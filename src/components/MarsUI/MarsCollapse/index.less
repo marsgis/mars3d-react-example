@@ -1,0 +1,35 @@
+// collapse 折叠面板相关样式
+.mars-collapse {
+  &,
+  .ant-collapse-item,
+  .ant-collapse-content {
+    background: none !important;
+    border: none;
+  }
+  .ant-collapse-content-box {
+    padding: 5px;
+  }
+
+  .ant-collapse-header {
+    background-color: @collapse-header-color !important;
+    padding: 5px 10px !important;
+    border-bottom: 1px solid @mars-basecolor-reverse;
+    color: #fff !important;
+    .i-icon {
+      font-size: 16px !important;
+      line-height: 16px;
+      vertical-align: middle !important;
+    }
+  }
+  .ant-collapse-content {
+    color: @mars-basecolor !important;
+  }
+
+  .ant-collapse-extra {
+    .i-icon {
+      font-size: 16px;
+      line-height: 16px;
+      vertical-align: middle;
+    }
+  }
+}

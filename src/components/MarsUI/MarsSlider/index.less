@@ -1,0 +1,46 @@
+/*滑动条 输入面板内时修改高度等*/
+.mars-slider {
+  margin: 0px 10px 6px 6px;
+  .ant-slider-mark-text {
+    color: @mars-basecolor !important;
+  }
+  /*滑动条 未选择、已选择部分 高度*/
+  /*滑动条 未选择部分*/
+  .ant-slider-rail {
+    height: 10px;
+    border-radius: 5px;
+    background-color: @mars-ordinary-color !important;
+  }
+  .ant-slider-track {
+    height: 10px;
+    border-radius: 5px;
+    background-color: @primary-color !important;
+  }
+  /*滑动条 刻度点*/
+  .ant-slider-dot {
+    border-color: @border-color-base;
+    background-color: #16212c7d;
+    top: -1px;
+    height: 12px;
+    width: 12px;
+  }
+  .ant-slider-dot:first-child {
+    margin-left: -1px;
+  }
+  .ant-slider-dot:last-child {
+    right: -1px;
+    left: auto !important;
+  }
+
+  /*滑动条 拖拽点*/
+  .ant-slider-handle {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    margin-top: -4px;
+  }
+  .ant-slider-dot-active,
+  .ant-slider-handle {
+    border-color: @primary-color !important;
+  }
+}

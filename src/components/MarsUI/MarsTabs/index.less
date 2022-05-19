@@ -1,0 +1,27 @@
+.mars-tabs {
+  width: 100%;
+  .ant-tabs-nav {
+    margin-top: 0;
+    &::before {
+      border-color: @border-color-ordinary;
+    }
+  }
+  .ant-tabs-tab {
+    color: @mars-basecolor !important;
+  }
+  .ant-tabs-nav-wrap {
+    line-height: 1;
+  }
+  &.ant-tabs-card {
+    .ant-tabs-nav .ant-tabs-tab-active {
+      background: @button-background-active !important;
+    }
+    .ant-tabs-tab {
+      background: @button-background-base !important;
+      border-color: @border-color-ordinary;
+    }
+  }
+  .ant-tabs-tab-active {
+    border-top: none !important;
+  }
+}

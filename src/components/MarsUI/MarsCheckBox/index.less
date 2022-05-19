@@ -1,0 +1,19 @@
+.mars-checkbox {
+  color: @mars-basecolor;
+  .ant-checkbox-inner {
+    background-color: #fff;
+    border-color: @border-color-ordinary;
+  }
+  .ant-checkbox-checked {
+    background: @primary-color;
+    .ant-checkbox-inner {
+      background-color: @primary-color;
+      border-color: @primary-color;
+    }
+  }
+}
+.mars-checkbox-group {
+  .ant-checkbox-wrapper {
+    .mars-checkbox();
+  }
+}

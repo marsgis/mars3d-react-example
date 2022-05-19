@@ -1,0 +1,214 @@
+.mars-dialog {
+  position: absolute;
+  padding: 0;
+  border-radius: 4px;
+  border: 1px solid #4db3ff70;
+  z-index: 100;
+  background: linear-gradient(to left, #4db3ff, #4db3ff) left top no-repeat, linear-gradient(to bottom, #4db3ff, #4db3ff) left top no-repeat,
+    linear-gradient(to left, #4db3ff, #4db3ff) right top no-repeat, linear-gradient(to bottom, #4db3ff, #4db3ff) right top no-repeat,
+    linear-gradient(to left, #4db3ff, #4db3ff) left bottom no-repeat, linear-gradient(to bottom, #4db3ff, #4db3ff) left bottom no-repeat,
+    linear-gradient(to left, #4db3ff, #4db3ff) right bottom no-repeat, linear-gradient(to left, #4db3ff, #4db3ff) right bottom no-repeat;
+  background-size: 1px 20px, 20px 1px, 1px 20px, 20px 1px;
+  background-color: rgba(20, 20, 20, 0.5);
+
+  .mars-dialog__header {
+    height: 40px;
+    line-height: 40px;
+    cursor: move;
+    overflow: hidden;
+    padding: 0 5px 0px 15px;
+    border-bottom: 1px solid @border-color-ordinary;
+    background-color: @collapse-header-color;
+    color: @mars-basecolor;
+    .icon {
+      vertical-align: middle;
+      margin-right: 5px;
+    }
+    .title {
+      font-size: 16px;
+    }
+    .close-btn {
+      float: right;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 2px;
+    }
+  }
+
+  .mars-dialog__body {
+    width: 100%;
+    height: calc(100% - 40px);
+    padding: 0 5px 10px 10px;
+    overflow: hidden;
+  }
+  .content {
+    height: calc(100% - 40px);
+    overflow-y: auto;
+  }
+  .full-content {
+    height: 100%;
+  }
+  .footer {
+    height: 40px;
+    .footer-content {
+      height: 40px;
+      width: 100%;
+      padding-left: 10px;
+      padding-right: 10px;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      background: @background-base;
+    }
+  }
+
+  .active {
+    touch-action: none;
+    z-index: 999 !important;
+  }
+  .handle {
+    box-sizing: border-box;
+    position: absolute;
+    z-index: 1;
+    width: 10px;
+    height: 10px;
+    opacity: 0;
+  }
+  .handle-x {
+    height: auto;
+    top: 10px;
+    right: 0;
+    bottom: 10px;
+    cursor: e-resize;
+  }
+  .handle-y {
+    width: auto;
+    bottom: 0;
+    left: 10px;
+    right: 10px;
+    cursor: s-resize;
+  }
+  .handle-xy {
+    bottom: 0;
+    right: 0;
+    cursor: se-resize;
+  }
+}
+@media only screen and (max-width: 768px) {
+  [class*="handle-"]:before {
+    content: "";
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    top: -10px;
+    position: absolute;
+  }
+}
+
+/**下面是 5个 动画 */
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.fadein-right {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation-name: fadeInRight;
+  animation-name: fadeInRight;
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.fadein-left {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation-name: fadeInLeft;
+  animation-name: fadeInLeft;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+.fadein-up {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation-name: fadeInUp;
+  animation-name: fadeInUp;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+.fadein-down {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation-name: fadeInDown;
+  animation-name: fadeInDown;
+}
+
+@keyframes fadeInCenter {
+  from {
+    opacity: 0;
+    transform: scale(0.1);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.fadein-center {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation-name: fadeInCenter;
+  animation-name: fadeInCenter;
+}

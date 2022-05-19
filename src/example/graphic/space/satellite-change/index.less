@@ -1,0 +1,44 @@
+.videoWrap {
+    position: absolute;
+    bottom: 60px;
+    right: 10px;
+    padding: 4px 8px;
+    border: 1px solid gray;
+    background-color: #3f4854;
+    z-index: 9;
+  }
+  
+  .closeAction {
+    position: absolute;
+    top: -25px;
+    left: 0;
+    background-color: #3f4854;
+    padding: 2px 6px;
+    cursor: pointer;
+  }
+  
+  .closeAction:after {
+    content: "";
+    position: absolute;
+    right: -28px;
+    top: 0;
+    border-left: 14px solid #3f4854;
+    border-right: 14px solid transparent;
+    border-bottom: 14px solid #3f4854;
+    border-top: 14px solid transparent;
+  }
+  
+  .videoWrap .title {
+    margin-bottom: 8px;
+  }
+  
+  /* 视频的收缩展开状态 */
+  .videoWrap .openPanel {
+    display: block;
+  }
+  
+  .videoWrap .closePanel {
+    display: block;
+    cursor: pointer;
+    display: none;
+  }

@@ -1,0 +1,51 @@
+// 按钮
+.mars-button {
+  font-size: 14px;
+  background: @button-background-base;
+  border-color: #20a0ff;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: @button-color-base;
+  &.ant-btn-primary {
+    background: @primary-color;
+    border: none;
+  }
+  &.ant-btn-link {
+    border: none !important;
+    background: none !important;
+    padding: 0;
+    height: initial;
+  }
+
+  .mars-icon {
+    margin-right: 5px;
+  }
+}
+
+.mars-button:not([disabled]) {
+  &:hover {
+    color: @button-color-active;
+    border-color: #89bceb;
+    background: @button-background-active;
+  }
+  &:focus {
+    color: @button-color-active;
+    border-color: #89bceb;
+    background: @button-background-active;
+  }
+}
+
+.mars-btn:disabled {
+  color: @button-color-base;
+  border-color: #89bceb;
+  background: rgba(32, 160, 255, 0.2);
+  &:hover {
+    background: rgba(32, 160, 255, 0.2);
+    color: @mars-disable-color;
+  }
+}
+
+/* 小型 单击按钮 */
+.small-btn {
+  padding: 4px 5px;
+}

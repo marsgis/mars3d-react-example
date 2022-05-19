@@ -1,0 +1,66 @@
+import { MarsPannel, MarsButton, MarsCheckbox } from "@mars/components/MarsUI"
+import { Space } from "antd"
+import * as mapWork from "./map.js"
+import { LayerState } from "@mars/components/MarsSample/LayerState"
+import { DataManage } from "@mars/components/MarsSample/DataManage"
+import { LocationTo } from "@mars/components/MarsSample/LocationTo"
+import { useState } from "react"
+
+const onClickStartDraw = () => {
+  mapWork.startDrawGraphic()
+}
+
+const onClickStartBounce = () => {
+  mapWork.onClickStartBounce()
+}
+
+const onClickStartBounce2 = () => {
+  mapWork.onClickStartBounce2()
+}
+
+const onClickStopBounce = () => {
+  mapWork.onClickStopBounce()
+}
+
+function UIComponent() {
+  const [enabledEdit, setValue] = useState(false)
+
+  const onChangeHasEdit = (e: any) => {
+    setValue(e.target.checked)
+    mapWork.updateLayerHasEdit(e.target.checked)
+  }
+
+  return (
+    <>
+      <MarsPannel visible={true} top={10} right={10}>
+        <div className="f-mb">
+          <LayerState />
+        </div>
+
+        <div className="f-mb">
+          <Space>
+            <span className="mars-pannel-item-label">数据维护:</span>
+            <MarsButton onClick={onClickStartDraw}>图上标绘</MarsButton>
+            <MarsCheckbox checked={enabledEdit} onChange={onChangeHasEdit}>是否编辑</MarsCheckbox>
+          </Space>
+        </div>
+
+        <div className="f-mb">
+          <Space>
+            <span className="mars-pannel-item-label">方法演示:</span>
+            <MarsButton onClick={onClickStartBounce}>开始弹跳</MarsButton>
+            <MarsButton onClick={onClickStartBounce2}>开始弹跳（自动停止）</MarsButton>
+            <MarsButton onClick={onClickStopBounce}>停止弹跳</MarsButton>
+          </Space>
+        </div>
+
+        <div>
+          <DataManage />
+        </div>
+      </MarsPannel>
+      <LocationTo />
+    </>
+  )
+}
+
+export default UIComponent

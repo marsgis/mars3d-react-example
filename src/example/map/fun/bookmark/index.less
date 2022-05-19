@@ -1,0 +1,63 @@
+// input和搜索样式
+.ant-input-search .ant-input-lg {
+    background-color: @form-input-background;
+    border-color: #4db3ff;
+    color: #ffffffd9;
+}
+
+.bookmarkView {
+    width: 265px;
+    height: calc(100% - 65px);
+    border: 1px solid white;
+    text-align: center;
+    border-radius: 5px;
+    margin: 10px 0 0 4px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 10px;
+
+    .markImg {
+        height: 160px;
+        width: 100%;
+        z-index: 0;
+    }
+
+    .addNewImg {
+        position: relative;
+        border: 1px solid white;
+        margin-top: 22px;
+
+        &:after {
+            content: "";
+            width: calc(100% + 20px);
+            height: 1px;
+            background-color: white;
+            position: absolute;
+            bottom: -11px;
+            left: -11px;
+        }
+
+        .textItem {
+            width: 160px;
+            height: 27px;
+            line-height: 27px;
+            white-space: nowrap;
+            overflow-x: hidden;
+            text-align: center;
+            text-overflow: ellipsis;
+            margin-left: 39px;
+        }
+
+        .deleteItem {
+            width: 54px;
+            height: 19px;
+            border: none;
+            position: absolute;
+            top: 167px;
+            right: -7px;
+            background-color: rgba(0, 0, 0, 0);
+            border-color: rgba(0, 0, 0, 0);
+        }
+    }
+
+}

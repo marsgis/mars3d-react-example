@@ -1,0 +1,89 @@
+/**
+ * 所有页面全局公共CSS
+ *
+ * @copyright 火星科技 mars3d.cn
+ * @author 火星吴彦祖 2022-01-01
+ */
+
+/* 清除内外边距 */
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, /* structural elements 结构元素 */
+ dl, dt, dd, ul, ol, li, /* list elements 列表元素 */
+ pre, /* text formatting elements 文本格式元素 */
+ fieldset, lengend, button, input, textarea, /* form elements 表单元素 */
+ th, td {
+  /* table elements 表格元素 */
+  margin: 0;
+  padding: 0;
+  -moz-user-select: none; /*火狐*/
+  -webkit-user-select: none; /*webkit浏览器*/
+  -ms-user-select: none; /*IE10*/
+  -khtml-user-select: none; /*早期浏览器*/
+  user-select: none;
+  list-style: none;
+}
+
+/*滚动条*/
+body,
+html {
+  height: 100%;
+  width: 100%;
+  font-size: @font-size-base;
+  line-height: 1 !important;
+  overflow: hidden;
+  background-color: @mars-basecolor;
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+#root {
+  height: 100%;
+}
+
+::-webkit-scrollbar-button {
+  height: 0;
+  width: 0;
+  display: none;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-thumb {
+  border: 0;
+}
+
+::-webkit-scrollbar {
+  height: 10px;
+  width: 4px;
+  background: transparent;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  padding-top: 100px;
+  -webkit-box-shadow: inset 1px 1px 0 rgba(0, 0, 0, 0.1), inset -1px -1px 0 rgba(0, 0, 0, 0.07);
+  background-color: rgba(79, 79, 79, 0.8);
+  min-height: 28px;
+  border-radius: 4px;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-thumb {
+  border: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  -webkit-box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.25);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+::-webkit-scrollbar-thumb:active {
+  -webkit-box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.35);
+  background-color: rgba(0, 0, 0, 0.5);
+}
