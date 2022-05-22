@@ -91,7 +91,7 @@ function UIComponent() {
             </MarsButton>
           </Space>
         </MarsCollapsePanel>
-        <MarsCollapsePanel key="2" header="地下开挖">
+        <MarsCollapsePanel key="2" header="多个裁剪面">
           <Space wrap>
             <MarsButton
               onClick={() => {

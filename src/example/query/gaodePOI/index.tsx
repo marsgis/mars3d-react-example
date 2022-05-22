@@ -114,7 +114,8 @@ function UIComponent() {
           <Space>
             <span>城市:</span>
             {/* @ts-ignore */}
-            <Cascader bordered={false} options={city} onChange={selectCity}>
+            <Cascader bordered={false} options={city} onChange={selectCity}> 
+              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
               <a href="#">
                 {citySheng}/{cityShi}
               </a>
