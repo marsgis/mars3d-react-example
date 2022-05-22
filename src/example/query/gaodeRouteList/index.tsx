@@ -44,7 +44,7 @@ const selectWayOptions = [
   }
 ]
 
-function UIComponent(props) {
+function UIComponent() {
   const [startNumber, setStartValue] = useState("")
   const [countNumber, setEndtValue] = useState(0)
   const [seltValue, setselctValue] = useState("1") // 出行方式

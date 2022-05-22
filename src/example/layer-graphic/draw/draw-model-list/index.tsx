@@ -3,7 +3,6 @@ import * as mapWork from "./map.js"
 import { useState, useCallback, useEffect } from "react"
 import { Space, Upload } from "antd"
 import "./index.less"
-
 function UIComponent() {
   const [modelData, setmodelData] = useState([])
   const [selectOptions, setSelectOptions] = useState([])
@@ -50,12 +49,31 @@ function UIComponent() {
     [modelData]
   )
 
+  const props = {
+    name: "file",
+    accept: "json,geojson", // 接受文件类型
+    multiple: false, // 不支持多选
+    showUploadList: false,
+    beforeUpload() {
+      return false
+    },
+    onChange(info: any) {
+      const item = info.file
+      const fileName = item.name
+      const fileType = fileName?.substring(fileName.lastIndexOf(".") + 1, fileName.length).toLowerCase()
+      if (fileType !== "json") {
+        alert("文件类型不合法,请选择json格式标注文件！")
+      }
+      mapWork.openGeoJSON(item)
+    }
+  }
+
   return (
     <MarsPannel visible={true} right={10} top={10} width="270">
       <MarsForm>
         <MarsFormItem label="模型列表">
           <Space style={{ cursor: "pointer" }}>
-            <Upload onChange={(e) => mapWork.openGeoJSON(e.file)} multiple={false} name={"file"} accept={"json,geojson"} showUploadList={false}>
+            <Upload {...props}>
               <MarsIcon icon="folder-upload" width="19"></MarsIcon>
             </Upload>
             <MarsIcon onClick={() => mapWork.saveGeoJSON()} icon="disk" width="17" color="#f2f2f2"></MarsIcon>

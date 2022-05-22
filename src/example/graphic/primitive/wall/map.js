@@ -36,7 +36,12 @@ export function onMounted(mapInstance) {
   addDemoGraphic6()
   addDemoGraphic7()
   addDemoGraphic8()
-  queryAreasData()
+  addDemoGraphic9()
+  addDemoGraphic10()
+
+  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/geojson/areas/340100.json" }).then(function (data) {
+    addDemoGraphic11(data)
+  })
 }
 
 /**
@@ -240,7 +245,8 @@ function addDemoGraphic8() {
         image: "img/textures/fence.png",
         color: Cesium.Color.CHARTREUSE,
         count: 3,
-        speed: 20
+        speed: 20,
+        bloom: false
       })
     },
     attr: { remark: "示例8" }
@@ -248,8 +254,59 @@ function addDemoGraphic8() {
   graphicLayer.addGraphic(primitive)
 }
 
+function addDemoGraphic9() {
+  const primitive = new mars3d.graphic.WallPrimitive({
+    positions: [
+      [117.31104, 31.821121, 14],
+      [117.330257, 31.823798, 9.9],
+      [117.334015, 31.804235, 9.8],
+      [117.317901, 31.802142, 14.9],
+      [117.312515, 31.807128, 6.2]
+    ],
+    style: {
+      closure: true,
+      diffHeight: 500,
+      material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.WallScroll, {
+        image: "img/textures/poly-san.png",
+        color: Cesium.Color.RED,
+        count: 2,
+        direction: 1,
+        speed: 20,
+        bloom: true
+      })
+    },
+    attr: { remark: "示例9" }
+  })
+  graphicLayer.addGraphic(primitive)
+}
+
+function addDemoGraphic10() {
+  const primitive = new mars3d.graphic.WallPrimitive({
+    positions: [
+      [117.374042, 31.838945, 11.6],
+      [117.392644, 31.835948, 4.7],
+      [117.397659, 31.820042, 8],
+      [117.378515, 31.810404, 2]
+    ],
+    style: {
+      closure: true,
+      diffHeight: 500,
+      material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.WallScroll, {
+        image: "img/textures/line-color3.png",
+        color: Cesium.Color.BLUE,
+        count: 5,
+        direction: -1,
+        speed: 20,
+        bloom: true
+      })
+    },
+    attr: { remark: "示例9" }
+  })
+  graphicLayer.addGraphic(primitive)
+}
+
 // 显示合肥市边界
-function addDemoGraphic9(data) {
+function addDemoGraphic11(data) {
   const arr = mars3d.Util.geoJsonToGraphics(data) // 解析geojson
   for (let i = 0; i < arr.length; i++) {
     const item = arr[i]
@@ -272,17 +329,6 @@ function addDemoGraphic9(data) {
   }
 }
 
-// 数据获取
-function queryAreasData() {
-  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/geojson/areas/340100.json" })
-    .then(function (data) {
-      addDemoGraphic9(data)
-    })
-    .catch(function (error) {
-      console.log("加载JSON出错", error)
-    })
-}
-
 // 在图层绑定Popup弹窗
 export function bindLayerPopup() {
   graphicLayer.bindPopup(function (event) {
@@ -294,8 +340,6 @@ export function bindLayerPopup() {
     return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
   })
 }
-
-
 
 // 在图层级处理一些事物
 function bindLayerEvent() {

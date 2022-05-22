@@ -22,18 +22,13 @@ class CanvasBillboard extends mars3d.graphic.BillboardEntity {
   _mountedHook() {
     super._mountedHook()
 
-    // 图片对象
-    this.style.imageUrl = "img/marker/textPnl.png"
-    this.style.width = 300
-    this.style.height = 140
+    if (this._pngImage) {
+      this._updateCanvas()
+    } else {
+      this.style.imageUrl = "img/marker/textPnl.png" // 图片对象
+      this.style.width = 300
+      this.style.height = 140
 
-    if (!this._canvas) {
-      this._canvas = document.createElement("canvas")
-      this._canvas.width = this.style.width
-      this._canvas.height = this.style.height
-    }
-
-    if (!this._pngImage) {
       const img = new Image(this.style.width, this.style.height)
       img.crossOrigin = "Anonymous"
       img.src = this.style.imageUrl
@@ -42,16 +37,18 @@ class CanvasBillboard extends mars3d.graphic.BillboardEntity {
         this._updateCanvas()
       }
     }
-    this._updateCanvas()
   }
 
   // 创建canvas
   _updateCanvas() {
-    if (!this._pngImage || !this._canvas) {
+    if (!this._pngImage) {
       return
     }
 
-    const canvas = this._canvas
+    const canvas = document.createElement("canvas")
+    canvas.width = this.style.width
+    canvas.height = this.style.height
+
     const ctx = canvas.getContext("2d")
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     // 绘制图片
@@ -65,11 +62,8 @@ class CanvasBillboard extends mars3d.graphic.BillboardEntity {
     ctx.fillText(this.style.text, 160, canvas.height / 2)
     ctx.fillText("℃", 220, canvas.height / 2)
 
-    const newImg = new Image(canvas.width, canvas.height)
-    newImg.src = canvas.toDataURL("image/png")
-
     // 将图片赋予给矢量对象进行显示，this.image是父类的属性
-    this.image = newImg
+    this.image = canvas
   }
 }
 mars3d.graphic.CanvasBillboard = CanvasBillboard

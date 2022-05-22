@@ -2,7 +2,7 @@ import { MarsPannel, MarsButton, MarsSlider, MarsInput } from "@mars/components/
 import { Space } from "antd"
 import * as mapWork from "./map.js"
 import "./index.less"
-import { useWidget } from "@mars/common/store/widget"
+import { activate, disable, updateWidget, isActive } from "@mars/widgets/common/store/widget"
 import { useMemo, useState, useCallback } from "react"
 
 const onClickDrawWall = () => {
@@ -25,8 +25,7 @@ function UIComponent() {
   const [angle, setAngle] = useState(0)
 
   const [text, setText] = useState("Mars3D 火星科技 2017")
-
-  const { disable, activate, setWidgetData } = useWidget()
+ 
   const showEditor = useCallback(
     (e: any) => {
       activate({
@@ -43,7 +42,7 @@ function UIComponent() {
     })
     // 编辑修改了模型
     mapWork.eventTarget.on("graphicEditor-update", async (e: any) => {
-      setWidgetData("graphic-editor", {
+      updateWidget("graphic-editor", {
         data: { graphic: e.graphic }
       })
       showEditor(e)

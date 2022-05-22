@@ -151,27 +151,36 @@ function addDemoGraphic5(graphicLayer) {
     position: [116.1, 30.9, 1000],
     style: {
       radii: 2500,
+      innerRadii: 1500,
       maximumConeDegree: 90, // 半球
-      fill: false,
+      material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.WallScroll, {
+        image: "img/textures/line-color3.png",
+        count: 1.0,
+        color: "#00ffff",
+        speed: 20,
+        direction: -1,
+        axisY: true,
+        bloom: true
+      }),
       subdivisions: 128,
       stackPartitions: 32,
       slicePartitions: 32,
       outline: true,
-      outlineColor: "#f33349"
+      outlineColor: "#00ffff"
     },
     attr: { remark: "示例5" }
   })
   graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
 
   // 添加扫描面
-  graphic.addScanPlane({
-    type: "roll", // 扫描类型
-    step: 0.5, // 步长
-    style: {
-      minimumConeDegree: -90.0,
-      maximumConeDegree: 90.0
-    }
-  })
+  // graphic.addScanPlane({
+  //   type: "roll", // 扫描类型
+  //   step: 0.5, // 步长
+  //   style: {
+  //     minimumConeDegree: -90.0,
+  //     maximumConeDegree: 90.0
+  //   }
+  // })
 }
 
 // 半圆顶球体
@@ -181,24 +190,32 @@ function addDemoGraphic6(graphicLayer) {
     style: {
       radii: 2500,
       maximumConeDegree: 90,
-      fill: false,
-      outline: true,
-      outlineColor: Cesium.Color.BLUE.withAlpha(0.6)
+      material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.WallScroll, {
+        image: "img/textures/poly-san.png",
+        count: 1.0,
+        color: "#00ffff",
+        speed: 20,
+        direction: 1,
+        axisY: false,
+        bloom: true
+      })
+      // outline: true,
+      // outlineColor: Cesium.Color.BLUE.withAlpha(0.6)
     },
     attr: { remark: "示例6" }
   })
   graphicLayer.addGraphic(graphic)
 
-  // 添加扫描面
-  graphic.addScanPlane({
-    type: "pitch", // 扫描类型
-    step: 0.5, // 步长
-    style: {
-      roll: 90,
-      minimumConeDegree: 0.0,
-      maximumConeDegree: 180.0
-    }
-  })
+  // // 添加扫描面
+  // graphic.addScanPlane({
+  //   type: "pitch", // 扫描类型
+  //   step: 0.5, // 步长
+  //   style: {
+  //     roll: 90,
+  //     minimumConeDegree: 0.0,
+  //     maximumConeDegree: 180.0
+  //   }
+  // })
 }
 
 // 含内半径 半圆顶球体

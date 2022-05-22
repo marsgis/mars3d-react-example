@@ -2,7 +2,7 @@
  * Mars3D三维可视化平台  mars3d
  *
  * 版本信息：v3.3.9
- * 编译日期：2022-05-18 19:45:00
+ * 编译日期：2022-05-22 14:42:11
  * 版权所有：Copyright by 火星科技  http://mars3d.cn
  * 使用单位：免费公开版 ，2022-02-01
  */
@@ -21,6 +21,16 @@
 }
 .mars3d-container .mars3d-vrButton {
   right: auto !important;
+}
+/**隐藏的div对象，如 DivBillboardEntity、HeatLayer 等*/
+.mars3d-hideDiv {
+  z-index: -1;
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  pointer-events: none;
 }
 /**右键菜单*/
 .mars3d-contextmenu {
@@ -484,12 +494,6 @@
   border-radius: 2px;
   margin: -2px;
   box-sizing: content-box;
-}
-.mars3d-divBillboardEntity {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -1;
 }
 /**内置的DivGraphic通用样式【动画点】*/
 .mars3d-animation-point,

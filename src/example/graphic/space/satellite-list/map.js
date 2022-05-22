@@ -23,7 +23,19 @@ export const mapOptions = {
     clockAnimate: true, // 时钟动画控制(左下角)
     timeline: true, // 是否显示时间线控件
     compass: { top: "10px", left: "5px" }
-  }
+  },
+  layers: [
+    {
+      name: "夜晚图片",
+      icon: "img/basemaps/blackMarble.png",
+      type: "image",
+      url: "//data.mars3d.cn/file/img/world/night2.jpg",
+      dayAlpha: 0.1,
+      nightAlpha: 1.0,
+      brightness: 3.5,
+      show: true
+    }
+  ]
 }
 
 /**

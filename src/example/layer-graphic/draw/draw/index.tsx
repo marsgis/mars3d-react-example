@@ -3,7 +3,7 @@ import { Space, Upload } from "antd"
 import { useEffect } from "react"
 import * as mapWork from "./map.js"
 import { LocationTo } from "@mars/components/MarsSample/LocationTo"
-// import { activate, disable, updateWidget, isActive } from "@mars/common/store/widgetnew"
+import { activate, disable, updateWidget, isActive } from "@mars/widgets/common/store/widget"
 
 interface FileItem {
   uid: string
@@ -17,39 +17,31 @@ interface FileInfo {
   file: FileItem
   fileList: FileItem[]
 }
-
-// let needOpen = true
+ 
 
 function UIComponent() {
-  // useEffect(() => {
-  //   // 编辑修改了模型
-  //   mapWork.eventTarget.on("graphicEditor-update", async (e: any) => {
-  //     needOpen = true
-  //     if (isActive("GraphicEditor")) {
-  //       updateWidget("GraphicEditor", { graphic: e.graphic })
-  //     } else {
-  //       activate({
-  //         name: "GraphicEditor",
-  //         data: { graphic: e.graphic }
-  //       })
-  //     }
+  useEffect(() => {
+    // 编辑修改了模型
+    mapWork.eventTarget.on("graphicEditor-update", async (e: any) => { 
+      if (isActive("GraphicEditor")) {
+        updateWidget("GraphicEditor", { graphic: e.graphic })
+      } else {
+        activate({
+          name: "GraphicEditor",
+          data: { graphic: e.graphic }
+        })
+      } 
+    })
 
-  //     setTimeout(() => {
-  //       needOpen = false
-  //     }, 200)
-  //   })
-
-  //   // 停止编辑修改模型
-  //   mapWork.eventTarget.on("graphicEditor-stop", async (e: any) => {
-  //     setTimeout(() => {
-  //       if (!needOpen) {
-  //         disable("GraphicEditor")
-  //       } else {
-  //         needOpen = true
-  //       }
-  //     }, 100)
-  //   })
-  // }, [])
+    // 停止编辑修改模型
+    mapWork.eventTarget.on("graphicEditor-stop", async (e: any) => {
+      setTimeout(() => {
+        if (!mapWork.graphicLayer.isEditing) {
+          disable("GraphicEditor")
+        } 
+      }, 100)
+    })
+  }, [])
 
   return (
     <>

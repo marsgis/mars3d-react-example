@@ -41,6 +41,7 @@ function showHeatMap(arrPoints, height) {
   // 热力图 图层
   heatLayer = new mars3d.layer.HeatLayer({
     positions: arrPoints,
+    rectangle: rectangle,
     // 以下为热力图本身的样式参数，可参阅api：https://www.patrick-wied.at/static/heatmapjs/docs.html
     heatStyle: {
       radius: 40,
@@ -56,17 +57,22 @@ function showHeatMap(arrPoints, height) {
 
 // 更新数据
 export function btnUpdate() {
-  heatLayer.positions = getRandomPoints(1000)
+  const arr = getRandomPoints(1000)
+  heatLayer.setPositions(arr, true)
+}
+
+const rectangle = {
+   xmin: 117.226189,
+   xmax: 117.245831,
+   ymin: 31.828858,
+   ymax: 31.842967
 }
 
 // 获取bbox矩形区域内的count个随机点
 function getRandomPoints(count) {
-  const xmin = 117.226189
-  const xmax = 117.245831
-  const ymin = 31.828858
-  const ymax = 31.842967
+
   const arr = []
-  const arrPoint = turf.randomPoint(count, { bbox: [xmin, ymin, xmax, ymax] }).features // 随机点
+  const arrPoint = turf.randomPoint(count, { bbox: [rectangle.xmin, rectangle.ymin, rectangle.xmax, rectangle.ymax] }).features // 随机点
   for (let i = 0; i < arrPoint.length; i++) {
     const item = arrPoint[i].geometry.coordinates
     const val = Math.floor(Math.random() * 100) // 热力值

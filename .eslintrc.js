@@ -37,8 +37,8 @@ module.exports = {
     "no-use-before-define": "off", // 允许 方法在未定义前使用
     "multiline-ternary": "off",
     "no-restricted-globals": "off",
+    "react-hooks/exhaustive-deps": "off", // 检查 effect 的依赖 
     "react-hooks/rules-of-hooks": "error", // 检查 Hook 的规则
-    "react-hooks/exhaustive-deps": "warn", // 检查 effect 的依赖
     // mars3d-react-example项目专用的配置(目的便于示例的开发调试) end
 
     "@typescript-eslint/no-explicit-any": "off", // ts：允许用any

@@ -91,7 +91,9 @@ function UIComponent() {
             键盘漫游
           </MarsCheckbox>
           <span className="mars-pannel-item-label">调试页面:</span>
-          <MarsButton href="editor-react.html?id=layer-tileset/manager/edit">模型参数调试</MarsButton>
+          <MarsButton href="editor-react.html?id=layer-tileset/manager/edit" target="_blank">
+            模型参数调试
+          </MarsButton>
         </MarsCollapsePanel>
       </MarsCollapse>
     </MarsPannel>

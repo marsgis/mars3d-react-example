@@ -168,7 +168,6 @@ function addDemoGraphic5(graphicLayer) {
       topRadius: 0.0,
       bottomRadius: 3000,
       material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.CircleWave, {
-        duration: 2000,
         color: "#02ff00"
       })
     },

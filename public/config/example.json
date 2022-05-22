@@ -2897,6 +2897,14 @@
             "libs": ["mars3d", "mars3d-heatmap"]
           },
           {
+            "name": "动态热力图",
+            "thumbnail": "layero-heatmap-heatLayer-dynamic.gif",
+            "main_es5": "layero-heatmap-heatLayer-dynamic",
+            "main": "layer-other/heatmap/heatLayer-dynamic",
+            "hasPannel": true,
+            "libs": ["mars3d", "mars3d-heatmap"]
+          },
+          {
             "name": "立体曲面热力图",
             "thumbnail": "layero-heatmap-heatLayer-arc.jpg",
             "main_es5": "layero-heatmap-heatLayer-arc",

@@ -98,7 +98,6 @@ function addDemoGraphic2(graphicLayer) {
       length: 4000,
       angle: 5, // 半场角度
       material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.CircleWave, {
-        duration: 2000,
         color: "#02ff00"
       })
     }

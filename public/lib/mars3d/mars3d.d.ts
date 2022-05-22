@@ -3,7 +3,7 @@
  * Mars3D三维可视化平台  mars3d
  *
  * 版本信息：v3.3.9
- * 编译日期：2022-05-18 19:45:00
+ * 编译日期：2022-05-22 14:42:10
  * 版权所有：Copyright by 火星科技  http://mars3d.cn
  * 使用单位：免费公开版 ，2022-02-01
  */
@@ -1245,7 +1245,10 @@ declare namespace MaterialType {
      * @property [image] - 背景图片URL
      * @property [color = new Cesium.Color(1.0, 0.0, 0.0, 0.7)] - 颜色
      * @property [count = 1] - 数量
+     * @property [direction = -1] - 方向，1是往下，-1是往上
      * @property [speed = 5.0] - 速度，值越大越快
+     * @property [bloom = false] - 是否泛光
+     * @property [axisY = false] - 是否Y轴朝上
      */
     const WallScroll: string;
     /**
@@ -6246,7 +6249,6 @@ declare class BaseEntity extends BaseGraphic {
  * @param [options.parent] - 要与此实体关联的父实体。
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.drawShow = true] - 绘制时，是否自动隐藏entity，可避免拾取坐标存在问题。
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.entity] - 传入外部已经构造好的Entity对象
  * @param [options.hasEdit = true] - 是否允许编辑
  * @param [options.maxCacheCount = 50] - 当使用addDynamicPosition设置为动画轨迹位置时，保留的坐标点数量
@@ -6280,7 +6282,6 @@ declare class BasePointEntity extends BaseEntity {
         parent?: Cesium.Entity;
         onBeforeCreate?: (...params: any[]) => any;
         drawShow?: boolean;
-        addHeight?: number;
         entity?: Cesium.Entity;
         hasEdit?: boolean;
         maxCacheCount?: number;
@@ -6422,7 +6423,6 @@ declare class BasePointEntity extends BaseEntity {
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.minPointNum = 2] - 绘制时，至少需要点的个数
  * @param [options.maxPointNum = 9999] - 绘制时，最多允许点的个数
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.hasEdit = true] - 是否允许编辑
  * @param [options.hasMoveEdit = true] - 编辑时，是否可以整体平移
  * @param [options.hasHeightEdit = true] - 编辑时，当有diffHeight时，是否可以编辑高度
@@ -6449,7 +6449,6 @@ declare class BasePolyEntity extends BaseEntity {
         onBeforeCreate?: (...params: any[]) => any;
         minPointNum?: number;
         maxPointNum?: number;
-        addHeight?: number;
         hasEdit?: boolean;
         hasMoveEdit?: boolean;
         hasHeightEdit?: boolean;
@@ -6647,7 +6646,6 @@ declare namespace BillboardEntity {
  * @param [options.frameRateHeight = 30] - 当使用addDynamicPosition设置为动画轨迹位置时，并clampToTileset：true时，多少帧计算一次贴模型高度
  * @param [options.objectsToExclude] - 当使用addDynamicPosition设置为动画轨迹位置时，并clampToTileset：true时，排除的不进行贴模型计算的模型对象，可以是： primitives, entities, 或 3D Tiles features
  * @param [options.drawShow = true] - 绘制时，是否自动隐藏entity，可避免拾取坐标存在问题。
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.popup] - 绑定的popup弹窗值，也可以bindPopup方法绑定
  * @param [options.popupOptions] - popup弹窗时的配置参数，也支持如pointerEvents等{@link Popup}构造参数
  * @param [options.tooltip] - 绑定的tooltip弹窗值，也可以bindTooltip方法绑
@@ -6680,7 +6678,6 @@ declare class BillboardEntity extends BasePointEntity {
         frameRateHeight?: number;
         objectsToExclude?: any;
         drawShow?: boolean;
-        addHeight?: number;
         popup?: string | any[] | ((...params: any[]) => any);
         popupOptions?: Popup.StyleOptions | any;
         tooltip?: string | any[] | ((...params: any[]) => any);
@@ -6814,7 +6811,6 @@ declare namespace BoxEntity {
  * @param [options.parent] - 要与此实体关联的父实体。
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.drawShow = true] - 绘制时，是否自动隐藏entity，可避免拾取坐标存在问题。
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.popup] - 绑定的popup弹窗值，也可以bindPopup方法绑定
  * @param [options.popupOptions] - popup弹窗时的配置参数，也支持如pointerEvents等{@link Popup}构造参数
  * @param [options.tooltip] - 绑定的tooltip弹窗值，也可以bindTooltip方法绑
@@ -6838,7 +6834,6 @@ declare class BoxEntity extends BasePointEntity {
         parent?: Cesium.Entity;
         onBeforeCreate?: (...params: any[]) => any;
         drawShow?: boolean;
-        addHeight?: number;
         popup?: string | any[] | ((...params: any[]) => any);
         popupOptions?: Popup.StyleOptions | any;
         tooltip?: string | any[] | ((...params: any[]) => any);
@@ -6967,7 +6962,6 @@ declare namespace CanvasLabelEntity {
  * @param [options.parent] - 要与此实体关联的父实体。
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.drawShow = true] - 绘制时，是否自动隐藏entity，可避免拾取坐标存在问题。
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.popup] - 绑定的popup弹窗值，也可以bindPopup方法绑定
  * @param [options.popupOptions] - popup弹窗时的配置参数，也支持如pointerEvents等{@link Popup}构造参数
  * @param [options.tooltip] - 绑定的tooltip弹窗值，也可以bindTooltip方法绑
@@ -6990,7 +6984,6 @@ declare class CanvasLabelEntity extends BasePointEntity {
         parent?: Cesium.Entity;
         onBeforeCreate?: (...params: any[]) => any;
         drawShow?: boolean;
-        addHeight?: number;
         popup?: string | any[] | ((...params: any[]) => any);
         popupOptions?: Popup.StyleOptions | any;
         tooltip?: string | any[] | ((...params: any[]) => any);
@@ -7100,7 +7093,6 @@ declare namespace CircleEntity {
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.drawShowRadius = true] - 绘制时，是否显示圆的半径。
  * @param [options.drawShow = true] - 绘制时，是否自动隐藏entity，可避免拾取坐标存在问题。
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.popup] - 绑定的popup弹窗值，也可以bindPopup方法绑定
  * @param [options.popupOptions] - popup弹窗时的配置参数，也支持如pointerEvents等{@link Popup}构造参数
  * @param [options.tooltip] - 绑定的tooltip弹窗值，也可以bindTooltip方法绑
@@ -7124,7 +7116,6 @@ declare class CircleEntity extends BasePointEntity {
         onBeforeCreate?: (...params: any[]) => any;
         drawShowRadius?: boolean;
         drawShow?: boolean;
-        addHeight?: number;
         popup?: string | any[] | ((...params: any[]) => any);
         popupOptions?: Popup.StyleOptions | any;
         tooltip?: string | any[] | ((...params: any[]) => any);
@@ -7490,7 +7481,6 @@ declare namespace CorridorEntity {
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.minPointNum = 2] - 绘制时，至少需要点的个数
  * @param [options.maxPointNum = 9999] - 绘制时，最多允许点的个数
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.hasEdit = true] - 是否允许编辑
  * @param [options.hasMoveEdit = true] - 编辑时，是否可以整体平移
  * @param [options.hasHeightEdit = true] - 编辑时，当有diffHeight时，是否可以编辑高度
@@ -7517,7 +7507,6 @@ declare class CorridorEntity extends BasePolyEntity {
         onBeforeCreate?: (...params: any[]) => any;
         minPointNum?: number;
         maxPointNum?: number;
-        addHeight?: number;
         hasEdit?: boolean;
         hasMoveEdit?: boolean;
         hasHeightEdit?: boolean;
@@ -7566,7 +7555,6 @@ declare class CorridorEntity extends BasePolyEntity {
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.minPointNum = 2] - 绘制时，至少需要点的个数
  * @param [options.maxPointNum = 9999] - 绘制时，最多允许点的个数
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.hasEdit = true] - 是否允许编辑
  * @param [options.hasMoveEdit = true] - 编辑时，是否可以整体平移
  * @param [options.hasHeightEdit = true] - 编辑时，当有diffHeight时，是否可以编辑高度
@@ -7593,7 +7581,6 @@ declare class CurveEntity extends PolylineEntity {
         onBeforeCreate?: (...params: any[]) => any;
         minPointNum?: number;
         maxPointNum?: number;
-        addHeight?: number;
         hasEdit?: boolean;
         hasMoveEdit?: boolean;
         hasHeightEdit?: boolean;
@@ -7694,7 +7681,6 @@ declare namespace CylinderEntity {
  * @param [options.parent] - 要与此实体关联的父实体。
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.drawShow = true] - 绘制时，是否自动隐藏entity，可避免拾取坐标存在问题。
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.popup] - 绑定的popup弹窗值，也可以bindPopup方法绑定
  * @param [options.popupOptions] - popup弹窗时的配置参数，也支持如pointerEvents等{@link Popup}构造参数
  * @param [options.tooltip] - 绑定的tooltip弹窗值，也可以bindTooltip方法绑
@@ -7718,7 +7704,6 @@ declare class CylinderEntity extends BasePointEntity {
         parent?: Cesium.Entity;
         onBeforeCreate?: (...params: any[]) => any;
         drawShow?: boolean;
-        addHeight?: number;
         popup?: string | any[] | ((...params: any[]) => any);
         popupOptions?: Popup.StyleOptions | any;
         tooltip?: string | any[] | ((...params: any[]) => any);
@@ -7844,7 +7829,6 @@ declare namespace DivBillboardEntity {
  * @param [options.parent] - 要与此实体关联的父实体。
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.drawShow = true] - 绘制时，是否自动隐藏entity，可避免拾取坐标存在问题。
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.popup] - 绑定的popup弹窗值，也可以bindPopup方法绑定
  * @param [options.popupOptions] - popup弹窗时的配置参数，也支持如pointerEvents等{@link Popup}构造参数
  * @param [options.tooltip] - 绑定的tooltip弹窗值，也可以bindTooltip方法绑
@@ -7867,7 +7851,6 @@ declare class DivBillboardEntity extends BillboardEntity {
         parent?: Cesium.Entity;
         onBeforeCreate?: (...params: any[]) => any;
         drawShow?: boolean;
-        addHeight?: number;
         popup?: string | any[] | ((...params: any[]) => any);
         popupOptions?: Popup.StyleOptions | any;
         tooltip?: string | any[] | ((...params: any[]) => any);
@@ -8081,7 +8064,6 @@ declare namespace EllipseEntity {
  * @param [options.parent] - 要与此实体关联的父实体。
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.drawShow = true] - 绘制时，是否自动隐藏entity，可避免拾取坐标存在问题。
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.popup] - 绑定的popup弹窗值，也可以bindPopup方法绑定
  * @param [options.popupOptions] - popup弹窗时的配置参数，也支持如pointerEvents等{@link Popup}构造参数
  * @param [options.tooltip] - 绑定的tooltip弹窗值，也可以bindTooltip方法绑
@@ -8104,7 +8086,6 @@ declare class EllipseEntity extends CircleEntity {
         parent?: Cesium.Entity;
         onBeforeCreate?: (...params: any[]) => any;
         drawShow?: boolean;
-        addHeight?: number;
         popup?: string | any[] | ((...params: any[]) => any);
         popupOptions?: Popup.StyleOptions | any;
         tooltip?: string | any[] | ((...params: any[]) => any);
@@ -8245,7 +8226,6 @@ declare namespace EllipsoidEntity {
  * @param [options.parent] - 要与此实体关联的父实体。
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.drawShow = true] - 绘制时，是否自动隐藏entity，可避免拾取坐标存在问题。
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.popup] - 绑定的popup弹窗值，也可以bindPopup方法绑定
  * @param [options.popupOptions] - popup弹窗时的配置参数，也支持如pointerEvents等{@link Popup}构造参数
  * @param [options.tooltip] - 绑定的tooltip弹窗值，也可以bindTooltip方法绑
@@ -8270,7 +8250,6 @@ declare class EllipsoidEntity extends BasePointEntity {
         parent?: Cesium.Entity;
         onBeforeCreate?: (...params: any[]) => any;
         drawShow?: boolean;
-        addHeight?: number;
         popup?: string | any[] | ((...params: any[]) => any);
         popupOptions?: Popup.StyleOptions | any;
         tooltip?: string | any[] | ((...params: any[]) => any);
@@ -8415,7 +8394,6 @@ declare namespace FontBillboardEntity {
  * @param [options.parent] - 要与此实体关联的父实体。
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.drawShow = true] - 绘制时，是否自动隐藏entity，可避免拾取坐标存在问题。
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.popup] - 绑定的popup弹窗值，也可以bindPopup方法绑定
  * @param [options.popupOptions] - popup弹窗时的配置参数，也支持如pointerEvents等{@link Popup}构造参数
  * @param [options.tooltip] - 绑定的tooltip弹窗值，也可以bindTooltip方法绑
@@ -8438,7 +8416,6 @@ declare class FontBillboardEntity extends BasePointEntity {
         parent?: Cesium.Entity;
         onBeforeCreate?: (...params: any[]) => any;
         drawShow?: boolean;
-        addHeight?: number;
         popup?: string | any[] | ((...params: any[]) => any);
         popupOptions?: Popup.StyleOptions | any;
         tooltip?: string | any[] | ((...params: any[]) => any);
@@ -8561,7 +8538,6 @@ declare namespace LabelEntity {
  * @param [options.parent] - 要与此实体关联的父实体。
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.drawShow = true] - 绘制时，是否自动隐藏entity，可避免拾取坐标存在问题。
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.popup] - 绑定的popup弹窗值，也可以bindPopup方法绑定
  * @param [options.popupOptions] - popup弹窗时的配置参数，也支持如pointerEvents等{@link Popup}构造参数
  * @param [options.tooltip] - 绑定的tooltip弹窗值，也可以bindTooltip方法绑
@@ -8584,7 +8560,6 @@ declare class LabelEntity extends BasePointEntity {
         parent?: Cesium.Entity;
         onBeforeCreate?: (...params: any[]) => any;
         drawShow?: boolean;
-        addHeight?: number;
         popup?: string | any[] | ((...params: any[]) => any);
         popupOptions?: Popup.StyleOptions | any;
         tooltip?: string | any[] | ((...params: any[]) => any);
@@ -8782,7 +8757,6 @@ declare namespace ModelEntity {
  * @param [options.referenceFrame = Cesium.ReferenceFrame.FIXED] - 当使用addDynamicPosition设置为动画轨迹位置时，position位置被定义的参考系。
  * @param [options.numberOfDerivatives = 0] - 当使用addDynamicPosition设置为动画轨迹位置时，每个位置的导数的数量;即速度、加速度等。
  * @param [options.drawShow = true] - 绘制时，是否自动隐藏entity，可避免拾取坐标存在问题。
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.popup] - 绑定的popup弹窗值，也可以bindPopup方法绑定
  * @param [options.popupOptions] - popup弹窗时的配置参数，也支持如pointerEvents等{@link Popup}构造参数
  * @param [options.tooltip] - 绑定的tooltip弹窗值，也可以bindTooltip方法绑
@@ -8818,7 +8792,6 @@ declare class ModelEntity extends BasePointEntity {
         referenceFrame?: Cesium.ReferenceFrame;
         numberOfDerivatives?: number;
         drawShow?: boolean;
-        addHeight?: number;
         popup?: string | any[] | ((...params: any[]) => any);
         popupOptions?: Popup.StyleOptions | any;
         tooltip?: string | any[] | ((...params: any[]) => any);
@@ -9171,7 +9144,6 @@ declare namespace PlaneEntity {
  * @param [options.parent] - 要与此实体关联的父实体。
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.drawShow = true] - 绘制时，是否自动隐藏entity，可避免拾取坐标存在问题。
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.popup] - 绑定的popup弹窗值，也可以bindPopup方法绑定
  * @param [options.popupOptions] - popup弹窗时的配置参数，也支持如pointerEvents等{@link Popup}构造参数
  * @param [options.tooltip] - 绑定的tooltip弹窗值，也可以bindTooltip方法绑
@@ -9195,7 +9167,6 @@ declare class PlaneEntity extends BasePointEntity {
         parent?: Cesium.Entity;
         onBeforeCreate?: (...params: any[]) => any;
         drawShow?: boolean;
-        addHeight?: number;
         popup?: string | any[] | ((...params: any[]) => any);
         popupOptions?: Popup.StyleOptions | any;
         tooltip?: string | any[] | ((...params: any[]) => any);
@@ -9298,7 +9269,6 @@ declare namespace PointEntity {
  * @param [options.frameRateHeight = 30] - 当使用addDynamicPosition设置为动画轨迹位置时，并clampToTileset：true时，多少帧计算一次贴模型高度
  * @param [options.objectsToExclude] - 当使用addDynamicPosition设置为动画轨迹位置时，并clampToTileset：true时，排除的不进行贴模型计算的模型对象，可以是： primitives, entities, 或 3D Tiles features
  * @param [options.drawShow = true] - 绘制时，是否自动隐藏entity，可避免拾取坐标存在问题。
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.popup] - 绑定的popup弹窗值，也可以bindPopup方法绑定
  * @param [options.popupOptions] - popup弹窗时的配置参数，也支持如pointerEvents等{@link Popup}构造参数
  * @param [options.tooltip] - 绑定的tooltip弹窗值，也可以bindTooltip方法绑
@@ -9331,7 +9301,6 @@ declare class PointEntity extends BasePointEntity {
         frameRateHeight?: number;
         objectsToExclude?: any;
         drawShow?: boolean;
-        addHeight?: number;
         popup?: string | any[] | ((...params: any[]) => any);
         popupOptions?: Popup.StyleOptions | any;
         tooltip?: string | any[] | ((...params: any[]) => any);
@@ -9457,7 +9426,6 @@ declare namespace PolygonEntity {
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.minPointNum = 2] - 绘制时，至少需要点的个数
  * @param [options.maxPointNum = 9999] - 绘制时，最多允许点的个数
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.hasEdit = true] - 是否允许编辑
  * @param [options.hasMoveEdit = true] - 编辑时，是否可以整体平移
  * @param [options.hasHeightEdit = true] - 编辑时，当有diffHeight时，是否可以编辑高度
@@ -9484,7 +9452,6 @@ declare class PolygonEntity extends BasePolyEntity {
         onBeforeCreate?: (...params: any[]) => any;
         minPointNum?: number;
         maxPointNum?: number;
-        addHeight?: number;
         hasEdit?: boolean;
         hasMoveEdit?: boolean;
         hasHeightEdit?: boolean;
@@ -9638,7 +9605,6 @@ declare namespace PolylineEntity {
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.minPointNum = 2] - 绘制时，至少需要点的个数
  * @param [options.maxPointNum = 9999] - 绘制时，最多允许点的个数
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.hasEdit = true] - 是否允许编辑
  * @param [options.hasMoveEdit = true] - 编辑时，是否可以整体平移
  * @param [options.hasHeightEdit = true] - 编辑时，当有diffHeight时，是否可以编辑高度
@@ -9665,7 +9631,6 @@ declare class PolylineEntity extends BasePolyEntity {
         onBeforeCreate?: (...params: any[]) => any;
         minPointNum?: number;
         maxPointNum?: number;
-        addHeight?: number;
         hasEdit?: boolean;
         hasMoveEdit?: boolean;
         hasHeightEdit?: boolean;
@@ -9760,7 +9725,6 @@ declare namespace PolylineVolumeEntity {
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.minPointNum = 2] - 绘制时，至少需要点的个数
  * @param [options.maxPointNum = 9999] - 绘制时，最多允许点的个数
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.hasEdit = true] - 是否允许编辑
  * @param [options.hasMoveEdit = true] - 编辑时，是否可以整体平移
  * @param [options.hasHeightEdit = true] - 编辑时，当有diffHeight时，是否可以编辑高度
@@ -9787,7 +9751,6 @@ declare class PolylineVolumeEntity extends BasePolyEntity {
         onBeforeCreate?: (...params: any[]) => any;
         minPointNum?: number;
         maxPointNum?: number;
-        addHeight?: number;
         hasEdit?: boolean;
         hasMoveEdit?: boolean;
         hasHeightEdit?: boolean;
@@ -9911,7 +9874,6 @@ declare namespace RectangleEntity {
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.minPointNum = 2] - 绘制时，至少需要点的个数
  * @param [options.maxPointNum = 9999] - 绘制时，最多允许点的个数
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.hasEdit = true] - 是否允许编辑
  * @param [options.hasMoveEdit = true] - 编辑时，是否可以整体平移
  * @param [options.hasHeightEdit = true] - 编辑时，当有diffHeight时，是否可以编辑高度
@@ -9939,7 +9901,6 @@ declare class RectangleEntity extends BasePolyEntity {
         onBeforeCreate?: (...params: any[]) => any;
         minPointNum?: number;
         maxPointNum?: number;
-        addHeight?: number;
         hasEdit?: boolean;
         hasMoveEdit?: boolean;
         hasHeightEdit?: boolean;
@@ -10166,7 +10127,6 @@ declare namespace RectangularSensor {
  * @param [options.parent] - 要与此实体关联的父实体。
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.drawShow = true] - 绘制时，是否自动隐藏entity，可避免拾取坐标存在问题。
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.popup] - 绑定的popup弹窗值，也可以bindPopup方法绑定
  * @param [options.popupOptions] - popup弹窗时的配置参数，也支持如pointerEvents等{@link Popup}构造参数
  * @param [options.tooltip] - 绑定的tooltip弹窗值，也可以bindTooltip方法绑
@@ -10190,7 +10150,6 @@ declare class RectangularSensor extends BasePointEntity {
         parent?: Cesium.Entity;
         onBeforeCreate?: (...params: any[]) => any;
         drawShow?: boolean;
-        addHeight?: number;
         popup?: string | any[] | ((...params: any[]) => any);
         popupOptions?: Popup.StyleOptions | any;
         tooltip?: string | any[] | ((...params: any[]) => any);
@@ -10457,7 +10416,6 @@ declare namespace WallEntity {
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.minPointNum = 2] - 绘制时，至少需要点的个数
  * @param [options.maxPointNum = 9999] - 绘制时，最多允许点的个数
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.hasEdit = true] - 是否允许编辑
  * @param [options.hasMoveEdit = true] - 编辑时，是否可以整体平移
  * @param [options.hasHeightEdit = true] - 编辑时，当有diffHeight时，是否可以编辑高度
@@ -10484,7 +10442,6 @@ declare class WallEntity extends BasePolyEntity {
         onBeforeCreate?: (...params: any[]) => any;
         minPointNum?: number;
         maxPointNum?: number;
-        addHeight?: number;
         hasEdit?: boolean;
         hasMoveEdit?: boolean;
         hasHeightEdit?: boolean;
@@ -10532,7 +10489,6 @@ declare class WallEntity extends BasePolyEntity {
  * @param [options.parent] - 要与此实体关联的父实体。
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.hasMoveEdit = true] - 绘制时，是否可以整体平移
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.popup] - 绑定的popup弹窗值，也可以bindPopup方法绑定
  * @param [options.popupOptions] - popup弹窗时的配置参数，也支持如pointerEvents等{@link Popup}构造参数
  * @param [options.tooltip] - 绑定的tooltip弹窗值，也可以bindTooltip方法绑
@@ -10555,7 +10511,6 @@ declare class AttackArrow extends PolygonEntity {
         parent?: Cesium.Entity;
         onBeforeCreate?: (...params: any[]) => any;
         hasMoveEdit?: boolean;
-        addHeight?: number;
         popup?: string | any[] | ((...params: any[]) => any);
         popupOptions?: Popup.StyleOptions | any;
         tooltip?: string | any[] | ((...params: any[]) => any);
@@ -10595,7 +10550,6 @@ declare class AttackArrow extends PolygonEntity {
  * @param [options.parent] - 要与此实体关联的父实体。
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.hasMoveEdit = true] - 绘制时，是否可以整体平移
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.popup] - 绑定的popup弹窗值，也可以bindPopup方法绑定
  * @param [options.popupOptions] - popup弹窗时的配置参数，也支持如pointerEvents等{@link Popup}构造参数
  * @param [options.tooltip] - 绑定的tooltip弹窗值，也可以bindTooltip方法绑
@@ -10618,7 +10572,6 @@ declare class AttackArrowPW extends PolygonEntity {
         parent?: Cesium.Entity;
         onBeforeCreate?: (...params: any[]) => any;
         hasMoveEdit?: boolean;
-        addHeight?: number;
         popup?: string | any[] | ((...params: any[]) => any);
         popupOptions?: Popup.StyleOptions | any;
         tooltip?: string | any[] | ((...params: any[]) => any);
@@ -10658,7 +10611,6 @@ declare class AttackArrowPW extends PolygonEntity {
  * @param [options.parent] - 要与此实体关联的父实体。
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.hasMoveEdit = true] - 绘制时，是否可以整体平移
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.popup] - 绑定的popup弹窗值，也可以bindPopup方法绑定
  * @param [options.popupOptions] - popup弹窗时的配置参数，也支持如pointerEvents等{@link Popup}构造参数
  * @param [options.tooltip] - 绑定的tooltip弹窗值，也可以bindTooltip方法绑
@@ -10681,7 +10633,6 @@ declare class AttackArrowYW extends PolygonEntity {
         parent?: Cesium.Entity;
         onBeforeCreate?: (...params: any[]) => any;
         hasMoveEdit?: boolean;
-        addHeight?: number;
         popup?: string | any[] | ((...params: any[]) => any);
         popupOptions?: Popup.StyleOptions | any;
         tooltip?: string | any[] | ((...params: any[]) => any);
@@ -10721,7 +10672,6 @@ declare class AttackArrowYW extends PolygonEntity {
  * @param [options.parent] - 要与此实体关联的父实体。
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.hasMoveEdit = true] - 绘制时，是否可以整体平移
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.popup] - 绑定的popup弹窗值，也可以bindPopup方法绑定
  * @param [options.popupOptions] - popup弹窗时的配置参数，也支持如pointerEvents等{@link Popup}构造参数
  * @param [options.tooltip] - 绑定的tooltip弹窗值，也可以bindTooltip方法绑
@@ -10744,7 +10694,6 @@ declare class CloseVurve extends PolygonEntity {
         parent?: Cesium.Entity;
         onBeforeCreate?: (...params: any[]) => any;
         hasMoveEdit?: boolean;
-        addHeight?: number;
         popup?: string | any[] | ((...params: any[]) => any);
         popupOptions?: Popup.StyleOptions | any;
         tooltip?: string | any[] | ((...params: any[]) => any);
@@ -10784,7 +10733,6 @@ declare class CloseVurve extends PolygonEntity {
  * @param [options.parent] - 要与此实体关联的父实体。
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.hasMoveEdit = true] - 绘制时，是否可以整体平移
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.popup] - 绑定的popup弹窗值，也可以bindPopup方法绑定
  * @param [options.popupOptions] - popup弹窗时的配置参数，也支持如pointerEvents等{@link Popup}构造参数
  * @param [options.tooltip] - 绑定的tooltip弹窗值，也可以bindTooltip方法绑
@@ -10807,7 +10755,6 @@ declare class DoubleArrow extends PolygonEntity {
         parent?: Cesium.Entity;
         onBeforeCreate?: (...params: any[]) => any;
         hasMoveEdit?: boolean;
-        addHeight?: number;
         popup?: string | any[] | ((...params: any[]) => any);
         popupOptions?: Popup.StyleOptions | any;
         tooltip?: string | any[] | ((...params: any[]) => any);
@@ -10859,7 +10806,6 @@ declare class EditSector extends EditPolygon {
  * @param [options.parent] - 要与此实体关联的父实体。
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.hasMoveEdit = true] - 绘制时，是否可以整体平移
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.popup] - 绑定的popup弹窗值，也可以bindPopup方法绑定
  * @param [options.popupOptions] - popup弹窗时的配置参数，也支持如pointerEvents等{@link Popup}构造参数
  * @param [options.tooltip] - 绑定的tooltip弹窗值，也可以bindTooltip方法绑
@@ -10882,7 +10828,6 @@ declare class FineArrow extends PolygonEntity {
         parent?: Cesium.Entity;
         onBeforeCreate?: (...params: any[]) => any;
         hasMoveEdit?: boolean;
-        addHeight?: number;
         popup?: string | any[] | ((...params: any[]) => any);
         popupOptions?: Popup.StyleOptions | any;
         tooltip?: string | any[] | ((...params: any[]) => any);
@@ -10922,7 +10867,6 @@ declare class FineArrow extends PolygonEntity {
  * @param [options.parent] - 要与此实体关联的父实体。
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.hasMoveEdit = true] - 绘制时，是否可以整体平移
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.popup] - 绑定的popup弹窗值，也可以bindPopup方法绑定
  * @param [options.popupOptions] - popup弹窗时的配置参数，也支持如pointerEvents等{@link Popup}构造参数
  * @param [options.tooltip] - 绑定的tooltip弹窗值，也可以bindTooltip方法绑
@@ -10945,7 +10889,6 @@ declare class FineArrowYW extends PolygonEntity {
         parent?: Cesium.Entity;
         onBeforeCreate?: (...params: any[]) => any;
         hasMoveEdit?: boolean;
-        addHeight?: number;
         popup?: string | any[] | ((...params: any[]) => any);
         popupOptions?: Popup.StyleOptions | any;
         tooltip?: string | any[] | ((...params: any[]) => any);
@@ -10985,7 +10928,6 @@ declare class FineArrowYW extends PolygonEntity {
  * @param [options.parent] - 要与此实体关联的父实体。
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.hasMoveEdit = true] - 绘制时，是否可以整体平移
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.popup] - 绑定的popup弹窗值，也可以bindPopup方法绑定
  * @param [options.popupOptions] - popup弹窗时的配置参数，也支持如pointerEvents等{@link Popup}构造参数
  * @param [options.tooltip] - 绑定的tooltip弹窗值，也可以bindTooltip方法绑
@@ -11008,7 +10950,6 @@ declare class GatheringPlace extends PolygonEntity {
         parent?: Cesium.Entity;
         onBeforeCreate?: (...params: any[]) => any;
         hasMoveEdit?: boolean;
-        addHeight?: number;
         popup?: string | any[] | ((...params: any[]) => any);
         popupOptions?: Popup.StyleOptions | any;
         tooltip?: string | any[] | ((...params: any[]) => any);
@@ -11048,7 +10989,6 @@ declare class GatheringPlace extends PolygonEntity {
  * @param [options.parent] - 要与此实体关联的父实体。
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.hasMoveEdit = true] - 绘制时，是否可以整体平移
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.popup] - 绑定的popup弹窗值，也可以bindPopup方法绑定
  * @param [options.popupOptions] - popup弹窗时的配置参数，也支持如pointerEvents等{@link Popup}构造参数
  * @param [options.tooltip] - 绑定的tooltip弹窗值，也可以bindTooltip方法绑
@@ -11071,7 +11011,6 @@ declare class IsosTriangle extends PolygonEntity {
         parent?: Cesium.Entity;
         onBeforeCreate?: (...params: any[]) => any;
         hasMoveEdit?: boolean;
-        addHeight?: number;
         popup?: string | any[] | ((...params: any[]) => any);
         popupOptions?: Popup.StyleOptions | any;
         tooltip?: string | any[] | ((...params: any[]) => any);
@@ -11111,7 +11050,6 @@ declare class IsosTriangle extends PolygonEntity {
  * @param [options.parent] - 要与此实体关联的父实体。
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.hasMoveEdit = true] - 绘制时，是否可以整体平移
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.popup] - 绑定的popup弹窗值，也可以bindPopup方法绑定
  * @param [options.popupOptions] - popup弹窗时的配置参数，也支持如pointerEvents等{@link Popup}构造参数
  * @param [options.tooltip] - 绑定的tooltip弹窗值，也可以bindTooltip方法绑
@@ -11134,7 +11072,6 @@ declare class Lune extends PolygonEntity {
         parent?: Cesium.Entity;
         onBeforeCreate?: (...params: any[]) => any;
         hasMoveEdit?: boolean;
-        addHeight?: number;
         popup?: string | any[] | ((...params: any[]) => any);
         popupOptions?: Popup.StyleOptions | any;
         tooltip?: string | any[] | ((...params: any[]) => any);
@@ -11177,7 +11114,6 @@ declare class Lune extends PolygonEntity {
  * @param [options.parent] - 要与此实体关联的父实体。
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.hasMoveEdit = true] - 绘制时，是否可以整体平移
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.popup] - 绑定的popup弹窗值，也可以bindPopup方法绑定
  * @param [options.popupOptions] - popup弹窗时的配置参数，也支持如pointerEvents等{@link Popup}构造参数
  * @param [options.tooltip] - 绑定的tooltip弹窗值，也可以bindTooltip方法绑
@@ -11204,7 +11140,6 @@ declare class Regular extends PolygonEntity {
         parent?: Cesium.Entity;
         onBeforeCreate?: (...params: any[]) => any;
         hasMoveEdit?: boolean;
-        addHeight?: number;
         popup?: string | any[] | ((...params: any[]) => any);
         popupOptions?: Popup.StyleOptions | any;
         tooltip?: string | any[] | ((...params: any[]) => any);
@@ -11262,7 +11197,6 @@ declare class Regular extends PolygonEntity {
  * @param [options.parent] - 要与此实体关联的父实体。
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.hasMoveEdit = true] - 绘制时，是否可以整体平移
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.popup] - 绑定的popup弹窗值，也可以bindPopup方法绑定
  * @param [options.popupOptions] - popup弹窗时的配置参数，也支持如pointerEvents等{@link Popup}构造参数
  * @param [options.tooltip] - 绑定的tooltip弹窗值，也可以bindTooltip方法绑
@@ -11289,7 +11223,6 @@ declare class Sector extends PolygonEntity {
         parent?: Cesium.Entity;
         onBeforeCreate?: (...params: any[]) => any;
         hasMoveEdit?: boolean;
-        addHeight?: number;
         popup?: string | any[] | ((...params: any[]) => any);
         popupOptions?: Popup.StyleOptions | any;
         tooltip?: string | any[] | ((...params: any[]) => any);
@@ -11344,7 +11277,6 @@ declare class Sector extends PolygonEntity {
  * @param [options.parent] - 要与此实体关联的父实体。
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.hasMoveEdit = true] - 绘制时，是否可以整体平移
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.popup] - 绑定的popup弹窗值，也可以bindPopup方法绑定
  * @param [options.popupOptions] - popup弹窗时的配置参数，也支持如pointerEvents等{@link Popup}构造参数
  * @param [options.tooltip] - 绑定的tooltip弹窗值，也可以bindTooltip方法绑
@@ -11367,7 +11299,6 @@ declare class StraightArrow extends PolygonEntity {
         parent?: Cesium.Entity;
         onBeforeCreate?: (...params: any[]) => any;
         hasMoveEdit?: boolean;
-        addHeight?: number;
         popup?: string | any[] | ((...params: any[]) => any);
         popupOptions?: Popup.StyleOptions | any;
         tooltip?: string | any[] | ((...params: any[]) => any);
@@ -11412,7 +11343,6 @@ declare class StraightArrow extends PolygonEntity {
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.minPointNum = 2] - 绘制时，至少需要点的个数
  * @param [options.maxPointNum = 9999] - 绘制时，最多允许点的个数
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.hasEdit = true] - 是否允许编辑
  * @param [options.hasMoveEdit = true] - 编辑时，是否可以整体平移
  * @param [options.hasHeightEdit = true] - 编辑时，当有diffHeight时，是否可以编辑高度
@@ -11442,7 +11372,6 @@ declare class AngleMeasure extends PolylineEntity {
         onBeforeCreate?: (...params: any[]) => any;
         minPointNum?: number;
         maxPointNum?: number;
-        addHeight?: number;
         hasEdit?: boolean;
         hasMoveEdit?: boolean;
         hasHeightEdit?: boolean;
@@ -11492,7 +11421,6 @@ declare class AngleMeasure extends PolylineEntity {
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.minPointNum = 2] - 绘制时，至少需要点的个数
  * @param [options.maxPointNum = 9999] - 绘制时，最多允许点的个数
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.hasEdit = true] - 是否允许编辑
  * @param [options.hasMoveEdit = true] - 编辑时，是否可以整体平移
  * @param [options.hasHeightEdit = true] - 编辑时，当有diffHeight时，是否可以编辑高度
@@ -11521,7 +11449,6 @@ declare class AreaMeasure extends PolygonEntity {
         onBeforeCreate?: (...params: any[]) => any;
         minPointNum?: number;
         maxPointNum?: number;
-        addHeight?: number;
         hasEdit?: boolean;
         hasMoveEdit?: boolean;
         hasHeightEdit?: boolean;
@@ -11577,7 +11504,6 @@ declare class AreaMeasure extends PolygonEntity {
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.minPointNum = 2] - 绘制时，至少需要点的个数
  * @param [options.maxPointNum = 9999] - 绘制时，最多允许点的个数
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.hasEdit = true] - 是否允许编辑
  * @param [options.hasMoveEdit = true] - 编辑时，是否可以整体平移
  * @param [options.hasHeightEdit = true] - 编辑时，当有diffHeight时，是否可以编辑高度
@@ -11606,7 +11532,6 @@ declare class AreaSurfaceMeasure extends AreaMeasure {
         onBeforeCreate?: (...params: any[]) => any;
         minPointNum?: number;
         maxPointNum?: number;
-        addHeight?: number;
         hasEdit?: boolean;
         hasMoveEdit?: boolean;
         hasHeightEdit?: boolean;
@@ -11646,7 +11571,6 @@ declare class AreaSurfaceMeasure extends AreaMeasure {
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.minPointNum = 2] - 绘制时，至少需要点的个数
  * @param [options.maxPointNum = 9999] - 绘制时，最多允许点的个数
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.hasEdit = true] - 是否允许编辑
  * @param [options.hasMoveEdit = true] - 编辑时，是否可以整体平移
  * @param [options.hasHeightEdit = true] - 编辑时，当有diffHeight时，是否可以编辑高度
@@ -11675,7 +11599,6 @@ declare class DistanceMeasure extends PolylineEntity {
         onBeforeCreate?: (...params: any[]) => any;
         minPointNum?: number;
         maxPointNum?: number;
-        addHeight?: number;
         hasEdit?: boolean;
         hasMoveEdit?: boolean;
         hasHeightEdit?: boolean;
@@ -11725,7 +11648,6 @@ declare class DistanceMeasure extends PolylineEntity {
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.minPointNum = 2] - 绘制时，至少需要点的个数
  * @param [options.maxPointNum = 9999] - 绘制时，最多允许点的个数
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.hasEdit = true] - 是否允许编辑
  * @param [options.hasMoveEdit = true] - 编辑时，是否可以整体平移
  * @param [options.hasHeightEdit = true] - 编辑时，当有diffHeight时，是否可以编辑高度
@@ -11754,7 +11676,6 @@ declare class DistanceSurfaceMeasure extends DistanceMeasure {
         onBeforeCreate?: (...params: any[]) => any;
         minPointNum?: number;
         maxPointNum?: number;
-        addHeight?: number;
         hasEdit?: boolean;
         hasMoveEdit?: boolean;
         hasHeightEdit?: boolean;
@@ -11794,7 +11715,6 @@ declare class DistanceSurfaceMeasure extends DistanceMeasure {
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.minPointNum = 2] - 绘制时，至少需要点的个数
  * @param [options.maxPointNum = 9999] - 绘制时，最多允许点的个数
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.hasEdit = true] - 是否允许编辑
  * @param [options.hasMoveEdit = true] - 编辑时，是否可以整体平移
  * @param [options.hasHeightEdit = true] - 编辑时，当有diffHeight时，是否可以编辑高度
@@ -11823,7 +11743,6 @@ declare class HeightMeasure extends PolylineEntity {
         onBeforeCreate?: (...params: any[]) => any;
         minPointNum?: number;
         maxPointNum?: number;
-        addHeight?: number;
         hasEdit?: boolean;
         hasMoveEdit?: boolean;
         hasHeightEdit?: boolean;
@@ -11873,7 +11792,6 @@ declare class HeightMeasure extends PolylineEntity {
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.minPointNum = 2] - 绘制时，至少需要点的个数
  * @param [options.maxPointNum = 9999] - 绘制时，最多允许点的个数
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.hasEdit = true] - 是否允许编辑
  * @param [options.hasMoveEdit = true] - 编辑时，是否可以整体平移
  * @param [options.hasHeightEdit = true] - 编辑时，当有diffHeight时，是否可以编辑高度
@@ -11902,7 +11820,6 @@ declare class HeightTriangleMeasure extends HeightMeasure {
         onBeforeCreate?: (...params: any[]) => any;
         minPointNum?: number;
         maxPointNum?: number;
-        addHeight?: number;
         hasEdit?: boolean;
         hasMoveEdit?: boolean;
         hasHeightEdit?: boolean;
@@ -11945,7 +11862,6 @@ declare class HeightTriangleMeasure extends HeightMeasure {
  * @param [options.parent] - 要与此实体关联的父实体。
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.drawShow = true] - 绘制时，是否自动隐藏entity，可避免拾取坐标存在问题。
- * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.popup] - 绑定的popup弹窗值，也可以bindPopup方法绑定
  * @param [options.popupOptions] - popup弹窗时的配置参数，也支持如pointerEvents等{@link Popup}构造参数
  * @param [options.tooltip] - 绑定的tooltip弹窗值，也可以bindTooltip方法绑
@@ -11968,7 +11884,6 @@ declare class PointMeasure extends PointEntity {
         parent?: Cesium.Entity;
         onBeforeCreate?: (...params: any[]) => any;
         drawShow?: boolean;
-        addHeight?: number;
         popup?: string | any[] | ((...params: any[]) => any);
         popupOptions?: Popup.StyleOptions | any;
         tooltip?: string | any[] | ((...params: any[]) => any);
@@ -23960,11 +23875,13 @@ declare class Map extends BaseClass {
      * @param [options] - 参数对象，包括以下：
      * @param [options.basemaps] - 默认不比较及处理，true:返回所有basemps中配置图层，false：排除所有所有basemps中配置图层
      * @param [options.layers] - 默认不比较及处理，true:返回所有operationallayers中配置图层，false：排除所有operationallayers中配置图层
+     * @param [options.childs = true] - 是否获取GroupLayer内的子图层
      * @returns 图层数组
      */
     getLayers(options?: {
         basemaps?: boolean;
         layers?: boolean;
+        childs?: boolean;
     }): BaseLayer[] | any[];
     /**
      * 获取所有basemps底图图层
@@ -25369,14 +25286,20 @@ declare class TextMaterialProperty extends Image2MaterialProperty {
  * @param options.image - 背景图片URL
  * @param [options.color = new Cesium.Color(1, 0, 0, 1.0)] - 背景图片颜色
  * @param [options.count = 1] - 数量
- * @param [options.speed = 5.0] - 速度
+ * @param [options.direction = -1] - 方向，1是往下，-1是往上
+ * @param [options.speed = 5.0] - 速度，值越大越快
+ * @param [options.bloom = false] - 是否泛光
+ * @param [options.axisY = false] - 是否Y轴朝上
  */
 declare class WallScrollMaterialProperty extends BaseMaterialProperty {
     constructor(options?: {
         image: string;
         color?: string | Cesium.Color;
         count?: number;
+        direction?: number;
         speed?: number;
+        bloom?: boolean;
+        axisY?: boolean;
     });
     /**
      * 获取 材质名称
@@ -25667,6 +25590,11 @@ declare class EchartsLayer extends BaseLayer {
  * 【需要引入 heatmap.js 库 和 mars3d-heatmap 插件库】
  * @param options - 参数对象，包括以下：
  * @param [options.positions] - 坐标位置数组，有热力值时，传入LatLngPoint数组，热力值为value字段。示例:[{lat:31.123,lng:103.568,value:1.2},{lat:31.233,lng:103.938,value:2.3}]
+ * @param [options.rectangle] - 坐标的矩形区域范围，默认内部自动计算
+ * @param options.rectangle.xmin - 最小经度值
+ * @param options.rectangle.xmax - 最大纬度值
+ * @param options.rectangle.ymin - 最小纬度值
+ * @param options.rectangle.ymax - 最大纬度值
  * @param [options.heatStyle] - heatmap热力图本身configObject参数，详情也可查阅 [heatmap文档]{@link https://www.patrick-wied.at/static/heatmapjs/docs.html}
  * @param [options.heatStyle.maxOpacity = 0.8] - 最大不透明度，取值范围0.0-1.0。
  * @param [options.heatStyle.minOpacity = 0.1] - 最小不透明度，取值范围0.0-1.0。
@@ -25701,6 +25629,12 @@ declare class EchartsLayer extends BaseLayer {
 declare class HeatLayer extends BaseLayer {
     constructor(options: {
         positions?: LngLatPoint[] | Cesium.Cartesian3[] | any;
+        rectangle?: {
+            xmin: number;
+            xmax: number;
+            ymin: number;
+            ymax: number;
+        };
         heatStyle?: {
             maxOpacity?: number;
             minOpacity?: number;
@@ -25762,20 +25696,22 @@ declare class HeatLayer extends BaseLayer {
     /**
      * 添加新的坐标点
      * @param item - 坐标点（含热力值）
+     * @param [isGD] - 是否固定区域坐标，true时可以平滑更新
      * @returns 无
      */
-    addPosition(item: Cesium.Cartesian3 | LngLatPoint): void;
+    addPosition(item: Cesium.Cartesian3 | LngLatPoint, isGD?: boolean): void;
+    /**
+     * 添加新的坐标点
+     * @param arr - 坐标点（含热力值）
+     * @param [isGD] - 是否固定区域坐标，true时可以平滑更新
+     * @returns 无
+     */
+    setPositions(arr: Cesium.Cartesian3[] | LngLatPoint[], isGD?: boolean): void;
     /**
      * 清除矢量对象
      * @returns 无
      */
     clear(): void;
-    /**
-     * 根据坐标点获取其对应的value值和颜色值
-     * @param item - 坐标点
-     * @returns 格式为 {"x":2081,"y":767,"value":3,"color":"rgba(209,231,0,195)"}
-     */
-    getPointData(item: Cesium.Cartesian3 | LngLatPoint): any;
     /**
      * 获取图层内所有数据的 矩形边界值
      * @param [options] - 控制参数
@@ -25785,6 +25721,12 @@ declare class HeatLayer extends BaseLayer {
     getRectangle(options?: {
         isFormat?: boolean;
     }): Cesium.Rectangle | any;
+    /**
+     * 根据坐标点获取其对应的value值和颜色值
+     * @param item - 坐标点
+     * @returns 格式为 {"x":2081,"y":767,"value":3,"color":"rgba(209,231,0,195)"}
+     */
+    getPointData(item: Cesium.Cartesian3 | LngLatPoint): any;
 }
 
 /**
@@ -31316,6 +31258,12 @@ declare namespace DomUtil {
      * @returns class样式名称
      */
     function getClass(el: HTMLElement): string;
+    /**
+     * 复制canvas对象
+     * @param oldCanvas - 原canvas对象
+     * @returns 复制后的canvas对象
+     */
+    function copyCanvas(oldCanvas: HTMLCanvasElement): HTMLCanvasElement;
 }
 
 /**

@@ -37,7 +37,7 @@ export default ({ mode }: ConfigEnv) => {
       extensions: [".js", ".ts", ".jsx", ".tsx", ".json"]
     },
     optimizeDeps: {
-      include: ["mars3d"]
+      include: ["mars3d", "@mars/widgets/common/store/widget"]
     },
     json: {
       // 支持从 .json 文件中进行按名导入
@@ -74,6 +74,11 @@ export default ({ mode }: ConfigEnv) => {
         input: {
           index: path.resolve(__dirname, "index.html"),
           editor: path.resolve(__dirname, "editor-react.html")
+        },
+        output: {
+          entryFileNames: `example/assets-react/[name].js`,
+          chunkFileNames: `example/assets-react/[name].js`,
+          assetFileNames: `example/assets-react/[name].[ext]`
         }
       },
       // 当设置为 true, 构建后将会生成 manifest.json 文件

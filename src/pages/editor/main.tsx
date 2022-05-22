@@ -3,8 +3,9 @@ import { createRoot } from "react-dom/client"
 import { getQueryString } from "@mars/utils/mars-util"
 import MarsUIInstall from "@mars/components/MarsUI"
 import MainOperation from "@mars/components/MarsWork/MainOperation"
+import { generateWidgetView } from "@mars/widgets/common/store/widget"
 import { Editor as MarsgisEditor } from "@marsgis/editor"
-
+import widgetState from "@mars/widgets/widget-state"
 import "@mars/assets/style/index.less"
 import "@marsgis/editor/dist/style.css"
 
@@ -34,17 +35,21 @@ marsEditor.on("loaded", (exampleConfig) => {
   inited = true
 })
 
+const WidgetView = generateWidgetView(widgetState)
+
 function initUI(simple: boolean) {
   reactApp = createRoot(document.getElementById("mars-main-view"))
   if (simple) {
     reactApp.render(<div></div>)
   } else {
     reactApp.render(
-      <MainOperation
-        beforeMounted={() => {
-          marsEditor.useLifecycle()
-        }}
-      ></MainOperation>
+      <WidgetView>
+        <MainOperation
+          beforeMounted={() => {
+            marsEditor.useLifecycle()
+          }}
+        ></MainOperation>
+      </WidgetView>
     )
   }
 }

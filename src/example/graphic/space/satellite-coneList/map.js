@@ -7,6 +7,7 @@ let weixin
 export const mapOptions = {
   scene: {
     center: { lat: 12.845055, lng: 112.931363, alt: 24286797, heading: 3, pitch: -90 },
+    globe: { enableLighting: true },
     cameraController: {
       zoomFactor: 3.0,
       minimumZoomDistance: 1000,
@@ -18,7 +19,19 @@ export const mapOptions = {
     clockAnimate: true, // 时钟动画控制(左下角)
     timeline: true, // 是否显示时间线控件
     compass: { top: "10px", left: "5px" }
-  }
+  },
+  layers: [
+    {
+      name: "夜晚图片",
+      icon: "img/basemaps/blackMarble.png",
+      type: "image",
+      url: "//data.mars3d.cn/file/img/world/night2.jpg",
+      dayAlpha: 0.1,
+      nightAlpha: 1.0,
+      brightness: 3.5,
+      show: true
+    }
+  ]
 }
 export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
 

@@ -14,12 +14,25 @@ const converter = Cesium.Transforms.eastNorthUpToFixedFrame
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: 0.072832, lng: 151.409367, alt: 29330818, heading: 10, pitch: -90 }
+    center: { lat: 0.072832, lng: 151.409367, alt: 29330818, heading: 10, pitch: -90 },
+    globe: { enableLighting: true }
   },
   cameraController: {
     maximumZoomDistance: 9000000000,
     constrainedAxis: false // 解除在南北极区域鼠标操作限制
-  }
+  },
+  layers: [
+    {
+      name: "夜晚图片",
+      icon: "img/basemaps/blackMarble.png",
+      type: "image",
+      url: "//data.mars3d.cn/file/img/world/night2.jpg",
+      dayAlpha: 0.1,
+      nightAlpha: 1.0,
+      brightness: 3.5,
+      show: true
+    }
+  ]
 }
 
 export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中

@@ -20,7 +20,10 @@ export const mapOptions = {
       name: "夜晚图片",
       icon: "img/basemaps/blackMarble.png",
       type: "image",
-      url: "//data.mars3d.cn/file/img/world/night.jpg"
+      url: "//data.mars3d.cn/file/img/world/night.jpg",
+      dayAlpha: 0.1,
+      nightAlpha: 1.0,
+      brightness: 3.5
     },
     {
       name: "蓝色底图",

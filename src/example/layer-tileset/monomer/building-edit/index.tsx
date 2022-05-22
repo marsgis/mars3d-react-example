@@ -2,7 +2,7 @@ import { MarsButton, MarsPannel, MarsRadio, MarsRadioGroup } from "@mars/compone
 import * as mapWork from "./map.js"
 import { Space, Upload } from "antd"
 import { useCallback, useMemo } from "react"
-import { useWidget } from "@mars/common/store/widget"
+import { disable, activate } from "@mars/widgets/common/store/widget"
 
 interface FileItem {
   uid: string
@@ -36,8 +36,7 @@ const openGeoJSON = (info: FileInfo) => {
   mapWork.openGeoJSON(item)
 }
 
-function UIComponent() {
-  const { disable, activate } = useWidget()
+function UIComponent() { 
 
   const showEditor = useCallback(
     (e: any) => {

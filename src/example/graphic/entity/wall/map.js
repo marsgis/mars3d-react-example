@@ -38,6 +38,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic7(graphicLayer)
   addDemoGraphic8(graphicLayer)
   addDemoGraphic9(graphicLayer)
+  addDemoGraphic10(graphicLayer)
 }
 
 /**
@@ -232,7 +233,7 @@ function addDemoGraphic7(graphicLayer) {
     positions: [
       [117.192113, 31.80998, 32.2],
       [117.228145, 31.792757, 26.7],
-      [117.2717, 31.798397, 20.7]
+      [117.261023, 31.776821, 19.8]
     ],
     style: {
       diffHeight: 500,
@@ -324,6 +325,31 @@ function addDemoGraphic9(graphicLayer) {
       graphic.bindTooltip("合肥欢迎您 - 火星科技")
     }
   })
+}
+
+function addDemoGraphic10() {
+  const primitive = new mars3d.graphic.WallEntity({
+    positions: [
+      [117.251382, 31.824055, 28.4],
+      [117.278989, 31.819766, 27.3],
+      [117.279566, 31.799699, 3.9],
+      [117.265249, 31.797702, 26.3],
+      [117.245146, 31.811783, 29]
+    ],
+    style: {
+      closure: true,
+      diffHeight: 500,
+      material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.WallScroll, {
+        image: "img/textures/fence.png",
+        color: Cesium.Color.CHARTREUSE,
+        count: 3,
+        speed: 20,
+        bloom: true
+      })
+    },
+    attr: { remark: "示例10" }
+  })
+  graphicLayer.addGraphic(primitive)
 }
 
 // 边界墙绘制 - 数据获取

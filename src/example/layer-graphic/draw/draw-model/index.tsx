@@ -2,15 +2,14 @@ import { MarsButton, MarsCheckbox, MarsForm, MarsFormItem, MarsInput, MarsPannel
 import * as mapWork from "./map.js"
 import { useMemo, useState, useCallback } from "react"
 import { Space, Upload } from "antd"
-import { useWidget } from "@mars/common/store/widget"
+import { disable, activate, isActive, updateWidget } from "@mars/widgets/common/store/widget"
 
 // *****************************属性面板***************************//
 
 function UIComponent() {
   const [isProxy, setIsProxy] = useState(false)
   const [modelUrl, setModelUrl] = useState("//data.mars3d.cn/gltf/mars/feiji.glb")
-
-  const { disable, activate, isActive, setWidgetData } = useWidget()
+ 
 
   const showEditor = useCallback(
     (e: any) => {
@@ -27,7 +26,7 @@ function UIComponent() {
     })
     // 编辑修改了模型
     mapWork.eventTarget.on("graphicEditor-update", async (e: any) => {
-      setWidgetData("graphic-editor", {
+      updateWidget("graphic-editor", {
         data: { graphic: e.graphic }
       })
       showEditor(e)
