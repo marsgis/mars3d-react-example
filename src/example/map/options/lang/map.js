@@ -19,7 +19,7 @@ export const mapOptions = {
     clockAnimate: true, // 时钟动画控制(左下角)
     timeline: true, // 是否显示时间线控件
 
-    defaultContextMenu: true, // 涉及到多语言的模块：右键菜单
+    contextmenu: { hasDefault: true }, // 涉及到多语言的模块：右键菜单
     compass: { top: "10px", left: "5px" },
     distanceLegend: { left: "180px", bottom: "30px" },
     locationBar: {

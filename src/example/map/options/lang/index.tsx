@@ -58,7 +58,7 @@ function UIComponent() {
             <MarsButton onClick={onClickDistance}>distance</MarsButton>
             <MarsButton onClick={onClickHeight}>height</MarsButton>
             <MarsButton onClick={onClickArea}>area</MarsButton>
-            <MarsButton onClick={onClickAngle}>ditance</MarsButton>{" "}
+            <MarsButton onClick={onClickAngle}>angle</MarsButton>{" "}
           </Col>
         </Row>
       </div>

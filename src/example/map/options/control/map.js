@@ -22,7 +22,7 @@ function initMap() {
       timeline: true, // 时间线
 
       // 以下是mars3d.control定义的控件
-      defaultContextMenu: true, // 右键菜单
+      contextmenu: { hasDefault: true }, // 右键菜单
       mouseDownView: true,
       compass: { top: "10px", left: "5px" },
       distanceLegend: { left: "100px", bottom: "2px" }

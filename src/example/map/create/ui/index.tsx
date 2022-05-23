@@ -1,5 +1,6 @@
 import { Component } from "react"
 import * as mapWork from "./map.js"
+import axios from "axios"
 import { Space } from "antd"
 import {
   MarsInput,
@@ -21,7 +22,8 @@ import {
   $alert,
   $notify,
   $showLoading,
-  $hideLoading
+  $hideLoading,
+  MarsTable
 } from "@mars/components/MarsUI"
 
 class UIComponent extends Component<any, any> {
@@ -29,10 +31,12 @@ class UIComponent extends Component<any, any> {
     super(props)
     this.state = {
       visible: true,
-      inputValue: 5
+      inputValue: 5,
+      typhoonList: []
     }
     mapWork.eventTarget.on("init", ({ value }) => {
       this.setInputValue(value)
+      this.getTyphoonList()
     })
   }
 
@@ -48,6 +52,48 @@ class UIComponent extends Component<any, any> {
       ...prevState,
       inputValue: value
     }))
+  }
+
+  columns = [
+    {
+      title: "台风编号",
+      dataIndex: "typnumber",
+      key: "typnumber"
+    },
+    {
+      title: "台风名(中文)",
+      dataIndex: "name_cn"
+    },
+    {
+      title: "台风名(英文)",
+      dataIndex: "name_en"
+    }
+  ]
+
+  getTyphoonList() {
+    const url = "//data.mars3d.cn/file/apidemo/typhoon/list_2020.json"
+    axios.get(url).then((res: any) => {
+      const data = res.data
+      const resultData = data.typhoonList.map((item: any) => ({
+        key: item[0],
+        id: item[0],
+        name_en: item[1],
+        name_cn: item[2],
+        typnumber: item[3],
+        state: item[7]
+      }))
+
+      this.setState((prevState) => ({
+        ...prevState,
+        typhoonList: resultData
+      }))
+    })
+  }
+
+  rowSelection = {
+    hideSelectAll: true,
+    hideDefaultSelections: true,
+    onChange: (selectedRowKeys: string[]) => {}
   }
 
   render() {
@@ -88,6 +134,15 @@ class UIComponent extends Component<any, any> {
               <MarsInputGroup value={["1", "2", "3"]} units={[",", ",", "."]} onChange={(v) => console.log(v)}></MarsInputGroup>
             </MarsFormItem>
           </MarsForm>
+          <MarsTable
+            size="small"
+            dataSource={this.state.typhoonList}
+            columns={this.columns}
+            bordered
+            pagination={{ pageSize: 5 }}
+            rowSelection={this.rowSelection}
+          ></MarsTable>
+
           <Space wrap>
             <MarsButton onClick={() => $message("message提示信息")}>
               <MarsIcon icon="aiming"></MarsIcon>

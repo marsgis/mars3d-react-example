@@ -21,7 +21,6 @@ export function onMounted(mapInstance) {
   map = mapInstance // 记录map
   addMeasure()
 }
-
 /**
  * 释放当前地图业务的生命周期函数
  * @returns {void} 无

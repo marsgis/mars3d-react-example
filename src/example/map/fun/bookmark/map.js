@@ -54,7 +54,3 @@ export function butAddTxtName(name) {
 export function flytoView(center) {
   map.setCameraView(center)
 }
-
-export function removeLocalStorage() {
-  localStorage.removeItem("bookmark")
-}

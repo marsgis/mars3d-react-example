@@ -13,7 +13,7 @@ function initMap() {
       sceneModePicker: true, // 二三维切换按钮
       navigationHelpButton: true, // 帮助按钮
       fullscreenButton: true, // 全屏按钮
-      defaultContextMenu: true // 右键菜单
+      contextmenu: { hasDefault: true } // 右键菜单
     },
     basemaps: [
       {

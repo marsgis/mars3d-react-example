@@ -19,7 +19,7 @@ function initMap() {
       fxaa: true
     },
     control: {
-      defaultContextMenu: true // 右键菜单
+      contextmenu: { hasDefault: true } // 右键菜单
     }
   })
 
