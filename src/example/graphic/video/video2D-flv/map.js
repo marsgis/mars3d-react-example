@@ -96,6 +96,18 @@ function createVideoDom() {
   } else {
     $message("不支持flv格式视频")
   }
+
+  setTimeout(() => {
+    try {
+      if (videoElement.paused) {
+        globalMsg("当前浏览器已限制自动播放，请单击播放按钮")
+        videoElement.play()
+      }
+    } catch (e) {
+      // 规避浏览器权限异常
+        globalMsg("当前浏览器已限制自动播放，请单击播放按钮")
+    } 
+  }, 3000)
 }
 
 // 加载已配置好的视频（此参数为界面上“打印参数”按钮获取的）

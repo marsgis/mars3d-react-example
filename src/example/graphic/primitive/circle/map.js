@@ -74,7 +74,7 @@ function addDemoGraphic2(graphicLayer) {
     position: new mars3d.LngLatPoint(116.239096, 30.872072, 700),
     style: {
       radius: 1500.0,
-      image: "img/textures/excavate_bottom_min.jpg"
+      image: "img/textures/poly-soil.jpg"
     },
     attr: { remark: "示例2" }
   })

@@ -63,7 +63,7 @@ function addDemoGraphic1() {
     position: [117.205457, 31.842984, 63.9],
     style: {
       container: videoElement,
-      maskImage: "img/textures/videoMask.png", // 羽化视频四周，融合更美观
+      maskImage: "img/textures/video-mask.png", // 羽化视频四周，融合更美观
       angle: 46.3,
       angle2: 15.5,
       heading: 178.5,
@@ -89,8 +89,6 @@ function addDemoGraphic1() {
 }
 
 const flvUrl = "https://sf1-hscdn-tos.pstatp.com/obj/media-fe/xgplayer_doc_video/flv/xgplayer-demo-360p.flv"
-
-
 function createVideoDom() {
   videoElement = mars3d.DomUtil.create("video", "", document.body)
   videoElement.setAttribute("muted", "muted")
@@ -112,6 +110,18 @@ function createVideoDom() {
   } else {
     $message("不支持flv格式视频")
   }
+
+  setTimeout(() => {
+    try {
+      if (videoElement.paused) {
+        globalMsg("当前浏览器已限制自动播放，请单击播放按钮")
+        videoElement.play()
+      }
+    } catch (e) {
+      // 规避浏览器权限异常
+        globalMsg("当前浏览器已限制自动播放，请单击播放按钮")
+    }
+  }, 3000)
 }
 
 export function onChangeAngle(value) {

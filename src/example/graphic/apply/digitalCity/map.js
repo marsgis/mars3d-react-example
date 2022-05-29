@@ -5,7 +5,7 @@ export let map // mars3d.Map三维地图对象
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: 31.253607, lng: 121.519759, alt: 1492, heading: 203, pitch: -33 }
+    center: { lat: 31.215956, lng: 121.508605, alt: 887, heading: 5, pitch: -26 }
   },
   layers: [
     {
@@ -76,12 +76,12 @@ export function onMounted(mapInstance) {
   })
   map.addEffect(bloomEffect)
 
-  // 围绕旋转
-  const rotatePoint = new mars3d.thing.RotatePoint({
-    direction: true, // 方向 true逆时针，false顺时针
-    time: 50 // 给定飞行一周所需时间(单位 秒)，控制速度
-  })
-  map.addThing(rotatePoint)
+  // // 围绕旋转
+  // const rotatePoint = new mars3d.thing.RotatePoint({
+  //   direction: true, // 方向 true逆时针，false顺时针
+  //   time: 50 // 给定飞行一周所需时间(单位 秒)，控制速度
+  // })
+  // map.addThing(rotatePoint)
 
   // 添加矢量数据
   addCityGraphics()
@@ -148,7 +148,7 @@ function addCityGraphics() {
       radius: 500,
       height: 50,
       material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.Image2, {
-        image: "/img/textures/circle_bg.png"
+        image: "/img/textures/circle-two.png"
       }),
       rotation: new Cesium.CallbackProperty(getRotationValue, false),
       stRotation: new Cesium.CallbackProperty(getRotationValue, false)
@@ -203,7 +203,7 @@ function addCityGraphics() {
     style: {
       radius: 480.0,
       material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.CircleScan, {
-        image: "/img/textures/circleScan.png",
+        image: "/img/textures/circle-scan.png",
         color: "#ffffff"
       }),
       stRotation: new Cesium.CallbackProperty(getRotationValue, false),
@@ -282,7 +282,7 @@ function addCityGraphics() {
         width: 1,
         material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.ODLine, {
           color: "rgb(255, 255, 2)",
-          bgColor: "rgb(0,0,0,0.1)",
+          bgColor: "rgb(255,255,255,0.01)",
           startTime: startTime,
           speed: speed
         })

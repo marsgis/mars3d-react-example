@@ -128,7 +128,7 @@ function addDemoGraphic3(graphicLayer) {
       cornerType: Cesium.CornerType.BEVELED,
       material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
         color: "#ff0000",
-        image: "img/textures/fenceline.png",
+        image: "img/textures/fence-line.png",
         speed: 10,
         repeat_x: 6
       })

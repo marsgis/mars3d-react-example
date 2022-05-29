@@ -173,7 +173,6 @@ export function divGraphicHotSpot() {
     })
     graphicLayer.addGraphic(divGraphic)
   }
-
 }
 
 // 在图层绑定Popup弹窗
@@ -187,4 +186,3 @@ export function bindLayerPopup() {
     return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
   })
 }
-

@@ -80,7 +80,7 @@ export function createTileLayer(options) {
   // 绘制区域
   const rectangle = options.rectangle
   if (rectangle) {
-    params.rectangle = JSON.parse(rectangle)
+    params.rectangle = rectangle
   }
 
   // 代理被选中
@@ -141,7 +141,7 @@ export function btnDrawExtent(options) {
       outlineColor: "#ff0000"
     },
     success: function (graphic) {
-      const rectangle = JSON.stringify(mars3d.PolyUtil.formatRectangle(graphic._rectangle_draw))
+      const rectangle = mars3d.PolyUtil.formatRectangle(graphic._rectangle_draw)
       options.rectangle = rectangle
       eventTarget.fire("rectangle", { rectangle })
       createTileLayer(options)
@@ -167,4 +167,20 @@ export function changeBrightness(val) {
   if (tileLayer) {
     tileLayer.brightness = val
   }
+}
+
+export function creatHRectangleEntity(item) {
+  map.graphicLayer.clear()
+  const graphic = new mars3d.graphic.RectangleEntity({
+    rectangle: Cesium.Rectangle.fromDegrees(item.xmin, item.ymin, item.xmax, item.ymax),
+    style: {
+      fill: false,
+      outline: true,
+      outlineWidth: 3,
+      outlineColor: "#ff0000"
+    }
+  })
+  map.graphicLayer.addGraphic(graphic)
+
+  graphic.flyTo({ scale: 1.5 })
 }

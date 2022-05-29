@@ -203,7 +203,7 @@ function addDemoGraphic6(graphicLayer) {
       width: 5,
       material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
         color: "#00ff00",
-        image: "img/textures/LinkPulse.png",
+        image: "img/textures/line-pulse.png",
         speed: 3
       })
     },
@@ -225,7 +225,7 @@ function addDemoGraphic7(graphicLayer) {
       material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
         color: "#66bd63",
         repeat: new Cesium.Cartesian2(2.0, 1.0),
-        image: "img/textures/line.png",
+        image: "img/textures/line-gradual.png",
         speed: 25
       })
     },
@@ -246,7 +246,7 @@ function addDemoGraphic8(graphicLayer) {
       // 动画线材质
       material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
         color: "#1a9850",
-        image: "img/textures/lineAarrow.png",
+        image: "img/textures/line-arrow-blue.png",
         speed: 20,
         repeat: new Cesium.Cartesian2(5, 1)
       })
@@ -288,7 +288,7 @@ function addDemoGraphic10(graphicLayer) {
     style: {
       width: 10,
       material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
-        image: "img/textures/lineClr2.png",
+        image: "img/textures/line-colour.png",
         speed: 10
       })
     },
@@ -307,7 +307,7 @@ function addDemoGraphic11(graphicLayer) {
       width: 10,
       material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
         color: Cesium.Color.AQUA,
-        image: "./img/textures/arrow2.png",
+        image: "./img/textures/arrow-h.png",
         repeat: new Cesium.Cartesian2(20, 1),
         speed: 30
       })
@@ -328,7 +328,7 @@ function addDemoGraphic12(graphicLayer) {
       material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
         color: "#a6d96a",
         repeat: new Cesium.Cartesian2(4.0, 1.0),
-        image: "img/textures/arrow_1.png",
+        image: "img/textures/line-arrow-dovetail.png",
         speed: 20
       })
     },
@@ -348,7 +348,7 @@ function addDemoGraphic13(graphicLayer) {
       clampToGround: true,
       material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
         color: Cesium.Color.CHARTREUSE,
-        image: "img/textures/lineClr.png",
+        image: "img/textures/line-color-yellow.png",
         speed: 25
       })
     },
@@ -368,7 +368,7 @@ function addDemoGraphic14(graphicLayer) {
       clampToGround: true,
       material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
         color: "rgba(89,249,255,0.8)",
-        image: "img/textures/LineDataTrans.png",
+        image: "img/textures/line-tarans.png",
         speed: 8
       })
     },

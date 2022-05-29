@@ -88,7 +88,7 @@ function addDemoGraphic2(graphicLayer) {
     ],
     style: {
       materialType: mars3d.MaterialType.Image,
-      image: "img/textures/excavate_bottom_min.jpg",
+      image: "img/textures/poly-soil.jpg",
       opacity: 0.8, // 透明度
       clampToGround: true
     },

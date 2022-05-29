@@ -26,7 +26,7 @@ export function onMounted(mapInstance) {
   })
   map.addThing(sightline)
 
-  globalNotify("功能和已知问题提示", "(1) 依赖cesium底层接口，少数情况下不够准确", { duration: null })
+  globalNotify("功能和已知问题提示", "(1) 依赖cesium底层接口，少数情况下不够准确")
 }
 
 /**

@@ -106,7 +106,6 @@ function showDivGraphic(arr) {
     const cityName = arr[i].name // 城市名字
     const point = [arr[i].lng, arr[i].lat] // 位置
 
-
     // 白色背景
     const backGroundGraphic = new mars3d.graphic.DivGraphic({
       position: point,

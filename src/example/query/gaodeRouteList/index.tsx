@@ -95,7 +95,7 @@ function UIComponent() {
           <MarsInput value={startNumber} disabled></MarsInput>
           <MarsButton
             onClick={async () => {
-              const startPoint: string = await mapWork.stratPoint()
+              const startPoint: string = await mapWork.startPoint()
               setStartValue(startPoint)
             }}
           >
@@ -106,9 +106,9 @@ function UIComponent() {
       <MarsFormItem label="终点">
         <Space>
           <p className="inputWidth">
-            共<span style={{ color: "red" }}>{countNumber}</span>条POI点
+            共,<span style={{ color: "red" }}>{countNumber}</span>条POI点
           </p>
-          <MarsButton onClick={() => mapWork.endPoint()}>选点</MarsButton>
+          <MarsButton onClick={() => mapWork.endPoint()}>查询</MarsButton>
         </Space>
       </MarsFormItem>
       <div className="f-tac">

@@ -17,7 +17,7 @@ function UIComponent() {
   }
 
   return (
-    <MarsPannel visible={true} top={10} right={10} height={70}>
+    <MarsPannel visible={true} top={10} right={10} height={75}>
       <div className="f-mb">
         <MarsCheckbox checked={dangerSphere} onChange={formRedSphereChange}>
           危险圈

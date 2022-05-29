@@ -1,7 +1,7 @@
 import * as mars3d from "mars3d"
 
 export let map // mars3d.Map三维地图对象
-let roamLine
+export let roamLine
 const roamLineData = {}
 
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
@@ -23,7 +23,7 @@ export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
-  map.toolbar.style.bottom = "55px"// 修改toolbar控件的样式
+  map.toolbar.style.bottom = "55px" // 修改toolbar控件的样式
 
   addGraphicLayer()
 }
@@ -63,6 +63,7 @@ function addGraphicLayer() {
     model: {
       url: "//data.mars3d.cn/gltf/mars/jingche/jingche.gltf",
       heading: 90,
+      noPitchRoll: true,
       minimumPixelSize: 50,
       show: true
     },
@@ -121,7 +122,7 @@ function addGraphicLayer() {
     }
 
     const lblRemainLen = container.querySelector("#lblRemainLen")
-    if (lblRemainLen) {
+    if (lblRemainLen && !isNaN(params.len)) {
       lblRemainLen.innerHTML = mars3d.MeasureUtil.formatDistance(roamLine.alllen - params.len)
     }
   })
@@ -157,8 +158,6 @@ function startFly() {
 
   addParticleSystem(roamLine)
 }
-
-
 
 // 显示实时坐标和时间
 function showRealTimeInfo(params, _alltime) {

@@ -44,17 +44,17 @@ function UIComponent() {
         </MarsFormItem>
         <MarsFormItem>
           <Space>
-            <MarsButton onClick={() => mapWork.clipping1()}>切顶部</MarsButton>
-            <MarsButton onClick={() => mapWork.clipping2()}>切底部</MarsButton>
-            <MarsButton onClick={() => mapWork.clipping3()}>切东向</MarsButton>
+            <MarsButton onClick={() => mapWork.clippingType("ZR")}>切顶部</MarsButton>
+            <MarsButton onClick={() => mapWork.clippingType("Z")}>切底部</MarsButton>
+            <MarsButton onClick={() => mapWork.clippingType("XR")}>切东向</MarsButton>
           </Space>
         </MarsFormItem>
 
         <MarsFormItem>
           <Space>
-            <MarsButton onClick={() => mapWork.clipping4()}>切西向</MarsButton>
-            <MarsButton onClick={() => mapWork.clipping5()}>切南向</MarsButton>
-            <MarsButton onClick={() => mapWork.clipping6()}>切北向</MarsButton>
+            <MarsButton onClick={() => mapWork.clippingType("X")}>切西向</MarsButton>
+            <MarsButton onClick={() => mapWork.clippingType("Y")}>切南向</MarsButton>
+            <MarsButton onClick={() => mapWork.clippingType("YR")}>切北向</MarsButton>
           </Space>
         </MarsFormItem>
 

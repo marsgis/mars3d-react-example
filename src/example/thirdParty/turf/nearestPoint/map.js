@@ -102,7 +102,7 @@ function clickPoint(position) {
       clampToGround: true,
       material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
         color: "rgba(89,249,255,0.8)",
-        image: "img/textures/LineDataTrans.png",
+        image: "img/textures/line-tarans.png",
         speed: 8
       })
     }

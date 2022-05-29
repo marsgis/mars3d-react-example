@@ -75,7 +75,6 @@ function initPath(routePaths) {
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-
   // 在layer上绑定监听事件
   graphicLayer.on(mars3d.EventType.click, function (event) {
     console.log("监听layer，单击了矢量对象", event)

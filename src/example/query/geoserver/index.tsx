@@ -80,7 +80,7 @@ function UIComponent() {
       type: "input",
       field: "keyWords",
       label: "名称",
-      value: "",
+      value: "请输入查询关键字",
       change(data) {
         keyWords = data
       }

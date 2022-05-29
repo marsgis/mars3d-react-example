@@ -32,7 +32,6 @@ export function onMounted(mapInstance) {
 
   // url传入模型地址
   const type = mars3d.Util.getRequestByName("data")
-
   switch (type) {
     case "feiji":
       showAircraft()

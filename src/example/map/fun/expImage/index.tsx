@@ -1,6 +1,6 @@
 import { useState } from "react"
 import * as mapWork from "./map.js"
-import { MarsButton, MarsPannel } from "@mars/components/MarsUI"
+import { MarsButton, MarsPannel, MarsDialog } from "@mars/components/MarsUI"
 import { Space } from "antd"
 
 function UIComponent(props) {
@@ -48,9 +48,9 @@ function UIComponent(props) {
         </Space>
       </MarsPannel>
 
-      <MarsPannel visible={showImage} left="25%" top="30%" width="50%" closeable>
-        <img alt="查看场景出图" src={imges} style={{ width: "100%", height: "90%" }} />
-      </MarsPannel>
+      <MarsDialog visible={showImage} onClose={() => setShowImageValue(false)} left="25%" top="30%" width="50%" title="查看场景出图">
+        <img alt="查看场景出图" src={imges} style={{ width: "100%", height: "100%" }} />
+      </MarsDialog>
     </>
   )
 }

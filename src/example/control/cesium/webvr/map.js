@@ -2,7 +2,6 @@ import * as mars3d from "mars3d"
 
 export let map // mars3d.Map三维地图对象
 
-
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = function (option) {
   option.control = {
@@ -49,8 +48,7 @@ export function onMounted(mapInstance) {
   globalNotify(
     "已知问题：",
     `(1) 请确保您的显示器调整到 3D模式。
-      (2) 需要佩戴3D眼镜才能体验效果。`,
-    { duration: null }
+      (2) 需要佩戴3D眼镜才能体验效果。`
   )
 }
 

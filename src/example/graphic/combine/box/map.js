@@ -55,7 +55,6 @@ export function addDemoGraphic(num) {
   const startTime = new Date().getTime()
 
   const count = num * 10000
-
   const gridSize = 45 / Math.sqrt(count)
 
   const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
@@ -98,7 +97,6 @@ export function addDemoGraphic(num) {
 
   globalMsg("生成" + arrData.length + "条数据，共耗时" + usedTime.toFixed(2) + "秒")
 }
-
 
 // 在图层绑定Popup弹窗
 export function bindLayerPopup() {

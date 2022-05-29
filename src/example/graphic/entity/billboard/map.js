@@ -283,7 +283,6 @@ export function startDrawGraphic() {
   })
 }
 
-
 export function btnStartBounce() {
   graphicLayer.eachGraphic((graphic) => {
     if (graphic.startBounce) {
@@ -311,8 +310,6 @@ export function btnStopBounce() {
     }
   })
 }
-
-
 
 // 也可以在单个Graphic上做个性化管理及绑定操作
 function initGraphicManager(graphic) {

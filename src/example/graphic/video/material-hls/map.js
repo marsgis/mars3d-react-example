@@ -1,5 +1,4 @@
 import * as mars3d from "mars3d"
-
 export let map // mars3d.Map三维地图对象
 export let graphicLayer // 矢量图层对象
 let videoElement
@@ -57,7 +56,6 @@ export function onUnmounted() {
 }
 
 const hlsUrl = "http://1252093142.vod2.myqcloud.com/4704461fvodcq1252093142/f865d8a05285890787810776469/playlist.f3.m3u8"
-
 function createVideoDom() {
   videoElement = mars3d.DomUtil.create("video", "", document.body)
   videoElement.setAttribute("muted", "muted")
@@ -84,6 +82,18 @@ function createVideoDom() {
       videoElement.play()
     })
   }
+
+  setTimeout(() => {
+    try {
+      if (videoElement.paused) {
+        globalMsg("当前浏览器已限制自动播放，请单击播放按钮")
+        videoElement.play()
+      }
+    } catch (e) {
+      // 规避浏览器权限异常
+        globalMsg("当前浏览器已限制自动播放，请单击播放按钮")
+    } 
+  }, 3000)
 }
 
 // 竖立视频

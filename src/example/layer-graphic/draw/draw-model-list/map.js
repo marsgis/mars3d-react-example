@@ -1,7 +1,7 @@
 import * as mars3d from "mars3d"
 
 export let map // mars3d.Map三维地图对象
-let graphicLayer // 矢量图层对象
+export let graphicLayer // 矢量图层对象
 
 export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
 

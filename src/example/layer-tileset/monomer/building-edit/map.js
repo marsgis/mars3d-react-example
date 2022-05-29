@@ -1,7 +1,7 @@
 import * as mars3d from "mars3d"
 
 export let map // mars3d.Map三维地图对象
-let graphicLayerEdit
+export let graphicLayer
 let geoJsonLayerDTH
 
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
@@ -62,7 +62,7 @@ export function onMounted(mapInstance) {
   })
   map.addLayer(geoJsonLayerDTH)
 
-  graphicLayerEdit = new mars3d.layer.GraphicLayer({
+  graphicLayer = new mars3d.layer.GraphicLayer({
     hasEdit: true,
     isAutoEditing: true, // 绘制完成后是否自动激活编辑
     symbol: {
@@ -74,21 +74,21 @@ export function onMounted(mapInstance) {
       }
     }
   })
-  map.addLayer(graphicLayerEdit)
+  map.addLayer(graphicLayer)
 
   // 触发自定义事件
-  graphicLayerEdit.on(mars3d.EventType.drawCreated, function (e) {
+  graphicLayer.on(mars3d.EventType.drawCreated, function (e) {
     const graphic = e.graphic
     eventTarget.fire("graphicEditor-start", { graphic })
   })
-  graphicLayerEdit.on(
+  graphicLayer.on(
     [mars3d.EventType.editStart, mars3d.EventType.editMovePoint, mars3d.EventType.editStyle, mars3d.EventType.editRemovePoint],
     function (e) {
       const graphic = e.graphic
       eventTarget.fire("graphicEditor-update", { graphic })
     }
   )
-  graphicLayerEdit.on([mars3d.EventType.editStop, mars3d.EventType.removeGraphic], function (e) {
+  graphicLayer.on([mars3d.EventType.editStop, mars3d.EventType.removeGraphic], function (e) {
     eventTarget.fire("graphicEditor-stop")
   })
 
@@ -96,7 +96,7 @@ export function onMounted(mapInstance) {
   const configUrl = "//data.mars3d.cn/file/geojson/dth-xuexiao-fd.json"
   mars3d.Util.fetchJson({ url: configUrl })
     .then(function (result) {
-      graphicLayerEdit.loadGeoJSON(result)
+      graphicLayer.loadGeoJSON(result)
     })
     .catch(function (error) {
       console.log("加载JSON出错", error)
@@ -118,7 +118,7 @@ export function onUnmounted() {
  *@returns {void} 无
  */
 export function bindLayerContextMenu() {
-  graphicLayerEdit.bindContextMenu([
+  graphicLayer.bindContextMenu([
     {
       text: "开始编辑对象",
       icon: "fa fa-edit",
@@ -135,7 +135,7 @@ export function bindLayerContextMenu() {
           return false
         }
         if (graphic) {
-          graphicLayerEdit.startEditing(graphic)
+          graphicLayer.startEditing(graphic)
         }
       }
     },
@@ -155,7 +155,7 @@ export function bindLayerContextMenu() {
           return false
         }
         if (graphic) {
-          graphicLayerEdit.stopEditing(graphic)
+          graphicLayer.stopEditing(graphic)
         }
       }
     },
@@ -175,7 +175,7 @@ export function bindLayerContextMenu() {
         if (!graphic) {
           return
         }
-        graphicLayerEdit.removeGraphic(graphic)
+        graphicLayer.removeGraphic(graphic)
       }
     },
     {
@@ -201,27 +201,27 @@ export function bindLayerContextMenu() {
 
 // 切换到预览模式
 export function toYLMS() {
-  const geojson = graphicLayerEdit.toGeoJSON()
+  const geojson = graphicLayer.toGeoJSON()
 
   geoJsonLayerDTH.load({ data: geojson })
 
-  graphicLayerEdit.hasEdit = false
-  graphicLayerEdit.show = false
+  graphicLayer.hasEdit = false
+  graphicLayer.show = false
 }
 
 // 切换到编辑模式
 export function toBJMS() {
   geoJsonLayerDTH.clear()
-  graphicLayerEdit.hasEdit = true
-  graphicLayerEdit.show = true
+  graphicLayer.hasEdit = true
+  graphicLayer.show = true
 }
 
 export function deleteAll() {
-  graphicLayerEdit.clear()
+  graphicLayer.clear()
 }
 
 export function drawPolygon() {
-  graphicLayerEdit.startDraw({
+  graphicLayer.startDraw({
     type: "polygon",
     style: {
       color: "#ffff00",
@@ -249,7 +249,7 @@ export function openGeoJSON(file) {
     reader.readAsText(file, "UTF-8")
     reader.onloadend = function (e) {
       const json = this.result
-      graphicLayerEdit.loadGeoJSON(json, {
+      graphicLayer.loadGeoJSON(json, {
         clear: true,
         flyTo: true
       })
@@ -263,11 +263,11 @@ export function openGeoJSON(file) {
 // 保存JSON文件
 export function saveGeoJSON() {
 
-  if (graphicLayerEdit.length === 0) {
+  if (graphicLayer.length === 0) {
     globalMsg("当前没有标注任何数据，无需保存！")
     return
   }
- const layers = map.getLayerById(graphicLayerEdit.id)
+ const layers = map.getLayerById(graphicLayer.id)
   const geojson = layers.toGeoJSON()
   mars3d.Util.downloadFile("单体化.json", JSON.stringify(geojson))
 }

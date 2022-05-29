@@ -4,6 +4,6 @@ import "./index.less"
 
 export const MarsForm = Form
 
-export const MarsFormItem = (props: FormItemProps) => {
-  return <Form.Item className="mars-form-item" {...props}></Form.Item>
+export const MarsFormItem = ({ className, ...props }: FormItemProps & { className?: string }) => {
+  return <Form.Item className={["mars-form-item", className].join(" ")} {...props}></Form.Item>
 }

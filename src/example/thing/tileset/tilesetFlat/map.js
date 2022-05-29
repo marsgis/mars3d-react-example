@@ -2,6 +2,7 @@ import * as mars3d from "mars3d"
 
 export let map // mars3d.Map三维地图对象
 let graphicLayer // 矢量图层对象,用于graphic绑定展示
+let tilesetLayer // 3dtiles模型；添加模型选择
 let tilesetFlat
 
 export const mapOptions = {
@@ -26,7 +27,12 @@ export function onMounted(mapInstance) {
   map.addLayer(graphicLayer)
 
   map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
-  addLayer()
+  showDytDemo(true, [
+    [108.959062, 34.220134, 397.3],
+    [108.959802, 34.220147, 397.6],
+    [108.959779, 34.219506, 398.7],
+    [108.959106, 34.21953, 398.1]
+  ]) // true - 加载边界线,后者是初始加载的压平位置
 }
 
 /**
@@ -37,33 +43,65 @@ export function onUnmounted() {
   map = null
 }
 
-function addLayer() {
+export function showDytDemo(chkShowLine, positions = null) {
+  removeLayer()
+
   // 加模型
-  const tilesetLayer = new mars3d.layer.TilesetLayer({
+  tilesetLayer = new mars3d.layer.TilesetLayer({
     name: "大雁塔",
     url: "//data.mars3d.cn/3dtiles/qx-dyt/tileset.json",
     position: { alt: -27 },
     maximumScreenSpaceError: 1,
-    maximumMemoryUsage: 1024
+    maximumMemoryUsage: 1024,
+    flyTo: true
   })
   map.addLayer(tilesetLayer)
+
+  createTilesetFlat(chkShowLine, positions)
+}
+
+export function showTehDemo(chkShowLine) {
+  removeLayer()
+
+  // 以下数据为cesiumlab v3处理，目前其材质有做偏移处理，不知道内部逻辑及具体值，无法平整压平。
+  tilesetLayer = new mars3d.layer.TilesetLayer({
+    name: "合肥天鹅湖",
+    url: "//data.mars3d.cn/3dtiles/qx-teh/tileset.json",
+    position: { lng: 117.218434, lat: 31.81807, alt: 163 },
+    maximumScreenSpaceError: 16,
+    maximumMemoryUsage: 1024,
+    dynamicScreenSpaceError: true,
+    cullWithChildrenBounds: false,
+    skipLevelOfDetail: true,
+    preferLeaves: true,
+    center: { lat: 31.795308, lng: 117.21948, alt: 1820, heading: 0, pitch: -39 },
+    flyTo: true
+  })
+  map.addLayer(tilesetLayer)
+  createTilesetFlat(chkShowLine)
+}
+
+// 添加模型处理类，默认positions为大雁塔的压平位置
+function createTilesetFlat(chkShowLine, positions = null) {
+  if (tilesetFlat) {
+    map.removeThing(tilesetFlat)
+    tilesetFlat = null
+  }
 
   // 模型压平处理类
   tilesetFlat = new mars3d.thing.TilesetFlat({
     layer: tilesetLayer,
-    positions: [
-      [108.959062, 34.220134, 397.3],
-      [108.959802, 34.220147, 397.6],
-      [108.959779, 34.219506, 398.7],
-      [108.959106, 34.21953, 398.1]
-    ],
+    positions: positions,
     height: 0
   })
   map.addThing(tilesetFlat)
 
   // 模型加载完成方法一
   tilesetLayer.readyPromise.then((e) => {
-    eventTarget.fire("dataLoaded", { list: tilesetFlat.list })
+    tilesetFlat.list.forEach((item) => {
+      const id = addTestLine(chkShowLine, item.positions)
+      addTableItem({ id: id, item: item })
+    })
   })
 
   // 模型加载完成方法二
@@ -72,6 +110,20 @@ function addLayer() {
   //     eventTarget.fire("dataLoaded", { list: tilesetFlat.list })
   //   }, 10)
   // })
+}
+
+function removeLayer() {
+  if (tilesetLayer) {
+    map.removeLayer(tilesetLayer, true)
+    tilesetLayer = null
+  }
+
+  if (tilesetFlat) {
+    removeAll()
+
+    map.removeThing(tilesetFlat)
+    tilesetFlat = null
+  }
 }
 
 // 添加矩形
@@ -143,7 +195,6 @@ export function chkShowLine(val) {
 }
 
 function addTestLine(chkShowLine, positions) {
-  console.log("外框")
   const graphic = new mars3d.graphic.PolylineEntity({
     positions: positions,
     style: {

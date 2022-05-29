@@ -139,8 +139,6 @@ function random(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
-
-
 // 在图层绑定Popup弹窗
 export function bindLayerPopup() {
   graphicLayer.bindPopup(function (event) {
@@ -152,8 +150,6 @@ export function bindLayerPopup() {
     return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
   })
 }
-
-
 
 // 绑定右键菜单
 export function bindLayerContextMenu() {
@@ -179,5 +175,3 @@ export function bindLayerContextMenu() {
     }
   ])
 }
-
-

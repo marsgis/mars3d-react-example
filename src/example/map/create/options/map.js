@@ -41,7 +41,7 @@ function initMap() {
         name: "天地图影像",
         icon: "img/basemaps/tdt_img.png",
         type: "tdt",
-        layer: "img_d", 
+        layer: "img_d",
         show: true
       }
     ]

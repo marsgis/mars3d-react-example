@@ -105,7 +105,7 @@ function addDemoGraphic3(graphicLayer) {
       width: 200.0,
       cornerType: Cesium.CornerType.MITERED,
       material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
-        image: "./img/textures/arrow2.png",
+        image: "./img/textures/arrow-h.png",
         axisY: false,
         repeat: new Cesium.Cartesian2(20.0, 1.0),
         color: "#ffff00",

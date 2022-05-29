@@ -16,28 +16,28 @@ export const mapOptions = {
  * @param {mars3d.Map} mapInstance 地图对象
  * @returns {void} 无
  */
- export function onMounted(mapInstance) {
+export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
   queryTemperatureData()
-  .then(function (geojson) {
-    // eslint-disable-next-line no-undef
-    const image = loadkriging(geojson.features, kriging_bounds, kriging_colors)
-    const tileLayer = new mars3d.layer.ImageLayer({
-      url: image,
-      rectangle: {
-        xmin: 73.4766,
-        xmax: 135.088,
-        ymin: 18.1055,
-        ymax: 53.5693
-      },
-      alpha: 0.4
+    .then(function (geojson) {
+      // eslint-disable-next-line no-undef
+      const image = loadkriging(geojson.features, kriging_bounds, kriging_colors)
+      const tileLayer = new mars3d.layer.ImageLayer({
+        url: image,
+        rectangle: {
+          xmin: 73.4766,
+          xmax: 135.088,
+          ymin: 18.1055,
+          ymax: 53.5693
+        },
+        alpha: 0.4
+      })
+      map.addLayer(tileLayer)
     })
-    map.addLayer(tileLayer)
-  })
-  .catch(function(error) {
-    console.log("构造出错了", error)
-  })
+    .catch(function (error) {
+      console.log("构造出错了", error)
+    })
 }
 
 /**

@@ -277,7 +277,7 @@ function weixingStyle(item) {
 // Orbital altitude definitions.
 
 // 重置
-export function resetUI() {
+export function resetGraphic() {
   // 循环所有卫星
   if (!graphicLayer) {
     globalMsg("当前数据正在加载")

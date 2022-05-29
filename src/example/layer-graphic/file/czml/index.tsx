@@ -26,7 +26,7 @@ function UIComponent() {
     })
 
     // 隐藏button
-    const isUrl = getQueryString("data") == null
+    const isUrl = getQueryString("data") === (null || "czml")
     setShowBtn(isUrl)
   }, [])
 

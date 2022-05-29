@@ -191,7 +191,7 @@ export function showChinaLine() {
         width: 2,
         material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
           color: "#00ffff",
-          image: "img/textures/fenceline.png",
+          image: "img/textures/fence-line.png",
           speed: 10,
           repeat_x: 10
         }),

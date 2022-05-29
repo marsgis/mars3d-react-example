@@ -2,7 +2,6 @@ import * as mars3d from "mars3d"
 
 export let map // mars3d.Map三维地图对象
 
-
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   //  方式1：在创建地球前的传参中配置control参数

@@ -16,12 +16,12 @@ interface FileItem {
 interface FileInfo {
   file: FileItem
   fileList: FileItem[]
-} 
+}
 
 function UIComponent() {
   useEffect(() => {
     // 编辑修改了模型
-    mapWork.eventTarget.on("graphicEditor-update", async (e: any) => { 
+    mapWork.eventTarget.on("graphicEditor-update", async (e: any) => {
       if (isActive("GraphicEditor")) {
         updateWidget("GraphicEditor", { graphic: e.graphic })
       } else {
@@ -29,7 +29,7 @@ function UIComponent() {
           name: "GraphicEditor",
           data: { graphic: e.graphic }
         })
-      } 
+      }
     })
 
     // 停止编辑修改模型
@@ -37,7 +37,7 @@ function UIComponent() {
       setTimeout(() => {
         if (!mapWork.graphicLayer.isEditing) {
           disable("GraphicEditor")
-        } 
+        }
       }, 100)
     })
   }, [])

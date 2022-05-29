@@ -115,7 +115,7 @@ function addDemoGraphic4(graphicLayer) {
       plane: new Cesium.Plane(Cesium.Cartesian3.UNIT_Z, 0.0),
       dimensions: new Cesium.Cartesian2(4000.0, 4000.0),
       material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.Image, {
-        image: "img/textures/movingRiver.png",
+        image: "img/textures/poly-rivers.png",
         transparent: true
       })
     },

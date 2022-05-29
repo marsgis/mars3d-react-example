@@ -101,6 +101,8 @@ function UIComponent() {
       type: "switch",
       field: "control",
       label: "状态控制",
+      extra: "显示其它区域",
+      extraWidth: 180,
       value: true,
       change(value) {
         mapWork.chkClippingPlanes(value)

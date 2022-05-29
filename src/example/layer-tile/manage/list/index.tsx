@@ -116,7 +116,7 @@ function UIComponent() {
   }, [])
 
   return (
-    <MarsPannel visible={true} top={10} right={10} bottom={40} width={230}>
+    <MarsPannel visible={true} top={10} right={10} bottom={40} width={250}>
       <MarsTree
         treeData={treeData}
         checkable

@@ -31,7 +31,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic2(graphicLayer)
   addDemoGraphic3(graphicLayer)
 
-  globalNotify("已知问题：", `(1) 井目前主要地形开挖分析内部中使用，在本示例内未开启深度检测时会浮动在地图上。`, { duration: null })
+  globalNotify("已知问题：", `(1) 井目前主要地形开挖分析内部中使用，在本示例内未开启深度检测时会浮动在地图上。`)
 }
 
 /**
@@ -54,8 +54,8 @@ function addDemoGraphic1(graphicLayer) {
     ],
     style: {
       diffHeight: 300, // 井的深度
-      image: "./img/textures/excavate_side_min.jpg",
-      imageBottom: "./img/textures/excavate_bottom_min.jpg",
+      image: "./img/textures/poly-stone.jpg",
+      imageBottom: "./img/textures/poly-soil.jpg",
       label: {
         text: "我是火星科技",
         font_size: 18,
@@ -84,8 +84,8 @@ function addDemoGraphic2(graphicLayer) {
     ],
     style: {
       diffHeight: 200, // 井的深度
-      image: "./img/textures/excavate_kuangqu.jpg",
-      imageBottom: "./img/textures/excavate_bottom_min.jpg",
+      image: "./img/textures/mining.jpg",
+      imageBottom: "./img/textures/poly-soil.jpg",
       splitNum: 50 // 井边界插值数
     },
     attr: { remark: "示例2" }
@@ -106,8 +106,8 @@ function addDemoGraphic3(graphicLayer) {
     ],
     style: {
       diffHeight: 200, // 井的深度
-      image: "./img/textures/excavate_side_min.jpg",
-      imageBottom: "./img/textures/excavationregion_top.jpg",
+      image: "./img/textures/poly-stone.jpg",
+      imageBottom: "./img/textures/poly-sand.jpg",
       splitNum: 50 // 井边界插值数
     },
     attr: { remark: "示例3" }
@@ -122,8 +122,8 @@ function addPit(graphicLayer, positions, height) {
     positions: positions,
     style: {
       diffHeight: height, // 井的深度
-      image: "./img/textures/excavate_side_min.jpg",
-      imageBottom: "./img/textures/excavate_bottom_min.jpg",
+      image: "./img/textures/poly-stone.jpg",
+      imageBottom: "./img/textures/poly-soil.jpg",
       splitNum: 50 // 井边界插值数
     }
   })

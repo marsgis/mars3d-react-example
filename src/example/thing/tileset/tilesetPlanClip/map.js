@@ -127,34 +127,9 @@ export function drawPoly2() {
   })
 }
 
-// 切顶部
-export function clipping1() {
-  tilesetPlanClip.type = mars3d.thing.TilesetPlanClip.Type.ZR
-}
-
-// 切底部
-export function clipping2() {
-  tilesetPlanClip.type = mars3d.thing.TilesetPlanClip.Type.Z
-}
-
-// 切东部
-export function clipping3() {
-  tilesetPlanClip.type = mars3d.thing.TilesetPlanClip.Type.XR
-}
-
-// 切西部
-export function clipping4() {
-  tilesetPlanClip.type = mars3d.thing.TilesetPlanClip.Type.X
-}
-
-// 切南部
-export function clipping5() {
-  tilesetPlanClip.type = mars3d.thing.TilesetPlanClip.Type.Y
-}
-
-// 切北部
-export function clipping6() {
-  tilesetPlanClip.type = mars3d.thing.TilesetPlanClip.Type.YR
+// 更改切换方向
+export function clippingType(type) {
+  tilesetPlanClip.type = mars3d.thing.TilesetPlanClip.Type[type]
 }
 
 // 距离

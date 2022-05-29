@@ -63,7 +63,6 @@ export function onMounted(mapInstance) {
   })
   graphicLayer.addGraphic(graphicModel)
 
-
   // 添加特效
   const outlineEffect = new mars3d.effect.OutlineEffect({
     color: "#FFFF00",

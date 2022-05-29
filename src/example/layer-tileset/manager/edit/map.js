@@ -2,8 +2,8 @@ import * as mars3d from "mars3d"
 import { TilesEditor } from "./TilesEditor.js"
 
 export let map // mars3d.Map三维地图对象
-let tiles3dLayer
-let tilesEditor
+export let tiles3dLayer
+export let tilesEditor
 
 // 自定义事件
 export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
@@ -307,7 +307,7 @@ export function saveBookmark(params) {
     delete params.axis
   }
 
-  mars3d.Util.downloadFile("3dtiles图层配置.json", JSON.stringify(params))
+  mars3d.Util.downloadFile("3dtiles图层配置.json", JSON.stringify(getConfig(params)))
 }
 
 function removeLayer() {

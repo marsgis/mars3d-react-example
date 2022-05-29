@@ -27,7 +27,7 @@ export function onMounted(mapInstance) {
   })
   map.addLayer(tdtDmLayer)
 
-  globalNotify("已知问题：", `(1) 使用国家测绘局天地图在线地名服务。(2) 如未显示地名，可能是服务不稳定造成`, { duration: null })
+  globalNotify("已知问题：", `(1) 使用国家测绘局天地图在线地名服务。(2) 如未显示地名，可能是服务不稳定造成`)
 }
 
 /**

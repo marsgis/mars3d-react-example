@@ -89,7 +89,7 @@ function addDemoGraphic2(graphicLayer) {
       [117.183832, 31.814237, 38.76]
     ],
     style: {
-      image: "img/textures/excavate_bottom_min.jpg",
+      image: "img/textures/poly-soil.jpg",
 
       label: {
         text: "我是火星科技",
@@ -322,7 +322,7 @@ function addDemoGraphic11(graphicLayer) {
     ],
     style: {
       materialType: mars3d.MaterialType.WaterLight,
-      specularMap: "img/textures/excavate_side_min.jpg",
+      specularMap: "img/textures/poly-stone.jpg",
       alpha: 0.6,
       clampToGround: true
     },

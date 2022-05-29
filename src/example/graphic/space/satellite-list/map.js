@@ -204,7 +204,7 @@ function processInArea(weixin) {
             width: 7,
             // 动画线材质
             material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
-              url: "./img/textures/arrow2.png",
+              url: "./img/textures/arrow-h.png",
               color: Cesium.Color.AQUA,
               repeat: new Cesium.Cartesian2(15, 1),
               speed: 60 // 时长，控制速度

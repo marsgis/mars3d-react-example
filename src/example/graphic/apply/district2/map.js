@@ -90,7 +90,7 @@ function addAnhui() {
             addHeight: -15000,
             diffHeight: 15000, // 墙高
             materialType: mars3d.MaterialType.Image2,
-            image: "./img/textures/grawall.png",
+            image: "./img/textures/fence-top.png",
             color: "rgba(0,255,255,0.6)"
             // renderState: Cesium.RenderState.fromCache({
             //   blending: Cesium.BlendingState.ALPHA_BLEND,

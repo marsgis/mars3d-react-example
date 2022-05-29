@@ -240,8 +240,6 @@ function bindLayerEvent() {
   })
 }
 
-
-
 // 在图层绑定Popup弹窗
 export function bindLayerPopup() {
   graphicLayer.bindPopup(function (event) {
@@ -253,8 +251,6 @@ export function bindLayerPopup() {
     return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
   })
 }
-
-
 
 // 绑定右键菜单
 export function bindLayerContextMenu() {
@@ -337,8 +333,6 @@ export function startDrawGraphic() {
     }
   })
 }
-
-
 
 // 也可以在单个Graphic上做个性化管理及绑定操作
 function initGraphicManager(graphic) {

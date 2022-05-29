@@ -23,9 +23,7 @@ export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
-  addLayer()
-
-  globalNotify("已知问题：", `(1) 因为使用clippingPlanes接口，绘制多边形时，部分围合角度时会存在效果不对`, { duration: null })
+  globalNotify("已知问题：", `因为使用clippingPlanes接口，绘制多边形时，部分围合角度时会存在效果不对`)
 }
 
 /**
@@ -36,7 +34,7 @@ export function onUnmounted() {
   map = null
 }
 
-function addLayer() {
+export function addLayer(height) {
   // 管网模型图层
   const tilesetLayer = new mars3d.layer.TilesetLayer({
     name: "地下管网",
@@ -58,14 +56,12 @@ function addLayer() {
       [117.21764, 31.843807, 42.83],
       [117.214491, 31.843807, 42.83]
     ],
-    // diffHeight: 30, // 井的深度
-    image: "img/textures/excavate_side_min.jpg", // 边界墙材质
-    imageBottom: "img/textures/excavate_bottom_min.jpg", // 底部区域材质
+    diffHeight: height, // 井的深度
+    image: "img/textures/poly-stone.jpg", // 边界墙材质
+    imageBottom: "img/textures/poly-soil.jpg", // 底部区域材质
     splitNum: 50 // 井边界插值数
   })
   map.addThing(terrainPlanClip)
-
-  eventTarget.fire("hasAddLayer", { terrainPlanClip })
 }
 
 // 是否挖地

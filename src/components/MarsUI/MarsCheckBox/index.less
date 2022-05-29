@@ -1,14 +1,17 @@
-.mars-checkbox {
-  color: @mars-basecolor;
+.mars-checkbox, .mars-main-view .ant-checkbox-wrapper {
+  color: @mars-base-color;
+
   .ant-checkbox-inner {
-    background-color: #fff;
-    border-color: @border-color-ordinary;
+    background-color: @mars-bg-base;
+    border-color: @mars-base-border-color;
   }
+
   .ant-checkbox-checked {
-    background: @primary-color;
+    background: @mars-primary-color;
+
     .ant-checkbox-inner {
-      background-color: @primary-color;
-      border-color: @primary-color;
+      background-color: @mars-primary-color;
+      border-color: @mars-primary-color;
     }
   }
 }

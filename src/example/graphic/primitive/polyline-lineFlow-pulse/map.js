@@ -107,7 +107,7 @@ export function onMounted(mapInstance) {
           width: 2,
           material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
             color: "#3af2f3",
-            image: "img/textures/LinkPulse.png",
+            image: "img/textures/line-pulse.png",
             speed: 1
           })
         }

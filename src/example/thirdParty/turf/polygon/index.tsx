@@ -13,7 +13,7 @@ function UIComponent() {
       <div className="f-mb">
         <Space>
           <span>原始数据:</span>
-          <MarsButton onClick={() => mapWork.drawPolygon()}>绘制线</MarsButton>
+          <MarsButton onClick={() => mapWork.drawPolygon()}>绘制面</MarsButton>
         </Space>
       </div>
 

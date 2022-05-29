@@ -105,7 +105,7 @@ function addDemoGraphic3(graphicLayer) {
       radius: 80,
       material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
         color: "#1a9850",
-        image: "img/textures/fenceline.png",
+        image: "img/textures/fence-line.png",
         speed: 10,
         repeat_x: 6
       }),

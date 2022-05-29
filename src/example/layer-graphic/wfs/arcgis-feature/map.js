@@ -7,6 +7,9 @@ export const mapOptions = {
   scene: {
     center: { lat: 31.810597, lng: 117.220617, alt: 1038, heading: 13, pitch: -30 }
   },
+  terrain: {
+    show: false
+  },
   // 方式1：在创建地球前的参数中配置
   layers: [
     {
@@ -50,7 +53,6 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
 
-  delete mapOptions.terrain
   map.basemap = 2017 // 蓝色底图
 
   // 添加演示图层

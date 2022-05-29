@@ -53,7 +53,7 @@ function showWindLine(arr) {
   const arrData = []
   const radius = 12000
   const lineMaterial = mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
-    image: "img/textures/ArrowOpacity.png",
+    image: "img/textures/line-arrow-right.png",
     color: "#00ff00",
     speed: 30
   })
@@ -90,7 +90,7 @@ function showWindLine(arr) {
   map.addLayer(graphicLayer)
 
   let lineMaterial = mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
-    image: "img/textures/ArrowOpacity.png",
+    image: "img/textures/line-arrow-right.png",
     color: "#00ff00",
     speed: 30
   })

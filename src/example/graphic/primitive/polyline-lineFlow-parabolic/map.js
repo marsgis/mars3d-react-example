@@ -59,7 +59,7 @@ export function onMounted(mapInstance) {
   ]
 
   const lineMaterial = mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
-    image: "img/textures/lineClr.png",
+    image: "img/textures/line-color-yellow.png",
     color: new Cesium.Color(255 / 255, 201 / 255, 38 / 255, 1),
     speed: 10
   })
@@ -96,7 +96,7 @@ export function onUnmounted() {
  * 更新material
  * graphic.setStyle({
  *   material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
- *     image: "img/textures/lineClr.png",
+ *     image: "img/textures/line-color-yellow.png",
  *     color: new Cesium.Color(255 / 255, 201 / 255, 38 / 255, 1),
  *     speed: speed,
  *   }),

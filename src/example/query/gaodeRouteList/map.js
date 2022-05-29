@@ -79,7 +79,7 @@ export function onUnmounted() {
 }
 
 // 起点
-export function stratPoint() {
+export function startPoint() {
   if (startGraphic) {
     startGraphic.remove()
     startGraphic = null
@@ -259,7 +259,7 @@ export function centerAtRoute(id) {
   graphic.entityGraphic.width = 5
   graphic.entityGraphic.material = mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
     color: Cesium.Color.CHARTREUSE,
-    image: "img/textures/lineClr.png",
+    image: "img/textures/line-color-yellow.png",
     speed: 20
   })
 

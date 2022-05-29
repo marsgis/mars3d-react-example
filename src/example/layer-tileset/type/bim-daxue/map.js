@@ -110,8 +110,8 @@ function addPlaneClipThing(layerWorkBIM) {
       [117.251176, 31.844216, 28.24]
     ],
     diffHeight: 10, // 高度
-    image: "./img/textures/excavate_side_min.jpg", // 边界墙材质
-    imageBottom: "./img/textures/excavate_bottom_min.jpg", // 底部区域材质
+    image: "./img/textures/poly-stone.jpg", // 边界墙材质
+    imageBottom: "./img/textures/poly-soil.jpg", // 底部区域材质
     splitNum: 50 // wall边界插值数
   })
   map.addThing(terrainPlanClip)

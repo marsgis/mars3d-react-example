@@ -49,42 +49,42 @@ function UIComponent() {
             </MarsButton>
             <MarsButton
               onClick={() => {
-                mapWork.clipping1()
+                mapWork.clippingType("ZR")
               }}
             >
               切顶部
             </MarsButton>
             <MarsButton
               onClick={() => {
-                mapWork.clipping2()
+                mapWork.clippingType("Z")
               }}
             >
               切底部
             </MarsButton>
             <MarsButton
               onClick={() => {
-                mapWork.clipping3()
+                mapWork.clippingType("XR")
               }}
             >
               切东向
             </MarsButton>
             <MarsButton
               onClick={() => {
-                mapWork.clipping4()
+                mapWork.clippingType("X")
               }}
             >
               切西向
             </MarsButton>
             <MarsButton
               onClick={() => {
-                mapWork.clipping5()
+                mapWork.clippingType("Y")
               }}
             >
               切南向
             </MarsButton>
             <MarsButton
               onClick={() => {
-                mapWork.clipping6()
+                mapWork.clippingType("YR")
               }}
             >
               切北向

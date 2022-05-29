@@ -87,7 +87,7 @@ function addDemoGraphic3(graphicLayer) {
       semiMajorAxis: 1500, // 长半轴 半径
       semiMinorAxis: 900, // 短半轴 半径
       material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.CircleWave, {
-        image: "img/textures/circleScan.png",
+        image: "img/textures/circle-scan.png",
         color: "#5fc4ee"
       }),
       stRotation: new Cesium.CallbackProperty(function (e) {

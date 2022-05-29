@@ -87,11 +87,12 @@ git clone git@gitee.com:marsgis/mars3d-react-example.git
 #### 首次运行前安装依赖
 
 ```
-npm install
+npm install  
 
 //或使用代理
 npm i --registry=http://registry.taobao.org
 ```
+> 注意：尽量使用 npm 安装依赖
 
 #### 启动开发环境
 
@@ -137,7 +138,6 @@ npm run serve:dist  //测试dist运行状态
 - [ESlint](https://eslint.bootcss.com/)：代码检查工具
 - [IconPark](https://iconpark.oceanengine.com/official)：UI 图标库
 
-> 需要有一定的知识储备，包括 react hook 等，建议浏览下[Web 前端知识视频讲解](https://www.bilibili.com/video/BV1xr4y1U73r/)
 
 ### 主要目录说明
 
@@ -240,6 +240,23 @@ mars3d-react-example
 
 > 注：上述配置`main`为`src\example`下的相对路径
 
+
+一个示例所有的配置文件的类型定义如下
+
+```typescript
+interface ConfigSubChildren {
+  name: string // 示例名称
+  thumbnail?: string // 缩略图
+  main: string // 入口，example下的相对路径
+  hasPannel?: boolean // 该示例是否存在ui面板
+  pannelFiles?: any[] // ui面板的依赖文件数组
+  libs?: string[] // 外部依赖
+  resources?: string[] // 内部依赖
+  params?: string // 此示例的url后面的额外参数
+  hidden?: boolean // 列表中隐藏此示例
+}
+```
+
 ### 2. 新建示例对应目录
 
 在`src\example`示例目录下新建对应示例的子目录，因为示例众多，建议多级目录来管理，当前我们新建了`src\example\map\sample\`目录。
@@ -275,6 +292,13 @@ hideLoading(type) // 关闭loading
 
 完成后我们即可访问 [http://localhost:8080/editor.html?id=map/sample](http://localhost:8080/editor.html?id=map/sample)来查看示例的效果。
 
+
+#### map.js 中的几个特殊的变量和函数
+- onMounted：是 ui 整个示例的入口函数，只能在这里获取到地图对象
+- initMap：覆盖框架默认的初始化地图的方法（较少使用）
+- mapOptions 覆盖默认的地图配置，可以是一个函数，参数为默认的地图配置，返回值为新的配置
+
+
 ### 4. (按需可选)配置其他依赖资源
 
 按示例本身需要来配置 libs 和 resources 依赖。
@@ -285,6 +309,13 @@ hideLoading(type) // 关闭loading
 创建控件 React 面板，可以参考已有示例加上相关业务面板。此文件必须默认导出一个 react 组件
 
 同时在 example.json 中的对应示例增加配置`hasPannel:true`
+
+
+#### GUI控件
+- gui控件是为了快速实现复杂可交互表单的组件
+- 通过 `import {MarsGUI} from "@mars/components/MarsUI"` 导入后即可使用
+
+
 
 #### 5.1. `index.tsx`面板操作`map.js`内地图相关对象时。
 

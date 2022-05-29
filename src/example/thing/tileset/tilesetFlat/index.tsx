@@ -10,7 +10,7 @@ interface TableItem {
   lineId: string
 }
 
-let datasource
+let datasource = []
 let dataKeys = []
 let chkShowLine = true
 function UIComponent() {
@@ -26,6 +26,31 @@ function UIComponent() {
   }, [])
 
   const options: GuiItem[] = [
+    {
+      type: "custom",
+      label: "开挖区域",
+      element: (
+        <Space>
+          <MarsButton
+            onClick={() => {
+              setTableData([])
+              mapWork.showDytDemo()
+            }}
+          >
+            大雁塔
+          </MarsButton>
+          <MarsButton
+            onClick={() => {
+              setTableData([])
+              mapWork.showTehDemo()
+            }}
+          >
+            天鹅湖
+          </MarsButton>
+          <MarsButton onClick={removeAll}>清除</MarsButton>
+        </Space>
+      )
+    },
     {
       type: "custom",
       label: "开挖区域",
@@ -125,11 +150,9 @@ function UIComponent() {
       const id = event.data.id
 
       datasource.push({ key: item.id, name: "压平区" + item.id, lineId: id })
-      setTableData([])
       setTableData([...datasource])
 
       dataKeys.push(item.id)
-      setSelectRow([])
       setSelectRow([...dataKeys])
     })
   }, [])

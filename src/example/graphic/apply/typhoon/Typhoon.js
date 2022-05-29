@@ -14,7 +14,6 @@ class Typhoon {
 
     this.clickPtLayer = new mars3d.layer.GraphicLayer()
     map.addLayer(this.clickPtLayer)
-
     this.showTyphoonToMap(options.path)
   }
 

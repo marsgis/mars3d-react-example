@@ -36,7 +36,7 @@ export function onMounted(mapInstance) {
   const invertedEffect = new mars3d.effect.InvertedEffect()
   map.addEffect(invertedEffect)
 
-  globalNotify("已知问题提示", "(1) 目前为实验示例，镜面效果一般。 (2) 模型越平整效果越好 ", { duration: null })
+  globalNotify("已知问题提示", "(1) 目前为实验示例，镜面效果一般。 (2) 模型越平整效果越好 ")
 }
 
 /**

@@ -1,8 +1,7 @@
-/* eslint-disable no-unused-vars */
 //  移动位置、旋转 3dtiles
 class TilesEditor extends mars3d.BaseClass {
   //= ========= 构造方法 ==========
-  constructor (options) {
+  constructor(options) {
     super(options)
 
     this.options = options
@@ -17,9 +16,7 @@ class TilesEditor extends mars3d.BaseClass {
     this.rotating = false
     this._enabled = false
 
-    this.billboards = this.map.scene.primitives.add(
-      new Cesium.BillboardCollection()
-    )
+    this.billboards = this.map.scene.primitives.add(new Cesium.BillboardCollection())
     this.handler = new Cesium.ScreenSpaceEventHandler(this.map.canvas)
 
     // 用来平移位置的指示器
@@ -42,11 +39,11 @@ class TilesEditor extends mars3d.BaseClass {
 
   //= ========= 对外属性 ==========
   // 启用状态
-  get enabled () {
+  get enabled() {
     return this._enabled
   }
 
-  set enabled (val) {
+  set enabled(val) {
     this._enabled = val
     if (val) {
       this.handler.setInputAction((p) => {
@@ -62,12 +59,8 @@ class TilesEditor extends mars3d.BaseClass {
       this.rotatep.show = true
       this.movep.show = true
     } else {
-      this.handler.removeInputAction(
-        Cesium.ScreenSpaceEventType.LEFT_DOWN
-      )
-      this.handler.removeInputAction(
-        Cesium.ScreenSpaceEventType.MOUSE_MOVE
-      )
+      this.handler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOWN)
+      this.handler.removeInputAction(Cesium.ScreenSpaceEventType.MOUSE_MOVE)
       this.handler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_UP)
 
       this.rotatep.show = false
@@ -76,11 +69,11 @@ class TilesEditor extends mars3d.BaseClass {
   }
 
   // 移动位置的图标位置
-  get position () {
+  get position() {
     return this._position
   }
 
-  set position (value) {
+  set position(value) {
     this._position = value
 
     this.movep.position = this.position
@@ -88,23 +81,19 @@ class TilesEditor extends mars3d.BaseClass {
   }
 
   // 旋转方向的图标位置(依据位置和朝向计算)
-  get rotationPosition () {
+  get rotationPosition() {
     if (this._position) {
-      return mars3d.PointUtil.getPositionByDirectionAndLen(
-        this._position,
-        this._heading,
-        this._range
-      )
+      return mars3d.PointUtil.getPositionByDirectionAndLen(this._position, this._heading, this._range)
     } else {
       return null
     }
   }
 
-  get heading () {
+  get heading() {
     return this._heading
   }
 
-  set heading (value) {
+  set heading(value) {
     this._heading = value
 
     if (this._position) {
@@ -112,11 +101,11 @@ class TilesEditor extends mars3d.BaseClass {
     }
   }
 
-  get range () {
+  get range() {
     return this._range
   }
 
-  set range (value) {
+  set range(value) {
     this._range = value
 
     if (this._position) {
@@ -125,23 +114,17 @@ class TilesEditor extends mars3d.BaseClass {
   }
 
   //= ========= 方法 ==========
-  handlerOnLeafDown (event) {
+  handlerOnLeafDown(event) {
     const pickedObjects = this.scene.drillPick(event.position, 2)
 
     for (let i = 0; i < pickedObjects.length; i++) {
       const pickedObject = pickedObjects[i]
 
-      if (
-        Cesium.defined(pickedObject) &&
-        pickedObject.primitive === this.movep
-      ) {
+      if (Cesium.defined(pickedObject) && pickedObject.primitive === this.movep) {
         this.dragging = true
         this.scene.screenSpaceCameraController.enableRotate = false
         break
-      } else if (
-        Cesium.defined(pickedObject) &&
-        pickedObject.primitive === this.rotatep
-      ) {
+      } else if (Cesium.defined(pickedObject) && pickedObject.primitive === this.rotatep) {
         this.rotating = true
         this.scene.screenSpaceCameraController.enableRotate = false
         break
@@ -149,7 +132,7 @@ class TilesEditor extends mars3d.BaseClass {
     }
   }
 
-  handlerOnMouseMove (event) {
+  handlerOnMouseMove(event) {
     const position = this.pickTerrain(event.endPosition)
     if (!position) {
       return
@@ -166,10 +149,7 @@ class TilesEditor extends mars3d.BaseClass {
     } else if (this.rotating) {
       this.rotatep.position = position
       this._range = Cesium.Cartesian3.distance(this._position, position)
-      this._heading = mars3d.MeasureUtil.getAngle(
-        this._position,
-        position
-      ) // 模型是正东为0
+      this._heading = mars3d.MeasureUtil.getAngle(this._position, position) // 模型是正东为0
 
       this.fire(mars3d.EventType.change, {
         heading: this._heading
@@ -177,7 +157,7 @@ class TilesEditor extends mars3d.BaseClass {
     }
   }
 
-  handlerOnLeftUp (event) {
+  handlerOnLeftUp(event) {
     if (this.dragging || this.rotating) {
       this.rotating = this.dragging = false
       this.scene.screenSpaceCameraController.enableRotate = true
@@ -186,13 +166,13 @@ class TilesEditor extends mars3d.BaseClass {
     }
   }
 
-  pickTerrain (wndpos) {
+  pickTerrain(wndpos) {
     const ray = this.map.camera.getPickRay(wndpos)
     const pos = this.map.scene.globe.pick(ray, this.map.scene)
     return pos
   }
 
-  remove () {
+  remove() {
     // 从场景中移除
     if (this.billboards) {
       this.scene.primitives.remove(this.billboards)
@@ -202,7 +182,7 @@ class TilesEditor extends mars3d.BaseClass {
     this.movep.show = false
   }
 
-  destroy () {
+  destroy() {
     this.remove()
     this.handler.destroy()
 

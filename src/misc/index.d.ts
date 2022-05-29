@@ -7,8 +7,6 @@
 export {}
 declare global {
   interface Window {
-    mars3d: any
-    mars2d: any
     configLibs: any // 第3方公共类库配置文件
 
     _mapInstance: any // map地图对象

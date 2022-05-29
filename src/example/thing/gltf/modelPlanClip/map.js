@@ -60,28 +60,9 @@ export function rangeNormalZ(value) {
   modelPlanClip.normalZ = value
 }
 
-export function clipping1() {
-  modelPlanClip.type = mars3d.thing.ModelPlanClip.Type.ZR
-}
-
-export function clipping2() {
-  modelPlanClip.type = mars3d.thing.ModelPlanClip.Type.Z
-}
-
-export function clipping3() {
-  modelPlanClip.type = mars3d.thing.ModelPlanClip.Type.XR
-}
-
-export function clipping4() {
-  modelPlanClip.type = mars3d.thing.ModelPlanClip.Type.X
-}
-
-export function clipping5() {
-  modelPlanClip.type = mars3d.thing.ModelPlanClip.Type.Y
-}
-
-export function clipping6() {
-  modelPlanClip.type = mars3d.thing.ModelPlanClip.Type.YR
+// 更改切换方向
+export function clippingType(type) {
+  modelPlanClip.type = mars3d.thing.ModelPlanClip.Type[type]
 }
 
 // 绘制线

@@ -87,7 +87,7 @@ function addDemoGraphic2(graphicLayer) {
       startAngle: 20, // 开始角度(正东方向为0,顺时针到360度)
       clampToGround: true,
       material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.Image, {
-        image: "img/textures/laker_surface.jpg",
+        image: "img/textures/poly-lake.jpg",
         color: Cesium.Color.WHITE.withAlpha(0.8) // 透明度处理
       })
     },

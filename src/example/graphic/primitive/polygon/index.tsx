@@ -10,7 +10,7 @@ function UIComponent() {
           <LayerState />
         </MarsFormItem>
       </MarsForm>
-      <DataLoad {...{ min: 0.1, max: 100, step: 0.1, unit: "万条" }}/>
+      <DataLoad {...{ num: 0.1, min: 0.1, max: 100, step: 0.1, unit: "万条" }} />
     </MarsPannel>
   )
 }

@@ -45,7 +45,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic1()
   addDemoGraphic2()
 
-  globalNotify("操作提示：", `请鼠标单击地图任意处，浏览器安全机制需要鼠标操作才能自动开始播放视频。`, { duration: null })
+  globalNotify("操作提示：", `请鼠标单击地图任意处，浏览器安全机制需要鼠标操作才能自动开始播放视频。`)
 }
 
 /**
@@ -62,7 +62,7 @@ function addDemoGraphic1() {
     position: [117.204472, 31.842488, 120.9],
     style: {
       url: "//data.mars3d.cn/file/video/lukou.mp4",
-      maskImage: "img/textures/videoMask.png", // 羽化视频四周，融合更美观
+      maskImage: "img/textures/video-mask.png", // 羽化视频四周，融合更美观
       angle: 33.3,
       angle2: 23.4,
       heading: 140.7,
@@ -78,7 +78,7 @@ function addDemoGraphic2() {
     position: [117.205457, 31.842984, 63.9],
     style: {
       url: "//data.mars3d.cn/file/video/menqian.mp4",
-      maskImage: "img/textures/videoMask.png", // 羽化视频四周，融合更美观
+      maskImage: "img/textures/video-mask.png", // 羽化视频四周，融合更美观
       angle: 46.3,
       angle2: 15.5,
       heading: 178.5,

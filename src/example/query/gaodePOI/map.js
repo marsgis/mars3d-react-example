@@ -55,9 +55,7 @@ export function onMounted(mapInstance) {
     return inHtml
   })
 
-  queryGaodePOI = new mars3d.query.GaodePOI({
-
-  })
+  queryGaodePOI = new mars3d.query.GaodePOI()
 }
 
 /**

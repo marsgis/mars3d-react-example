@@ -33,9 +33,9 @@ function UIComponent(props) {
         </Space>
       </div>
 
-      <MarsFormItem label="按颜色着色">
+      <MarsFormItem label="建筑物颜色">
         <MarsColor
-          value={"#4B61E1"}
+          value={"#ffffff"}
           onChange={(data) => {
             mapWork.selectColor(data.target.value)
           }}

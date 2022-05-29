@@ -70,8 +70,6 @@ export function addDemoGraphic(count) {
   globalMsg("共耗时" + usedTime.toFixed(2) + "秒")
 }
 
-
-
 // 在图层绑定Popup弹窗
 export function bindLayerPopup() {
   graphicLayer.bindPopup(function (event) {

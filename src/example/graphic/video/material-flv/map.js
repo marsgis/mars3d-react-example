@@ -58,7 +58,6 @@ export function onUnmounted() {
 }
 
 const flvUrl = "https://sf1-hscdn-tos.pstatp.com/obj/media-fe/xgplayer_doc_video/flv/xgplayer-demo-360p.flv"
-
 function createVideoDom() {
   videoElement = mars3d.DomUtil.create("video", "", document.body)
   videoElement.setAttribute("muted", "muted")
@@ -79,6 +78,18 @@ function createVideoDom() {
   } else {
     $message("不支持flv格式视频")
   }
+
+  setTimeout(() => {
+    try {
+      if (videoElement.paused) {
+        globalMsg("当前浏览器已限制自动播放，请单击播放按钮")
+        videoElement.play()
+      }
+    } catch (e) {
+      // 规避浏览器权限异常
+      globalMsg("当前浏览器已限制自动播放，请单击播放按钮")
+    }
+  }, 3000)
 }
 
 // 竖立视频

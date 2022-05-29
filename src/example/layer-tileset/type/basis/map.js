@@ -87,6 +87,8 @@ export function onMounted(mapInstance) {
       showPntsGantaDemo()
       break
     default:
+      showQxShequDemo()
+      break
   }
 }
 

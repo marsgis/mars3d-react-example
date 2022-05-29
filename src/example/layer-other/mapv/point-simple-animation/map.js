@@ -28,7 +28,7 @@ export function onMounted(mapInstance) {
       console.log("加载JSON出错", error)
     })
 
-  globalNotify("功能和已知问题提示", `在视域变化中部分效果（如点的闪烁）没有融合，可根据实际项目决定是否采用此效果。`, { duration: null })
+  globalNotify("功能和已知问题提示", `在视域变化中部分效果（如点的闪烁）没有融合，可根据实际项目决定是否采用此效果。`)
 }
 
 /**

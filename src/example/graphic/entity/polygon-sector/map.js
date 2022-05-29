@@ -83,7 +83,7 @@ function addDemoGraphic2(graphicLayer) {
       endAngle: 170,
       clampToGround: true,
       material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.Image, {
-        image: "img/textures/excavate_bottom_min.jpg",
+        image: "img/textures/poly-soil.jpg",
         color: Cesium.Color.WHITE.withAlpha(0.8) // 透明度处理
       })
     },

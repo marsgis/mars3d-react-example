@@ -68,7 +68,7 @@ function UIComponent() {
             defaultChecked={isShowSjw}
             onChange={(e) => {
               setIsShowSjw(e.target.checked)
-              mapWork.showResult(isShowSjw)
+              mapWork.showResult(e.target.checked)
             }}
           >
             显示面内计算的三角网

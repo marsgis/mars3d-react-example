@@ -37,6 +37,7 @@ export function onMounted(mapInstance) {
   eventTarget.fire("init", {
     value: 10
   })
+  queryTilesetData()
 }
 
 /**
@@ -95,4 +96,16 @@ export function updateContrast(val) {
 // 创建图层
 export function createLayer(layer) {
   return mars3d.LayerUtil.create(layer)
+}
+
+// 数据获取
+function queryTilesetData() {
+  mars3d.Util.fetchJson({ url: "config/tileset.json" })
+    .then(function (arr) {
+      const modelData = arr.layers
+      eventTarget.fire("loadTypeList", { modelData })
+    })
+    .catch(function (error) {
+      console.log("加载JSON出错", error)
+    })
 }

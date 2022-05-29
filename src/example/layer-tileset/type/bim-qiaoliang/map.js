@@ -134,8 +134,8 @@ export function terrainClips(heightVal) {
       [117.096176, 31.853494, 42.56]
     ],
     diffHeight: heightVal, // 高度
-    image: "./img/textures/excavate_side_min.jpg",
-    imageBottom: "./img/textures/excavate_bottom_min.jpg",
+    image: "./img/textures/poly-stone.jpg",
+    imageBottom: "./img/textures/poly-soil.jpg",
     splitNum: 80 // 井边界插值数
   })
   map.addThing(terrainClip)

@@ -153,8 +153,6 @@ export function bindLayerPopup() {
   })
 }
 
-
-
 // 绑定右键菜单
 export function bindLayerContextMenu() {
   graphicLayer.bindContextMenu([
@@ -239,8 +237,6 @@ export function startDrawGraphic() {
     }
   })
 }
-
-
 
 // 也可以在单个Graphic上做个性化管理及绑定操作
 function initGraphicManager(graphic) {

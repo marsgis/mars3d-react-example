@@ -4,7 +4,8 @@ import * as mapWork from "./map.js"
 import { LayerState } from "@mars/components/MarsSample/LayerState"
 import { DataManage } from "@mars/components/MarsSample/DataManage"
 import { LocationTo } from "@mars/components/MarsSample/LocationTo"
-import { useState } from "react"
+import { activate, disable, updateWidget, isActive } from "@mars/widgets/common/store/widget"
+import { useState, useEffect } from "react"
 
 const onClickStartDraw = () => {
   mapWork.startDrawGraphic()
@@ -21,6 +22,29 @@ function UIComponent() {
     setValue(e.target.checked)
     mapWork.updateLayerHasEdit(e.target.checked)
   }
+
+  useEffect(() => {
+    // 编辑修改了模型
+    mapWork.eventTarget.on("graphicEditor-update", async (e: any) => {
+      if (isActive("GraphicEditor")) {
+        updateWidget("GraphicEditor", { graphic: e.graphic })
+      } else {
+        activate({
+          name: "GraphicEditor",
+          data: { graphic: e.graphic }
+        })
+      }
+    })
+
+    // 停止编辑修改模型
+    mapWork.eventTarget.on("graphicEditor-stop", async (e: any) => {
+      setTimeout(() => {
+        if (!mapWork.graphicLayer.isEditing) {
+          disable("GraphicEditor")
+        }
+      }, 100)
+    })
+  }, [])
 
   return (
     <>

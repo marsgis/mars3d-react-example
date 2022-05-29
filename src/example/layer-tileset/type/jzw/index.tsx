@@ -17,7 +17,7 @@ function UIComponent() {
             </MarsButton>
             建筑物颜色
             <MarsColor
-              defaultValue={"#4B61E1"}
+              defaultValue={"#34bdff"}
               onChange={(e) => {
                 mapWork.changeColor(e.target.value)
               }}

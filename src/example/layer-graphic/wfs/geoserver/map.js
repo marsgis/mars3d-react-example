@@ -7,6 +7,9 @@ export const mapOptions = {
   scene: {
     center: { lat: 31.798703, lng: 117.207366, alt: 2033, heading: 31, pitch: -29 }
   },
+  terrain: {
+    show: false
+  },
   layers: [
     {
       name: "合肥教育点",
@@ -76,7 +79,6 @@ export function onUnmounted() {
  * @returns {void} 无
  */
 function addWmsLayer() {
-  delete mapOptions.terrain
   const changeLevel = 15
 
   // 瓦片图，参考用

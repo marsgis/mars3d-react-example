@@ -2,6 +2,7 @@ import { MarsCheckbox, MarsForm, MarsFormItem, MarsIcon, MarsOption, MarsPannel,
 import * as mapWork from "./map.js"
 import { useState, useCallback, useEffect } from "react"
 import { Space, Upload } from "antd"
+import { activate, disable, updateWidget, isActive } from "@mars/widgets/common/store/widget"
 import "./index.less"
 function UIComponent() {
   const [modelData, setmodelData] = useState([])
@@ -31,6 +32,29 @@ function UIComponent() {
         defauList[i] = item
       }
       setDataList(defauList)
+    })
+  }, [])
+
+  useEffect(() => {
+    // 编辑修改了模型
+    mapWork.eventTarget.on("graphicEditor-update", async (e: any) => {
+      if (isActive("GraphicEditor")) {
+        updateWidget("GraphicEditor", { graphic: e.graphic })
+      } else {
+        activate({
+          name: "GraphicEditor",
+          data: { graphic: e.graphic }
+        })
+      }
+    })
+
+    // 停止编辑修改模型
+    mapWork.eventTarget.on("graphicEditor-stop", async (e: any) => {
+      setTimeout(() => {
+        if (!mapWork.graphicLayer.isEditing) {
+          disable("GraphicEditor")
+        }
+      }, 100)
     })
   }, [])
 

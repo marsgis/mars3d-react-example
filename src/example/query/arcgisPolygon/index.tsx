@@ -42,7 +42,7 @@ function UIComponent() {
       type: "input",
       field: "context",
       label: "名称",
-      value: "",
+      value: "请输入查询关键字",
       change(data) {
         console.log("数据change变化", data)
         keyWords = data

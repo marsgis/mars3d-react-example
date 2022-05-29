@@ -224,7 +224,7 @@ function UIComponent() {
 
   useEffect(() => {
     mapWork.eventTarget.on("rectangle", (e: any) => {
-      guiRef.current.updateField("rectangle", e.rectangle)
+      guiRef.current.updateField("rectangle", JSON.stringify(e.rectangle))
     })
   }, [])
 
@@ -276,7 +276,7 @@ function UIComponent() {
       maxLoadLevel: data.loadLevel[1],
       minShowLevel: data.showLevel[0],
       maxShowLevel: data.showLevel[1],
-      rectangle: data.rectangle,
+      rectangle: data.rectangle ? JSON.parse(data.rectangle) : null,
       opacity: data.opacity,
       brightness: data.brightness,
       chkProxy: data.chkProxy

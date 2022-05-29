@@ -312,7 +312,7 @@ function UIComponent() {
         <MarsCollapse defaultActiveKey={["1", "2", "3"]}>
           <MarsCollapsePanel key="1" header="模型URL地址">
             <Space wrap>
-              <span className="mars-pannel-item-label">模型URL地址:</span>
+              <span className="mars-pannel-item-label">模型URL:</span>
               <MarsInput
                 style={{ width: "280px" }}
                 defaultValue={inputUrl}
@@ -345,6 +345,13 @@ function UIComponent() {
             <Space>
               <MarsButton
                 onClick={() => {
+                  mapWork.saveBookmark(updataValue())
+                }}
+              >
+                保存参数
+              </MarsButton>
+              <MarsButton
+                onClick={() => {
                   mapWork.locate()
                 }}
               >
@@ -357,13 +364,6 @@ function UIComponent() {
                 }}
               >
                 查看构件
-              </MarsButton>
-              <MarsButton
-                onClick={() => {
-                  mapWork.saveBookmark(updataValue())
-                }}
-              >
-                保存参数
               </MarsButton>
             </Space>
           </MarsCollapsePanel>

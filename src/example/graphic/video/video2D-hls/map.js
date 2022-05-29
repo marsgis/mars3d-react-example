@@ -77,7 +77,6 @@ export function onUnmounted() {
 // let hlsUrl = "http://ivi.bupt.edu.cn/hls/cctv13.m3u8";
 // const hlsUrl = "http://playertest.longtailvideo.com/adaptive/bipbop/gear4/prog_index.m3u8"
 const hlsUrl = "http://1252093142.vod2.myqcloud.com/4704461fvodcq1252093142/f865d8a05285890787810776469/playlist.f3.m3u8"
-
 function createVideoDom(callback) {
   videoElement = mars3d.DomUtil.create("video", "", document.body)
   videoElement.setAttribute("muted", "muted")
@@ -106,6 +105,18 @@ function createVideoDom(callback) {
       }
     })
   }
+
+  setTimeout(() => {
+    try {
+      if (videoElement.paused) {
+        globalMsg("当前浏览器已限制自动播放，请单击播放按钮")
+        videoElement.play()
+      }
+    } catch (e) {
+      // 规避浏览器权限异常
+        globalMsg("当前浏览器已限制自动播放，请单击播放按钮")
+    } 
+  }, 3000)
 }
 
 // 加载已配置好的视频（此参数为界面上“打印参数”按钮获取的）

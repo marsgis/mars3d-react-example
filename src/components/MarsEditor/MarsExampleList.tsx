@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { useState, useEffect, useCallback, useMemo } from "react"
-import { Agreement, Close, Help, Right, Search } from "@icon-park/react"
+import { MarsIcon } from "@mars/components/MarsUI"
 import { downloadFile } from "@mars/utils/file-util"
 import _ from "lodash"
 import reactIcon from "./reactIcon.svg"
@@ -154,7 +154,7 @@ function MarsExampleList({ exampleList, jump, packageName, totalCount }) {
                 <p className="name">
                   {item.name} ({item.count})
                 </p>
-                <Right size="24" fill="#fff"></Right>
+                <MarsIcon icon="right" size="24" fill="#fff"></MarsIcon>
               </div>
               <div className="sidebar-2">
                 {item.children.map((item, index) => (
@@ -186,22 +186,22 @@ function MarsExampleList({ exampleList, jump, packageName, totalCount }) {
             <div className="search-l">
               <input value={inputValue} onChange={(e) => searchText(e)} className="search-i" color="#fff" placeholder="请输入示例名称筛选..." />
               <div className="ss-pic">
-                <Search size="24" fill="#fff" />
+                <MarsIcon icon="search" size="24" fill="#fff"></MarsIcon>
               </div>
               <div className="clear-value" style={{ display: inputValue ? "block" : "none" }} onClick={() => setInputValue("")}>
-                <Close size="18" />
+                <MarsIcon icon="close" size="24"></MarsIcon>
               </div>
             </div>
 
             <div className="search-r">
-              <Help className="icon" size="20" fill="#bbbbbb" />
+              <MarsIcon className="help" icon="search" size="20" fill="#bbbbbb"></MarsIcon>
               <p className="look">查看说明</p>
               <div className="sanjiao"></div>
               <div className="sanjiao-1"></div>
               <div className="explain">
                 <div className="explain-wrap">
                   <div className="sm-pic">
-                    <Agreement size="24" fill="#008aff" />
+                    <MarsIcon icon="agreement" size="24" fill="#008aff"></MarsIcon>
                   </div>
                   <div className="sm">说明</div>
                   <div className="line1">
@@ -264,7 +264,7 @@ function MarsExampleList({ exampleList, jump, packageName, totalCount }) {
                   <h3>
                     {item1.name} ({item1.children.length})
                     <div className="question" v-if="item1.details">
-                      <Help className="icon" size="20" fill="#bbbbbb" />
+                      <MarsIcon className="icon" icon="help" size="20" fill="#bbbbbb"></MarsIcon>
                       <div className="sanjiao1"></div>
                       <div className="sanjiao2"></div>
                       <div className="tan1">
@@ -276,23 +276,26 @@ function MarsExampleList({ exampleList, jump, packageName, totalCount }) {
                     </div>
                   </h3>
                   <ul>
-                    {item1.children.map((item2, index) => (
-                      <li key={item2.id} onClick={() => jump && jump(item2)}>
-                        {/* <span title="这是最近新加的功能">新</span> */}
-                        <div className="pic">
-                          <img src={item2.thumbnail} alt="" />
-                        </div>
-                        <p>
-                          {item2.name}
-                          {item2.hasPannel === true && (
-                            <span className="iconPic">
-                              <img src={reactIcon} alt="react"></img>
-                            </span>
-                          )}
-                          {item2.plugins && <span>[{item2.plugins}插件]</span>}
-                        </p>
-                      </li>
-                    ))}
+                    {item1.children.map(
+                      (item2, index) =>
+                        item2.hidden !== true && (
+                          <li key={item2.id} onClick={() => jump && jump(item2)}>
+                            {/* <span title="这是最近新加的功能">新</span> */}
+                            <div className="pic">
+                              <img src={item2.thumbnail} alt="" />
+                            </div>
+                            <p>
+                              {item2.name}
+                              {item2.hasPannel === true && (
+                                <span className="iconPic">
+                                  <img src={reactIcon} alt="react"></img>
+                                </span>
+                              )}
+                              {item2.plugins && <span>[{item2.plugins}插件]</span>}
+                            </p>
+                          </li>
+                        )
+                    )}
                   </ul>
                 </div>
               ))}

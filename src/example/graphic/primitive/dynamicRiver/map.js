@@ -47,7 +47,7 @@ export function onMounted(mapInstance) {
       [115.850741, 30.438108, 189.9]
     ],
     style: {
-      image: "./img/textures/movingRiver.png",
+      image: "./img/textures/poly-rivers.png",
       width: 280,
       height: 30,
       speed: 10
@@ -82,7 +82,7 @@ export function drawLine(width, height, speed) {
       dynamicRiver = new mars3d.graphic.DynamicRiver({
         positions: points,
         style: {
-          image: "./img/textures/movingRiver.png",
+          image: "./img/textures/poly-rivers.png",
           width: width,
           height: height,
           speed: speed

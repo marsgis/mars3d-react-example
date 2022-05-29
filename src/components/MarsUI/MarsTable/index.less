@@ -1,101 +1,42 @@
-// 表格
-.ant-table,
-.ant-table-thead > tr > th {
-  color: @mars-basecolor;
-  background: none !important;
-}
-
-.ant-table .ant-table-thead {
-  background-color: rgba(32, 160, 255, 0.2);
-}
-
-.ant-table-tbody > tr.ant-table-placeholder > td {
-  background: #141414;
-}
-
-.ant-table-row:hover > td,
-.ant-table-row-selected > td {
-  background-color: @mars-ordinary-color !important;
-}
-
-.ant-table-container,
-.ant-table-cell {
-  border-color: #cde1de !important;
-  background: transparent !important;
-}
-
-.ant-table-container {
-  border: 1px solid #cde1de !important;
-}
-
-.ant-table-cell:last-child {
-  border-right: 0 !important;
-}
-
-.ant-table-placeholder > td {
-  background: rgba(32, 42, 68, 0.3) !important;
-}
-
-.ant-table-row:nth-last-child(1) .ant-table-cell {
-  border-bottom: none;
-}
-
-// 分页
-.ant-pagination {
-  * {
-    color: @mars-basecolor !important;
-  }
-  .ant-pagination-item,
-  .ant-pagination-prev,
-  .ant-pagination-next {
-    background: none;
-    background-color: transparent !important;
-  }
-  .ant-pagination-prev .ant-pagination-item-link,
-  .ant-pagination-next .ant-pagination-item-link {
-    background: none;
-    background-color: transparent !important;
+.mars-table {
+  .ant-table,
+  .ant-table-thead > tr > th {
+    color: @mars-base-color;
+    background: none !important;
   }
 
-  .ant-pagination-simple-pager {
-    input {
-      background: none;
-      background-color: transparent !important;
-    }
-  }
-}
-
-
-.ant-select-dropdown {
-  background-color: @border-color-ordinary !important;
-
-  .ant-select-item {
-    transition: none;
-
-    &:hover,
-    &:focus {
-      background-color: @input-background-active;
-    }
+  .ant-table-row:nth-of-type(even) {
+    background-color: @mars-bg-base;
   }
 
-  .ant-select-item-option-active {
-    background-color: @primary-color !important;
+  .ant-table .ant-table-thead {
+    background-color: @mars-select-bg;
   }
-}
 
-.ant-select:not(.ant-select-customize-input) .ant-select-selector {
-  background-color: transparent !important;
-}
+  .ant-table-tbody > tr.ant-table-placeholder > td {
+    background: #141414;
+  }
 
-.ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
-  background-color: @primary-color !important;
-}
+  .ant-table-row:hover > td,
+  .ant-table-row-selected > td {
+    background-color: @mars-select-bg !important;
+  }
 
-//table表格滚动条
-.ant-table-body {
-  &::-webkit-scrollbar {
-    //整体样式
-    height: 0;
-    width: 0;
+  .ant-table-cell {
+    border: none !important;
+    background: transparent !important;
+  }
+
+  .ant-table-container {
+    border: 1px solid @mars-primary-color !important;
+    background: transparent !important;
+  }
+
+  .ant-table-placeholder > td {
+    background: @mars-bg-base !important;
+  }
+
+  .ant-table-row:nth-last-child(1) .ant-table-cell {
+    border-bottom: none;
   }
 }

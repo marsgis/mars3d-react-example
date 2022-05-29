@@ -37,7 +37,6 @@ let windLayer
 function addLayer() {
   windLayer = new mars3d.layer.WindLayer({
     particlesNumber: 9000,
-    fixedHeight: 0.0,
     fadeOpacity: 0.996,
     dropRate: 0.003,
     dropRateBump: 0.01,
@@ -74,19 +73,9 @@ let canrefresh
 
 // 参数调整面板
 export function onParticleSystemOptionsChange(options) {
-  const option = {
-    particlesNumber: options.particlesNumber,
-    fixedHeight: options.fixedHeight,
-    fadeOpacity: options.fadeOpacity,
-    dropRate: options.dropRate,
-    dropRateBump: options.dropRateBump,
-    speedFactor: options.speedFactor,
-    lineWidth: options.lineWidth
-  }
-  // 不能随时刷新，需要隔一段时间刷新，避免卡顿
   clearTimeout(canrefresh)
   canrefresh = setTimeout(() => {
-    windLayer.setOptions(option)
+    windLayer.setOptions(options)
   }, 500)
 }
 

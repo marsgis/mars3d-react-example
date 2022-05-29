@@ -87,7 +87,11 @@ function rotatePoint_onChangeHandler(event) {
 
 // 在map地图上绑定右键菜单
 export function bindMapDefault() {
-  const defaultContextmenuItems = map.getDefaultContextMenu() // 内置的默认右键菜单获取方法
+  // const defaultContextmenuItems = map.getDefaultContextMenu() // 内置的默认右键菜单获取方法
+  // map.bindContextMenu(defaultContextmenuItems) // 可以删减defaultContextmenuItems数组内值
+
+  // eslint-disable-next-line no-undef
+  const defaultContextmenuItems = getDefaultContextMenu(map) //是map.getDefaultContextMenu代码相同，用于自定义修改，代码在getDefaultContextMenu.js
   map.bindContextMenu(defaultContextmenuItems) // 可以删减defaultContextmenuItems数组内值
 }
 

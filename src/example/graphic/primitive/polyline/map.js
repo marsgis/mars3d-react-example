@@ -149,7 +149,7 @@ function addDemoGraphic4(graphicLayer) {
       width: 5,
       material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
         color: "#1a9850",
-        image: "img/textures/ArrowOpacity.png",
+        image: "img/textures/line-arrow-right.png",
         speed: 10
       })
     },
@@ -168,7 +168,7 @@ function addDemoGraphic5(graphicLayer) {
     style: {
       width: 5,
       material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
-        image: "./img/textures/arrow2.png",
+        image: "./img/textures/arrow-h.png",
         axisY: false,
         repeat: new Cesium.Cartesian2(20.0, 1.0),
         color: "#ffff00",
@@ -210,7 +210,7 @@ function addDemoGraphic7(graphicLayer) {
       width: 5,
       material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
         color: Cesium.Color.CHARTREUSE,
-        image: "img/textures/lineClr.png",
+        image: "img/textures/line-color-yellow.png",
         speed: 15
       })
     },
@@ -319,7 +319,7 @@ function addDemoGraphic11(graphicLayer) {
       width: 1.7,
       // 使用自定义材质
       material: mars3d.MaterialUtil.createMaterial(LineSpriteType, {
-        image: "./img/textures/spriteline1.png",
+        image: "./img/textures/line-sprite.png",
         speed: 10
       })
     },
@@ -339,7 +339,7 @@ function addDemoGraphic12(graphicLayer) {
       width: 2,
       // 使用自定义材质
       material: mars3d.MaterialUtil.createMaterial(LineSpriteType, {
-        image: "./img/textures/spriteline2.png",
+        image: "./img/textures/fence-line.png",
         speed: 10
       })
     },
@@ -359,7 +359,7 @@ function addDemoGraphic13(graphicLayer) {
       width: 1.6,
       // 使用自定义材质
       material: mars3d.MaterialUtil.createMaterial(LineSpriteType, {
-        image: "./img/textures/spriteline3.png",
+        image: "./img/textures/line-sprite2.png",
         speed: 10
       })
     },

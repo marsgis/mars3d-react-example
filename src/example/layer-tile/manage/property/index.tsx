@@ -94,7 +94,7 @@ function UIComponent() {
   ]
   return (
     <MarsPannel visible={true} right="10" top="10" width="250">
-      <div>栅格底图参数:</div>
+      <div>瓦片底图通用参数</div>
       <MarsGui options={options} formProps={{ labelCol: { span: 5 } }}></MarsGui>
     </MarsPannel>
   )

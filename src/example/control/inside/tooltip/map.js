@@ -50,7 +50,6 @@ function removeDemoLayer() {
 }
 
 // 1.在map地图上绑定Tooltip移入信息窗
-
 export function bindMapDemo() {
   removeDemoLayer()
 

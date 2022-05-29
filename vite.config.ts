@@ -37,7 +37,7 @@ export default ({ mode }: ConfigEnv) => {
       extensions: [".js", ".ts", ".jsx", ".tsx", ".json"]
     },
     optimizeDeps: {
-      include: ["mars3d", "@mars/widgets/common/store/widget"]
+      include: ["@mars/widgets/common/store/widget"]
     },
     json: {
       // 支持从 .json 文件中进行按名导入
@@ -67,18 +67,13 @@ export default ({ mode }: ConfigEnv) => {
       sourcemap: false,
       // 自定义rollup-commonjs插件选项
       commonjsOptions: {
-        include: /node_modules|src\/widgets\/common/
+        include: /node_modules|src\/widgets\/common\/store/
       },
       // 自定义底层的 Rollup 打包配置
       rollupOptions: {
         input: {
           index: path.resolve(__dirname, "index.html"),
           editor: path.resolve(__dirname, "editor-react.html")
-        },
-        output: {
-          entryFileNames: `example/assets-react/[name].js`,
-          chunkFileNames: `example/assets-react/[name].js`,
-          assetFileNames: `example/assets-react/[name].[ext]`
         }
       },
       // 当设置为 true, 构建后将会生成 manifest.json 文件
@@ -92,7 +87,7 @@ export default ({ mode }: ConfigEnv) => {
     },
     plugins: [
       react(),
-      eslintPlugin({ cache: false }),
+      eslintPlugin(),
       createStyleImportPlugin({
         resolves: [AntdResolve()],
         libs: [

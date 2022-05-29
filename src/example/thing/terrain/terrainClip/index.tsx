@@ -1,5 +1,5 @@
 import { MarsPannel, MarsCheckbox, MarsButton, MarsInputNumber, MarsIcon, MarsTable } from "@mars/components/MarsUI"
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { Space } from "antd"
 import * as mapWork from "./map.js"
 
@@ -18,6 +18,10 @@ function UIComponent() {
       const seletData = event.table.map((item: any) => item.key)
       setSelectRow(seletData)
     })
+  }, [])
+
+  useEffect(() => {
+    mapWork.addTerrainClip(50)
   }, [])
 
   // 表格操作

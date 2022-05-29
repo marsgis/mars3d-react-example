@@ -363,7 +363,7 @@ function UIComponent() {
     }
 
     guiRef.current.reset() // 重置
-    mapWork.resetUI()
+    mapWork.resetGraphic()
   }
 
   const highlightSatellite = () => {

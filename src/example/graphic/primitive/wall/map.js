@@ -201,7 +201,7 @@ function addDemoGraphic6() {
     ],
     style: {
       diffHeight: 400,
-      image: "img/textures/movingRiver.png"
+      image: "img/textures/poly-rivers.png"
     },
     attr: { remark: "示例6" }
   })
@@ -292,7 +292,9 @@ function addDemoGraphic10() {
       closure: true,
       diffHeight: 500,
       material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.WallScroll, {
-        image: "img/textures/line-color3.png",
+        image: "img/textures/flow-wall-1.png",
+        image2: "img/textures/flow-wall-2.png",
+        image3: "img/textures/flow-wall-3.png",
         color: Cesium.Color.BLUE,
         count: 5,
         direction: -1,

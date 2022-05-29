@@ -19,7 +19,7 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
-  globalNotify("操作提示", `鼠标左键单击进行发射`, { duration: null })
+  globalNotify("操作提示", `鼠标左键单击进行发射`)
   addDemo()
 }
 

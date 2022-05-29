@@ -1,15 +1,13 @@
 import { MarsPannel, MarsButton, MarsCheckbox, MarsInputNumber } from "@mars/components/MarsUI"
 import { Space } from "antd"
-import { useCallback, useMemo, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import * as mapWork from "./map.js"
 
 function UIComponent() {
   const [height, setHeight] = useState(30) // 地形开挖深度
 
-  useMemo(() => {
-    mapWork.eventTarget.on("hasAddLayer", (e: any) => {
-      e.terrainPlanClip.diffHeight = height
-    })
+  useEffect(() => {
+    mapWork.addLayer(height)
   }, [])
 
   // 改变切割的深度

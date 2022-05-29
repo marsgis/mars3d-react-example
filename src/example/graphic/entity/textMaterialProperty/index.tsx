@@ -1,9 +1,8 @@
 import { MarsPannel, MarsButton, MarsSlider, MarsInput } from "@mars/components/MarsUI"
 import { Space } from "antd"
 import * as mapWork from "./map.js"
-import "./index.less"
 import { activate, disable, updateWidget, isActive } from "@mars/widgets/common/store/widget"
-import { useMemo, useState, useCallback } from "react"
+import { useEffect, useState } from "react"
 
 const onClickDrawWall = () => {
   mapWork.onClickDrawWall()
@@ -25,32 +24,27 @@ function UIComponent() {
   const [angle, setAngle] = useState(0)
 
   const [text, setText] = useState("Mars3D 火星科技 2017")
- 
-  const showEditor = useCallback(
-    (e: any) => {
-      activate({
-        name: "GraphicEditor",
-        data: { graphic: e.graphic }
-      })
-    },
-    [activate]
-  )
 
-  useMemo(() => {
-    mapWork.eventTarget.on("graphicEditor-start", async (e: any) => {
-      showEditor(e)
-    })
+  useEffect(() => {
     // 编辑修改了模型
     mapWork.eventTarget.on("graphicEditor-update", async (e: any) => {
-      updateWidget("graphic-editor", {
-        data: { graphic: e.graphic }
-      })
-      showEditor(e)
+      if (isActive("GraphicEditor")) {
+        updateWidget("GraphicEditor", { graphic: e.graphic })
+      } else {
+        activate({
+          name: "GraphicEditor",
+          data: { graphic: e.graphic }
+        })
+      }
     })
 
     // 停止编辑修改模型
     mapWork.eventTarget.on("graphicEditor-stop", async (e: any) => {
-      disable("graphic-editor")
+      setTimeout(() => {
+        if (!mapWork.graphicLayer.isEditing) {
+          disable("GraphicEditor")
+        }
+      }, 100)
     })
   }, [])
 
@@ -84,7 +78,7 @@ function UIComponent() {
       <div className="f-pt">
         <Space>
           <span>方向</span>
-          <MarsSlider value={angle} min={0} max={360} step={1} onChange={onChangeDirection}></MarsSlider>
+          <MarsSlider value={angle} style={{ width: "200px" }} min={0} max={360} step={1} onChange={onChangeDirection}></MarsSlider>
         </Space>
       </div>
 

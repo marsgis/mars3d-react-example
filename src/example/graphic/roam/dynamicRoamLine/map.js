@@ -244,8 +244,8 @@ function getPathList(beginTime, endTime) {
     })
 }
 
-export function onSelect(data, selected) {
-  const car = graphicLayer.getGraphicById(data.key)
+export function onSelect(id, selected) {
+  const car = graphicLayer.getGraphicById(id)
   if (!car) {
     return
   }
@@ -267,8 +267,8 @@ export function onChange(data) {
 }
 
 // 点击行
-export function flyToModel(data) {
-  const car = graphicLayer.getGraphicById(data.key)
+export function flyToModel(id) {
+  const car = graphicLayer.getGraphicById(id)
   if (car) {
     car.flyToPoint({ radius: 900 })
   }

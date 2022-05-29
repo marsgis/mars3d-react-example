@@ -6,44 +6,7 @@ export let map // mars3d.Map三维地图对象
 export const mapOptions = {
   scene: {
     center: { lat: 31.838348, lng: 117.206494, alt: 752, heading: 359, pitch: -54 }
-  },
-  layers: [
-    {
-      type: "3dtiles",
-      name: "合肥国家大学科技园",
-      url: "//data.mars3d.cn/3dtiles/qx-hfdxy/tileset.json",
-      maximumScreenSpaceError: 1,
-      maximumMemoryUsage: 1024,
-      position: { alt: 50 },
-      show: true
-    },
-    {
-      id: 87,
-      type: "arcgis_wfs",
-      name: "兴趣点",
-      url: "//server.mars3d.cn/arcgis/rest/services/mars/hefei/MapServer/1",
-      where: " NAME like '%大学%' ",
-      minimumLevel: 15,
-      symbol: {
-        type: "billboardP",
-        styleOptions: {
-          image: "img/marker/mark3.png",
-          scale: 0.7,
-          verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-          label: {
-            text: "{NAME}",
-            font_size: 15,
-            color: "#ffffff",
-            outline: true,
-            outlineColor: "#000000",
-            pixelOffsetY: -30
-          }
-        }
-      },
-      popup: "名称：{NAME}<br />地址：{address}",
-      show: true
-    }
-  ]
+  }
 }
 
 /**
@@ -54,6 +17,48 @@ export const mapOptions = {
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
+
+  // 添加参考三维模型
+  const tiles3dLayer = new mars3d.layer.TilesetLayer({
+    name: "合肥国家大学科技园",
+    url: "//data.mars3d.cn/3dtiles/qx-hfdxy/tileset.json",
+    position: { alt: -24 },
+    maximumScreenSpaceError: 1,
+    maximumMemoryUsage: 1024
+  })
+
+  const tiles3dLayer2 = new mars3d.layer.ArcGisWfsLayer({
+    name: "兴趣点",
+    url: "//server.mars3d.cn/arcgis/rest/services/mars/hefei/MapServer/1",
+    where: " NAME like '%大学%' ",
+    minimumLevel: 15,
+    symbol: {
+      type: "billboardP",
+      styleOptions: {
+        image: "img/marker/mark3.png",
+        scale: 0.7,
+        verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+        label: {
+          text: "{NAME}",
+          font_size: 15,
+          color: "#ffffff",
+          outline: true,
+          outlineColor: "#000000",
+          pixelOffsetY: -30
+        }
+      }
+    },
+    popup: "名称：{NAME}<br />地址：{address}",
+    show: true
+  })
+
+  // 绑定事件
+  map.on(mars3d.EventType.load, function (event) {
+    console.log("数据加载完成", event)
+
+    map.addLayer(tiles3dLayer)
+    map.addLayer(tiles3dLayer2)
+  })
 
   // 绑定回调处理
   const layerPoint = map.getLayer("兴趣点", "name")

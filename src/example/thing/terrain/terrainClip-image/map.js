@@ -32,13 +32,13 @@ export function onMounted(mapInstance) {
       [116.908152, 31.44481]
     ],
     diffHeight: 1200, // 矿区深度
-    image: "./img/textures/excavate_kuangqu.jpg", // 井墙面贴图url
-    imageBottom: "./img/textures/excavate_bottom_min.jpg", // 井底贴图url
+    image: "./img/textures/mining.jpg", // 井墙面贴图url
+    imageBottom: "./img/textures/poly-soil.jpg", // 井底贴图url
     splitNum: 2 // wall边界插值数
   })
   map.addThing(terrainClip)
 
-  globalNotify("功能提示", "(1)非真实数据，仅体现岩层效果。", { duration: null })
+  globalNotify("功能提示", "非真实数据，仅体现岩层效果。")
 }
 
 /**

@@ -1,16 +1,28 @@
-import { useMemo } from "react"
+import { useEffect, useMemo } from "react"
 import _ from "lodash"
-import Icon from "@icon-park/react/es/all"
-import type { IconType } from "@icon-park/react/es/all"
+import * as svgModule from "@icon-park/svg"
 import "./index.less"
 
 interface MarsIconProps extends Record<string, any> {
-  icon: IconType | string
+  icon: string
   color?: string
   width?: string | number
 }
+console.log(svgModule)
 
-export const MarsIcon = ({ icon, color = "#fff", width = "14", ...props }: MarsIconProps) => {
+export const MarsIcon = ({ icon, color, fill, width = "14", theme = "outline", size, ...props }: MarsIconProps) => {
   const iconName = useMemo(() => _.upperFirst(_.camelCase(icon)), [icon])
-  return <Icon className="mars-icon" type={iconName} theme="outline" fill={color} size={width} {...props} />
+
+  const svgComponent = useMemo(
+    () =>
+      svgModule[iconName]({
+        theme,
+        fill: fill || color,
+        size: size || width,
+        ...props
+      }),
+    [iconName]
+  )
+
+  return <span className="mars-icon" dangerouslySetInnerHTML={{ __html: svgComponent }}></span>
 }

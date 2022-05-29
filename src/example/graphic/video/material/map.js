@@ -38,11 +38,9 @@ export function onMounted(mapInstance) {
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-
   bindLayerEvent() // 对图层绑定相关事件
   bindLayerPopup() // 在图层上绑定popup,对所有加到这个图层的矢量数据都生效
   bindLayerContextMenu() // 在图层绑定右键菜单,对所有加到这个图层的矢量数据都生效
-
 
   createVideoDom()
 
@@ -78,6 +76,18 @@ function createVideoDom() {
     element: videoElement
   })
   map.clock.shouldAnimate = true
+
+  setTimeout(() => {
+    try {
+      if (videoElement.paused) {
+        globalMsg("当前浏览器已限制自动播放，请单击播放按钮")
+        videoElement.play()
+      }
+    } catch (e) {
+      // 规避浏览器权限异常
+        globalMsg("当前浏览器已限制自动播放，请单击播放按钮")
+    } 
+  }, 3000)
 }
 
 // 竖立视频
@@ -188,8 +198,6 @@ export function removeAll() {
   graphicLayer.clear()
 }
 
-
-
 // 在图层级处理一些事物
 function bindLayerEvent() {
   // 在layer上绑定监听事件
@@ -278,6 +286,5 @@ export function bindLayerContextMenu() {
         graphicLayer.removeGraphic(graphic)
       }
     }
-
   ])
 }

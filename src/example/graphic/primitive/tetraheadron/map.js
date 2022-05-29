@@ -21,11 +21,11 @@ export function onMounted(mapInstance) {
   map.basemap = 2017 // 切换至蓝色底图
 
   // 添加参考三维模型;
-  // const tiles3dLayer = new mars3d.layer.TilesetLayer({
-  //   name: "合肥市建筑物",
-  //   url: "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json"
-  // })
-  // map.addLayer(tiles3dLayer)
+  const tiles3dLayer = new mars3d.layer.TilesetLayer({
+    name: "合肥市建筑物",
+    url: "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json"
+  })
+  map.addLayer(tiles3dLayer)
 
   // 创建矢量数据图层
   const graphicLayer = new mars3d.layer.GraphicLayer()

@@ -53,8 +53,8 @@ function showRoad(arr, options) {
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  const arrPosition = []
-  for (let i = 0; i < arr.length; i += 1) {
+  let arrPosition = []
+  for (let i = 0; i < arr.length; i++) {
     const item = arr[i]
 
     const position = Cesium.Cartesian3.fromDegrees(item.x, item.y)
@@ -95,6 +95,7 @@ function showRoad(arr, options) {
     }
   }
 
+  arrPosition = arrPosition.reverse()
   const positions = mars3d.PolyUtil.getBezierCurve(arrPosition)
   positions.push(arrPosition[arrPosition.length - 1])
 
@@ -103,7 +104,7 @@ function showRoad(arr, options) {
     style: {
       width: 4,
       material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
-        image: "img/textures/LinkPulse.png",
+        image: "img/textures/line-pulse.png",
         color: options.color,
         repeat: new Cesium.Cartesian2(10.0, 1.0),
         speed: 2

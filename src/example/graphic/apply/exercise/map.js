@@ -133,7 +133,7 @@ function addPlane(property, team) {
       material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
         color: getTeamColor(team),
         repeat: new Cesium.Cartesian2(2.0, 1.0),
-        image: "img/textures/line.png",
+        image: "img/textures/line-gradual.png",
         speed: 15
       })
     },

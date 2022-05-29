@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 /**
  * 第3方公共类库配置文件
  *
@@ -54,18 +56,19 @@ window.configLibs = {
     "mars3d/plugins/supermap/mars3d-supermap.js" // mars3d-supermap简化调用封装
   ],
 
-  /// ///////////////////////cesium相关第3方插件////////////////////////
-  "cesium-pbf": [
+
+  //////////////////////////cesium相关第3方插件////////////////////////
+  "cesium-pbf-ol": [
     // pbf矢量瓦片支持
-    "mars3d/thirdParty/pbf/ol.js",
-    "mars3d/thirdParty/pbf/olms.js",
-    "mars3d/thirdParty/pbf/mvt.js",
-    "mars3d/thirdParty/pbf/style/MapboxStreetsV6.js"
+    "mars3d/thirdParty/pbf-ol/ol.js",
+    "mars3d/thirdParty/pbf-ol/olms.js",
+    "mars3d/thirdParty/pbf-ol/mvt.js",
+    "mars3d/thirdParty/pbf-ol/style/MapboxStreetsV6.js",
   ],
   "cesium-weiVectorTile": [
     // 项目矢量瓦片方式加载GeoJson插件
-    "mars3d/thirdParty/weiVectorTile/CesiumVectorTile.js",
-    "mars3d/thirdParty/weiVectorTile/WeiVectorTileLayer.js"
+    "mars3d/thirdParty/weiVectorTile/CesiumVectorTile.min.js",
+    "mars3d/thirdParty/weiVectorTile/WeiVectorTileLayer.js",
   ],
   "cesium-meshVisualizer": [
     // ammo物理引擎支持
@@ -86,27 +89,47 @@ window.configLibs = {
     "ol/ol-cesium/olcesium.js"
   ],
 
-  /// ///////////////////////mars2d及其插件////////////////////////
-  mars2d: [
-    // 地图 主库
-    "https://unpkg.com/leaflet/dist/leaflet.css", // leaflet
+  //////////////////////////mars2d及其插件////////////////////////
+  'mars2d': [//地图 主库
+    "https://unpkg.com/leaflet/dist/leaflet.css", //leaflet
     "https://unpkg.com/leaflet/dist/leaflet.js",
-    "http://mars2d.cn/lib/mars2d/mars2d.css", // mars2d
+    "http://mars2d.cn/lib/mars2d/mars2d.css", //mars2d
     "http://mars2d.cn/lib/mars2d/mars2d.js",
     "http://mars2d.cn/lib/mars2d/plugins/esri/mars2d-esri.js"
   ],
 
-  /// ///////////////////////其他地图渲染相关库////////////////////////
-  echarts: ["echarts/echarts.min.js", "echarts/dark.js"],
-  "echarts-gl": ["echarts/echarts.min.js", "echarts/echarts-gl/echarts-gl.min.js"],
-  "echarts-liquidfill": ["echarts/echarts.min.js", "echarts/echarts-liquidfill/echarts-liquidfill.js"],
-  terraformer: ["terraformer/terraformer-1.0.9.min.js", "terraformer/terraformer-wkt-parser-1.2.0.min.js"],
-  kmlGeojson: [
+  //////////////////////////其他地图渲染相关库////////////////////////
+  'echarts': [
+    "echarts/echarts.min.js",
+    "echarts/dark.js"
+  ],
+  'echarts-gl': [
+    "echarts/echarts.min.js",
+    "echarts/echarts-gl/echarts-gl.min.js"
+  ],
+  'echarts-liquidfill': [
+    "echarts/echarts.min.js",
+    "echarts/echarts-liquidfill/echarts-liquidfill.js"
+  ],
+  'terraformer': [
+    "terraformer/terraformer-1.0.9.min.js",
+    "terraformer/terraformer-wkt-parser-1.2.0.min.js",
+  ],
+  'kriging': [
+    "kriging/kriging.min.js"
+  ],
+  'three': [
+    "three/three.js"
+  ],
+  'kmlGeojson': [
     // 项目KML/KMZ解析加载GeoJson插件
     "kml/kml-geojson.js"
   ],
   kriging: ["kriging/kriging.min.js"],
   three: ["three/three.js"],
-  hls: ["video/hls/hls.js"],
-  flv: ["video/flv/flv.min.js"]
+  'hls': ["video/hls/hls.js"],
+  'flv': ["video/flv/flv.min.js"],
+
 }
+
+

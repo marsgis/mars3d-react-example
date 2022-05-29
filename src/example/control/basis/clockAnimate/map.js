@@ -5,7 +5,7 @@ export let map // mars3d.Map三维地图对象
 // 事件对象，用于抛出事件给面板
 export const eventTarget = new mars3d.BaseClass()
 
- // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = function (option) {
   option.control = {
     timeline: true,

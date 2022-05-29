@@ -19,13 +19,11 @@ export const eventTabel = new mars3d.BaseClass()
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
-  addTerrainClip()
 
   globalNotify(
     "已知问题：",
     `(1) 开挖区域内矢量对象无法穿透进行拾取。
-      (2) 多个开挖区域距离太远时会存在误差。`,
-    { duration: null }
+     (2) 多个开挖区域距离太远时会存在误差。`
   )
 }
 
@@ -37,11 +35,11 @@ export function onUnmounted() {
   map = null
 }
 
-function addTerrainClip() {
+export function addTerrainClip(height) {
   terrainClip = new mars3d.thing.TerrainClip({
-    // diffHeight: 20, // 井的深度
-    image: "img/textures/excavate_side_min.jpg",
-    imageBottom: "img/textures/excavate_bottom_min.jpg",
+    diffHeight: height, // 井的深度
+    image: "img/textures/poly-stone.jpg",
+    imageBottom: "img/textures/poly-soil.jpg",
     splitNum: 80 // 井边界插值数
   })
   map.addThing(terrainClip)
@@ -73,8 +71,6 @@ function addTerrainClip() {
     { diffHeight: 200 }
   )
   addTableItem(areaItem2)
-
-  eventTabel.fire("loadTerrainClip", { terrainClip })
 }
 
 // 添加矩形

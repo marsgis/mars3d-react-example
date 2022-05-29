@@ -1,6 +1,20 @@
-@mars-basecolor: #ffffffd9; // 基础字体颜色
-@mars-basecolor-reverse: #000; // 基础字体颜色-反色
-@primary-color: #4db3ff; // 主要颜色
+@mars-primary-color: rgba(0, 138, 255, 0.9);
+@mars-primary-color-half: rgba(0, 138, 255, 0.5);
+@mars-sub-color: #26ddff;
+@mars-danger-color: #f75165;
+@mars-warning-color: #ff8041;
+@mars-success-color: #18af92;
+@mars-base-color: #ffffff;
+@mars-content-color: #cdcdcd;
+@mars-hover-btn-bg: #3ea6ff;
+@mars-click-btn-bg: #015dab;
+@mars-disable-btn-bg: #cdcdcd;
+@mars-base-border: #ffffff;
+@mars-select-bg: rgba(0, 138, 255, 0.2);
+@mars-bg-base: rgba(23, 49, 71, 0.8);
+@mars-base-border-color: #d9d9d9;
+@mars-list-active: linear-gradient(90deg, rgba(0, 138, 255, 0) 0%, rgba(0, 138, 255, 0.58) 53%, rgba(0, 138, 255, 0.02) 100%);
+
 @mars-ordinary-color: rgba(32, 160, 255, 0.2); // 普通颜色
 @mars-background-active: #000000d9; // 全局激活背景色
 @font-size-base: 12px; // 主要字体大小
@@ -17,13 +31,62 @@
 @button-background-active: #20a0ff33; // 按钮激活背景颜色
 @collapse-header-color: #202a4480; // 折叠面板头部颜色
 
+// 提示组件背景
+.mars-msg-bg {
+  background-image: url(./assets/images/border-image-base.png);
+  background-size: 100% 100%;
+}
+// 提示组件标题样式
+.mars-msg-title {
+  background-image: url(./assets/images/msg-title-bg.png);
+  padding: 9px 14px;
+  background-size: 100% 100%;
+  font-size: 18px;
+  color: #0089fe;
+}
+// 下拉样式
+.mars-drop-bg {
+  background-color: @mars-bg-base !important;
+  background: #173147;
+  box-shadow: 0px 4px 15px 1px rgba(2, 33, 59, 0.7);
+  border-radius: 0px;
+  background-image: url(./assets/images/selet-dropdown-border.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
 .mars-main-view {
-  color: @mars-basecolor;
+  color: @mars-base-color;
   .mars-primary-table {
     width: 100%;
     td {
       border: 1px solid @border-color-base;
       padding: 2px;
+    }
+  }
+
+  // 分页
+  .ant-pagination {
+    * {
+      color: @mars-base-color !important;
+    }
+
+    .ant-pagination-item,
+    .ant-pagination-prev,
+    .ant-pagination-next {
+      background: none;
+      background-color: transparent !important;
+      .ant-pagination-item-link {
+        background: none;
+        background-color: transparent !important;
+      }
+    }
+
+    .ant-pagination-simple-pager {
+      input {
+        background: none;
+        background-color: transparent !important;
+      }
     }
   }
 }
