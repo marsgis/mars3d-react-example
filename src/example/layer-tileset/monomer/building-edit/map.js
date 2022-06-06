@@ -2,12 +2,13 @@ import * as mars3d from "mars3d"
 
 export let map // mars3d.Map三维地图对象
 export let graphicLayer
+
 let geoJsonLayerDTH
 
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: 43.820826, lng: 125.144526, alt: 679, heading: 333, pitch: -32 }
+    center: { lat: 43.822109, lng: 125.14311, alt: 890, heading: 337, pitch: -50 }
   },
   control: {
     infoBox: false
@@ -175,7 +176,11 @@ export function bindLayerContextMenu() {
         if (!graphic) {
           return
         }
+        const parent = graphic._parent // 右击是编辑点时
         graphicLayer.removeGraphic(graphic)
+        if (parent) {
+          graphicLayer.removeGraphic(parent)
+        }
       }
     },
     {

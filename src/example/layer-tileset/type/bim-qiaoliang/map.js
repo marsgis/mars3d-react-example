@@ -242,18 +242,34 @@ export function clipLine() {
 export function clipPoly() {
   tilesetPlanClip.clear()
 
+  // map.graphicLayer.startDraw({
+  //   type: "polygon",
+  //   style: {
+  //     color: "#007be6",
+  //     opacity: 0.5
+  //   },
+  //   success: function (graphic) {
+  //     // 绘制成功后回调
+  //     const positions = graphic.positionsShow
+  //     map.graphicLayer.clear()
+
+  //     console.log("绘制坐标为", JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) // 方便测试拷贝坐标
+
+  //     tilesetPlanClip.positions = positions
+  //   }
+  // })
+
   map.graphicLayer.startDraw({
-    type: "polygon",
+    type: "rectangle",
     style: {
       color: "#007be6",
-      opacity: 0.5
+      opacity: 0.8,
+      outline: false
     },
     success: function (graphic) {
       // 绘制成功后回调
-      const positions = graphic.positionsShow
+      const positions = graphic.getOutlinePositions(false)
       map.graphicLayer.clear()
-
-      console.log("绘制坐标为", JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) // 方便测试拷贝坐标
 
       tilesetPlanClip.positions = positions
     }
@@ -264,16 +280,34 @@ export function clipPoly() {
 export function clipPoly2() {
   tilesetPlanClip.clear()
 
+  // map.graphicLayer.startDraw({
+  //   type: "polygon",
+  //   style: {
+  //     color: "#007be6",
+  //     opacity: 0.5,
+  //     clampToGround: true
+  //   },
+  //   success: function (graphic) {
+  //     // 绘制成功后回调
+  //     const positions = graphic.positionsShow
+  //     map.graphicLayer.clear()
+
+  //     tilesetPlanClip.clipOutSide = true
+  //     tilesetPlanClip.positions = positions
+  //   }
+  // })
+
+
   map.graphicLayer.startDraw({
-    type: "polygon",
+    type: "rectangle",
     style: {
       color: "#007be6",
-      opacity: 0.5,
-      clampToGround: true
+      opacity: 0.8,
+      outline: false
     },
     success: function (graphic) {
       // 绘制成功后回调
-      const positions = graphic.positionsShow
+      const positions = graphic.getOutlinePositions(false)
       map.graphicLayer.clear()
 
       tilesetPlanClip.clipOutSide = true

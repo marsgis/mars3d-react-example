@@ -3,7 +3,7 @@ import { useCallback, useMemo, useState } from "react"
 import { Space } from "antd"
 import * as mapWork from "./map.js"
 import type { GuiItem } from "@mars/components/MarsUI"
-import "./index.less"
+import "./index.css"
 
 const columns = [
   {
@@ -16,13 +16,15 @@ const columns = [
     title: "类型",
     dataIndex: "type",
     key: "type",
+    width: 60,
     align: "center"
   },
   {
-    title: "住址",
+    title: "地址",
     dataIndex: "address",
     key: "address",
-    align: "center"
+    align: "center",
+    ellipsis: true
   }
 ]
 
@@ -117,7 +119,7 @@ function UIComponent() {
         <div className="table-view">
           {/* @ts-ignore */}
           <MarsTable pagination={false} dataSource={tableData} columns={columns} bordered onRow={customRow} size="small"></MarsTable>
-          <div className="querybar-fr">
+          <div className="f-pt">
             <Space>
               <span>找到{allLength}条结果</span>第{nowPage}/{allPage}页<MarsButton onClick={() => mapWork.showFirstPage()}>首页</MarsButton>
               <MarsButton onClick={() => mapWork.showPretPage()}>&lt;</MarsButton>

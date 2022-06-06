@@ -21,18 +21,24 @@ export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
+  map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
+
+  globalNotify(
+    "已知问题提示",
+    `(1) 对3dtiles数据有要求，仅适用于无自带着色器的纹理格式模型。
+     (2) 目前不支持所有3dtile数据，请替换url进行自测`
+  )
 
   // 创建矢量数据图层
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
   showDytDemo(true, [
     [108.959062, 34.220134, 397.3],
     [108.959802, 34.220147, 397.6],
     [108.959779, 34.219506, 398.7],
     [108.959106, 34.21953, 398.1]
-  ]) // true - 加载边界线,后者是初始加载的压平位置
+  ])
 }
 
 /**
@@ -43,7 +49,7 @@ export function onUnmounted() {
   map = null
 }
 
-export function showDytDemo(chkShowLine, positions = null) {
+export function showDytDemo(chkShowLine, positions) {
   removeLayer()
 
   // 加模型
@@ -81,8 +87,29 @@ export function showTehDemo(chkShowLine) {
   createTilesetFlat(chkShowLine)
 }
 
+export function showQxShequDemo(chkShowLine) {
+  removeLayer()
+
+  tilesetLayer = new mars3d.layer.TilesetLayer({
+    name: "县城社区",
+    url: "//data.mars3d.cn/3dtiles/qx-shequ/tileset.json",
+    position: { alt: 11.5 },
+    maximumScreenSpaceError: 1,
+    maximumMemoryUsage: 1024,
+    dynamicScreenSpaceError: true,
+    cullWithChildrenBounds: false,
+    skipLevelOfDetail: true,
+    preferLeaves: true,
+    center: { lat: 28.439062, lng: 119.479517, alt: 484, heading: 4, pitch: -63 },
+    flyTo: true
+  })
+  map.addLayer(tilesetLayer)
+
+  createTilesetFlat(chkShowLine)
+}
+
 // 添加模型处理类，默认positions为大雁塔的压平位置
-function createTilesetFlat(chkShowLine, positions = null) {
+function createTilesetFlat(chkShowLine, positions) {
   if (tilesetFlat) {
     map.removeThing(tilesetFlat)
     tilesetFlat = null
@@ -91,8 +118,7 @@ function createTilesetFlat(chkShowLine, positions = null) {
   // 模型压平处理类
   tilesetFlat = new mars3d.thing.TilesetFlat({
     layer: tilesetLayer,
-    positions: positions,
-    height: 0
+    positions: positions
   })
   map.addThing(tilesetFlat)
 
@@ -103,13 +129,6 @@ function createTilesetFlat(chkShowLine, positions = null) {
       addTableItem({ id: id, item: item })
     })
   })
-
-  // 模型加载完成方法二
-  // tilesetLayer.on(mars3d.EventType.load, function () {
-  //   setTimeout(() => {
-  //     eventTarget.fire("dataLoaded", { list: tilesetFlat.list })
-  //   }, 10)
-  // })
 }
 
 function removeLayer() {
@@ -127,7 +146,7 @@ function removeLayer() {
 }
 
 // 添加矩形
-export function btnDrawExtent(chkShowLine) {
+export function btnDrawExtent(chkShowLine, height) {
   map.graphicLayer.clear()
   map.graphicLayer.startDraw({
     type: "rectangle",
@@ -144,14 +163,14 @@ export function btnDrawExtent(chkShowLine) {
       const id = addTestLine(chkShowLine, positions)
       console.log("绘制坐标为", JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) // 方便测试拷贝坐标
 
-      const item = tilesetFlat.addArea(positions)
+      const item = tilesetFlat.addArea(positions, { height: height })
 
       addTableItem({ id: id, item: item })
     }
   })
 }
 // 绘制多边形
-export function btnDraw(chkShowLine) {
+export function btnDraw(chkShowLine, height) {
   map.graphicLayer.clear()
   map.graphicLayer.startDraw({
     type: "polygon",
@@ -167,7 +186,7 @@ export function btnDraw(chkShowLine) {
       const id = addTestLine(chkShowLine, positions)
       console.log("绘制坐标为", JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) // 方便测试拷贝坐标
 
-      const item = tilesetFlat.addArea(positions)
+      const item = tilesetFlat.addArea(positions, { height: height })
 
       addTableItem({ id: id, item: item })
     }
@@ -184,7 +203,7 @@ export function removeAll() {
 
 // 改变压平的高度
 export function changeFlatHeight(val) {
-  tilesetFlat.height = val
+  tilesetFlat.updateHeight(val)
 }
 
 // 是否显示测试边界线
@@ -234,6 +253,7 @@ export function flyToGraphic(item) {
 export function deletedGraphic(key, id) {
   const graphic = tilesetFlat.getAreaById(key)
   tilesetFlat.removeArea(graphic)
+
   const graphicLine = graphicLayer.getGraphicById(id)
   graphicLayer.removeGraphic(graphicLine)
 }

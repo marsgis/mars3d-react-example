@@ -19,6 +19,27 @@
       "center": { "lat": 31.786281, "lng": 117.223716, "alt": 3718, "heading": 2, "pitch": -45 }
     },
     {
+      "pid": 2040,
+      "type": "3dtiles",
+      "name": "合肥市区2",
+      "url": "//data.mars3d.cn/3dtiles/jzw-hefei2/tileset.json",
+      "maximumScreenSpaceError": 1,
+      "maximumMemoryUsage": 1024,
+      "style": {
+        "color": {
+          "conditions": [["true", "color('rgba(42, 160, 224, 1)')"]]
+        }
+      },
+      "marsJzwStyle": true,
+      "highlight": { "type": "click", "color": "#FFFF00" },
+      "popup": [
+        { "field": "objectid", "name": "编号" },
+        { "field": "remark", "name": "名称" },
+        { "field": "height", "name": "楼高", "unit": "米" }
+      ],
+      "center": { "lat": 31.786281, "lng": 117.223716, "alt": 3718, "heading": 2, "pitch": -45 }
+    },
+    {
       "id": 204012,
       "pid": 2040,
       "type": "3dtiles",

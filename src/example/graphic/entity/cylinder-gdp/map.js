@@ -273,11 +273,9 @@ function getCityChartsOptions(attr) {
     },
     title: {
       text: attr.Name + "   近五年GDP（亿元）",
+      textStyle: { color: "white", fontSize: "17", fontWidth: "normal" },
       top: "10",
-      left: "5",
-      color: "white",
-      fontSize: "17",
-      fontWidth: "normal"
+      left: "5"
     },
     tooltip: {
       show: "true",

@@ -18,13 +18,17 @@ export const mapOptions = {
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
-
   map.basemap = 2017 // 切换到蓝色底图
 
   const tilesetLayer = new mars3d.layer.TilesetLayer({
-    url: "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
+    url: "//data.mars3d.cn/3dtiles/jzw-hefei2/tileset.json",
     maximumScreenSpaceError: 1,
     maximumMemoryUsage: 1024,
+    style: {
+      color: {
+        conditions: [["true", `color("rgba(42, 160, 224, 1)")`]]
+      }
+    },
     marsJzwStyle: true, // 打开建筑物特效（内置Shader代码）
     center: { lat: 31.801072, lng: 117.208356, alt: 1250, heading: 35, pitch: -17 },
     popup: "all"
@@ -48,7 +52,8 @@ export function onMounted(mapInstance) {
         width: 1,
         material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlowColor, {
           color: "rgb(141,172,172)",
-          speed: random(10, 20),
+          speed: random(5, 10),
+          startTime: random(1000, 3000),
           percent: 0.1,
           alpha: 0.01
         })

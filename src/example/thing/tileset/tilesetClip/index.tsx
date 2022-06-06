@@ -12,13 +12,15 @@ function UIComponent() {
     {
       title: "裁剪区",
       dataIndex: "name",
-      key: "name"
+      key: "name",
+      align: "center"
     },
     {
       title: "操作",
       dataIndex: "caozuo",
       key: "caozuo",
       width: 80,
+      align: "center",
       render: (comp: string, record: any) => {
         return (
           <>
@@ -67,15 +69,6 @@ function UIComponent() {
     })
   }, [])
 
-  useEffect(() => {
-    $notify(
-      "已知问题提示",
-      `（1）对3dtiles数据有要求，仅适用于无自带着色器的纹理格式模型。
-    （2）目前不支持所有3dtile数据，请替换url进行自测`,
-      { duration: null }
-    )
-  }, [])
-
   // 表格的操作
   const flyto = (record: any) => {
     mapWork.flyToGraphic(record.key)
@@ -106,9 +99,8 @@ function UIComponent() {
         </Space>
       </div>
 
-      <div>
-        <MarsTable pagination={{ pageSize: 5 }} bordered rowSelection={rowSelection} columns={columns} dataSource={dataSource}></MarsTable>
-      </div>
+      {/* @ts-ignore */}
+      <MarsTable pagination={{ pageSize: 5 }} bordered rowSelection={rowSelection} columns={columns} dataSource={dataSource}></MarsTable>
     </MarsPannel>
   )
 }

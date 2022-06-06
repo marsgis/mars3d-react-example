@@ -252,13 +252,6 @@
             "hasPannel": true
           },
           {
-            "name": "Mapbox矢量瓦片(.pbf)",
-            "thumbnail": "layert-online-mvt.jpg",
-            "main": "layer-tile/online/mvt",
-            "hasPannel": true,
-            "libs": ["mars3d", "cesium-pbf-ol"]
-          },
-          {
             "name": "实时交通态势图",
             "thumbnail": "layert-online-traffic-time.jpg",
             "main": "layer-tile/online/traffic-time",
@@ -351,6 +344,20 @@
             "name": "谷歌地球企业版【需部署私服】",
             "thumbnail": "layert-type-gee.jpg",
             "main": "layer-tile/type/gee"
+          },
+          {
+            "name": "PBF矢量瓦片(OL渲染)",
+            "thumbnail": "layert-type-mvt.jpg",
+            "main": "layer-tile/type/pbf-ol",
+            "hasPannel": true,
+            "libs": ["mars3d", "cesium-pbf-ol"]
+          },
+          {
+            "name": "PBF矢量瓦片(Mapbox渲染)",
+            "thumbnail": "layert-type-mapbox.jpg",
+            "main": "layer-tile/type/pbf-mapbox",
+            "hasPannel": true,
+            "libs": ["mars3d", "cesium-pbf-mapbox"]
           }
         ]
       },

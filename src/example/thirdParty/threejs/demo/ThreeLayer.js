@@ -3,13 +3,13 @@ const THREE = window.THREE
 
 // 与THREE.js集成
 class ThreeLayer extends BaseLayer {
-  constructor (options = {}) {
+  constructor(options = {}) {
     super(options)
 
     this._pointerEvents = this.options.pointerEvents
   }
 
-  _showHook (show) {
+  _showHook(show) {
     if (show) {
       this._threejsContainer.style.visibility = "visible"
     } else {
@@ -23,7 +23,7 @@ class ThreeLayer extends BaseLayer {
    * @return {void}  无
    * @private
    */
-  _mountedHook () {
+  _mountedHook() {
     if (!THREE) {
       throw new Error("请引入 three.js 库 ")
     }
@@ -56,16 +56,16 @@ class ThreeLayer extends BaseLayer {
    * @return {void}  无
    * @private
    */
-  _addedHook () {
+  _addedHook() {
     if (this._container) {
       this._map.container.appendChild(this._container)
     }
 
     this._map.viewer.useDefaultRenderLoop = false // 关闭自动渲染
 
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
-    const that = this;
-    (function frame () {
+    // eslint-disable-next-line
+    const that = this
+    ;(function frame() {
       // animateFrame: requestAnimationFrame事件句柄，用来清除操作
       that._animateFrame = window.requestAnimationFrame(frame)
       that.update() // 按帧率执行
@@ -78,7 +78,7 @@ class ThreeLayer extends BaseLayer {
    * @return {void}  无
    * @private
    */
-  _removedHook () {
+  _removedHook() {
     window.cancelAnimationFrame(this._animateFrame)
     delete this._animateFrame
 
@@ -89,24 +89,24 @@ class ThreeLayer extends BaseLayer {
     }
   }
 
-  update () {
+  update() {
     this.renderCesium()
     this.renderThreeObj()
     this.renderCamera()
   }
 
-  renderCesium () {
+  renderCesium() {
     this._map.viewer.render()
   }
 
-  renderThreeObj () {
+  renderThreeObj() {
     const width = this._container.clientWidth
     const height = this._container.clientHeight
     this.renderer.setSize(width, height)
     this.renderer.render(this.scene, this.camera)
   }
 
-  renderCamera () {
+  renderCamera() {
     // register Three.js scene with Cesium
     this.camera.fov = Cesium.Math.toDegrees(this._map.camera.frustum.fovy) // ThreeJS FOV is vertical
     this.camera.updateProjectionMatrix()

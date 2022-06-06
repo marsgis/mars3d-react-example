@@ -114,19 +114,21 @@ function UIComponent() {
     {
       title: "开挖区域",
       dataIndex: "name",
-      key: "name"
+      key: "name",
+      align: "center"
     },
     {
       title: "操作",
       dataIndex: "caozuo",
       key: "caozuo",
+      align: "center",
       width: 100,
       render: (comp: string, record: any) => {
         return (
           <>
             <Space>
-              <MarsIcon style={{ cursor: "pointer" }} icon="move-one" color="#f2f2f2" onClick={() => flyto(record)} />
-              <MarsIcon style={{ cursor: "pointer" }} icon="delete" color="#f2f2f2" onClick={() => deleted(record)} />
+              <MarsIcon icon="move-one" color="#f2f2f2" onClick={() => flyto(record)} />
+              <MarsIcon icon="delete" color="#f2f2f2" onClick={() => deleted(record)} />
             </Space>
           </>
         )
@@ -169,7 +171,8 @@ function UIComponent() {
 
   return (
     <MarsPannel visible={true} width={360} right={10} top={10}>
-      <MarsGui options={options} formProps={{ labelCol: { span: 7 } }}></MarsGui>
+      <MarsGui options={options} formProps={{ labelCol: { span: 5 } }}></MarsGui>
+      {/* @ts-ignore */}
       <MarsTable pagination={{ pageSize: 5 }} dataSource={tableData} rowSelection={rowSelection} columns={columns} bordered></MarsTable>
     </MarsPannel>
   )

@@ -27,7 +27,7 @@ function UIComponent() {
         onClose={() => {
           setShowLayer(false)
         }}
-        width="calc(100% - 200px)"
+        width="calc(100% - 300px)"
         left="100"
         top="80"
         bottom="80"

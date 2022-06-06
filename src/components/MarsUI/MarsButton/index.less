@@ -1,17 +1,23 @@
 // 按钮
 .mars-button.ant-btn {
-  font-size: 14px;
-  background: @mars-primary-color-half;
-  border: none;
-  padding-left: 10px;
-  padding-right: 10px;
-  color: @mars-base-color;
-  :deep(.mars-icon) {
-    font-size: 18px !important;
-    line-height: 18px;
-    vertical-align: middle !important;
-    padding-left: 2px;
-    padding-right: 2px;
+  &:not(.ant-btn-text) {
+    font-size: 14px;
+    background: @mars-primary-color-half;
+    border: none;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: @mars-base-color;
+    .mars-icon {
+      margin-right: 4px;
+    }
+    &:disabled {
+      color: @mars-base-color;
+      background: @mars-disable-btn-bg;
+      &:hover {
+        background: @mars-disable-btn-bg;
+        color: @mars-base-color;
+      }
+    }
   }
 }
 .mars-button:not([disabled]) {

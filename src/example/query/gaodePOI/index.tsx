@@ -3,6 +3,7 @@ import { Space, Cascader } from "antd"
 import { useMemo, useState, useEffect, useCallback } from "react"
 import axios from "axios"
 import * as mapWork from "./map.js"
+import "./index.css"
 
 const columns = [
   {
@@ -21,7 +22,7 @@ const columns = [
     key: "type"
   },
   {
-    title: "住址",
+    title: "地址",
     dataIndex: "address",
     key: "address"
   }
@@ -114,7 +115,7 @@ function UIComponent() {
           <Space>
             <span>城市:</span>
             {/* @ts-ignore */}
-            <Cascader bordered={false} options={city} onChange={selectCity}> 
+            <Cascader bordered={false} options={city} onChange={selectCity}>
               {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
               <a href="#">
                 {citySheng}/{cityShi}

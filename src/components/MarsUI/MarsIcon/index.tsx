@@ -24,5 +24,5 @@ export const MarsIcon = ({ icon, color, fill, width = "14", theme = "outline", s
     [iconName]
   )
 
-  return <span className="mars-icon" dangerouslySetInnerHTML={{ __html: svgComponent }}></span>
+  return <span className="mars-icon" dangerouslySetInnerHTML={{ __html: svgComponent }} {...props}></span>
 }

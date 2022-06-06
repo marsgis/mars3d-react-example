@@ -18,6 +18,8 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
+  globalNotify("已知问题提示", `(1) 井目前主要地形开挖分析内部中使用，在本示例内未开启深度检测时会浮动在地图上。`)
+
   // 创建Graphic图层
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
@@ -30,8 +32,6 @@ export function onMounted(mapInstance) {
   addDemoGraphic1(graphicLayer)
   addDemoGraphic2(graphicLayer)
   addDemoGraphic3(graphicLayer)
-
-  globalNotify("已知问题：", `(1) 井目前主要地形开挖分析内部中使用，在本示例内未开启深度检测时会浮动在地图上。`)
 }
 
 /**
@@ -227,7 +227,11 @@ export function bindLayerContextMenu() {
         if (!graphic) {
           return
         }
+        const parent = graphic._parent // 右击是编辑点时
         graphicLayer.removeGraphic(graphic)
+        if (parent) {
+          graphicLayer.removeGraphic(parent)
+        }
       }
     },
     {

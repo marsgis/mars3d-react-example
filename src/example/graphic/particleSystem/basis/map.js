@@ -41,7 +41,7 @@ function addDemoGraphic1(graphicLayer) {
   const particleSystem = new mars3d.graphic.ParticleSystem({
     position: Cesium.Cartesian3.fromDegrees(117.224855, 31.815135, 28.05), // 位置
     style: {
-      image: "./img/particle/fountain2.png",
+      image: "./img/particle/penquan.png",
       startColor: new Cesium.Color(1, 1, 1, 0.6), // 粒子出生时的颜色
       endColor: new Cesium.Color(0.8, 0.86, 1, 0.4), // 当粒子死亡时的颜色
 
@@ -72,7 +72,7 @@ function addDemoGraphic2(graphicLayer) {
   const particleSystem = new mars3d.graphic.ParticleSystem({
     position: Cesium.Cartesian3.fromDegrees(117.225518, 31.815549, 28.28), // 位置
     style: {
-      image: "./img/particle/fire4.png",
+      image: "./img/particle/fire2.png",
       startColor: new Cesium.Color(1, 1, 1, 1), // 粒子出生时的颜色
       endColor: new Cesium.Color(0.5, 0, 0, 0), // 当粒子死亡时的颜色
       // sizeInMeters: true,

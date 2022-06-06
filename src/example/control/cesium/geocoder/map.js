@@ -5,10 +5,7 @@ export let map // mars3d.Map三维地图对象
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = function (option) {
   option.control = {
-    geocoder: true,
-    geocoderConfig: {
-      key: ["f2fedb9b08ae13d22f1692cd472d345e", "2e6ca4aeb6867fb637a5bee8333e5d3a"] // 高德key
-    }
+    geocoder: true
   }
   return option
 }

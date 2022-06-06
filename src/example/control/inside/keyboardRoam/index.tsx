@@ -13,35 +13,11 @@ function UIComponent() {
           </Space>
         </MarsFormItem>
         <MarsFormItem label="平移步长：">
-          <MarsSlider onChange={(e) => mapWork.changeSlider(e)} min={0} max={300} step={0.01}></MarsSlider>
+          <MarsSlider onChange={(e) => mapWork.changeSlider(e)} min={0} max={300} step={0.01} style={{ width: "50%" }}></MarsSlider>
         </MarsFormItem>
-        <MarsFormItem label="相机平移：">
-          <Space>
-            <span>W :向前</span>
-            <span>S :向后</span>
-            <span>D :向右</span>
-            <span>A :向左</span>
-            <span>Q :升高</span>
-            <span>E :降低</span>
-          </Space>
-        </MarsFormItem>
-        <MarsFormItem label="相机本身：">
-          <Space>
-            <span>↑ :抬头</span>
-            <span>↓ :低头</span>
-            <span>← :向左旋转</span>
-            <span>→ :向右旋转</span>
-          </Space>
-        </MarsFormItem>
-        <MarsFormItem label="屏幕中心点：">
-          <Space>
-            <span>I :飞近</span>
-            <span>K :远离</span>
-            <span>U :向上</span>
-            <span>O :向下</span>
-            <span>J :逆时针</span>
-            <span>L :顺时针</span>
-          </Space>
+
+        <MarsFormItem>
+          <img src="/img/tietu/keyboard.png" alt="" />
         </MarsFormItem>
       </MarsForm>
     </MarsPannel>

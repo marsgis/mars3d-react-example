@@ -54,18 +54,18 @@ function globalInitMap(options) {
 }
 
 // 调用项目的消息提示（自动消失）
-function globalMsg(msg, type, ...args) {
-  return parentGlobal.$message(msg, type, ...args)
+function globalMsg(content) {
+  return parentGlobal.$message(content)
 }
 
 // 调用项目的弹窗提示（手动单击确定关闭窗口）
-function globalAlert(msg, title, ...args) {
-  return parentGlobal.$alert(msg, title, ...args)
+function globalAlert(content, title) {
+  return parentGlobal.$alert(content, title)
 }
 
 // 调用项目的右上角信息提示（可关闭）
-function globalNotify(msg, disc, ...args) {
-  return parentGlobal.$notify(msg, disc, ...args)
+function globalNotify(title, content) {
+  return parentGlobal.$notify(title, content)
 }
 
 function showLoading(type) {

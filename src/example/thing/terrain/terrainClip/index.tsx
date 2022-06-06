@@ -49,13 +49,15 @@ function UIComponent() {
     {
       title: "开挖区域",
       dataIndex: "name",
-      key: "name"
+      key: "name",
+      align: "center"
     },
     {
       title: "操作",
       dataIndex: "caozuo",
       key: "caozuo",
       width: 80,
+      align: "center",
       render: (comp: string, record: any, index: number) => {
         return (
           <>
@@ -106,7 +108,7 @@ function UIComponent() {
           <MarsInputNumber min={-500} max={999} step={1} defaultValue={50} onChange={changeClipHeight}></MarsInputNumber>
         </Space>
       </div>
-
+      {/* @ts-ignore */}
       <MarsTable dataSource={tableData} rowSelection={rowSelection} columns={columns} bordered pagination={{ pageSize: 5 }}></MarsTable>
     </MarsPannel>
   )

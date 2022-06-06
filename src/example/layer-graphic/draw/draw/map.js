@@ -5,6 +5,9 @@ export let map // mars3d.Map三维地图对象
 export let graphicLayer // 矢量图层对象
 
 export const mapOptions = {
+  // scene: {
+  //   center: { lat: 30.846849, lng: 116.335307, alt: 739, heading: 360, pitch: -45 }
+  // },
   control: {
     infoBox: false
   }
@@ -378,7 +381,11 @@ export function bindLayerContextMenu() {
         if (!graphic) {
           return
         }
+        const parent = graphic._parent // 右击是编辑点时
         graphicLayer.removeGraphic(graphic)
+        if (parent) {
+          graphicLayer.removeGraphic(parent)
+        }
       }
     },
     {
@@ -467,8 +474,6 @@ export function bindLayerContextMenu() {
 export function updateOnlyPickModelPosition(value) {
   map.onlyPickModelPosition = value
 }
-
-
 
 /**
  * 打开geojson文件
@@ -595,11 +600,11 @@ export function saveWKT() {
 
 // 加载演示数据
 function loadDemoData() {
-  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/geojson/mars3d-draw.json" })
-    .then(function (json) {
-      graphicLayer.loadGeoJSON(json, { clear: true, flyTo: true })
-    })
-    .catch(function (error) {
-      console.log("加载JSON出错", error)
-    })
+  if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
+    return
+  }
+
+  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/geojson/mars3d-draw.json" }).then(function (json) {
+    graphicLayer.loadGeoJSON(json, { clear: true, flyTo: true })
+  })
 }

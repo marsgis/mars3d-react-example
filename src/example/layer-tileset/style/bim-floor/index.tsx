@@ -8,7 +8,7 @@ const list = [
   { name: "3F", callback: () => mapWork.show(3) },
   { name: "2F", callback: () => mapWork.show(2) },
   { name: "1F", callback: () => mapWork.show(1) },
-  { name: "-1f", callback: () => mapWork.minusOne() },
+  { name: "-1F", callback: () => mapWork.minusOne() },
   { name: "整体", callback: () => mapWork.showAll() }
 ]
 

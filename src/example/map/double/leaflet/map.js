@@ -13,10 +13,9 @@ export function onMounted(mapInstance) {
   map3d = mapInstance // 记录map
   map3d.camera.percentageChanged = 0.01
 
+  globalNotify("已知问题提示", `三维事件目前监听不灵敏，视角同步不够平滑。 `)
+
   creatMap2D()
-
-
-  globalNotify("已知问题：", `(1) 三维事件目前监听不灵敏，视角同步不够平滑。 `)
 }
 
 /**

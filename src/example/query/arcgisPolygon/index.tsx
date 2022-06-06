@@ -5,27 +5,35 @@ import { Space } from "antd"
 import { useEffect, useRef, useState } from "react"
 import * as echarts from "echarts"
 import * as mapWork from "./map.js"
+import "./index.css"
 
 const columns = [
   {
     title: "序号",
     dataIndex: "index",
-    key: "index"
+    key: "index",
+    align: "center"
   },
   {
     title: "类别",
     dataIndex: "type",
-    key: "type"
+    key: "type",
+    align: "center",
+    width: 100,
+    ellipsis: true
   },
   {
     title: "数量",
     dataIndex: "num",
-    key: "num"
+    key: "num",
+    align: "center"
   },
   {
     title: "面积（亩）",
     dataIndex: "area",
-    key: "area"
+    key: "area",
+    width: 100,
+    align: "center"
   }
 ]
 
@@ -107,11 +115,6 @@ function UIComponent() {
 
       // 表格数据
       stateDataSource(arrTable)
-
-      // echarts图表
-      // setTimeout(() => {
-      //   createTabsEchartsData(arrType, arrArea, arrPie)
-      // })
     })
   }, [])
 
@@ -136,6 +139,7 @@ function UIComponent() {
           {...{ centered: true, tabBarGutter: 55 }}
         >
           <MarsTabPane key="1" tab="表格">
+            {/* @ts-ignore */}
             <MarsTable columns={columns} dataSource={dataSource} {...{ scroll: { y: tableScrollHeight.current }, bordered: true, size: "small" }} />
           </MarsTabPane>
           <MarsTabPane key="2" tab="饼状图">

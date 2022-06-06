@@ -7,7 +7,11 @@ import "./index.less"
 
 const jumpUrl = (item: any) => {
   let url = process.env.BASE_URL
-  url += "editor-react.html"
+  if (process.env.EDITOR_MODE) {
+    url += "editor-react.html"
+  } else {
+    url += "read-react.html"
+  }
 
   // 处理参数
   url += "?id=" + encodeURI(item.main)

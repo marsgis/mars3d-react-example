@@ -20,6 +20,13 @@ export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
+  globalNotify(
+    "已知问题提示",
+    `(1) 对3dtiles数据有要求，仅适用于无自带着色器的纹理格式模型。
+     (2) 目前不支持所有3dtile数据，请替换url进行自测`
+  )
+
+
   map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
   addLayer()
 }

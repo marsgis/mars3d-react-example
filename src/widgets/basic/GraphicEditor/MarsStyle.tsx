@@ -82,6 +82,26 @@ export default function MarsStyle({ style, graphic, onChange = () => {} }: MarsA
       }
 
       const attrName = item.name
+      // 以下对样式互斥的处理。
+      // 贴地对象
+      if (innerStyle.clampToGround) {
+        if (
+          attrName === "fill" || // 不能取消填充。
+          attrName === "height" || // 没有高度
+          attrName === "outline" ||
+          attrName === "outlineWidth" ||
+          attrName === "outlineColor" ||
+          attrName === "outlineOpacity" ||
+          attrName === "hasShadows" ||
+          attrName === "diffHeight"
+        ) {
+          return false
+        }
+      } else {
+        if (attrName === "zIndex") {
+          return false
+        }
+      }
 
       // 三维立体对象
       if (innerStyle.diffHeight > 0) {
@@ -117,11 +137,11 @@ export default function MarsStyle({ style, graphic, onChange = () => {} }: MarsA
 
   return (
     <MarsCollapse activeKey={["1"]}>
-      <MarsCollapsePanel key="1" showArrow={false} header="属性信息">
+      <MarsCollapsePanel key="1" showArrow={false} header="样式信息">
         <table className="mars-primary-table">
           <tbody>
             <tr>
-              <td width={80}>所在图层</td>
+              <td width={100}>所在图层</td>
               <td>{graphic._layer.name || "默认分组"}</td>
             </tr>
             <tr>

@@ -34,6 +34,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic4(graphicLayer)
   addDemoGraphic5(graphicLayer)
   addDemoGraphic6(graphicLayer)
+  addDemoGraphic7(graphicLayer)
 }
 
 /**
@@ -171,6 +172,65 @@ function addDemoGraphic6(graphicLayer) {
   graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
 }
 
+// 注册自定义材质
+const CylinderFadeType = "CylinderFade"
+mars3d.MaterialUtil.register(CylinderFadeType, {
+  fabric: {
+    uniforms: {
+      color: new Cesium.Color(1.0, 0.0, 0.0, 0.7),
+      image: Cesium.Material.DefaultImageId
+    },
+    source: `
+        uniform vec4 color;
+        uniform sampler2D image;
+        czm_material czm_getMaterial(czm_materialInput materialInput){
+          czm_material material = czm_getDefaultMaterial(materialInput);
+          vec2 st = materialInput.st;
+          float time = fract(czm_frameNumber / 90.) ;
+          vec2 new_st = fract(st- vec2(time,time));
+          vec4 colorImage = texture2D(image, new_st);
+          vec3 diffuse = colorImage.rgb;
+          float alpha = colorImage.a;
+          diffuse *= color.rgb;
+          alpha *= color.a;
+          material.diffuse = diffuse;
+          material.alpha = alpha * pow(1. - st.t,color.a);
+          return material;
+        } `
+  },
+  translucent: true
+})
+
+function addDemoGraphic7(graphicLayer) {
+  Cesium.Resource.fetchImage({ url: "img/textures/vline-point.png" }).then((image) => {
+    const primitive = new mars3d.graphic.CylinderPrimitive({
+      position: [116.209929, 30.975196, 1670.4],
+      style: {
+        length: 2000.0,
+        topRadius: 0.0,
+        bottomRadius: 1000.0,
+        material: mars3d.MaterialUtil.createMaterial(CylinderFadeType, {
+          color: "#00ffff",
+          image: _getParticlesImage(image)
+        })
+      },
+      attr: { remark: "示例7" }
+    })
+    graphicLayer.addGraphic(primitive) // primitive.addTo(graphicLayer)  //另外一种写法
+  })
+}
+
+function _getParticlesImage(image) {
+  const canvas = document.createElement("canvas")
+  canvas.width = 64
+  canvas.height = 256
+  const ctx = canvas.getContext("2d")
+  ctx.clearRect(0, 0, 64, 256)
+  ctx.drawImage(image, 0, 0)
+  ctx.drawImage(image, 33, 0)
+  return canvas
+}
+
 // 在图层级处理一些事物
 function bindLayerEvent() {
   // 在layer上绑定监听事件
@@ -185,8 +245,6 @@ function bindLayerEvent() {
   }) */
 }
 
-
-
 // 在图层绑定Popup弹窗
 export function bindLayerPopup() {
   graphicLayer.bindPopup(function (event) {
@@ -198,8 +256,6 @@ export function bindLayerPopup() {
     return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
   })
 }
-
-
 
 // 绑定右键菜单
 export function bindLayerContextMenu() {
@@ -220,7 +276,11 @@ export function bindLayerContextMenu() {
         if (!graphic) {
           return
         }
+        const parent = graphic._parent // 右击是编辑点时
         graphicLayer.removeGraphic(graphic)
+        if (parent) {
+          graphicLayer.removeGraphic(parent)
+        }
       }
     }
   ])

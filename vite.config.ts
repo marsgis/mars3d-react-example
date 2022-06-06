@@ -73,7 +73,8 @@ export default ({ mode }: ConfigEnv) => {
       rollupOptions: {
         input: {
           index: path.resolve(__dirname, "index.html"),
-          editor: path.resolve(__dirname, "editor-react.html")
+          editor: path.resolve(__dirname, "editor-react.html"),
+          read: path.resolve(__dirname, "read-react.html")
         }
       },
       // 当设置为 true, 构建后将会生成 manifest.json 文件

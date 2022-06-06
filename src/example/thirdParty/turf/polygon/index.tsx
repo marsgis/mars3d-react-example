@@ -2,6 +2,7 @@ import { MarsPannel, MarsButton, MarsInputNumber } from "@mars/components/MarsUI
 import { Space } from "antd"
 import { useState } from "react"
 import * as mapWork from "./map.js"
+import "./index.css"
 
 function UIComponent() {
   const [angle, setAngleVaue] = useState(45)

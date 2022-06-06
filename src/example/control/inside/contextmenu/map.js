@@ -91,7 +91,7 @@ export function bindMapDefault() {
   // map.bindContextMenu(defaultContextmenuItems) // 可以删减defaultContextmenuItems数组内值
 
   // eslint-disable-next-line no-undef
-  const defaultContextmenuItems = getDefaultContextMenu(map) //是map.getDefaultContextMenu代码相同，用于自定义修改，代码在getDefaultContextMenu.js
+  const defaultContextmenuItems = getDefaultContextMenu(map) // 是map.getDefaultContextMenu代码相同，用于自定义修改，代码在getDefaultContextMenu.js
   map.bindContextMenu(defaultContextmenuItems) // 可以删减defaultContextmenuItems数组内值
 }
 

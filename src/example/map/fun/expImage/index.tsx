@@ -9,8 +9,8 @@ function UIComponent(props) {
 
   return (
     <>
-      <MarsPannel visible={true} right="10" top="10">
-        <Space>
+      <MarsPannel visible={true} right="10" top="10" width={200}>
+        <Space wrap>
           <MarsButton
             onClick={() => {
               mapWork.showMapImg().then((image) => {
@@ -19,7 +19,7 @@ function UIComponent(props) {
               })
             }}
           >
-            查看场景出图
+            查看场景出图(弹窗)
           </MarsButton>
 
           <MarsButton

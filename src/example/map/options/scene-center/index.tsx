@@ -1,4 +1,4 @@
-import { MarsPannel, MarsButton } from "@mars/components/MarsUI"
+import { MarsPannel, MarsButton, MarsCollapse, MarsCollapsePanel } from "@mars/components/MarsUI"
 import { Row, Col, Space } from "antd"
 import * as mapWork from "./map.js"
 import "./index.less"
@@ -54,24 +54,17 @@ const cameraData = [
 function UIComponent() {
   return (
     <MarsPannel visible={true} top={10} right={10} width={310}>
-      <div className="lang-button-contain">
-        <Row>
-          <Col span={7}>景点视角:</Col>
-          <Col span={24}>
-            <Space>
-              <MarsButton onClick={() => mapWork.changeView1()}>故宫</MarsButton>
-              <MarsButton onClick={() => mapWork.changeView2()}>珠峰</MarsButton>
-              <MarsButton onClick={() => mapWork.changeView3()}>华山</MarsButton>
-              <MarsButton onClick={() => mapWork.changeView4()}>大别山</MarsButton>
-            </Space>
-          </Col>
-        </Row>
-      </div>
-
-      <div className="f-pt lang-button-contain">
-        <Row>
-          <Col span={15}>相机和视角控制演示:</Col>
-          <Col span={24}>
+      <MarsCollapse defaultActiveKey={["1", "2"]}>
+        <MarsCollapsePanel key="1" showArrow={false} header="景点视角:">
+          <Space>
+            <MarsButton onClick={() => mapWork.changeView1()}>故宫</MarsButton>
+            <MarsButton onClick={() => mapWork.changeView2()}>珠峰</MarsButton>
+            <MarsButton onClick={() => mapWork.changeView3()}>华山</MarsButton>
+            <MarsButton onClick={() => mapWork.changeView4()}>大别山</MarsButton>
+          </Space>
+        </MarsCollapsePanel>
+        <MarsCollapsePanel key="2" showArrow={false} header="相机和视角控制演示:">
+          <Space wrap>
             {cameraData.map((item, index) => {
               return (
                 <MarsButton key={index} onClick={item.callback}>
@@ -79,9 +72,9 @@ function UIComponent() {
                 </MarsButton>
               )
             })}
-          </Col>
-        </Row>
-      </div>
+          </Space>
+        </MarsCollapsePanel>
+      </MarsCollapse>
     </MarsPannel>
   )
 }

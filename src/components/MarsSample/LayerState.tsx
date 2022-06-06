@@ -272,7 +272,7 @@ export const LayerState = (props) => {
       <span className="mars-pannel-item-label" style={{ display: props.label ? "none" : "" }}>
         {props.label || "图层状态:"}
       </span>
-      <MarsCheckboxGroup options={optionsWithDisabled} defaultValue={["show", "popup"]} onChange={onChange} />
+      <MarsCheckboxGroup options={optionsWithDisabled} defaultValue={["show", "popup", "rightMenu"]} onChange={onChange} />
     </div>
   )
 }

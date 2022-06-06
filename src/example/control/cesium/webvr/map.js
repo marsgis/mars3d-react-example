@@ -4,6 +4,7 @@ export let map // mars3d.Map三维地图对象
 
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = function (option) {
+  option.scene.center = { lat: 28.439577, lng: 119.476925, alt: 229, heading: 57, pitch: -29 }
   option.control = {
     vrButton: true
   }
@@ -19,7 +20,7 @@ export const mapOptions = function (option) {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
-  map.setCameraView({ lat: 28.439577, lng: 119.476925, alt: 229, heading: 57, pitch: -29 })
+  globalNotify("已知问题提示", `(1) 请确保您的显示器调整到 3D模式。(2) 需要佩戴3D眼镜才能体验效果。`)
 
   // 加个模型，效果更NB
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
@@ -44,12 +45,6 @@ export function onMounted(mapInstance) {
 
   // WebVR相关参数: 焦距
   map.scene.eyeSeparation.focalLength = 5.0
-
-  globalNotify(
-    "已知问题：",
-    `(1) 请确保您的显示器调整到 3D模式。
-      (2) 需要佩戴3D眼镜才能体验效果。`
-  )
 }
 
 /**

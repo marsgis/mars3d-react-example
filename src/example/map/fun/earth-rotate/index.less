@@ -1,0 +1,76 @@
+.infoview-js {
+  position: absolute;
+  right: 10px;
+  top: 60px;
+  width: 30%;
+  height: 80%;
+  border: none;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.infoview_panel {
+  height: 100%;
+  width: 100%;
+  color: #ffffff;
+  padding: 10px;
+  background: url("/img/btnBar/infoBox.png") no-repeat;
+  background-size: 100% 100%;
+  margin-right: 5px;
+  span {
+    font-size: 20px !important;
+  }
+  label {
+    color: #03dae7;
+    display: inline-block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    line-height: 35px;
+    font-size: 20px !important;
+  }
+  .title {
+    color: #ffec48;
+    font-size: 28px;
+    text-align: center;
+    font-weight: bold;
+    line-height: 50px;
+  }
+}
+.btnBar {
+  bottom: 40px;
+  left: 10%;
+  position: absolute;
+  .mars-button {
+    background: url("/img/btnBar/button.png") no-repeat !important;
+  }
+
+  .mars-button:not([disabled]) {
+    &:hover {
+      color: @mars-base-color;
+      background: url("/img/btnBar/button_select.png") no-repeat !important ;
+    }
+    &:focus {
+      color: @mars-base-color;
+      background: url("/img/btnBar/button_select.png") no-repeat !important ;
+    }
+  }
+}
+
+.btnbar_item {
+  font: 16px "Microsoft YaHei";
+  color: rgba(255, 255, 255, 1);
+  pointer-events: auto;
+  display: inline-block;
+  width: 170px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border: none;
+  background: url("/img/btnBar/button.png") no-repeat;
+  background-size: 100% 100%;
+  margin-right: 40px;
+}
+.infoview_panel_scroll {
+  height: 98%;
+  width: 99%;
+  overflow-y: auto;
+}

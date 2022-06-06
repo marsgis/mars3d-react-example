@@ -30,8 +30,10 @@ export const mapOptions = {
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
-
   map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
+
+  globalNotify("已知问题提示", `当前使用的是原生Cesium+SuperMap3D插件方式，很多API不支持，完整方式需要参考Github开源代码切换Cesium到超图版Cesium。`)
+
 
   showMaxNiaochaoDemo()
 }

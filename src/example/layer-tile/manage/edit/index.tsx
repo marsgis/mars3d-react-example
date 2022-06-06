@@ -1,9 +1,11 @@
 import * as mapWork from "./map.js"
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { MarsButton, MarsGui, MarsPannel } from "@mars/components/MarsUI"
 import type { GuiItem } from "@mars/components/MarsUI"
 import { Space } from "antd"
 
+let updateValue = {}
+let loadShow = false
 function UIComponent() {
   const options: GuiItem[] = [
     {
@@ -171,8 +173,15 @@ function UIComponent() {
     {
       type: "input",
       field: "rectangle",
-      label: "输入框",
+      label: "矩形范围",
       value: "",
+      extra: (
+        <Space>
+          <MarsButton size="middle" onClick={() => btnDrawExtent()}>
+            绘制
+          </MarsButton>
+        </Space>
+      ),
       change(data) {
         if (data === "") {
           mapWork.btnClearExtent()
@@ -192,6 +201,7 @@ function UIComponent() {
       change(data) {
         guiRef.current.updateField("opacity", data)
         mapWork.changeOpacity(data)
+        dataUpdate()
       }
     },
     {
@@ -204,54 +214,78 @@ function UIComponent() {
       value: 1,
       change(data) {
         guiRef.current.updateField("brightness", data)
-        mapWork.changeBrightness(data)
+        // mapWork.changeBrightness(data)
+        dataUpdate()
       }
     },
     {
-      type: "switch",
+      type: "checkbox",
       field: "agent",
-      label: "使用代理",
-      value: false,
+      label: "代理",
+      options: [
+        {
+          label: "使用代理",
+          value: true
+        }
+      ],
       change(data) {
-        guiRef.current.updateField("chkProxy", data)
+        if (data[0]) {
+          guiRef.current.updateField("chkProxy", true)
+        } else {
+          guiRef.current.updateField("chkProxy", false)
+        }
         dataUpdate()
       }
     }
   ]
 
   const guiRef = useRef<any>()
-  const [updateValue, setUpdateValue] = useState({})
 
-  useEffect(() => {
+  const [loadCoverageText, setloadCoverageText] = useState("加载图层")
+
+  useMemo(() => {
     mapWork.eventTarget.on("rectangle", (e: any) => {
-      guiRef.current.updateField("rectangle", JSON.stringify(e.rectangle))
+      if (e.rectangle) {
+        guiRef.current.updateField("rectangle", JSON.stringify(e.rectangle))
+        dataUpdate()
+      }
     })
   }, [])
 
   const onCheckedoutUrl = useCallback((data) => {
     const url = data.toLowerCase()
     if (url.indexOf("wms") !== -1) {
-      guiRef.current.updateField("url", "wms")
+      guiRef.current.updateField("type", "wms")
     } else if (url.indexOf("wmts") !== -1) {
-      guiRef.current.updateField("url", "wmts")
+      guiRef.current.updateField("type", "wmts")
     } else if (url.indexOf("_alllayers") !== -1) {
-      guiRef.current.updateField("url", "arcgis_cache")
+      guiRef.current.updateField("type", "arcgis_cache")
     } else if (url.indexOf("arcgis") !== -1) {
-      guiRef.current.updateField("url", "arcgis")
+      guiRef.current.updateField("type", "arcgis")
     } else if (url.indexOf("{x}") !== -1 && url.indexOf("{z}") !== -1) {
-      guiRef.current.updateField("url", "xyz")
+      guiRef.current.updateField("type", "xyz")
     }
   }, [])
 
   const loadCoverage = useCallback(async () => {
     // 加载图层
-    try {
-      console.log("表单验证通过")
-      mapWork.createTileLayer(updateValue)
-    } catch (err) {
-      console.log("表单验证失败")
+    if (!loadShow) {
+      try {
+        console.log("表单验证通过")
+        mapWork.createTileLayer(updateValue)
+      } catch (err) {
+        console.log("表单验证失败")
+      }
+    } else {
+      mapWork.removeLayer()
     }
-  }, [updateValue])
+
+    const text = loadShow ? "加载图层" : "移除图层"
+    setloadCoverageText(text)
+
+    loadShow = !loadShow
+  }, [])
+
   const reset = useCallback(() => {
     // 重置参数
     guiRef.current.reset()
@@ -264,8 +298,19 @@ function UIComponent() {
   // 当参数改变时，修改加载图层的部分参数
   const dataUpdate = useCallback(() => {
     const data = guiRef.current.getValues()
+    updateAllData(data)
+    mapWork.dataUpdate(updateValue)
+    // 记录到历史
+    localStorage.setItem("tileLayer_edit", JSON.stringify(data))
+  }, [])
 
-    const value = {
+  // 绘制和清除区域
+  const btnDrawExtent = useCallback(() => {
+    mapWork.btnDrawExtent(updateValue)
+  }, [])
+
+  const updateAllData = useCallback((data: any) => {
+    updateValue = {
       url: data.url,
       type: data.type,
       txtLayer: data.txtLayer,
@@ -281,20 +326,21 @@ function UIComponent() {
       brightness: data.brightness,
       chkProxy: data.chkProxy
     }
-
-    setUpdateValue(value)
-    mapWork.dataUpdate(value)
   }, [])
 
-  // 绘制和清除区域
-  const btnDrawExtent = useCallback(() => {
-    mapWork.btnDrawExtent(updateValue)
-    dataUpdate()
-  }, [updateValue, dataUpdate])
-
   useEffect(() => {
-    dataUpdate()
-  }, [dataUpdate])
+    const lastData = JSON.parse(localStorage.getItem("tileLayer_edit"))
+    if (lastData && lastData.url !== "") {
+      guiRef.current.updateFields(lastData)
+      updateAllData(lastData)
+      if (lastData.rectangle) {
+        mapWork.creatHRectangleEntity(JSON.parse(lastData.rectangle))
+      }
+    } else {
+      guiRef.current.updateFields({ url: "//data.mars3d.cn/tile/dizhiChina/{z}/{x}/{y}.png" })
+      dataUpdate()
+    }
+  }, [])
 
   return (
     <MarsPannel visible={true} width="400" right="10" top="10">
@@ -302,13 +348,10 @@ function UIComponent() {
       <div className="f-tac">
         <Space>
           <MarsButton size="middle" onClick={() => loadCoverage()}>
-            加载图层
+            {loadCoverageText}
           </MarsButton>
           <MarsButton size="middle" onClick={() => reset()}>
             重置参数
-          </MarsButton>
-          <MarsButton size="middle" onClick={() => btnDrawExtent()}>
-            绘制
           </MarsButton>
         </Space>
       </div>

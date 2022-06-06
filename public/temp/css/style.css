@@ -315,6 +315,9 @@ html {
   border: 1px solid #209ffd;
   background: #209ffd1c;
 }
+.mars3d-popup-content {
+  margin: 15px;
+}
 .mars3d-divGraphic:hover {
   z-index: 999 !important;
 }

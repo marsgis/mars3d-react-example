@@ -19,7 +19,7 @@ function UIComponent(props) {
   return (
     <MarsPannel visible={true} right="10" top="10">
       <div className="f-mb">
-        当前共有{allLength}条视角记录，当前正在{nowView}条视角
+        当前共有{allLength}条视角记录，当前正在第{nowView}条视角
       </div>
       <div className="f-mb">
         <MarsButton

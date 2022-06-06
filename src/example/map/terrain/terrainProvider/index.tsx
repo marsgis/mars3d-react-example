@@ -64,12 +64,11 @@ function UIComponent() {
   ]
 
   return (
-    <MarsPannel visible={true} top={10} right={10}>
+    <MarsPannel visible={true} top={10} right={10} width={190}>
       <MarsGui
         options={options}
         formProps={{
-          labelCol: { span: 2 },
-          wrapperCol: { span: 22 }
+          labelCol: { span: 6 }
         }}
       ></MarsGui>
     </MarsPannel>

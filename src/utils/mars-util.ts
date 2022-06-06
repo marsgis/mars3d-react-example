@@ -55,6 +55,21 @@ export function getQueryString(parameter: string): string | null {
 
 
 /**
+ *  获取示例ID
+ * @export
+ * @return {string}  示例ID
+ */
+export function getExampleId(): string {
+  let exampleId = getQueryString("id")
+  if (!exampleId) {
+    throw new Error("id不能为空")
+  }
+  exampleId = exampleId.replace(/\\/gm, "/").replace("src/example/", "").replace("/map.js", "")
+
+  return exampleId
+}
+
+/**
  * 将指定的异步方法转为Promise
  *
  * @param {*} context

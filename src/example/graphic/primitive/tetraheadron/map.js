@@ -17,13 +17,20 @@ export const mapOptions = {
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
-
   map.basemap = 2017 // 切换至蓝色底图
 
   // 添加参考三维模型;
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     name: "合肥市建筑物",
-    url: "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json"
+    url: "//data.mars3d.cn/3dtiles/jzw-hefei2/tileset.json",
+    maximumScreenSpaceError: 1,
+    maximumMemoryUsage: 1024,
+    style: {
+      color: {
+        conditions: [["true", `color("rgba(42, 160, 224, 1)")`]]
+      }
+    },
+    marsJzwStyle: true
   })
   map.addLayer(tiles3dLayer)
 
@@ -51,7 +58,7 @@ export function addDemoGraphic1(graphicLayer) {
     style: {
       width: 25,
       height: 40,
-      color: "rgba(200,200,0,0.7)",
+      color: "rgba(255,0,0,0.7)",
       moveHeight: 50
     },
     attr: { remark: "示例1" }

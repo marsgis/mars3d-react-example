@@ -1,4 +1,4 @@
-import { MarsPannel, MarsButton } from "@mars/components/MarsUI"
+import { MarsPannel, MarsButton, MarsColor } from "@mars/components/MarsUI"
 import * as mapWork from "./map.js"
 import { Space } from "antd"
 
@@ -20,6 +20,7 @@ function UIComponent() {
         >
           移除图层
         </MarsButton>
+        <MarsColor value={"#4e70a6"} onChange={(e) => mapWork.setFilterColor(e.target.value)}></MarsColor>
       </Space>
     </MarsPannel>
   )

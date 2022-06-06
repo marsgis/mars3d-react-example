@@ -1,6 +1,6 @@
 import React from "react"
 import { createRoot } from "react-dom/client"
-import { getQueryString } from "@mars/utils/mars-util"
+import { getExampleId, getQueryString } from "@mars/utils/mars-util"
 import MarsUIInstall from "@mars/components/MarsUI"
 import MainOperation from "@mars/components/MarsWork/MainOperation"
 import { generateWidgetView } from "@mars/widgets/common/store/widget"
@@ -58,4 +58,4 @@ function destoryUI() {
   reactApp = null
 }
 
-marsEditor.render(document.getElementById("root"), getQueryString("id"), getQueryString("name"))
+marsEditor.render(document.getElementById("root"), getExampleId(), getQueryString("name"))

@@ -1,4 +1,4 @@
-//火星科技定义的geoserver发布的pdf的Sld样式
+//火星科技定义的geoserver发布的pdf的Sld样式(未调试完成)
 
 (function (window) {
   class MarsPbfStyle {

@@ -86,7 +86,7 @@ function createVideoDom() {
     } catch (e) {
       // 规避浏览器权限异常
         globalMsg("当前浏览器已限制自动播放，请单击播放按钮")
-    } 
+    }
   }, 3000)
 }
 
@@ -283,7 +283,11 @@ export function bindLayerContextMenu() {
         if (!graphic) {
           return
         }
+        const parent = graphic._parent // 右击是编辑点时
         graphicLayer.removeGraphic(graphic)
+        if (parent) {
+          graphicLayer.removeGraphic(parent)
+        }
       }
     }
   ])

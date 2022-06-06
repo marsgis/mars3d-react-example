@@ -1,6 +1,7 @@
 import { LayerState } from "@mars/components/MarsSample/LayerState.jsx"
 import { MarsFormItem, MarsButton, MarsPannel } from "@mars/components/MarsUI"
 import { Row, Col, Space } from "antd"
+import "./entity.css"
 
 const list = {
   point: [
@@ -28,8 +29,7 @@ function UIComponent() {
   return (
     <MarsPannel visible={true} right="10" top="10" width="420">
       <LayerState></LayerState>
-
-      <Row className="f-mb">
+      <Row className="f-mb loft-two">
         <Col span={4}>点状:</Col>
         <Col span={19}>
           <Space {...{ align: "end", direction: "horizontal", wrap: true }}>

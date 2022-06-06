@@ -28,9 +28,9 @@ export function onMounted(mapInstance) {
   map = mapInstance // 记录map
   map.toolbar.style.bottom = "55px"// 修改toolbar控件的样式
 
-  addGraphicLayer()
+  globalNotify("已知问题提示", `不支持对地形的求交，目前仅对椭球体做投射。 `)
 
-  globalNotify("已知问题：", `(1) 不支持对地形的求交，目前仅对椭球体做投射。 `)
+  addGraphicLayer()
 }
 
 /**

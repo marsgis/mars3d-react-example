@@ -36,8 +36,7 @@ const openGeoJSON = (info: FileInfo) => {
   mapWork.openGeoJSON(item)
 }
 
-function UIComponent() { 
-
+function UIComponent() {
   const showEditor = useCallback(
     (e: any) => {
       activate({
@@ -64,7 +63,7 @@ function UIComponent() {
   }, [disable, showEditor])
 
   return (
-    <MarsPannel visible={true} right={10} top={10} width={292}>
+    <MarsPannel visible={true} right={10} top={10} width={276}>
       <Space wrap>
         <MarsRadioGroup
           onChange={(e: any) => {
@@ -77,7 +76,7 @@ function UIComponent() {
         </MarsRadioGroup>
         <MarsButton onClick={() => mapWork.drawPolygon()}>单体化面</MarsButton>
         <Upload onChange={openGeoJSON} multiple={false} name={"file"} accept={"json,geojson"} showUploadList={false}>
-          <MarsButton>打开...</MarsButton>
+          <MarsButton>打开</MarsButton>
         </Upload>
         <MarsButton onClick={() => mapWork.saveGeoJSON()}>保存</MarsButton>
         <MarsButton onClick={() => mapWork.deleteAll()}>清除</MarsButton>

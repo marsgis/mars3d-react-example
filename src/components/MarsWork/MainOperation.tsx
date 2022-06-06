@@ -1,8 +1,8 @@
 import { lazy, Suspense, useEffect, Component } from "react"
-import { getQueryString } from "@mars/utils/mars-util"
+import { getExampleId } from "@mars/utils/mars-util"
 const modules = import.meta.glob("../../example/**/index.tsx")
 
-const componentName = getQueryString("id")
+const componentName = getExampleId()
 
 function Fallback({ lazyLoaded }) {
   useEffect(

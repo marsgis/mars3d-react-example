@@ -8,7 +8,7 @@ let bloomEffect
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: 31.868646, lng: 117.249678, alt: 1485, heading: 110, pitch: -40 }
+    center: { lat: 31.795446, lng: 117.219725, alt: 1816, heading: 15, pitch: -34 }
   },
   layers: [
     {
@@ -164,6 +164,8 @@ export function setStyle1() {
 
 // 不改动cesium源码版本的建筑物样式
 export function setStyle2() {
+  const upZ = tiles3dLayer.upAxis === Cesium.Axis.Z
+
   tiles3dLayer.customShader = new Cesium.CustomShader({
     lightingModel: Cesium.LightingModel.UNLIT,
     fragmentShaderText: `
@@ -177,7 +179,7 @@ export function setStyle2() {
       float _glowRange = 100.0; // 光环的移动范围(高度)
 
       // 建筑基础色
-      float mars_height = position.z - _baseHeight;
+      float mars_height = ${upZ ? "position.z" : "position.y"} - _baseHeight;
       float mars_a11 = fract(czm_frameNumber / 120.0) * 3.14159265 * 2.0;
       float mars_a12 = mars_height / _heightRange + sin(mars_a11) * 0.1;
       material.diffuse = vec3(0.0, 0.0, 1.0); // 颜色

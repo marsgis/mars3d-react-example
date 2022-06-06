@@ -24,6 +24,8 @@ export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
+  globalNotify("已知问题提示", `模型上日照阴影可能存在锯齿。`)
+
   // let imageryLayer = map.scene.imageryLayers.get(0)
   // imageryLayer.dayAlpha = 0.1  //白天图层透明值
   // imageryLayer.nightAlpha = 1.0 //夜晚图层透明值

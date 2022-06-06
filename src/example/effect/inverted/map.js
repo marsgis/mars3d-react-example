@@ -21,6 +21,8 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
+  globalNotify("已知问题提示", "(1) 目前为实验示例，镜面效果一般。 (2) 模型越平整效果越好 ")
+
   // 添加参考三维模型
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     url: "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
@@ -35,8 +37,6 @@ export function onMounted(mapInstance) {
   // 倒影效果
   const invertedEffect = new mars3d.effect.InvertedEffect()
   map.addEffect(invertedEffect)
-
-  globalNotify("已知问题提示", "(1) 目前为实验示例，镜面效果一般。 (2) 模型越平整效果越好 ")
 }
 
 /**

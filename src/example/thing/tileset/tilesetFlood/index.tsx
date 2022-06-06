@@ -120,7 +120,7 @@ function UIComponent(props) {
         </div>
       </div>
 
-      <div style={{ display: !isShowUi ? "block" : "none" }}>
+      <div style={{ display: !isShowUi ? "block" : "none", width: "320PX" }}>
         <MarsForm>
           <MarsFormItem label="高度选择">
             <MarsSlider

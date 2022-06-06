@@ -129,9 +129,19 @@ function addWmsLayer() {
   wfsLayer.on(mars3d.EventType.click, function (event) {
     console.log("单击了图层", event)
   })
+
+  let timeTik
+  wfsLayer.on(mars3d.EventType.update, function (event) {
+    console.log(`图层内数据更新了`, event)
+
+    clearTimeout(timeTik)
+    timeTik = setTimeout(() => {
+      if (!wfsLayer.isLoading) {
+        console.log(`本批次数据加载完成`)
+      }
+    }, 1000)
+  })
 }
-
-
 
 // 图层状态 在组件中进行管理的图层
 export function getManagerLayer() {

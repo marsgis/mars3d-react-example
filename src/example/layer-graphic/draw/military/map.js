@@ -171,7 +171,11 @@ export function bindLayerContextMenu() {
         if (!graphic) {
           return
         }
+        const parent = graphic._parent // 右击是编辑点时
         graphicLayer.removeGraphic(graphic)
+        if (parent) {
+          graphicLayer.removeGraphic(parent)
+        }
       }
     },
 
@@ -256,7 +260,7 @@ export function openGeoJSON(file) {
   }
 }
 
- 
+
 
 // 简化geojson的坐标
 function simplifyGeoJSON(geojson) {

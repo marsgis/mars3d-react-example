@@ -1,6 +1,7 @@
 import { MarsPannel, MarsButton, MarsTree } from "@mars/components/MarsUI"
 import { useCallback, useMemo, useState } from "react"
 import { Space } from "antd"
+import "./index.less"
 import { LayerState } from "@mars/components/MarsSample/LayerState"
 import * as mapWork from "./map.js"
 const layersObj: any = {}
@@ -15,7 +16,6 @@ function UIComponent() {
     }
   ])
 
-  const [expandedKeys, setExpandedKeys] = useState<any[]>(["0"]) // 默认展开的节点
   const [checkedKeys, setCheckedKeys] = useState<any[]>([]) // 默认勾选的节点
 
   useMemo(() => {
@@ -125,14 +125,10 @@ function UIComponent() {
         <LayerState />
       </MarsPannel>
 
-      <MarsPannel visible={true} right={10} top={100} maxHeight={700}>
-        <MarsTree
-          treeData={treeData}
-          onExpand={(expandedKeysValue) => setExpandedKeys(expandedKeysValue)}
-          checkedKeys={checkedKeys}
-          expandedKeys={expandedKeys}
-          onCheck={checkedChange}
-        ></MarsTree>
+      <MarsPannel visible={true} right={10} top={100}>
+        <div className="pannel">
+          <MarsTree treeData={treeData} checkedKeys={checkedKeys} defaultExpandAll onCheck={checkedChange}></MarsTree>
+        </div>
       </MarsPannel>
     </>
   )

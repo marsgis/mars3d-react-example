@@ -97,7 +97,7 @@ function UIComponent(props) {
   }
 
   return (
-    <MarsPannel visible={true} right="10" top="10" width={326}>
+    <MarsPannel visible={true} right="10" top="10" width={280}>
       {isShow ? (
         <MarsGui
           ref={marsGuiRef}

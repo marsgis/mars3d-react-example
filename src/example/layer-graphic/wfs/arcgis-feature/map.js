@@ -113,7 +113,18 @@ function addArcGisWFSLayer1() {
   wfsLayer.on(mars3d.EventType.click, function (event) {
     console.log("单击了图层", event)
   })
-  window.wfsLayer = wfsLayer
+
+  let timeTik
+  wfsLayer.on(mars3d.EventType.update, function (event) {
+    console.log(`图层内数据更新了`, event)
+
+    clearTimeout(timeTik)
+    timeTik = setTimeout(() => {
+      if (!wfsLayer.isLoading) {
+        console.log(`本批次数据加载完成`)
+      }
+    }, 1000)
+  })
 
   setTimeout(function () {
     // 测试更换条件

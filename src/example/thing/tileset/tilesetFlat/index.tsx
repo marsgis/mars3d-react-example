@@ -34,6 +34,7 @@ function UIComponent() {
           <MarsButton
             onClick={() => {
               setTableData([])
+              datasource = []
               mapWork.showDytDemo()
             }}
           >
@@ -42,6 +43,7 @@ function UIComponent() {
           <MarsButton
             onClick={() => {
               setTableData([])
+              datasource = []
               mapWork.showTehDemo()
             }}
           >
@@ -88,7 +90,7 @@ function UIComponent() {
     {
       type: "switch",
       field: "enabledBianJieXian",
-      label: "显示测试边界线:",
+      label: "测试边界线:",
       value: true,
       change(data) {
         mapWork.chkShowLine(data)
@@ -115,13 +117,16 @@ function UIComponent() {
     {
       title: "开挖区域",
       dataIndex: "name",
-      key: "name"
+      key: "name",
+      align: "center",
+      width: 100
     },
     {
       title: "操作",
       dataIndex: "caozuo",
       key: "caozuo",
       width: 100,
+      align: "center",
       render: (comp: string, record: any) => {
         return (
           <>
@@ -157,15 +162,6 @@ function UIComponent() {
     })
   }, [])
 
-  useEffect(() => {
-    $notify(
-      "已知问题提示",
-      `（1）对3dtiles数据有要求，仅适用于无自带着色器的纹理格式模型。
-    （2）目前不支持所有3dtile数据，请替换url进行自测`,
-      { duration: null }
-    )
-  }, [])
-
   // 移除对应的表格数据
   const deleted = useCallback(
     (record: TableItem) => {
@@ -178,19 +174,18 @@ function UIComponent() {
   )
 
   return (
-    <MarsPannel visible={true} right={10} top={10} width={380}>
-      <MarsGui options={options} formProps={{ labelCol: { span: 8 } }}></MarsGui>
+    <MarsPannel visible={true} right={10} top={10} width={340}>
+      <MarsGui options={options} formProps={{ labelCol: { span: 6 } }}></MarsGui>
 
-      <div>
-        <MarsTable
-          rowSelection={rowSelection}
-          pagination={{ pageSize: 5 }}
-          scroll={{ y: 400 }}
-          dataSource={tableData}
-          columns={columns}
-          bordered
-        ></MarsTable>
-      </div>
+      {/* @ts-ignore */}
+      <MarsTable
+        rowSelection={rowSelection}
+        pagination={{ pageSize: 5 }}
+        scroll={{ y: 400 }}
+        dataSource={tableData}
+        columns={columns}
+        bordered
+      ></MarsTable>
     </MarsPannel>
   )
 }

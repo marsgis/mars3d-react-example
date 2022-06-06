@@ -12,6 +12,8 @@ let tilesetPlanClip
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
+  globalNotify("已知问题提示", `因为使用clippingPlanes接口，绘制面时，有些绘制的角度存在效果不对`)
+
   // 加模型
   const tilesetLayer = new mars3d.layer.TilesetLayer({
     name: "县城社区",

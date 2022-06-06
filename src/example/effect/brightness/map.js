@@ -1,14 +1,30 @@
 import * as mars3d from "mars3d"
 
 export let map // mars3d.Map三维地图对象
-let brightnessEffect
 
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: 31.841018, lng: 117.252932, alt: 1346, heading: 38, pitch: -26 }
+    center: { lat: 31.795863, lng: 117.212909, alt: 2113, heading: 25, pitch: -34 }
   },
   layers: [
+    {
+      pid: 2040,
+      type: "3dtiles",
+      name: "合肥市区2",
+      url: "//data.mars3d.cn/3dtiles/jzw-hefei2/tileset.json",
+      maximumScreenSpaceError: 1,
+      maximumMemoryUsage: 1024,
+      style: {
+        color: {
+          conditions: [["true", "color('rgba(42, 160, 224, 1)')"]]
+        }
+      },
+      marsJzwStyle: true,
+      highlight: { type: "click", color: "#FFFF00" },
+      popup: "all",
+      show: true
+    },
     {
       type: "geojson",
       name: "道路线",
@@ -39,7 +55,6 @@ export const mapOptions = {
           specularIntensity: 0.8, // 控制镜面反射强度的数字。
           baseWaterColor: "#00baff", // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
           blendColor: "#00baff" // 从水中混合到非水域时使用的rgba颜色对象。
-          // clampToGround: true,
         }
       },
       popup: "{name}",
@@ -47,6 +62,8 @@ export const mapOptions = {
     }
   ]
 }
+
+let brightnessEffect
 
 /**
  * 初始化地图业务，生命周期钩子函数（必须）
@@ -56,24 +73,7 @@ export const mapOptions = {
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
-
   map.basemap = 2017 // 切换至蓝色底图
-
-  // 添加参考三维模型
-  const tiles3dLayer = new mars3d.layer.TilesetLayer({
-    name: "合肥市建筑物",
-    url: "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
-    maximumScreenSpaceError: 1,
-    maximumMemoryUsage: 1024,
-    marsJzwStyle: true, // 打开建筑物特效（内置Shader代码）
-    highlight: { type: "click", color: "#FFFF00" },
-    popup: [
-      { field: "objectid", name: "编号" },
-      { field: "name", name: "名称" },
-      { field: "height", name: "楼高", unit: "米" }
-    ]
-  })
-  map.addLayer(tiles3dLayer)
 
   // 构造效果
   brightnessEffect = new mars3d.effect.BrightnessEffect()

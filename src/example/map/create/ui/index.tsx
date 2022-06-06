@@ -1,7 +1,7 @@
 import { Component } from "react"
 import * as mapWork from "./map.js"
 import axios from "axios"
-import { Space } from "antd"
+import { Space, Row, Col } from "antd"
 import {
   MarsInput,
   MarsInputNumber,
@@ -17,8 +17,10 @@ import {
   MarsSlider,
   MarsSwitch,
   MarsButton,
+  MarsDatePicker,
   MarsPannel,
   MarsInputGroup,
+  MarsColor,
   MarsIcon,
   $message,
   $alert,
@@ -35,6 +37,8 @@ class UIComponent extends Component<any, any> {
     this.state = {
       visible: true,
       inputValue: 5,
+      extent: "",
+      color: "#ffff00",
       typhoonList: [],
       treeData: [],
       expandedKeys: [],
@@ -69,18 +73,22 @@ class UIComponent extends Component<any, any> {
     mapWork.eventTarget.on("init", ({ value }) => {
       this.setInputValue(value)
     })
+
+    mapWork.eventTarget.on("drawExtent", (event: any) => {
+      this.setState({
+        extent: event.extent
+      })
+    })
   }
 
   hidePannel() {
-    this.setState((prevState) => ({
-      ...prevState,
+    this.setState(() => ({
       visible: false
     }))
   }
 
   setInputValue(value) {
-    this.setState((prevState) => ({
-      ...prevState,
+    this.setState(() => ({
       inputValue: value
     }))
   }
@@ -94,7 +102,6 @@ class UIComponent extends Component<any, any> {
     axios.get(url).then((res: any) => {
       const data = res.data
       this.setState({
-        ...this.state,
         typhoonList: data.typhoonList.map((item: any) => ({
           id: item[0],
           key: item[0],
@@ -189,11 +196,33 @@ class UIComponent extends Component<any, any> {
         <MarsCollapse defaultActiveKey={["1", "2", "3"]} expandIconPosition="right">
           <MarsCollapsePanel key="1" header="表单控件">
             <MarsForm labelCol={{ span: 5 }}>
-              <MarsFormItem label="输入框">
-                <MarsInput value={this.state.inputValue}></MarsInput>
+              <MarsFormItem label="简单文本">
+                <MarsInput
+                  value={this.state.inputValue}
+                  onChange={(e) =>
+                    this.setState({
+                      inputValue: e.target.value
+                    })
+                  }
+                ></MarsInput>
+              </MarsFormItem>
+              <MarsFormItem label="地图交互">
+                <Row gutter={5}>
+                  <Col span={19}>
+                    <MarsInput value={this.state.extent} allowClear></MarsInput>
+                  </Col>
+                  <Col span={5}>
+                    <MarsButton className="small-btn" onClick={mapWork.drawExtent}>
+                      绘制
+                    </MarsButton>
+                  </Col>
+                </Row>
               </MarsFormItem>
               <MarsFormItem label="数字">
                 <MarsInputNumber></MarsInputNumber>
+              </MarsFormItem>
+              <MarsFormItem label="日期选择">
+                <MarsDatePicker></MarsDatePicker>
               </MarsFormItem>
               <MarsFormItem label="下拉框">
                 <MarsSelect defaultValue="2">
@@ -213,7 +242,7 @@ class UIComponent extends Component<any, any> {
                 </MarsRadioGroup>
               </MarsFormItem>
               <MarsFormItem label="滑动条">
-                <MarsSlider defaultValue={30}></MarsSlider>
+                <MarsSlider min={-0.5} max={1.5} step={0.05} defaultValue={0} onChange={(v) => mapWork.updateBrightness(v)}></MarsSlider>
               </MarsFormItem>
               <MarsFormItem label="滑动条2">
                 <MarsSlider
@@ -222,30 +251,48 @@ class UIComponent extends Component<any, any> {
                   min={-255}
                   max={255}
                   step={1}
+                  onChange={(v) => mapWork.updateContrast(v)}
                 ></MarsSlider>
               </MarsFormItem>
-              <MarsFormItem className="f-push-20-t" label="开关">
-                <MarsSwitch defaultChecked></MarsSwitch>
+              <MarsFormItem className="f-push-20-t" label="鼠标操作">
+                <MarsSwitch defaultChecked onChange={(v) => mapWork.enableMapMouseController(v)}></MarsSwitch>
               </MarsFormItem>
               <MarsFormItem label="输入框组">
                 <MarsInputGroup value={["1", "2", "3"]} units={[",", ",", "."]} onChange={(v) => console.log(v)}></MarsInputGroup>
               </MarsFormItem>
+              <MarsFormItem label="颜色选择器">
+                <Space>
+                  <MarsColor
+                    value={this.state.color}
+                    onChange={(e) =>
+                      this.setState({
+                        color: e.target.value
+                      })
+                    }
+                  ></MarsColor>
+                  <label>已选择: {this.state.color}</label>
+                </Space>
+              </MarsFormItem>
             </MarsForm>
-
-            <Space wrap>
-              <MarsButton onClick={() => $message("message提示信息")}>
-                <MarsIcon icon="aiming"></MarsIcon>
-                <span>提示</span>
-              </MarsButton>
-              <MarsButton onClick={() => $alert("alert提示信息")}>
-                <MarsIcon icon="aiming"></MarsIcon>
-                <span>弹框</span>
-              </MarsButton>
-              <MarsButton onClick={() => $notify("notify提示信息", "今天天气很好")}>
-                <MarsIcon icon="aiming"></MarsIcon>
-                <span>通知</span>
-              </MarsButton>
-            </Space>
+            <div className="f-tac">
+              <Space wrap>
+                <MarsButton onClick={() => $message("message提示信息")}>
+                  <MarsIcon icon="aiming"></MarsIcon>
+                  <span>提示</span>
+                </MarsButton>
+                <MarsButton onClick={() => $alert("alert提示信息")}>
+                  <MarsIcon icon="aiming"></MarsIcon>
+                  <span>弹框</span>
+                </MarsButton>
+                <MarsButton onClick={() => $notify("notify提示信息", "今天天气很好")}>
+                  <MarsIcon icon="aiming"></MarsIcon>
+                  <span>通知</span>
+                </MarsButton>
+                <MarsButton disabled>
+                  <span>禁用</span>
+                </MarsButton>
+              </Space>
+            </div>
           </MarsCollapsePanel>
           <MarsCollapsePanel key="2" header="表格控件">
             <MarsTable
@@ -268,17 +315,18 @@ class UIComponent extends Component<any, any> {
               onCheck={(v: any) => this.onCheckTreeItem(v)}
               onExpand={(v: any) => this.setState({ expandedKeys: v })}
             ></MarsTree>
-            
-            <Space wrap>
-              <MarsButton onClick={() => $showLoading()}>
-                <MarsIcon icon="aiming"></MarsIcon>
-                <span>打开loading</span>
-              </MarsButton>
-              <MarsButton onClick={() => $hideLoading()}>
-                <MarsIcon icon="aiming"></MarsIcon>
-                <span>关闭loading</span>
-              </MarsButton>
-            </Space>
+            <div className="f-tac">
+              <Space wrap>
+                <MarsButton onClick={() => $showLoading()}>
+                  <MarsIcon icon="aiming"></MarsIcon>
+                  <span>打开loading</span>
+                </MarsButton>
+                <MarsButton onClick={() => $hideLoading()}>
+                  <MarsIcon icon="aiming"></MarsIcon>
+                  <span>关闭loading</span>
+                </MarsButton>
+              </Space>
+            </div>
           </MarsCollapsePanel>
         </MarsCollapse>
       </MarsPannel>

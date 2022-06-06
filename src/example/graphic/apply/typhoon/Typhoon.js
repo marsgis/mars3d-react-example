@@ -352,6 +352,7 @@ class PlayTyphoon extends Typhoon {
 
     let lastType = arr[0].level
     let property = new Cesium.SampledPositionProperty()
+    property.forwardExtrapolationType = Cesium.ExtrapolationType.HOLD
 
     for (let i = 0, len = arr.length; i < len; i++) {
       const item = arr[i]
@@ -402,6 +403,7 @@ class PlayTyphoon extends Typhoon {
 
         lastType = item.level
         property = new Cesium.SampledPositionProperty() // 控制动画播放的对象
+        property.forwardExtrapolationType = Cesium.ExtrapolationType.HOLD
         property.addSample(pointTime, position)
       }
 

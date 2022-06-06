@@ -5,7 +5,7 @@ import * as mapWork from "./map.js"
 function UIComponent() {
   return (
     <MarsPannel visible={true} right="10" top="10" width={340}>
-      <MarsCollapse defaultActiveKey={["1", "2"]}>
+      <MarsCollapse defaultActiveKey={["1", "2", "3"]}>
         <MarsCollapsePanel key="1" header="3D Tiles示例">
           <Space wrap>
             <MarsButton
@@ -62,35 +62,38 @@ function UIComponent() {
           </Space>
         </MarsCollapsePanel>
         <MarsCollapsePanel key="2" header="相关控制">
-          <MarsCheckbox
-            onChange={(e) => {
-              mapWork.bindTestTerrain(e.target.checked)
-            }}
-          >
-            深度检测
-          </MarsCheckbox>
-          <MarsCheckbox
-            onChange={(e) => {
-              mapWork.bindWireframe(e.target.checked)
-            }}
-          >
-            模型三角网
-          </MarsCheckbox>
-          <MarsCheckbox
-            onChange={(e) => {
-              mapWork.bindBoundbox(e.target.checked)
-            }}
-          >
-            模型包围盒
-          </MarsCheckbox>
-          <MarsCheckbox
-            onChange={(e) => {
-              mapWork.bindGfirstperson(e.target.checked)
-            }}
-          >
-            键盘漫游
-          </MarsCheckbox>
-          <span className="mars-pannel-item-label">调试页面:</span>
+          <Space wrap>
+            <MarsCheckbox
+              onChange={(e) => {
+                mapWork.bindTestTerrain(e.target.checked)
+              }}
+            >
+              深度检测
+            </MarsCheckbox>
+            <MarsCheckbox
+              onChange={(e) => {
+                mapWork.bindWireframe(e.target.checked)
+              }}
+            >
+              模型三角网
+            </MarsCheckbox>
+            <MarsCheckbox
+              onChange={(e) => {
+                mapWork.bindBoundbox(e.target.checked)
+              }}
+            >
+              模型包围盒
+            </MarsCheckbox>
+            <MarsCheckbox
+              onChange={(e) => {
+                mapWork.bindGfirstperson(e.target.checked)
+              }}
+            >
+              键盘漫游
+            </MarsCheckbox>
+          </Space>
+        </MarsCollapsePanel>
+        <MarsCollapsePanel key="3" header="调试页面">
           <MarsButton href="editor-react.html?id=layer-tileset/manager/edit" target="_blank">
             模型参数调试
           </MarsButton>

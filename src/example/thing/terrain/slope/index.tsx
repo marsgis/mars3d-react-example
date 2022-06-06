@@ -29,7 +29,9 @@ function UIComponent() {
       <div className="f-mb">
         <Space>
           <span className="mars-pannel-item-label">插值数</span>
-          <MarsInputNumber defaultValue={10} min={1} max={999} onChange={numberChange} />
+          <div style={{ width: "70px" }}>
+            <MarsInputNumber defaultValue={10} min={1} max={999} onChange={numberChange} />
+          </div>
           <MarsButton onClick={drawExtent}>添加矩形</MarsButton>
           <MarsButton onClick={drawPolygon}>添加多边形</MarsButton>
           <MarsButton onClick={() => mapWork.btnDrawPoint()}>添加点</MarsButton>

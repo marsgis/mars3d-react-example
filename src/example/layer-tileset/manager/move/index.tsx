@@ -1,8 +1,8 @@
-import { MarsPannel, MarsGui, MarsInput, MarsButton, MarsCheckbox } from "@mars/components/MarsUI"
-import type { GuiItem } from "@mars/components/MarsUI"
+import { MarsPannel, MarsInput, MarsButton, MarsCheckbox, MarsRadio, MarsRadioGroup } from "@mars/components/MarsUI"
 import { Space } from "antd"
 import { useEffect, useState } from "react"
 import * as mapWork from "./map.js"
+import "./index.css"
 
 let url = ""
 let x = 0
@@ -64,38 +64,36 @@ function UIComponent() {
     mapWork.setTranslation(x, y, z)
   }
 
-  const options: GuiItem[] = [
-    {
-      type: "radio",
-      field: "step",
-      label: "设置移动步长:",
-      value: 1,
-      options: [
-        {
-          label: "0.1",
-          value: 0.1
-        },
-        {
-          label: "1",
-          value: 1
-        },
-        {
-          label: "10",
-          value: 10
-        },
-        {
-          label: "100",
-          value: 100
-        }
-      ],
-      change(data) {
-        step = data
-      }
-    },
-    {
-      type: "custom",
-      label: "按步长移动",
-      element: (
+  return (
+    <MarsPannel visible={true} top={10} right={10} height={204}>
+      <div className="f-mb">
+        <span>3dtile模型移动(只适合小范围内的偏移 笛卡尔坐标方向，非贴球面)</span>
+      </div>
+
+      <div className="f-mb">
+        <span className="mars-pannel-item-label">模型URL:</span>
+        <Space>
+          <MarsInput defaultValue="//data.mars3d.cn/3dtiles/qx-dyt/tileset.json" onChange={urlChange}></MarsInput>
+          <MarsButton onClick={showModel}>加载模型</MarsButton>
+        </Space>
+      </div>
+
+      <div className="f-mb">
+        <span className="mars-pannel-item-label">设置移动步长:</span>
+        <MarsRadioGroup
+          onChange={(e) => {
+            step = e.target.value
+          }}
+          defaultValue={1}
+        >
+          <MarsRadio value={0.1}>0.1</MarsRadio>
+          <MarsRadio value={1}>1</MarsRadio>
+          <MarsRadio value={10}>10</MarsRadio>
+          <MarsRadio value={100}>100</MarsRadio>
+        </MarsRadioGroup>
+      </div>
+      <div className="f-mb">
+        <span className="mars-pannel-item-label">按步长移动:</span>
         <Space>
           <MarsButton onClick={() => moveModel(0)}>x+</MarsButton>
           <MarsButton onClick={() => moveModel(1)}>x-</MarsButton>
@@ -104,30 +102,11 @@ function UIComponent() {
           <MarsButton onClick={() => moveModel(4)}>z+</MarsButton>
           <MarsButton onClick={() => moveModel(5)}>z-</MarsButton>
         </Space>
-      )
-    }
-  ]
-
-  return (
-    <MarsPannel visible={true} top={10} right={10} height={230}>
-      <div className="f-mb">
-        <span>3dtile模型移动(只适合小范围内的偏移 笛卡尔坐标方向，非贴球面)</span>
       </div>
-
       <div className="f-mb">
         <Space>
-          <span className="mars-pannel-item-label">模型URL:</span>
-          <MarsInput defaultValue="//data.mars3d.cn/3dtiles/qx-dyt/tileset.json" onChange={urlChange}></MarsInput>
-          <MarsButton onClick={showModel}>加载模型</MarsButton>
-        </Space>
-      </div>
-
-      <MarsGui options={options}></MarsGui>
-
-      <div className="f-mb">
-        <Space>
-          <span>当前偏移量:</span>
-          <span>{result}</span>
+          <span className="mars-pannel-item-label">当前偏移量:</span>
+          <span>{result || "x:0.0 y:0.0 z:0.0"}</span>
         </Space>
       </div>
 

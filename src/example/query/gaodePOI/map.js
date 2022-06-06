@@ -136,6 +136,9 @@ function loadData(queryOptions, text) {
     text: text,
     success: function (res) {
       const data = res.list
+      if (data.length <= 1) {
+        globalMsg("未搜索到相关数据！")
+      }
       resultList = resultList.concat(data)
       addDemoGraphics(data)
 

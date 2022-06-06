@@ -29,32 +29,14 @@ export function onMounted(mapInstance) {
   })
   map.addLayer(tiles3dLayer)
 
-  // 加矢量数据
+  // 矢量图层
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  const graphicBox = new mars3d.graphic.BoxEntity({
-    position: Cesium.Cartesian3.fromDegrees(117.074033, 31.663258, 31.3),
-    style: {
-      dimensions: new Cesium.Cartesian3(100.0, 100.0, 100.0),
-      material: Cesium.Color.GREY
-    }
-  })
-  graphicLayer.addGraphic(graphicBox)
-
-  const graphic = new mars3d.graphic.EllipsoidEntity({
-    position: Cesium.Cartesian3.fromDegrees(117.074423, 31.664305, 30.8),
-    style: {
-      radii: new Cesium.Cartesian3(50.0, 50.0, 50.0),
-      material: Cesium.Color.GREY
-    },
-    attr: { remark: "示例1" }
-  })
-  graphicLayer.addGraphic(graphic)
-
-  const graphicModel = new mars3d.graphic.ModelEntity({
+  // 加gltf模型
+  const graphicModel = new mars3d.graphic.ModelPrimitive({
     name: "汽车",
-    position: Cesium.Cartesian3.fromDegrees(117.078572, 31.663526, 27.7),
+    position: Cesium.Cartesian3.fromDegrees(117.074035, 31.660459, 40),
     style: {
       url: "//data.mars3d.cn/gltf/mars/qiche.gltf",
       scale: 1,
@@ -62,6 +44,79 @@ export function onMounted(mapInstance) {
     }
   })
   graphicLayer.addGraphic(graphicModel)
+
+  // 加矢量数据
+  const graphicBox1 = new mars3d.graphic.BoxPrimitive({
+    position: Cesium.Cartesian3.fromDegrees(117.071033, 31.663258, 31.3),
+    style: {
+      dimensions: new Cesium.Cartesian3(100.0, 100.0, 100.0),
+      color: "#ff0000"
+    }
+  })
+  graphicLayer.addGraphic(graphicBox1)
+
+  const graphic1 = new mars3d.graphic.EllipsoidPrimitive({
+    position: Cesium.Cartesian3.fromDegrees(117.071423, 31.664305, 30.8),
+    style: {
+      radii: new Cesium.Cartesian3(50.0, 50.0, 50.0),
+      color: "#ff0000"
+    }
+  })
+  graphicLayer.addGraphic(graphic1)
+
+  const graphicBox2 = new mars3d.graphic.BoxPrimitive({
+    position: Cesium.Cartesian3.fromDegrees(117.074033, 31.663258, 31.3),
+    style: {
+      dimensions: new Cesium.Cartesian3(100.0, 100.0, 100.0),
+      color: Cesium.Color.GREY
+    }
+  })
+  graphicLayer.addGraphic(graphicBox2)
+
+  const graphic2 = new mars3d.graphic.EllipsoidPrimitive({
+    position: Cesium.Cartesian3.fromDegrees(117.074423, 31.664305, 30.8),
+    style: {
+      radii: new Cesium.Cartesian3(50.0, 50.0, 50.0),
+      color: Cesium.Color.GREY
+    }
+  })
+  graphicLayer.addGraphic(graphic2)
+
+  const graphicBox3 = new mars3d.graphic.BoxPrimitive({
+    position: Cesium.Cartesian3.fromDegrees(117.076033, 31.663258, 31.3),
+    style: {
+      dimensions: new Cesium.Cartesian3(100.0, 100.0, 100.0),
+      color: "#3388ff"
+    }
+  })
+  graphicLayer.addGraphic(graphicBox3)
+
+  const graphic3 = new mars3d.graphic.EllipsoidPrimitive({
+    position: Cesium.Cartesian3.fromDegrees(117.076423, 31.664305, 30.8),
+    style: {
+      radii: new Cesium.Cartesian3(50.0, 50.0, 50.0),
+      color: "#3388ff"
+    }
+  })
+  graphicLayer.addGraphic(graphic3)
+
+  const graphicBox4 = new mars3d.graphic.BoxPrimitive({
+    position: Cesium.Cartesian3.fromDegrees(117.078033, 31.663258, 31.3),
+    style: {
+      dimensions: new Cesium.Cartesian3(100.0, 100.0, 100.0),
+      color: "#00ffff"
+    }
+  })
+  graphicLayer.addGraphic(graphicBox4)
+
+  const graphic4 = new mars3d.graphic.EllipsoidPrimitive({
+    position: Cesium.Cartesian3.fromDegrees(117.078423, 31.664305, 30.8),
+    style: {
+      radii: new Cesium.Cartesian3(50.0, 50.0, 50.0),
+      color: "#00ffff"
+    }
+  })
+  graphicLayer.addGraphic(graphic4)
 
   // 添加特效
   const outlineEffect = new mars3d.effect.OutlineEffect({

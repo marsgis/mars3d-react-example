@@ -1,5 +1,5 @@
 import * as mapWork from "./map.js"
-import { MarsGui, MarsPannel } from "@mars/components/MarsUI"
+import { MarsGui, MarsPannel, MarsCollapse, MarsCollapsePanel } from "@mars/components/MarsUI"
 import type { GuiItem } from "@mars/components/MarsUI"
 
 function UIComponent() {
@@ -93,9 +93,12 @@ function UIComponent() {
     }
   ]
   return (
-    <MarsPannel visible={true} right="10" top="10" width="250">
-      <div>瓦片底图通用参数</div>
-      <MarsGui options={options} formProps={{ labelCol: { span: 5 } }}></MarsGui>
+    <MarsPannel visible={true} right="10" top="10" width="280">
+      <MarsCollapse defaultActiveKey={["1"]}>
+        <MarsCollapsePanel key="1" header="瓦片底图通用参数">
+          <MarsGui options={options} formProps={{ labelCol: { span: 5 } }}></MarsGui>
+        </MarsCollapsePanel>
+      </MarsCollapse>
     </MarsPannel>
   )
 }

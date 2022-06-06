@@ -9,7 +9,7 @@ const columns = [
     title: "序号",
     dataIndex: "index",
     key: "index",
-    width: 35
+    width: 50
   },
   {
     title: "名称",
@@ -105,9 +105,9 @@ function UIComponent() {
       </MarsFormItem>
       <MarsFormItem label="终点">
         <Space>
-          <p className="inputWidth">
-            共,<span style={{ color: "red" }}>{countNumber}</span>条POI点
-          </p>
+          <span>
+            共<span style={{ color: "red" }}>{countNumber}</span>条POI点
+          </span>
           <MarsButton onClick={() => mapWork.endPoint()}>查询</MarsButton>
         </Space>
       </MarsFormItem>

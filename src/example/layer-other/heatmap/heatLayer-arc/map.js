@@ -34,10 +34,15 @@ function addLayer() {
 
   // 加载城市模型
   const tilesetLayer = new mars3d.layer.TilesetLayer({
-    url: "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
+    url: "//data.mars3d.cn/3dtiles/jzw-hefei2/tileset.json",
     maximumScreenSpaceError: 1,
     maximumMemoryUsage: 1024,
-    center: { lat: 31.805004, lng: 117.222617, alt: 1457.4, heading: 1.6, pitch: -30.5, roll: 0 },
+    style: {
+      color: {
+        conditions: [["true", `color("rgba(42, 160, 224, 1)")`]]
+      }
+    },
+    marsJzwStyle: true,
     popup: "all"
   })
   map.addLayer(tilesetLayer)

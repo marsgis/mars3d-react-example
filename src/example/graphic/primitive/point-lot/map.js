@@ -38,7 +38,7 @@ export function onMounted(mapInstance) {
   resource
     .fetchJson()
     .then(function (rs) {
-      globalNotify("已知问题：", `加载十几万条数据，请耐心等待~`)
+      globalNotify("已知问题提示", `加载十几万条数据，请耐心等待~`)
 
       setTimeout(() => {
         creteaPointPrimitive(graphicLayer, rs)

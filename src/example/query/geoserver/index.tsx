@@ -3,6 +3,7 @@ import { useCallback, useMemo, useState } from "react"
 import { Space } from "antd"
 import * as mapWork from "./map.js"
 import type { GuiItem } from "@mars/components/MarsUI"
+import "./index.css"
 
 const columns = [
   {

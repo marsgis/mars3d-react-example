@@ -125,8 +125,8 @@ function UIComponent() {
       <MarsGui
         options={options}
         formProps={{
-          labelCol: { span: 2 },
-          wrapperCol: { span: 22 }
+          labelCol: { span: 1 },
+          wrapperCol: { span: 23 }
         }}
       ></MarsGui>
     </MarsPannel>

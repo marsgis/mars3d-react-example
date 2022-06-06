@@ -23,7 +23,7 @@ export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
-  globalNotify("已知问题：", `因为使用clippingPlanes接口，绘制多边形时，部分围合角度时会存在效果不对`)
+  globalNotify("已知问题提示", `因为使用clippingPlanes接口，绘制多边形时，部分围合角度时会存在效果不对`)
 }
 
 /**

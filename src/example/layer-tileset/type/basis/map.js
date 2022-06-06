@@ -32,9 +32,6 @@ export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
 
   map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
-
-  map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
-
   // 调试面板
   map.viewer.extend(Cesium.viewerCesiumInspectorMixin)
   map.scene.globe.depthTestAgainstTerrain = false

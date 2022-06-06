@@ -17,7 +17,6 @@ function UIComponent() {
   ])
 
   const [showBtn, setShowBtn] = useState(false)
-  const [expandedKeys, setExpandedKeys] = useState<any[]>([]) // 默认展开的节点
   const [checkedKeys, setCheckedKeys] = useState<any[]>([]) // 默认勾选的节点
 
   useMemo(() => {
@@ -51,10 +50,6 @@ function UIComponent() {
     }
     setTree([{ ...treeData[0], children: children }])
     setCheckedKeys(dataKeys)
-  }
-
-  const onExpand = (expandedKeysValue: any) => {
-    setExpandedKeys(expandedKeysValue)
   }
 
   const checkedChange = (keys: any, item: any) => {
@@ -103,7 +98,7 @@ function UIComponent() {
       </MarsPannel>
 
       <MarsPannel visible={true} right={10} top={100}>
-        <MarsTree treeData={treeData} onExpand={onExpand} checkedKeys={checkedKeys} expandedKeys={["0"]} onCheck={checkedChange}></MarsTree>
+        <MarsTree treeData={treeData} checkedKeys={checkedKeys} defaultExpandAll={true} onCheck={checkedChange}></MarsTree>
       </MarsPannel>
     </>
   )

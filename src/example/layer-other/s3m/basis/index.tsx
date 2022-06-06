@@ -1,5 +1,6 @@
-import { MarsButton, MarsPannel } from "@mars/components/MarsUI"
+import { MarsButton, MarsPannel, MarsCollapse, MarsCollapsePanel, MarsIcon } from "@mars/components/MarsUI"
 import { Space } from "antd"
+import { useCallback } from "react"
 import * as mapWork from "./map.js"
 
 const list = [
@@ -12,18 +13,30 @@ const list = [
 ]
 
 function UIComponent() {
+  const expandIcon = useCallback(() => {
+    return <MarsIcon icon="down-c"></MarsIcon>
+  }, [])
+
   return (
     <MarsPannel visible={true} right="10" top="10" width={202}>
-      <p className="mars-pannel-item">超图S3M图层：</p>
-      <Space {...{ direction: "horizontal", wrap: true }}>
-        {list.map((item) => {
-          return (
-            <MarsButton key={item.name} onClick={item.callback}>
-              {item.name}
-            </MarsButton>
-          )
-        })}
-      </Space>
+      <MarsCollapse defaultActiveKey={["1", "2"]} expandIcon={expandIcon}>
+        <MarsCollapsePanel key="1" header="超图S3M图层">
+          <Space {...{ direction: "horizontal", wrap: true }}>
+            {list.map((item) => {
+              return (
+                <MarsButton key={item.name} onClick={item.callback}>
+                  {item.name}
+                </MarsButton>
+              )
+            })}
+          </Space>
+        </MarsCollapsePanel>
+        <MarsCollapsePanel key="2" header="开源仓库">
+          <MarsButton href="https://gitee.com/marsgis/mars3d-link-supermap" target="_blank">
+            与超图结合开源仓库
+          </MarsButton>
+        </MarsCollapsePanel>
+      </MarsCollapse>
     </MarsPannel>
   )
 }

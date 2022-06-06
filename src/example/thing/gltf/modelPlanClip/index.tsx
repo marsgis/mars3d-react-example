@@ -69,7 +69,9 @@ function UIComponent() {
         <MarsFormItem label="裁剪面参数"></MarsFormItem>
       </MarsForm>
       <MarsGui formProps={{ labelCol: { span: 7 } }} options={options}></MarsGui>
-      <MarsButton onClick={() => mapWork.clear()}>清除</MarsButton>
+      <div className="f-tac">
+        <MarsButton onClick={() => mapWork.clear()}>清除</MarsButton>
+      </div>
     </MarsPannel>
   )
 }
