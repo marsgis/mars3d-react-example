@@ -116,7 +116,9 @@ const PannelElement = forwardRef<any, Props>(({ beforeClose, onClose, ...props }
 
   return (
     <div className={`mars-pannel ${props.customClass || ""}`} ref={pannelBox}>
-      <div className="pannel-content">{props.children}</div>
+      <div className="pannel-content" style={{ overflowY: props.height ? "auto" : "visible" }}>
+        {props.children}
+      </div>
       {props.closeable && (
         <div className="pannel-close-icon" onClick={closeModel}>
           <MarsIcon icon="close-one" width="20"></MarsIcon>

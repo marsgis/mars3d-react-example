@@ -50,6 +50,7 @@ export interface GuiItem {
 interface MarsGuiProps {
   options: GuiItem[]
   formProps?: any
+  className?: string
 }
 
 function ItemComponent({ type, extraWidth = 100, extraContent, onChange, ...props }) {
@@ -139,7 +140,8 @@ export const MarsGui = forwardRef<any, MarsGuiProps>(
       formProps = {
         labelCol: { span: 5 },
         wrapperCol: { span: 19 }
-      }
+      },
+      className = ""
     },
     ref
   ) => {
@@ -236,7 +238,7 @@ export const MarsGui = forwardRef<any, MarsGuiProps>(
     }))
 
     return (
-      <div className="mars-gui">
+      <div className={`mars-gui ${className}`}>
         <MarsForm initialValues={originFormData} {...formProps} form={form}>
           {renderOptions
             .filter((item) => {

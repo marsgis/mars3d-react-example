@@ -268,7 +268,7 @@ function onChange(checkedValues) {
 
 export const LayerState = (props) => {
   return (
-    <div style={{ height: "23px" }}>
+    <div className="layerSet" style={{ height: "23px" }}>
       <span className="mars-pannel-item-label" style={{ display: props.label ? "none" : "" }}>
         {props.label || "图层状态:"}
       </span>

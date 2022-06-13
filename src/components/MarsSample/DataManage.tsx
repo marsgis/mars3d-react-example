@@ -9,6 +9,18 @@ const onClickClear = () => {
   mapWork.graphicLayer.clear()
 }
 
+// 保存json
+const expJSONFile = () => {
+  const graphicLayer = mapWork.graphicLayer
+
+  if (graphicLayer.length === 0) {
+    $message("当前没有标注任何数据，无需保存！")
+    return
+  }
+  const geojson = graphicLayer.toJSON()
+  mars3d.Util.downloadFile("标绘数据.json", JSON.stringify(geojson))
+}
+
 // 保存geojson
 const onClickExpFile = () => {
   const graphicLayer = mapWork.graphicLayer
@@ -18,7 +30,7 @@ const onClickExpFile = () => {
     return
   }
   const geojson = graphicLayer.toGeoJSON()
-  mars3d.Util.downloadFile("我的标注.json", JSON.stringify(geojson))
+  mars3d.Util.downloadFile("标绘数据GeoJSON.json", JSON.stringify(geojson))
 }
 
 export const DataManage = () => {
@@ -78,16 +90,25 @@ export const DataManage = () => {
 
   return (
     <Space>
-      <span className="mars-pannel-item-label">数据管理:</span>
-      <MarsButton onClick={onClickClear}>清除</MarsButton>
+      <span className="mars-pannel-item-label" style={{ color: "#fff" }}>
+        图层数据:
+      </span>
+      <MarsButton onClick={onClickClear}>
+        <MarsIcon icon="delete" />
+        清除
+      </MarsButton>
+      <MarsButton onClick={expJSONFile} title={"保存构造参数Json"}>
+        保存参数
+      </MarsButton>
+
       <MarsButton onClick={onClickExpFile} title={"保存GeoJSON"}>
-        <MarsIcon icon="save" />
-        保存
+        <MarsIcon icon="save-one" />
+        导出
       </MarsButton>
 
       <Upload {...props}>
         <MarsButton title={"打开GeoJSON"}>
-          <MarsIcon icon="upload-one" />
+          <MarsIcon icon="folder-open" />
           打开
         </MarsButton>
       </Upload>
