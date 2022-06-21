@@ -11,8 +11,8 @@ import {
   $message
 } from "@mars/components/MarsUI"
 import styleConfig from "./attr.json"
-import { useCallback, useEffect, useMemo, useState } from "react"
-import { cloneDeep, uniq, isArray } from "lodash"
+import { useCallback, useMemo } from "react"
+import { cloneDeep, isArray } from "lodash"
 
 const components = {
   number: MarsInputNumber,
@@ -38,7 +38,7 @@ interface MarsAttrProps {
 
 export default function MarsStyle({ style, graphic, onChange = () => {} }: MarsAttrProps) {
   const styleOptions = useMemo(() => {
-    const defaultOption = styleConfig[graphic.options.edittype || graphic.type] || {}
+    const defaultOption = styleConfig[graphic.options.styleType || graphic.type] || {}
     return defaultOption
   }, [graphic])
 

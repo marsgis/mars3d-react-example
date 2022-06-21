@@ -26,7 +26,15 @@ let inited = false
 let reactApp
 marsEditor.on("loaded", (exampleConfig) => {
   if (!reactApp) {
-    MarsUIInstall()
+    MarsUIInstall({
+      dialog: {
+        position: {
+          left: 50,
+          bottom: 50
+        },
+        warpper: "sanbox-warpper"
+      }
+    })
   }
   if (inited) {
     destoryUI()

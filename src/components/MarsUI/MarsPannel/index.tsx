@@ -1,4 +1,4 @@
-import { forwardRef, useState, useRef, useEffect, useCallback } from "react"
+import { forwardRef, useRef, useEffect, useCallback } from "react"
 import { createPortal } from "react-dom"
 import { MarsIcon } from "@mars/components/MarsUI"
 
@@ -80,7 +80,7 @@ const PannelElement = forwardRef<any, Props>(({ beforeClose, onClose, ...props }
         pannelStyle.maxHeight = antoUnit(props.maxHeight)
       }
     }
-  }, [props.width, props.height, props.top, props.bottom])
+  }, [props.width, props.height, props.top, props.bottom, props.maxHeight])
 
   const close = useCallback(() => {
     pannelBox.current.style.display = "none"
@@ -116,9 +116,7 @@ const PannelElement = forwardRef<any, Props>(({ beforeClose, onClose, ...props }
 
   return (
     <div className={`mars-pannel ${props.customClass || ""}`} ref={pannelBox}>
-      <div className="pannel-content" style={{ overflowY: props.height ? "auto" : "visible" }}>
-        {props.children}
-      </div>
+      <div className="pannel-content">{props.children}</div>
       {props.closeable && (
         <div className="pannel-close-icon" onClick={closeModel}>
           <MarsIcon icon="close-one" width="20"></MarsIcon>

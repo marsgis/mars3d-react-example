@@ -50,6 +50,9 @@ export default ({ mode }: ConfigEnv) => {
           javascriptEnabled: true,
           additionalData: `@import "${path.resolve(__dirname, "src/components/MarsUI/base.less")}";`
         }
+      },
+      modules: {
+        localsConvention: "camelCase"
       }
     },
     build: {

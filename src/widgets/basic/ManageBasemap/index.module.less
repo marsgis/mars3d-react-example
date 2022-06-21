@@ -1,0 +1,29 @@
+.basemap-card {
+  width: 75px;
+  list-style-type: none;
+  margin-top: 10px;
+  margin-left: 10px;
+  float: left;
+  text-align: center;
+  cursor: pointer;
+  font-size: 12px;
+  color: #fff;
+
+  &:hover {
+    .active-card();
+  }
+
+  .icon {
+    border: 1px solid #4db3ff78;
+    width: 75px;
+    height: 70px;
+    padding: 1px;
+  }
+}
+
+.active-card {
+  color: #337fe5 !important;
+  .icon {
+    border-color: #337fe5;
+  }
+}

@@ -1,11 +1,21 @@
-import { forwardRef, useCallback, useEffect, useMemo, useRef } from "react"
+import { forwardRef, useCallback, useEffect, useState } from "react"
 import { Input, Space } from "antd"
 import type { PasswordProps, SearchProps, InputProps, InputRef } from "antd/lib/input"
 import type { TextAreaRef, TextAreaProps } from "antd/lib/input/TextArea"
+import classNames from "classnames"
 import "./index.less"
 
-export const MarsInput = forwardRef<InputRef, InputProps>((props, ref) => {
-  return <Input className="mars-input" ref={ref} {...props}></Input>
+export const MarsInput = forwardRef<InputRef, InputProps & { className?: string }>(({ className, ...props }, ref) => {
+  return (
+    <Input
+      className={classNames({
+        "mars-input": true,
+        [className]: className
+      })}
+      ref={ref}
+      {...props}
+    ></Input>
+  )
 })
 
 interface MarsInputGroupProps {
@@ -14,21 +24,32 @@ interface MarsInputGroupProps {
   onChange?: (v: any) => void
 }
 export const MarsInputGroup = forwardRef<any, MarsInputGroupProps>(({ value = [], units = [], onChange }, ref) => {
-  const values = useRef(value)
+  const [values, setValues] = useState(() => value)
 
   useEffect(() => {
-    values.current = value
+    setValues(value)
   }, [value])
 
-  const itemChange = useCallback((v, i) => {
-    values.current[i] = v
-    onChange && onChange(values.current)
-  }, [onChange])
+  const itemChange = useCallback(
+    (v) => {
+      setValues(v)
+      onChange && onChange(v)
+    },
+    [onChange]
+  )
 
   return (
     <Space>
-      {values.current.map((item, i) => (
-        <MarsInput defaultValue={item} key={i} suffix={units[i]} onChange={(e) => itemChange(e.target.value, i)}></MarsInput>
+      {values.map((item, i) => (
+        <MarsInput
+          value={item}
+          key={i}
+          suffix={units[i]}
+          onChange={(e) => {
+            values[i] = e.target.value
+            itemChange(values)
+          }}
+        ></MarsInput>
       ))}
     </Space>
   )

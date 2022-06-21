@@ -22,6 +22,8 @@ export * from "./MarsDatePicker"
 export * from "./MarsTabs"
 export * from "./MarsCollapse"
 export * from "./MarsTable"
+export * from "./MarsDrowdown"
+export * from "./MarsPagination"
 
 export const $alert = MarsAlert
 export const $notify = MarsNotify
@@ -36,10 +38,11 @@ export const setConfig = (config) => {
 }
 
 export const getConfig = () => {
-  return marsUIConfig
+  return marsUIConfig || {}
 }
 
-export default () => {
+export default (config?: any) => {
+  setConfig(config || {})
   window.$alert = MarsAlert
   window.$notify = MarsNotify
   window.$message = MarsMessage

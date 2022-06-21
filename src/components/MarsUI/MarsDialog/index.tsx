@@ -1,6 +1,7 @@
-import { forwardRef, useState, useRef, useEffect, useCallback, useMemo, ReactElement } from "react"
+import { forwardRef, useRef, useEffect, useCallback, useMemo, ReactElement } from "react"
 import { createPortal } from "react-dom"
 import { MarsIcon } from "@mars/components/MarsUI"
+import { getConfig } from "../index"
 
 import "./index.less"
 
@@ -34,13 +35,14 @@ interface Props {
 
   children?: any
   footer?: ReactElement
+  icon?: ReactElement
 
   onClose?: () => void
 }
 
 const defaultHandles = ["x", "y", "xy"]
 const DialogElement = forwardRef<any, Props>(
-  ({ handles = true, width = 200, minWidth = 100, minHeight = 100, maxWidth = 1000, maxHeight = 1000, ...props }, ref) => {
+  ({ handles = true, width = 200, minWidth = 100, minHeight = 100, maxWidth = 1000, maxHeight = 1000, icon, ...props }, ref) => {
     const pannelBox = useRef<HTMLDivElement>()
     useEffect(() => {
       const pannelStyle = pannelBox.current.style
@@ -187,15 +189,17 @@ const DialogElement = forwardRef<any, Props>(
     return (
       <div className="mars-dialog" ref={pannelBox}>
         <div className="mars-dialog__header" onMouseDown={drag}>
-          <span className="icon">
-            <slot name="icon"></slot>
-          </span>
+          <span className="icon">{icon && icon}</span>
           <span className="title"> {props.title} </span>
           <MarsIcon icon="close" width="18" className="close-btn" onClick={close}></MarsIcon>
         </div>
-        <div className="mars-dialog__body">
+        <div className={`mars-dialog__body ${props.footer ? "" : "full-content"}`}>
           <div className="content">{props.children}</div>
-          <div className="footer">{props.footer && <div className="footer-content">{props.footer}</div>}</div>
+          {props.footer && (
+            <div className="footer">
+              <div className="footer-content">{props.footer}</div>
+            </div>
+          )}
         </div>
         {actualHandles.map((handle) => (
           <div key={handle} className={`handle handle-${handle}`} onMouseDown={(e) => setSize(handle, e)}></div>
@@ -205,12 +209,22 @@ const DialogElement = forwardRef<any, Props>(
   }
 )
 
-export const MarsDialog = forwardRef<any, Props>(({ warpper, ...props }, ref) => {
-  if (warpper) {
-    const domNode = document.querySelector(warpper)
-    return createPortal(<DialogElement warpper={warpper} {...props} ref={ref}></DialogElement>, domNode)
+export const MarsDialog = forwardRef<any, Props>(({ warpper = "", ...props }, ref) => {
+  const CONFIG = getConfig()
+  let newWarpper = warpper
+
+  let globalConfig: Record<string, any> = {}
+  if (CONFIG.dialog) {
+    globalConfig = CONFIG.dialog
   }
-  return <DialogElement warpper="sanbox-warpper" {...props} ref={ref}></DialogElement>
+  if (!newWarpper) {
+    newWarpper = globalConfig.warpper || "mars-main-view"
+  }
+  if (newWarpper) {
+    const domNode = document.querySelector(`#${newWarpper}`)
+    return createPortal(<DialogElement warpper={newWarpper} {...props} ref={ref}></DialogElement>, domNode)
+  }
+  return <DialogElement warpper="mars-main-view" {...props} ref={ref}></DialogElement>
 })
 
 // 处理传入的单位问题

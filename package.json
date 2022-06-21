@@ -8,21 +8,21 @@
     "clean-cache": "rimraf node_modules/.cache/ && rimraf node_modules/.vite",
     "clean-lib": "rimraf node_modules",
     "preview": "vite preview",
-    "build": "npm run lint && vite build",
+    "build": "vite build",
     "serve:dist": "http-server ./dist",
     "lint": "npm run eslint",
-    "eslint": "eslint ./src/**/*.{js,jsx,vue,ts,tsx} --fix",
-    "prepare": "husky install"
+    "eslint": "eslint ./src/**/*.{js,jsx,vue,ts,tsx} --fix"
   },
   "dependencies": {
     "@icon-park/svg": "^1.4.0",
-    "@marsgis/editor": "^1.0.10",
+    "@marsgis/editor": "^1.0.11",
+    "classnames": "^2.3.1",
     "antd": "^4.19.3",
     "axios": "^0.26.1",
     "echarts": "^5.3.2",
     "lodash": "^4.17.21",
     "mars3d": "^3.3.0",
-    "monaco-editor": "^0.33.0",
+    "monaco-editor": "^0.29.1",
     "nprogress": "^0.2.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
@@ -52,7 +52,6 @@
     "eslint-config-react-app": "^6.0.0",
     "eslint-config-standard": "^16.0.3",
     "eslint-plugin-react-hooks": "^4.3.0",
-    "husky": "^7.0.4",
     "less": "^4.1.2",
     "rollup-plugin-copy": "^3.4.0",
     "typescript": "^4.5.4",
@@ -84,10 +83,5 @@
   ],
   "author": "火星科技",
   "license": "Apache-2.0",
-  "homepage": "http://mars3d.cn",
-  "lint-staged": {
-    "*.{js,jsx,vue,ts,tsx}": [
-      "npm run eslint"
-    ]
-  }
+  "homepage": "http://mars3d.cn"
 }

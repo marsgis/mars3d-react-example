@@ -39,8 +39,4 @@ const ListRenderer = () => {
 }
 
 const reactApp = createRoot(document.getElementById("root"))
-reactApp.render(
-  <React.StrictMode>
-    <ListRenderer />
-  </React.StrictMode>
-)
+reactApp.render(<ListRenderer />)

@@ -40,4 +40,68 @@
   .ant-table-row:nth-last-child(1) .ant-table-cell {
     border-bottom: none;
   }
+
+  // 分页
+  .ant-pagination {
+    * {
+      color: @mars-base-color !important;
+    }
+
+    .ant-pagination-item,
+    .ant-pagination-item-link,
+    .ant-pagination-prev,
+    .ant-pagination-next {
+      background: none !important;
+      background-color: transparent !important;
+    }
+
+    .ant-pagination-simple-pager {
+      input {
+        background: none;
+        background-color: transparent !important;
+      }
+    }
+
+    .ant-select {
+      color: @mars-base-color;
+      background-color: transparent !important;
+      background: none;
+
+      .ant-select-selector {
+        border-color: @mars-base-border-color !important;
+        background: none;
+        background-color: transparent !important;
+
+        &:hover,
+        &:focus {
+          border-color: #4db3ff !important;
+        }
+      }
+
+      .ant-select-arrow {
+        color: @mars-base-color !important;
+      }
+    }
+
+    .ant-select-dropdown {
+      background-color: red;
+      padding: 0 !important;
+      .mars-drop-bg();
+
+      .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+        background: @mars-list-active;
+      }
+
+      .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+        font-weight: 700;
+        background: @mars-list-active;
+      }
+
+      .ant-select-item {
+        transition: none;
+        color: @mars-base-color !important;
+        text-align: center;
+      }
+    }
+  }
 }
