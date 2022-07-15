@@ -38,7 +38,7 @@ export function onMounted(mapInstance) {
     name: "建筑物面",
     url: "//data.mars3d.cn/file/geojson/buildings-hf.json",
     symbol: {
-      type: "polygonCombine", // 大数据面类型，效率高
+      type: "polygonC", // 大数据面类型，效率高
       styleOptions: {
         color: "#0d3685",
         opacity: 1.0,

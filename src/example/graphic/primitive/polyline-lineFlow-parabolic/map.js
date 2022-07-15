@@ -19,7 +19,7 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
-  // 创建Graphic图层
+  // 创建矢量数据图层
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -30,11 +30,12 @@ export function onMounted(mapInstance) {
     position: center,
     style: {
       radius: 50000.0,
-      material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.CircleWave, {
+      materialType: mars3d.MaterialType.CircleWave,
+      materialOptions: {
         color: "#ff0000",
         count: 1, // 单个圆圈
         speed: 20
-      })
+      }
     }
   })
   graphicLayer.addGraphic(graphic)
@@ -67,15 +68,15 @@ export function onMounted(mapInstance) {
     const item = cities[i]
     const thisPoint = Cesium.Cartesian3.fromDegrees(item.lon, item.lat, 1)
     const positions = mars3d.PolyUtil.getLinkedPointList(center, thisPoint, 40000, 100) // 计算曲线点
-    const primitive = new mars3d.graphic.PolylinePrimitive({
+    const graphic = new mars3d.graphic.PolylinePrimitive({
       positions: positions,
       style: {
         width: 2,
         material: lineMaterial // 动画线材质
       }
     })
-    primitive.bindPopup(`合肥 - ${item.name}`)
-    graphicLayer.addGraphic(primitive)
+    graphic.bindPopup(`合肥 - ${item.name}`)
+    graphicLayer.addGraphic(graphic)
   }
 }
 

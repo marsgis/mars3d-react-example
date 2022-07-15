@@ -21,7 +21,7 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
-  // 创建Graphic图层
+  // 创建矢量数据图层
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -42,7 +42,7 @@ export function onMounted(mapInstance) {
 
       setTimeout(() => {
         creteaPointPrimitive(graphicLayer, rs)
-      }, 1000)
+      }, 500)
     })
     .catch(function (error) {
       globalAlert(error, "加载数据出错")
@@ -64,18 +64,20 @@ function creteaPointPrimitive(graphicLayer, rs) {
   const degree = 45 // 角度
   const hpr = new Cesium.HeadingPitchRoll(Cesium.Math.toRadians(degree), 0, 0)
 
+  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
+
   for (let i = 1, len = rs.length; i < len; i++) {
     const item = rs[i]
 
-    if (item[2] !== 2) {
-      continue
-    } // 只展示一层
+    if (i % 2 === 0) {
+      continue // 抽析数据，减少数据量
+    }
 
     const val = item[3]
     const par1Position = mars3d.PointUtil.getPositionByHprAndOffset(center, new Cesium.Cartesian3(item[0], item[1], item[2]), hpr)
 
     // 加point点
-    const primitive = new mars3d.graphic.PointPrimitive({
+    const graphic = new mars3d.graphic.PointPrimitive({
       position: par1Position,
       style: {
         pixelSize: 5,
@@ -83,8 +85,9 @@ function creteaPointPrimitive(graphicLayer, rs) {
       },
       tooltip: "浓度值：" + val
     })
-    graphicLayer.addGraphic(primitive)
+    graphicLayer.addGraphic(graphic)
   }
+  graphicLayer.enabledEvent = true // 恢复事件
 }
 
 // 半球范围圈

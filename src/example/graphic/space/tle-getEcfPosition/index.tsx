@@ -32,7 +32,7 @@ const columns = [
     key: "distance"
   }
 ]
-const tableData = []
+
 function UIComponent() {
   const [startTime, setStartTime] = useState(dayjs().format("YYYY-MM-DD HH:mm:ss")) // 开始时间
   const [endTime, setEndTime] = useState(dayjs().add(60, "minute").format("YYYY-MM-DD HH:mm:ss")) // 结束时间
@@ -47,6 +47,7 @@ function UIComponent() {
 
   useMemo(() => {
     mapWork.eventTarget.on("dataList", (e: any) => {
+      const tableData = []
       e.tableList.forEach((item, index) => {
         tableData.push({
           key: index,
@@ -68,6 +69,11 @@ function UIComponent() {
 
   const onChangeEndTime = (time: any) => {
     setEndTime(time)
+  }
+
+  const clearResult = () => {
+    setPathData([])
+    mapWork.clearResult()
   }
 
   return (
@@ -107,7 +113,7 @@ function UIComponent() {
       <div className="f-tac f-mb">
         <Space>
           <MarsButton onClick={startFX}>开始分析</MarsButton>
-          <MarsButton>清除</MarsButton>
+          <MarsButton onClick={clearResult}>清除</MarsButton>
         </Space>
       </div>
 

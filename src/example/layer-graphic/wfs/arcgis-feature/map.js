@@ -21,8 +21,7 @@ export const mapOptions = {
       symbol: {
         type: "billboardP",
         styleOptions: {
-          image: "img/marker/mark3.png",
-          scale: 0.7,
+          image: "img/marker/mark-blue.png",
           verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
           clampToGround: true,
           label: {
@@ -153,5 +152,5 @@ function addArcGisWFSLayer2() {
 
 // 图层状态 在组件中进行管理的图层
 export function getManagerLayer() {
-  return map.getLayer("建筑物面矢量图层", "name")
+  return map.getLayerByAttr("建筑物面矢量图层", "name")
 }

@@ -57,10 +57,11 @@ function addGraphicLayer() {
     style: {
       leadTime: 0,
       resolution: 1,
-      material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.PolylineGlow, {
+      materialType: mars3d.MaterialType.PolylineGlow,
+      materialOptions: {
         glowPower: 0.1,
         color: Cesium.Color.GREEN
-      }),
+      },
       width: 10
     },
     model: {

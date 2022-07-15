@@ -42,6 +42,7 @@ function UIComponent() {
     onChange: (selectedRowKeys: string[]) => {
       // 使得点击之后选项改变
       setSelectRow(selectedRowKeys)
+      select = selectedRowKeys
     },
     onSelect: (record: any, selected: boolean) => {
       mapWork.showHideArea(record.key, selected)
@@ -51,15 +52,8 @@ function UIComponent() {
   const [dataSource, setDataSource] = useState([])
 
   useMemo(() => {
-    mapWork.eventTarget.on("dataLoaded", function (event: any) {
-      resultData = event.list.map((item: any) => ({ key: item.id, name: "裁剪区" + item.id }))
-      setDataSource(resultData)
-      select = event.list.map((item: any) => item.id)
-      setSelectRow(select)
-    })
-
     mapWork.eventTarget.on("addItem", function (event: any) {
-      const item = event.item
+      const item = event.area
       resultData.push({ key: item.id, name: "裁剪区" + item.id })
       select.push(item.id)
       setDataSource([])

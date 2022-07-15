@@ -26,7 +26,6 @@ function UIComponent() {
         mapWork.chkSensorType(sensorType)
       }
     },
-
     {
       type: "slider",
       field: "pitch",
@@ -35,11 +34,12 @@ function UIComponent() {
       min: -180,
       max: 180,
       value: 0,
+      extra: "值{pitch}",
+      extraWidth: 60,
       change(pitch) {
         mapWork.pitchChange(pitch)
       }
     },
-
     {
       type: "slider",
       field: "roll",
@@ -48,11 +48,12 @@ function UIComponent() {
       min: -180,
       max: 180,
       value: 0,
+      extra: "值{roll}",
+      extraWidth: 60,
       change(roll) {
         mapWork.rollChange(roll)
       }
     },
-
     {
       type: "slider",
       field: "angle1",
@@ -61,6 +62,8 @@ function UIComponent() {
       min: 0,
       max: 89,
       value: 30,
+      extra: "值{angle1}",
+      extraWidth: 60,
       change(angle1) {
         mapWork.angle1(angle1)
       }
@@ -73,6 +76,8 @@ function UIComponent() {
       min: 0,
       max: 89,
       value: 20,
+      extra: "值{angle2}",
+      extraWidth: 60,
       show(data) {
         return data.type !== "1"
       },
@@ -94,15 +99,15 @@ function UIComponent() {
 
   return (
     <>
-      <MarsPannel visible={true} top={10} right={10} width={280}>
+      <MarsPannel visible={true} top={10} right={10} width={290}>
         <div className="f-mb">
           <Space>
-            <span className="mars-pannel-item-label">视椎体:</span>
+            <span className="mars-pannel-item-label">视椎体状态:</span>
             <MarsButton onClick={() => mapWork.locate()}>定位至卫星</MarsButton>
             <MarsButton onClick={() => selPoint(viewType)}> {viewType ? "取消凝视" : "凝视"} </MarsButton>
           </Space>
         </div>
-        <MarsGui options={options} formProps={{ labelCol: { span: 6 } }}></MarsGui>
+        <MarsGui options={options} formProps={{ labelCol: { span: 7 } }}></MarsGui>
 
         <div className="f-mb">
           <span className="mars-pannel-item-label">参考系轴:</span>

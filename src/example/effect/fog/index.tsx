@@ -21,9 +21,9 @@ function UIComponent() {
         <MarsFormItem label="雾颜色">
           <MarsColor
             {...{ value: color }}
-            onChange={(data) => {
-              onChangeColor(data.target.value)
-              mapWork.setColor(data.target.value)
+            onChange={(value) => {
+              onChangeColor(value)
+              mapWork.setColor(value)
             }}
           ></MarsColor>
         </MarsFormItem>

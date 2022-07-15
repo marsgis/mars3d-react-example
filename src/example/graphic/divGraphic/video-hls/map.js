@@ -43,7 +43,7 @@ export function onMounted(mapInstance) {
       {
         text: "查看摄像头",
         icon: "fa fa-trash-o",
-        callback: function (e) {
+        callback: (e) => {
           const graphic = e.graphic
 
           globalMsg("右键菜单示例")
@@ -54,10 +54,10 @@ export function onMounted(mapInstance) {
   )
 
   // 添加数据
-  addDemoGraphic(graphicLayer, [117.080397, 31.656139, 33.3])
-  addDemoGraphic(graphicLayer, [117.078006, 31.65649, 49.4])
-  addDemoGraphic(graphicLayer, [117.080571, 31.657898, 50.2])
-  addDemoGraphic(graphicLayer, [117.078331, 31.660016, 47.2])
+  addRandomGraphicByCount(graphicLayer, [117.080397, 31.656139, 33.3])
+  addRandomGraphicByCount(graphicLayer, [117.078006, 31.65649, 49.4])
+  addRandomGraphicByCount(graphicLayer, [117.080571, 31.657898, 50.2])
+  addRandomGraphicByCount(graphicLayer, [117.078331, 31.660016, 47.2])
 }
 
 /**
@@ -72,12 +72,12 @@ export function onUnmounted() {
 // const hlsUrl = "http://playertest.longtailvideo.com/adaptive/bipbop/gear4/prog_index.m3u8"
 const hlsUrl = "http://1252093142.vod2.myqcloud.com/4704461fvodcq1252093142/f865d8a05285890787810776469/playlist.f3.m3u8"
 
-function addDemoGraphic(graphicLayer, position) {
+function addRandomGraphicByCount(graphicLayer, position) {
   const graphicImg = new mars3d.graphic.DivGraphic({
     position: position,
     style: {
       html: ` <div class="mars3d-camera-content">
-                  <img class="mars3d-camera-img" src="img/marker/camera.svg" >
+                  <img class="mars3d-camera-img" src="img/icon/camera.svg" >
                 </div>
                 <div class="mars3d-camera-line" ></div>
                 <div class="mars3d-camera-point"></div>

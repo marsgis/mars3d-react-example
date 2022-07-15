@@ -1,15 +1,52 @@
 .layer-pictrue {
-    position: absolute;
-    bottom: 30px;
-    left: 60px;
-    .layer-picture_img {
-      height: 180px;
+  position: absolute;
+  bottom: 30px;
+  left: 60px;
+  .layer-picture_img {
+    height: 180px;
+  }
+}
+
+.tree-slider {
+  display: inline-block;
+  width: 70px;
+  margin-left: 5px;
+  vertical-align: middle;
+}
+
+// 树控件右键菜单的设置
+.mars-menucontent {
+  border-bottom: 1px solid #008aff70;
+  border-left: 1px solid #008aff70;
+  border-right: 1px solid #008aff70;
+  box-shadow: 0px 4px 15px 1px rgba(2, 33, 59, 0.7);
+  :global(.ant-menu) {
+    color: @mars-base-color;
+    background-color: @mars-bg-base;
+    border-right: none;
+    background: linear-gradient(to left, @mars-content-color, @mars-content-color) left bottom no-repeat,
+      linear-gradient(to bottom, @mars-content-color, @mars-content-color) left bottom no-repeat,
+      linear-gradient(to left, @mars-content-color, @mars-content-color) right bottom no-repeat,
+      linear-gradient(to left, @mars-content-color, @mars-content-color) right bottom no-repeat;
+    background-size: 1px 10px, 10px 1px, 1px 10px, 10px 1px;
+    background-color: @mars-bg-base !important;
+  }
+  :global(.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected) {
+    color: @mars-base-color;
+    background-color: transparent;
+  }
+  :global(.ant-menu-item-active) {
+    color: @mars-base-color !important;
+  }
+  :global(.ant-menu-item) {
+    background: none;
+    height: 33px;
+    line-height: 28px;
+    &:hover {
+      background: @mars-list-active;
     }
   }
-
-  .tree-slider {
-    display: inline-block;
-    width: 70px;
-    margin-left: 5px;
-    vertical-align: middle;
+  :global(.ant-upload) {
+    color: @mars-base-color;
   }
+}

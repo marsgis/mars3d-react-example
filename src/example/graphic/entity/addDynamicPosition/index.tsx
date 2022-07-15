@@ -7,9 +7,9 @@ function UIComponent() {
   return (
     <>
       <MarsPannel visible={true} top={10} right={10}>
-        <LayerState />
+        <LayerState direction="horizontal" />
 
-        <div>
+        <div className="f-pt">
           <Space>
             <span>动态贴模型示例:</span>
             <MarsButton href="editor-react.html?id=graphic/entity/addDynamicPosition-tileset" target="_blank">

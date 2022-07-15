@@ -37,7 +37,7 @@ export function onMounted(mapInstance) {
     symbol: {
       styleOptions: {
         ...pointStyle,
-        image: "img/marker/mark3.png"
+        image: "img/marker/mark-blue.png"
       }
     },
     popup: "{项目名称}",
@@ -78,7 +78,7 @@ function clickPoint(position) {
     position: position,
     style: {
       ...pointStyle,
-      image: "img/marker/start.png"
+      image: "img/marker/route-start.png"
     },
     popup: "查询点"
   })
@@ -100,11 +100,12 @@ function clickPoint(position) {
     style: {
       width: 5,
       clampToGround: true,
-      material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
+      materialType: mars3d.MaterialType.LineFlow,
+      materialOptions: {
         color: "rgba(89,249,255,0.8)",
         image: "img/textures/line-tarans.png",
         speed: 8
-      })
+      }
     }
   })
   graphicLayer.addGraphic(polyline)
@@ -115,11 +116,12 @@ function clickPoint(position) {
     style: {
       radius: polyline.distance / 10,
       height: 40,
-      material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.CircleWave, {
+      materialType: mars3d.MaterialType.CircleWave,
+      materialOptions: {
         color: "#00ffff",
         count: 2,
         speed: 20
-      })
+      }
     },
     popup: "最近的体育场所是:<br />" + nearestPoint.attr["项目名称"]
   })

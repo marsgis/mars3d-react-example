@@ -20,7 +20,7 @@ export function onMounted(mapInstance) {
 
   map.basemap = "黑色底图"
 
-  // 创建Graphic图层
+  // 创建矢量数据图层
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -48,7 +48,7 @@ function addDemoGraphics(graphicLayer) {
         const color = colors[i]
         const height = i * 80 + 50
 
-        const primitive = new mars3d.graphic.PolylinePrimitive({
+        const graphic = new mars3d.graphic.PolylinePrimitive({
           positions: item.positions,
           style: {
             width: 3,
@@ -58,7 +58,7 @@ function addDemoGraphics(graphicLayer) {
           },
           attr: item.attr
         })
-        graphicLayer.addGraphic(primitive)
+        graphicLayer.addGraphic(graphic)
       })
     })
     .catch(function (error) {

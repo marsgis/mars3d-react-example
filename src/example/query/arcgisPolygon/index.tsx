@@ -1,11 +1,10 @@
-import { MarsGui, MarsPannel, MarsButton, MarsTabs, MarsTabPane, MarsTable } from "@mars/components/MarsUI"
+import { MarsGui, MarsPannel, MarsButton, MarsTabs, MarsTabPane, MarsTable, MarsInput } from "@mars/components/MarsUI"
 import { setAutoHeight } from "@mars/utils/mars-util"
 import type { GuiItem } from "@mars/components/MarsUI"
 import { Space } from "antd"
 import { useEffect, useRef, useState } from "react"
 import * as echarts from "echarts"
 import * as mapWork from "./map.js"
-import "./index.css"
 
 const columns = [
   {
@@ -50,7 +49,7 @@ function UIComponent() {
       type: "input",
       field: "context",
       label: "名称",
-      value: "请输入查询关键字",
+      placeholder: "请输入关键词",
       change(data) {
         console.log("数据change变化", data)
         keyWords = data
@@ -168,6 +167,7 @@ function createTabsEchartsData(arrType: any, arrArea: any, arrPie: any, e) {
     },
     tooltip: {
       trigger: "item",
+      confine: true,
       formatter: "{a} <br/>{b} : {c} 亩</br>占比 : {d}%",
       backgroundColor: "rgba(63, 72, 84, 0.7)",
       textStyle: {
@@ -198,6 +198,7 @@ function createTabsEchartsData(arrType: any, arrArea: any, arrPie: any, e) {
   const histogramOption = {
     tooltip: {
       trigger: "item",
+      confine: true,
       backgroundColor: "rgba(63, 72, 84, 0.7)",
       formatter: "{b}: {c} 亩",
       textStyle: {

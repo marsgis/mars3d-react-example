@@ -96,7 +96,7 @@ function addDemoGraphics(geojson) {
     if (item.name) {
       const thisPoint = Cesium.Cartesian3.fromDegrees(item.center[0], item.center[1])
       const positions = mars3d.PolyUtil.getLinkedPointList(center, thisPoint, 40000, 100) // 计算曲线点
-      const primitive = new mars3d.graphic.PolylinePrimitive({
+      const graphic = new mars3d.graphic.PolylinePrimitive({
         positions: positions,
         style: {
           width: 2,
@@ -104,8 +104,8 @@ function addDemoGraphics(geojson) {
         },
         attr: item
       })
-      primitive.bindTooltip(`合肥 - ${item.name}`)
-      map.graphicLayer.addGraphic(primitive)
+      graphic.bindTooltip(`合肥 - ${item.name}`)
+      map.graphicLayer.addGraphic(graphic)
     }
   }
 }

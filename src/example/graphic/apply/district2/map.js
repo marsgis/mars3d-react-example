@@ -84,14 +84,16 @@ function addAnhui() {
       }).then((result) => {
         console.log("边界墙插值计算完成坐标", result.positions)
 
-        const primitive = new mars3d.graphic.WallPrimitive({
+        const graphic = new mars3d.graphic.WallPrimitive({
           positions: result.positions,
           style: {
             addHeight: -15000,
             diffHeight: 15000, // 墙高
             materialType: mars3d.MaterialType.Image2,
-            image: "./img/textures/fence-top.png",
-            color: "rgba(0,255,255,0.6)"
+            materialOptions: {
+              image: "./img/textures/fence-top.png",
+              color: "rgba(0,255,255,0.6)"
+            }
             // renderState: Cesium.RenderState.fromCache({
             //   blending: Cesium.BlendingState.ALPHA_BLEND,
             //   depthTest: {
@@ -107,7 +109,7 @@ function addAnhui() {
           },
           attr: attr
         })
-        anhuiWall.addGraphic(primitive)
+        anhuiWall.addGraphic(graphic)
       })
     }
   })
@@ -171,11 +173,12 @@ function addCenterCity(graphicLayer) {
     position: point,
     style: {
       radius: 16000,
-      material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.CircleWave, {
+      materialType: mars3d.MaterialType.CircleWave,
+      materialOptions: {
         color: "rgba(0,255,255,0.6)",
         count: 2,
         speed: 10
-      })
+      }
     }
   })
   graphicLayer.addGraphic(cicle)
@@ -212,36 +215,16 @@ function addOutCircle(graphicLayer) {
 
   for (let i = 0; i < arrImg.length; i++) {
     const item = arrImg[i]
-    const primitive = new mars3d.graphic.RectanglePrimitive({
+    const graphic = new mars3d.graphic.RectanglePrimitive({
       positions: item.positions,
       style: {
         materialType: mars3d.MaterialType.Image2,
-        image: item.image,
-        opacity: 0.4
+        materialOptions: {
+          image: item.image,
+          opacity: 0.4
+        }
       }
     })
-    graphicLayer.addGraphic(primitive)
+    graphicLayer.addGraphic(graphic)
   }
-
-  // 自转的半椭圆
-  // let rotation = Cesium.Math.toRadians(50);
-  // function getRotationValue() {
-  //   rotation += 0.005;
-  //   return rotation;
-  // }
-  // let primitive1 = new mars3d.graphic.RectangleEntity({
-  //   positions: [
-  //     [114.642444, 34.789658],
-  //     [119.814361, 29.425181],
-  //   ],
-  //   style: {
-  //     materialType: mars3d.MaterialType.Image2,
-  //     image: "./img/icon/calib-semicircle.png",
-  //     opacity: 0.2,
-  //     clampToGround: true,
-  //     rotation: new Cesium.CallbackProperty(getRotationValue, false),
-  //     stRotation: new Cesium.CallbackProperty(getRotationValue, false),
-  //   },
-  // });
-  // graphicLayer.addGraphic(primitive1);
 }

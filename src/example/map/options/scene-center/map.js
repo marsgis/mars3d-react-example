@@ -18,6 +18,7 @@ export const mapOptions = {
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
+  map.camera.percentageChanged = 0.01
 
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
@@ -32,11 +33,11 @@ export function onMounted(mapInstance) {
       stackPartitions: 32,
       slicePartitions: 32,
       outline: true,
-      outlineColor: Cesium.Color.YELLOW,
+      outlineColor: "#ffff00",
 
       // 高亮时的样式（默认为鼠标移入，也可以指定type:'click'单击高亮），构造后也可以openHighlight、closeHighlight方法来手动调用
       highlight: {
-        outlineColor: Cesium.Color.RED
+        outlineColor: "#ff0000"
       }
     },
     // 添加扫描面

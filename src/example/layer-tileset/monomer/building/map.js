@@ -42,7 +42,7 @@ export function onMounted(mapInstance) {
         opacity: 0.2,
         clampToGround: true,
         classification: true,
-        buffer: 1,
+        // buffer: 1,
         // 单体化鼠标移入或单击后高亮的样式
         highlight: {
           type: mars3d.EventType.click,

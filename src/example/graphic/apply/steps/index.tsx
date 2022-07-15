@@ -123,6 +123,7 @@ function UIComponent() {
           title: "等高线绘制",
           key: "03-02",
           times: 10,
+          index: 10,
           widget() {
             mapWork.workDgx2Line()
           }
@@ -131,6 +132,7 @@ function UIComponent() {
           title: "等高线结果",
           key: "03-03",
           times: 11,
+          index: 11,
           widget() {
             mapWork.workDgx3End()
           }
@@ -151,6 +153,9 @@ function UIComponent() {
   const [counter, setCount] = useState<number>(0)
   // const counter = useRef<number>(0)
   // let counter = 0
+
+  const [showComputer, setShowComputer] = useState(false)
+  const [contourDraw, setContourDraw] = useState(false)
 
   useMemo(() => {
     let i = 0
@@ -196,6 +201,17 @@ function UIComponent() {
       timer = setTimeout(() => {
         start()
       }, animate.times * 1000)
+
+      if (currentIndex === 10) {
+        setShowComputer(true)
+        setContourDraw(false)
+      } else if (currentIndex === 11) {
+        setShowComputer(false)
+        setContourDraw(true)
+      } else {
+        setShowComputer(false)
+        setContourDraw(false)
+      }
     } else {
       stop()
     }
@@ -254,63 +270,92 @@ function UIComponent() {
   }
 
   return (
-    <MarsPannel visible={true} top={10} right={10} width={230}>
-      <div className="f-mb">
-        <Space>
-          {!isPlay || isPause ? (
-            <MarsButton onClick={play}>
-              <Space>
+    <>
+      <MarsPannel visible={true} top={10} right={10} width={230}>
+        <div className="f-mb">
+          <Space>
+            {!isPlay || isPause ? (
+              <MarsButton onClick={play}>
+                <Space>
+                  <MarsIcon icon="handle-triangle" className="icon-vertical-a"></MarsIcon>
+                  <span>{isPause ? "继续" : "开始"}</span>
+                </Space>
+              </MarsButton>
+            ) : (
+              ""
+            )}
+
+            {isPlay && !isPause ? (
+              <MarsButton onClick={pause}>
                 <MarsIcon icon="handle-triangle" className="icon-vertical-a"></MarsIcon>
-                <span>{isPause ? "继续" : "开始"}</span>
-              </Space>
-            </MarsButton>
-          ) : (
-            ""
-          )}
+                <span>暂停</span>
+              </MarsButton>
+            ) : (
+              ""
+            )}
 
-          {isPlay && !isPause ? (
-            <MarsButton onClick={pause}>
-              <MarsIcon icon="handle-triangle" className="icon-vertical-a"></MarsIcon>
-              <span>暂停</span>
-            </MarsButton>
-          ) : (
-            ""
-          )}
-
-          {isPlay ? (
-            <MarsButton onClick={stop}>
-              <MarsIcon icon="power" className="icon-vertical-a"></MarsIcon>
-              <span>停止</span>
-            </MarsButton>
-          ) : (
-            ""
-          )}
-        </Space>
-      </div>
-
-      <div className="f-mb">
-        <MarsTree
-          treeData={treeData}
-          selectedKeys={selectedKeys}
-          defaultExpandAll={true}
-          checkable={false}
-          selectable={true}
-          onSelect={onSelect}
-          titleRender={renderNode}
-        ></MarsTree>
-      </div>
-
-      {isPlay ? (
-        <div>
-          <h3 className="f-mb show-time">总时长：{totalTimes}</h3>
-          <h3 className="f-mb show-time">
-            当前: {currentWork}&nbsp;{counter}秒
-          </h3>
+            {isPlay ? (
+              <MarsButton onClick={stop}>
+                <MarsIcon icon="power" className="icon-vertical-a"></MarsIcon>
+                <span>停止</span>
+              </MarsButton>
+            ) : (
+              ""
+            )}
+          </Space>
         </div>
-      ) : (
-        ""
-      )}
-    </MarsPannel>
+
+        <div className="f-mb">
+          <MarsTree
+            treeData={treeData}
+            selectedKeys={selectedKeys}
+            defaultExpandAll={true}
+            checkable={false}
+            selectable={true}
+            onSelect={onSelect}
+            titleRender={renderNode}
+          ></MarsTree>
+        </div>
+
+        {isPlay ? (
+          <div>
+            <h3 className="f-mb show-time">总时长：{totalTimes}</h3>
+            <h3 className="f-mb show-time">
+              当前: {currentWork}&nbsp;{counter}秒
+            </h3>
+          </div>
+        ) : (
+          ""
+        )}
+      </MarsPannel>
+      {showComputer ? (
+        <MarsPannel visible={true} top={10} left={10} width={400}>
+          等高线计算过程展示 <br />
+          <ul className="contentUl">
+            <li>完成地性线的连接工作后，即可在同一坡度的两相邻点之间内插出每整米高程的等高线通过点。</li>
+            <li>前提：相邻点等坡度, 原理：比例内插</li>
+
+            <li>
+              <img src="img/jiaoben/dgx1.jpg" alt="" style={{ height: "150px" }} />
+            </li>
+            <li>
+              假设ab间的坡度是均匀的，则根据a和b点间的高差为6.4m，ab线上图上的平距为48mm，由a点到22m等高线的高差为0.8m，由b点到27m等高线的高差为0.6m，则由a点到22m等高线及由b点到27m等高线的线长，x1和x2可以根据相似三角形状原理得到如下关系式
+            </li>
+            <li>
+              <img src="img/jiaoben/dgx2.jpg" alt="" style={{ height: "80px" }} />
+            </li>
+          </ul>
+        </MarsPannel>
+      ) : null}
+      {contourDraw ? (
+        <MarsPannel visible={true} top={10} left={10} width={400}>
+          <Space wrap>
+            等高线通过点绘制 <br />
+            <img src="img/jiaoben/dgx3.jpg" alt="" style={{ width: "100%" }} />
+          </Space>
+        </MarsPannel>
+      ) : null}
+    </>
   )
 }
 

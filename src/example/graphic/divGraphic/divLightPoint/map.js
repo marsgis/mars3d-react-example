@@ -1,6 +1,7 @@
 import * as mars3d from "mars3d"
 
 export let map // mars3d.Map三维地图对象
+export let graphicLayer // 矢量图层对象
 
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
@@ -17,7 +18,6 @@ export const mapOptions = {
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
-
   map.basemap = 2017
 
   // 显示边界
@@ -28,14 +28,16 @@ export function onMounted(mapInstance) {
       type: "wall",
       styleOptions: {
         diffHeight: 800, // 墙高
-        materialType: mars3d.MaterialType.LineFlow,
-        speed: 10, // 速度
-        image: "img/textures/fence.png", // 图片
-        repeatX: 1, // 重复数量
-        axisY: true, // 竖直方向
-        color: "#00ffff", // 颜色
-        opacity: 0.6, // 透明度
         outline: false,
+        materialType: mars3d.MaterialType.LineFlow,
+        materialOptions: {
+          speed: 10, // 速度
+          image: "img/textures/fence.png", // 图片
+          repeatX: 1, // 重复数量
+          axisY: true, // 竖直方向
+          color: "#00ffff", // 颜色
+          opacity: 0.6 // 透明度
+        },
         label: {
           text: "{name}",
           font_size: 18,
@@ -53,14 +55,20 @@ export function onMounted(mapInstance) {
   })
   map.addLayer(geoJsonLayer)
 
-  // 显示高校点
-  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/gaoxiao.json" })
-    .then(function (res) {
-      addFeature(res)
-    })
-    .catch(function (error) {
-      console.log("加载JSON出错", error)
-    })
+  // 创建DIV数据图层
+  graphicLayer = new mars3d.layer.GraphicLayer()
+  map.addLayer(graphicLayer)
+
+  // 在layer上绑定监听事件
+  graphicLayer.on(mars3d.EventType.click, function (event) {
+    console.log("监听layer，单击了矢量对象", event)
+  })
+
+  bindLayerPopup() // 在图层上绑定popup,对所有加到这个图层的矢量数据都生效
+  bindLayerContextMenu() // 在图层绑定右键菜单,对所有加到这个图层的矢量数据都生效
+
+  // 加一些演示数据
+  addDemoGraphic1(graphicLayer)
 }
 
 /**
@@ -71,59 +79,155 @@ export function onUnmounted() {
   map = null
 }
 
-function addFeature(arr) {
+// 显示高校点
+function addDemoGraphic1(graphicLayer) {
   const pointColorArr = ["#f33349", "#f79a2c", "#f2fa19", "#95e40c", "#1ffee6"]
+  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/gaoxiao.json" })
+    .then(function (arr) {
+      for (let i = 0, len = arr.length; i < len; i++) {
+        const item = arr[i]
+        const postions = item["经纬度"].split(",") // 取到经纬度坐标
+        if (postions.length !== 2) {
+          continue
+        }
 
-  // 创建DIV数据图层
-  const graphicLayer = new mars3d.layer.GraphicLayer()
-  map.addLayer(graphicLayer)
+        const lng = Number(postions[0])
+        const lat = Number(postions[1])
+        const pointColor = pointColorArr[i % pointColorArr.length]
 
-  // 在layer上绑定监听事件
-  graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("监听layer，单击了矢量对象", event)
+        const graphic = new mars3d.graphic.DivLightPoint({
+          name: item["高校名称"],
+          position: Cesium.Cartesian3.fromDegrees(lng, lat),
+          style: {
+            color: pointColor,
+            size: item["主管部门"] === "教育部" ? 15 : 10,
+            distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 200000) // 按视距距离显示
+            // label: {
+            //   text: item["高校名称"], // 内容
+            //   color: "#ffffff"
+            // }
+          },
+          attr: item
+        })
+        graphicLayer.addGraphic(graphic)
+      }
+    })
+    .catch(function (error) {
+      console.log("加载JSON出错", error)
+    })
+}
 
-    const item = event.graphic.attr
-    globalMsg("单击了：" + item["高校名称"])
-  })
+// 生成演示数据(测试数据量)
+export function addRandomGraphicByCount(count) {
+  graphicLayer.clear()
+  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
 
-  graphicLayer.bindPopup(function (event) {
-    const item = event.graphic.attr
-    if (!item) {
-      return false
-    }
-    const html =
-      "高校名称：" +
-      item["高校名称"] +
-      "<br />所属地区：" +
-      item["地区"] +
-      "<br />主管部门：" +
-      item["主管部门"] +
-      "<br />办学层次：" +
-      item["办学层次"] +
-      "<br />王牌专业：" +
-      item["王牌专业"]
-    return html
-  })
+  const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
+  const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
+  console.log("生成的测试网格坐标", result)
 
-  for (let i = 0, len = arr.length; i < len; i++) {
-    const item = arr[i]
-    const postions = item["经纬度"].split(",") // 取到经纬度坐标
-    if (postions.length !== 2) {
-      continue
-    }
-
-    const lng = Number(postions[0])
-    const lat = Number(postions[1])
-    const pointColor = pointColorArr[i % pointColorArr.length]
+  for (let j = 0; j < result.points.length; ++j) {
+    const position = result.points[j]
+    const index = j + 1
 
     const graphic = new mars3d.graphic.DivLightPoint({
-      position: Cesium.Cartesian3.fromDegrees(lng, lat),
+      position: position,
       style: {
-        color: pointColor,
-        distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 200000) // 按视距距离显示
+        color: "#f33349"
       },
-      attr: item
+      attr: { index: index }
     })
     graphicLayer.addGraphic(graphic)
   }
+
+  graphicLayer.enabledEvent = true // 恢复事件
+  return result.points.length
+}
+
+// 开始绘制
+export function startDrawGraphic() {
+  graphicLayer.startDraw({
+    type: "divLightPoint",
+    style: {
+      color: "#f33349"
+    }
+  })
+}
+
+// 在图层绑定Popup弹窗
+export function bindLayerPopup() {
+  graphicLayer.bindPopup(function (event) {
+    const attr = event.graphic.attr || {}
+    attr["类型"] = event.graphic.type
+    attr["来源"] = "我是layer上绑定的Popup"
+    attr["备注"] = "我支持鼠标交互"
+
+    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
+  })
+}
+
+// 绑定右键菜单
+export function bindLayerContextMenu() {
+  graphicLayer.bindContextMenu([
+    {
+      text: "开始编辑对象",
+      icon: "fa fa-edit",
+      show: function (e) {
+        const graphic = e.graphic
+        if (!graphic || !graphic.hasEdit) {
+          return false
+        }
+        return !graphic.isEditing
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
+        if (graphic) {
+          graphicLayer.startEditing(graphic)
+        }
+      }
+    },
+    {
+      text: "停止编辑对象",
+      icon: "fa fa-edit",
+      show: function (e) {
+        const graphic = e.graphic
+        if (!graphic || !graphic.hasEdit) {
+          return false
+        }
+        return graphic.isEditing
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
+        if (graphic) {
+          graphic.stopEditing()
+        }
+      }
+    },
+    {
+      text: "删除对象",
+      icon: "fa fa-trash-o",
+      show: (event) => {
+        const graphic = event.graphic
+        if (!graphic || graphic.isDestroy) {
+          return false
+        } else {
+          return true
+        }
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        if (!graphic) {
+          return
+        }
+        graphic.stopEditing()
+        graphicLayer.removeGraphic(graphic)
+      }
+    }
+  ])
 }

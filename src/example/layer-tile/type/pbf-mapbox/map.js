@@ -18,6 +18,11 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
+  globalNotify(
+    "已知问题提示",
+    `(1) 无数据区域mapbox-gl.js解析失败F12会有错误提示，但不影响使用。(2) 如果部分PBF数据未显示，需要扩展开发对应解析style代码。`
+  )
+
   addPbfLayer()
 }
 

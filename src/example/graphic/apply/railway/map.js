@@ -54,7 +54,7 @@ export function onUnmounted() {
 }
 
 function addLayer() {
-  // 创建Graphic图层
+  // 创建矢量数据图层
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -119,17 +119,19 @@ function inintRoad(positionsSJ, positionsTD) {
   // 显示echarts
   eventTarget.fire("dataLoaded", { heightArray, heightTDArray, distanceArray })
   //  画线
-  const primitive = new mars3d.graphic.PolylinePrimitive({
+  const graphic = new mars3d.graphic.PolylinePrimitive({
     id: "设计路线",
     positions: positionsSJ,
     style: {
       width: 3,
-      color: Cesium.Color.RED,
       materialType: mars3d.MaterialType.PolylineDash, // 虚线
-      dashLength: 20
+      materialOptions: {
+        color: Cesium.Color.RED,
+        dashLength: 20
+      }
     }
   })
-  graphicLayer.addGraphic(primitive)
+  graphicLayer.addGraphic(graphic)
 
   const primitiveTD = new mars3d.graphic.PolylinePrimitive({
     id: "贴地路线",

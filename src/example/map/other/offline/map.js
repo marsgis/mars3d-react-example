@@ -25,6 +25,16 @@ export const mapOptions = {
       type: "image",
       url: "//data.mars3d.cn/file/img/world/world.jpg"
     }
+  ],
+  layers: [
+    {
+      name: "卫星注记",
+      type: "xyz",
+      url: "//data.mars3d.cn/tile/tdtImgZj/{z}/{x}/{y}.png",
+      minimumLevel: 0,
+      maximumLevel: 12,
+      show: true
+    }
   ]
 }
 /**

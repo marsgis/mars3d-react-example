@@ -136,7 +136,7 @@ function initCharts_Two(arr: any, ZJLY: any) {
       orient: "vertical",
       left: "right",
       textStyle: {
-        color: "#ccc"
+        color: "#fff"
       }
     },
     // 图形的设置
@@ -203,7 +203,7 @@ function histogram(arr: any, Word: string) {
       text: "单位:" + Word,
       // 全局样式对此不生效，
       textStyle: {
-        color: "#ccc"
+        color: "#fff"
       }
     },
     // 移入柱子时的阴影

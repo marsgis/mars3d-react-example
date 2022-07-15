@@ -19,7 +19,7 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
-  // 创建Graphic图层
+  // 创建矢量数据图层
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -77,15 +77,15 @@ function showWindLine(arr) {
   }
 
   // 多个线对象的合并渲染。
-  const primitive = new mars3d.graphic.PolylineCombine({
+  const graphic = new mars3d.graphic.PolylineCombine({
     instances: arrData
   })
-  graphicLayer.addGraphic(primitive)
+  graphicLayer.addGraphic(graphic)
 }
 
 // 按单个线渲染，效率差些
 /* function showWindLine(arr) {
-  // 创建Graphic图层
+  // 创建矢量数据图层
   let graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -105,15 +105,15 @@ function showWindLine(arr) {
     let pt1 = mars3d.PointUtil.getPositionByDirectionAndLen(position, angle, radius)
     pt1 = mars3d.PointUtil.setPositionsHeight(pt1, 0)
 
-    let primitive = new mars3d.graphic.PolylinePrimitive({
+    let graphic = new mars3d.graphic.PolylinePrimitive({
       positions: [position, pt1],
       style: {
         width: 8,
         material: lineMaterial // 动画线材质
       }
     })
-    primitive.bindPopup(`${angle}`)
-    graphicLayer.addGraphic(primitive)
+    graphic.bindPopup(`${angle}`)
+    graphicLayer.addGraphic(graphic)
   }
 } */
 

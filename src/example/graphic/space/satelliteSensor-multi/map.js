@@ -217,7 +217,7 @@ export function getRegion() {
   map.graphicLayer.clear()
 
   coords.forEach((position) => {
-    const primitive = new mars3d.graphic.PointPrimitive({
+    const graphic = new mars3d.graphic.PointPrimitive({
       position: position,
       style: {
         color: "#ff0000",
@@ -228,7 +228,7 @@ export function getRegion() {
         clampToGround: true
       }
     })
-    map.graphicLayer.addGraphic(primitive)
+    map.graphicLayer.addGraphic(graphic)
   })
 }
 
@@ -241,7 +241,7 @@ export function getCenter() {
     return
   }
 
-  const primitive = new mars3d.graphic.PointPrimitive({
+  const graphic = new mars3d.graphic.PointPrimitive({
     position: groundPosition,
     style: {
       color: "#ff0000",
@@ -252,7 +252,7 @@ export function getCenter() {
       clampToGround: true
     }
   })
-  map.graphicLayer.addGraphic(primitive)
+  map.graphicLayer.addGraphic(graphic)
 
   const point = mars3d.LngLatPoint.fromCartesian(groundPosition)
   globalMsg(point.toString())

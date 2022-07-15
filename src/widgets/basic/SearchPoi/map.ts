@@ -20,7 +20,7 @@ export function onMounted(mapInstance: mars3d.Map): void {
   })
 
   graphicLayer = new mars3d.layer.GraphicLayer({
-    name: "PIO查询",
+    name: "POI查询",
     pid: 99 // 图层管理 中使用，父节点id
   })
 

@@ -30,7 +30,7 @@ function UIComponent() {
     {
       type: "radio",
       field: "type",
-      label: "测试",
+      label: "单选",
       value: "1",
       // 显示过滤器 可以直接传递boolean
       show(data) {
@@ -57,10 +57,7 @@ function UIComponent() {
     {
       type: "checkbox",
       field: "type2",
-      label: "测试多选",
-      extra(data) {
-        return data.speed
-      },
+      label: "多选",
       value: ["1"],
       options: [
         {
@@ -170,6 +167,7 @@ function UIComponent() {
       min: -10,
       max: 100,
       value: [1, 50],
+      extra: "{range}",
       change(data) {
         console.log("数据change变化", data)
       }

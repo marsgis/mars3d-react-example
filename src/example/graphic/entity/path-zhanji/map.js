@@ -42,10 +42,11 @@ function addDemoGraphics() {
     style: {
       radii: new Cesium.Cartesian3(200000.0, 200000.0, 200000.0),
       maximumConeDegree: 90,
-      material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.EllipsoidWave, {
+      materialType: mars3d.MaterialType.EllipsoidWave,
+      materialOptions: {
         color: "#ff0000",
         speed: 5.0
-      }),
+      },
       outline: false
     }
   })
@@ -61,17 +62,18 @@ function addDemoGraphics() {
   linePositions.push(linePositions[0]) // 闭合圆
 
   // 圆圈线
-  // let graphicLine = new mars3d.graphic.PolylineEntity({
+  // const graphicLine = new mars3d.graphic.PolylineEntity({
   //   positions: linePositions,
   //   style: {
   //     width: 8,
-  //     material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.PolylineGlow, {
+  //     materialType: mars3d.MaterialType.PolylineGlow,
+  //     materialOptions: {
   //       glowPower: 0.2,
-  //       color: Cesium.Color.GREEN,
-  //     }),
-  //   },
-  // });
-  // graphicLayer.addGraphic(graphicLine);
+  //       color: Cesium.Color.GREEN
+  //     }
+  //   }
+  // })
+  // graphicLayer.addGraphic(graphicLine)
 
   // 飞机path路径
   const property = new Cesium.SampledPositionProperty()
@@ -128,8 +130,6 @@ function addDemoGraphics() {
   map.clock.multiplier = 1
   map.clock.shouldAnimate = true
 }
-
-
 
 // 顶视图
 export function viewSeeTop() {

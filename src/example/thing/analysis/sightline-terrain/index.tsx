@@ -1,6 +1,6 @@
 import { MarsPannel, MarsButton, MarsSlider, MarsCheckbox } from "@mars/components/MarsUI"
 import { Space } from "antd"
-import { useCallback, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import * as mapWork from "./map.js"
 import "./index.less"
 import _ from "lodash"
@@ -24,7 +24,7 @@ function UIComponent() {
 
   const [isChecked, setTerrain] = useState(false) // 是否开启地形检测
 
-  useMemo(() => {  
+  useEffect(() => {
     mapWork.updateModel(params)
   }, [params])
 

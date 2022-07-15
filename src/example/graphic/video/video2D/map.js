@@ -63,7 +63,7 @@ function addModel() {
     {
       text: "删除对象",
       icon: "fa fa-trash-o",
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         if (graphic) {
           graphicLayer.removeGraphic(graphic)
@@ -91,46 +91,65 @@ function addDemoGraphic1() {
     }
   })
   graphicLayer.addGraphic(video2D)
+}
 
-  selectedView = video2D // 记录下
+export function getGraphic(graphicId) {
+  selectedView = graphicLayer.getGraphicById(graphicId)
+  return selectedView
+}
 
-  eventTarget.fire("loadVideo", {
-    value: {
-      cameraAngle: selectedView.angle,
-      cameraAngle2: selectedView.angle2,
-      heading: selectedView.heading,
-      pitchValue: selectedView.pitch,
-      distanceValue: selectedView.distance,
-      opcity: selectedView.opacity,
-      ckdFrustum: selectedView.showFrustum
-    }
-  })
+// 生成演示数据(测试数据量)
+export function addRandomGraphicByCount(count) {
+  graphicLayer.clear()
+  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
+
+  const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
+  const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
+  console.log("生成的测试网格坐标", result)
+
+  for (let j = 0; j < result.points.length; ++j) {
+    const position = result.points[j]
+    const index = j + 1
+
+    const graphic = new mars3d.graphic.Video2D({
+      position: position,
+      style: {
+        url: "//data.mars3d.cn/file/video/duimian.mp4",
+        angle: 46.3,
+        angle2: 15.5,
+        heading: 178.5,
+        pitch: 8.2,
+        distance: 1178,
+        showFrustum: true
+      },
+      attr: { index: index }
+    })
+    graphicLayer.addGraphic(graphic)
+  }
+
+  graphicLayer.enabledEvent = true // 恢复事件
+  return result.points.length
 }
 
 // 投射视频
-export function addVideo(data) {
+export function startDrawGraphic() {
   // 开始绘制
   graphicLayer.startDraw({
     type: "video2D",
     style: {
       url: "//data.mars3d.cn/file/video/lukou.mp4",
-      angle: data.cameraAngle,
-      angle2: data.cameraAngle2,
-      heading: data.heading,
-      pitch: data.pitchValue,
-      distance: data.distanceValue,
-      showFrustum: data.ckdFrustum
-    },
-    success: function (graphic) {
-      console.log("绘制完成", graphic)
-
-      selectedView = graphic // 记录下
+      angle: 46.3,
+      angle2: 15.5,
+      heading: 178.5,
+      pitch: 8.2,
+      distance: 78,
+      showFrustum: true
     }
   })
 }
 
 // 按当前相机投射视频
-export function addThisCamera(data) {
+export function startDrawGraphic2() {
   // 取屏幕中心点
   const targetPosition = map.getCenter({ format: false })
   if (!targetPosition) {
@@ -148,23 +167,17 @@ export function addThisCamera(data) {
     targetPosition: targetPosition,
     style: {
       url: "//data.mars3d.cn/file/video/lukou.mp4",
-      angle: data.cameraAngle,
-      angle2: data.cameraAngle2,
-      heading: data.heading,
-      pitch: data.pitchValue,
-      distance: data.distanceValue,
-      opacity: data.opcity,
-      showFrustum: data.showFrustum
+      angle: 46.3,
+      angle2: 15.5,
+      heading: 178.5,
+      pitch: 8.2,
+      distance: 78,
+      showFrustum: true
     }
   })
   graphicLayer.addGraphic(video2D)
 
   selectedView = video2D // 记录下
-}
-// 清除
-export function clear() {
-  graphicLayer.clear()
-  selectedView = null
 }
 
 // 播放暂停

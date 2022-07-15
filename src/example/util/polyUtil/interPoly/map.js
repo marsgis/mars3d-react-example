@@ -54,13 +54,13 @@ export function interPolygon(val) {
       const positions = graphic.positionsShow
       map.graphicLayer.clear()
 
-      const resultInter = mars3d.PolyUtil.interPolygon({
+      mars3d.PolyUtil.interPolygon({
         scene: map.scene,
         positions: positions,
         splitNum: val // splitNum插值分割的个数
+      }).then((resultInter) => {
+        showInterResult(resultInter.list)
       })
-
-      showInterResult(resultInter.list)
     }
   })
 }
@@ -151,16 +151,16 @@ function showInterResult(list) {
 
     // 点
     for (const pt of [item.point1, item.point2, item.point3]) {
-      const primitive = new mars3d.graphic.PointPrimitive({
+      const graphic = new mars3d.graphic.PointPrimitive({
         position: pt.pointDM,
         style: {
           pixelSize: 9,
           color: Cesium.Color.fromCssColorString("#ff0000").withAlpha(0.5)
         }
       })
-      interGraphicLayer.addGraphic(primitive)
+      interGraphicLayer.addGraphic(graphic)
 
-      primitive.bindTooltip("点高度:" + mars3d.MeasureUtil.formatDistance(pt.height))
+      graphic.bindTooltip("点高度:" + mars3d.MeasureUtil.formatDistance(pt.height))
     }
 
     // 横截面面积
@@ -173,9 +173,7 @@ function showInterResult(list) {
     const primitivePoly = new mars3d.graphic.PolygonPrimitive({
       positions: positions,
       style: {
-        material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.Color, {
-          color: Cesium.Color.fromCssColorString("#ffffff").withAlpha(0.01)
-        })
+        color: Cesium.Color.fromCssColorString("#ffffff").withAlpha(0.01)
       }
     })
     interGraphicLayer.addGraphic(primitivePoly)
@@ -186,9 +184,7 @@ function showInterResult(list) {
       positions: positions,
       style: {
         width: 1,
-        material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.Color, {
-          color: Cesium.Color.fromCssColorString("#ffff00").withAlpha(0.3)
-        })
+        color: Cesium.Color.fromCssColorString("#ffff00").withAlpha(0.3)
       }
     })
     interGraphicLayer.addGraphic(primitiveLine)

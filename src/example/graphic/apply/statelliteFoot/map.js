@@ -97,6 +97,10 @@ const satelliteFoot = {
 
   // 绘制一个足迹
   drawOneFoot: function (point, instrumentFOV) {
+    if (!point || !point.valid()) {
+      return
+    }
+
     // 卫星到地面的垂直线
     this._drawLineGroundToSatellite(point)
 
@@ -129,18 +133,18 @@ const satelliteFoot = {
     })
     graphicLayer.addGraphic(point2)
 
-    const primitiveLine = new mars3d.graphic.PolylinePrimitive({
-      positions: [point, groundPoint],
-      style: {
-        width: 1,
-        color: Cesium.Color.YELLOW
-      }
-    })
-    graphicLayer.addGraphic(primitiveLine)
+    // const primitiveLine = new mars3d.graphic.PolylinePrimitive({
+    //   positions: [point, groundPoint],
+    //   style: {
+    //     width: 1,
+    //     color: Cesium.Color.YELLOW
+    //   }
+    // })
+    // graphicLayer.addGraphic(primitiveLine)
   },
   // 投射圆锥体
   _drawInstrumentFootPrintSwathWidth: function (instrumentFOV, point) {
-    const primitive = new mars3d.graphic.CylinderPrimitive({
+    const graphic = new mars3d.graphic.CylinderPrimitive({
       name: "视锥体",
       position: Cesium.Cartesian3.fromDegrees(point.lng, point.lat, point.alt / 2),
       style: {
@@ -152,7 +156,7 @@ const satelliteFoot = {
         outlineColor: Cesium.Color.RED.withAlpha(0.5)
       }
     })
-    graphicLayer.addGraphic(primitive)
+    graphicLayer.addGraphic(graphic)
   },
   // 在地球表面上绘制可见足迹椭圆（红色外圈线）
   _drawVisibleFootPrint: function (point) {
@@ -164,7 +168,7 @@ const satelliteFoot = {
     const groundPointToOriginToTangentAngle = 90.0 - groundPointToSatPointToTangentAngle
     const distanceAlongGround = Cesium.Math.TWO_PI * radiusOfEarth * (groundPointToOriginToTangentAngle / 360.0)
 
-    const primitive = new mars3d.graphic.CirclePrimitive({
+    const graphic = new mars3d.graphic.CirclePrimitive({
       name: "可视卫星范围（45度）",
       position: groundPoint,
       style: {
@@ -175,6 +179,6 @@ const satelliteFoot = {
         outlineColor: "#ff0000"
       }
     })
-    graphicLayer.addGraphic(primitive)
+    graphicLayer.addGraphic(graphic)
   }
 }

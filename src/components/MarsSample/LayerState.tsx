@@ -1,44 +1,8 @@
-import { MarsPannel, $alert, MarsCheckboxGroup, MarsFormItem } from "@mars/components/MarsUI"
+import { MarsPannel, $alert, MarsCheckboxGroup, MarsCheckbox } from "@mars/components/MarsUI"
+import { useEffect, useMemo, useState } from "react"
+import { Space } from "antd"
 const mapWork = window.mapWork
 const mars3d = mapWork.mars3d
-
-const onChangeShow = () => {
-  const layer = getManagerLayer()
-  layer.show = true
-}
-
-const onChangePopup = () => {
-  if (mapWork.bindLayerPopup) {
-    mapWork.bindLayerPopup()
-  } else {
-    bindLayerPopup()
-  }
-}
-
-const onChangeTooltip = () => {
-  const layer = getManagerLayer()
-  // layer.bindTooltip("我是layer上绑定的Tooltip")
-  layer.bindTooltip(
-    function (event) {
-      const attr = getAttrForEvent(event)
-      attr["类型"] = event.graphic?.type
-      attr["来源"] = "我是layer上绑定的Toolip"
-      attr["备注"] = "我支持鼠标移入交互"
-
-      return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
-    },
-    { pointerEvents: true }
-  )
-}
-
-const onChangeRightMenu = () => {
-  const layer = getManagerLayer()
-  if (mapWork.bindLayerContextMenu) {
-    mapWork.bindLayerContextMenu()
-  } else {
-    bindLayerContextMenu()
-  }
-}
 
 // 获取map.js中定义的需要管理的图层
 function getManagerLayer() {
@@ -76,46 +40,6 @@ function bindLayerContextMenu() {
   const graphicLayer = getManagerLayer()
 
   graphicLayer.bindContextMenu([
-    {
-      text: "开始编辑对象",
-      icon: "fa fa-edit",
-      show: function (e) {
-        const graphic = e.graphic
-        if (!graphic || !graphic.startEditing) {
-          return false
-        }
-        return !graphic.isEditing
-      },
-      callback: function (e) {
-        const graphic = e.graphic
-        if (!graphic) {
-          return false
-        }
-        if (graphic) {
-          graphicLayer.startEditing(graphic)
-        }
-      }
-    },
-    {
-      text: "停止编辑对象",
-      icon: "fa fa-edit",
-      show: function (e) {
-        const graphic = e.graphic
-        if (!graphic) {
-          return false
-        }
-        return graphic.isEditing
-      },
-      callback: function (e) {
-        const graphic = e.graphic
-        if (!graphic) {
-          return false
-        }
-        if (graphic) {
-          graphicLayer.stopEditing(graphic)
-        }
-      }
-    },
     {
       text: "删除对象",
       icon: "fa fa-trash-o",
@@ -228,51 +152,119 @@ function getAttrForEvent(event) {
   return attr ?? {}
 }
 
-const optionsWithDisabled = [
-  { label: "显示", value: "show" },
-  { label: "Popup", value: "popup" },
-  { label: "Tooltip", value: "tooltip" },
-  { label: "右键菜单", value: "rightMenu" }
-]
-
-function onChange(checkedValues) {
-  const layer = getManagerLayer()
-  layer.show = false // 先隐藏
-  layer.unbindPopup() // 先解除popup
-  layer.unbindTooltip() // 先解除tooltip
-  layer.unbindContextMenu(true) // 线解除右键菜单
-
-  checkedValues.forEach((type: string) => {
-    switch (type) {
-      case "show":
-        onChangeShow()
-        break
-
-      case "popup":
-        onChangePopup()
-        break
-
-      case "tooltip":
-        onChangeTooltip()
-        break
-
-      case "rightMenu":
-        onChangeRightMenu()
-        break
-
-      default:
-        break
-    }
-  })
-}
-
 export const LayerState = (props) => {
+  const [show, setShow] = useState(true)
+  const [popup, setPopup] = useState(true)
+  const [toolTip, setToolTip] = useState(false)
+  const [menu, setMenu] = useState(false)
+
+  useMemo(() => {
+    // 恢复默认状态
+    if (mapWork.eventTarget) {
+      mapWork.eventTarget.on("defuatData", (item: any) => {
+        setShow(item.enabledShowHide)
+        setPopup(item.enabledPopup)
+        setToolTip(item.enabledTooltip)
+        setMenu(item.enabledRightMenu)
+      })
+    }
+  }, [])
+
+  useEffect(() => {
+    const layer = getManagerLayer()
+    if (layer) {
+      setShow(layer.show)
+      setPopup(layer.hasPopup())
+      setToolTip(layer.hasTooltip())
+      setMenu(layer.hasContextMenu())
+    }
+  }, [])
+
+  // 控制显示隐藏
+  const onChangeShow = (e) => {
+    const checked = e.target.checked
+    setShow(checked)
+    const layer = getManagerLayer()
+    layer.show = checked
+  }
+
+  // 绑定Popup
+  const onChangePopup = (e) => {
+    const checked = e.target.checked
+    setPopup(checked)
+
+    const layer = getManagerLayer()
+
+    if (checked) {
+      if (mapWork.bindLayerPopup) {
+        mapWork.bindLayerPopup()
+      } else {
+        bindLayerPopup()
+      }
+    } else {
+      layer.unbindPopup()
+    }
+  }
+
+  // 绑定Tooltip
+  const onChangeTooltip = (e) => {
+    const checked = e.target.checked
+    setToolTip(checked)
+    const layer = getManagerLayer()
+    if (checked) {
+      // layer.bindTooltip("我是layer上绑定的Tooltip")
+      layer.bindTooltip(
+        function (event) {
+          const attr = getAttrForEvent(event)
+          attr["类型"] = event.graphic?.type
+          attr["来源"] = "我是layer上绑定的Toolip"
+          attr["备注"] = "我支持鼠标移入交互"
+
+          return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
+        },
+        { pointerEvents: true }
+      )
+    } else {
+      layer.unbindTooltip()
+    }
+  }
+
+  // 绑定右键菜单
+  const onChangeRightMenu = (e) => {
+    const checked = e.target.checked
+    setMenu(checked)
+    const layer = getManagerLayer()
+    if (checked) {
+      if (mapWork.bindLayerContextMenu) {
+        mapWork.bindLayerContextMenu()
+      } else {
+        bindLayerContextMenu()
+      }
+    } else {
+      layer.unbindContextMenu(true)
+    }
+  }
+
   return (
     <div className="layerSet" style={{ height: "23px" }}>
-      <span className="mars-pannel-item-label" style={{ display: props.label ? "none" : "" }}>
-        {props.label || "图层状态:"}
-      </span>
-      <MarsCheckboxGroup options={optionsWithDisabled} defaultValue={["show", "popup", "rightMenu"]} onChange={onChange} />
+      <Space direction={props.direction || "vertical"} wrap={!!props.wrap}>
+        <span className="mars-pannel-item-label" style={{ display: props.label === "" ? "none" : "" }}>
+          {props.label || "图层状态:"}
+        </span>
+
+        <MarsCheckbox checked={show} onChange={onChangeShow}>
+          显示
+        </MarsCheckbox>
+        <MarsCheckbox checked={popup} onChange={onChangePopup}>
+          Popup
+        </MarsCheckbox>
+        <MarsCheckbox checked={toolTip} onChange={onChangeTooltip}>
+          Tooltip
+        </MarsCheckbox>
+        <MarsCheckbox checked={menu} onChange={onChangeRightMenu}>
+          右键菜单
+        </MarsCheckbox>
+      </Space>
     </div>
   )
 }

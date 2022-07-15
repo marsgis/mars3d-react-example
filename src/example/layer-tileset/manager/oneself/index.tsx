@@ -31,9 +31,9 @@ function UIComponent(props) {
 
       <MarsFormItem label="背景颜色">
         <MarsColor
-          defaultValue={"#363635"}
+          value={"#363635"}
           onChange={(data) => {
-            mapWork.changeColor(data.target.value)
+            mapWork.changeColor(data)
           }}
         ></MarsColor>
       </MarsFormItem>

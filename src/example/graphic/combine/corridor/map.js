@@ -6,7 +6,7 @@ export let graphicLayer
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: 31.806147, lng: 117.236965, alt: 3307, heading: 359, pitch: -54 }
+    center: { lat: 31.580774, lng: 117.196281, alt: 22557, heading: 1, pitch: -42 }
   },
   terrain: {
     show: false
@@ -24,7 +24,7 @@ export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
-  // 创建Graphic图层
+  // 创建矢量数据图层
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -37,8 +37,9 @@ export function onMounted(mapInstance) {
 
   bindLayerPopup() // 在图层上绑定popup,对所有加到这个图层的矢量数据都生效
 
-  // 添加演示示例
-  addDemoGraphic1()
+  // 加演示数据
+  addRandomGraphicByCount(10000)
+  graphicLayer.flyTo()
 }
 
 /**
@@ -49,76 +50,39 @@ export function onUnmounted() {
   map = null
 }
 
-// 加一些演示数据
-function addDemoGraphic1() {
-  Cesium.Resource.fetchJson({
-    url: "//data.mars3d.cn/file/geojson/buildings-hf.json"
-  })
-    .then((data) => {
-      const arr = mars3d.Util.geoJsonToGraphics(data, {
-        symbol: {
-          callback: function (attr, styleOpt) {
-            return {
-              width: 3.0,
-              height: 0,
-              diffHeight: 5,
-              cornerType: Cesium.CornerType.MITERED,
-              color: Cesium.Color.fromRandom({ alpha: 0.5 }) // 随机色
-            }
-          }
-        }
-      })
-
-      globalMsg("共加载" + arr.length + "条数据")
-
-      // 多个线对象的合并渲染。
-      const primitive = new mars3d.graphic.CorridorCombine({
-        instances: arr,
-
-        // 高亮时的样式
-        highlight: {
-          type: mars3d.EventType.click,
-          color: Cesium.Color.YELLOW
-        }
-      })
-      graphicLayer.addGraphic(primitive)
-    })
-    .catch(function (error) {
-      globalAlert("服务出错", error)
-    })
-}
-
 // 按钮添加
-export function addDemoGraphic(num) {
+export function addRandomGraphicByCount(count) {
   graphicLayer.clear()
+  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
 
-  showLoading()
-  const startTime = new Date().getTime()
+  const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
+  const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
+  console.log("生成的测试网格坐标", result)
 
-  const count = num * 10000
+  const corridorWidth = Math.floor(result.radius / 10)
 
   const arrData = []
-  for (let j = 0; j < count; ++j) {
-    const position = randomPoint()
-    const pt1 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 225, 500)
-    const pt3 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 315, 500)
+  for (let j = 0; j < result.points.length; ++j) {
+    const position = result.points[j]
+    const index = j + 1
+
+    const pt1 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 225, result.radius)
+    const pt3 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 315, result.radius)
 
     arrData.push({
       positions: [pt1, position, pt3],
       style: {
-        width: 60.0,
+        width: corridorWidth,
+        height: 50,
         diffHeight: 50,
-        height: random(30, 9000),
-        color: Cesium.Color.fromRandom({ alpha: 0.5 })
+        color: Cesium.Color.fromRandom({ alpha: 0.6 })
       },
-      attr: {
-        name: "第" + j + "个"
-      }
+      attr: { index: index }
     })
   }
 
   // 多个线对象的合并渲染。
-  const primitive = new mars3d.graphic.CorridorCombine({
+  const graphic = new mars3d.graphic.CorridorCombine({
     instances: arrData,
 
     // 高亮时的样式
@@ -127,14 +91,10 @@ export function addDemoGraphic(num) {
       color: Cesium.Color.YELLOW
     }
   })
-  graphicLayer.addGraphic(primitive)
+  graphicLayer.addGraphic(graphic)
 
-  hideLoading()
-  const endTime = new Date().getTime()
-  // 两个时间戳相差的毫秒数
-  const usedTime = (endTime - startTime) / 1000
-
-  globalMsg("共耗时" + usedTime.toFixed(2) + "秒")
+  graphicLayer.enabledEvent = true // 恢复事件
+  return result.points.length
 }
 
 // 在图层绑定Popup弹窗
@@ -147,16 +107,4 @@ export function bindLayerPopup() {
 
     return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
   })
-}
-
-// 取区域内的随机点
-function randomPoint() {
-  const jd = random(115.955684 * 1000, 117.474003 * 1000) / 1000
-  const wd = random(30.7576 * 1000, 32.008782 * 1000) / 1000
-  return Cesium.Cartesian3.fromDegrees(jd, wd)
-}
-
-// 取随机数字
-function random(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min)
 }

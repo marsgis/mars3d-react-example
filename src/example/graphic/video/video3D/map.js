@@ -56,6 +56,84 @@ export function onUnmounted() {
   map = null
 }
 
+export function getGraphic(graphicId) {
+  selectedView = graphicLayer.getGraphicById(graphicId)
+  return selectedView
+}
+
+// 生成演示数据(测试数据量)
+export function addRandomGraphicByCount(count) {
+  graphicLayer.clear()
+  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
+
+  const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
+  const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
+  console.log("生成的测试网格坐标", result)
+
+  for (let j = 0; j < result.points.length; ++j) {
+    const position = result.points[j]
+    const index = j + 1
+
+    const graphic = new mars3d.graphic.Video3D({
+      position: position,
+      style: {
+        url: "//data.mars3d.cn/file/video/menqian.mp4",
+        maskImage: "img/textures/video-mask.png", // 羽化视频四周，融合更美观
+        angle: 46.3,
+        angle2: 15.5,
+        heading: 178.5,
+        pitch: -49.5,
+        showFrustum: true
+      },
+      attr: { index: index }
+    })
+    graphicLayer.addGraphic(graphic)
+  }
+
+  graphicLayer.enabledEvent = true // 恢复事件
+  return result.points.length
+}
+
+export function startDrawGraphic() {
+  // 开始绘制
+  graphicLayer.startDraw({
+    type: "video3D",
+    style: {
+      url: "//data.mars3d.cn/file/video/lukou.mp4",
+      maskImage: "img/textures/video-mask.png", // 羽化视频四周，融合更美观
+      angle: 33.3,
+      angle2: 23.4,
+      heading: 140.7,
+      pitch: -82.1
+    }
+  })
+}
+
+export function startDrawGraphic2() {
+  // 取屏幕中心点
+  const targetPosition = map.getCenter({ format: false })
+  if (!targetPosition) {
+    return
+  }
+
+  const cameraPosition = Cesium.clone(map.camera.position)
+
+  // 构造投射体
+  const video3D = new mars3d.graphic.Video3D({
+    position: cameraPosition,
+    targetPosition: targetPosition,
+    style: {
+      url: "//data.mars3d.cn/file/video/lukou.mp4",
+      maskImage: "img/textures/video-mask.png", // 羽化视频四周，融合更美观
+      angle: 33.3,
+      angle2: 23.4,
+      heading: 140.7,
+      pitch: -82.1
+    }
+  })
+  graphicLayer.addGraphic(video3D)
+}
+
 // 加载已配置好的视频（此参数为界面上“打印参数”按钮获取的）
 function addDemoGraphic1() {
   const video3D = new mars3d.graphic.Video3D({
@@ -88,19 +166,6 @@ function addDemoGraphic2() {
     attr: { remark: "示例2" }
   })
   graphicLayer.addGraphic(video3D)
-
-  selectedView = video3D // 记录下
-  eventTarget.fire("loadVideo", {
-    value: {
-      cameraAngle: selectedView.angle,
-      cameraAngle2: selectedView.angle2,
-      heading: selectedView.heading,
-      pitchValue: selectedView.pitch,
-      distanceValue: selectedView.distance,
-      opcity: selectedView.opacity,
-      ckdFrustum: selectedView.showFrustum
-    }
-  })
 }
 
 export function onChangeAngle(value) {
@@ -160,62 +225,6 @@ export function onChangeOpacity(value) {
   if (selectedView) {
     selectedView.opacity = value
   }
-}
-
-export function addVideo(data) {
-  // 开始绘制
-  graphicLayer.startDraw({
-    type: "video3D",
-    style: {
-      url: "//data.mars3d.cn/file/video/lukou.mp4",
-      angle: data.cameraAngle,
-      angle2: data.cameraAngle2,
-      heading: data.heading,
-      pitch: data.pitchValue,
-      distance: data.distanceValue,
-      showFrustum: data.ckdFrustum
-    },
-    success: function (graphic) {
-      console.log("绘制完成", graphic)
-
-      selectedView = graphic // 记录下
-    }
-  })
-}
-
-export function addThisCamera(data) {
-  // 取屏幕中心点
-  const targetPosition = map.getCenter({ format: false })
-  if (!targetPosition) {
-    return
-  }
-
-  const cameraPosition = Cesium.clone(map.camera.position)
-
-  // 构造投射体
-  const video3D = new mars3d.graphic.Video3D({
-    position: cameraPosition,
-    targetPosition: targetPosition,
-    style: {
-      url: "//data.mars3d.cn/file/video/lukou.mp4",
-      angle: data.cameraAngle,
-      angle2: data.cameraAngle2,
-      heading: data.heading,
-      pitch: data.pitchValue,
-      distance: data.distanceValue,
-      opacity: data.opcity,
-      showFrustum: data.showFrustum
-    }
-  })
-  graphicLayer.addGraphic(video3D)
-
-  selectedView = video3D // 记录下
-}
-
-// 清除
-export function clear() {
-  graphicLayer.clear()
-  selectedView = null
 }
 
 // 播放暂停

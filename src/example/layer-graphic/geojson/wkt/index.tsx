@@ -38,13 +38,13 @@ function UIComponent() {
           children.push({
             title: layer.airportName,
             key: key,
-            uuid: layer.graphic.uuid
+            id: layer.graphic.id
           })
 
           if (layer.graphic.show) {
             selects.push(key)
           }
-          layersObj[layer.graphic.uuid] = layer
+          layersObj[layer.graphic.id] = layer
         }
       }
 
@@ -59,7 +59,7 @@ function UIComponent() {
     setCheckedKeys(keys)
 
     const show = checkedNodes.checked
-    const entity = layersObj[checkedNodes.node.uuid]
+    const entity = layersObj[checkedNodes.node.id]
 
     if (checkedNodes.node.id === -1) {
       Object.keys(layersObj).forEach((k) => {
@@ -80,7 +80,7 @@ function UIComponent() {
   return (
     <>
       <MarsPannel visible={true} right={10} top={10}>
-        <LayerState />
+        <LayerState direction="horizontal"/>
       </MarsPannel>
 
       <MarsPannel visible={true} right={10} top={60} height={600} width={230}>

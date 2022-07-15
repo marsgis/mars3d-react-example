@@ -1,39 +1,11 @@
-import { MarsButton, MarsForm, MarsFormItem, MarsGui, MarsPannel } from "@mars/components/MarsUI"
+import { MarsButton, MarsForm, MarsFormItem, MarsInputNumber, MarsPannel, MarsSlider } from "@mars/components/MarsUI"
 import * as mapWork from "./map.js"
+import { useState } from "react"
 import { Space } from "antd"
-import type { GuiItem } from "@mars/components/MarsUI"
-
 function UIComponent() {
-  const options: GuiItem[] = [
-    {
-      type: "slider",
-      field: "distanceValue",
-      label: "裁剪距离",
-      value: 0,
-      min: -100,
-      max: 100,
-      step: 1,
-      extra: "{distanceValue}",
-      extraWidth: 40,
-      change(value) {
-        mapWork.rangeDistance(value)
-      }
-    },
-    {
-      type: "slider",
-      field: "deviationValue",
-      label: "Z偏移量",
-      value: 0,
-      min: -100,
-      max: 100,
-      step: 1,
-      extra: "{deviationValue}",
-      extraWidth: 40,
-      change(value) {
-        mapWork.rangeNormalZ(value)
-      }
-    }
-  ]
+  const [distace, setDistance] = useState(0)
+
+  const [range, setRange] = useState(0)
 
   return (
     <MarsPannel visible={true} right={10} top={10}>
@@ -67,8 +39,67 @@ function UIComponent() {
           </Space>
         </MarsFormItem>
         <MarsFormItem label="裁剪面参数"></MarsFormItem>
+
+        <MarsFormItem>
+          <div className="f-mb">
+            <Space>
+              <span>裁剪距离</span>
+              <MarsSlider
+                min={-100}
+                max={100}
+                value={distace}
+                defaultValue={0}
+                style={{ width: "100px" }}
+                onChange={(e) => {
+                  setDistance(e)
+                  mapWork.rangeDistance(e)
+                }}
+              ></MarsSlider>
+              <MarsInputNumber
+                min={-100}
+                max={100}
+                value={distace}
+                defaultValue={0}
+                style={{ width: "60px" }}
+                onChange={(e) => {
+                  setDistance(e)
+                  mapWork.rangeDistance(e)
+                }}
+              ></MarsInputNumber>
+              米
+            </Space>
+          </div>
+          <div className="f-mb">
+            <Space>
+              <span>斜切偏移量</span>
+              <MarsSlider
+                min={-100}
+                max={100}
+                value={range}
+                defaultValue={0}
+                style={{ width: "100px" }}
+                onChange={(e) => {
+                  setRange(e)
+                  mapWork.rangeNormalZ(e)
+                }}
+              ></MarsSlider>
+              <MarsInputNumber
+                min={-100}
+                max={100}
+                value={range}
+                defaultValue={0}
+                style={{ width: "60px" }}
+                onChange={(e) => {
+                  setRange(e)
+                  mapWork.rangeNormalZ(e)
+                }}
+              ></MarsInputNumber>
+              米
+            </Space>
+          </div>
+        </MarsFormItem>
       </MarsForm>
-      <MarsGui formProps={{ labelCol: { span: 7 } }} options={options}></MarsGui>
+
       <div className="f-tac">
         <MarsButton onClick={() => mapWork.clear()}>清除</MarsButton>
       </div>

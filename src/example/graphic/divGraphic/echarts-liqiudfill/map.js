@@ -34,10 +34,10 @@ export function onMounted(mapInstance) {
   map.addLayer(graphicLayer)
 
   // 添加矢量数据
-  addDemoGraphic([117.077462, 31.657745, 60], { value: 0.53, color: "#fb980b" })
-  addDemoGraphic([117.079091, 31.65898, 90], { value: 0.45, color: "#00ff00" })
-  addDemoGraphic([117.079766, 31.658268, 70], { value: 0.35, color: "#00ffff" })
-  addDemoGraphic([117.07913, 31.655748, 80], { value: 0.21, color: "#ff0000" })
+  addRandomGraphicByCount([117.077462, 31.657745, 60], { value: 0.53, color: "#fb980b" })
+  addRandomGraphicByCount([117.079091, 31.65898, 90], { value: 0.45, color: "#00ff00" })
+  addRandomGraphicByCount([117.079766, 31.658268, 70], { value: 0.35, color: "#00ffff" })
+  addRandomGraphicByCount([117.07913, 31.655748, 80], { value: 0.21, color: "#ff0000" })
 }
 
 /**
@@ -48,7 +48,7 @@ export function onUnmounted() {
   map = null
 }
 
-function addDemoGraphic(position, attr) {
+function addRandomGraphicByCount(position, attr) {
   const graphic = new mars3d.graphic.DivGraphic({
     position: position,
     style: {

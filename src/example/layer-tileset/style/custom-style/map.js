@@ -33,7 +33,7 @@ export function onMounted(mapInstance) {
   })
   map.addLayer(tilesetLayer)
 
-  // 从数据库读取属性后，按下面格式组织好赋值即可
+  // 从数据库读取属性后，按下面格式组织好赋值即可[不适合大模型]
   tilesetLayer.setProperties("id", [
     {
       id: "55a7cf9c71f1c9c495413f934dd1a158",
@@ -48,6 +48,15 @@ export function onMounted(mapInstance) {
       testStyle: true // 新增的属性
     }
   ])
+
+  // setTimeout(() => {
+  //   tilesetLayer.setProperties()// 清除所有
+  //   tilesetLayer.setProperties("id", [
+  //     {
+  //       id: "55a7cf9c71f1c9c495413f934dd1a158"
+  //     }
+  //   ])
+  // }, 5000)
 
   // style回调方法
   tilesetLayer.style = function (event) {

@@ -20,20 +20,37 @@ interface FileInfo {
 
 function UIComponent() {
   useEffect(() => {
-    // 编辑修改了模型
-    mapWork.eventTarget.on("graphicEditor-update", async (e: any) => {
-      if (isActive("GraphicEditor")) {
-        updateWidget("GraphicEditor", { graphic: e.graphic })
-      } else {
-        activate({
-          name: "GraphicEditor",
-          data: { graphic: e.graphic }
-        })
-      }
+    // @ts-ignore
+    const mars3d = window.mars3d
+    // 矢量数据创建完成
+    mapWork.graphicLayer.on(mars3d.EventType.drawCreated, function (e) {
+      activate({
+        name: "GraphicEditor",
+        data: { graphic: e.graphic }
+      })
     })
-
-    // 停止编辑修改模型
-    mapWork.eventTarget.on("graphicEditor-stop", async (e: any) => {
+    // 修改了矢量数据
+    mapWork.graphicLayer.on(
+      [
+        mars3d.EventType.click,
+        mars3d.EventType.editStart,
+        mars3d.EventType.editMovePoint,
+        mars3d.EventType.editStyle,
+        mars3d.EventType.editRemovePoint
+      ],
+      function (e) {
+        if (isActive("GraphicEditor")) {
+          updateWidget("GraphicEditor", { graphic: e.graphic })
+        } else {
+          activate({
+            name: "GraphicEditor",
+            data: { graphic: e.graphic }
+          })
+        }
+      }
+    )
+    // 停止编辑
+    mapWork.graphicLayer.on([mars3d.EventType.editStop, mars3d.EventType.removeGraphic], function (e) {
       setTimeout(() => {
         if (!mapWork.graphicLayer.isEditing) {
           disable("GraphicEditor")

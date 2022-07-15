@@ -141,12 +141,13 @@ function drawWarningLine() {
       [125.850451, 28.424599]
     ],
     style: {
-      material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.Text, {
+      materialType: mars3d.MaterialType.Text,
+      materialOptions: {
         text: "24小时警戒线",
         font: "80px 楷体",
         color: "#828314",
         backgroundColor: new Cesium.Color(0.0, 0.0, 0.0, 0)
-      }),
+      },
       rotationDegree: 90
     }
   })
@@ -162,10 +163,11 @@ function drawWarningLine() {
     ],
     style: {
       width: 2,
-      material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.PolylineDash, {
+      materialType: mars3d.MaterialType.PolylineDash,
+      materialOptions: {
         dashLength: 20.0,
         color: "#4dba3d"
-      })
+      }
     }
   })
   map.graphicLayer.addGraphic(lineWarning48)
@@ -177,12 +179,13 @@ function drawWarningLine() {
       [133.423638, 26.772991]
     ],
     style: {
-      material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.Text, {
+      materialType: mars3d.MaterialType.Text,
+      materialOptions: {
         text: "48小时警戒线",
         font: "80px 楷体",
         color: "#4dba3d",
         backgroundColor: new Cesium.Color(0.0, 0.0, 0.0, 0)
-      }),
+      },
       rotationDegree: 90,
       zIndex: 4
     }

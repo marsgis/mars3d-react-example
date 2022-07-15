@@ -28,12 +28,13 @@ export function onMounted(mapInstance) {
     coordinates: Cesium.Rectangle.fromDegrees(-180.0, -90.0, 180.0, 90.0),
     style: {
       height: 6000,
-      material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.RectSlide, {
+      materialType: mars3d.MaterialType.RectSlide,
+      materialOptions: {
         image: "img/tietu/cloud.png",
         color: Cesium.Color.WHITE.withAlpha(0.6),
         speed: 0.5,
         pure: true
-      }),
+      },
       distanceDisplayCondition: new Cesium.DistanceDisplayCondition(3000000, 100000000)
     }
   })

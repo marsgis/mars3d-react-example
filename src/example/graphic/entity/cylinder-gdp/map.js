@@ -17,24 +17,27 @@ export const mapOptions = {
       symbol: {
         styleOptions: {
           materialType: mars3d.MaterialType.PolyGradient,
-          color: "#3388cc",
-          opacity: 0.7,
-          alphaPower: 1.3,
-          length: "{gdp}"
+          materialOptions: {
+            color: "#3388cc",
+            opacity: 0.7,
+            alphaPower: 1.3
+          },
+          height: 0,
+          diffHeight: "{gdp}"
         },
         styleField: "Name",
         styleFieldOptions: {
-          济宁市: { color: "#D4AACE" },
-          临沂市: { color: "#8DC763" },
-          菏泽市: { color: "#F7F39A" },
-          枣庄市: { color: "#F7F39A" },
-          徐州市: { color: "#96F0F1" },
-          宿迁市: { color: "#EAC9A8" },
-          连云港市: { color: "#F7F39A" },
-          商丘市: { color: "#D4AACE" },
-          宿州市: { color: "#8DC763" },
-          亳州市: { color: "#96F0F1" },
-          淮北市: { color: "#EAC9A8" }
+          济宁市: { materialOptions: { color: "#D4AACE" } },
+          临沂市: { materialOptions: { color: "#8DC763" } },
+          菏泽市: { materialOptions: { color: "#F7F39A" } },
+          枣庄市: { materialOptions: { color: "#F7F39A" } },
+          徐州市: { materialOptions: { color: "#96F0F1" } },
+          宿迁市: { materialOptions: { color: "#EAC9A8" } },
+          连云港市: { materialOptions: { color: "#F7F39A" } },
+          商丘市: { materialOptions: { color: "#D4AACE" } },
+          宿州市: { materialOptions: { color: "#8DC763" } },
+          亳州市: { materialOptions: { color: "#96F0F1" } },
+          淮北市: { materialOptions: { color: "#EAC9A8" } }
         }
       },
       show: true
@@ -53,7 +56,7 @@ export function onMounted(mapInstance) {
 
   map.basemap = 2017 // 蓝色底图
 
-  // 创建Graphic图层
+  // 创建矢量数据图层
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -117,7 +120,7 @@ function showYearZT(data) {
     createZT(p3, height1, "#FF6D5D", html)
 
     // 添加文字
-    const primitive = new mars3d.graphic.LabelPrimitive({
+    const graphic = new mars3d.graphic.LabelPrimitive({
       position: Cesium.Cartesian3.fromDegrees(jwd[0], jwd[1], height1 + height2 + height3),
       style: {
         text: numall,
@@ -132,8 +135,8 @@ function showYearZT(data) {
         pixelOffset: new Cesium.Cartesian2(0, -20)
       }
     })
-    graphicLayer.addGraphic(primitive)
-    primitive.bindTooltip(html)
+    graphicLayer.addGraphic(graphic)
+    graphic.bindTooltip(html)
   }
 }
 
@@ -212,7 +215,7 @@ function conventChartsData(arrOld) {
 }
 
 function bindHaihuaiPopup() {
-  const layerHuaihai = map.getLayer(1987, "id") // 获取config.json中对应图层
+  const layerHuaihai = map.getLayerById(1987) // 获取config.json中对应图层
 
   // 在layer上绑定Popup单击弹窗
   layerHuaihai.bindPopup(

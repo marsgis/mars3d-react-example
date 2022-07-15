@@ -90,7 +90,7 @@ export function startPoint() {
     .startDraw({
       type: "billboard",
       style: {
-        image: "img/marker/start.png",
+        image: "img/marker/route-start.png",
         horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
         verticalOrigin: Cesium.VerticalOrigin.BOTTOM
       }
@@ -223,7 +223,7 @@ function addEndPointEntity(arr) {
     const graphic = new mars3d.graphic.BillboardEntity({
       position: Cesium.Cartesian3.fromDegrees(item.x, item.y),
       style: {
-        image: "img/marker/end.png",
+        image: "img/marker/route-end.png",
         scale: 1,
         clampToGround: true, // 贴地
         label: {

@@ -82,7 +82,7 @@ function addMeasure() {
     console.log("开始分析", event)
     clearInterResult()
     showLoading()
-    console.log("坐标为", JSON.stringify(mars3d.PointTrans.cartesians2lonlats(event.positions))) // 方便测试拷贝坐标
+    console.log("坐标为", JSON.stringify(mars3d.LngLatArray.toArray(event.positions))) // 方便测试拷贝坐标
   })
 
   measure.on(mars3d.EventType.end, function (event) {
@@ -171,8 +171,25 @@ export function selHeight() {
     globalMsg("请先开始方量分析")
     return
   }
-  measureVolume.selecteHeight().then((height) => {
-    showHeightVal()
+
+  // 拾取高度
+  map.graphicLayer.startDraw({
+    type: "point",
+    style: {
+      color: "#00fff2"
+    },
+    success: (graphic) => {
+      const height = graphic.point?.alt
+      map.graphicLayer.removeGraphic(graphic)
+
+      if (!height) {
+        return
+      }
+
+      measureVolume.height = height
+
+      showHeightVal(height)
+    }
   })
 }
 
@@ -205,16 +222,16 @@ function showInterResult(list) {
 
     // 点
     for (const pt of [item.point1, item.point2, item.point3]) {
-      const primitive = new mars3d.graphic.PointPrimitive({
+      const graphic = new mars3d.graphic.PointPrimitive({
         position: pt.pointDM,
         style: {
           pixelSize: 9,
           color: Cesium.Color.fromCssColorString("#ff0000").withAlpha(0.5)
         }
       })
-      interGraphicLayer.addGraphic(primitive)
+      interGraphicLayer.addGraphic(graphic)
 
-      primitive.bindTooltip("点高度:" + mars3d.MeasureUtil.formatDistance(pt.height))
+      graphic.bindTooltip("点高度:" + mars3d.MeasureUtil.formatDistance(pt.height))
     }
 
     // 横截面面积
@@ -227,9 +244,7 @@ function showInterResult(list) {
     const primitivePoly = new mars3d.graphic.PolygonPrimitive({
       positions: positions,
       style: {
-        material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.Color, {
-          color: Cesium.Color.fromCssColorString("#ffffff").withAlpha(0.01)
-        })
+        color: Cesium.Color.fromCssColorString("#ffffff").withAlpha(0.01)
       }
     })
     interGraphicLayer.addGraphic(primitivePoly)
@@ -240,9 +255,7 @@ function showInterResult(list) {
       positions: positions,
       style: {
         width: 1,
-        material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.Color, {
-          color: Cesium.Color.fromCssColorString("#ffff00").withAlpha(0.3)
-        })
+        color: Cesium.Color.fromCssColorString("#ffff00").withAlpha(0.3)
       }
     })
     interGraphicLayer.addGraphic(primitiveLine)

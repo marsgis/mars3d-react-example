@@ -62,15 +62,14 @@ export function btnUpdate() {
 }
 
 const rectangle = {
-   xmin: 117.226189,
-   xmax: 117.245831,
-   ymin: 31.828858,
-   ymax: 31.842967
+  xmin: 117.226189,
+  xmax: 117.245831,
+  ymin: 31.828858,
+  ymax: 31.842967
 }
 
 // 获取bbox矩形区域内的count个随机点
 function getRandomPoints(count) {
-
   const arr = []
   const arrPoint = turf.randomPoint(count, { bbox: [rectangle.xmin, rectangle.ymin, rectangle.xmax, rectangle.ymax] }).features // 随机点
   for (let i = 0; i < arrPoint.length; i++) {

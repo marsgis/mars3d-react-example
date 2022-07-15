@@ -5,9 +5,20 @@ export let map // mars3d.Map三维地图对象
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: 29.516846, lng: 106.610174, alt: 13449, heading: 310, pitch: -64 }
+    center: { lat: 29.464497, lng: 106.529141, alt: 14871, heading: 1, pitch: -55 },
+    showMoon: false,
+    showSkyBox: false,
+    showSkyAtmosphere: false,
+    fog: false,
+    globe: {
+      baseColor: "rgba(0,0,0,0)",
+      showGroundAtmosphere: false,
+      enableLighting: false
+    }
   },
-  baseLayerPicker: false
+  terrain: {
+    show: false
+  }
 }
 
 /**
@@ -18,6 +29,7 @@ export const mapOptions = {
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
+  map.basemap = 2017 // 蓝色底图
 
   addDemoGraphics()
 }
@@ -31,30 +43,22 @@ export function onUnmounted() {
 }
 
 function addDemoGraphics() {
-  map.basemap = 2017 // 蓝色底图
-
-  // 调节场景环境
-  map.scene.globe.globeAlpha = 0.001
-  map.scene.undergroundMode = true
-  map.scene.sun.show = false
-  map.scene.moon.show = false
-  map.scene.skyBox.show = false
-  map.scene.skyAtmosphere.show = false
-
   // geojson图层
   const geoJsonLayer1 = new mars3d.layer.GeoJsonLayer({
     url: "//data.mars3d.cn/file/geojson/wuhan-line1.json",
     symbol: {
-      // type: 'polyline',
+      type: "polylineC",
       styleOptions: {
-        materialType: "PolylineGlow",
-        glowPower: 0.06, // 发光强度
         width: 50, // 线宽
-        color: "#FF4500",
-        opacity: 0.9,
-        clampToGround: true
+        materialType: "PolylineGlow",
+        materialOptions: {
+          color: "#FF4500",
+          opacity: 0.9,
+          glowPower: 0.06 // 发光强度
+        }
       }
     },
+    // popup: "all",
     show: true
   })
   map.addLayer(geoJsonLayer1)
@@ -62,15 +66,18 @@ function addDemoGraphics() {
   const geoJsonLayer2 = new mars3d.layer.GeoJsonLayer({
     url: "//data.mars3d.cn/file/geojson/wuhan-line2.json",
     symbol: {
+      type: "polylineC",
       styleOptions: {
-        materialType: "PolylineGlow",
-        glowPower: 0.1, // 发光强度
         width: 10, // 线宽
-        color: "#FF4500",
-        opacity: 0.9,
-        clampToGround: true
+        materialType: "PolylineGlow",
+        materialOptions: {
+          color: "#FF4500",
+          opacity: 0.9,
+          glowPower: 0.1 // 发光强度
+        }
       }
     },
+    // popup: "all",
     show: true
   })
   map.addLayer(geoJsonLayer2)
@@ -78,15 +85,18 @@ function addDemoGraphics() {
   const geoJsonLayer3 = new mars3d.layer.GeoJsonLayer({
     url: "//data.mars3d.cn/file/geojson/wuhan-line3.json",
     symbol: {
+      type: "polylineC",
       styleOptions: {
-        materialType: "PolylineGlow",
-        glowPower: 0.1, // 发光强度
         width: 10, // 线宽
-        color: "#FF4500",
-        opacity: 0.9,
-        clampToGround: true
+        materialType: "PolylineGlow",
+        materialOptions: {
+          color: "#FF4500",
+          opacity: 0.9,
+          glowPower: 0.1 // 发光强度
+        }
       }
     },
+    // popup: "all",
     show: true
   })
   map.addLayer(geoJsonLayer3)

@@ -57,6 +57,10 @@ li {
   list-style: none;
 }
 
+:focus-visible {
+  outline: none;
+}
+
 #centerDiv3D {
   height: 100%;
   width: 100%;
@@ -69,6 +73,16 @@ li {
   position: relative;
 }
 
+/*用于测试非全屏地图*/
+/* #centerDiv3D {
+  height: calc(100% - 200px);
+  width: calc(100% - 400px);
+  left: 200px;
+  right: 200px;
+  top: 100px;
+  bottom: 100px;
+} */
+
 .content {
   overflow: auto;
   position: relative;
@@ -78,8 +92,6 @@ li {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-
-
 
 /*滚动条*/
 body,
@@ -140,8 +152,6 @@ html {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-
-
 /**cesium 工具按钮栏*/
 
 .cesium-viewer-toolbar {
@@ -156,7 +166,7 @@ html {
   vertical-align: middle;
 }
 
-.cesium-viewer-toolbar>.cesium-toolbar-button,
+.cesium-viewer-toolbar > .cesium-toolbar-button,
 .cesium-navigationHelpButton-wrapper,
 .cesium-viewer-geocoderContainer {
   margin-bottom: 5px;
@@ -195,11 +205,13 @@ html {
   left: 40px;
   transform-origin: left bottom;
 }
-.cesium-navigation-help-instructions,.cesium-navigation-button{
+.cesium-navigation-help-instructions,
+.cesium-navigation-button {
   background-color: rgba(23, 49, 71, 0.8);
 }
-.cesium-navigation-button-selected,.cesium-navigation-button-unselected:hover {
-  background-color: rgba(23, 49, 71, 1.0);
+.cesium-navigation-button-selected,
+.cesium-navigation-button-unselected:hover {
+  background-color: rgba(23, 49, 71, 1);
 }
 
 /**cesium 二维三维切换*/
@@ -264,11 +276,9 @@ html {
   left: 10px;
   right: auto;
 }
-.cesium-cesiumInspector{
+.cesium-cesiumInspector {
   background-color: rgba(23, 49, 71, 0.8);
 }
-
-
 
 /**覆盖mars3d内部控件的颜色等样式*/
 .mars3d-compass .mars3d-compass-outer {
@@ -301,6 +311,24 @@ html {
 .mars3d-popup-background {
   background: rgba(23, 49, 71, 0.8);
 }
+
+.mars3d-tooltip {
+  background: rgba(23, 49, 71, 0.8);
+  border: 1px solid rgba(23, 49, 71, 0.8);
+}
+.mars3d-tooltip-top:before {
+  border-top-color: rgba(23, 49, 71, 0.8);
+}
+.mars3d-tooltip-bottom:before {
+  border-bottom-color: rgba(23, 49, 71, 0.8);
+}
+.mars3d-tooltip-left:before {
+  border-left-color: rgba(23, 49, 71, 0.8);
+}
+.mars3d-tooltip-right:before {
+  border-right-color: rgba(23, 49, 71, 0.8);
+}
+
 .mars3d-template-content label {
   padding-right: 6px;
 }
@@ -321,4 +349,3 @@ html {
 .mars3d-divGraphic:hover {
   z-index: 999 !important;
 }
-

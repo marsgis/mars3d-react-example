@@ -60,8 +60,7 @@ function addLayer() {
     symbol: {
       type: "billboard",
       styleOptions: {
-        image: "img/marker/mark1.png",
-        scale: 0.7,
+        image: "img/marker/mark-red.png",
         verticalOrigin: Cesium.VerticalOrigin.BOTTOM
       }
     },
@@ -93,16 +92,17 @@ export function getDataSurfaceHeight() {
   showLoading()
 
   // 对图层内的数据做贴地运算,自动得到贴地高度
-  geoJsonLayer.autoSurfaceHeight({
-    endItem: function (index, len) {
-      const resultData = {
-        percent: index + 1,
-        percentAll: len
+  geoJsonLayer
+    .autoSurfaceHeight({
+      endItem: function (result) {
+        const resultData = {
+          percent: result.index + 1,
+          percentAll: result.count
+        }
+        eventTarget.fire("computedResult", { resultData })
       }
-      eventTarget.fire("computedResult", { resultData })
-    },
-    callback: function () {
+    })
+    .then(() => {
       hideLoading()
-    }
-  })
+    })
 }

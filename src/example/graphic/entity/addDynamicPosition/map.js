@@ -19,9 +19,7 @@ export const mapOptions = {
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
-
   map.basemap = 2017 // 蓝色底图
-
   map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
 
   // 创建矢量数据图层
@@ -65,19 +63,20 @@ export function onMounted(mapInstance) {
           distanceDisplayCondition_near: 0
         }
       },
+      // forwardExtrapolationType: Cesium.ExtrapolationType.NONE,
       attr: { index: i, remark: "Model示例" }
     })
     graphicLayer.addGraphic(graphic)
 
+    // 仅 forwardExtrapolationType: Cesium.ExtrapolationType.NONE时触发
     // graphic.on(mars3d.EventType.stop, function (event) {
-    //   console.log("已停止运行", event.target?.attr);
-    // });
+    //   console.log("已停止运行", event.target?.attr)
+    // })
   }
   for (let i = 0; i < 20; i++) {
     const graphic = new mars3d.graphic.BillboardEntity({
       style: {
-        image: "img/marker/mark3.png",
-        scale: 0.6,
+        image: "img/marker/mark-blue.png",
         horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
         verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
         scaleByDistance: new Cesium.NearFarScalar(10000, 1.0, 500000, 0.1)
@@ -165,12 +164,12 @@ export function bindLayerContextMenu() {
           return true
         }
       },
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         if (!graphic) {
           return
         }
-        const parent = graphic._parent // 右击是编辑点时
+        const parent = graphic.parent // 右击是编辑点时
         graphicLayer.removeGraphic(graphic)
         if (parent) {
           graphicLayer.removeGraphic(parent)

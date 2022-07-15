@@ -45,10 +45,10 @@ export function randomPoints() {
 
   points.features.forEach((e, index) => {
     const position = e.geometry.coordinates
-    const primitive = new mars3d.graphic.BillboardPrimitive({
+    const graphic = new mars3d.graphic.BillboardPrimitive({
       position: position,
       style: {
-        image: "img/marker/mark3.png",
+        image: "img/marker/mark-blue.png",
         scale: 1,
         horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
         verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
@@ -57,7 +57,7 @@ export function randomPoints() {
       },
       popup: "第" + index + "个"
     })
-    pointsLayer.addGraphic(primitive)
+    pointsLayer.addGraphic(graphic)
   })
 }
 

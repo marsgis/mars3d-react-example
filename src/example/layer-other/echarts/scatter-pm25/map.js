@@ -1027,6 +1027,10 @@ function getEchartsOption() {
       x: "center",
       textStyle: {
         color: "#fff"
+      },
+      subtextStyle: {
+        color: "yellow",
+        fontWeight: "bold"
       }
     },
     tooltip: {

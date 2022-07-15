@@ -77,12 +77,18 @@ function UIComponent() {
       }
     },
     {
-      type: "switch",
+      type: "checkbox",
       field: "isShowBox",
       label: "盒子:",
-      value: true,
+      value: ["1"],
+      options: [
+        {
+          label: "是否显示",
+          value: "1"
+        }
+      ],
       change(data) {
-        mapWork.showModelMatrix(data)
+        mapWork.showModelMatrix(data[0] === "1")
       }
     }
   ]
@@ -116,7 +122,7 @@ function UIComponent() {
 
   return (
     <MarsPannel visible={true} right="10" top="10">
-      <MarsGui options={options} formProps={{ labelCol: { span: 7 } }} ref={marsGuiRef}></MarsGui>
+      <MarsGui options={options} formProps={{ labelCol: { span: 8 } }} ref={marsGuiRef}></MarsGui>
       <div className="f-tac">
         <Space>
           <MarsButton

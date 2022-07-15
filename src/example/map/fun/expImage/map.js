@@ -65,13 +65,9 @@ export function onUnmounted() {
 
 // 查看场景出图
 export function showMapImg() {
-  return map
-    .expImage({
-      download: false
-    })
-    .then((base64) => {
-      return base64.image
-    })
+  return map.expImage({ download: false }).then((result) => {
+    return result.image
+  })
 }
 
 // 下载场景出图
@@ -88,7 +84,7 @@ export function downLoad2() {
 }
 
 export function downLoadDiv() {
-  const mapDom = document.getElementById("mars3dContainer")
+  const mapDom = map.container
   const filterNode = document.getElementsByClassName("cesium-viewer-cesiumWidgetContainer")
   function filter(node) {
     return node !== filterNode[0]

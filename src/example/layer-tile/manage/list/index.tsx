@@ -1,5 +1,5 @@
 import { MarsPannel, MarsTree } from "@mars/components/MarsUI"
-import { useCallback, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import * as mapWork from "./map.js"
 
 const layersObj: any = {}
@@ -10,10 +10,8 @@ function UIComponent() {
   const [expandedKeys, setExpandedKeys] = useState<any[]>([]) // 默认展开的节点
   const [checkedKeys, setCheckedKeys] = useState<any[]>([]) // 默认勾选的节点
 
-  useMemo(() => {
-    mapWork.eventTarget.on("loadEnd", () => {
-      initTree()
-    })
+  useEffect(() => {
+    initTree()
   }, [])
 
   // 初始化树构件
@@ -27,15 +25,14 @@ function UIComponent() {
       if (layer && layer.pid === -1) {
         const node: any = {
           title: layer.name,
-          key: layer.uuid,
+          key: layer.id,
           id: layer.id,
-          pId: layer.pid,
-          uuid: layer.uuid
+          pId: layer.pid 
         }
         node.children = findChild(node, layers)
         treeNode.push(node)
         expandNode.push(node.key)
-        layersObj[layer.uuid] = layer
+        layersObj[layer.id] = layer
       }
     }
 
@@ -51,15 +48,14 @@ function UIComponent() {
       .map((item: any) => {
         const node: any = {
           title: item.name,
-          key: item.uuid,
+          key: item.id,
           id: item.id,
-          pId: item.pid,
-          uuid: item.uuid,
+          pId: item.pid, 
           group: item.type === "group"
         }
-        layersObj[item.uuid] = item
+        layersObj[item.id] = item
         expandNode.push(node.key)
-        if (item.hasEmptyGroup) {
+        if (item.hasEmptyGroup || item.hasChildLayer) {
           node.children = findChild(node, list)
         }
         if (item.isAdded && item.show) {
@@ -88,7 +84,7 @@ function UIComponent() {
 
       if (keys.indexOf(e.node.key) !== -1) {
         layer.show = true
-        mapWork.flyToLayer(layer)
+        layer.flyTo()
       } else {
         layer.show = false
       }

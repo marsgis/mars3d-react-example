@@ -45,8 +45,7 @@ export default function (props) {
           title: layer.name || `未命名(${layer.type})`,
           key: layer.id,
           id: layer.id,
-          pId: layer.pid,
-          uuid: layer.uuid,
+          pId: layer.pid, 
           hasZIndex: layer.hasZIndex,
           hasOpacity: layer.hasOpacity,
           opacity: 100 * (layer.opacity || 0),
@@ -86,8 +85,7 @@ export default function (props) {
           title: item.name || `未命名(${item.type})`,
           key: item.id,
           id: item.id,
-          pId: item.pid,
-          uuid: item.uuid,
+          pId: item.pid, 
           hasZIndex: item.hasZIndex,
           hasOpacity: item.hasOpacity,
           opacity: 100 * (item.opacity || 0),
@@ -115,7 +113,7 @@ export default function (props) {
     const layer = layersObj.current[e.node.id]
     setChecked({
       isChecked: e.checked,
-      id: e.node.uuid
+      id: e.node.id
     })
     // console.log("点击的矢量图层", layer)
     if (layer) {
@@ -247,7 +245,7 @@ export default function (props) {
     return (
       <>
         <span onDoubleClick={() => flyTo(node)}>{node.title}</span>
-        {node.hasOpacity && checked.isChecked && node.uuid === checked.id ? (
+        {node.hasOpacity && checked.isChecked && node.id === checked.id ? (
           <span className={`${styles["tree-slider"]}`}>
             <MarsSlider
               defaultValue={opacityObj.current[node.id]}

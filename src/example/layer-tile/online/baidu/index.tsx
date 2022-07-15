@@ -1,31 +1,16 @@
-import { MarsPannel, MarsButton } from "@mars/components/MarsUI"
-import { QueryPoi } from "@mars/components/MarsSample/QueryPoi/index"
-import * as mapWork from "./map.js"
-import { Space } from "antd"
+import { MarsPannel } from "@mars/components/MarsUI"
+import { TileLayerState } from "@mars/components/MarsSample/TileLayerState"
+import { activate } from "@mars/widgets/common/store/widget"
+import { useEffect } from "react"
 
 function UIComponent() {
+  useEffect(() => {
+    activate("SearchPoi")
+  }, [])
   return (
-    <>
-      <QueryPoi />
-      <MarsPannel visible={true} right={10} top={10}>
-        <Space>
-          <MarsButton
-            onClick={() => {
-              mapWork.addLayer()
-            }}
-          >
-            叠加图层
-          </MarsButton>
-          <MarsButton
-            onClick={() => {
-              mapWork.removeLayer()
-            }}
-          >
-            移除图层
-          </MarsButton>
-        </Space>
-      </MarsPannel>
-    </>
+    <MarsPannel visible={true} right={10} top={10}>
+      <TileLayerState /> 
+    </MarsPannel>
   )
 }
 

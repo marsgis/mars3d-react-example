@@ -2,6 +2,7 @@ import { MarsPannel, MarsGui } from "@mars/components/MarsUI"
 import type { GuiItem } from "@mars/components/MarsUI"
 
 import * as mapWork from "./map.js"
+import { activate, disable } from "@mars/widgets/common/store/widget"
 
 // 按钮
 const chooseButton = (data) => {
@@ -13,7 +14,7 @@ const chooseButton = (data) => {
   mapWork.bindVR(findValue(data, "6"))
   mapWork.bindHelpButton(findValue(data, "7"))
   mapWork.bindZoom(findValue(data, "8"))
-  onBindLayer(findValue(data, "9"))
+  mapWork.bindLayer(findValue(data, "9"))
 }
 
 // 面板
@@ -31,13 +32,6 @@ const findValue = (data, index) => {
   })
 }
 
-const onBindLayer = (e) => {
-  if (e) {
-    // activate("tools-button")
-  } else {
-    // disable("tools-button")
-  }
-}
 function UIComponent() {
   const options: GuiItem[] = [
     {

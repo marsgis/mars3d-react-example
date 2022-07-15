@@ -18,7 +18,10 @@ export function onMounted(mapInstance) {
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  bindLayerEvent() // 对图层绑定相关事件
+  // 在layer上绑定监听事件
+  graphicLayer.on(mars3d.EventType.click, function (event) {
+    console.log("监听layer，单击了矢量对象", event)
+  })
   bindLayerPopup() // 在图层上绑定popup,对所有加到这个图层的矢量数据都生效
   bindLayerContextMenu() // 在图层绑定右键菜单,对所有加到这个图层的矢量数据都生效
 
@@ -133,7 +136,8 @@ function addDemoGraphic4(graphicLayer) {
 
       // 高亮时的样式（默认为鼠标移入，也可以指定type:'click'单击高亮），构造后也可以openHighlight、closeHighlight方法来手动调用
       highlight: {
-        font_size: 30
+        color: "#ff0000",
+        outlineColor: "#ff0000"
       }
     },
     attr: { remark: "示例4" }
@@ -141,124 +145,42 @@ function addDemoGraphic4(graphicLayer) {
   graphicLayer.addGraphic(graphic)
 }
 
-// 在图层级处理一些事物
-function bindLayerEvent() {
-  // 在layer上绑定监听事件
-  graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("监听layer，单击了矢量对象", event)
-  })
-  /* graphicLayer.on(mars3d.EventType.mouseOver, function (event) {
-    console.log("监听layer，鼠标移入了矢量对象", event)
-  })
-  graphicLayer.on(mars3d.EventType.mouseOut, function (event) {
-    console.log("监听layer，鼠标移出了矢量对象", event)
-  }) */
+// 生成演示数据(测试数据量)
+export function addRandomGraphicByCount(count) {
+  graphicLayer.clear()
+  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
 
-  // 数据编辑相关事件， 用于属性弹窗的交互
-  graphicLayer.on(mars3d.EventType.drawCreated, function (e) {
-    eventTarget.fire("graphicEditor-start", e)
-  })
+  const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
+  const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
+  console.log("生成的测试网格坐标", result)
 
-  graphicLayer.on(
-    [mars3d.EventType.editStart, mars3d.EventType.editMovePoint, mars3d.EventType.editStyle, mars3d.EventType.editRemovePoint],
-    function (e) {
-      eventTarget.fire("graphicEditor-update", e)
-    }
-  )
+  for (let j = 0; j < result.points.length; ++j) {
+    const position = result.points[j]
+    const index = j + 1
 
-  graphicLayer.on([mars3d.EventType.editStop, mars3d.EventType.removeGraphic], function (e) {
-    eventTarget.fire("graphicEditor-stop", e)
-  })
-}
-
-// 在图层绑定Popup弹窗
-export function bindLayerPopup() {
-  graphicLayer.bindPopup(function (event) {
-    const attr = event.graphic.attr || {}
-    attr["类型"] = event.graphic.type
-    attr["来源"] = "我是layer上绑定的Popup"
-    attr["备注"] = "我支持鼠标交互"
-
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
-  })
-}
-
-// 绑定右键菜单
-export function bindLayerContextMenu() {
-  graphicLayer.bindContextMenu([
-    {
-      text: "开始编辑对象",
-      icon: "fa fa-edit",
-      show: function (e) {
-        const graphic = e.graphic
-        if (!graphic || !graphic.startEditing) {
-          return false
-        }
-        return !graphic.isEditing
+    const graphic = new mars3d.graphic.CanvasLabelEntity({
+      position: position,
+      style: {
+        text: "第" + index + "个",
+        font_size: 50,
+        scale: 0.5, // font_size放大，再缩小可以文字显示更清晰
+        font_family: "微软雅黑",
+        color: "#ffffff",
+        backgroundColor: "rgba(226,190,40,0.5)",
+        backgroundPadding: 15,
+        outlineColor: "#ffffff",
+        outlineWidth: 5
       },
-      callback: function (e) {
-        const graphic = e.graphic
-        if (!graphic) {
-          return false
-        }
-        if (graphic) {
-          graphicLayer.startEditing(graphic)
-        }
-      }
-    },
-    {
-      text: "停止编辑对象",
-      icon: "fa fa-edit",
-      show: function (e) {
-        const graphic = e.graphic
-        if (!graphic) {
-          return false
-        }
-        return graphic.isEditing
-      },
-      callback: function (e) {
-        const graphic = e.graphic
-        if (!graphic) {
-          return false
-        }
-        if (graphic) {
-          graphicLayer.stopEditing(graphic)
-        }
-      }
-    },
-    {
-      text: "删除对象",
-      icon: "fa fa-trash-o",
-      show: (event) => {
-        const graphic = event.graphic
-        if (!graphic || graphic.isDestroy) {
-          return false
-        } else {
-          return true
-        }
-      },
-      callback: function (e) {
-        const graphic = e.graphic
-        if (!graphic) {
-          return
-        }
-        const parent = graphic._parent // 右击是编辑点时
-        graphicLayer.removeGraphic(graphic)
-        if (parent) {
-          graphicLayer.removeGraphic(parent)
-        }
-      }
-    }
-  ])
+      attr: { index: index }
+    })
+    graphicLayer.addGraphic(graphic)
+  }
+  graphicLayer.enabledEvent = true // 恢复事件
+  return result.points.length
 }
 
-// 按钮事件
-export function updateLayerHasEdit(val) {
-  graphicLayer.hasEdit = val
-}
-
+// 开始绘制
 export function startDrawGraphic() {
-  // 开始绘制
   graphicLayer.startDraw({
     type: "canvasLabel",
     style: {
@@ -303,4 +225,85 @@ export function onClickStopBounce() {
       graphic.stopBounce()
     }
   })
+}
+
+// 在图层绑定Popup弹窗
+export function bindLayerPopup() {
+  graphicLayer.bindPopup(function (event) {
+    const attr = event.graphic.attr || {}
+    attr["类型"] = event.graphic.type
+    attr["来源"] = "我是layer上绑定的Popup"
+    attr["备注"] = "我支持鼠标交互"
+
+    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
+  })
+}
+
+// 绑定右键菜单
+export function bindLayerContextMenu() {
+  graphicLayer.bindContextMenu([
+    {
+      text: "开始编辑对象",
+      icon: "fa fa-edit",
+      show: function (e) {
+        const graphic = e.graphic
+        if (!graphic || !graphic.hasEdit) {
+          return false
+        }
+        return !graphic.isEditing
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
+        if (graphic) {
+          graphicLayer.startEditing(graphic)
+        }
+      }
+    },
+    {
+      text: "停止编辑对象",
+      icon: "fa fa-edit",
+      show: function (e) {
+        const graphic = e.graphic
+        if (!graphic || !graphic.hasEdit) {
+          return false
+        }
+        return graphic.isEditing
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
+        if (graphic) {
+          graphic.stopEditing()
+        }
+      }
+    },
+    {
+      text: "删除对象",
+      icon: "fa fa-trash-o",
+      show: (event) => {
+        const graphic = event.graphic
+        if (!graphic || graphic.isDestroy) {
+          return false
+        } else {
+          return true
+        }
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        if (!graphic) {
+          return
+        }
+        const parent = graphic.parent // 右击是编辑点时
+        graphicLayer.removeGraphic(graphic)
+        if (parent) {
+          graphicLayer.removeGraphic(parent)
+        }
+      }
+    }
+  ])
 }

@@ -277,8 +277,8 @@ function UIComponent() {
   }, [])
 
   return (
-    <MarsPannel visible={true} right="10" top="10" width="300">
-      <MarsGui options={options} formProps={{ labelCol: { span: 4 } }} ref={marsGuiRef}></MarsGui>
+    <MarsPannel visible={true} right="10" top="10" width="360">
+      <MarsGui options={options} formProps={{ labelCol: { span: 5 } }} ref={marsGuiRef}></MarsGui>
 
       <div className="f-tac">
         <Space>

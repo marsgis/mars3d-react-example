@@ -1,17 +1,15 @@
-import { MarsForm, MarsFormItem, MarsPannel } from "@mars/components/MarsUI"
-import { LayerState } from "@mars/components/MarsSample/LayerState"
-import { DataLoad } from "@mars/components/MarsSample/DataLoad"
+import { MarsPannel } from "@mars/components/MarsUI"
+import { GraphicLayerState } from "@mars/components/MarsSample/GraphicLayerState"
+import { LocationTo } from "@mars/components/MarsSample/LocationTo"
 
 function UIComponent() {
   return (
-    <MarsPannel visible={true} right={10} top={10}>
-      <MarsForm>
-        <MarsFormItem>
-          <LayerState />
-        </MarsFormItem>
-      </MarsForm>
-      <DataLoad {...{ num: 0.1, min: 0.1, max: 100, step: 0.1, unit: "万条" }} />
-    </MarsPannel>
+    <>
+      <MarsPannel visible={true} top={10} right={10}>
+        <GraphicLayerState defaultCount={1000} drawLabel1={"绘制面"} drawLabel2={"绘制立体面"} />
+      </MarsPannel>
+      <LocationTo />
+    </>
   )
 }
 

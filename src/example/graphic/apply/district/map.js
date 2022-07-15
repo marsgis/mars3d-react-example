@@ -52,7 +52,9 @@ function addAnhui(graphicLayer) {
     style: {
       height: diffHeight,
       materialType: mars3d.MaterialType.Image2,
-      image: "//data.mars3d.cn/file/img/anhui.png"
+      materialOptions: {
+        image: "//data.mars3d.cn/file/img/anhui.png"
+      }
     }
   })
   graphicLayer.addGraphic(anhuiImg)
@@ -66,7 +68,9 @@ function addAnhui(graphicLayer) {
       styleOptions: {
         diffHeight: diffHeight, // 墙高
         materialType: mars3d.MaterialType.Image2,
-        image: "./img/icon/wall.png"
+        materialOptions: {
+          image: "./img/icon/wall.png"
+        }
       }
     }
   })
@@ -131,11 +135,12 @@ function addCenterCity(graphicLayer) {
     position: point,
     style: {
       radius: 16000,
-      material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.CircleWave, {
+      materialType: mars3d.MaterialType.CircleWave,
+      materialOptions: {
         color: "rgba(0,255,255,0.6)",
         count: 2,
         speed: 10
-      })
+      }
     }
   })
   graphicLayer.addGraphic(cicle)
@@ -172,15 +177,17 @@ function addOutCircle(graphicLayer) {
 
   for (let i = 0; i < arrImg.length; i++) {
     const item = arrImg[i]
-    const primitive = new mars3d.graphic.RectanglePrimitive({
+    const graphic = new mars3d.graphic.RectanglePrimitive({
       positions: item.positions,
       style: {
         materialType: mars3d.MaterialType.Image2,
-        image: item.image,
-        opacity: 0.4
+        materialOptions: {
+          image: item.image,
+          opacity: 0.4
+        }
       }
     })
-    graphicLayer.addGraphic(primitive)
+    graphicLayer.addGraphic(graphic)
   }
 
   // 自转的半椭圆
@@ -196,8 +203,10 @@ function addOutCircle(graphicLayer) {
     ],
     style: {
       materialType: mars3d.MaterialType.Image2,
-      image: "./img/icon/calib-semicircle.png",
-      opacity: 0.2,
+      materialOptions: {
+        image: "./img/icon/calib-semicircle.png",
+        opacity: 0.2
+      },
       clampToGround: true,
       rotation: new Cesium.CallbackProperty(getRotationValue, false),
       stRotation: new Cesium.CallbackProperty(getRotationValue, false)

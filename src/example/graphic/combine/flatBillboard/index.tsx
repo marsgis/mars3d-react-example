@@ -1,29 +1,21 @@
-import { MarsButton, MarsCheckbox, MarsForm, MarsFormItem, MarsInputNumber, MarsPannel } from "@mars/components/MarsUI"
-import * as mapWork from "./map.js"
+import { MarsPannel, MarsButton } from "@mars/components/MarsUI"
+import { GraphicLayerState } from "@mars/components/MarsSample/GraphicLayerState"
 import { Space } from "antd"
-import { useState } from "react"
-import { LayerState } from "@mars/components/MarsSample/LayerState"
+import * as mapWork from "./map.js"
 
 function UIComponent() {
-  const [num, setNum] = useState(20)
-
   return (
-    <MarsPannel visible={true} right={10} top={10}>
-      <MarsForm>
-        <MarsFormItem>
-          <LayerState />
-        </MarsFormItem>
-        <MarsFormItem label="间隔:">
+    <>
+      <MarsPannel visible={true} top={10} right={10}>
+        <GraphicLayerState defaultCount={10000} enabledDraw={false} />
+        <div className="f-pdg-10-t">
           <Space>
-            <MarsInputNumber value={num} onChange={(data: number) => setNum(data)}></MarsInputNumber>
-            米插值
-            <MarsButton onClick={() => mapWork.showDataPoint(num)}>生成图标</MarsButton>
-            <MarsButton onClick={() => mapWork.clearData()}>清除</MarsButton>
-            <MarsButton onClick={() => mapWork.loadDemo()}>加载演示数据</MarsButton>
+            <span className="mars-pannel-item-label">样例数据:</span>
+            <MarsButton onClick={() => mapWork.addDemoGraphic1()}>东南风场</MarsButton>
           </Space>
-        </MarsFormItem>
-      </MarsForm>
-    </MarsPannel>
+        </div>
+      </MarsPannel>
+    </>
   )
 }
 

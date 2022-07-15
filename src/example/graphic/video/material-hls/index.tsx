@@ -4,61 +4,12 @@ import type { GuiItem } from "@mars/components/MarsUI"
 import { Space } from "antd"
 import * as mapWork from "./map.js"
 import { useRef } from "react"
+import { GraphicLayerState } from "@mars/components/MarsSample/GraphicLayerState"
 
 function UIComponent() {
   const marsGuiRef = useRef<any>()
 
   const options: GuiItem[] = [
-    {
-      type: "custom",
-      label: "标绘:",
-      element: (
-        <Space>
-          <MarsButton
-            onClick={() => {
-              mapWork.drawRectangle()
-            }}
-          >
-            贴地矩形
-          </MarsButton>
-          <MarsButton
-            onClick={() => {
-              mapWork.drawPolygon(true)
-            }}
-          >
-            贴地面
-          </MarsButton>
-          <MarsButton
-            onClick={() => {
-              mapWork.drawPolygon(false)
-            }}
-          >
-            立体面
-          </MarsButton>
-          <MarsButton
-            onClick={() => {
-              mapWork.removeAll()
-            }}
-          >
-            清除
-          </MarsButton>
-        </Space>
-      )
-    },
-    {
-      type: "slider",
-      field: "angleValue",
-      label: "方向",
-      step: 1,
-      min: 0,
-      max: 360,
-      value: 10,
-      extra: "当前值：{angleValue}",
-      change(data) {
-        marsGuiRef.current.updateField("angleValue", data)
-        mapWork.angleChange(data)
-      }
-    },
     {
       type: "custom",
       label: "状态:",
@@ -83,9 +34,8 @@ function UIComponent() {
     }
   ]
   return (
-    <MarsPannel visible={true} right="10" top="10" width="420">
-      <LayerState></LayerState>
-
+    <MarsPannel visible={true} right="10" top="10">
+      <GraphicLayerState drawLabel1="贴地矩形" defaultCount={10} drawLabel2="竖立墙" />
       <MarsGui options={options} ref={marsGuiRef}></MarsGui>
     </MarsPannel>
   )

@@ -9,7 +9,7 @@ function UIComponent() {
 
   return (
     <MarsPannel visible={true} right="10" top="10">
-      <p className="f-tac f-mb" style={{ color: "#cad1d1", fontSize: "12px" }}>
+      <p className="f-mb" style={{ color: "#cad1d1", fontSize: "12px" }}>
         提示：插值数大时分析略慢，请耐心等待。
       </p>
       <MarsFormItem label="插值数">

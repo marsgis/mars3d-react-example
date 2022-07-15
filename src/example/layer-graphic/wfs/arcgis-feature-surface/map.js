@@ -22,12 +22,13 @@ export function onMounted(mapInstance) {
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     name: "合肥国家大学科技园",
     url: "//data.mars3d.cn/3dtiles/qx-hfdxy/tileset.json",
-    position: { alt: -24 },
+    position: { alt: 80 },
     maximumScreenSpaceError: 1,
     maximumMemoryUsage: 1024
   })
+  map.addLayer(tiles3dLayer)
 
-  const tiles3dLayer2 = new mars3d.layer.ArcGisWfsLayer({
+  const graphicLayer = new mars3d.layer.ArcGisWfsLayer({
     name: "兴趣点",
     url: "//server.mars3d.cn/arcgis/rest/services/mars/hefei/MapServer/1",
     where: " NAME like '%大学%' ",
@@ -35,8 +36,7 @@ export function onMounted(mapInstance) {
     symbol: {
       type: "billboardP",
       styleOptions: {
-        image: "img/marker/mark3.png",
-        scale: 0.7,
+        image: "img/marker/mark-blue.png",
         verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
         label: {
           text: "{NAME}",
@@ -51,20 +51,12 @@ export function onMounted(mapInstance) {
     popup: "名称：{NAME}<br />地址：{address}",
     show: true
   })
-
-  // 绑定事件
-  map.on(mars3d.EventType.load, function (event) {
-    console.log("数据加载完成", event)
-
-    map.addLayer(tiles3dLayer)
-    map.addLayer(tiles3dLayer2)
+  graphicLayer.on(mars3d.EventType.addGraphic, function (event) {
+    updateAutoSurfaceHeight(event.graphic)
   })
 
-  // 绑定回调处理
-  const layerPoint = map.getLayer("兴趣点", "name")
-  layerPoint.on(mars3d.EventType.addGraphic, function (event) {
-    // 添加entity的回调，方便自定义控制。
-    updateAutoSurfaceHeight(event.graphic)
+  map.on(mars3d.EventType.load, function (event) {
+    map.addLayer(graphicLayer)
   })
 }
 
@@ -83,15 +75,10 @@ function updateAutoSurfaceHeight(graphic) {
   }
 
   // 点贴模型测试
-  let position = graphic.position
-  position = mars3d.PointUtil.getSurfaceHeight(map.scene, position, {
-    asyn: true, // 是否异步求准确高度
-    has3dtiles: true, // 是否先求贴模型上（无模型时改为false，提高效率）
-    callback: function (newHeight, cartOld) {
-      console.log("原始高度为：" + cartOld.height.toFixed(2) + ",贴地高度：" + newHeight.toFixed(2))
+  const position = graphic.position
+  mars3d.PointUtil.getSurfaceHeight(map.scene, position, { has3dtiles: true }).then((result) => {
+    console.log("原始高度为：" + result.height_original.toFixed(2) + ",贴地高度：" + result.height.toFixed(2))
 
-      const positionNew = Cesium.Cartesian3.fromRadians(cartOld.longitude, cartOld.latitude, newHeight)
-      graphic.position = positionNew
-    }
+    graphic.position = result.position
   })
 }

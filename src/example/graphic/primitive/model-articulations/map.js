@@ -1,7 +1,7 @@
 import * as mars3d from "mars3d"
 
 export let map // mars3d.Map三维地图对象
-export let primitive
+export let graphic
 export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
 
 /**
@@ -35,11 +35,11 @@ function addRockets() {
   //   selectedArticulation: undefined
   // }
 
-  // 创建Graphic图层
+  // 创建矢量数据图层
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  primitive = new mars3d.graphic.ModelPrimitive({
+  graphic = new mars3d.graphic.ModelPrimitive({
     position: [113.693, 31.243, 220000],
     style: {
       url: "//data.mars3d.cn/gltf/sample/launchvehicle/launchvehicle.glb",
@@ -48,10 +48,10 @@ function addRockets() {
       heading: 0
     }
   })
-  graphicLayer.addGraphic(primitive)
+  graphicLayer.addGraphic(graphic)
 
   // gltf模型加载完成事件
-  primitive.on(mars3d.EventType.load, (event) => {
+  graphic.on(mars3d.EventType.load, (event) => {
     model = event.model
 
     // 缩放区域到模型所在位置

@@ -273,7 +273,7 @@
 
     //取样式数据
     getPbfStyle(styleUrl) {
-      return mars3d.Resource.fetchJson({
+      return mars3d.Util.fetchJson({
         url: styleUrl,
         queryParameters: {
           access_token: this.options.key || "mars3d"

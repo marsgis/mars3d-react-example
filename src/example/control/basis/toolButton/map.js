@@ -23,12 +23,20 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
+  let hasSelected = false
   const toolButton = new mars3d.control.ToolButton({
     title: "示例按钮bookmark",
     icon: "img/icon/bookmark-one.svg",
     insertIndex: 1, // 插入的位置顺序, 1是home按钮后面
     click: () => {
-      globalMsg("单击了 示例按钮bookmark，回调中想干啥就干啥~")
+      hasSelected = !hasSelected
+      if (hasSelected) {
+        mars3d.DomUtil.addClass(toolButton.container, "toolButton-selected")
+        globalMsg("选中了 示例按钮bookmark，回调中想干啥就干啥~")
+      } else {
+        mars3d.DomUtil.removeClass(toolButton.container, "toolButton-selected")
+        globalMsg("取消选中了 示例按钮bookmark，回调中想干啥就干啥~")
+      }
     }
   })
   map.addControl(toolButton)

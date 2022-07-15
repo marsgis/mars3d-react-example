@@ -38,9 +38,11 @@ function addDemoGraphics() {
       type: "polygon",
       styleOptions: {
         materialType: mars3d.MaterialType.PolyGradient, // 重要参数，指定材质
-        color: "#3388cc",
-        opacity: 0.7,
-        alphaPower: 1.3,
+        materialOptions: {
+          color: "#3388cc",
+          opacity: 0.7,
+          alphaPower: 1.3
+        },
         // 面中心点，显示文字的配置
         label: {
           text: "{name}", // 对应的属性名称
@@ -57,9 +59,12 @@ function addDemoGraphics() {
         }
       },
       callback: function (attr, styleOpt) {
-        const randomHeight = attr.gdp * 5 // 测试的高度
+        const randomHeight = (attr.childrenNum || 1) * 500 // 测试的高度
         return {
-          color: getColor(),
+          materialOptions: {
+            color: getColor()
+          },
+          height: 0,
           diffHeight: randomHeight
         }
       }

@@ -63,28 +63,28 @@ const DialogElement = forwardRef<any, Props>(
       pannelStyle.zIndex = zIndex
       // 横向位置初始化
       if (left !== undefined) {
-        pannelStyle.left = antoUnit(left)
+        pannelStyle.left = autoUnit(left)
       } else if (right !== undefined) {
-        pannelStyle.right = antoUnit(right)
+        pannelStyle.right = autoUnit(right)
         pannelStyle.left = "initial"
       }
       // 纵向位置初始化
       if (top !== undefined) {
-        pannelStyle.top = antoUnit(top)
+        pannelStyle.top = autoUnit(top)
       }
       if (bottom !== undefined) {
-        pannelStyle.bottom = antoUnit(bottom)
+        pannelStyle.bottom = autoUnit(bottom)
       }
     }, [props.left, props.right, props.top, props.bottom, props.zIndex, props.position])
 
     useEffect(() => {
       const pannelStyle = pannelBox.current.style
       if (width) {
-        pannelStyle.width = antoUnit(width)
+        pannelStyle.width = autoUnit(width)
       }
       if (!props.top || !props.bottom) {
         if (props.height) {
-          pannelStyle.height = antoUnit(props.height)
+          pannelStyle.height = autoUnit(props.height)
         }
       }
     }, [width, props.height, props.top, props.bottom])
@@ -110,7 +110,7 @@ const DialogElement = forwardRef<any, Props>(
         const maxLeft = warpper!.offsetWidth - pb.offsetWidth
         const maxTop = warpper!.offsetHeight - pb.offsetHeight
 
-        pb.style.height = antoUnit(pb.offsetHeight) // 处理没有height的情况
+        pb.style.height = autoUnit(pb.offsetHeight) // 处理没有height的情况
 
         addEvent(document.documentElement, "mousemove", toPointerPosition)
         addEvent(document.documentElement, "mouseup", handleUp)
@@ -122,7 +122,7 @@ const DialogElement = forwardRef<any, Props>(
           const left = bl + distanceX
           const top = bt + distanceY
           if (props.top && props.bottom) {
-            pb.style.height = antoUnit(pb.offsetHeight)
+            pb.style.height = autoUnit(pb.offsetHeight)
             pb.style.bottom = "initial"
           }
 
@@ -186,12 +186,34 @@ const DialogElement = forwardRef<any, Props>(
       props.onClose && props.onClose()
     }, [props])
 
+    useEffect(() => {
+      // 监听元素变化
+      const warpperEle = document.getElementById(props.warpper)
+      const domObserver = new MutationObserver((mList, ob) => {
+        const isExceed = warpperEle.offsetHeight < pannelBox.current.offsetHeight + pannelBox.current.offsetTop
+        if (isExceed) {
+          const niceHeight = warpperEle.offsetHeight - pannelBox.current.offsetTop
+          pannelBox.current.style.height = autoUnit(niceHeight)
+        }
+      })
+
+      domObserver.observe(pannelBox.current, {
+        attributes: true,
+        childList: true,
+        subtree: true
+      })
+
+      return () => {
+        domObserver.disconnect()
+      }
+    }, [])
+
     return (
       <div className="mars-dialog" ref={pannelBox}>
         <div className="mars-dialog__header" onMouseDown={drag}>
           <span className="icon">{icon && icon}</span>
           <span className="title"> {props.title} </span>
-          <MarsIcon icon="close" width="18" className="close-btn" onClick={close}></MarsIcon>
+          <MarsIcon icon="close" width="18" color="#41A8FF" className="close-btn" onClick={close}></MarsIcon>
         </div>
         <div className={`mars-dialog__body ${props.footer ? "" : "full-content"}`}>
           <div className="content">{props.children}</div>
@@ -228,7 +250,7 @@ export const MarsDialog = forwardRef<any, Props>(({ warpper = "", ...props }, re
 })
 
 // 处理传入的单位问题
-function antoUnit(value: number | string) {
+function autoUnit(value: number | string) {
   if (typeof value === "number" || (typeof value === "string" && /^[0-9]*$/.test(value))) {
     return `${value}px`
   } else {

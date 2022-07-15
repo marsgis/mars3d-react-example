@@ -21,6 +21,8 @@ let basemapsTool: mars3d.control.ToolButton
  * @returns {void} 无
  */
 export function onMounted(mapInstance: mars3d.Map): void {
+  console.log("加载了")
+
   if (!mapInstance) {
     return
   }
@@ -29,6 +31,7 @@ export function onMounted(mapInstance: mars3d.Map): void {
   layersTool = new mars3d.control.ToolButton({
     title: "图层控制",
     icon: iconLayer,
+    id: "mars-manage-layer-btn",
     insertIndex: 1, // 插入的位置顺序, 1是home按钮后面
     click: () => {
       eventTarget.fire("openManageLayer")
@@ -56,8 +59,8 @@ export function onMounted(mapInstance: mars3d.Map): void {
 export function onUnmounted() {
   console.log("卸载了")
   eventTarget.off()
-  map.removeControl(basemapsTool)
-  map.removeControl(layersTool)
+  map?.removeControl(basemapsTool)
+  map?.removeControl(layersTool)
   basemapsTool = null
   layersTool = null
   map = null

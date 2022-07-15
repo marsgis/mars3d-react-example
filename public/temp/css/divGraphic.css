@@ -24,7 +24,7 @@
   position: absolute;
   bottom: -39px;
   left: -22px;
-  background: url("../../img/marker/popupLbl.png") 0px 0px no-repeat;
+  background: url("../../img/icon/popupLbl.png") 0px 0px no-repeat;
   background-position: 0px 0px;
 }
 
@@ -86,7 +86,7 @@
 
 /**************** 蓝色科技感文本面板 ****************/
 .mars-spot {
-  background-image: url("../../img/marker/circleBlue.png");
+  background-image: url("../../img/icon/lbl-circle.png");
   position: absolute;
   background-repeat: no-repeat;
   user-select: none;
@@ -100,11 +100,11 @@
 }
 
 .mars-spot:hover {
-  background-image: url("../../img/marker/circleYellow.png");
+  background-image: url("../../img/icon/lbl-circle2.png");
 }
 
 .mars-spot:hover .mars-spot-board{
-  background-image: url("../../img/marker/divYellow.png");
+  background-image: url("../../img/icon/lbl-extent2.png");
 }
 
 .mars-spot:hover .mars-spot-line{
@@ -120,7 +120,7 @@
 }
 
   .mars-spot-board {
-    background-image: url("../../img/marker/divBlue.png");
+    background-image: url("../../img/icon/lbl-extent.png");
     top: -165px;
     transform: translateX(-30%);
     width: 180px;
@@ -134,7 +134,7 @@
   }
 
   .mars-spot-board:hover {
-    background-image: url("../../img/marker/divYellow.png");
+    background-image: url("../../img/icon/lbl-extent2.png");
 
   }
 
@@ -240,7 +240,7 @@
   background: rgba(42, 42, 42, 0.8);
   border-radius: 4px;
 
-  background: url("../../img/marker/div1.png");
+  background: url("../../img/icon/div1.png");
   background-size: 100%;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -275,7 +275,7 @@
   height: 157px;
   background: rgba(42, 42, 42, 0.8);
   border-radius: 4px;
-  background: url("../../img/marker/div2.png");
+  background: url("../../img/icon/div2.png");
   background-size: 100%;
   -webkit-background-size: cover;
   -moz-background-size: cover;

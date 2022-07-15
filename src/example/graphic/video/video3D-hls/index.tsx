@@ -1,44 +1,17 @@
-import { LayerState } from "@mars/components/MarsSample/LayerState.jsx"
-import { MarsButton, MarsPannel, MarsGui } from "@mars/components/MarsUI"
+import { MarsButton, MarsDialog, MarsPannel, MarsGui } from "@mars/components/MarsUI"
+import { GraphicLayerState } from "@mars/components/MarsSample/GraphicLayerState"
 import type { GuiItem } from "@mars/components/MarsUI"
 import { Space } from "antd"
 import * as mapWork from "./map.js"
-import { useRef } from "react"
+import { useRef, useState } from "react"
 
 function UIComponent() {
   const marsGuiRef = useRef<any>()
 
-  const options: GuiItem[] = [
-    {
-      type: "custom",
-      label: "",
-      element: (
-        <Space>
-          <MarsButton
-            onClick={() => {
-              mapWork.addVideo(marsGuiRef.current.getValues())
-            }}
-          >
-            绘制投射视频
-          </MarsButton>
-          <MarsButton
-            onClick={() => {
-              mapWork.addThisCamera(marsGuiRef.current.getValues())
-            }}
-          >
-            按当前相机投射视频
-          </MarsButton>
+  const [selectedGraphic, setSelected] = useState(false)
+  const [graphicName, setGraphicName] = useState("")
 
-          <MarsButton
-            onClick={() => {
-              mapWork.clear()
-            }}
-          >
-            清除
-          </MarsButton>
-        </Space>
-      )
-    },
+  const options: GuiItem[] = [
     {
       type: "custom",
       label: "相机位置:",
@@ -174,11 +147,45 @@ function UIComponent() {
   ]
 
   return (
-    <MarsPannel visible={true} right="10" top="10" width="420">
-      <LayerState></LayerState>
+    <>
+      <MarsPannel visible={true} right="10" top="10" width="420">
+        <GraphicLayerState
+          defaultCount={10}
+          interaction={false}
+          customEditor={"video3D"}
+          onStartEditor={(data: any) => {
+            const graphic = mapWork.getGraphic(data.graphicId)
 
-      <MarsGui options={options} formProps={{ labelCol: { span: 5 } }} ref={marsGuiRef}></MarsGui>
-    </MarsPannel>
+            setGraphicName(data.graphicName)
+            setSelected(true)
+
+            marsGuiRef.current.updateField("cameraAngle", graphic?.angle)
+            marsGuiRef.current.updateField("cameraAngle2", graphic?.angle2)
+            marsGuiRef.current.updateField("distanceValue", graphic?.distance)
+            marsGuiRef.current.updateField("heading", graphic?.heading)
+            marsGuiRef.current.updateField("pitchValue", graphic?.pitch)
+            marsGuiRef.current.updateField("ckdFrustum", graphic?.showFrustum)
+            marsGuiRef.current.updateField("opcity", graphic?.opacity)
+          }}
+          onStopEditor={() => {
+            setSelected(false)
+          }}
+        />
+      </MarsPannel>
+
+      <MarsDialog
+        title={graphicName}
+        visible={selectedGraphic}
+        onClose={() => {
+          setSelected(false)
+        }}
+        left="10"
+        top="10"
+        width="420"
+      >
+        <MarsGui options={options} ref={marsGuiRef}></MarsGui>
+      </MarsDialog>
+    </>
   )
 }
 

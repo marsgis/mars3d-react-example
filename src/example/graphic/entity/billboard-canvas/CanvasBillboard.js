@@ -10,7 +10,9 @@ class CanvasBillboard extends mars3d.graphic.BillboardEntity {
 
   set text(val) {
     this.style.text = val
-    this._updateCanvas()
+    if (this._map) {
+      this._updateCanvas()
+    }
   }
 
   /**
@@ -25,7 +27,7 @@ class CanvasBillboard extends mars3d.graphic.BillboardEntity {
     if (this._pngImage) {
       this._updateCanvas()
     } else {
-      this.style.imageUrl = "img/marker/textPnl.png" // 图片对象
+      this.style.imageUrl = "img/icon/textPnl.png" // 图片对象
       this.style.width = 300
       this.style.height = 140
 
@@ -41,7 +43,7 @@ class CanvasBillboard extends mars3d.graphic.BillboardEntity {
 
   // 创建canvas
   _updateCanvas() {
-    if (!this._pngImage) {
+    if (!this._pngImage || this._map.camera.positionCartographic.height > 100000) {
       return
     }
 
@@ -66,4 +68,8 @@ class CanvasBillboard extends mars3d.graphic.BillboardEntity {
     this.image = canvas
   }
 }
+
+// 注册下
+mars3d.GraphicUtil.register("canvasBillboard", CanvasBillboard)
+
 mars3d.graphic.CanvasBillboard = CanvasBillboard

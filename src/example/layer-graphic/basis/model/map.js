@@ -1,7 +1,8 @@
 import * as mars3d from "mars3d"
 
 export let map // mars3d.Map三维地图对象
-let gltfLayer
+export let graphicLayer
+export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
 
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
@@ -35,10 +36,18 @@ export function onUnmounted() {
 
 export function removeLayer() {
   map.trackedEntity = null
-  if (gltfLayer) {
-    map.removeLayer(gltfLayer, true)
-    gltfLayer = null
+  if (graphicLayer) {
+    map.removeLayer(graphicLayer, true)
+    graphicLayer = null
   }
+
+  // 重置状态
+  eventTarget.fire("defuatData", {
+    enabledShowHide: true,
+    enabledPopup: true,
+    enabledTooltip: false,
+    enabledRightMenu: false
+  })
 }
 
 // 示例：上海
@@ -46,22 +55,27 @@ export function showShanghaiDemo() {
   removeLayer()
 
   // 创建gltf模型，
-  gltfLayer = new mars3d.layer.ModelLayer({
+  graphicLayer = new mars3d.layer.GraphicLayer({
     name: "上海浦东",
-
-    // 方式1：单个模型时，直接按下面传入position即可
-    url: "//data.mars3d.cn/gltf/mars/shanghai/scene.gltf",
-    style: { scale: 520, heading: 215 },
-    position: [121.507762, 31.233975, 200],
-
+    data: [
+      {
+        type: "modelP",
+        position: [121.507762, 31.233975, 200],
+        style: {
+          url: "//data.mars3d.cn/gltf/mars/shanghai/scene.gltf",
+          scale: 520,
+          heading: 215
+        }
+      }
+    ],
     center: { lat: 31.251138, lng: 121.463588, alt: 1729.97, heading: 110.7, pitch: -25, roll: 0.2 },
     popup: "上海浦东模型",
     flyTo: true
   })
-  map.addLayer(gltfLayer)
+  map.addLayer(graphicLayer)
 
   // 绑定事件
-  gltfLayer.on(mars3d.EventType.click, function (event) {
+  graphicLayer.on(mars3d.EventType.click, function (event) {
     console.log("单击了图层", event)
   })
 }
@@ -71,32 +85,37 @@ export function showDonghuaDemo() {
   removeLayer()
 
   // 创建gltf模型
-  gltfLayer = new mars3d.layer.ModelLayer({
+  graphicLayer = new mars3d.layer.GraphicLayer({
     name: "骨骼动画",
-    // 方式2：多个模型时，可以传入data属性构造
     data: [
       {
-        url: "//data.mars3d.cn/gltf/mars/fengche.gltf",
+        type: "modelP",
         position: [117.170624, 31.840666, 278.66],
-        style: { scale: 200, heading: 270 }
+        style: {
+          url: "//data.mars3d.cn/gltf/mars/fengche.gltf",
+          scale: 200,
+          heading: 270
+        }
       },
       {
-        url: "//data.mars3d.cn/gltf/mars/firedrill/xiaofangyuan-run.gltf",
+        type: "modelP",
         position: [117.184442, 31.842172, 33.92],
-        style: { scale: 300 }
+        style: {
+          url: "//data.mars3d.cn/gltf/mars/firedrill/xiaofangyuan-run.gltf",
+          scale: 300
+        }
       }
     ],
     center: { lat: 31.817737, lng: 117.179117, alt: 1810, heading: 0, pitch: -30, roll: 0 },
-    flyTo: true,
-    show: true
+    flyTo: true
   })
-  map.addLayer(gltfLayer)
+  map.addLayer(graphicLayer)
 
   // 绑定事件
-  gltfLayer.on(mars3d.EventType.load, function (event) {
+  graphicLayer.on(mars3d.EventType.load, function (event) {
     console.log("数据加载完成", event)
   })
-  gltfLayer.on(mars3d.EventType.click, function (event) {
+  graphicLayer.on(mars3d.EventType.click, function (event) {
     console.log("单击了图层", event)
   })
 }
@@ -132,22 +151,32 @@ export function showFenliDemo() {
     { lng: 112.230322327, lat: 39.0281575923999, alt: 1965 }
   ]
 
-  // 创建gltf模型
-  gltfLayer = new mars3d.layer.ModelLayer({
-    name: "风力发电机",
-
-    // 方式3： 多个同属性(url和style完全相同)模型时，可以直接简化，传入positions属性。
-    url: "//data.mars3d.cn/gltf/mars/fengche.gltf",
-    style: { scale: 40, heading: 135, minimumPixelSize: 30, clampToGround: true },
-    positions: positions,
-    center: { lat: 39.066518, lng: 112.245269, alt: 2913, heading: 226, pitch: -21, roll: 0 },
-    flyTo: true,
-    show: true
+  const arr = []
+  positions.forEach((item) => {
+    arr.push({
+      type: "modelP",
+      position: item,
+      style: {
+        url: "//data.mars3d.cn/gltf/mars/fengche.gltf",
+        scale: 40,
+        heading: 135,
+        minimumPixelSize: 30,
+        clampToGround: true
+      }
+    })
   })
-  map.addLayer(gltfLayer)
+
+  // 创建gltf模型
+  graphicLayer = new mars3d.layer.GraphicLayer({
+    name: "风力发电机",
+    data: arr,
+    center: { lat: 39.066518, lng: 112.245269, alt: 2913, heading: 226, pitch: -21, roll: 0 },
+    flyTo: true
+  })
+  map.addLayer(graphicLayer)
 
   // 绑定事件
-  gltfLayer.on(mars3d.EventType.click, function (event) {
+  graphicLayer.on(mars3d.EventType.click, function (event) {
     console.log("单击了图层", event)
   })
 }
@@ -156,7 +185,19 @@ export function showFenliDemo() {
 export function showGuangfu() {
   removeLayer()
 
-  const arrData = []
+  // 创建图层
+  graphicLayer = new mars3d.layer.GraphicLayer({
+    name: "光伏电场",
+    center: { lat: 42.786315, lng: 93.105225, alt: 2095, heading: 57, pitch: -44 },
+    flyTo: true
+  })
+  map.addLayer(graphicLayer)
+
+  // 绑定事件
+  graphicLayer.on(mars3d.EventType.click, function (event) {
+    console.log("单击了图层", event)
+  })
+
   // 构造数据
   const longitudeString = 93.1214
   const latitudeString = 42.7863
@@ -179,25 +220,17 @@ export function showGuangfu() {
       point = { lng: longitudeString - 0.0042, lat: latitudeString + (i - 100) / 1000, alt: height }
     }
 
-    arrData.push({
-      url: "//data.mars3d.cn/gltf/mars/taiyang/taiyang.gltf",
-      style: { scale: 1, heading: heading, minimumPixelSize: 30, clampToGround: true },
-      position: point
+    const graphic = new mars3d.graphic.ModelPrimitive({
+      name: "风机",
+      position: point,
+      style: {
+        url: "//data.mars3d.cn/gltf/mars/taiyang/taiyang.gltf",
+        scale: 1,
+        heading: heading,
+        minimumPixelSize: 30,
+        clampToGround: true
+      }
     })
+    graphicLayer.addGraphic(graphic)
   }
-
-  // 创建gltf模型
-  gltfLayer = new mars3d.layer.ModelLayer({
-    name: "光伏电场",
-    data: arrData,
-    center: { lat: 42.786315, lng: 93.105225, alt: 2095, heading: 57, pitch: -44 },
-    flyTo: true,
-    show: true
-  })
-  map.addLayer(gltfLayer)
-
-  // 绑定事件
-  gltfLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了图层", event)
-  })
 }

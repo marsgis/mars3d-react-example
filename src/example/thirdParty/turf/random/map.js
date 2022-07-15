@@ -51,10 +51,10 @@ export function randomPoints() {
   points.features.forEach((e, index) => {
     const position = e.geometry.coordinates
 
-    const primitive = new mars3d.graphic.BillboardPrimitive({
+    const graphic = new mars3d.graphic.BillboardPrimitive({
       position: position,
       style: {
-        image: "img/marker/mark3.png",
+        image: "img/marker/mark-blue.png",
         scale: 1,
         horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
         verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
@@ -62,7 +62,7 @@ export function randomPoints() {
       },
       popup: "第" + index + "个"
     })
-    graphicLayer.addGraphic(primitive)
+    graphicLayer.addGraphic(graphic)
   })
 }
 
@@ -81,7 +81,7 @@ export function randomPolylines() {
   polylines.features.forEach((e, index) => {
     const positions = e.geometry.coordinates
 
-    const primitive = new mars3d.graphic.PolylinePrimitive({
+    const graphic = new mars3d.graphic.PolylinePrimitive({
       positions: positions,
       style: {
         width: 4,
@@ -91,7 +91,7 @@ export function randomPolylines() {
       },
       popup: "第" + index + "个"
     })
-    graphicLayer.addGraphic(primitive)
+    graphicLayer.addGraphic(graphic)
   })
 }
 
@@ -109,7 +109,7 @@ export function randomPolygons() {
 
   polygons.features.forEach((e, index) => {
     const positions = e.geometry.coordinates
-    const primitive = new mars3d.graphic.PolygonPrimitive({
+    const graphic = new mars3d.graphic.PolygonPrimitive({
       positions: positions,
       style: {
         color: getColor(),
@@ -118,7 +118,7 @@ export function randomPolygons() {
       },
       popup: "第" + index + "个"
     })
-    graphicLayer.addGraphic(primitive)
+    graphicLayer.addGraphic(graphic)
   })
 }
 

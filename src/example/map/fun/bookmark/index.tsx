@@ -23,7 +23,7 @@ let newData = []
 
 function UIComponent(props) {
   const [viewName, changeViewName] = useState("") // input名称
-  const [viewData, changeViewData] = useState([{ name: "没有匹配的值", image: "", center: "" }]) // 数据
+  const [viewData, changeViewData] = useState([{ name: "没有匹配的值", img: "", center: "" }]) // 数据
 
   useMemo(() => {
     mapWork.eventTarget.on("addImgObject", (data) => {
@@ -52,7 +52,7 @@ function UIComponent(props) {
     changeViewData([...newData])
 
     if (newData.length === 0) {
-      changeViewData([{ name: "没有匹配的值", image: "", center: "" }])
+      changeViewData([{ name: "没有匹配的值", img: "", center: "" }])
       localStorage.removeItem("bookmark")
       return
     }
@@ -80,12 +80,12 @@ function UIComponent(props) {
       <div className="bookmarkView">
         {viewData.map((item, index) => {
           return (
-            <div className="addNewImg" key={item.name + index}>
-              {item.image ? <img className="markImg" alt="" src={item.image} onClick={() => mapWork.flytoView(item.center)} /> : null}
+            <div className={item.img ? "addNewImg" : "addNewImg1"} key={item.name + index}>
+              {item.img ? <img className="markImg" alt="" src={item.img} onClick={() => mapWork.flytoView(item.center)} /> : null}
               <p className="textItem" title={item.name}>
                 {item.name}
               </p>
-              {item.image ? <MarsIcon icon="delete" className="deleteItem" color="#f2f2f2" onClick={() => deletedViewItem(index)} /> : null}
+              {item.img ? <MarsIcon icon="delete" className="deleteItem" color="#f2f2f2" onClick={() => deletedViewItem(index)} /> : null}
             </div>
           )
         })}

@@ -99,7 +99,7 @@ function addSatellite() {
       sensorType: mars3d.graphic.SatelliteSensor.Type.Rect,
       angle1: 10,
       angle2: 5,
-      color: "#6ef500",
+      color: "rgba(0,255,255,0.5)",
       reverse: true,
       show: true
     },

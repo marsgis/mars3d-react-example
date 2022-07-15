@@ -1,8 +1,7 @@
 import * as mars3d from "mars3d"
 
 export let map // mars3d.Map三维地图对象
-let graphicLayer
-let selectedView
+export let graphicLayer
 
 // 事件对象，用于抛出事件给面板
 export const eventTarget = new mars3d.BaseClass()
@@ -40,7 +39,7 @@ export function onMounted(mapInstance) {
   })
   map.addLayer(tiles3dLayer)
 
-  // 创建Graphic图层
+  // 创建矢量数据图层
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -69,56 +68,61 @@ function addDemoGraphic1() {
     }
   })
   graphicLayer.addGraphic(viewShed)
-
-  selectedView = viewShed // 记录下
-
-  eventTarget.fire("addViewShedValue", {
-    value: {
-      cameraAngle: selectedView.angle,
-      cameraAngle2: selectedView.angle2,
-      heading: selectedView.heading,
-      pitchValue: selectedView.pitch,
-      distanceValue: selectedView.distance,
-      opcity: selectedView.opacity,
-      showFrustum: selectedView.showFrustum
-    }
-  })
 }
 
 // 添加可视域
-export function addViewShed(data) {
+export function startDrawGraphic() {
   // 开始绘制
   graphicLayer.startDraw({
     type: "viewShed",
     style: {
-      angle: data.cameraAngle,
-      angle2: data.cameraAngle2,
-      showFrustum: data.showFrustum,
+      angle: 60,
+      angle2: 45,
+      distance: 80,
+      heading: 44,
+      pitch: -12,
       addHeight: 0.5 // 在坐标点增加的高度值，规避遮挡，效果更友好
-    },
-    success: function (graphic) {
-      console.log("绘制完成", graphic)
-
-      selectedView = graphic // 记录下
-
-      eventTarget.fire("addViewShedValue", {
-        value: {
-          cameraAngle: selectedView.angle,
-          cameraAngle2: selectedView.angle2,
-          heading: selectedView.heading,
-          pitchValue: selectedView.pitch,
-          distanceValue: selectedView.distance,
-          opcity: selectedView.opacity,
-          showFrustum: selectedView.showFrustum
-        }
-      })
     }
   })
 }
 
-export function clear() {
+// 生成演示数据(测试数据量)
+export function addRandomGraphicByCount(count) {
   graphicLayer.clear()
-  selectedView = null
+  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
+
+  const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
+  const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
+  console.log("生成的测试网格坐标", result)
+
+  for (let j = 0; j < result.points.length; ++j) {
+    const position = result.points[j]
+    const index = j + 1
+
+    const graphic = new mars3d.graphic.ViewShed({
+      position: position,
+      style: {
+        angle: 60,
+        angle2: 45,
+        distance: 1880,
+        heading: 44,
+        pitch: -12,
+        addHeight: 0.5
+      },
+      attr: { index: index }
+    })
+    graphicLayer.addGraphic(graphic)
+  }
+
+  graphicLayer.enabledEvent = true // 恢复事件
+  return result.points.length
+}
+
+// 属性编辑
+let selectedView
+export function getGraphic(graphicId) {
+  selectedView = graphicLayer.getGraphicById(graphicId)
+  return selectedView
 }
 
 export function selCamera() {

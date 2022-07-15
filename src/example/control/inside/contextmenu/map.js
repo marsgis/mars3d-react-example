@@ -106,7 +106,7 @@ export function bindMapDemo() {
       show: function (e) {
         return Cesium.defined(e.cartesian)
       },
-      callback: function (e) {
+      callback: (e) => {
         const mpt = mars3d.LngLatPoint.fromCartesian(e.cartesian)
         globalAlert(mpt.toString(), "位置信息")
       }
@@ -114,7 +114,7 @@ export function bindMapDemo() {
     {
       text: "查看当前视角",
       icon: "fa fa-camera-retro", // 支持 font-class 的字体方式图标
-      callback: function (e) {
+      callback: (e) => {
         const mpt = JSON.stringify(map.getCameraView())
         globalAlert(mpt, "当前视角信息")
       }
@@ -125,7 +125,7 @@ export function bindMapDemo() {
       show: function () {
         return !map.scene.globe.depthTestAgainstTerrain
       },
-      callback: function (e) {
+      callback: (e) => {
         map.scene.globe.depthTestAgainstTerrain = true
       }
     },
@@ -135,7 +135,7 @@ export function bindMapDemo() {
       show: function () {
         return map.scene.globe.depthTestAgainstTerrain
       },
-      callback: function (e) {
+      callback: (e) => {
         map.scene.globe.depthTestAgainstTerrain = false
       }
     },
@@ -150,7 +150,7 @@ export function bindMapDemo() {
           show: function (e) {
             return Cesium.defined(e.cartesian)
           },
-          callback: function (e) {
+          callback: (e) => {
             const cameraDistance = Cesium.Cartesian3.distance(e.cartesian, map.camera.positionWC) * 0.1
 
             map.flyToPoint(e.cartesian, {
@@ -176,7 +176,7 @@ export function bindLayerDemo() {
     {
       text: "删除对象",
       icon: "fa fa-trash-o",
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         if (graphic) {
           graphicLayer.removeGraphic(graphic)
@@ -196,7 +196,7 @@ export function bindLayerDemo() {
           graphic.type === "wall"
         )
       },
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         const strDis = mars3d.MeasureUtil.formatDistance(graphic.distance)
         globalAlert("该对象的长度为:" + strDis)
@@ -209,7 +209,7 @@ export function bindLayerDemo() {
         const graphic = e.graphic
         return graphic.type === "circle" || graphic.type === "rectangle" || graphic.type === "polygon"
       },
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         const strDis = mars3d.MeasureUtil.formatDistance(graphic.distance)
         globalAlert("该对象的周长为:" + strDis)
@@ -220,9 +220,23 @@ export function bindLayerDemo() {
       icon: "fa fa-reorder",
       show: function (e) {
         const graphic = e.graphic
-        return graphic.type === "circle" || graphic.type === "rectangle" || graphic.type === "polygon"
+        if (!graphic) {
+          return false
+        }
+        return (
+          graphic.type === "circle" ||
+          graphic.type === "circleP" ||
+          graphic.type === "rectangle" ||
+          graphic.type === "rectangleP" ||
+          ((graphic.type === "polygon" ||
+            graphic.type === "polygonP" ||
+            graphic.type === "wall" ||
+            graphic.type === "scrollWall" ||
+            graphic.type === "water") &&
+            graphic.positionsShow?.length > 2)
+        )
       },
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         const strArea = mars3d.MeasureUtil.formatArea(graphic.area)
         globalAlert("该对象的面积为:" + strArea)
@@ -242,7 +256,7 @@ export function bindGraphicDemo() {
     {
       text: "删除对象[graphic绑定的]",
       icon: "fa fa-trash-o",
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         if (graphic) {
           graphic.remove()

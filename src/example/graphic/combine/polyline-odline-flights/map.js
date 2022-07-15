@@ -71,7 +71,7 @@ function addDemoGraphics() {
 }
 
 function initPath(routePaths) {
-  // 创建Graphic图层
+  // 创建矢量数据图层
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -97,28 +97,91 @@ function initPath(routePaths) {
       positions: positions,
       style: {
         width: 2.0,
-        material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.ODLine, {
+        materialType: mars3d.MaterialType.ODLine,
+        materialOptions: {
           color: new Cesium.Color(0.8 * Math.random() + 0.2, 0.5 * Math.random() + 0.5, 0.1, 1.0),
           bgColor: new Cesium.Color(0.8, 0.8, 0.2, 0.2),
           startTime: 10.0 * Math.random(),
           speed: 2 + 1.0 * Math.random(),
           bidirectional: 2
-        })
+        }
       },
       attr: item
     })
   })
 
   // 多个线对象的合并渲染。
-  const primitive = new mars3d.graphic.PolylineCombine({
+  const graphic = new mars3d.graphic.PolylineCombine({
     instances: arrData
   })
-  graphicLayer.addGraphic(primitive)
+  graphicLayer.addGraphic(graphic)
+}
+
+export function getAirData() {
+  // 每年度航班统计
+  const AirNum = [
+    {
+      year: "2000年", // 年份
+      domestic: 1032, // 国内航班
+      international: 133 // 国际航班
+    },
+    {
+      year: "2010年",
+      domestic: 1078,
+      international: 302
+    },
+    {
+      year: "2017年",
+      domestic: 3615,
+      international: 803
+    },
+    {
+      year: "2018年",
+      domestic: 4096,
+      international: 849
+    },
+    {
+      year: "2019年",
+      domestic: 4568,
+      international: 953
+    }
+  ]
+
+  // 国内机场航线数字
+  const routeNum = [
+    {
+      airport: "合肥新桥机场",
+      routeNum: 116
+    },
+    {
+      airport: "北京大兴机场",
+      routeNum: 126
+    },
+    {
+      airport: "湖北机场",
+      routeNum: 106
+    },
+    {
+      airport: "上海虹桥机场",
+      routeNum: 102
+    },
+    {
+      airport: "深圳宝安国际机场",
+      routeNum: 120
+    }
+  ]
+
+  return {
+    guoji: 895, // 国际航线条数
+    guonei: 4686, // 国内航线条数
+    flight: AirNum,
+    route: routeNum
+  }
 }
 
 // 按单个线渲染，效率差些
 /* function initPath(routePaths) {
-  // 创建Graphic图层
+  // 创建矢量数据图层
   let graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -129,7 +192,7 @@ function initPath(routePaths) {
       positions: positions,
       style: {
         width: 2.0,
-        material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.ODLine, {
+         materialType:mars3d.MaterialType.ODLine, {
           color: new Cesium.Color(0.8 * Math.random() + 0.2, 0.5 * Math.random() + 0.5, 0.1, 1.0),
           bgColor: new Cesium.Color(0.8, 0.8, 0.2, 0.2),
           startTime: 10.0 * Math.random(),

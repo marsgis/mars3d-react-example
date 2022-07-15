@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { setAutoHeight } from "@mars/utils/mars-util"
 import axios from "axios"
 import * as mapWork from "./map.js"
+import "./index.less"
 
 // 不同等级的台风对应不同的颜色
 function getColor(level) {
@@ -86,7 +87,7 @@ function UIComponent() {
 
   const [path, setPath] = useState([]) // 台风路径信息
 
-  const [tableScrollHeight, setHeight] = useState(100) // 路径表格高度自适应
+  const [tableScrollHeight, setHeight] = useState(80) // 路径表格高度自适应
 
   const [select, setSelect] = useState({
     // 勾选的台风
@@ -116,7 +117,7 @@ function UIComponent() {
 
     setAutoHeight((height) => {
       setHeight(height - 50)
-    }, 400)
+    }, 420)
   }, [])
 
   const rowSelection = {
@@ -306,31 +307,70 @@ function UIComponent() {
   }
 
   return (
-    <MarsPannel visible={true} right={10} top={10} width={338}>
-      <MarsTable
-        size="small"
-        dataSource={typhoonList}
-        columns={columns}
-        bordered
-        pagination={{ pageSize: 5 }}
-        rowSelection={rowSelection}
-      ></MarsTable>
+    <>
+      <MarsPannel visible={true} right={10} top={10} width={338}>
+        <MarsTable
+          size="small"
+          dataSource={typhoonList}
+          columns={columns}
+          bordered
+          pagination={{ pageSize: 5 }}
+          rowSelection={rowSelection}
+        ></MarsTable>
 
-      {select.show ? (
-        <>
-          <div className="playBtn">
-            <Space>
-              {!select.play ? <MarsButton onClick={startPlay}>播放</MarsButton> : <MarsButton onClick={stopPlay}>停止</MarsButton>}
-              已选择：{select.name_cn}
-            </Space>
-          </div>
+        {select.show ? (
+          <>
+            <div className="playBtn">
+              <Space>
+                {!select.play ? <MarsButton onClick={startPlay}>播放</MarsButton> : <MarsButton onClick={stopPlay}>停止</MarsButton>}
+                已选择：{select.name_cn}
+              </Space>
+            </div>
 
-          <MarsTable size="small" bordered pagination={false} columns={columnsPath} dataSource={path} scroll={{ y: tableScrollHeight }}></MarsTable>
-        </>
-      ) : (
-        ""
-      )}
-    </MarsPannel>
+            <MarsTable
+              size="small"
+              bordered
+              onRow={(recode: any) => {
+                return {
+                  onClick: () => {
+                    mapWork.clickPathRow(recode)
+                  }
+                }
+              }}
+              pagination={false}
+              columns={columnsPath}
+              dataSource={path}
+              scroll={{ y: tableScrollHeight }}
+            ></MarsTable>
+          </>
+        ) : (
+          ""
+        )}
+      </MarsPannel>
+
+      <div className="legendContent">
+        <ul>
+          <li>
+            <span className="round" style={{ backgroundColor: "#eed139" }}></span>热带低压
+          </li>
+          <li>
+            <span className="round" style={{ backgroundColor: "#0000ff" }}></span>热带风暴
+          </li>
+          <li>
+            <span className="round" style={{ backgroundColor: "#0f8000" }}></span>强热带风暴
+          </li>
+          <li>
+            <span className="round" style={{ backgroundColor: "#fe9c45" }}></span>台风
+          </li>
+          <li>
+            <span className="round" style={{ backgroundColor: "#fe00fe" }}></span>强台风
+          </li>
+          <li>
+            <span className="round" style={{ backgroundColor: "#fe0000" }}></span>超强台风
+          </li>
+        </ul>
+      </div>
+    </>
   )
 }
 

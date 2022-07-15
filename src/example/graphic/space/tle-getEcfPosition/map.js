@@ -182,7 +182,7 @@ function fxOneSatellite(item, options) {
     }
     // 显示点[参考比较结果是否正确]
     // let timeStr = new Date(nowTime).format("yyyy-MM-dd HH:mm:ss")
-    const primitive = new mars3d.graphic.PointPrimitive({
+    const pointPrimitive = new mars3d.graphic.PointPrimitive({
       position: position,
       style: {
         color: pointClr,
@@ -191,7 +191,7 @@ function fxOneSatellite(item, options) {
       attr: item
       // tooltip: `编号：${item.norad} <br />卫星：${item.name} <br />时间：${timeStr}`
     })
-    map.graphicLayer.addGraphic(primitive)
+    map.graphicLayer.addGraphic(pointPrimitive)
 
     // 判断是卫星否在缓冲区内
     const isInPoly = graphic.isInPoly(position)
@@ -300,7 +300,7 @@ function showResult(newSatelliteArr) {
 
 
 function showCorridor(data) {
-  const primitive = new mars3d.graphic.CorridorPrimitive({
+  const graphic = new mars3d.graphic.CorridorPrimitive({
     positions: data.positions,
     style: {
       width: 6000,
@@ -308,7 +308,7 @@ function showCorridor(data) {
       color: "#00ff00"
     }
   })
-  map.graphicLayer.addGraphic(primitive)
+  map.graphicLayer.addGraphic(graphic)
 
   const inthtml =
     '<table style="width:280px;">' +
@@ -329,7 +329,7 @@ function showCorridor(data) {
     data.distance +
     " </td></tr>" +
     "</table>"
-  primitive.bindPopup(inthtml)
+  graphic.bindPopup(inthtml)
 
-  data._graphic = primitive
+  data._graphic = graphic
 }

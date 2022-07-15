@@ -13,6 +13,8 @@ interface TableItem {
 let datasource = []
 let dataKeys = []
 let chkShowLine = true
+let flatHeight
+
 function UIComponent() {
   const [tableData, setTableData] = useState([])
   const [rowKeys, setSelectRow] = useState([]) // 默认选中的项
@@ -28,7 +30,7 @@ function UIComponent() {
   const options: GuiItem[] = [
     {
       type: "custom",
-      label: "开挖区域",
+      label: "模型",
       element: (
         <Space>
           <MarsButton
@@ -49,7 +51,15 @@ function UIComponent() {
           >
             天鹅湖
           </MarsButton>
-          <MarsButton onClick={removeAll}>清除</MarsButton>
+          <MarsButton
+            onClick={() => {
+              setTableData([])
+              datasource = []
+              mapWork.showQxShequDemo()
+            }}
+          >
+            某县城
+          </MarsButton>
         </Space>
       )
     },
@@ -60,14 +70,14 @@ function UIComponent() {
         <Space>
           <MarsButton
             onClick={() => {
-              mapWork.btnDrawExtent(chkShowLine)
+              mapWork.btnDrawExtent(flatHeight)
             }}
           >
             绘制矩形
           </MarsButton>
           <MarsButton
             onClick={() => {
-              mapWork.btnDraw(chkShowLine)
+              mapWork.btnDraw(flatHeight)
             }}
           >
             绘制多边行
@@ -85,16 +95,28 @@ function UIComponent() {
       extra: "(米)",
       change(data) {
         mapWork.changeFlatHeight(data)
+        flatHeight = data
       }
     },
     {
-      type: "switch",
+      type: "checkbox",
       field: "enabledBianJieXian",
-      label: "测试边界线:",
-      value: true,
+      label: "",
+      value: ["show"],
+      options: [
+        {
+          label: "显示测试边界线",
+          value: "show"
+        }
+      ],
       change(data) {
-        mapWork.chkShowLine(data)
-        chkShowLine = data
+        if (data[0]) {
+          mapWork.chkShowLine(true)
+          chkShowLine = true
+        } else {
+          mapWork.chkShowLine(false)
+          chkShowLine = false
+        }
       }
     }
   ]
@@ -115,7 +137,7 @@ function UIComponent() {
   // 表格数据
   const columns = [
     {
-      title: "开挖区域",
+      title: "压平区域",
       dataIndex: "name",
       key: "name",
       align: "center",
@@ -140,21 +162,11 @@ function UIComponent() {
     }
   ]
 
-  useMemo(() => {
-    mapWork.eventTarget.on("dataLoaded", function (event: any) {
-      const data = event.list.map((item: any) => ({ key: item.id, name: "压平区" + item.id }))
-      setTableData(data)
-
-      setSelectRow(event.list.map((item: any) => item.id))
-      datasource = data
-      dataKeys = event.list.map((item: any) => item.id)
-    })
-
+  useMemo(() => { 
     mapWork.eventTarget.on("addItem", function (event: any) {
-      const item = event.data.item
-      const id = event.data.id
+      const item = event.area 
 
-      datasource.push({ key: item.id, name: "压平区" + item.id, lineId: id })
+      datasource.push({ key: item.id, name: "压平区" + item.id, lineId: item.lineId })
       setTableData([...datasource])
 
       dataKeys.push(item.id)
@@ -174,18 +186,11 @@ function UIComponent() {
   )
 
   return (
-    <MarsPannel visible={true} right={10} top={10} width={340}>
-      <MarsGui options={options} formProps={{ labelCol: { span: 6 } }}></MarsGui>
+    <MarsPannel visible={true} right={10} top={10} width={350}>
+      <MarsGui options={options} formProps={{ labelCol: { span: 7 } }}></MarsGui>
 
       {/* @ts-ignore */}
-      <MarsTable
-        rowSelection={rowSelection}
-        pagination={{ pageSize: 5 }}
-        scroll={{ y: 400 }}
-        dataSource={tableData}
-        columns={columns}
-        bordered
-      ></MarsTable>
+      <MarsTable rowSelection={rowSelection} pagination={{ pageSize: 5 }} scroll={{ y: 400 }} dataSource={tableData} columns={columns}></MarsTable>
     </MarsPannel>
   )
 }

@@ -51,8 +51,12 @@ function addDemoGraphic1(graphicLayer) {
   // 开始 自旋转效果
   graphic.rotateStart({
     direction: false, // 控制方向, true逆时针，false顺时针
-    time: 30 // time：给定飞行一周所需时间(单位 秒)，控制速度
+    time: 20 // time：给定飞行一周所需时间(单位 秒)，控制速度
   })
+
+  // setTimeout(() => {
+  //   graphic.rotateStop()
+  // }, 3000)
 }
 
 function addDemoGraphic2(graphicLayer) {

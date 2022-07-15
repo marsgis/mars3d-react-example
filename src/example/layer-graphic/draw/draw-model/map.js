@@ -29,7 +29,11 @@ export function onMounted(mapInstance) {
   })
   map.addLayer(graphicLayer)
 
-  bindLayerEvent()
+  // 在layer上绑定监听事件
+  graphicLayer.on(mars3d.EventType.click, function (event) {
+    console.log("监听layer，单击了矢量对象", event)
+  })
+
 }
 
 /**
@@ -55,33 +59,7 @@ export function startDrawModel(url, isProxy) {
   })
 }
 
-// 在图层级处理一些事物
-function bindLayerEvent() {
-  // 在layer上绑定监听事件
-  graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("监听layer，单击了矢量对象", event)
-  })
-  /* graphicLayer.on(mars3d.EventType.mouseOver, function (event) {
-      console.log("监听layer，鼠标移入了矢量对象", event)
-    })
-    graphicLayer.on(mars3d.EventType.mouseOut, function (event) {
-      console.log("监听layer，鼠标移出了矢量对象", event)
-    }) */
 
-  // 数据编辑相关事件， 用于属性弹窗的交互
-  graphicLayer.on(mars3d.EventType.drawCreated, function (e) {
-    eventTarget.fire("graphicEditor-start", e)
-  })
-  graphicLayer.on(
-    [mars3d.EventType.editStart, mars3d.EventType.editMovePoint, mars3d.EventType.editStyle, mars3d.EventType.editRemovePoint],
-    function (e) {
-      eventTarget.fire("graphicEditor-update", e)
-    }
-  )
-  graphicLayer.on([mars3d.EventType.editStop, mars3d.EventType.removeGraphic], function (e) {
-    eventTarget.fire("graphicEditor-stop", e)
-  })
-}
 
 // 地形
 export function chkHasTerrain(isStkTerrain) {

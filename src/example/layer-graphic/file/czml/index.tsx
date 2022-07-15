@@ -25,7 +25,7 @@ function UIComponent() {
     })
 
     // 隐藏button
-    const isUrl = getQueryString("data") === (null || "czml")
+    const isUrl = getQueryString("data") === ("CZML" || null)
     setShowBtn(isUrl)
   }, [])
 
@@ -77,7 +77,7 @@ function UIComponent() {
 
   return (
     <>
-      <MarsPannel visible={true} right={10} top={10} width={524}>
+      <MarsPannel visible={true} right={10} top={10}>
         {showBtn ? (
           <div className="f-mb">
             <Space>
@@ -94,10 +94,10 @@ function UIComponent() {
           ""
         )}
 
-        <LayerState />
+        <LayerState direction="horizontal"/>
       </MarsPannel>
 
-      <MarsPannel visible={true} right={10} top={100}>
+      <MarsPannel visible={true} right={10} top={100} width={220}>
         <MarsTree treeData={treeData} checkedKeys={checkedKeys} defaultExpandAll={true} onCheck={checkedChange}></MarsTree>
       </MarsPannel>
     </>

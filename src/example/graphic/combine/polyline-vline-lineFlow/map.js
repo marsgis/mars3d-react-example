@@ -35,7 +35,7 @@ export function onMounted(mapInstance) {
   })
   map.addLayer(tilesetLayer)
 
-  // 创建Graphic图层
+  // 创建矢量数据图层
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -50,22 +50,23 @@ export function onMounted(mapInstance) {
       positions: [startPt, endPt],
       style: {
         width: 1,
-        material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlowColor, {
+        materialType: mars3d.MaterialType.LineFlowColor,
+        materialOptions: {
           color: "rgb(141,172,172)",
           speed: random(5, 10),
           startTime: random(1000, 3000),
           percent: 0.1,
           alpha: 0.01
-        })
+        }
       }
     })
   }
 
   // 多个线对象的合并渲染。
-  const primitive = new mars3d.graphic.PolylineCombine({
+  const graphic = new mars3d.graphic.PolylineCombine({
     instances: arrData
   })
-  graphicLayer.addGraphic(primitive)
+  graphicLayer.addGraphic(graphic)
 }
 
 /**

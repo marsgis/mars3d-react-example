@@ -247,16 +247,18 @@ export function workLine1Sjx() {
       style: {
         width: 5,
         clampToGround: true,
-        material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
+        materialType: mars3d.MaterialType.LineFlow,
+        materialOptions: {
           color: Cesium.Color.YELLOW,
           speed: 3, // 控制速度
           url: "img/textures/line-color-yellow.png"
-        })
+        }
       },
       tooltip: "山脊线"
     })
     polyLineLayer.addGraphic(line)
   }
+
   setTimeout(() => {
     if (polyLineLayer) {
       polyLineLayer.eachGraphic((graphic) => {
@@ -318,11 +320,12 @@ export function workLine2Sgx() {
       style: {
         width: 5,
         clampToGround: true,
-        material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
+        materialType: mars3d.MaterialType.LineFlow,
+        materialOptions: {
           color: Cesium.Color.AQUA,
           speed: 3, // 控制速度
           url: "img/textures/line-color-yellow.png"
-        })
+        }
       },
       tooltip: "山谷线"
     })
@@ -384,11 +387,12 @@ export function workDgx1Point() {
     style: {
       width: 5,
       clampToGround: true,
-      material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
+      materialType: mars3d.MaterialType.LineFlow,
+      materialOptions: {
         color: Cesium.Color.MAGENTA,
         speed: 3, // 控制速度
         url: "img/textures/line-color-yellow.png"
-      })
+      }
     }
   })
   map.graphicLayer.addGraphic(lineGraphic)

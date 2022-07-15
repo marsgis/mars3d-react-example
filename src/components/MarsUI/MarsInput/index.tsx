@@ -55,10 +55,6 @@ export const MarsInputGroup = forwardRef<any, MarsInputGroupProps>(({ value = []
   )
 })
 
-export const MarsColor = forwardRef<InputRef, InputProps>((props, ref) => {
-  return <Input className="mars-input-color" ref={ref} {...props} type="color"></Input>
-})
-
 export const MarsTextArea = forwardRef<TextAreaRef, TextAreaProps>((props, ref) => {
   return <Input.TextArea className="mars-textarea" ref={ref} {...props}></Input.TextArea>
 })

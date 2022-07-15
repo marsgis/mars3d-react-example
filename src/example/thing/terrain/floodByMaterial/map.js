@@ -105,12 +105,13 @@ export function btnDraw(callback) {
 function updateHeightRange(positions, callback) {
   showLoading()
 
-  const result = mars3d.PolyUtil.getHeightRange(positions, map.scene)
-  const minHeight = Math.ceil(result.minHeight)
-  const maxHeight = Math.floor(result.maxHeight)
+  mars3d.PolyUtil.getHeightRange(positions, map.scene).then((result) => {
+    const minHeight = Math.ceil(result.minHeight)
+    const maxHeight = Math.floor(result.maxHeight)
 
-  callback(minHeight, maxHeight)
-  hideLoading()
+    callback(minHeight, maxHeight)
+    hideLoading()
+  })
 }
 
 // 开始分析

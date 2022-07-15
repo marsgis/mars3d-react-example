@@ -61,14 +61,16 @@ export function onUnmounted() {
 
 // 叠加的图层
 let tileLayer
-export function addLayer() {
-  removeLayer()
+
+export function addTileLayer() {
+  removeTileLayer()
+
   // 方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
   tileLayer = new mars3d.layer.WmsLayer({
     url: "//server.mars3d.cn/geoserver/mars/wms",
     layers: "mars:hf",
     parameters: {
-      transparent: "true",
+      transparent: true,
       format: "image/png"
     },
     getFeatureInfoParameters: {
@@ -78,12 +80,13 @@ export function addLayer() {
     highlight: {
       type: "wallP",
       diffHeight: 100,
-      material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
+      materialType: mars3d.MaterialType.LineFlow,
+      materialOptions: {
         image: "img/textures/fence.png",
         color: "#ffff00",
         speed: 10, // 速度，建议取值范围1-100
         axisY: true
-      })
+      }
     },
     popup: "all",
     flyTo: true
@@ -99,7 +102,7 @@ export function addLayer() {
   })
 }
 
-export function removeLayer() {
+export function removeTileLayer() {
   if (tileLayer) {
     map.removeLayer(tileLayer, true)
     tileLayer = null

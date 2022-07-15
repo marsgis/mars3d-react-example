@@ -1,5 +1,4 @@
 import * as mars3d from "mars3d"
-import { $message } from "@mars/components/mars-ui/index"
 
 export let map // mars3d.Map三维地图对象
 let graphicLayer
@@ -94,7 +93,7 @@ export function onMounted(mapInstance) {
     map.setCameraView({ lat: 31.252058, lng: 117.988745, alt: 95026, heading: 340, pitch: -49 })
   })
   setMapView(55, () => {
-    $message("红方获得胜利")
+    globalMsg("红方获得胜利")
   })
 }
 
@@ -112,12 +111,13 @@ function addWallPrimitive(positions, color) {
     style: {
       diffHeight: 5000,
       closure: true,
-      material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
+      materialType: mars3d.MaterialType.LineFlow,
+      materialOptions: {
         image: "img/textures/fence.png",
         color: color,
         speed: 10, // 速度，建议取值范围1-100
         axisY: true
-      })
+      }
     }
   })
   graphicLayer.addGraphic(Square)
@@ -130,12 +130,13 @@ function addPlane(property, team) {
     style: {
       width: 6,
       leadTime: 0, // 前方的路线不显示
-      material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
+      materialType: mars3d.MaterialType.LineFlow,
+      materialOptions: {
         color: getTeamColor(team),
         repeat: new Cesium.Cartesian2(2.0, 1.0),
         image: "img/textures/line-gradual.png",
         speed: 15
-      })
+      }
     },
     model: {
       url: "//data.mars3d.cn/gltf/mars/zhanji.glb",

@@ -5,7 +5,7 @@ export let map // mars3d.Map三维地图对象
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: 31.663835, lng: 117.52331, alt: 407326, heading: 352, pitch: -88 },
+    center: { lat: 30.307787, lng: 117.559842, alt: 312871, heading: 0, pitch: -64 },
     cameraController: {
       zoomFactor: 3.0,
       minimumZoomDistance: 1,
@@ -39,8 +39,11 @@ export function onMounted(mapInstance) {
         clampToGround: true
       }
     }
+    // flyTo: true
   })
   map.addLayer(geoJsonLayer)
+
+  window.geoJsonLayer = geoJsonLayer
 }
 
 /**

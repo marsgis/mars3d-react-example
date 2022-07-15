@@ -1,26 +1,10 @@
-import { MarsPannel, MarsButton } from "@mars/components/MarsUI"
-import * as mapWork from "./map.js"
-import { Space } from "antd"
+import { MarsPannel } from "@mars/components/MarsUI"
+import { TileLayerState } from "@mars/components/MarsSample/TileLayerState"
 
 function UIComponent() {
   return (
     <MarsPannel visible={true} right={10} top={10}>
-      <Space>
-        <MarsButton
-          onClick={() => {
-            mapWork.addLayer()
-          }}
-        >
-          叠加图层
-        </MarsButton>
-        <MarsButton
-          onClick={() => {
-            mapWork.removeLayer()
-          }}
-        >
-          移除图层
-        </MarsButton>
-      </Space>
+      <TileLayerState /> 
     </MarsPannel>
   )
 }

@@ -4,8 +4,8 @@ import * as mapWork from "./map.js"
 
 function UIComponent() {
   return (
-    <MarsPannel visible={true} right="10" top="10">
-      <Space>
+    <MarsPannel visible={true} right="10" top="10" width="83">
+      <Space wrap>
         <MarsButton
           onClick={() => {
             mapWork.divGraphicYellow()

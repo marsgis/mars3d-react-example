@@ -21,7 +21,7 @@ export function onMounted(mapInstance) {
   map = mapInstance // 记录map
   map.basemap = 2017 // 切换至蓝色底图
 
-  eventTarget.fire("mapLoaded")
+
 
   addGaodeLayer()
 }

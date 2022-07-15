@@ -63,12 +63,12 @@ export function onMounted(mapInstance) {
           return true
         }
       },
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         if (!graphic) {
           return
         }
-        const parent = graphic._parent // 右击是编辑点时
+        const parent = graphic.parent // 右击是编辑点时
         drawLayer.removeGraphic(graphic)
         if (parent) {
           drawLayer.removeGraphic(parent)

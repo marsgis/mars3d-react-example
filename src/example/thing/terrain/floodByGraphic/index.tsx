@@ -51,7 +51,10 @@ function UIComponent(props) {
       label: "最低海拔",
       extra: "米",
       value: 0,
-      step: 1
+      step: 1,
+      change(value) {
+        setParams({ minHeight: Math.ceil(value), maxHeight: marsGuiRef.current.getValue("maxHeight") })
+      }
     },
     {
       type: "number",
@@ -59,7 +62,10 @@ function UIComponent(props) {
       label: "最高海拔",
       extra: "米",
       value: 0,
-      step: 1
+      step: 1,
+      change(value) {
+        setParams({ minHeight: marsGuiRef.current.getValue("minHeight"), maxHeight: Math.ceil(value) })
+      }
     },
     {
       type: "number",

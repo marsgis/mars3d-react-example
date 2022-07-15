@@ -1,16 +1,23 @@
-import { MarsPannel, MarsGui } from "@mars/components/MarsUI"
+import { MarsPannel, MarsGui, MarsButton } from "@mars/components/MarsUI"
 import type { GuiItem } from "@mars/components/MarsUI"
 import * as mapWork from "./map.js"
+import { Space } from "antd"
 
 function UIComponent() {
   const options: GuiItem[] = [
     {
-      type: "switch",
+      type: "checkbox",
       field: "state",
-      label: "开启地下模式",
-      value: true,
+      label: "状态",
+      value: ["1"],
+      options: [
+        {
+          label: "开启地下模式",
+          value: "1"
+        }
+      ],
       change(value) {
-        mapWork.chkUnderground(value)
+        mapWork.chkUnderground(value[0] === "1")
       }
     },
     {
@@ -26,45 +33,43 @@ function UIComponent() {
       }
     },
     {
-      type: "radio",
-      field: "type",
+      type: "custom",
       label: "演示视角",
-      value: "1",
-      options: [
-        {
-          label: "俯视视角",
-          value: "1"
-        },
-        {
-          label: "地下视角1",
-          value: "2"
-        },
-        {
-          label: "地下视角2",
-          value: "3"
-        }
-      ],
-      change(val) {
-        if (val === "1") {
-          mapWork.centerAtDX1()
-        }
-        if (val === "2") {
-          mapWork.centerAtDX2()
-        }
-        if (val === "3") {
-          mapWork.centerAtDX3()
-        }
-      }
+      element: (
+        <Space>
+          <MarsButton
+            onClick={() => {
+              mapWork.centerAtDX1()
+            }}
+          >
+            俯视视角
+          </MarsButton>
+          <MarsButton
+            onClick={() => {
+              mapWork.centerAtDX2()
+            }}
+          >
+            地下视角1
+          </MarsButton>
+
+          <MarsButton
+            onClick={() => {
+              mapWork.centerAtDX3()
+            }}
+          >
+            地下视角2
+          </MarsButton>
+        </Space>
+      )
     }
   ]
 
   return (
-    <MarsPannel visible={true} top={10} right={10} width={340}>
+    <MarsPannel visible={true} top={10} right={10} width={370}>
       <MarsGui
         options={options}
         formProps={{
-          labelCol: { span: 7 },
-          wrapperCol: { span: 17 }
+          labelCol: { span: 6 }
         }}
       />
     </MarsPannel>

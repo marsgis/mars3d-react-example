@@ -44,11 +44,10 @@ function GeodePoiLayer() {
     height: 5,
     symbol: {
       styleOptions: {
-        image: "img/marker/mark3.png",
-        scale: 0.7,
+        image: "img/marker/mark-blue.png",
         scaleByDistance: true,
         scaleByDistance_far: 20000,
-        scaleByDistance_farValue: 0.5,
+        scaleByDistance_farValue: 0.6,
         scaleByDistance_near: 1000,
         scaleByDistance_nearValue: 1,
         label: {

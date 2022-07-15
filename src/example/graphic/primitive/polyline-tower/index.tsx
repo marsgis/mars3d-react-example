@@ -5,17 +5,24 @@ import * as mapWork from "./map.js"
 
 // 获取的dom元素
 function drawHeightToDistanceEcharts(heightArry: any[], heightTDArray: any[], distanceArray: any[]) {
-  const myChart = echarts.init(document.getElementById("section")!, "dark")
+  const myChart = echarts.init(document.getElementById("section")!)
 
   const option = {
     title: {
       text: "断面图",
-      left: 25
+      left: 25,
+      textStyle: {
+        fontSize: 18,
+        color: "#ffaf15" // 主标题文字颜色
+      }
     },
     tooltip: {
       trigger: "axis",
       axisPointer: {
         type: "cross"
+      },
+      lineStyle: {
+        color: "#fff"
       }
     },
     toolbox: {
@@ -25,7 +32,10 @@ function drawHeightToDistanceEcharts(heightArry: any[], heightTDArray: any[], di
       }
     },
     legend: {
-      data: ["地形高程", "电线高程"]
+      data: ["地形高程", "电线高程"],
+      textStyle: {
+        color: "#fff"
+      }
     },
     grid: {
       left: 50,
@@ -36,15 +46,57 @@ function drawHeightToDistanceEcharts(heightArry: any[], heightTDArray: any[], di
     xAxis: {
       type: "category",
       boundaryGap: false,
-      data: distanceArray
+      data: distanceArray,
+      axisLabel: {
+        show: true,
+        lineStyle: {
+          color: "#86b96f" // 更改坐标轴颜色
+        },
+        textStyle: {
+          color: "#86b96f" // 更改坐标轴文字颜色
+        }
+      },
+      axisLine: {
+        show: true,
+        lineStyle: {
+          color: "#86b96f"
+        }
+      },
+      splitLine: {
+        // 修改背景线条样式
+        show: true, // 是否展示
+        lineStyle: {
+          color: "#555"
+        }
+      },
+      axisTick: {
+        show: true,
+        lineStyle: {
+          color: "#86b96f"
+        }
+      }
     },
     yAxis: {
       type: "value",
       axisLabel: {
-        formatter: "{value} 米"
+        formatter: "{value} 米",
+        show: true,
+        lineStyle: {
+          color: "#86b96f" // 更改坐标轴颜色
+        },
+        textStyle: {
+          color: "#fff" // 更改坐标轴文字颜色
+        }
       },
       axisPointer: {
         snap: true
+      },
+      splitLine: {
+        // 修改背景线条样式
+        show: true, // 是否展示
+        lineStyle: {
+          color: "#555"
+        }
       }
     },
     dataZoom: {

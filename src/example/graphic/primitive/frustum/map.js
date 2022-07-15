@@ -24,7 +24,10 @@ export function onMounted(mapInstance) {
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  bindLayerEvent() // 对图层绑定相关事件
+  // 在layer上绑定监听事件
+  graphicLayer.on(mars3d.EventType.click, function (event) {
+    console.log("监听layer，单击了矢量对象", event)
+  })
   bindLayerPopup() // 在图层上绑定popup,对所有加到这个图层的矢量数据都生效
   bindLayerContextMenu() // 在图层绑定右键菜单,对所有加到这个图层的矢量数据都生效
 
@@ -70,8 +73,7 @@ function addDemoGraphic1(graphicLayer) {
       outline: true,
       outlineColor: "#ffffff",
       outlineOpacity: 1.0
-    },
-    asynchronous: false
+    }
   })
   graphicLayer.addGraphic(graphicFrustum)
 }
@@ -94,7 +96,6 @@ function addDemoGraphic2(graphicLayer) {
         opacity: 0.8
       }
     },
-    asynchronous: false,
     attr: { remark: "示例2" }
   })
   graphicLayer.addGraphic(graphic)
@@ -123,8 +124,7 @@ function addDemoGraphic3(graphicLayer) {
       heading: 70,
       color: "#00ffff",
       opacity: 0.7
-    },
-    asynchronous: false
+    }
   })
   graphicLayer.addGraphic(graphic)
 }
@@ -146,21 +146,37 @@ export function onClickSelPoint() {
   })
 }
 
-// 在图层级处理一些事物
-function bindLayerEvent() {
-  // 在layer上绑定监听事件
-  graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("监听layer，单击了矢量对象", event)
-  })
-  /* graphicLayer.on(mars3d.EventType.mouseOver, function (event) {
-    console.log("监听layer，鼠标移入了矢量对象", event)
-  })
-  graphicLayer.on(mars3d.EventType.mouseOut, function (event) {
-    console.log("监听layer，鼠标移出了矢量对象", event)
-  }) */
+// 生成演示数据(测试数据量)
+export function addRandomGraphicByCount(count) {
+  graphicLayer.clear()
+  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
+
+  const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
+  const result = mars3d.PolyUtil.getGridPoints(bbox, count, 1000)
+  console.log("生成的测试网格坐标", result)
+
+  for (let j = 0; j < result.points.length; ++j) {
+    const position = result.points[j]
+    const index = j + 1
+
+    const graphic = new mars3d.graphic.FrustumPrimitive({
+      position: position,
+      style: {
+        angle: 10,
+        angle2: 5,
+        length: result.radius * 2,
+        heading: Math.random() * 100,
+        pitch: 40,
+        color: Cesium.Color.fromRandom({ alpha: 0.6 })
+      },
+      attr: { index: index }
+    })
+    graphicLayer.addGraphic(graphic)
+  }
+
+  graphicLayer.enabledEvent = true // 恢复事件
+  return result.points.length
 }
-
-
 
 // 在图层绑定Popup弹窗
 export function bindLayerPopup() {
@@ -174,11 +190,63 @@ export function bindLayerPopup() {
   })
 }
 
-
+// 开始绘制
+export function startDrawGraphic() {
+  graphicLayer.startDraw({
+    type: "frustum",
+    style: {
+      angle: 10,
+      angle2: 5,
+      length: 1000,
+      color: "#00ffff",
+      opacity: 0.7
+    }
+  })
+}
 
 // 绑定右键菜单
 export function bindLayerContextMenu() {
   graphicLayer.bindContextMenu([
+    {
+      text: "开始编辑对象",
+      icon: "fa fa-edit",
+      show: function (e) {
+        const graphic = e.graphic
+        if (!graphic || !graphic.hasEdit) {
+          return false
+        }
+        return !graphic.isEditing
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
+        if (graphic) {
+          graphicLayer.startEditing(graphic)
+        }
+      }
+    },
+    {
+      text: "停止编辑对象",
+      icon: "fa fa-edit",
+      show: function (e) {
+        const graphic = e.graphic
+        if (!graphic || !graphic.hasEdit) {
+          return false
+        }
+        return graphic.isEditing
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
+        if (graphic) {
+          graphic.stopEditing()
+        }
+      }
+    },
     {
       text: "删除对象",
       icon: "fa fa-trash-o",
@@ -190,12 +258,12 @@ export function bindLayerContextMenu() {
           return true
         }
       },
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         if (!graphic) {
           return
         }
-        const parent = graphic._parent // 右击是编辑点时
+        const parent = graphic.parent // 右击是编辑点时
         graphicLayer.removeGraphic(graphic)
         if (parent) {
           graphicLayer.removeGraphic(parent)

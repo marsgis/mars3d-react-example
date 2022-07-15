@@ -65,7 +65,7 @@ function UIComponent() {
   }
 
   return (
-    <MarsPannel visible={true} top={10} right={10} height={204}>
+    <MarsPannel visible={true} top={10} right={10} height={210}>
       <div className="f-mb">
         <span>3dtile模型移动(只适合小范围内的偏移 笛卡尔坐标方向，非贴球面)</span>
       </div>

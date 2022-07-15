@@ -18,12 +18,10 @@ export const mapOptions = {
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
-
   map.basemap = 2017 // 蓝色底图
-
   map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
 
-  // 创建Graphic图层
+  // 创建矢量数据图层
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -42,7 +40,8 @@ export function onMounted(mapInstance) {
 
   bindLayerPopup() // 在图层上绑定popup,对所有加到这个图层的矢量数据都生效
 
-  createCollection(1000)
+  addRandomGraphicByCount(1000)
+  graphicLayer.flyTo()
 }
 
 /**
@@ -53,55 +52,34 @@ export function onUnmounted() {
   map = null
 }
 
-export function addDemoGraphic(count) {
+export function addRandomGraphicByCount(count) {
   graphicLayer.clear()
+  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
 
-  showLoading()
+  const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
+  const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
+  console.log("生成的测试网格坐标", result)
 
-  const startTime = new Date().getTime()
-
-  createCollection(count)
-
-  hideLoading()
-  const endTime = new Date().getTime()
-  // 两个时间戳相差的毫秒数
-  const usedTime = (endTime - startTime) / 1000
-
-  globalMsg("共耗时" + usedTime.toFixed(2) + "秒")
-}
-
-// 在图层绑定Popup弹窗
-export function bindLayerPopup() {
-  graphicLayer.bindPopup(function (event) {
-    const attr = event.graphic.attr || {}
-    attr["类型"] = event.graphic.type
-    attr["来源"] = "我是layer上绑定的Popup"
-    attr["备注"] = "我支持鼠标交互"
-
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
-  })
-}
-
-// 合并渲染
-function createCollection(count) {
   const arrData = []
-  for (let j = 0; j < count; ++j) {
+  for (let j = 0; j < result.points.length; ++j) {
+    const position = result.points[j]
+    const index = j + 1
+
     arrData.push({
-      position: randomPoint(),
+      position: position,
       style: {
-        heading: 270,
-        scale: 30
-        // scaleZ: 50
+        heading: 90,
+        scale: 5
       },
       attr: {
-        name: "第" + j + "个模型",
+        index: index,
         time: new Date().toLocaleTimeString()
       }
     })
   }
 
   const modelCombine = new mars3d.graphic.ModelCombine({
-    url: "//data.mars3d.cn/gltf/mars/fengche.gltf",
+    url: "//data.mars3d.cn/gltf/mars/qiche.gltf",
     instances: arrData
   })
   graphicLayer.addGraphic(modelCombine)
@@ -116,14 +94,19 @@ function createCollection(count) {
   //   }
   //   modelCombine.instances = arrData
   // }, 5000)
+
+  graphicLayer.enabledEvent = true // 恢复事件
+  return result.points.length
 }
 
-// 取区域内的随机点
-function randomPoint() {
-  const jd = random(117.184644 * 1000, 117.307163 * 1000) / 1000
-  const wd = random(31.783595 * 1000, 31.87024 * 1000) / 1000
-  return Cesium.Cartesian3.fromDegrees(jd, wd, 50)
-}
-function random(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min)
+// 在图层绑定Popup弹窗
+export function bindLayerPopup() {
+  graphicLayer.bindPopup(function (event) {
+    const attr = event.graphic.attr || {}
+    attr["类型"] = event.graphic.type
+    attr["来源"] = "我是layer上绑定的Popup"
+    attr["备注"] = "我支持鼠标交互"
+
+    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
+  })
 }

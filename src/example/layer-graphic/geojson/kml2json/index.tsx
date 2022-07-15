@@ -122,7 +122,7 @@ function UIComponent() {
             </MarsButton>
           </Space>
         </div>
-        <LayerState />
+        <LayerState direction="horizontal"/>
       </MarsPannel>
 
       <MarsPannel visible={true} right={10} top={100}>

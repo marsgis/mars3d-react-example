@@ -1,9 +1,8 @@
-import { MarsPannel, MarsButton, MarsGui, MarsTable, $message } from "@mars/components/MarsUI"
+import { MarsPannel, MarsButton, MarsGui, MarsTable, $message, MarsInput } from "@mars/components/MarsUI"
 import { useCallback, useMemo, useState } from "react"
 import { Space } from "antd"
 import * as mapWork from "./map.js"
 import type { GuiItem } from "@mars/components/MarsUI"
-import "./index.css"
 
 const columns = [
   {
@@ -76,16 +75,12 @@ function UIComponent() {
     setPagination(page.pageSize)
   }
 
+    // 关键字查询
+    const keyWordsChange = (item) => {
+      keyWords = item.target.value
+    }
+
   const options: GuiItem[] = [
-    {
-      type: "input",
-      field: "keyWords",
-      label: "名称",
-      value: "请输入查询关键字",
-      change(data) {
-        keyWords = data
-      }
-    },
     {
       type: "custom",
       label: "范围",
@@ -111,6 +106,12 @@ function UIComponent() {
 
   return (
     <MarsPannel visible={true} right={10} top={10} width={370}>
+      <div className="f-mb ">
+        <Space>
+          <span className="mars-pannel-item-label">名称:</span>
+          <MarsInput placeholder="请输入关键字查询" onChange={keyWordsChange}></MarsInput>
+        </Space>
+      </div>
       <MarsGui options={options}></MarsGui>
       {tableData.length > 0 ? (
         <div>

@@ -20,15 +20,24 @@ export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
   // 创建gltf模型，
-  const gltfLayer = new mars3d.layer.ModelLayer({
+  const graphicLayer = new mars3d.layer.GraphicLayer({
     name: "上海浦东",
-    url: "//data.mars3d.cn/gltf/mars/shanghai/scene.gltf",
-    style: { scale: 520, heading: 215 }, // style同标绘的model类型
-    position: [121.507762, 31.233975, 200],
+    data: [
+      {
+        type: "model",
+        position: [121.507762, 31.233975, 200],
+        style: {
+          url: "//data.mars3d.cn/gltf/mars/shanghai/scene.gltf",
+          scale: 520,
+          heading: 215
+        }
+      }
+    ],
     center: { lat: 31.251138, lng: 121.463588, alt: 1729.97, heading: 110.7, pitch: -25, roll: 0.2 },
+    popup: "上海浦东模型",
     flyTo: true
   })
-  map.addLayer(gltfLayer)
+  map.addLayer(graphicLayer)
 
   // 雾效果
   fogEffect = new mars3d.effect.FogEffect({

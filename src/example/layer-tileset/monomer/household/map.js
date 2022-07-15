@@ -84,7 +84,7 @@ function createDthGraphic(options) {
   const minHight = attr.bottomHeight // 当前层的 底部海拔高度
   const maxHight = attr.topHeight // 当前层的 顶部海拔高度
 
-  const primitive = new mars3d.graphic.PolygonPrimitive({
+  const graphic = new mars3d.graphic.PolygonPrimitive({
     positions: points,
     style: {
       height: minHight,
@@ -102,7 +102,7 @@ function createDthGraphic(options) {
     },
     attr: attr
   })
-  geoJsonLayerDTH.addGraphic(primitive)
+  geoJsonLayerDTH.addGraphic(graphic)
 }
 
 // 颜色

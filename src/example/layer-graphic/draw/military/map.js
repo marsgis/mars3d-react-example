@@ -29,7 +29,11 @@ export function onMounted(mapInstance) {
   })
   map.addLayer(graphicLayer)
 
-  bindLayerEvent() // 对图层绑定相关事件
+  // 在layer上绑定监听事件
+  graphicLayer.on(mars3d.EventType.click, function (event) {
+    console.log("监听layer，单击了矢量对象", event)
+  })
+
   bindLayerContextMenu() // 在图层绑定右键菜单,对所有加到这个图层的矢量数据都生效
 }
 
@@ -45,7 +49,7 @@ export function onUnmounted() {
 export function drawPolygon(type) {
   graphicLayer.startDraw({
     type: type,
-    edittype: "polygon",
+    styleType: "polygon",
     style: {
       color: "#ff0000",
       opacity: 0.6,
@@ -61,42 +65,12 @@ export function drawPolygon(type) {
 export function drawExtrudedPolygon(type) {
   graphicLayer.startDraw({
     type: type,
-    edittype: "polygon",
+    styleType: "polygon",
     style: {
       color: "#ffd500",
       opacity: 0.4,
       diffHeight: 300
     }
-  })
-}
-
-// 在图层级处理一些事物
-function bindLayerEvent() {
-  // 在layer上绑定监听事件
-  graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("监听layer，单击了矢量对象", event)
-  })
-  /* graphicLayer.on(mars3d.EventType.mouseOver, function (event) {
-    console.log("监听layer，鼠标移入了矢量对象", event)
-  })
-  graphicLayer.on(mars3d.EventType.mouseOut, function (event) {
-    console.log("监听layer，鼠标移出了矢量对象", event)
-  }) */
-
-  // 数据编辑相关事件，用于属性弹窗的交互
-  graphicLayer.on(mars3d.EventType.drawCreated, function (e) {
-    if (graphicLayer.hasEdit) {
-      eventTarget.fire("graphicEditor-start", e)
-    }
-  })
-  graphicLayer.on(
-    [mars3d.EventType.editStart, mars3d.EventType.editMovePoint, mars3d.EventType.editStyle, mars3d.EventType.editRemovePoint],
-    function (e) {
-      eventTarget.fire("graphicEditor-update", e)
-    }
-  )
-  graphicLayer.on([mars3d.EventType.editStop, mars3d.EventType.removeGraphic], function (e) {
-    eventTarget.fire("graphicEditor-stop", e)
   })
 }
 
@@ -120,12 +94,12 @@ export function bindLayerContextMenu() {
       icon: "fa fa-edit",
       show: function (e) {
         const graphic = e.graphic
-        if (!graphic || !graphic.startEditing) {
+        if (!graphic || !graphic.hasEdit) {
           return false
         }
         return !graphic.isEditing
       },
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         if (!graphic) {
           return false
@@ -140,18 +114,18 @@ export function bindLayerContextMenu() {
       icon: "fa fa-edit",
       show: function (e) {
         const graphic = e.graphic
-        if (!graphic) {
+        if (!graphic || !graphic.hasEdit) {
           return false
         }
         return graphic.isEditing
       },
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         if (!graphic) {
           return false
         }
         if (graphic) {
-          graphicLayer.stopEditing(graphic)
+          graphic.stopEditing()
         }
       }
     },
@@ -166,12 +140,12 @@ export function bindLayerContextMenu() {
           return true
         }
       },
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         if (!graphic) {
           return
         }
-        const parent = graphic._parent // 右击是编辑点时
+        const parent = graphic.parent // 右击是编辑点时
         graphicLayer.removeGraphic(graphic)
         if (parent) {
           graphicLayer.removeGraphic(parent)
@@ -182,7 +156,7 @@ export function bindLayerContextMenu() {
     {
       text: "计算周长",
       icon: "fa fa-medium",
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         const strDis = mars3d.MeasureUtil.formatDistance(graphic.distance)
         globalAlert("该对象的周长为:" + strDis)
@@ -191,17 +165,13 @@ export function bindLayerContextMenu() {
     {
       text: "计算面积",
       icon: "fa fa-reorder",
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         const strArea = mars3d.MeasureUtil.formatArea(graphic.area)
         globalAlert("该对象的面积为:" + strArea)
       }
     }
   ])
-}
-
-export function updateLayerHasEdit(val) {
-  graphicLayer.hasEdit = val
 }
 
 // 保存GeoJSON
@@ -259,8 +229,6 @@ export function openGeoJSON(file) {
     globalMsg("暂不支持 " + fileType + " 文件类型的数据！")
   }
 }
-
-
 
 // 简化geojson的坐标
 function simplifyGeoJSON(geojson) {

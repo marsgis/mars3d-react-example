@@ -63,8 +63,8 @@ function getEchartsOption() {
     乌鲁木齐: [87.405386, 41.779595]
   }
 
-  const symbolPoint = "image://img/marker/symbol1.png"
-  const linePoint = "image://img/marker/linePoint1.png"
+  const symbolPoint = "image://img/icon/symbol1.png"
+  const linePoint = "image://img/icon/linePoint1.png"
 
   const pointArr = []
   for (const key in geoCoorddata) {

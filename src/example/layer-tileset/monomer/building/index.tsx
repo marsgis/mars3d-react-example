@@ -6,7 +6,7 @@ function UIComponent(props) {
   return (
     <MarsPannel visible={true} right="10" top="10">
       <Space>
-        显示每户颜色:
+        显示每栋颜色:
         <MarsSwitch
           defaultChecked
           onChange={(data) => {

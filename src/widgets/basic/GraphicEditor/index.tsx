@@ -9,13 +9,25 @@ import "./index.less"
 function GraphicEditor({ currentWidget, ...props }) {
   const [graphic, setGraphic] = useState(null)
   const [style, setStyle] = useState(null)
+  const [layerName, setLayerName] = useState("")
+  const [customType, setCustomType] = useState("")
+  const [graphicType, setGraphicType] = useState("")
 
   useEffect(() => {
     console.log("编辑面板接收到了graphic对象更新:", currentWidget)
-    const gp = currentWidget.data.graphic
+    const gp = currentWidget?.data?.graphic
+    if (!gp) {
+      return
+    }
+
+    setLayerName(gp._layer.name)
+    setCustomType(currentWidget.data?.styleType || gp.options.styleType)
+    setGraphicType(gp.type) 
+    setStyle(_.cloneDeep(gp?.style))
+
     setGraphic(gp)
-    setStyle(_.cloneDeep(gp.style))
-  }, [currentWidget.data.graphic])
+
+  }, [currentWidget])
 
   return (
     <MarsDialog title="属性编辑" width="260" top="60" bottom="40" left="10" minWidth={200} {...props}>
@@ -43,10 +55,13 @@ function GraphicEditor({ currentWidget, ...props }) {
             <MarsStyle
               style={style}
               graphic={graphic}
+              layerName={layerName}
+              customType={customType}
+              graphicType={graphicType}
               onChange={(data) => {
-                console.log("更新style:", data)
-                graphic.setStyle(data)
-                setStyle(_.cloneDeep(data))
+                console.log("修改了style样式", data)
+                graphic.setStyle(_.cloneDeep(data))
+                // setStyle(_.cloneDeep(data))
               }}
             ></MarsStyle>
           </div>

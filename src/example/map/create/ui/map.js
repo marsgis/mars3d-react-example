@@ -28,6 +28,7 @@ export const eventTarget = new mars3d.BaseClass()
  * @returns {void} 无
  */
 export function onMounted(mapInstance) {
+  console.log("onMounted执行了")
   map = mapInstance // 记录首次创建的map
 
   // 构造bloom效果 用于滑动条测试
@@ -45,6 +46,7 @@ export function onMounted(mapInstance) {
  * @returns {void} 无
  */
 export function onUnmounted() {
+  console.log("onUnmounted执行了")
   map.graphicLayer.clear()
   map.removeEffect(bloomEffect, true)
   bloomEffect = null

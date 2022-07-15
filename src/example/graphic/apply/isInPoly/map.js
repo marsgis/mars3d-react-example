@@ -58,8 +58,7 @@ function addData(arr) {
     const graphic = new mars3d.graphic.BillboardEntity({
       position: Cesium.Cartesian3.fromDegrees(item.x, item.y, 0),
       style: {
-        image: "img/marker/mark3.png",
-        scale: 1,
+        image: "img/marker/mark-blue.png",
         horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
         verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
         scaleByDistance: new Cesium.NearFarScalar(10000, 1.0, 500000, 0.1)
@@ -80,7 +79,7 @@ function updateSelect(drawGraphic) {
     const isInArea = drawGraphic.isInPoly(position)
     if (isInArea) {
       graphic.setStyle({
-        image: "img/marker/mark1.png"
+        image: "img/marker/mark-red.png"
       })
       selectGraphic.push(graphic)
     }
@@ -93,7 +92,7 @@ export function removeAll() {
   for (let i = 0; i < selectGraphic.length; i++) {
     const graphic = selectGraphic[i]
     graphic.setStyle({
-      image: "img/marker/mark3.png"
+      image: "img/marker/mark-blue.png"
     })
   }
   selectGraphic = []

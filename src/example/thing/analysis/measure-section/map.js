@@ -103,7 +103,7 @@ export function showTipMarker(point, z, inthtml) {
       name: "当前点",
       position: _position_draw,
       style: {
-        image: "img/marker/mark3.png",
+        image: "img/marker/mark-blue.png",
         scale: 1,
         horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
         verticalOrigin: Cesium.VerticalOrigin.BOTTOM,

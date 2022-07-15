@@ -47,48 +47,50 @@ function UIComponent() {
             >
               按绘制线裁剪
             </MarsButton>
-            <MarsButton
-              onClick={() => {
-                mapWork.clippingType("ZR")
-              }}
-            >
-              切顶部
-            </MarsButton>
-            <MarsButton
-              onClick={() => {
-                mapWork.clippingType("Z")
-              }}
-            >
-              切底部
-            </MarsButton>
-            <MarsButton
-              onClick={() => {
-                mapWork.clippingType("XR")
-              }}
-            >
-              切东向
-            </MarsButton>
-            <MarsButton
-              onClick={() => {
-                mapWork.clippingType("X")
-              }}
-            >
-              切西向
-            </MarsButton>
-            <MarsButton
-              onClick={() => {
-                mapWork.clippingType("Y")
-              }}
-            >
-              切南向
-            </MarsButton>
-            <MarsButton
-              onClick={() => {
-                mapWork.clippingType("YR")
-              }}
-            >
-              切北向
-            </MarsButton>
+            <Space wrap>
+              <MarsButton
+                onClick={() => {
+                  mapWork.clippingType("ZR")
+                }}
+              >
+                切顶部
+              </MarsButton>
+              <MarsButton
+                onClick={() => {
+                  mapWork.clippingType("Z")
+                }}
+              >
+                切底部
+              </MarsButton>
+              <MarsButton
+                onClick={() => {
+                  mapWork.clippingType("XR")
+                }}
+              >
+                切东向
+              </MarsButton>
+              <MarsButton
+                onClick={() => {
+                  mapWork.clippingType("X")
+                }}
+              >
+                切西向
+              </MarsButton>
+              <MarsButton
+                onClick={() => {
+                  mapWork.clippingType("Y")
+                }}
+              >
+                切南向
+              </MarsButton>
+              <MarsButton
+                onClick={() => {
+                  mapWork.clippingType("YR")
+                }}
+              >
+                切北向
+              </MarsButton>
+            </Space>
           </Space>
         </MarsCollapsePanel>
         <MarsCollapsePanel key="2" header="多个裁剪面">
@@ -119,15 +121,17 @@ function UIComponent() {
           </Space>
         </MarsCollapsePanel>
         <MarsCollapsePanel key="3" header="模型裁剪">
-          <MarsGui options={options} formProps={{ labelCol: { span: 7 } }}></MarsGui>
+          <MarsGui options={options} formProps={{ labelCol: { span: 8 } }}></MarsGui>
 
-          <MarsButton
-            onClick={() => {
-              mapWork.clear()
-            }}
-          >
-            清除
-          </MarsButton>
+          <div className="f-tac">
+            <MarsButton
+              onClick={() => {
+                mapWork.clear()
+              }}
+            >
+              清除
+            </MarsButton>
+          </div>
         </MarsCollapsePanel>
       </MarsCollapse>
     </MarsPannel>

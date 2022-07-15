@@ -48,7 +48,7 @@ function UIComponent() {
       <div className="f-mb">
         <Space>
           <span>步长:</span>
-          <MarsInputNumber value={step} min={1} max={10} onChange={stepChange}></MarsInputNumber>
+          <MarsInputNumber value={step} min={1} max={10} onChange={stepChange}></MarsInputNumber>公里
           <MarsButton
             onClick={() => {
               mapWork.pointGrid(step)

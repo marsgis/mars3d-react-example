@@ -67,7 +67,7 @@ export function onMounted(mapInstance) {
     hasEdit: true,
     isAutoEditing: true, // 绘制完成后是否自动激活编辑
     symbol: {
-      type: "polygon",
+      type: "polygonP",
       merge: true, // 是否合并并覆盖json中已有的style，默认不合并
       styleOptions: {
         color: "rgba(255, 255, 0, 0.4)",
@@ -76,22 +76,6 @@ export function onMounted(mapInstance) {
     }
   })
   map.addLayer(graphicLayer)
-
-  // 触发自定义事件
-  graphicLayer.on(mars3d.EventType.drawCreated, function (e) {
-    const graphic = e.graphic
-    eventTarget.fire("graphicEditor-start", { graphic })
-  })
-  graphicLayer.on(
-    [mars3d.EventType.editStart, mars3d.EventType.editMovePoint, mars3d.EventType.editStyle, mars3d.EventType.editRemovePoint],
-    function (e) {
-      const graphic = e.graphic
-      eventTarget.fire("graphicEditor-update", { graphic })
-    }
-  )
-  graphicLayer.on([mars3d.EventType.editStop, mars3d.EventType.removeGraphic], function (e) {
-    eventTarget.fire("graphicEditor-stop")
-  })
 
   // 加载数据
   const configUrl = "//data.mars3d.cn/file/geojson/dth-xuexiao-fd.json"
@@ -125,12 +109,12 @@ export function bindLayerContextMenu() {
       icon: "fa fa-edit",
       show: function (e) {
         const graphic = e.graphic
-        if (!graphic || !graphic.startEditing) {
+        if (!graphic || !graphic.hasEdit) {
           return false
         }
         return !graphic.isEditing
       },
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         if (!graphic) {
           return false
@@ -145,18 +129,18 @@ export function bindLayerContextMenu() {
       icon: "fa fa-edit",
       show: function (e) {
         const graphic = e.graphic
-        if (!graphic) {
+        if (!graphic || !graphic.hasEdit) {
           return false
         }
         return graphic.isEditing
       },
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         if (!graphic) {
           return false
         }
         if (graphic) {
-          graphicLayer.stopEditing(graphic)
+          graphic.stopEditing()
         }
       }
     },
@@ -171,12 +155,12 @@ export function bindLayerContextMenu() {
           return true
         }
       },
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         if (!graphic) {
           return
         }
-        const parent = graphic._parent // 右击是编辑点时
+        const parent = graphic.parent // 右击是编辑点时
         graphicLayer.removeGraphic(graphic)
         if (parent) {
           graphicLayer.removeGraphic(parent)
@@ -186,7 +170,7 @@ export function bindLayerContextMenu() {
     {
       text: "计算周长",
       icon: "fa fa-medium",
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         const strDis = mars3d.MeasureUtil.formatDistance(graphic.distance)
         globalAlert("该对象的周长为:" + strDis)
@@ -195,7 +179,7 @@ export function bindLayerContextMenu() {
     {
       text: "计算面积",
       icon: "fa fa-reorder",
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         const strArea = mars3d.MeasureUtil.formatArea(graphic.area)
         globalAlert("该对象的面积为:" + strArea)
@@ -258,7 +242,6 @@ export function openGeoJSON(file) {
         clear: true,
         flyTo: true
       })
-
     }
   } else {
     globalMsg("暂不支持 " + fileType + " 文件类型的数据！")
@@ -267,12 +250,11 @@ export function openGeoJSON(file) {
 
 // 保存JSON文件
 export function saveGeoJSON() {
-
   if (graphicLayer.length === 0) {
     globalMsg("当前没有标注任何数据，无需保存！")
     return
   }
- const layers = map.getLayerById(graphicLayer.id)
+  const layers = map.getLayerById(graphicLayer.id)
   const geojson = layers.toGeoJSON()
   mars3d.Util.downloadFile("单体化.json", JSON.stringify(geojson))
 }

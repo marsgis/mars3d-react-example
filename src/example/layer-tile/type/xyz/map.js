@@ -74,8 +74,8 @@ export function onUnmounted() {
 // 叠加的图层
 let tileLayer
 
-export function addLayer() {
-  removeLayer()
+export function addTileLayer() {
+  removeTileLayer()
 
   // 方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
   tileLayer = new mars3d.layer.XyzLayer({
@@ -90,17 +90,18 @@ export function addLayer() {
   map.addLayer(tileLayer)
 
   // 该方法演示地图内部需要设置偏移量时如何加载
-  /* tileLayer = new mars3d.layer.XyzLayer({
-    url: "'url'&z={z_2}&y={y}&x={x}",
-    customTags: {
-      z_2: function (imageryProvider, x, y, level) {
-        return level - 2
-      }
-    }
-  })
-  map.addLayer(tileLayer) */
+  // tileLayer = new mars3d.layer.XyzLayer({
+  //   url: "'url'&z={z_2}&y={y}&x={x}",
+  //   customTags: {
+  //     z_2: function (imageryProvider, x, y, level) {
+  //       return level - 2
+  //     }
+  //   }
+  // })
+  // map.addLayer(tileLayer)
 }
-export function removeLayer() {
+
+export function removeTileLayer() {
   if (tileLayer) {
     map.removeLayer(tileLayer, true)
     tileLayer = null

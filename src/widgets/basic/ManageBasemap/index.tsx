@@ -9,11 +9,11 @@ function initData(e: any) {
   let activeBaseMap: string
   const baseMapData = e.baseMaps.map((m: any) => {
     if (m.isAdded && m.show) {
-      activeBaseMap = m.uuid
+      activeBaseMap = m.id
     }
     return {
       name: m.name,
-      uuid: m.uuid,
+      id: m.id,
       options: m.options
     }
   })
@@ -65,11 +65,11 @@ export default withLifeCyle(function (props) {
             key={i}
             className={classNames({
               [styles.basemapCard]: true,
-              [styles.activeCard]: active === item.uuid
+              [styles.activeCard]: active === item.id
             })}
             onClick={() => {
-              stateActive(item.uuid)
-              mapWork.changeBaseMaps(item.uuid)
+              stateActive(item.id)
+              mapWork.changeBaseMaps(item.id)
             }}
           >
             <img className={styles.icon} src={item.options.icon || "img/basemaps/bingAerial.png"} alt="" />

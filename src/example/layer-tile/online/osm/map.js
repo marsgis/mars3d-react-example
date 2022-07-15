@@ -7,16 +7,16 @@ export const mapOptions = {
   scene: {
     center: { lat: 31.675177, lng: 117.323257, alt: 81193, heading: 0, pitch: -79 },
     highDynamicRange: false
-  },
+  }
   // 方式1：在创建地球前的参数中配置
-  basemaps: [
-    {
-      name: "OSM开源地图",
-      icon: "img/basemaps/osm.png",
-      type: "osm",
-      show: true
-    }
-  ]
+  // basemaps: [
+  //   {
+  //     name: "OSM开源地图",
+  //     icon: "img/basemaps/osm.png",
+  //     type: "osm",
+  //     show: true
+  //   }
+  // ]
 }
 
 export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
@@ -29,7 +29,6 @@ export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
-  // eventTarget.fire("mapLoaded")
 }
 
 /**
@@ -38,4 +37,24 @@ export function onMounted(mapInstance) {
  */
 export function onUnmounted() {
   map = null
+}
+
+// 叠加的图层
+let tileLayer
+export function addTileLayer() {
+  removeTileLayer()
+
+  // 方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
+  tileLayer = new mars3d.layer.OsmLayer({
+    layer: "OSM开源地图",
+    type: "osm"
+  })
+  map.addLayer(tileLayer)
+}
+
+export function removeTileLayer() {
+  if (tileLayer) {
+    map.removeLayer(tileLayer, true)
+    tileLayer = null
+  }
 }

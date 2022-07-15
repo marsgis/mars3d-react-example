@@ -127,8 +127,7 @@ class UIComponent extends Component<any, any> {
             title: layer.name,
             key: layer.id,
             id: layer.id,
-            pId: layer.pid,
-            uuid: layer.uuid
+            pId: layer.pid 
           }
           node.children = this.findChild(node, layers)
           treeData.push(node)
@@ -152,8 +151,7 @@ class UIComponent extends Component<any, any> {
           title: item.name,
           key: item.id,
           id: item.id,
-          pId: item.pid,
-          uuid: item.uuid
+          pId: item.pid 
         }
         const nodeLayer = mapWork.createLayer(item) // 创建图层
         this.layersObj[item.id] = nodeLayer
@@ -209,7 +207,15 @@ class UIComponent extends Component<any, any> {
               <MarsFormItem label="地图交互">
                 <Row gutter={5}>
                   <Col span={19}>
-                    <MarsInput value={this.state.extent} allowClear></MarsInput>
+                    <MarsInput
+                      value={this.state.extent}
+                      allowClear
+                      onChange={(e) => {
+                        this.setState({
+                          extent: e.target.value
+                        })
+                      }}
+                    ></MarsInput>
                   </Col>
                   <Col span={5}>
                     <MarsButton className="small-btn" onClick={mapWork.drawExtent}>
@@ -264,11 +270,11 @@ class UIComponent extends Component<any, any> {
                 <Space>
                   <MarsColor
                     value={this.state.color}
-                    onChange={(e) =>
+                    onChange={(e) => {
                       this.setState({
-                        color: e.target.value
+                        color: e
                       })
-                    }
+                    }}
                   ></MarsColor>
                   <label>已选择: {this.state.color}</label>
                 </Space>

@@ -20,7 +20,6 @@ export const mapOptions = {
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
-
   map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
 
   graphicLayer = new mars3d.layer.GraphicLayer({
@@ -28,6 +27,11 @@ export function onMounted(mapInstance) {
     isAutoEditing: true // 绘制完成后是否自动激活编辑
   })
   map.addLayer(graphicLayer)
+
+  // 在layer上绑定监听事件
+  graphicLayer.on(mars3d.EventType.click, function (event) {
+    console.log("监听layer，单击了矢量对象", event)
+  })
 
   // 加载模型列表
   const configUrl = "//data.mars3d.cn/gltf/list.json"
@@ -38,7 +42,6 @@ export function onMounted(mapInstance) {
     .catch(function (error) {
       console.log("加载JSON出错", error)
     })
-  bindLayerEvent()
 }
 
 /**
@@ -56,34 +59,6 @@ export function startDrawModel(style) {
     type: "model",
     drawShow: true, // 绘制时，是否显示模型，可避免在3dtiles上拾取坐标存在问题。
     style: style
-  })
-}
-
-// 在图层级处理一些事物
-function bindLayerEvent() {
-  // 在layer上绑定监听事件
-  graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("监听layer，单击了矢量对象", event)
-  })
-  /* graphicLayer.on(mars3d.EventType.mouseOver, function (event) {
-      console.log("监听layer，鼠标移入了矢量对象", event)
-    })
-    graphicLayer.on(mars3d.EventType.mouseOut, function (event) {
-      console.log("监听layer，鼠标移出了矢量对象", event)
-    }) */
-
-  // 数据编辑相关事件， 用于属性弹窗的交互
-  graphicLayer.on(mars3d.EventType.drawCreated, function (e) {
-    eventTarget.fire("graphicEditor-start", e)
-  })
-  graphicLayer.on(
-    [mars3d.EventType.editStart, mars3d.EventType.editMovePoint, mars3d.EventType.editStyle, mars3d.EventType.editRemovePoint],
-    function (e) {
-      eventTarget.fire("graphicEditor-update", e)
-    }
-  )
-  graphicLayer.on([mars3d.EventType.editStop, mars3d.EventType.removeGraphic], function (e) {
-    eventTarget.fire("graphicEditor-stop", e)
   })
 }
 

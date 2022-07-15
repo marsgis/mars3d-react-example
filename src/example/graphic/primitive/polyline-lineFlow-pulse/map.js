@@ -105,11 +105,12 @@ export function onMounted(mapInstance) {
         positions: [startPoint, endPoint],
         style: {
           width: 2,
-          material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
+          materialType: mars3d.MaterialType.LineFlow,
+          materialOptions: {
             color: "#3af2f3",
             image: "img/textures/line-pulse.png",
             speed: 1
-          })
+          }
         }
       })
       graphicLayer.addGraphic(line)

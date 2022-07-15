@@ -7,7 +7,7 @@ function UIComponent() {
     {
       type: "switch",
       field: "useDepthofField",
-      label: "启用状态",
+      label: "启用",
       value: true,
       change(value) {
         mapWork.setDepthOfField(value)

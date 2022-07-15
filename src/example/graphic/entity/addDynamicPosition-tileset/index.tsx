@@ -8,9 +8,7 @@ function UIComponent() {
   return (
     <>
       <MarsPannel visible={true} top={10} right={10}>
-        <div className="f-mb">
-          <LayerState />
-        </div>
+        <LayerState direction="horizontal"/>
       </MarsPannel>
       <LocationTo />
     </>

@@ -1,15 +1,13 @@
 import * as mars3d from "mars3d"
 
 export let map // mars3d.Map三维地图对象
-let dom
 
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
     center: { lat: 36.873519, lng: 106.863496, alt: 19999205, heading: 354, pitch: -89 },
     orderIndependentTranslucency: false,
-    contextOptions: { webgl: { alpha: true } }, // 允许透明
-    showSun: false,
+    contextOptions: { webgl: { alpha: true } }, // 允许透明，只能Map初始化传入 [关键代码]
     showMoon: false,
     showSkyBox: false,
     showSkyAtmosphere: false,
@@ -30,7 +28,6 @@ export const mapOptions = {
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
-  dom = mars3d.DomUtil.get("mars3dContainer")
 }
 
 /**
@@ -42,17 +39,17 @@ export function onUnmounted() {
 }
 
 export function show() {
-  dom.style.backgroundImage = "none"
+  map.container.style.backgroundImage = "none"
 }
 
 export function show1() {
-  dom.style.backgroundImage = "url(/img/tietu/backGroundImg.jpg)"
+  map.container.style.backgroundImage = "url(/img/tietu/backGroundImg.jpg)"
 }
 
 export function show2() {
-  dom.style.backgroundImage = "url(//data.mars3d.cn/file/img/world/world.jpg)"
+  map.container.style.backgroundImage = "url(//data.mars3d.cn/file/img/world/world.jpg)"
 }
 
 export function show3() {
-  dom.style.backgroundImage = "url(/img/tietu/bg4.jpg)"
+  map.container.style.backgroundImage = "url(/img/tietu/bg4.jpg)"
 }

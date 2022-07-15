@@ -1,5 +1,4 @@
 import * as mars3d from "mars3d"
-import { $message } from "@mars/components/mars-ui/index"
 
 export let map // mars3d.Map三维地图对象
 export let graphicLayer // 矢量图层对象
@@ -39,7 +38,7 @@ export function onMounted(mapInstance) {
   })
   map.addLayer(tiles3dLayer)
 
-  // 创建Graphic图层
+  // 创建矢量数据图层
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -55,37 +54,6 @@ export function onMounted(mapInstance) {
  */
 export function onUnmounted() {
   map = null
-}
-
-// 加载已配置好的视频（此参数为界面上“打印参数”按钮获取的）
-function addDemoGraphic1() {
-  const video3D = new mars3d.graphic.Video3D({
-    position: [117.205457, 31.842984, 63.9],
-    style: {
-      container: videoElement,
-      maskImage: "img/textures/video-mask.png", // 羽化视频四周，融合更美观
-      angle: 46.3,
-      angle2: 15.5,
-      heading: 178.5,
-      pitch: -49.5,
-      showFrustum: true
-    },
-    attr: { remark: "示例1" }
-  })
-  graphicLayer.addGraphic(video3D)
-
-  selectedView = video3D // 记录下
-  eventTarget.fire("loadVideo", {
-    value: {
-      cameraAngle: selectedView.angle,
-      cameraAngle2: selectedView.angle2,
-      heading: selectedView.heading,
-      pitchValue: selectedView.pitch,
-      distanceValue: selectedView.distance,
-      opcity: selectedView.opacity,
-      ckdFrustum: selectedView.showFrustum
-    }
-  })
 }
 
 const flvUrl = "https://sf1-hscdn-tos.pstatp.com/obj/media-fe/xgplayer_doc_video/flv/xgplayer-demo-360p.flv"
@@ -108,7 +76,7 @@ function createVideoDom() {
     flvPlayer.load()
     flvPlayer.play()
   } else {
-    $message("不支持flv格式视频")
+    globalMsg("不支持flv格式视频")
   }
 
   setTimeout(() => {
@@ -119,9 +87,110 @@ function createVideoDom() {
       }
     } catch (e) {
       // 规避浏览器权限异常
-        globalMsg("当前浏览器已限制自动播放，请单击播放按钮")
+      globalMsg("当前浏览器已限制自动播放，请单击播放按钮")
     }
   }, 3000)
+}
+
+// 加载已配置好的视频（此参数为界面上“打印参数”按钮获取的）
+function addDemoGraphic1() {
+  const video3D = new mars3d.graphic.Video3D({
+    position: [117.205457, 31.842984, 63.9],
+    style: {
+      container: videoElement,
+      maskImage: "img/textures/video-mask.png", // 羽化视频四周，融合更美观
+      angle: 46.3,
+      angle2: 15.5,
+      heading: 178.5,
+      pitch: -49.5,
+      showFrustum: true
+    },
+    attr: { remark: "示例1" }
+  })
+  graphicLayer.addGraphic(video3D)
+}
+
+export function getGraphic(graphicId) {
+  selectedView = graphicLayer.getGraphicById(graphicId)
+  return selectedView
+}
+
+// 生成演示数据(测试数据量)
+export function addRandomGraphicByCount(count) {
+  graphicLayer.clear()
+  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
+
+  const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
+  const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
+  console.log("生成的测试网格坐标", result)
+
+  for (let j = 0; j < result.points.length; ++j) {
+    const position = result.points[j]
+    const index = j + 1
+
+    const graphic = new mars3d.graphic.Video3D({
+      position: position,
+      style: {
+        container: videoElement,
+        maskImage: "img/textures/video-mask.png", // 羽化视频四周，融合更美观
+        angle: 46.3,
+        angle2: 15.5,
+        heading: 178.5,
+        pitch: -49.5,
+        showFrustum: true
+      },
+      attr: { index: index }
+    })
+    graphicLayer.addGraphic(graphic)
+  }
+
+  graphicLayer.enabledEvent = true // 恢复事件
+  return result.points.length
+}
+
+// 添加投射视频
+export function startDrawGraphic() {
+  // 开始绘制
+  graphicLayer.startDraw({
+    type: "video3D",
+    style: {
+      container: videoElement,
+      maskImage: "img/textures/video-mask.png", // 羽化视频四周，融合更美观
+      angle: 46.3,
+      angle2: 15.5,
+      heading: 178.5,
+      pitch: -49.5,
+      showFrustum: true
+    }
+  })
+}
+
+// 按当前视角投射视频
+export function startDrawGraphic2() {
+  // 取屏幕中心点
+  const targetPosition = map.getCenter({ format: false })
+  if (!targetPosition) {
+    return
+  }
+
+  const cameraPosition = Cesium.clone(map.camera.position)
+
+  // 构造投射体
+  const video3D = new mars3d.graphic.Video3D({
+    position: cameraPosition,
+    targetPosition: targetPosition,
+    style: {
+      container: videoElement,
+      maskImage: "img/textures/video-mask.png", // 羽化视频四周，融合更美观
+      angle: 46.3,
+      angle2: 15.5,
+      heading: 178.5,
+      pitch: -49.5,
+      showFrustum: true,
+      opacity: 1
+    }
+  })
+  graphicLayer.addGraphic(video3D)
 }
 
 export function onChangeAngle(value) {
@@ -170,77 +239,24 @@ export function onChangePitch(value) {
   }
 }
 
-// 透明度
+// 线框是否显示
+export function showFrustum(ckd) {
+  if (selectedView) {
+    selectedView.showFrustum = ckd
+  }
+}
+
 export function onChangeOpacity(value) {
   if (selectedView) {
     selectedView.opacity = value
   }
 }
 
-// 添加投射视频
-export function addVideo(data) {
-  // 开始绘制
-  graphicLayer.startDraw({
-    type: "video3D",
-    style: {
-      container: videoElement,
-      angle: data.cameraAngle,
-      angle2: data.cameraAngle2,
-      heading: data.heading,
-      pitch: data.pitchValue,
-      distance: data.distanceValue,
-      showFrustum: data.ckdFrustum
-    },
-    success: function (graphic) {
-      console.log("绘制完成", graphic)
-
-      selectedView = graphic // 记录下
-    }
-  })
-}
-
-// 按当前视角投射视频
-export function addThisCamera(data) {
-  // 取屏幕中心点
-  const targetPosition = map.getCenter({ format: false })
-  if (!targetPosition) {
-    return
-  }
-
-  const cameraPosition = Cesium.clone(map.camera.position)
-
-  // 构造投射体
-  const video3D = new mars3d.graphic.Video3D({
-    position: cameraPosition,
-    targetPosition: targetPosition,
-    style: {
-      container: videoElement,
-      angle: data.cameraAngle,
-      angle2: data.cameraAngle2,
-      heading: data.heading,
-      pitch: data.pitchValue,
-      distance: data.distanceValue,
-      opacity: data.opcity,
-      showFrustum: data.showFrustum
-    }
-  })
-  graphicLayer.addGraphic(video3D)
-
-  selectedView = video3D // 记录下
-}
-
-// 清除
-export function clear() {
-  graphicLayer.clear()
-  selectedView = null
-}
-
 // 播放暂停
 export function playOrpause() {
-  if (!selectedView) {
-    return
+  if (selectedView) {
+    selectedView.play = !selectedView.play
   }
-  selectedView.play = !selectedView.play
 }
 
 // 定位至视频位置
@@ -260,19 +276,12 @@ export function printParameters() {
   console.log("Video3D构造参数为", params)
 }
 
-// 线框是否显示
-export function showFrustum(ckd) {
-  if (!selectedView) {
-    return
-  }
-  selectedView.showFrustum = ckd
-}
-
 // 视频位置
 export function selCamera() {
   if (!selectedView) {
     return
   }
+
   map.graphicLayer.startDraw({
     type: "point",
     success: (graphic) => {

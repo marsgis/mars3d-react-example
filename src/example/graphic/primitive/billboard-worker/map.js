@@ -32,7 +32,7 @@ export function onMounted(mapInstance) {
 
   imgData = getImageData()
 
-  // 创建Graphic图层
+  // 创建矢量数据图层
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -114,7 +114,7 @@ function createGraphics(currentData) {
   for (let i = currentData.length - 1; i >= 0; i--) {
     const item = currentData[i]
 
-    const primitive = new mars3d.graphic.BillboardPrimitive({
+    const graphic = new mars3d.graphic.BillboardPrimitive({
       id: item.x,
       name: item.city,
       position: [item.lon, item.lat],
@@ -130,7 +130,7 @@ function createGraphics(currentData) {
       },
       attr: item
     })
-    graphicLayer.addGraphic(primitive)
+    graphicLayer.addGraphic(graphic)
   }
 }
 

@@ -54,7 +54,7 @@ function addLayer() {
     { lat: 31.836674, lng: 117.260762, alt: 1779, heading: 269, pitch: -37 }
   ])
 
-  // 创建Graphic图层
+  // 创建矢量数据图层
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -82,14 +82,14 @@ function addLayer() {
   for (let i = 0; i < arrPoints.length; i++) {
     const item = arrPoints[i]
 
-    const primitive = new mars3d.graphic.PointPrimitive({
+    const graphic = new mars3d.graphic.PointPrimitive({
       position: [item.lng, item.lat, 90],
       style: {
         color: "#ffff00",
         pixelSize: 7
       }
     })
-    graphicLayer.addGraphic(primitive)
+    graphicLayer.addGraphic(graphic)
   }
   graphicLayer.show = false
 }

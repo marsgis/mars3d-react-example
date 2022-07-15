@@ -2,11 +2,12 @@ import * as mars3d from "mars3d"
 
 export let map // mars3d.Map三维地图对象
 export let graphicLayer // 矢量图层对象
+export const eventTarget = new mars3d.BaseClass()
 
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: 29.792193, lng: 121.48008, alt: 122, heading: 198, pitch: -54 }
+    center: { lat: 29.792325, lng: 121.480055, alt: 146, heading: 198, pitch: -54 }
   }
 }
 
@@ -30,12 +31,14 @@ export function onMounted(mapInstance) {
   map.addLayer(tiles3dLayer)
 
   // 创建矢量数据图层
-  graphicLayer = new mars3d.layer.GraphicLayer({
-    hasEdit: true
-  })
+  graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  bindLayerEvent() // 对图层绑定相关事件
+  // 在layer上绑定监听事件
+  graphicLayer.on(mars3d.EventType.click, function (event) {
+    console.log("监听layer，单击了矢量对象", event)
+  })
+
   bindLayerPopup() // 在图层上绑定popup,对所有加到这个图层的矢量数据都生效
   bindLayerContextMenu() // 在图层绑定右键菜单,对所有加到这个图层的矢量数据都生效
 
@@ -52,11 +55,12 @@ export function onMounted(mapInstance) {
  */
 export function onUnmounted() {
   map = null
+  graphicLayer.clear()
 }
 
 //  wall文字  primitive方式添加
 function addDemoGraphic1(graphicLayer) {
-  const primitive = new mars3d.graphic.WallPrimitive({
+  const graphic = new mars3d.graphic.WallPrimitive({
     positions: [
       [121.479914, 29.791249, 32],
       [121.479694, 29.791303, 32]
@@ -64,34 +68,37 @@ function addDemoGraphic1(graphicLayer) {
     style: {
       diffHeight: 5,
       materialType: mars3d.MaterialType.Text,
-      text: "水利闸门",
-      font_family: "楷体",
-      fillColor: "#00ffff"
+      materialOptions: {
+        text: "水利闸门",
+        font_family: "楷体",
+        color: "#00ffff"
+      }
     },
     attr: { remark: "示例1" }
   })
-  graphicLayer.addGraphic(primitive)
+  graphicLayer.addGraphic(graphic)
 }
 
 //  wall文字  primitive方式添加
 function addDemoGraphic2(graphicLayer) {
-  const primitive = new mars3d.graphic.WallPrimitive({
+  const graphic = new mars3d.graphic.WallPrimitive({
     positions: [
       [121.479343, 29.791419, 35],
       [121.479197, 29.791474, 35]
     ],
     style: {
       diffHeight: 5,
-      material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.Text, {
+      materialType: mars3d.MaterialType.Text,
+      materialOptions: {
         text: "火星科技",
         font_size: 70,
-        fillColor: "#3388cc",
+        color: "#3388cc",
         outlineWidth: 4
-      })
+      }
     },
     attr: { remark: "示例2" }
   })
-  graphicLayer.addGraphic(primitive)
+  graphicLayer.addGraphic(graphic)
 }
 
 // rectangle贴地矩形  3dtiles路面文字
@@ -103,26 +110,27 @@ function addDemoGraphic3(graphicLayer) {
       [121.480114, 29.791201]
     ],
     style: {
+      classificationType: Cesium.ClassificationType.BOTH,
       clampToGround: true,
-
-      material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.Text, {
+      rotationDegree: 163,
+      materialType: mars3d.MaterialType.Text,
+      materialOptions: {
         text: "火星路",
         font_size: 50,
         font_family: "楷体",
-        fillColor: "#00ff00",
+        color: "#00ff00",
         stroke: true,
         strokeWidth: 2,
         strokeColor: "#ffffff"
-      }),
-      rotationDegree: 163,
+      }
 
       // 高亮时的样式（默认为鼠标移入，也可以指定type:'click'单击高亮），构造后也可以openHighlight、closeHighlight方法来手动调用
-      highlight: {
-        type: mars3d.EventType.click,
-        stroke: true,
-        strokeColor: new Cesium.Color(1.0, 1.0, 0.0, 0.8),
-        strokeWidth: 5
-      }
+      // highlight: {
+      //   type: mars3d.EventType.click
+      //   // stroke: true,
+      //   // strokeColor: new Cesium.Color(1.0, 1.0, 0.0, 0.8),
+      //   // strokeWidth: 5
+      // }
     },
     attr: { remark: "示例3" }
   })
@@ -136,14 +144,15 @@ function addDemoGraphic4(graphicLayer) {
       [121.480136, 29.79169, 13]
     ],
     style: {
-      material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.Text, {
+      materialType: mars3d.MaterialType.Text,
+      materialOptions: {
         text: "火星科技Mars3D平台",
         font_size: 70,
-        fillColor: new Cesium.Color(1.0, 1.0, 0.0, 1.0),
+        color: new Cesium.Color(1.0, 1.0, 0.0, 1.0),
         stroke: true,
         strokeWidth: 2,
         strokeColor: new Cesium.Color(1.0, 1.0, 1.0, 0.8)
-      }),
+      },
       rotation: Cesium.Math.toRadians(163),
       stRotation: Cesium.Math.toRadians(163),
       clampToGround: true
@@ -153,60 +162,105 @@ function addDemoGraphic4(graphicLayer) {
   graphicLayer.addGraphic(rectanglePrimitive)
 }
 
-// 添加数据
-export function addDemoGraphic(count) {
+// 生成演示数据(测试数据量)
+export function addRandomGraphicByCount(count) {
   graphicLayer.clear()
+  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
 
-  map.centerAt({ lat: 29.81612, lng: 121.476177, alt: 945, heading: 179, pitch: -22 })
+  const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
+  const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
+  console.log("生成的测试网格坐标", result)
 
-  showLoading()
-  const startTime = new Date().getTime()
+  const diffHeight = result.radius * 0.5
 
-  // 取区域内的随机图标
-  function randomPoint(j) {
-    const jd = random(121.460727 * 1000, 121.494659 * 1000) / 1000
-    const wd = random(29.778576 * 1000, 29.806463 * 1000) / 1000
-    return Cesium.Cartesian3.fromDegrees(jd, wd, 20)
-  }
+  for (let j = 0; j < result.points.length; ++j) {
+    const position = result.points[j]
+    const index = j + 1
 
-  const txtWidth = 90 // 图片宽度，单位：米
-  const txtHeight = 40 // 图片高度，单位：米
+    const pt1 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 225, result.radius)
+    const pt2 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 45, result.radius)
 
-  // 多个面对象的合并渲染。
-  const instances = []
-  for (let j = 0; j < count; ++j) {
-    const position = randomPoint(j)
-
-    const pt1 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 160, txtWidth)
-
-    const primitive = new mars3d.graphic.WallPrimitive({
-      positions: [position, pt1],
+    const graphic = new mars3d.graphic.WallPrimitive({
+      positions: [pt1, pt2],
       style: {
-        diffHeight: txtHeight,
+        diffHeight: diffHeight,
         materialType: mars3d.MaterialType.Text,
-        text: "第" + j + "个",
-        font_family: "楷体",
-        fillColor: "#00ffff"
+        materialOptions: {
+          text: "第" + index + "个",
+          font_family: "楷体",
+          color: "#00ffff"
+        }
       },
-      tooltip: "第" + j + "个"
+      attr: { index: index }
     })
-    graphicLayer.addGraphic(primitive)
+    graphicLayer.addGraphic(graphic)
   }
 
-  hideLoading()
-  const endTime = new Date().getTime()
-  // 两个时间戳相差的毫秒数
-  const usedTime = (endTime - startTime) / 1000
-  console.log(usedTime)
-
-  globalMsg("共耗时" + usedTime.toFixed(2) + "秒")
+  graphicLayer.enabledEvent = true // 恢复事件
+  return result.points.length
 }
 
-// 清除数据
+// 开始绘制
+export function startDrawGraphic() {
+  graphicLayer.startDraw({
+    type: "wallP",
+    maxPointNum: 2,
+    style: {
+      diffHeight: 5,
+      materialType: mars3d.MaterialType.Text,
+      materialOptions: {
+        text: "Mars3D三维可视化平台",
+        color: "#ffff00",
+        font_family: "楷体",
+        font_size: 50
+      }
+    }
+  })
+}
 
-// 取随机数据
-function random(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min)
+// 绘制贴地矩形
+export function startDrawGraphic2() {
+  graphicLayer.startDraw({
+    type: "rectangleP",
+    style: {
+      materialType: mars3d.MaterialType.Text,
+      materialOptions: {
+        text: "Mars3D三维可视化平台"
+      },
+      clampToGround: true
+    }
+  })
+}
+
+// 根据中心点来计算矩形
+export function onClickDrawPoint() {
+  graphicLayer.startDraw({
+    type: "point",
+    style: {
+      color: "#ffff00",
+      clampToGround: true
+    },
+    success: function (graphic) {
+      const position = graphic.positionShow
+      const positions = mars3d.PolyUtil.getRectPositionsByCenter({
+        center: position,
+        width: 60,
+        height: 10
+      })
+
+      const rectangleEntity = new mars3d.graphic.RectanglePrimitive({
+        positions: positions,
+        style: {
+          materialType: mars3d.MaterialType.Text,
+          materialOptions: {
+            text: "Mars3D三维可视化平台"
+          },
+          clampToGround: true
+        }
+      })
+      graphicLayer.addGraphic(rectangleEntity)
+    }
+  })
 }
 
 // 在图层绑定Popup弹窗
@@ -221,23 +275,49 @@ export function bindLayerPopup() {
   })
 }
 
-// 在图层级处理一些事物
-function bindLayerEvent() {
-  // 在layer上绑定监听事件
-  graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("监听layer，单击了矢量对象", event)
-  })
-  /* graphicLayer.on(mars3d.EventType.mouseOver, function (event) {
-    console.log("监听layer，鼠标移入了矢量对象", event)
-  })
-  graphicLayer.on(mars3d.EventType.mouseOut, function (event) {
-    console.log("监听layer，鼠标移出了矢量对象", event)
-  }) */
-}
-
 // 绑定右键菜单
 export function bindLayerContextMenu() {
   graphicLayer.bindContextMenu([
+    {
+      text: "开始编辑对象",
+      icon: "fa fa-edit",
+      show: function (e) {
+        const graphic = e.graphic
+        if (!graphic || !graphic.hasEdit) {
+          return false
+        }
+        return !graphic.isEditing
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
+        if (graphic) {
+          graphicLayer.startEditing(graphic)
+        }
+      }
+    },
+    {
+      text: "停止编辑对象",
+      icon: "fa fa-edit",
+      show: function (e) {
+        const graphic = e.graphic
+        if (!graphic || !graphic.hasEdit) {
+          return false
+        }
+        return graphic.isEditing
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
+        if (graphic) {
+          graphic.stopEditing()
+        }
+      }
+    },
     {
       text: "删除对象",
       icon: "fa fa-trash-o",
@@ -249,16 +329,37 @@ export function bindLayerContextMenu() {
           return true
         }
       },
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         if (!graphic) {
           return
         }
-        const parent = graphic._parent // 右击是编辑点时
+        const parent = graphic.parent // 右击是编辑点时
         graphicLayer.removeGraphic(graphic)
         if (parent) {
           graphicLayer.removeGraphic(parent)
         }
+      }
+    },
+    {
+      text: "计算长度",
+      icon: "fa fa-medium",
+      callback: (e) => {
+        const graphic = e.graphic
+        const strDis = mars3d.MeasureUtil.formatDistance(graphic.distance)
+        globalAlert("该对象的长度为:" + strDis)
+      }
+    },
+    {
+      text: "计算围合面积",
+      icon: "fa fa-reorder",
+      show: (event) => {
+        return event.graphic?.positionsShow?.length > 2
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        const strArea = mars3d.MeasureUtil.formatArea(graphic.area)
+        globalAlert("该对象的面积为:" + strArea)
       }
     }
   ])

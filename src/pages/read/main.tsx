@@ -33,7 +33,7 @@ marsEditor.on("loaded", (exampleConfig) => {
           left: 50,
           bottom: 50
         },
-        warpper: "sanbox-warpper"
+        warpper: "mars-main-view"
       }
     })
   }
@@ -47,7 +47,7 @@ marsEditor.on("loaded", (exampleConfig) => {
 const WidgetView = generateWidgetView(widgetState)
 
 function initUI(simple: boolean) {
-  reactApp = createRoot(document.getElementById("mars-main-view"))
+  reactApp = createRoot(document.getElementById("mars-ui-root"))
   if (simple) {
     reactApp.render(<div></div>)
   } else {

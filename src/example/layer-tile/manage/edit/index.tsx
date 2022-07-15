@@ -277,7 +277,7 @@ function UIComponent() {
         console.log("表单验证失败")
       }
     } else {
-      mapWork.removeLayer()
+      mapWork.removeTileLayer()
     }
 
     const text = loadShow ? "加载图层" : "移除图层"
@@ -292,7 +292,7 @@ function UIComponent() {
 
     // 清除绘制区域和移除加载的矢量数据
     mapWork.btnClearExtent()
-    mapWork.removeLayer()
+    mapWork.removeTileLayer()
   }, [])
 
   // 当参数改变时，修改加载图层的部分参数
@@ -353,10 +353,16 @@ function UIComponent() {
           <MarsButton size="middle" onClick={() => reset()}>
             重置参数
           </MarsButton>
+          <MarsButton size="middle" onClick={() => saveBookmark()}>
+            保存参数
+          </MarsButton>
         </Space>
       </div>
     </MarsPannel>
   )
 }
 
+const saveBookmark = () => {
+  mapWork.saveBookmark(updateValue)
+}
 export default UIComponent

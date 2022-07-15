@@ -280,7 +280,13 @@ function getEchartsOption() {
         text: "散点图态势",
         subtext: "san dian tu taishi",
         left: "center",
-        color: "#fff"
+        textStyle: {
+          color: "#fff"
+        },
+        subtextStyle: {
+          color: "yellow",
+          fontWeight: "bold"
+        }
       },
       {
         id: "statistic",
@@ -288,7 +294,9 @@ function getEchartsOption() {
         right: 120,
         top: 40,
         width: 100,
-        color: "#fff",
+        textStyle: {
+          color: "#fff"
+        },
         fontSize: 16
       }
     ],

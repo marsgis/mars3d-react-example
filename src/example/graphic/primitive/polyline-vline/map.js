@@ -45,7 +45,7 @@ function queryPopulationApiData() {
 function showData(data) {
   const heightScale = 2000000
 
-  // 创建Graphic图层
+  // 创建矢量数据图层
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -83,7 +83,7 @@ function showData(data) {
       const surfacePosition = Cesium.Cartesian3.fromDegrees(longitude, latitude, 0)
       const heightPosition = Cesium.Cartesian3.fromDegrees(longitude, latitude, height * heightScale)
 
-      const primitive = new mars3d.graphic.PolylineEntity({
+      const graphic = new mars3d.graphic.PolylineEntity({
         positions: [surfacePosition, heightPosition],
         style: {
           width: 4,
@@ -91,7 +91,7 @@ function showData(data) {
         },
         attr: { gdp: height }
       })
-      graphicLayer.addGraphic(primitive)
+      graphicLayer.addGraphic(graphic)
     }
   }
 }

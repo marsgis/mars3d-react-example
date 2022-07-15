@@ -6,7 +6,7 @@ import "./index.less"
 export const MarsTable = forwardRef<HTMLDivElement & { className?: string }, TableProps<any>>(({ className, ...props }, ref) => {
   return (
     <ConfigProvider locale={zhCN}>
-      <Table className={["mars-table", className].join(" ")} {...props} ref={ref}></Table>
+      <Table className={["mars-table", className].join(" ")} {...props} ref={ref} size="small"></Table>
     </ConfigProvider>
   )
 })

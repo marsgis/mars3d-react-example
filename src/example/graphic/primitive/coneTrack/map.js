@@ -79,7 +79,7 @@ let coneTrack
 function addDemoGraphic2(graphicLayer) {
   const position = [116.28782, 30.971557, 5000]
   // 加个飞机
-  const primitive = new mars3d.graphic.ModelPrimitive({
+  const graphic = new mars3d.graphic.ModelPrimitive({
     position: position,
     style: {
       url: "//data.mars3d.cn/gltf/mars/feiji.glb",
@@ -88,7 +88,7 @@ function addDemoGraphic2(graphicLayer) {
     },
     attr: { remark: "示例2" }
   })
-  graphicLayer.addGraphic(primitive)
+  graphicLayer.addGraphic(graphic)
 
   // 圆锥追踪体
   coneTrack = new mars3d.graphic.ConeTrackPrimitive({
@@ -97,9 +97,10 @@ function addDemoGraphic2(graphicLayer) {
     style: {
       length: 4000,
       angle: 5, // 半场角度
-      material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.CircleWave, {
+      materialType: mars3d.MaterialType.CircleWave,
+      materialOptions: {
         color: "#02ff00"
-      })
+      }
     }
   })
   graphicLayer.addGraphic(coneTrack)
@@ -181,10 +182,11 @@ function addDemoGraphic3(graphicLayer) {
       // length: 4000, //targetPosition存在时无需传
       angle: 5, // 半场角度
       // 自定义扩散波纹纹理
-      material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.CylinderWave, {
+      materialType: mars3d.MaterialType.CylinderWave,
+      materialOptions: {
         color: "#ffff00",
         repeat: 30.0
-      }),
+      },
       faceForward: false, // 当绘制的三角面片法向不能朝向视点时，自动翻转法向，从而避免法向计算后发黑等问题
       closed: true, // 是否为封闭体，实际上执行的是 是否进行背面裁剪
       renderState: Cesium.RenderState.fromCache({
@@ -219,7 +221,35 @@ function getSampledPositionProperty(points) {
   return property
 }
 
+// 生成演示数据(测试数据量)
+export function addRandomGraphicByCount(count) {
+  graphicLayer.clear()
+  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
 
+  const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
+  const result = mars3d.PolyUtil.getGridPoints(bbox, count, 1000)
+  console.log("生成的测试网格坐标", result)
+
+  for (let j = 0; j < result.points.length; ++j) {
+    const position = result.points[j]
+    const index = j + 1
+
+    const graphic = new mars3d.graphic.ConeTrackPrimitive({
+      position: position,
+      style: {
+        length: result.radius * 2,
+        topRadius: 0.0,
+        bottomRadius: result.radius,
+        color: Cesium.Color.fromRandom({ alpha: 0.6 })
+      },
+      attr: { index: index }
+    })
+    graphicLayer.addGraphic(graphic)
+  }
+
+  graphicLayer.enabledEvent = true // 恢复事件
+  return result.points.length
+}
 
 // 在图层绑定Popup弹窗
 export function bindLayerPopup() {
@@ -233,11 +263,49 @@ export function bindLayerPopup() {
   })
 }
 
-
-
 // 绑定右键菜单
 export function bindLayerContextMenu() {
   graphicLayer.bindContextMenu([
+    {
+      text: "开始编辑对象",
+      icon: "fa fa-edit",
+      show: function (e) {
+        const graphic = e.graphic
+        if (!graphic || !graphic.hasEdit) {
+          return false
+        }
+        return !graphic.isEditing
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
+        if (graphic) {
+          graphicLayer.startEditing(graphic)
+        }
+      }
+    },
+    {
+      text: "停止编辑对象",
+      icon: "fa fa-edit",
+      show: function (e) {
+        const graphic = e.graphic
+        if (!graphic || !graphic.hasEdit) {
+          return false
+        }
+        return graphic.isEditing
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
+        if (graphic) {
+          graphic.stopEditing()
+        }
+      }
+    },
     {
       text: "删除对象",
       icon: "fa fa-trash-o",
@@ -249,12 +317,12 @@ export function bindLayerContextMenu() {
           return true
         }
       },
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         if (!graphic) {
           return
         }
-        const parent = graphic._parent // 右击是编辑点时
+        const parent = graphic.parent // 右击是编辑点时
         graphicLayer.removeGraphic(graphic)
         if (parent) {
           graphicLayer.removeGraphic(parent)

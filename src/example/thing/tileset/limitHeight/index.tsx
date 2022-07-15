@@ -2,11 +2,12 @@ import { useState } from "react"
 import * as mapWork from "./map.js"
 import { MarsPannel, MarsButton, MarsSlider, MarsFormItem, MarsForm } from "@mars/components/MarsUI"
 import { Space } from "antd"
+import "./index.less"
 
 function UIComponent(props) {
   const [limitHeight, setHeightValue] = useState(30)
   return (
-    <MarsPannel visible={true} right="10" top="10" width={310}>
+    <MarsPannel visible={true} right="10" top="10" width={320}>
       <MarsForm {...{ labelCol: { span: 6 } }}>
         <MarsFormItem label="分析区域">
           <Space>
@@ -37,17 +38,19 @@ function UIComponent(props) {
         </MarsFormItem>
 
         <MarsFormItem label="限定高度">
-          <MarsSlider
-            defaultValue={limitHeight}
-            min={0}
-            max={180}
-            onChange={(data) => {
-              setHeightValue(data)
-              mapWork.currHeight(limitHeight)
-            }}
-          />
+          <Space>
+            <MarsSlider
+              defaultValue={limitHeight}
+              min={0}
+              max={180}
+              onChange={(data) => {
+                setHeightValue(data)
+                mapWork.currHeight(limitHeight)
+              }}
+            />
+            <span> 高度 {limitHeight}</span>
+          </Space>
         </MarsFormItem>
-        <MarsFormItem label="高度">{limitHeight}</MarsFormItem>
       </MarsForm>
     </MarsPannel>
   )

@@ -3,6 +3,8 @@ import * as mars3d from "mars3d"
 export let map // mars3d.Map三维地图对象
 export let graphicLayer // 矢量图层对象
 
+export const eventTarget = new mars3d.BaseClass()
+
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
@@ -19,11 +21,14 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
-  // 创建Graphic图层
+  // 创建矢量数据图层
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  bindLayerEvent() // 对图层绑定相关事件
+  // 在layer上绑定监听事件
+  graphicLayer.on(mars3d.EventType.click, function (event) {
+    console.log("监听layer，单击了矢量对象", event)
+  })
   bindLayerPopup() // 在图层上绑定popup,对所有加到这个图层的矢量数据都生效
   bindLayerContextMenu() // 在图层绑定右键菜单,对所有加到这个图层的矢量数据都生效
 
@@ -52,7 +57,7 @@ export function onUnmounted() {
 }
 
 function addDemoGraphic1(graphicLayer) {
-  const primitive = new mars3d.graphic.PolygonPrimitive({
+  const graphic = new mars3d.graphic.PolygonPrimitive({
     positions: [
       [117.218662, 31.800226, 37.68],
       [117.227836, 31.800388, 32.98],
@@ -75,12 +80,12 @@ function addDemoGraphic1(graphicLayer) {
     },
     attr: { remark: "示例1" }
   })
-  graphicLayer.addGraphic(primitive) // primitive.addTo(graphicLayer)  //另外一种写法
+  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
 }
 
 // 图片材质
 function addDemoGraphic2(graphicLayer) {
-  const primitive = new mars3d.graphic.PolygonPrimitive({
+  const graphic = new mars3d.graphic.PolygonPrimitive({
     positions: [
       [117.187572, 31.823074, 45.53],
       [117.195377, 31.82418, 43.36],
@@ -102,11 +107,11 @@ function addDemoGraphic2(graphicLayer) {
     },
     attr: { remark: "示例2" }
   })
-  graphicLayer.addGraphic(primitive) // primitive.addTo(graphicLayer)  //另外一种写法
+  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
 }
 
 function addDemoGraphic3(graphicLayer) {
-  const primitive = new mars3d.graphic.PolygonPrimitive({
+  const graphic = new mars3d.graphic.PolygonPrimitive({
     positions: [
       [117.216386, 31.815376, 35.16],
       [117.222533, 31.81729, 29.21],
@@ -118,23 +123,25 @@ function addDemoGraphic3(graphicLayer) {
     ],
     style: {
       materialType: mars3d.MaterialType.Water,
-      normalMap: "img/textures/waterNormals.jpg", // 水正常扰动的法线图
-      frequency: 1000.0, // 控制波数的数字。
-      animationSpeed: 0.01, // 控制水的动画速度的数字。
-      amplitude: 10, // 控制水波振幅的数字。
-      specularIntensity: 0.5, // 控制镜面反射强度的数字。
-      baseWaterColor: "#006ab4", // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
-      blendColor: "#006ab4", // 从水中混合到非水域时使用的rgba颜色对象。
+      materialOptions: {
+        normalMap: "img/textures/waterNormals.jpg", // 水正常扰动的法线图
+        frequency: 1000.0, // 控制波数的数字。
+        animationSpeed: 0.01, // 控制水的动画速度的数字。
+        amplitude: 10, // 控制水波振幅的数字。
+        specularIntensity: 0.5, // 控制镜面反射强度的数字。
+        baseWaterColor: "#006ab4", // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
+        blendColor: "#006ab4" // 从水中混合到非水域时使用的rgba颜色对象。
+      },
       clampToGround: true
     },
     attr: { remark: "示例3" }
   })
-  graphicLayer.addGraphic(primitive) // primitive.addTo(graphicLayer)  //另外一种写法
+  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
 }
 
 // 面状：草地面效果
 function addDemoGraphic4(graphicLayer) {
-  const primitive = new mars3d.graphic.PolygonPrimitive({
+  const graphic = new mars3d.graphic.PolygonPrimitive({
     positions: [
       [117.319966, 31.842082, 12.29],
       [117.330034, 31.835286, 11.07],
@@ -143,20 +150,21 @@ function addDemoGraphic4(graphicLayer) {
       [117.308954, 31.828975, 16.29]
     ],
     style: {
-      material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.PolyGrass, {
-        grassColor: new Cesium.Color(0.25, 0.4, 0.1, 1.0),
-        dirtColor: new Cesium.Color(0.1, 0.1, 0.1, 1.0),
-        patchiness: 1.5 // 斑驳
-      })
+      materialType: mars3d.MaterialType.PolyGrass,
+      materialOptions: {
+        evenColor: new Cesium.Color(0.25, 0.4, 0.1, 1.0),
+        oddColor: new Cesium.Color(0.1, 0.1, 0.1, 1.0),
+        frequency: 1.5 // 斑驳
+      }
     },
     attr: { remark: "示例4" }
   })
-  graphicLayer.addGraphic(primitive) // primitive.addTo(graphicLayer)  //另外一种写法
+  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
 }
 
 // 面状：木材面效果
 function addDemoGraphic5(graphicLayer) {
-  const primitive = new mars3d.graphic.PolygonPrimitive({
+  const graphic = new mars3d.graphic.PolygonPrimitive({
     positions: [
       [117.271662, 31.870639, 21.49],
       [117.290605, 31.871517, 19.47],
@@ -165,22 +173,23 @@ function addDemoGraphic5(graphicLayer) {
       [117.267705, 31.8491, 22.11]
     ],
     style: {
-      material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.PolyWood, {
-        lightWoodColor: new Cesium.Color(0.6, 0.3, 0.1, 1.0),
-        darkWoodColor: new Cesium.Color(0.4, 0.2, 0.07, 1.0),
-        ringFrequency: 10.0, // 环 频率
+      materialType: mars3d.MaterialType.PolyWood,
+      materialOptions: {
+        evenColor: new Cesium.Color(0.6, 0.3, 0.1, 1.0),
+        oddColor: new Cesium.Color(0.4, 0.2, 0.07, 1.0),
+        frequency: 10.0, // 环 频率
         noiseScale: new Cesium.Cartesian2(0.7, 0.5),
         grainFrequency: 27.0 // 波纹 频率
-      })
+      }
     },
     attr: { remark: "示例5" }
   })
-  graphicLayer.addGraphic(primitive) // primitive.addTo(graphicLayer)  //另外一种写法
+  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
 }
 
 // 面状：混合效果
 function addDemoGraphic6(graphicLayer) {
-  const primitive = new mars3d.graphic.PolygonPrimitive({
+  const graphic = new mars3d.graphic.PolygonPrimitive({
     positions: [
       [117.154815, 31.853495],
       [117.181255, 31.854257],
@@ -197,20 +206,21 @@ function addDemoGraphic6(graphicLayer) {
       [117.154815, 31.853495]
     ],
     style: {
-      material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.PolyBlob, {
-        lightColor: new Cesium.Color(1.0, 1.0, 1.0, 0.5),
-        darkColor: new Cesium.Color(0.0, 0.0, 1.0, 0.5),
+      materialType: mars3d.MaterialType.PolyBlob,
+      materialOptions: {
+        evenColor: new Cesium.Color(1.0, 1.0, 1.0, 0.5),
+        oddColor: new Cesium.Color(0.0, 0.0, 1.0, 0.5),
         frequency: 30.0 // 次数
-      })
+      }
     },
     attr: { remark: "示例6" }
   })
-  graphicLayer.addGraphic(primitive) // primitive.addTo(graphicLayer)  //另外一种写法
+  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
 }
 
 // 面状： 柏油路面效果
 function addDemoGraphic7(graphicLayer) {
-  const primitive = new mars3d.graphic.PolygonPrimitive({
+  const graphic = new mars3d.graphic.PolygonPrimitive({
     positions: [
       [117.208302, 31.85757],
       [117.234234, 31.858263],
@@ -219,20 +229,21 @@ function addDemoGraphic7(graphicLayer) {
       [117.208302, 31.85757]
     ],
     style: {
-      material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.PolyAsphalt, {
-        asphaltColor: new Cesium.Color(0.15, 0.15, 0.15, 1.0),
-        bumpSize: 0.005, // 凹凸大小
-        roughness: 0.2 // 粗糙
-      })
+      materialType: mars3d.MaterialType.PolyAsphalt,
+      materialOptions: {
+        color: new Cesium.Color(0.15, 0.15, 0.15, 1.0),
+        size: 0.005, // 凹凸大小
+        frequency: 0.2 // 粗糙
+      }
     },
     attr: { remark: "示例7" }
   })
-  graphicLayer.addGraphic(primitive) // primitive.addTo(graphicLayer)  //另外一种写法
+  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
 }
 
 // 面状：碎石面效果
 function addDemoGraphic8(graphicLayer) {
-  const primitive = new mars3d.graphic.PolygonPrimitive({
+  const graphic = new mars3d.graphic.PolygonPrimitive({
     positions: [
       [117.275127, 31.839641, 25.1],
       [117.291876, 31.83181, 23.6],
@@ -243,19 +254,20 @@ function addDemoGraphic8(graphicLayer) {
     ],
     style: {
       width: 5,
-      material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.PolyFacet, {
-        lightColor: new Cesium.Color(0.25, 0.25, 0.25, 0.75),
-        darkColor: new Cesium.Color(0.75, 0.75, 0.75, 0.75),
+      materialType: mars3d.MaterialType.PolyFacet,
+      materialOptions: {
+        evenColor: new Cesium.Color(0.25, 0.25, 0.25, 0.75),
+        oddColor: new Cesium.Color(0.75, 0.75, 0.75, 0.75),
         frequency: 50.0 // 次数
-      })
+      }
     },
     attr: { remark: "示例8" }
   })
-  graphicLayer.addGraphic(primitive) // primitive.addTo(graphicLayer)  //另外一种写法
+  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
 }
 
 function addDemoGraphic9(graphicLayer) {
-  const primitive = new mars3d.graphic.PolygonPrimitive({
+  const graphic = new mars3d.graphic.PolygonPrimitive({
     positions: [
       [117.261476, 31.799865, 20.8],
       [117.270864, 31.804957, 26],
@@ -266,10 +278,11 @@ function addDemoGraphic9(graphicLayer) {
     style: {
       height: 50,
       diffHeight: 300,
-      material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.PolyGradient, {
+      materialType: mars3d.MaterialType.PolyGradient,
+      materialOptions: {
         color: "#3388cc",
         alphaPower: 1.5
-      }),
+      },
       label: {
         text: "Mars3D平台",
         font_family: "楷体",
@@ -280,19 +293,19 @@ function addDemoGraphic9(graphicLayer) {
     },
     attr: { remark: "示例9" }
   })
-  graphicLayer.addGraphic(primitive) // primitive.addTo(graphicLayer)  //另外一种写法
+  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
 }
 
 function addDemoGraphic10(graphicLayer) {
-  const primitive = new mars3d.graphic.PolygonPrimitive({
+  const graphic = new mars3d.graphic.PolygonPrimitive({
     positions: [
       // 外环
       [
-        [117.24586, 31.832682, 38],
-        [117.259349, 31.83163, 33.4],
-        [117.255132, 31.822268, 33.6],
-        [117.247102, 31.822399, 23.6],
-        [117.241675, 31.827205, 30.8]
+        [117.24679, 31.835806, 35.8],
+        [117.258539, 31.832093, 36],
+        [117.254762, 31.8219, 33.3],
+        [117.24656, 31.8196, 24.8],
+        [117.240134, 31.827664, 27.4]
       ],
       // 内环
       [
@@ -308,11 +321,11 @@ function addDemoGraphic10(graphicLayer) {
     },
     attr: { remark: "示例10" }
   })
-  graphicLayer.addGraphic(primitive) // primitive.addTo(graphicLayer)  //另外一种写法
+  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
 }
 
 function addDemoGraphic11(graphicLayer) {
-  const primitive = new mars3d.graphic.PolygonPrimitive({
+  const graphic = new mars3d.graphic.PolygonPrimitive({
     positions: [
       [117.232633, 31.816532, 31.2],
       [117.247045, 31.816953, 25.8],
@@ -322,61 +335,82 @@ function addDemoGraphic11(graphicLayer) {
     ],
     style: {
       materialType: mars3d.MaterialType.WaterLight,
-      specularMap: "img/textures/poly-stone.jpg",
-      alpha: 0.6,
+      materialOptions: {
+        specularMap: "img/textures/poly-stone.jpg",
+        alpha: 0.6
+      },
       clampToGround: true
     },
     attr: { remark: "示例3" }
   })
-  graphicLayer.addGraphic(primitive) // primitive.addTo(graphicLayer)  //另外一种写法
+  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
 }
 
-// 生成数据
-export function addDemoGraphic(count) {
+// 生成演示数据(测试数据量)
+export function addRandomGraphicByCount(count) {
   graphicLayer.clear()
+  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
 
-  showLoading()
+  const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
+  const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
+  console.log("生成的测试网格坐标", result)
 
-  const startTime = new Date().getTime()
+  for (let j = 0; j < result.points.length; ++j) {
+    const position = result.points[j]
+    const index = j + 1
 
-  count = count * 10000
+    const pt1 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 0, result.radius)
+    const pt2 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 72, result.radius)
+    const pt3 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 144, result.radius)
+    const pt4 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 216, result.radius)
+    const pt5 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 288, result.radius)
 
-  for (let j = 0; j < count; ++j) {
-    const position = randomPoint()
-    const pt1 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 45, 500)
-    const pt2 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 135, 500)
-    const pt3 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 225, 500)
-    const pt4 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 315, 500)
-
-    const primitive = new mars3d.graphic.PolygonPrimitive({
-      positions: [pt1, pt2, pt3, pt4, pt1],
+    const graphic = new mars3d.graphic.PolygonPrimitive({
+      positions: [pt1, pt2, pt3, pt4, pt5],
       style: {
-        height: random(30, 4000),
-        color: Cesium.Color.fromRandom().withAlpha(0.7)
+        color: Cesium.Color.fromRandom({ alpha: 0.6 })
       },
-      tooltip: "第" + j + "个"
+      attr: { index: index }
     })
-    graphicLayer.addGraphic(primitive)
+    graphicLayer.addGraphic(graphic)
   }
 
-  hideLoading()
-  const endTime = new Date().getTime()
-  // 两个时间戳相差的毫秒数
-  const usedTime = (endTime - startTime) / 1000
-  globalMsg("共耗时" + usedTime.toFixed(2) + "秒")
+  graphicLayer.enabledEvent = true // 恢复事件
+  return result.points.length
 }
 
-// 取区域内的随机点
-function randomPoint() {
-  const jd = random(116.955684 * 1000, 117.474003 * 1000) / 1000
-  const wd = random(31.7576 * 1000, 32.008782 * 1000) / 1000
-  return Cesium.Cartesian3.fromDegrees(jd, wd)
+// 开始绘制
+export function startDrawGraphic() {
+  graphicLayer.startDraw({
+    type: "polygonP",
+    style: {
+      color: "#29cf34",
+      opacity: 0.5,
+      outline: true,
+      outlineWidth: 3,
+      outlineColor: "#ffffff",
+      label: {
+        text: "我是火星科技",
+        font_size: 18,
+        color: "#ffffff",
+        distanceDisplayCondition: true,
+        distanceDisplayCondition_far: 500000,
+        distanceDisplayCondition_near: 0
+      }
+    }
+  })
 }
-function random(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min)
+// 开始绘制
+export function startDrawGraphic2() {
+  graphicLayer.startDraw({
+    type: "polygonP",
+    style: {
+      color: "#00ff00",
+      opacity: 0.5,
+      diffHeight: 300
+    }
+  })
 }
-
-// 清除数据
 
 // 在图层绑定Popup弹窗
 export function bindLayerPopup() {
@@ -390,23 +424,49 @@ export function bindLayerPopup() {
   })
 }
 
-// 在图层级处理一些事物
-function bindLayerEvent() {
-  // 在layer上绑定监听事件
-  graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("监听layer，单击了矢量对象", event)
-  })
-  /* graphicLayer.on(mars3d.EventType.mouseOver, function (event) {
-    console.log("监听layer，鼠标移入了矢量对象", event)
-  })
-  graphicLayer.on(mars3d.EventType.mouseOut, function (event) {
-    console.log("监听layer，鼠标移出了矢量对象", event)
-  }) */
-}
-
 // 绑定右键菜单
 export function bindLayerContextMenu() {
   graphicLayer.bindContextMenu([
+    {
+      text: "开始编辑对象",
+      icon: "fa fa-edit",
+      show: function (e) {
+        const graphic = e.graphic
+        if (!graphic || !graphic.hasEdit) {
+          return false
+        }
+        return !graphic.isEditing
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
+        if (graphic) {
+          graphicLayer.startEditing(graphic)
+        }
+      }
+    },
+    {
+      text: "停止编辑对象",
+      icon: "fa fa-edit",
+      show: function (e) {
+        const graphic = e.graphic
+        if (!graphic || !graphic.hasEdit) {
+          return false
+        }
+        return graphic.isEditing
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
+        if (graphic) {
+          graphic.stopEditing()
+        }
+      }
+    },
     {
       text: "删除对象",
       icon: "fa fa-trash-o",
@@ -418,22 +478,23 @@ export function bindLayerContextMenu() {
           return true
         }
       },
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         if (!graphic) {
           return
         }
-        const parent = graphic._parent // 右击是编辑点时
+        const parent = graphic.parent // 右击是编辑点时
         graphicLayer.removeGraphic(graphic)
         if (parent) {
           graphicLayer.removeGraphic(parent)
         }
       }
     },
+
     {
       text: "计算周长",
       icon: "fa fa-medium",
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         const strDis = mars3d.MeasureUtil.formatDistance(graphic.distance)
         globalAlert("该对象的周长为:" + strDis)
@@ -442,7 +503,7 @@ export function bindLayerContextMenu() {
     {
       text: "计算面积",
       icon: "fa fa-reorder",
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         const strArea = mars3d.MeasureUtil.formatArea(graphic.area)
         globalAlert("该对象的面积为:" + strArea)

@@ -1,8 +1,8 @@
 import * as mars3d from "mars3d"
 
 export let map // mars3d.Map三维地图对象
-let camberRadar
-let graphicLayer
+export let graphicLayer
+export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
 
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
@@ -16,7 +16,6 @@ export const mapOptions = {
     sceneModePicker: false
   }
 }
-export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
 
 /**
  * 初始化地图业务，生命周期钩子函数（必须）
@@ -53,29 +52,10 @@ export function onUnmounted() {
   map = null
 }
 
-/**
- * 地图加载完成，添加一个双曲面雷达
- *
- * @export
- * @param {Object} radarParsms
- * @returns {void}
- */
-export function getViewConfig(radarParsms) {
-  const style = {
-    radius: radarParsms.outerRadius,
-    startRadius: radarParsms.innerRadius,
+export function addDemoGraphic1(radarParsms) {
 
-    heading: radarParsms.headingValue,
-    pitch: radarParsms.pitchValue,
-    roll: radarParsms.rollValue,
 
-    startFovH: Cesium.Math.toRadians(radarParsms.startFovH),
-    endFovH: Cesium.Math.toRadians(radarParsms.endFovH),
-    startFovV: Cesium.Math.toRadians(radarParsms.startFovV),
-    endFovV: Cesium.Math.toRadians(radarParsms.endFovV)
-  }
-
-  camberRadar = new mars3d.graphic.CamberRadar({
+  const camberRadar = new mars3d.graphic.CamberRadar({
     position: [117.170264, 31.840312, 363],
     style: {
       color: "#ff0000",
@@ -83,44 +63,154 @@ export function getViewConfig(radarParsms) {
       outline: true,
       outlineColor: "#ffffff",
       segmentH: 50,
-      ...style
+      radius: radarParsms.outerRadius,
+      startRadius: radarParsms.innerRadius,
+      heading: radarParsms.headingValue,
+      pitch: radarParsms.pitchValue,
+      roll: radarParsms.rollValue,
+      startFovH: Cesium.Math.toRadians(radarParsms.startFovH),
+      endFovH: Cesium.Math.toRadians(radarParsms.endFovH),
+      startFovV: Cesium.Math.toRadians(radarParsms.startFovV),
+      endFovV: Cesium.Math.toRadians(radarParsms.endFovV),
+      flat: true
     }
   })
   graphicLayer.addGraphic(camberRadar)
 }
 
+// 生成演示数据(测试数据量)
+export function addRandomGraphicByCount(count) {
+  graphicLayer.clear()
+  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
+
+  const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
+  const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
+  console.log("生成的测试网格坐标", result)
+
+  for (let j = 0; j < result.points.length; ++j) {
+    const position = result.points[j]
+    const index = j + 1
+
+    const graphic = new mars3d.graphic.CamberRadar({
+      position: position,
+      style: {
+        color: "#ff0000",
+        opacity: 0.5,
+        outline: true,
+        outlineColor: "#ffffff",
+        segmentH: 50,
+        radius: result.radius,
+        startRadius: result.radius * 0.3,
+        startFovH: Cesium.Math.toRadians(180),
+        endFovH: Cesium.Math.toRadians(-180),
+        startFovV: Cesium.Math.toRadians(0),
+        endFovV: Cesium.Math.toRadians(90)
+      },
+      attr: { index: index }
+    })
+    graphicLayer.addGraphic(graphic)
+  }
+
+  graphicLayer.enabledEvent = true // 恢复事件
+  return result.points.length
+}
+
+// 开始绘制 相阵控雷达
+export function startDrawGraphic() {
+  graphicLayer.startDraw({
+    type: "camberRadar",
+    style: {
+      color: "#ff0000",
+      opacity: 0.5,
+      outline: true,
+      outlineColor: "#ffffff",
+      segmentH: 50,
+      radius: 2000,
+      startRadius: 800,
+      startFovH: Cesium.Math.toRadians(180),
+      endFovH: Cesium.Math.toRadians(-180),
+      startFovV: Cesium.Math.toRadians(0),
+      endFovV: Cesium.Math.toRadians(90)
+    }
+  })
+}
+
+// 取图层的最后一条数据，用于测试参数调整
+function getLastGraphic() {
+  const arr = graphicLayer.getGraphics()
+  if (arr.length === 0) {
+    return null
+  } else {
+    return arr[arr.length - 1]
+  }
+}
+
 export function headingChange(value) {
-  camberRadar.heading = value
+  const camberRadar = getLastGraphic()
+  if (camberRadar) {
+    camberRadar.heading = value
+  }
 }
 
 export function pitchChange(value) {
-  camberRadar.pitch = value
+  const camberRadar = getLastGraphic()
+  if (camberRadar) {
+    camberRadar.pitch = value
+  }
 }
 
 export function rollChange(value) {
-  camberRadar.roll = value
+  const camberRadar = getLastGraphic()
+  if (camberRadar) {
+    camberRadar.roll = value
+  }
 }
 
 export function outerRadiusChange(val) {
-  camberRadar.radius = val
+  const camberRadar = getLastGraphic()
+  if (camberRadar) {
+    camberRadar.radius = val
+  }
 }
 
 export function innerRadiusChange(val) {
-  camberRadar.startRadius = val
+  const camberRadar = getLastGraphic()
+  if (camberRadar) {
+    camberRadar.startRadius = val
+  }
 }
 
 export function startFovHChange(value) {
-  camberRadar.startFovH = Cesium.Math.toRadians(value)
+  const camberRadar = getLastGraphic()
+  if (camberRadar) {
+    camberRadar.startFovH = Cesium.Math.toRadians(value)
+  }
 }
 
 export function endFovHChange(value) {
-  camberRadar.endFovH = Cesium.Math.toRadians(value)
+  const camberRadar = getLastGraphic()
+  if (camberRadar) {
+    camberRadar.endFovH = Cesium.Math.toRadians(value)
+  }
 }
 
 export function startFovVChange(value) {
-  camberRadar.startFovV = Cesium.Math.toRadians(value)
+  const camberRadar = getLastGraphic()
+  if (camberRadar) {
+    camberRadar.startFovV = Cesium.Math.toRadians(value)
+  }
 }
 
 export function endFovVChange(value) {
-  camberRadar.endFovV = Cesium.Math.toRadians(value)
+  const camberRadar = getLastGraphic()
+  if (camberRadar) {
+    camberRadar.endFovV = Cesium.Math.toRadians(value)
+  }
+}
+
+export function updateColor(value) {
+  const camberRadar = getLastGraphic()
+  if (camberRadar) {
+    camberRadar.color = value
+  }
 }

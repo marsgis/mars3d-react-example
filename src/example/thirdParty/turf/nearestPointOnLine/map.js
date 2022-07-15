@@ -88,10 +88,10 @@ function nearPoint() {
   const position = snapped.geometry.coordinates
 
   // 最近点（图标点）
-  const primitive = new mars3d.graphic.BillboardPrimitive({
+  const graphic = new mars3d.graphic.BillboardPrimitive({
     position: position,
     style: {
-      image: "img/marker/mark3.png",
+      image: "img/marker/mark-blue.png",
       scale: 1,
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
@@ -100,7 +100,7 @@ function nearPoint() {
     },
     popup: "最近点"
   })
-  pointLayer.addGraphic(primitive)
+  pointLayer.addGraphic(graphic)
 }
 
 // 清除数据

@@ -13,8 +13,6 @@ export const mapOptions = {
   }
 }
 
-export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
-
 /**
  * 初始化地图业务，生命周期钩子函数（必须）
  * 框架在地图初始化完成后自动调用该函数
@@ -24,7 +22,7 @@ export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
-  // 创建Graphic图层
+  // 创建矢量数据图层
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -34,9 +32,12 @@ export function onMounted(mapInstance) {
     // let attr = event.graphic.attr
     console.log("单击了合并对象中的单个值为", pickedItem)
   })
+
   bindLayerPopup() // 在图层上绑定popup,对所有加到这个图层的矢量数据都生效
 
-  addDemoGraphic(1)
+  // 加演示数据
+  addRandomGraphicByCount(10000)
+  graphicLayer.flyTo()
 }
 
 /**
@@ -47,34 +48,35 @@ export function onUnmounted() {
   map = null
 }
 
-// 生成演示数据
-export function addDemoGraphic(num) {
+// 生成演示数据(测试数据量)
+export function addRandomGraphicByCount(count) {
   graphicLayer.clear()
-
-  showLoading()
-  const startTime = new Date().getTime()
-
-  const count = num * 10000
-  const gridSize = 45 / Math.sqrt(count)
+  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
 
   const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
-  const geojson = turf.pointGrid(bbox, gridSize, { units: "kilometers" })
-  const arrData = mars3d.Util.geoJsonToGraphics(geojson) // 解析geojson
+  const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
+  console.log("生成的测试网格坐标", result)
 
-  const radius = (gridSize * 1000) / 2
+  const radius = result.radius
+  const dimensions = new Cesium.Cartesian3(radius, radius, radius)
 
-  for (let j = 0; j < arrData.length; ++j) {
-    arrData[j].style = {
-      dimensions: new Cesium.Cartesian3(radius, radius, radius),
-      color: Cesium.Color.fromRandom({ alpha: 0.5 })
-    }
-    arrData[j].attr = {
-      name: "第" + j + "个"
-    }
+  const arrData = []
+  for (let j = 0; j < result.points.length; ++j) {
+    const position = result.points[j]
+    const index = j + 1
+
+    arrData.push({
+      position: position,
+      style: {
+        dimensions: dimensions,
+        color: Cesium.Color.fromRandom({ alpha: 0.6 })
+      },
+      attr: { index: index }
+    })
   }
 
   // 多个矢量对象的合并渲染。
-  const primitive = new mars3d.graphic.BoxCombine({
+  const graphic = new mars3d.graphic.BoxCombine({
     instances: arrData,
     // style: {
     //   outline: true,
@@ -87,15 +89,10 @@ export function addDemoGraphic(num) {
       color: Cesium.Color.YELLOW.withAlpha(0.9)
     }
   })
-  graphicLayer.addGraphic(primitive)
+  graphicLayer.addGraphic(graphic)
 
-  hideLoading()
-  const endTime = new Date().getTime()
-  // 两个时间戳相差的毫秒数
-  const usedTime = (endTime - startTime) / 1000
-  // console.log(usedTime);
-
-  globalMsg("生成" + arrData.length + "条数据，共耗时" + usedTime.toFixed(2) + "秒")
+  graphicLayer.enabledEvent = true // 恢复事件
+  return result.points.length
 }
 
 // 在图层绑定Popup弹窗

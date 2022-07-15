@@ -5,7 +5,7 @@ export let map // mars3d.Map三维地图对象
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: 31.466724, lng: 119.306582, alt: 182294, heading: 359, pitch: -68 }
+    center: { lat: 25.873121, lng: 119.290515, alt: 51231, heading: 2, pitch: -71 }
   }
 }
 
@@ -17,13 +17,14 @@ export const mapOptions = {
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
+  // map.basemap = 2017 // 蓝色底图
 
-  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/heat.json" })
-    .then(function (data) {
+  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/heat-fuzhou.json" })
+    .then(function (result) {
       const arrPoints = []
-      for (let i = 0; i < data.Data.length; i++) {
-        const item = data.Data[i]
-        arrPoints.push({ lng: item.X, lat: item.Y, value: item.Count })
+      for (let i = 0; i < result.Data.length; i++) {
+        const item = result.Data[i]
+        arrPoints.push({ lng: item.x, lat: item.y, value: item.t0 })
       }
       showHeatMap(arrPoints)
     })
@@ -45,9 +46,19 @@ function showHeatMap(arrPoints) {
   const heatLayer = new mars3d.layer.HeatLayer({
     positions: arrPoints,
     // 以下为热力图本身的样式参数，可参阅api：https://www.patrick-wied.at/static/heatmapjs/docs.html
+    max: 20000,
     heatStyle: {
-      radius: 120,
-      blur: 0.85
+      radius: 20,
+      minOpacity: 0,
+      maxOpacity: 0.4,
+      blur: 0.3,
+      gradient: {
+        0: "#e9ec36",
+        0.25: "#ffdd2f",
+        0.5: "#fa6c20",
+        0.75: "#fe4a33",
+        1: "#ff0000"
+      }
     },
     // 以下为矩形矢量对象的样式参数
     style: {

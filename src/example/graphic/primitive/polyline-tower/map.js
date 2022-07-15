@@ -21,7 +21,7 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
-  // 创建Graphic图层
+  // 创建矢量数据图层
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -137,7 +137,7 @@ function showData(arrdata) {
 function drawWireTowerModel(position, degree, inthtml) {
   const modelUrls = ["tower.glb", "V.glb", "vertical01.glb", "vertical02.glb"]
   for (let j = 0; j < modelUrls.length; j++) {
-    const primitive = new mars3d.graphic.ModelPrimitive({
+    const graphic = new mars3d.graphic.ModelPrimitive({
       position: position,
       style: {
         url: "//data.mars3d.cn/gltf/mars/tower/" + modelUrls[j],
@@ -146,21 +146,21 @@ function drawWireTowerModel(position, degree, inthtml) {
         distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 4000.0)
       }
     })
-    graphicLayer.addGraphic(primitive)
+    graphicLayer.addGraphic(graphic)
 
-    primitive.bindPopup(inthtml)
+    graphic.bindPopup(inthtml)
   }
 }
 
 function drawGuideLine(positions, color) {
-  const primitive = new mars3d.graphic.PolylinePrimitive({
+  const graphic = new mars3d.graphic.PolylinePrimitive({
     positions: positions,
     style: {
       width: 4,
       color: color
     }
   })
-  graphicLayer.addGraphic(primitive)
+  graphicLayer.addGraphic(graphic)
 }
 
 // 绘制断面图echarts图表

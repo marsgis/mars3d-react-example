@@ -24,7 +24,10 @@ export function onMounted(mapInstance) {
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  bindLayerEvent() // 对图层绑定相关事件
+  // 在layer上绑定监听事件
+  graphicLayer.on(mars3d.EventType.click, function (event) {
+    console.log("监听layer，单击了矢量对象", event)
+  })
   bindLayerPopup() // 在图层上绑定popup,对所有加到这个图层的矢量数据都生效
   bindLayerContextMenu() // 在图层绑定右键菜单,对所有加到这个图层的矢量数据都生效
 
@@ -51,6 +54,8 @@ export function onMounted(mapInstance) {
  */
 export function onUnmounted() {
   map = null
+  graphicLayer.remove()
+  graphicLayer = null
 }
 
 function addDemoGraphic1(graphicLayer) {
@@ -83,7 +88,55 @@ function addDemoGraphic1(graphicLayer) {
   graphicLayer.addGraphic(graphic)
 
   // 演示个性化处理graphic
-  initGraphicManager(graphic)
+  // initGraphicManager(graphic)
+}
+
+// 也可以在单个Graphic上做个性化管理及绑定操作
+function initGraphicManager(graphic) {
+  // 3.在graphic上绑定监听事件
+  // graphic.on(mars3d.EventType.click, function (event) {
+  //   console.log("监听graphic，单击了矢量对象", event)
+  // })
+  // 绑定Tooltip
+  // graphic.bindTooltip('我是graphic上绑定的Tooltip') //.openTooltip()
+
+  // 绑定Popup
+  const inthtml = `<table style="width: auto;">
+            <tr>
+              <th scope="col" colspan="2" style="text-align:center;font-size:15px;">我是graphic上绑定的Popup </th>
+            </tr>
+            <tr>
+              <td>提示：</td>
+              <td>这只是测试信息，可以任意html</td>
+            </tr>
+          </table>`
+  graphic.bindPopup(inthtml).openPopup()
+
+  // 绑定右键菜单
+  graphic.bindContextMenu([
+    {
+      text: "删除对象[graphic绑定的]",
+      icon: "fa fa-trash-o",
+      callback: (e) => {
+        const graphic = e.graphic
+        if (graphic) {
+          graphic.remove()
+        }
+      }
+    }
+  ])
+
+  // 测试 颜色闪烁
+  if (graphic.startFlicker) {
+    graphic.startFlicker({
+      time: 20, // 闪烁时长（秒）
+      maxAlpha: 0.5,
+      color: Cesium.Color.YELLOW,
+      onEnd: function () {
+        // 结束后回调
+      }
+    })
+  }
 }
 
 // 有衬色边线,附带的label演示，导出geojson，加载geojson
@@ -95,11 +148,12 @@ function addDemoGraphic2(graphicLayer) {
     ],
     style: {
       width: 6,
-      material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.PolylineOutline, {
+      materialType: mars3d.MaterialType.PolylineOutline,
+      materialOptions: {
         color: Cesium.Color.ORANGE,
         outlineWidth: 2,
         outlineColor: Cesium.Color.BLACK
-      }),
+      },
       label: {
         text: "我是原始线",
         font_size: 18,
@@ -143,9 +197,10 @@ function addDemoGraphic3(graphicLayer) {
     style: {
       width: 8,
       clampToGround: true,
-      material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.PolylineArrow, {
+      materialType: mars3d.MaterialType.PolylineArrow,
+      materialOptions: {
         color: Cesium.Color.YELLOW
-      })
+      }
     },
     attr: { remark: "示例3" }
   })
@@ -162,10 +217,11 @@ function addDemoGraphic4(graphicLayer) {
     style: {
       width: 5,
       clampToGround: true,
-      material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.PolylineDash, {
+      materialType: mars3d.MaterialType.PolylineDash,
+      materialOptions: {
         color: Cesium.Color.CYAN,
         dashLength: 8.0
-      })
+      }
     },
     attr: { remark: "示例4" }
   })
@@ -182,11 +238,12 @@ function addDemoGraphic5(graphicLayer) {
     ],
     style: {
       width: 5,
-      material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.PolylineDash, {
+      materialType: mars3d.MaterialType.PolylineDash,
+      materialOptions: {
         color: Cesium.Color.BLUE,
         gapColor: Cesium.Color.YELLOW,
         dashPattern: parseInt("1111000000", 2)
-      })
+      }
     },
     attr: { remark: "示例5" }
   })
@@ -201,11 +258,12 @@ function addDemoGraphic6(graphicLayer) {
     ],
     style: {
       width: 5,
-      material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
+      materialType: mars3d.MaterialType.LineFlow,
+      materialOptions: {
         color: "#00ff00",
         image: "img/textures/line-pulse.png",
         speed: 3
-      })
+      }
     },
     attr: { remark: "示例6" }
   })
@@ -222,12 +280,13 @@ function addDemoGraphic7(graphicLayer) {
     style: {
       width: 8,
       // 动画线材质
-      material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
+      materialType: mars3d.MaterialType.LineFlow,
+      materialOptions: {
         color: "#66bd63",
         repeat: new Cesium.Cartesian2(2.0, 1.0),
         image: "img/textures/line-gradual.png",
         speed: 25
-      })
+      }
     },
     attr: { remark: "示例7" }
   })
@@ -244,12 +303,13 @@ function addDemoGraphic8(graphicLayer) {
     style: {
       width: 10,
       // 动画线材质
-      material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
+      materialType: mars3d.MaterialType.LineFlow,
+      materialOptions: {
         color: "#1a9850",
         image: "img/textures/line-arrow-blue.png",
         speed: 20,
         repeat: new Cesium.Cartesian2(5, 1)
-      })
+      }
     },
     attr: { remark: "示例8" }
   })
@@ -266,12 +326,13 @@ function addDemoGraphic9(graphicLayer) {
     positions: positions,
     style: {
       width: 5,
-      material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlowColor, {
+      materialType: mars3d.MaterialType.LineFlowColor,
+      materialOptions: {
         color: "#00ffff",
         speed: 10,
         percent: 0.15,
         alpha: 0.2
-      })
+      }
     },
     attr: { remark: "示例9" }
   })
@@ -287,10 +348,11 @@ function addDemoGraphic10(graphicLayer) {
     positions: positions,
     style: {
       width: 10,
-      material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
+      materialType: mars3d.MaterialType.LineFlow,
+      materialOptions: {
         image: "img/textures/line-colour.png",
         speed: 10
-      })
+      }
     },
     attr: { remark: "示例10" }
   })
@@ -305,12 +367,13 @@ function addDemoGraphic11(graphicLayer) {
     ],
     style: {
       width: 10,
-      material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
+      materialType: mars3d.MaterialType.LineFlow,
+      materialOptions: {
         color: Cesium.Color.AQUA,
         image: "./img/textures/arrow-h.png",
         repeat: new Cesium.Cartesian2(20, 1),
         speed: 30
-      })
+      }
     },
     attr: { remark: "示例11" }
   })
@@ -325,12 +388,13 @@ function addDemoGraphic12(graphicLayer) {
     ],
     style: {
       width: 18,
-      material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
+      materialType: mars3d.MaterialType.LineFlow,
+      materialOptions: {
         color: "#a6d96a",
         repeat: new Cesium.Cartesian2(4.0, 1.0),
         image: "img/textures/line-arrow-dovetail.png",
         speed: 20
-      })
+      }
     },
     attr: { remark: "示例12" }
   })
@@ -346,11 +410,12 @@ function addDemoGraphic13(graphicLayer) {
     style: {
       width: 5,
       clampToGround: true,
-      material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
+      materialType: mars3d.MaterialType.LineFlow,
+      materialOptions: {
         color: Cesium.Color.CHARTREUSE,
         image: "img/textures/line-color-yellow.png",
         speed: 25
-      })
+      }
     },
     attr: { remark: "示例13" }
   })
@@ -366,146 +431,51 @@ function addDemoGraphic14(graphicLayer) {
     style: {
       width: 5,
       clampToGround: true,
-      material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
+      materialType: mars3d.MaterialType.LineFlow,
+      materialOptions: {
         color: "rgba(89,249,255,0.8)",
         image: "img/textures/line-tarans.png",
         speed: 8
-      })
+      }
     },
     attr: { remark: "示例14" }
   })
   graphicLayer.addGraphic(graphic)
 }
 
-// 在图层级处理一些事物
-function bindLayerEvent() {
-  // 在layer上绑定监听事件
-  graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("监听layer，单击了矢量对象", event)
-  })
-  /* graphicLayer.on(mars3d.EventType.mouseOver, function (event) {
-    console.log("监听layer，鼠标移入了矢量对象", event)
-  })
-  graphicLayer.on(mars3d.EventType.mouseOut, function (event) {
-    console.log("监听layer，鼠标移出了矢量对象", event)
-  }) */
+// 生成演示数据(测试数据量)
+export function addRandomGraphicByCount(count) {
+  graphicLayer.clear()
+  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
 
-  // 数据编辑相关事件， 用于属性弹窗的交互
-  graphicLayer.on(mars3d.EventType.drawCreated, function (e) {
-    eventTarget.fire("graphicEditor-start", e)
-  })
-  graphicLayer.on(
-    [mars3d.EventType.editStart, mars3d.EventType.editMovePoint, mars3d.EventType.editStyle, mars3d.EventType.editRemovePoint],
-    function (e) {
-      eventTarget.fire("graphicEditor-update", e)
-    }
-  )
-  graphicLayer.on([mars3d.EventType.editStop, mars3d.EventType.removeGraphic], function (e) {
-    eventTarget.fire("graphicEditor-stop", e)
-  })
-}
+  const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
+  const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
+  console.log("生成的测试网格坐标", result)
 
+  for (let j = 0; j < result.points.length; ++j) {
+    const position = result.points[j]
+    const index = j + 1
 
+    const pt1 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 225, result.radius)
+    const pt2 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 315, result.radius)
 
-// 在图层绑定Popup弹窗
-export function bindLayerPopup() {
-  graphicLayer.bindPopup(function (event) {
-    const attr = event.graphic.attr || {}
-    attr["类型"] = event.graphic.type
-    attr["来源"] = "我是layer上绑定的Popup"
-    attr["备注"] = "我支持鼠标交互"
-
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
-  })
-}
-
-
-
-// 绑定右键菜单
-export function bindLayerContextMenu() {
-  graphicLayer.bindContextMenu([
-    {
-      text: "开始编辑对象",
-      icon: "fa fa-edit",
-      show: function (e) {
-        const graphic = e.graphic
-        if (!graphic || !graphic.startEditing) {
-          return false
-        }
-        return !graphic.isEditing
+    const graphic = new mars3d.graphic.PolylineEntity({
+      positions: [pt1, position, pt2],
+      style: {
+        width: 3.0,
+        color: Cesium.Color.fromRandom({ alpha: 1.0 })
       },
-      callback: function (e) {
-        const graphic = e.graphic
-        if (!graphic) {
-          return false
-        }
-        if (graphic) {
-          graphicLayer.startEditing(graphic)
-        }
-      }
-    },
-    {
-      text: "停止编辑对象",
-      icon: "fa fa-edit",
-      show: function (e) {
-        const graphic = e.graphic
-        if (!graphic) {
-          return false
-        }
-        return graphic.isEditing
-      },
-      callback: function (e) {
-        const graphic = e.graphic
-        if (!graphic) {
-          return false
-        }
-        if (graphic) {
-          graphicLayer.stopEditing(graphic)
-        }
-      }
-    },
-    {
-      text: "删除对象",
-      icon: "fa fa-trash-o",
-      show: (event) => {
-        const graphic = event.graphic
-        if (!graphic || graphic.isDestroy) {
-          return false
-        } else {
-          return true
-        }
-      },
-      callback: function (e) {
-        const graphic = e.graphic
-        if (!graphic) {
-          return
-        }
-        const parent = graphic._parent // 右击是编辑点时
-        graphicLayer.removeGraphic(graphic)
-        if (parent) {
-          graphicLayer.removeGraphic(parent)
-        }
-      }
-    },
-    {
-      text: "计算长度",
-      icon: "fa fa-medium",
-      callback: function (e) {
-        const graphic = e.graphic
-        const strDis = mars3d.MeasureUtil.formatDistance(graphic.distance)
-        globalAlert("该对象的长度为:" + strDis)
-      }
-    }
-  ])
+      attr: { index: index }
+    })
+    graphicLayer.addGraphic(graphic)
+  }
+
+  graphicLayer.enabledEvent = true // 恢复事件
+  return result.points.length
 }
 
-export function updateLayerHasEdit(val) {
-  graphicLayer.hasEdit = val
-}
-
-// 按钮事件
+// 开始绘制
 export function startDrawGraphic() {
-  // 开始绘制
   graphicLayer.startDraw({
     type: "polyline",
     // maxPointNum: 2, //可以限定最大点数，2个点绘制后自动结束
@@ -523,8 +493,9 @@ export function startDrawGraphic() {
     }
   })
 }
-export function onClickDrawModelClosure() {
-  // 开始绘制
+
+// 开始绘制
+export function startDrawGraphic2() {
   graphicLayer.startDraw({
     type: "polyline",
     style: {
@@ -535,59 +506,92 @@ export function onClickDrawModelClosure() {
   })
 }
 
+// 在图层绑定Popup弹窗
+export function bindLayerPopup() {
+  graphicLayer.bindPopup(function (event) {
+    const attr = event.graphic.attr || {}
+    attr["类型"] = event.graphic.type
+    attr["来源"] = "我是layer上绑定的Popup"
+    attr["备注"] = "我支持鼠标交互"
 
-
-// 也可以在单个Graphic上做个性化管理及绑定操作
-function initGraphicManager(graphic) {
-  // 3.在graphic上绑定监听事件
-  /* graphic.on(mars3d.EventType.click, function (event) {
-    console.log("监听graphic，单击了矢量对象", event)
+    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
   })
-  graphic.on(mars3d.EventType.mouseOver, function (event) {
-    console.log("监听graphic，鼠标移入了矢量对象", event)
-  })
-  graphic.on(mars3d.EventType.mouseOut, function (event) {
-    console.log("监听graphic，鼠标移出了矢量对象", event)
-  }) */
+}
 
-  // 绑定Tooltip
-  // graphic.bindTooltip('我是graphic上绑定的Tooltip') //.openTooltip()
-
-  // 绑定Popup
-  const inthtml = `<table style="width: auto;">
-            <tr>
-              <th scope="col" colspan="2" style="text-align:center;font-size:15px;">我是graphic上绑定的Popup </th>
-            </tr>
-            <tr>
-              <td>提示：</td>
-              <td>这只是测试信息，可以任意html</td>
-            </tr>
-          </table>`
-  graphic.bindPopup(inthtml).openPopup()
-
-  // 绑定右键菜单
-  graphic.bindContextMenu([
+// 绑定右键菜单
+export function bindLayerContextMenu() {
+  graphicLayer.bindContextMenu([
     {
-      text: "删除对象[graphic绑定的]",
-      icon: "fa fa-trash-o",
-      callback: function (e) {
+      text: "开始编辑对象",
+      icon: "fa fa-edit",
+      show: function (e) {
         const graphic = e.graphic
-        if (graphic) {
-          graphic.remove()
+        if (!graphic || !graphic.hasEdit) {
+          return false
         }
+        return !graphic.isEditing
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
+        if (graphic) {
+          graphicLayer.startEditing(graphic)
+        }
+      }
+    },
+    {
+      text: "停止编辑对象",
+      icon: "fa fa-edit",
+      show: function (e) {
+        const graphic = e.graphic
+        if (!graphic || !graphic.hasEdit) {
+          return false
+        }
+        return graphic.isEditing
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
+        if (graphic) {
+          graphic.stopEditing()
+        }
+      }
+    },
+    {
+      text: "删除对象",
+      icon: "fa fa-trash-o",
+      show: (event) => {
+        const graphic = event.graphic
+        if (!graphic || graphic.isDestroy) {
+          return false
+        } else {
+          return true
+        }
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        if (!graphic) {
+          return
+        }
+        const parent = graphic.parent // 右击是编辑点时
+        graphicLayer.removeGraphic(graphic)
+        if (parent) {
+          graphicLayer.removeGraphic(parent)
+        }
+      }
+    },
+    {
+      text: "计算长度",
+      icon: "fa fa-medium",
+      callback: (e) => {
+        const graphic = e.graphic
+        const strDis = mars3d.MeasureUtil.formatDistance(graphic.distance)
+        globalAlert("该对象的长度为:" + strDis)
       }
     }
   ])
-
-  // 测试 颜色闪烁
-  if (graphic.startFlicker) {
-    graphic.startFlicker({
-      time: 20, // 闪烁时长（秒）
-      maxAlpha: 0.5,
-      color: Cesium.Color.YELLOW,
-      onEnd: function () {
-        // 结束后回调
-      }
-    })
-  }
 }

@@ -19,11 +19,15 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
-  // 创建Graphic图层
+  // 创建矢量数据图层
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  bindLayerEvent() // 对图层绑定相关事件
+  // 在layer上绑定监听事件
+  graphicLayer.on(mars3d.EventType.click, function (event) {
+    console.log("监听layer，单击了矢量对象", event)
+  })
+
   bindLayerPopup() // 在图层上绑定popup,对所有加到这个图层的矢量数据都生效
   bindLayerContextMenu() // 在图层绑定右键菜单,对所有加到这个图层的矢量数据都生效
 
@@ -47,7 +51,7 @@ export function onUnmounted() {
 }
 
 function addDemoGraphic1(graphicLayer) {
-  const primitive = new mars3d.graphic.CirclePrimitive({
+  const graphic = new mars3d.graphic.CirclePrimitive({
     position: [116.314482, 30.918334, 417],
     style: {
       radius: 2000.0,
@@ -63,102 +67,143 @@ function addDemoGraphic1(graphicLayer) {
     },
     attr: { remark: "示例1" }
   })
-  graphicLayer.addGraphic(primitive) // primitive.addTo(graphicLayer)  //另外一种写法
+  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
 
   // 演示对graphic的个性化处理
-  initGraphicManager(primitive)
+  initGraphicManager(graphic)
+}
+// 也可以在单个Graphic上做个性化管理及绑定操作
+function initGraphicManager(graphic) {
+  // 3.在graphic上绑定监听事件
+  // graphic.on(mars3d.EventType.click, function (event) {
+  //   console.log("监听graphic，单击了矢量对象", event)
+  // })
+  // 绑定Tooltip
+  // graphic.bindTooltip('我是graphic上绑定的Tooltip') //.openTooltip()
+
+  // 绑定Popup
+  const inthtml = `<table style="width: auto;">
+            <tr>
+              <th scope="col" colspan="2" style="text-align:center;font-size:15px;">我是graphic上绑定的Popup </th>
+            </tr>
+            <tr>
+              <td>提示：</td>
+              <td>这只是测试信息，可以任意html</td>
+            </tr>
+          </table>`
+  graphic.bindPopup(inthtml).openPopup()
+
+  // 绑定右键菜单
+  graphic.bindContextMenu([
+    {
+      text: "删除对象[graphic绑定的]",
+      icon: "fa fa-trash-o",
+      callback: (e) => {
+        const graphic = e.graphic
+        if (graphic) {
+          graphic.remove()
+        }
+      }
+    }
+  ])
 }
 
 function addDemoGraphic2(graphicLayer) {
-  const primitive = new mars3d.graphic.CirclePrimitive({
+  const graphic = new mars3d.graphic.CirclePrimitive({
     position: new mars3d.LngLatPoint(116.239096, 30.872072, 700),
     style: {
       radius: 1500.0,
+      diffHeight: 1000,
       image: "img/textures/poly-soil.jpg"
     },
     attr: { remark: "示例2" }
   })
-  graphicLayer.addGraphic(primitive) // primitive.addTo(graphicLayer)  //另外一种写法
+  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
 }
 
 function addDemoGraphic3(graphicLayer) {
-  const primitive = new mars3d.graphic.CirclePrimitive({
+  const graphic = new mars3d.graphic.CirclePrimitive({
     position: new mars3d.LngLatPoint(116.392526, 30.903729, 933.55),
     style: {
       radius: 1500.0,
-      material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.CircleWave, {
+      materialType: mars3d.MaterialType.CircleWave,
+      materialOptions: {
         color: "#FF0000",
         count: 1, // 圆圈数量
         speed: 20
-      })
+      }
     },
     attr: { remark: "示例3" }
   })
-  graphicLayer.addGraphic(primitive) // primitive.addTo(graphicLayer)  //另外一种写法
+  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
 }
 
 function addDemoGraphic4(graphicLayer) {
-  const primitive = new mars3d.graphic.CirclePrimitive({
+  const graphic = new mars3d.graphic.CirclePrimitive({
     position: [116.244399, 30.920459],
     style: {
       radius: 2000,
-      material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.ScanLine, {
+      materialType: mars3d.MaterialType.ScanLine,
+      materialOptions: {
         color: new Cesium.Color(1.0, 1.0, 0.0, 1.0),
         speed: 10
-      })
+      }
     },
     attr: { remark: "示例4" }
   })
-  graphicLayer.addGraphic(primitive) // primitive.addTo(graphicLayer)  //另外一种写法
+  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
 }
 
 function addDemoGraphic5(graphicLayer) {
-  const primitive = new mars3d.graphic.CirclePrimitive({
+  const graphic = new mars3d.graphic.CirclePrimitive({
     position: new mars3d.LngLatPoint(116.37617, 30.847384, 396.12),
     style: {
       radius: 900.0,
-      material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.CircleWave, {
+      materialType: mars3d.MaterialType.CircleWave,
+      materialOptions: {
         color: "#ffff00",
         count: 3, // 圆圈数量
         speed: 20,
         gradient: 0.1
-      })
+      }
     },
     attr: { remark: "示例5" }
   })
-  graphicLayer.addGraphic(primitive) // 还可以另外一种写法: graphic.addTo(graphicLayer)
+  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
 }
 
 function addDemoGraphic6(graphicLayer) {
-  const primitive = new mars3d.graphic.CirclePrimitive({
+  const graphic = new mars3d.graphic.CirclePrimitive({
     position: new mars3d.LngLatPoint(116.258301, 30.979046, 1483.7),
     style: {
       radius: 2500.0,
       // clampToGround: true,
-      material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.RadarWave, {
+      materialType: mars3d.MaterialType.RadarWave,
+      materialOptions: {
         color: "#00ffff",
         speed: 10
-      })
+      }
     },
     attr: { remark: "示例6" }
   })
-  graphicLayer.addGraphic(primitive) // 还可以另外一种写法: graphic.addTo(graphicLayer)
+  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
 }
 
 function addDemoGraphic7(graphicLayer) {
-  const primitive = new mars3d.graphic.CirclePrimitive({
+  const graphic = new mars3d.graphic.CirclePrimitive({
     position: new mars3d.LngLatPoint(116.318342, 30.972578, 1431.9),
     style: {
       radius: 1200.0,
       clampToGround: true,
-      material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.RadarLine, {
+      materialType: mars3d.MaterialType.RadarLine,
+      materialOptions: {
         color: "#00ff00",
         speed: 10
-      })
+      }
     },
     attr: { remark: "示例7" }
   })
-  graphicLayer.addGraphic(primitive) // 还可以另外一种写法: graphic.addTo(graphicLayer)
+  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
 }
 
 function addDemoGraphic8(graphicLayer) {
@@ -171,7 +216,8 @@ function addDemoGraphic8(graphicLayer) {
         color2: Cesium.Color.YELLOW,
         color3: Cesium.Color.BLUE,
         alpha: 1.0,
-        speed: 10.0
+        speed: 10.0,
+        globalAlpha: 1.0
       },
       source: `czm_material czm_getMaterial(czm_materialInput materialInput)
       {
@@ -183,7 +229,7 @@ function addDemoGraphic8(graphicLayer) {
           if(dis > scale){
             discard;
           }else {
-            material.alpha = alpha;
+            material.alpha = alpha * globalAlpha;
           }
 
           if(dis < scale/3.0)
@@ -201,20 +247,91 @@ function addDemoGraphic8(graphicLayer) {
 
   const circlePrimitiveScan = new mars3d.graphic.CirclePrimitive({
     name: "三个颜色",
-    position: new mars3d.LatLngPoint(116.405876, 30.963469, 1054.6),
+    position: new mars3d.LngLatPoint(116.405876, 30.963469, 1054.6),
     style: {
       radius: 3000.0,
-      material: mars3d.MaterialUtil.createMaterial(Circle3WaveType, {
+      materialType: Circle3WaveType,
+      materialOptions: {
         color1: Cesium.Color.RED,
         color2: Cesium.Color.YELLOW,
         color3: Cesium.Color.BLUE,
         alpha: 0.4,
         speed: 10.0
-      })
+      }
     },
+    hasEdit: false,
     attr: { remark: "示例8" }
   })
   graphicLayer.addGraphic(circlePrimitiveScan)
+}
+
+// 生成演示数据(测试数据量)
+export function addRandomGraphicByCount(count) {
+  graphicLayer.clear()
+  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
+
+  const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
+  const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
+  console.log("生成的测试网格坐标", result)
+
+  for (let j = 0; j < result.points.length; ++j) {
+    const position = result.points[j]
+    const index = j + 1
+
+    const graphic = new mars3d.graphic.CircleEntity({
+      position: position,
+      style: {
+        radius: result.radius,
+        color: Cesium.Color.fromRandom({ alpha: 0.6 })
+      },
+      attr: { index: index }
+    })
+    graphicLayer.addGraphic(graphic)
+  }
+
+  graphicLayer.enabledEvent = true // 恢复事件
+  return result.points.length
+}
+
+// 开始绘制
+export function startDrawGraphic() {
+  graphicLayer.startDraw({
+    type: "circleP",
+    style: {
+      color: "#ffff00",
+      opacity: 0.6,
+      clampToGround: false,
+      outline: true,
+      outlineWidth: 3,
+      outlineColor: "#ffffff",
+      label: {
+        text: "我是火星科技",
+        font_size: 18,
+        color: "#ffffff",
+        distanceDisplayCondition: true,
+        distanceDisplayCondition_far: 500000,
+        distanceDisplayCondition_near: 0
+      }
+    },
+    drawShowRadius: true
+  })
+}
+
+// 开始绘制 圆柱
+export function startDrawGraphic2() {
+  graphicLayer.startDraw({
+    type: "circleP",
+    style: {
+      color: "#ff0000",
+      opacity: 0.5,
+      diffHeight: 600,
+
+      highlight: {
+        type: "click",
+        opacity: 0.9
+      }
+    }
+  })
 }
 
 // 在图层绑定Popup弹窗
@@ -243,12 +360,12 @@ export function bindLayerContextMenu() {
           return true
         }
       },
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         if (!graphic) {
           return
         }
-        const parent = graphic._parent // 右击是编辑点时
+        const parent = graphic.parent // 右击是编辑点时
         graphicLayer.removeGraphic(graphic)
         if (parent) {
           graphicLayer.removeGraphic(parent)
@@ -259,7 +376,7 @@ export function bindLayerContextMenu() {
     {
       text: "计算周长",
       icon: "fa fa-medium",
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         const strDis = mars3d.MeasureUtil.formatDistance(graphic.distance)
         globalAlert("该对象的周长为:" + strDis)
@@ -268,67 +385,10 @@ export function bindLayerContextMenu() {
     {
       text: "计算面积",
       icon: "fa fa-reorder",
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         const strArea = mars3d.MeasureUtil.formatArea(graphic.area)
         globalAlert("该对象的面积为:" + strArea)
-      }
-    }
-  ])
-}
-
-// 在图层级处理一些事物
-function bindLayerEvent() {
-  // 在layer上绑定监听事件
-  graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("监听layer，单击了矢量对象", event)
-  })
-  /* graphicLayer.on(mars3d.EventType.mouseOver, function (event) {
-    console.log("监听layer，鼠标移入了矢量对象", event)
-  })
-  graphicLayer.on(mars3d.EventType.mouseOut, function (event) {
-    console.log("监听layer，鼠标移出了矢量对象", event)
-  }) */
-}
-
-// 也可以在单个Graphic上做个性化管理及绑定操作
-function initGraphicManager(graphic) {
-  // 3.在graphic上绑定监听事件
-  /* graphic.on(mars3d.EventType.click, function (event) {
-    console.log("监听graphic，单击了矢量对象", event)
-  })
-  graphic.on(mars3d.EventType.mouseOver, function (event) {
-    console.log("监听graphic，鼠标移入了矢量对象", event)
-  })
-  graphic.on(mars3d.EventType.mouseOut, function (event) {
-    console.log("监听graphic，鼠标移出了矢量对象", event)
-  }) */
-
-  // 绑定Tooltip
-  // graphic.bindTooltip('我是graphic上绑定的Tooltip') //.openTooltip()
-
-  // 绑定Popup
-  const inthtml = `<table style="width: auto;">
-            <tr>
-              <th scope="col" colspan="2" style="text-align:center;font-size:15px;">我是graphic上绑定的Popup </th>
-            </tr>
-            <tr>
-              <td>提示：</td>
-              <td>这只是测试信息，可以任意html</td>
-            </tr>
-          </table>`
-  graphic.bindPopup(inthtml).openPopup()
-
-  // 绑定右键菜单
-  graphic.bindContextMenu([
-    {
-      text: "删除对象[graphic绑定的]",
-      icon: "fa fa-trash-o",
-      callback: function (e) {
-        const graphic = e.graphic
-        if (graphic) {
-          graphic.remove()
-        }
       }
     }
   ])

@@ -17,12 +17,13 @@ export const mapOptions = {
       url: "//data.mars3d.cn/file/geojson/hefei-road.json",
       symbol: {
         styleOptions: {
-          materialType: "PolylineGlow",
-          glowPower: 0.2,
-          color: "#FF4500",
           width: 12,
-          opacity: 0.8
-          // clampToGround: true,
+          materialType: "PolylineGlow",
+          materialOptions: {
+            color: "#FF4500",
+            opacity: 0.8,
+            glowPower: 0.2
+          }
         }
       },
       popup: "{name}",
@@ -34,7 +35,7 @@ export const mapOptions = {
       name: "河流(面状)",
       url: "//data.mars3d.cn/file/geojson/hefei-water.json",
       symbol: {
-        type: "waterCombine",
+        type: "waterC",
         styleOptions: {
           normalMap: "img/textures/waterNormals.jpg", // 水正常扰动的法线图
           frequency: 5000.0, // 控制波数的数字。
@@ -270,7 +271,7 @@ export function chkBrightness(val) {
   brightnessEffect.enabled = val
 }
 
-// 透明度
+
 export function alphaChange(value) {
   brightnessEffect.brightness = value
 }

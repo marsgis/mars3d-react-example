@@ -12,7 +12,7 @@ function getDefaultContextMenu(map) {
       show: function (e) {
         return Cesium.defined(e.cartesian)
       },
-      callback: function (e) {
+      callback: (e) => {
         // 经纬度
         const mpt = mars3d.LngLatPoint.fromCartesian(e.cartesian)
         const ptNew = mars3d.PointTrans.proj4Trans([mpt.lng, mpt.lat], "EPSG:4326", mars3d.CRS.CGCS2000_GK_Zone_3)
@@ -29,7 +29,7 @@ function getDefaultContextMenu(map) {
     {
       text: "查看当前视角",
       icon: mars3d.Icon.CameraInfo,
-      callback: function (e) {
+      callback: (e) => {
         const mpt = JSON.stringify(map.getCameraView())
         globalAlert(mpt, "当前视角信息")
       }
@@ -44,7 +44,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return map.scene.screenSpaceCameraController.enableCollisionDetection
           },
-          callback: function (e) {
+          callback: (e) => {
             map.scene.screenSpaceCameraController.enableCollisionDetection = false
           }
         },
@@ -54,7 +54,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return !map.scene.screenSpaceCameraController.enableCollisionDetection
           },
-          callback: function (e) {
+          callback: (e) => {
             map.scene.screenSpaceCameraController.enableCollisionDetection = true
           }
         },
@@ -64,7 +64,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return e.cartesian && (!that.rotatePoint || !that.rotatePoint?.isStart)
           },
-          callback: function (e) {
+          callback: (e) => {
             if (!that.rotatePoint) {
               that.rotatePoint = new mars3d.thing.RotatePoint()
               map.addThing(that.rotatePoint)
@@ -78,7 +78,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return that.rotatePoint?.isStart
           },
-          callback: function (e) {
+          callback: (e) => {
             if (that.rotatePoint) {
               that.rotatePoint.stop()
             }
@@ -91,7 +91,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return Cesium.defined(e.cartesian)
           },
-          callback: function (e) {
+          callback: (e) => {
             const cameraDistance = Cesium.Cartesian3.distance(e.cartesian, map.camera.positionWC) * 0.1
 
             map.flyToPoint(e.cartesian, {
@@ -106,7 +106,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return Cesium.defined(e.cartesian)
           },
-          callback: function (e) {
+          callback: (e) => {
             map.camera.flyTo({
               destination: mars3d.PointUtil.addPositionsHeight(e.cartesian, 10), // 升高10米
               orientation: {
@@ -124,7 +124,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return !map.keyboardRoam.enabled
           },
-          callback: function (e) {
+          callback: (e) => {
             map.keyboardRoam.enabled = true
           }
         },
@@ -134,7 +134,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return map.keyboardRoam.enabled
           },
-          callback: function (e) {
+          callback: (e) => {
             map.keyboardRoam.enabled = false
           }
         },
@@ -144,7 +144,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return map.trackedEntity !== undefined
           },
-          callback: function (e) {
+          callback: (e) => {
             map.trackedEntity = undefined
           }
         }
@@ -165,7 +165,7 @@ function getDefaultContextMenu(map) {
             const model = map.pick3DTileset(e.cartesian) // 拾取绘制返回的模型
             return !model.debugWireframe
           },
-          callback: function (e) {
+          callback: (e) => {
             const model = map.pick3DTileset(e.cartesian) // 拾取绘制返回的模型
             model.debugWireframe = true
           }
@@ -177,7 +177,7 @@ function getDefaultContextMenu(map) {
             const model = map.pick3DTileset(e.cartesian) // 拾取绘制返回的模型
             return model.debugWireframe
           },
-          callback: function (e) {
+          callback: (e) => {
             const model = map.pick3DTileset(e.cartesian) // 拾取绘制返回的模型
             model.debugWireframe = false
           }
@@ -189,7 +189,7 @@ function getDefaultContextMenu(map) {
             const model = map.pick3DTileset(e.cartesian) // 拾取绘制返回的模型
             return !model.debugShowBoundingVolume
           },
-          callback: function (e) {
+          callback: (e) => {
             const model = map.pick3DTileset(e.cartesian) // 拾取绘制返回的模型
             model.debugShowBoundingVolume = true
           }
@@ -201,7 +201,7 @@ function getDefaultContextMenu(map) {
             const model = map.pick3DTileset(e.cartesian) // 拾取绘制返回的模型
             return model.debugShowBoundingVolume
           },
-          callback: function (e) {
+          callback: (e) => {
             const model = map.pick3DTileset(e.cartesian) // 拾取绘制返回的模型
             model.debugShowBoundingVolume = false
           }
@@ -222,7 +222,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return !map.hasTerrain
           },
-          callback: function (e) {
+          callback: (e) => {
             map.hasTerrain = true
           }
         },
@@ -232,7 +232,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return map.hasTerrain
           },
-          callback: function (e) {
+          callback: (e) => {
             map.hasTerrain = false
           }
         },
@@ -242,7 +242,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return !map.scene.globe._surface.tileProvider._debug.wireframe
           },
-          callback: function (e) {
+          callback: (e) => {
             map.scene.globe._surface.tileProvider._debug.wireframe = true
           }
         },
@@ -252,7 +252,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return map.scene.globe._surface.tileProvider._debug.wireframe
           },
-          callback: function (e) {
+          callback: (e) => {
             map.scene.globe._surface.tileProvider._debug.wireframe = false
           }
         }
@@ -265,7 +265,7 @@ function getDefaultContextMenu(map) {
         {
           text: "距离",
           icon: mars3d.Icon.MeasureDistance,
-          callback: function (e) {
+          callback: (e) => {
             if (!that.measure) {
               that.measure = new mars3d.thing.Measure()
               map.addThing(that.measure)
@@ -276,7 +276,7 @@ function getDefaultContextMenu(map) {
         {
           text: "面积",
           icon: mars3d.Icon.MeasureArea,
-          callback: function (e) {
+          callback: (e) => {
             if (!that.measure) {
               that.measure = new mars3d.thing.Measure()
               map.addThing(that.measure)
@@ -287,7 +287,7 @@ function getDefaultContextMenu(map) {
         {
           text: "高度差",
           icon: mars3d.Icon.MeasureHeight,
-          callback: function (e) {
+          callback: (e) => {
             if (!that.measure) {
               that.measure = new mars3d.thing.Measure()
               map.addThing(that.measure)
@@ -298,7 +298,7 @@ function getDefaultContextMenu(map) {
         {
           text: "角度",
           icon: mars3d.Icon.MeasureAngle,
-          callback: function (e) {
+          callback: (e) => {
             if (!that.measure) {
               that.measure = new mars3d.thing.Measure()
               map.addThing(that.measure)
@@ -312,7 +312,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return that.measure && that.measure.hasMeasure
           },
-          callback: function (e) {
+          callback: (e) => {
             if (that.measure) {
               that.measure.clear()
             }
@@ -328,7 +328,7 @@ function getDefaultContextMenu(map) {
         {
           text: "标记点",
           icon: mars3d.Icon.DrawPoint,
-          callback: function (e) {
+          callback: (e) => {
             map.graphicLayer.startDraw({
               type: "point",
               style: {
@@ -345,7 +345,7 @@ function getDefaultContextMenu(map) {
         {
           text: "标记线",
           icon: mars3d.Icon.DrawPolyline,
-          callback: function (e) {
+          callback: (e) => {
             map.graphicLayer.startDraw({
               type: "polyline",
               style: {
@@ -362,7 +362,7 @@ function getDefaultContextMenu(map) {
         {
           text: "标记面",
           icon: mars3d.Icon.DrawPolygon,
-          callback: function (e) {
+          callback: (e) => {
             map.graphicLayer.startDraw({
               type: "polygon",
               style: {
@@ -381,7 +381,7 @@ function getDefaultContextMenu(map) {
         {
           text: "标记圆",
           icon: mars3d.Icon.DrawCircle,
-          callback: function (e) {
+          callback: (e) => {
             map.graphicLayer.startDraw({
               type: "circle",
               style: {
@@ -398,7 +398,7 @@ function getDefaultContextMenu(map) {
         {
           text: "标记矩形",
           icon: mars3d.Icon.DrawRectangle,
-          callback: function (e) {
+          callback: (e) => {
             map.graphicLayer.startDraw({
               type: "rectangle",
               style: {
@@ -418,7 +418,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return !map.graphicLayer.hasEdit
           },
-          callback: function (e) {
+          callback: (e) => {
             map.graphicLayer.hasEdit = true
           }
         },
@@ -428,7 +428,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return map.graphicLayer.hasEdit
           },
-          callback: function (e) {
+          callback: (e) => {
             map.graphicLayer.hasEdit = false
           }
         },
@@ -438,7 +438,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return map.graphicLayer.length > 0
           },
-          callback: function (e) {
+          callback: (e) => {
             mars3d.Util.downloadFile("图上标记.json", JSON.stringify(map.graphicLayer.toGeoJSON()))
           }
         },
@@ -448,7 +448,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return map.graphicLayer.length > 0
           },
-          callback: function (e) {
+          callback: (e) => {
             map.graphicLayer.clear()
           }
         }
@@ -464,7 +464,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return !that.rainEffect
           },
-          callback: function (e) {
+          callback: (e) => {
             if (!that.rainEffect) {
               that.rainEffect = new mars3d.effect.RainEffect()
               map.addEffect(that.rainEffect)
@@ -477,7 +477,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return that.rainEffect
           },
-          callback: function (e) {
+          callback: (e) => {
             if (that.rainEffect) {
               map.removeEffect(that.rainEffect, true)
               delete that.rainEffect
@@ -490,7 +490,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return !that.snowEffect
           },
-          callback: function (e) {
+          callback: (e) => {
             if (!that.snowEffect) {
               that.snowEffect = new mars3d.effect.SnowEffect()
               map.addEffect(that.snowEffect)
@@ -503,7 +503,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return that.snowEffect
           },
-          callback: function (e) {
+          callback: (e) => {
             if (that.snowEffect) {
               map.removeEffect(that.snowEffect, true)
               delete that.snowEffect
@@ -517,7 +517,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return !that.fogEffect
           },
-          callback: function (e) {
+          callback: (e) => {
             if (!that.fogEffect) {
               const height = map.camera.positionCartographic.height * 2
               that.fogEffect = new mars3d.effect.FogEffect({
@@ -533,7 +533,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return that.fogEffect
           },
-          callback: function (e) {
+          callback: (e) => {
             if (that.fogEffect) {
               map.removeEffect(that.fogEffect, true)
               delete that.fogEffect
@@ -547,7 +547,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return !that.bloomEffect
           },
-          callback: function (e) {
+          callback: (e) => {
             if (!that.bloomEffect) {
               that.bloomEffect = new mars3d.effect.BloomEffect()
               map.addEffect(that.bloomEffect)
@@ -560,7 +560,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return that.bloomEffect
           },
-          callback: function (e) {
+          callback: (e) => {
             if (that.bloomEffect) {
               map.removeEffect(that.bloomEffect, true)
               delete that.bloomEffect
@@ -574,7 +574,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return !that.brightnessEffect
           },
-          callback: function (e) {
+          callback: (e) => {
             if (!that.brightnessEffect) {
               that.brightnessEffect = new mars3d.effect.BrightnessEffect()
               map.addEffect(that.brightnessEffect)
@@ -587,7 +587,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return that.brightnessEffect
           },
-          callback: function (e) {
+          callback: (e) => {
             if (that.brightnessEffect) {
               map.removeEffect(that.brightnessEffect, true)
               delete that.brightnessEffect
@@ -601,7 +601,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return !that.nightVisionEffect
           },
-          callback: function (e) {
+          callback: (e) => {
             if (!that.nightVisionEffect) {
               that.nightVisionEffect = new mars3d.effect.NightVisionEffect()
               map.addEffect(that.nightVisionEffect)
@@ -614,7 +614,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return that.nightVisionEffect
           },
-          callback: function (e) {
+          callback: (e) => {
             if (that.nightVisionEffect) {
               map.removeEffect(that.nightVisionEffect, true)
               delete that.nightVisionEffect
@@ -628,7 +628,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return !that.blackAndWhiteEffect
           },
-          callback: function (e) {
+          callback: (e) => {
             if (!that.blackAndWhiteEffect) {
               that.blackAndWhiteEffect = new mars3d.effect.BlackAndWhiteEffect()
               map.addEffect(that.blackAndWhiteEffect)
@@ -641,7 +641,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return that.blackAndWhiteEffect
           },
-          callback: function (e) {
+          callback: (e) => {
             if (that.blackAndWhiteEffect) {
               map.removeEffect(that.blackAndWhiteEffect, true)
               delete that.blackAndWhiteEffect
@@ -655,7 +655,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return !that.outlineEffect
           },
-          callback: function (e) {
+          callback: (e) => {
             if (!that.outlineEffect) {
               that.outlineEffect = new mars3d.effect.OutlineEffect()
               map.addEffect(that.outlineEffect)
@@ -668,7 +668,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return that.outlineEffect
           },
-          callback: function (e) {
+          callback: (e) => {
             if (that.outlineEffect) {
               map.removeEffect(that.outlineEffect, true)
               delete that.outlineEffect
@@ -687,7 +687,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return !map.scene.globe.depthTestAgainstTerrain
           },
-          callback: function (e) {
+          callback: (e) => {
             map.scene.globe.depthTestAgainstTerrain = true
           }
         },
@@ -697,7 +697,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return map.scene.globe.depthTestAgainstTerrain
           },
-          callback: function (e) {
+          callback: (e) => {
             map.scene.globe.depthTestAgainstTerrain = false
           }
         },
@@ -708,7 +708,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return !map.scene.skyBox.show
           },
-          callback: function (e) {
+          callback: (e) => {
             map.scene.skyBox.show = true // 天空盒
             map.scene.moon.show = true // 太阳
             map.scene.sun.show = true // 月亮
@@ -720,7 +720,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return map.scene.skyBox.show
           },
-          callback: function (e) {
+          callback: (e) => {
             map.scene.skyBox.show = false // 天空盒
             map.scene.moon.show = false // 太阳
             map.scene.sun.show = false // 月亮
@@ -732,7 +732,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return !map.viewer.shadows
           },
-          callback: function (e) {
+          callback: (e) => {
             map.viewer.shadows = true
             map.viewer.terrainShadows = Cesium.ShadowMode.ENABLED
             map.scene.globe.enableLighting = true
@@ -744,7 +744,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return map.viewer.shadows
           },
-          callback: function (e) {
+          callback: (e) => {
             map.viewer.shadows = false
             map.viewer.terrainShadows = Cesium.ShadowMode.RECEIVE_ONLY
             map.scene.globe.enableLighting = false
@@ -756,7 +756,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return !map.scene.skyAtmosphere.show
           },
-          callback: function (e) {
+          callback: (e) => {
             map.scene.skyAtmosphere.show = true
             map.scene.globe.showGroundAtmosphere = true
           }
@@ -767,7 +767,7 @@ function getDefaultContextMenu(map) {
           show: function (e) {
             return map.scene.skyAtmosphere.show
           },
-          callback: function (e) {
+          callback: (e) => {
             map.scene.skyAtmosphere.show = false
             map.scene.globe.showGroundAtmosphere = false
           }
@@ -776,7 +776,7 @@ function getDefaultContextMenu(map) {
         {
           text: "场景出图",
           icon: mars3d.Icon.ExpImage,
-          callback: function (e) {
+          callback: (e) => {
             map.expImage()
           }
         }

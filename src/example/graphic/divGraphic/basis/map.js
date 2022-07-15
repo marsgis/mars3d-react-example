@@ -130,7 +130,7 @@ function addDemoGraphic4(graphicLayer) {
   const graphic = new mars3d.graphic.DivGraphic({
     position: [116.79013, 31.164872, 289],
     style: {
-      html: '<img src="img/marker/tf.gif" style="width:50px;height:50px;" ></img>',
+      html: '<img src="img/icon/tf.gif" style="width:50px;height:50px;" ></img>',
       distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 200000), // 按视距距离显示
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.CENTER
@@ -438,9 +438,40 @@ function movePoint(graphic) {
   graphic.position = property
 }
 
-// 按钮事件
+// 生成演示数据(测试数据量)
+export function addRandomGraphicByCount(count) {
+  graphicLayer.clear()
+  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
+
+  const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
+  const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
+  console.log("生成的测试网格坐标", result)
+
+  for (let j = 0; j < result.points.length; ++j) {
+    const position = result.points[j]
+    const index = j + 1
+
+    const graphic = new mars3d.graphic.DivGraphic({
+      position: position,
+      style: {
+        html: `<div class="marsGreenGradientPnl" >安徽欢迎您</div>`,
+        horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+        verticalOrigin: Cesium.VerticalOrigin.BOTTOM
+      },
+      attr: { index: index },
+      depthTest: false,
+      hasZIndex: false,
+      frameRate: 1
+    })
+    graphicLayer.addGraphic(graphic)
+  }
+
+  graphicLayer.enabledEvent = true // 恢复事件
+  return result.points.length
+}
+
+// 开始绘制
 export function startDrawGraphic() {
-  // 开始绘制
   graphicLayer.startDraw({
     type: "div",
     style: {
@@ -474,12 +505,12 @@ export function bindLayerContextMenu() {
       icon: "fa fa-edit",
       show: function (e) {
         const graphic = e.graphic
-        if (!graphic || !graphic.startEditing) {
+        if (!graphic || !graphic.hasEdit) {
           return false
         }
         return !graphic.isEditing
       },
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         if (!graphic) {
           return false
@@ -494,18 +525,18 @@ export function bindLayerContextMenu() {
       icon: "fa fa-edit",
       show: function (e) {
         const graphic = e.graphic
-        if (!graphic) {
+        if (!graphic || !graphic.hasEdit) {
           return false
         }
         return graphic.isEditing
       },
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         if (!graphic) {
           return false
         }
         if (graphic) {
-          graphicLayer.stopEditing(graphic)
+          graphic.stopEditing()
         }
       }
     },
@@ -520,18 +551,14 @@ export function bindLayerContextMenu() {
           return true
         }
       },
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         if (!graphic) {
           return
         }
-        graphicLayer.stopEditing(graphic)
+        graphic.stopEditing()
         graphicLayer.removeGraphic(graphic)
       }
     }
   ])
-}
-
-export function updateLayerHasEdit(enabledEdit) {
-  graphicLayer.hasEdit = enabledEdit
 }

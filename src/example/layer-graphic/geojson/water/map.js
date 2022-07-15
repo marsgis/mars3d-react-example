@@ -25,7 +25,7 @@ export const mapOptions = {
       name: "河流(面状)",
       url: "//data.mars3d.cn/file/geojson/hedao-nei.json",
       symbol: {
-        type: "waterCombine",
+        type: "waterC",
         styleOptions: {
           height: 17, // 水面高度
           normalMap: "img/textures/waterNormals.jpg", // 水正常扰动的法线图
@@ -57,7 +57,7 @@ export function onMounted(mapInstance) {
     name: "河流(面状)",
     url: "//data.mars3d.cn/file/geojson/hedao-wai.json",
     symbol: {
-      type: "waterCombine",
+      type: "waterC",
       styleOptions: {
         height: 16, // 水面高度
         normalMap: "img/textures/waterNormals.jpg", // 水正常扰动的法线图

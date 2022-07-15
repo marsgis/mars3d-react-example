@@ -35,7 +35,7 @@ export function onMounted(mapInstance) {
   })
   map.addLayer(tiles3dLayer)
 
-  // 创建Graphic图层
+  // 创建矢量数据图层
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -92,19 +92,20 @@ function addDemoGraphic2(graphicLayer) {
 }
 
 function addDemoGraphic3(graphicLayer) {
-  const primitive = new mars3d.graphic.CirclePrimitive({
+  const graphic = new mars3d.graphic.CirclePrimitive({
     position: [121.522454, 31.267553, 61.9],
     style: {
       radius: 2000,
-      material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.ScanLine, {
+      materialType: mars3d.MaterialType.ScanLine,
+      materialOptions: {
         color: new Cesium.Color(1.0, 1.0, 0.0, 1.0),
         speed: 10
-      }),
+      },
       clampToGround: true // 是否贴地
     },
     attr: { remark: "示例3" }
   })
-  graphicLayer.addGraphic(primitive)
+  graphicLayer.addGraphic(graphic)
 }
 
 function addDemoGraphic4(graphicLayer) {
@@ -115,10 +116,11 @@ function addDemoGraphic4(graphicLayer) {
     style: {
       radius: 1500.0,
       // 扫描材质
-      material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.CircleScan, {
+      materialType: mars3d.MaterialType.CircleScan,
+      materialOptions: {
         image: "img/textures/circle-scan.png",
         color: "#00ff00"
-      }),
+      },
       stRotation: new Cesium.CallbackProperty(function (e) {
         _rotation -= 0.1
         return _rotation
@@ -137,11 +139,12 @@ function addDemoGraphic5(graphicLayer) {
     position: new mars3d.LngLatPoint(121.526215, 31.245237, 123.5),
     style: {
       radius: 700.0,
-      material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.CircleScan, {
+      materialType: mars3d.MaterialType.CircleScan,
+      materialOptions: {
         // 扫描材质
         image: "img/textures/circle-two.png",
         color: "#5fc4ee"
-      }),
+      },
       stRotation: new Cesium.CallbackProperty(function (e) {
         _rotation += 0.1
         return _rotation

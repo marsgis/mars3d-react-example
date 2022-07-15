@@ -368,7 +368,7 @@ export function demoReferenceProperty() {
 
   // 演示属性机制
   const collection = graphicLayer.dataSource.entities
-  const dimensions = new Cesium.ReferenceProperty(collection, marsBox.uuid, ["box", "dimensions"])
+  const dimensions = new Cesium.ReferenceProperty(collection, marsBox.id, ["box", "dimensions"])
   redBox.setStyle({ dimensions: dimensions })
 }
 
@@ -415,7 +415,7 @@ export function demoVelocityVectorProperty() {
     position: propertyFJ,
     orientation: new Cesium.VelocityOrientationProperty(propertyFJ),
     style: {
-      image: "img/marker/huojian.svg",
+      image: "img/icon/huojian.svg",
       scale: 0.5,
       alignedAxis: new Cesium.VelocityVectorProperty(propertyFJ, true)
     }

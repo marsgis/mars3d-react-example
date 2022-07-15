@@ -27,7 +27,11 @@ export function onMounted(mapInstance) {
   map.addLayer(graphicLayer)
 
   // 2.在layer上绑定监听事件
-  bindLayerEvent() // 对图层绑定相关事件
+
+  // 在layer上绑定监听事件
+  graphicLayer.on(mars3d.EventType.click, function (event) {
+    console.log("监听layer，单击了矢量对象", event)
+  })
   bindLayerPopup() // 在图层上绑定popup,对所有加到这个图层的矢量数据都生效
   bindLayerContextMenu() // 在图层绑定右键菜单,对所有加到这个图层的矢量数据都生效
 
@@ -97,7 +101,7 @@ function addDemoGraphic3(graphicLayer) {
     name: "贴地图标",
     position: [116.3, 31.0, 1000],
     style: {
-      image: "img/marker/mark2.png",
+      image: "img/marker/mark-blue.png",
       scale: 1,
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
@@ -114,10 +118,11 @@ function addDemoGraphic4(graphicLayer) {
     style: {
       plane: new Cesium.Plane(Cesium.Cartesian3.UNIT_Z, 0.0),
       dimensions: new Cesium.Cartesian2(4000.0, 4000.0),
-      material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.Image, {
+      materialType: mars3d.MaterialType.Image2,
+      materialOptions: {
         image: "img/textures/poly-rivers.png",
         transparent: true
-      })
+      }
     },
     attr: { remark: "示例4" }
   })
@@ -181,9 +186,9 @@ function addDemoGraphic8(graphicLayer) {
     position: new mars3d.LngLatPoint(116.3, 30.9, 1000),
     style: {
       radii: new Cesium.Cartesian3(1500.0, 1500.0, 1500.0),
-      material: Cesium.Color.RED.withAlpha(0.5),
+      color: "rgba(255,0,0,0.5)",
       outline: true,
-      outlineColor: Cesium.Color.WHITE.withAlpha(0.3)
+      outlineColor: "rgba(255,255,255,0.3)"
     },
     attr: { remark: "示例8" }
   })
@@ -267,12 +272,13 @@ function addDemoGraphic13(graphicLayer) {
       closure: true,
       diffHeight: 500,
       // 动画线材质
-      material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
+      materialType: mars3d.MaterialType.LineFlow,
+      materialOptions: {
         image: "img/textures/fence.png",
         color: "#00ff00",
         speed: 10,
         axisY: true
-      })
+      }
     },
     attr: { remark: "示例13" }
   })
@@ -307,7 +313,8 @@ function addDemoGraphic15(graphicLayer) {
       [116.472468, 30.823091, 677.39]
     ],
     style: {
-      material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.Water, {
+      materialType: mars3d.MaterialType.Water,
+      materialOptions: {
         normalMap: "img/textures/waterNormals.jpg", // 水正常扰动的法线图
         frequency: 8000.0, // 控制波数的数字。
         animationSpeed: 0.02, // 控制水的动画速度的数字。
@@ -315,25 +322,11 @@ function addDemoGraphic15(graphicLayer) {
         specularIntensity: 0.8, // 控制镜面反射强度的数字。
         baseWaterColor: "#006ab4", // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
         blendColor: "#006ab4" // 从水中混合到非水域时使用的rgba颜色对象。
-      })
+      }
     },
     attr: { remark: "示例15" }
   })
   graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
-}
-
-// 在图层级处理一些事物
-function bindLayerEvent() {
-  // 在layer上绑定监听事件
-  graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("监听layer，单击了矢量对象", event)
-  })
-  /* graphicLayer.on(mars3d.EventType.mouseOver, function (event) {
-    console.log("监听layer，鼠标移入了矢量对象", event)
-  })
-  graphicLayer.on(mars3d.EventType.mouseOut, function (event) {
-    console.log("监听layer，鼠标移出了矢量对象", event)
-  }) */
 }
 
 // 绑定右键菜单
@@ -344,12 +337,12 @@ export function bindLayerContextMenu() {
       icon: "fa fa-edit",
       show: function (e) {
         const graphic = e.graphic
-        if (!graphic || !graphic.startEditing) {
+        if (!graphic || !graphic.hasEdit) {
           return false
         }
         return !graphic.isEditing
       },
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         if (!graphic) {
           return false
@@ -364,18 +357,18 @@ export function bindLayerContextMenu() {
       icon: "fa fa-edit",
       show: function (e) {
         const graphic = e.graphic
-        if (!graphic) {
+        if (!graphic || !graphic.hasEdit) {
           return false
         }
         return graphic.isEditing
       },
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         if (!graphic) {
           return false
         }
         if (graphic) {
-          graphicLayer.stopEditing(graphic)
+          graphic.stopEditing()
         }
       }
     },
@@ -390,12 +383,12 @@ export function bindLayerContextMenu() {
           return true
         }
       },
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         if (!graphic) {
           return
         }
-        const parent = graphic._parent // 右击是编辑点时
+        const parent = graphic.parent // 右击是编辑点时
         graphicLayer.removeGraphic(graphic)
         if (parent) {
           graphicLayer.removeGraphic(parent)
@@ -423,7 +416,7 @@ export function bindLayerContextMenu() {
           graphic.type === "wallP"
         )
       },
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         const strDis = mars3d.MeasureUtil.formatDistance(graphic.distance)
         globalAlert("该对象的长度为:" + strDis)
@@ -446,7 +439,7 @@ export function bindLayerContextMenu() {
           graphic.type === "polygonP"
         )
       },
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         const strDis = mars3d.MeasureUtil.formatDistance(graphic.distance)
         globalAlert("该对象的周长为:" + strDis)
@@ -465,13 +458,15 @@ export function bindLayerContextMenu() {
           graphic.type === "circleP" ||
           graphic.type === "rectangle" ||
           graphic.type === "rectangleP" ||
-          graphic.type === "polygon" ||
-          graphic.type === "polygonP" ||
-          graphic.type === "scrollWall" ||
-          graphic.type === "water"
+          ((graphic.type === "polygon" ||
+            graphic.type === "polygonP" ||
+            graphic.type === "wall" ||
+            graphic.type === "scrollWall" ||
+            graphic.type === "water") &&
+            graphic.positionsShow?.length > 2)
         )
       },
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         const strArea = mars3d.MeasureUtil.formatArea(graphic.area)
         globalAlert("该对象的面积为:" + strArea)

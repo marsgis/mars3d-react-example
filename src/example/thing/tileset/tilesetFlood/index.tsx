@@ -99,7 +99,7 @@ function UIComponent(props) {
   ]
 
   return (
-    <MarsPannel visible={true} right="10" top="10" width={355}>
+    <MarsPannel visible={true} right="10" top="10" width={360}>
       <div style={{ display: isShowUi ? "block" : "none" }}>
         <MarsGui
           ref={marsGuiRef}
@@ -138,9 +138,9 @@ function UIComponent(props) {
               <MarsButton
                 onClick={() => {
                   if (!isStart) {
-                    mapWork.tilesetFlood.start()
+                    mapWork.tilesetLayer.flood.start()
                   } else {
-                    mapWork.tilesetFlood.stop()
+                    mapWork.tilesetLayer.flood.stop()
                   }
 
                   stateStart(!isStart)

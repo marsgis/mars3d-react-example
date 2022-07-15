@@ -136,7 +136,7 @@
             "thumbnail": "map-terrain-terrainProvider-tdt.jpg",
             "main": "map/terrain/terrainProvider-tdt",
             "hasPannel": true,
-            "libs": ["mars3d", "cesium-comp", "mars3d-tdt"]
+            "libs": ["mars3d", "mars3d-tdt"]
           },
           {
             "name": "地形夸张",
@@ -296,14 +296,16 @@
           {
             "name": "image本地单张图片(区域影像)",
             "thumbnail": "layert-type-image-rectangle.jpg",
-            "main": "layer-tile/type/image-rectangle"
+            "main": "layer-tile/type/image-rectangle",
+            "hasPannel": true
           },
           {
             "name": "全国温度图(image应用案例)",
             "thumbnail": "layert-type-image-kriging.jpg",
             "main": "layer-tile/type/image-kriging",
             "libs": ["mars3d", "kriging"],
-            "resources": ["krigingConfig.js"]
+            "resources": ["krigingConfig.js"],
+            "hasPannel": true
           },
           {
             "name": "xyz金字塔瓦片",
@@ -314,7 +316,8 @@
           {
             "name": "xyz金字塔瓦片(区域影像)",
             "thumbnail": "layert-type-xyz-rectangle.jpg",
-            "main": "layer-tile/type/xyz-rectangle"
+            "main": "layer-tile/type/xyz-rectangle",
+            "hasPannel": true
           },
           {
             "name": "arcgis格式瓦片",
@@ -511,7 +514,8 @@
           {
             "name": "自定义工具栏按钮",
             "thumbnail": "control-basis-toolButton.jpg",
-            "main": "control/basis/toolButton"
+            "main": "control/basis/toolButton",
+            "resources": ["index.css"]
           },
           {
             "name": "放大缩小工具栏按钮",
@@ -540,7 +544,7 @@
             "resources": ["https://webapi.amap.com/maps?v=1.4.15&key=616e615727a1134331ff9459856653f1", "Geolocation.js", "Geolocation.css"]
           },
           {
-            "name": "POI兴趣点搜索",
+            "name": "POI兴趣点搜索(自定义Control)",
             "thumbnail": "control-other-poiQueryButton.jpg",
             "main": "control/other/poiQueryButton",
             "resources": ["PoiQueryButton.css", "PoiQueryButton.js"]
@@ -569,14 +573,14 @@
             "hasPannel": true
           },
           {
-            "name": "DIV 图层",
+            "name": "DIV 数据图层",
             "thumbnail": "graphic-divGraphic-basis.jpg",
             "main": "graphic/divGraphic/basis",
             "hasPannel": true,
             "resources": ["/temp/css/divGraphic.css"]
           },
           {
-            "name": "glTF 小模型图层(简单场景用)",
+            "name": "glTF小模型 数据图层",
             "thumbnail": "layerg-basis-model.jpg",
             "main": "layer-graphic/basis/model",
             "hasPannel": true
@@ -585,6 +589,7 @@
             "name": "3D Tiles 三维模型图层",
             "thumbnail": "layer3d-type-basis.jpg",
             "main": "layer-tileset/type/basis",
+            "params": "data=3dTiles",
             "hasPannel": true
           },
           {
@@ -703,7 +708,7 @@
             "name": "三维地名服务",
             "thumbnail": "layerg-other-tdtDm.jpg",
             "main": "layer-graphic/other/tdtDm",
-            "libs": ["mars3d", "cesium-comp", "mars3d-tdt"]
+            "libs": ["mars3d",  "mars3d-tdt"]
           },
           {
             "name": "矢量瓦片方式加载GeoJson",
@@ -728,6 +733,7 @@
             "thumbnail": "layerg-file-czml.jpg",
             "main": "layer-graphic/file/czml",
             "hasPannel": true,
+            "params": "data=CZML",
             "libs": ["mars3d", "cesium-sensorVolumes"]
           }
         ]
@@ -824,7 +830,8 @@
             "name": "Canvas图片点",
             "thumbnail": "graphic-entity-billboard-canvas.jpg",
             "main": "graphic/entity/billboard-canvas",
-            "resources": ["CanvasBillboard.js"]
+            "resources": ["CanvasBillboard.js"],
+            "hasPannel": true
           },
           {
             "name": "字体图片点",
@@ -985,6 +992,12 @@
             "name": "扇形",
             "thumbnail": "graphic-entity-polygon-sector.jpg",
             "main": "graphic/entity/polygon-sector",
+            "hasPannel": true
+          },
+          {
+            "name": "箭头军标",
+            "thumbnail": "graphic-entity-arrow.jpg",
+            "main": "graphic/entity/arrow",
             "hasPannel": true
           },
           {
@@ -1221,9 +1234,9 @@
           },
           {
             "name": "四面体",
-            "thumbnail": "graphic-primitive-tetraheadron.jpg",
-            "main": "graphic/primitive/tetraheadron",
-            "hasPannel": false
+            "thumbnail": "graphic-primitive-tetrahedron.jpg",
+            "main": "graphic/primitive/tetrahedron",
+            "hasPannel": true
           },
           {
             "name": "矿区岩层效果(井与开挖的实际应用)",
@@ -1298,7 +1311,8 @@
           {
             "name": "民航航线(OD线)",
             "thumbnail": "graphic-combine-polyline-odline-flights.jpg",
-            "main": "graphic/combine/polyline-odline-flights"
+            "main": "graphic/combine/polyline-odline-flights",
+            "hasPannel": true
           },
           {
             "name": "气象流动线",
@@ -1355,13 +1369,14 @@
             "name": "DivGraphic 基础对象",
             "thumbnail": "graphic-divGraphic-basis.jpg",
             "main": "graphic/divGraphic/basis",
-            "hasPannel": true,
-            "resources": ["/temp/css/divGraphic.css"]
+            "resources": ["/temp/css/divGraphic.css"],
+            "hasPannel": true
           },
           {
             "name": "动态效果点(南京高校)",
             "thumbnail": "graphic-divGraphic-divLightPoint.gif",
-            "main": "graphic/divGraphic/divLightPoint"
+            "main": "graphic/divGraphic/divLightPoint",
+            "hasPannel": true
           },
           {
             "name": "时序位置坐标",
@@ -1415,15 +1430,70 @@
             "hasPannel": true
           },
           {
-            "name": "粒子效果参数调节",
-            "thumbnail": "graphic-particleSystem-style.jpg",
-            "main": "graphic/particleSystem/style",
-            "hasPannel": true
-          },
-          {
             "name": "水闸放水效果",
             "thumbnail": "graphic-particleSystem-water.gif",
             "main": "graphic/particleSystem/water",
+            "hasPannel": true
+          }
+        ]
+      },
+      {
+        "name": "漫游路线对象",
+        "children": [
+          {
+            "name": "Route 实时轨迹路线",
+            "thumbnail": "graphic-custom-route.jpg",
+            "main": "graphic/custom/route",
+            "hasPannel": true
+          },
+          {
+            "name": "FixedRoute 历史轨迹路线",
+            "thumbnail": "graphic-custom-fixedRoute.jpg",
+            "main": "graphic/custom/fixedRoute",
+            "hasPannel": true
+          },
+          {
+            "name": "行人漫游",
+            "thumbnail": "graphic-custom-fixedRoute-walk.gif",
+            "main": "graphic/custom/fixedRoute-walk",
+            "hasPannel": true,
+            "resources": ["/temp/css/divGraphic.css"]
+          },
+          {
+            "name": "贴地表表面漫游",
+            "thumbnail": "graphic-custom-fixedRoute-ground.gif",
+            "main": "graphic/custom/fixedRoute-ground",
+            "hasPannel": true
+          },
+          {
+            "name": "贴模型表面漫游",
+            "thumbnail": "graphic-custom-fixedRoute-ground-tileset.gif",
+            "main": "graphic/custom/fixedRoute-ground-tileset",
+            "hasPannel": true
+          },
+          {
+            "name": "室内漫游",
+            "thumbnail": "graphic-custom-fixedRoute-indoor.gif",
+            "main": "graphic/custom/fixedRoute-indoor",
+            "hasPannel": true
+          },
+          {
+            "name": "空中漫游",
+            "thumbnail": "graphic-custom-fixedRoute-sky.gif",
+            "main": "graphic/custom/fixedRoute-sky",
+            "hasPannel": true,
+            "resources": ["/temp/css/divGraphic.css"]
+          },
+          {
+            "name": "飞机路线",
+            "thumbnail": "graphic-custom-fixedRoute-flight.gif",
+            "main": "graphic/custom/fixedRoute-flight",
+            "hasPannel": true
+          },
+          {
+            "name": "飞机路线(带投射)",
+            "thumbnail": "graphic-custom-fixedRoute-flight-ray.gif",
+            "main": "graphic/custom/fixedRoute-flight-ray",
             "hasPannel": true
           }
         ]
@@ -1647,67 +1717,6 @@
         ]
       },
       {
-        "name": "漫游路线对象",
-        "children": [
-          {
-            "name": "空中漫游",
-            "thumbnail": "graphic-roam-air.gif",
-            "main": "graphic/roam/air",
-            "hasPannel": true,
-            "resources": ["/temp/css/divGraphic.css"]
-          },
-          {
-            "name": "室内漫游",
-            "thumbnail": "graphic-roam-indoor.gif",
-            "main": "graphic/roam/indoor",
-            "hasPannel": true
-          },
-          {
-            "name": "行人漫游",
-            "thumbnail": "graphic-roam-walk.gif",
-            "main": "graphic/roam/walk",
-            "hasPannel": true,
-            "resources": ["/temp/css/divGraphic.css"]
-          },
-          {
-            "name": "贴地表表面漫游",
-            "thumbnail": "graphic-roam-ground.gif",
-            "main": "graphic/roam/ground",
-            "hasPannel": true
-          },
-          {
-            "name": "贴模型表面漫游",
-            "thumbnail": "graphic-roam-ground-tileset.gif",
-            "main": "graphic/roam/ground-tileset",
-            "hasPannel": true
-          },
-          {
-            "name": "飞行路线",
-            "thumbnail": "graphic-roam-flight.gif",
-            "main": "graphic/roam/flight",
-            "hasPannel": true
-          },
-          {
-            "name": "飞行路线(带投射)",
-            "thumbnail": "graphic-roam-flight-ray.gif",
-            "main": "graphic/roam/flight-ray",
-            "hasPannel": true
-          },
-          {
-            "name": "多个飞行路线",
-            "thumbnail": "graphic-roam-flight-multi.jpg",
-            "main": "graphic/roam/flight-multi",
-            "hasPannel": true
-          },
-          {
-            "name": "实时动态轨迹路线",
-            "thumbnail": "graphic-roam-dynamicRoamLine.jpg",
-            "main": "graphic/roam/dynamicRoamLine",
-            "hasPannel": true
-          }
-        ]
-      },
-      {
         "name": "综合应用案例",
         "children": [
           {
@@ -1831,12 +1840,6 @@
             "name": "ModelCombine对象(大数据+合并渲染)",
             "thumbnail": "graphic-combine-model.jpg",
             "main": "graphic/combine/model",
-            "hasPannel": true
-          },
-          {
-            "name": "ModelLayer图层对象(简单场景用)",
-            "thumbnail": "layerg-basis-model.jpg",
-            "main": "layer-graphic/basis/model",
             "hasPannel": true
           }
         ]
@@ -2043,8 +2046,7 @@
             "name": "3dtiles模型位置及参数编辑",
             "thumbnail": "layer3d-manager-edit.jpg",
             "main": "layer-tileset/manager/edit",
-            "hasPannel": true,
-            "resources": ["TilesEditor.js"]
+            "hasPannel": true
           },
           {
             "name": "模型位置XYZ平移(不贴球面)",
@@ -2317,6 +2319,11 @@
             "name": "对象描边",
             "thumbnail": "effect-outlineEffect.jpg",
             "main": "effect/outlineEffect"
+          },
+          {
+            "name": "对象泛光",
+            "thumbnail": "effect-bloomTarget.jpg",
+            "main": "effect/bloomTarget"
           },
           {
             "name": "泛光特效",

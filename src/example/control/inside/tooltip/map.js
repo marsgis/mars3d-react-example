@@ -212,8 +212,7 @@ export function bindGraphicDemo2() {
   const graphic = new mars3d.graphic.BillboardEntity({
     position: new mars3d.LngLatPoint(116.328539, 30.978731, 1521),
     style: {
-      image: "img/marker/di3.png",
-      scale: 0.5,
+      image: "img/marker/point-red.png",
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
       label: {

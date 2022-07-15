@@ -157,9 +157,8 @@ export function showSafetyNotice() {
       const geoType = featue.geometry?.type
       if (geoType === "Point") {
         return {
-          image: "img/marker/di3.png",
+          image: "img/marker/point-red.png",
           verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-          scale: 0.4,
           label: {
             text: attr.name,
             font_size: 18,

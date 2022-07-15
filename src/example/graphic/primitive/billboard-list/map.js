@@ -95,11 +95,10 @@ function createGraphics(graphicLayer, arr) {
     const item = arr[i]
     const position = Cesium.Cartesian3.fromDegrees(+item.lng, +item.lat, item.z || 0)
 
-    const primitive = new mars3d.graphic.BillboardPrimitive({
+    const graphic = new mars3d.graphic.BillboardPrimitive({
       position: position,
       style: {
-        image: "img/marker/mark3.png",
-        scale: 0.6,
+        image: "img/marker/mark-blue.png",
         horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
         verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
         scaleByDistance: new Cesium.NearFarScalar(1.5e2, 1.0, 8.0e6, 0.2),
@@ -118,6 +117,6 @@ function createGraphics(graphicLayer, arr) {
       },
       attr: item
     })
-    graphicLayer.addGraphic(primitive)
+    graphicLayer.addGraphic(graphic)
   }
 }

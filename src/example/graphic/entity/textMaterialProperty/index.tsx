@@ -1,95 +1,23 @@
-import { MarsPannel, MarsButton, MarsSlider, MarsInput } from "@mars/components/MarsUI"
+import { MarsPannel, MarsButton } from "@mars/components/MarsUI"
+import { GraphicLayerState } from "@mars/components/MarsSample/GraphicLayerState"
+import { LocationTo } from "@mars/components/MarsSample/LocationTo"
 import { Space } from "antd"
 import * as mapWork from "./map.js"
-import { activate, disable, updateWidget, isActive } from "@mars/widgets/common/store/widget"
-import { useEffect, useState } from "react"
-
-const onClickDrawWall = () => {
-  mapWork.onClickDrawWall()
-}
-
-const onClickDrawRectangle = () => {
-  mapWork.onClickDrawRectangle()
-}
-
-const onClickDrawPoint = () => {
-  mapWork.onClickDrawPoint()
-}
-
-const removeAll = () => {
-  mapWork.removeAll()
-}
 
 function UIComponent() {
-  const [angle, setAngle] = useState(0)
-
-  const [text, setText] = useState("Mars3D 火星科技 2017")
-
-  useEffect(() => {
-    // 编辑修改了模型
-    mapWork.eventTarget.on("graphicEditor-update", async (e: any) => {
-      if (isActive("GraphicEditor")) {
-        updateWidget("GraphicEditor", { graphic: e.graphic })
-      } else {
-        activate({
-          name: "GraphicEditor",
-          data: { graphic: e.graphic }
-        })
-      }
-    })
-
-    // 停止编辑修改模型
-    mapWork.eventTarget.on("graphicEditor-stop", async (e: any) => {
-      setTimeout(() => {
-        if (!mapWork.graphicLayer.isEditing) {
-          disable("GraphicEditor")
-        }
-      }, 100)
-    })
-  }, [])
-
-  // 改变方向
-  const onChangeDirection = (angle: number) => {
-    setAngle(angle)
-    mapWork.onChangeSlider(angle)
-  }
-
-  // 文字改变
-  const onChangeText = (value: any) => {
-    setText(value.target.value)
-  }
-
-  const onClickSure = () => {
-    mapWork.onClickSure(text)
-  }
-
   return (
-    <MarsPannel visible={true} top={10} right={10}>
-      <Space>
-        <MarsButton onClick={onClickDrawWall}>竖立墙</MarsButton>
-        <MarsButton onClick={onClickDrawRectangle}>贴地矩形</MarsButton>
-
-        <MarsButton onClick={onClickDrawPoint} title="根据中心点和长宽来计算矩形">
-          贴地矩形2
-        </MarsButton>
-        <MarsButton onClick={removeAll}>清除</MarsButton>
-      </Space>
-
-      <div className="f-pt">
-        <Space>
-          <span>方向</span>
-          <MarsSlider value={angle} style={{ width: "200px" }} min={0} max={360} step={1} onChange={onChangeDirection}></MarsSlider>
-        </Space>
-      </div>
-
-      <div className="f-pt">
-        <Space>
-          <span>文字</span>
-          <MarsInput value={text} onChange={onChangeText}></MarsInput>
-          <MarsButton onClick={onClickSure}>确定</MarsButton>
-        </Space>
-      </div>
-    </MarsPannel>
+    <>
+      <MarsPannel visible={true} top={10} right={10}>
+        <GraphicLayerState drawLabel1={"绘制墙"} drawLabel2={"绘制贴地矩形"} />
+        <div className="f-pdg-10-t">
+          <Space>
+            <span className="mars-pannel-item-label">其他绘制:</span>
+            <MarsButton onClick={() => mapWork.onClickDrawPoint()}>绘制点计算矩形</MarsButton>
+          </Space>
+        </div>
+      </MarsPannel>
+      <LocationTo />
+    </>
   )
 }
 

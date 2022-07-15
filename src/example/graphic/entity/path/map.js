@@ -6,7 +6,14 @@ export let graphicLayer // 矢量图层对象
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: 31.756263, lng: 117.209077, alt: 7696, heading: 5, pitch: -33 }
+    center: { lat: 31.756263, lng: 117.209077, alt: 7696, heading: 5, pitch: -33 },
+    clock: {
+      currentTime: "2017-08-25 08:00:00"
+    }
+  },
+  control: {
+    clockAnimate: true, // 时钟动画控制(左下角)
+    timeline: true // 是否显示时间线控件
   }
 }
 /**
@@ -22,7 +29,10 @@ export function onMounted(mapInstance) {
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  bindLayerEvent() // 对图层绑定相关事件
+  // 在layer上绑定监听事件
+  graphicLayer.on(mars3d.EventType.click, function (event) {
+    console.log("监听layer，单击了矢量对象", event)
+  })
   bindLayerPopup() // 在图层上绑定popup,对所有加到这个图层的矢量数据都生效
   bindLayerContextMenu() // 在图层绑定右键菜单,对所有加到这个图层的矢量数据都生效
 
@@ -152,21 +162,64 @@ function random(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
-// 在图层级处理一些事物
-function bindLayerEvent() {
-  // 在layer上绑定监听事件
-  graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("监听layer，单击了矢量对象", event)
-  })
-  /* graphicLayer.on(mars3d.EventType.mouseOver, function (event) {
-    console.log("监听layer，鼠标移入了矢量对象", event)
-  })
-  graphicLayer.on(mars3d.EventType.mouseOut, function (event) {
-    console.log("监听layer，鼠标移出了矢量对象", event)
-  }) */
+// 生成演示数据(测试数据量)
+export function addRandomGraphicByCount(count) {
+  graphicLayer.clear()
+  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
+
+  const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
+  const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
+  console.log("生成的测试网格坐标", result)
+
+  let tempTime
+
+  for (let j = 0; j < result.points.length; ++j) {
+    const position = result.points[j]
+    const index = j + 1
+
+    const property = new Cesium.SampledPositionProperty()
+    property.forwardExtrapolationType = Cesium.ExtrapolationType.HOLD
+
+    // 起点
+    tempTime = map.clock.currentTime // 飞行开始时间
+    const pt1 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 225, result.radius)
+    property.addSample(tempTime, pt1)
+
+    // 移动到的第1个目标点
+    tempTime = Cesium.JulianDate.addSeconds(tempTime, 60, new Cesium.JulianDate())
+    property.addSample(tempTime, mars3d.LngLatPoint.toCartesian(position))
+
+    // 移动到的第2个目标点
+    tempTime = Cesium.JulianDate.addSeconds(tempTime, 60, new Cesium.JulianDate())
+    const pt2 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 315, result.radius)
+    property.addSample(tempTime, pt2)
+
+    const graphic = new mars3d.graphic.PathEntity({
+      position: property,
+      style: {
+        width: 2,
+        color: "#ffff00",
+        opacity: 1.0,
+
+        // 高亮时的样式（默认为鼠标移入，也可以指定type:'click'单击高亮），构造后也可以openHighlight、closeHighlight方法来手动调用
+        highlight: {
+          type: mars3d.EventType.click,
+          color: "#ff0000"
+        }
+      },
+      model: {
+        url: "//data.mars3d.cn/gltf/mars/wrj.glb",
+        scale: 0.5,
+        minimumPixelSize: 40
+      },
+      attr: { index: index }
+    })
+    graphicLayer.addGraphic(graphic)
+  }
+
+  graphicLayer.enabledEvent = true // 恢复事件
+  return result.points.length
 }
-
-
 
 // 在图层绑定Popup弹窗
 export function bindLayerPopup() {
@@ -179,8 +232,6 @@ export function bindLayerPopup() {
     return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
   })
 }
-
-
 
 // 绑定右键菜单
 export function bindLayerContextMenu() {
@@ -196,12 +247,12 @@ export function bindLayerContextMenu() {
           return true
         }
       },
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         if (!graphic) {
           return
         }
-        const parent = graphic._parent // 右击是编辑点时
+        const parent = graphic.parent // 右击是编辑点时
         graphicLayer.removeGraphic(graphic)
         if (parent) {
           graphicLayer.removeGraphic(parent)
@@ -210,5 +261,3 @@ export function bindLayerContextMenu() {
     }
   ])
 }
-
-

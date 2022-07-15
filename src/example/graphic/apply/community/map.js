@@ -64,23 +64,19 @@ function addTilesetLayer() {
       color: {
         conditions: [["true", "rgba(16, 119, 209, 1)"]]
       }
+    },
+    // 裁剪区域
+    planClip: {
+      positions: [
+        [117.22648, 31.827441],
+        [117.210341, 31.830612],
+        [117.211311, 31.842438],
+        [117.226091, 31.842885]
+      ],
+      clipOutSide: true // 外裁剪
     }
   })
   map.addLayer(tiles3dLayer)
-
-  // 模型裁剪
-  const modelThing = new mars3d.thing.TilesetPlanClip({
-    layer: tiles3dLayer,
-    positions: [
-      [117.22648, 31.827441],
-      [117.210341, 31.830612],
-      [117.211311, 31.842438],
-      [117.226091, 31.842885]
-    ],
-    clipOutSide: true // 外裁剪
-  })
-
-  map.addThing(modelThing)
 }
 
 function addGraphics() {
@@ -112,11 +108,11 @@ function addGraphics() {
           style: {
             width: 4,
             closure: true,
-            // clampToGround: true,
-            material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineTrail, {
+            materialType: mars3d.MaterialType.LineTrail,
+            materialOptions: {
               color: item.attr.color,
               speed: 4
-            })
+            }
           },
           attr: { remark: "PolylineEntity线" }
         })

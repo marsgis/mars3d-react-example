@@ -12,11 +12,14 @@ export let graphicLayer // 矢量图层对象
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
-  // 创建Graphic图层
+  // 创建矢量数据图层
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  bindLayerEvent() // 对图层绑定相关事件
+  // 在layer上绑定监听事件
+  graphicLayer.on(mars3d.EventType.click, function (event) {
+    console.log("监听layer，单击了矢量对象", event)
+  })
   bindLayerPopup() // 在图层上绑定popup,对所有加到这个图层的矢量数据都生效
   bindLayerContextMenu() // 在图层绑定右键菜单,对所有加到这个图层的矢量数据都生效
 
@@ -69,6 +72,41 @@ function addDemoGraphic1(graphicLayer) {
 
   initGraphicManager(graphic)
 }
+// 也可以在单个Graphic上做个性化管理及绑定操作
+function initGraphicManager(graphic) {
+  // 3.在graphic上绑定监听事件
+  // graphic.on(mars3d.EventType.click, function (event) {
+  //   console.log("监听graphic，单击了矢量对象", event)
+  // })
+  // 绑定Tooltip
+  // graphic.bindTooltip('我是graphic上绑定的Tooltip') //.openTooltip()
+
+  // 绑定Popup
+  const inthtml = `<table style="width: auto;">
+            <tr>
+              <th scope="col" colspan="2" style="text-align:center;font-size:15px;">我是graphic上绑定的Popup </th>
+            </tr>
+            <tr>
+              <td>提示：</td>
+              <td>这只是测试信息，可以任意html</td>
+            </tr>
+          </table>`
+  graphic.bindPopup(inthtml).openPopup()
+
+  // 绑定右键菜单
+  graphic.bindContextMenu([
+    {
+      text: "删除对象[graphic绑定的]",
+      icon: "fa fa-trash-o",
+      callback: (e) => {
+        const graphic = e.graphic
+        if (graphic) {
+          graphic.remove()
+        }
+      }
+    }
+  ])
+}
 
 //
 function addDemoGraphic2(graphicLayer) {
@@ -78,7 +116,7 @@ function addDemoGraphic2(graphicLayer) {
       radii: new Cesium.Cartesian3(1000.0, 1000.0, 1000.0),
       color: Cesium.Color.RED.withAlpha(0.5),
       outline: true,
-      outlineColor: "#ffffff"
+      outlineColor: "rgba(255,255,255,0.5)"
     },
     attr: { remark: "示例2" }
   })
@@ -92,10 +130,11 @@ function addDemoGraphic3(graphicLayer) {
     style: {
       radii: new Cesium.Cartesian3(2000.0, 2000.0, 2000.0),
       maximumConeDegree: 90,
-      material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.EllipsoidElectric, {
+      materialType: mars3d.MaterialType.EllipsoidElectric,
+      materialOptions: {
         color: Cesium.Color.GREEN,
         speed: 5.0
-      })
+      }
     },
     attr: { remark: "示例3" }
   })
@@ -108,10 +147,11 @@ function addDemoGraphic3b(graphicLayer) {
     style: {
       radii: new Cesium.Cartesian3(2000.0, 2000.0, 2000.0),
       maximumConeDegree: 90,
-      material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.EllipsoidWave, {
+      materialType: mars3d.MaterialType.EllipsoidWave,
+      materialOptions: {
         color: "#00ffff",
         speed: 5.0
-      })
+      }
     }
   })
   graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
@@ -132,7 +172,7 @@ function addDemoGraphic4(graphicLayer) {
       color: "#f33349",
       opacity: 0.9,
       outline: true,
-      outlineColor: "#ffffff",
+      outlineColor: "rgba(255,255,255,0.5)",
       label: {
         text: "我是原始的",
         font_size: 18,
@@ -180,7 +220,7 @@ function addDemoGraphic5(graphicLayer) {
       maximumConeDegree: 90,
       color: "rgba(255,255,0,0.2)",
       outline: true,
-      outlineColor: "#ffffff"
+      outlineColor: "rgba(255,255,255,0.5)"
     },
     attr: { remark: "示例5" }
   })
@@ -196,7 +236,7 @@ function addDemoGraphic6(graphicLayer) {
       maximumConeDegree: 90,
       color: Cesium.Color.BLUE.withAlpha(0.3),
       outline: true,
-      outlineColor: "#ffffff"
+      outlineColor: "rgba(255,255,255,0.5)"
     },
     attr: { remark: "示例6" }
   })
@@ -213,7 +253,7 @@ function addDemoGraphic7(graphicLayer) {
       maximumConeDegree: 90,
       color: Cesium.Color.RED.withAlpha(0.3),
       outline: true,
-      outlineColor: "#ffffff"
+      outlineColor: "rgba(255,255,255,0.5)"
     },
     attr: { remark: "示例7" }
   })
@@ -231,7 +271,7 @@ function addDemoGraphic8(graphicLayer) {
       maximumConeDegree: 90,
       color: Cesium.Color.YELLOW.withAlpha(0.3),
       outline: true,
-      outlineColor: "#ffffff"
+      outlineColor: "rgba(255,255,255,0.5)"
     },
     attr: { remark: "示例8" }
   })
@@ -249,7 +289,7 @@ function addDemoGraphic9(graphicLayer) {
       maximumConeDegree: 140.0,
       color: "rgba(31,254,230,0.3)",
       outline: true,
-      outlineColor: "#ffffff"
+      outlineColor: "rgba(255,255,255,0.5)"
     },
     attr: { remark: "示例9" }
   })
@@ -266,7 +306,7 @@ function addDemoGraphic10(graphicLayer) {
       minimumConeDegree: 110.0,
       color: "rgba(149,228,12,0.3)",
       outline: true,
-      outlineColor: "#ffffff"
+      outlineColor: "rgba(255,255,255,0.5)"
     },
     attr: { remark: "示例10" }
   })
@@ -286,7 +326,7 @@ function addDemoGraphic11(graphicLayer) {
       maximumConeDegree: 70.0,
       color: "rgba(149,228,12,0.3)",
       outline: true,
-      outlineColor: "#ffffff"
+      outlineColor: "rgba(255,255,255,0.5)"
     },
     attr: { remark: "示例11" }
   })
@@ -304,7 +344,7 @@ function addDemoGraphic12(graphicLayer) {
       maximumConeDegree: 90.0,
       color: "rgba(242,250,25,0.3)",
       outline: true,
-      outlineColor: "#ffffff"
+      outlineColor: "rgba(255,255,255,0.5)"
     },
     attr: { remark: "示例12" }
   })
@@ -323,7 +363,7 @@ function addDemoGraphic13(graphicLayer) {
       maximumConeDegree: 90.0,
       color: "rgba(247,154,44,0.3)",
       outline: true,
-      outlineColor: "#ffffff"
+      outlineColor: "rgba(255,255,255,0.5)"
     },
     attr: { remark: "示例13" }
   })
@@ -375,18 +415,44 @@ function addDemoGraphic14(graphicLayer) {
   graphicLayer.addGraphic(graphicWai)
 }
 
-// 在图层级处理一些事物
-function bindLayerEvent() {
-  // 在layer上绑定监听事件
-  graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("监听layer，单击了矢量对象", event)
+// 生成演示数据(测试数据量)
+export function addRandomGraphicByCount(count) {
+  graphicLayer.clear()
+  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
+
+  const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
+  const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
+  console.log("生成的测试网格坐标", result)
+
+  const radius = result.radius
+
+  for (let j = 0; j < result.points.length; ++j) {
+    const position = result.points[j]
+    const index = j + 1
+
+    const graphic = new mars3d.graphic.EllipsoidPrimitive({
+      position: position,
+      style: {
+        radii: new Cesium.Cartesian3(radius, radius, radius),
+        color: Cesium.Color.fromRandom({ alpha: 0.6 })
+      },
+      attr: { index: index }
+    })
+    graphicLayer.addGraphic(graphic)
+  }
+
+  graphicLayer.enabledEvent = true // 恢复事件
+  return result.points.length
+}
+
+// 开始绘制
+export function startDrawGraphic() {
+  graphicLayer.startDraw({
+    type: "ellipsoidP",
+    style: {
+      color: "rgba(0,255,255,0.6)"
+    }
   })
-  /* graphicLayer.on(mars3d.EventType.mouseOver, function (event) {
-    console.log("监听layer，鼠标移入了矢量对象", event)
-  })
-  graphicLayer.on(mars3d.EventType.mouseOut, function (event) {
-    console.log("监听layer，鼠标移出了矢量对象", event)
-  }) */
 }
 
 // 在图层绑定Popup弹窗
@@ -405,6 +471,46 @@ export function bindLayerPopup() {
 export function bindLayerContextMenu() {
   graphicLayer.bindContextMenu([
     {
+      text: "开始编辑对象",
+      icon: "fa fa-edit",
+      show: function (e) {
+        const graphic = e.graphic
+        if (!graphic || !graphic.hasEdit) {
+          return false
+        }
+        return !graphic.isEditing
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
+        if (graphic) {
+          graphicLayer.startEditing(graphic)
+        }
+      }
+    },
+    {
+      text: "停止编辑对象",
+      icon: "fa fa-edit",
+      show: function (e) {
+        const graphic = e.graphic
+        if (!graphic || !graphic.hasEdit) {
+          return false
+        }
+        return graphic.isEditing
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
+        if (graphic) {
+          graphic.stopEditing()
+        }
+      }
+    },
+    {
       text: "删除对象",
       icon: "fa fa-trash-o",
       show: (event) => {
@@ -415,58 +521,15 @@ export function bindLayerContextMenu() {
           return true
         }
       },
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         if (!graphic) {
           return
         }
-        const parent = graphic._parent // 右击是编辑点时
+        const parent = graphic.parent // 右击是编辑点时
         graphicLayer.removeGraphic(graphic)
         if (parent) {
           graphicLayer.removeGraphic(parent)
-        }
-      }
-    }
-  ])
-}
-
-// 也可以在单个Graphic上做个性化管理及绑定操作
-function initGraphicManager(graphic) {
-  // 3.在graphic上绑定监听事件
-  /* graphic.on(mars3d.EventType.click, function (event) {
-    console.log("监听graphic，单击了矢量对象", event)
-  })
-  graphic.on(mars3d.EventType.mouseOver, function (event) {
-    console.log("监听graphic，鼠标移入了矢量对象", event)
-  })
-  graphic.on(mars3d.EventType.mouseOut, function (event) {
-    console.log("监听graphic，鼠标移出了矢量对象", event)
-  }) */
-
-  // 绑定Tooltip
-  // graphic.bindTooltip('我是graphic上绑定的Tooltip') //.openTooltip()
-
-  // 绑定Popup
-  const inthtml = `<table style="width: auto;">
-            <tr>
-              <th scope="col" colspan="2" style="text-align:center;font-size:15px;">我是graphic上绑定的Popup </th>
-            </tr>
-            <tr>
-              <td>提示：</td>
-              <td>这只是测试信息，可以任意html</td>
-            </tr>
-          </table>`
-  graphic.bindPopup(inthtml).openPopup()
-
-  // 绑定右键菜单
-  graphic.bindContextMenu([
-    {
-      text: "删除对象[graphic绑定的]",
-      icon: "fa fa-trash-o",
-      callback: function (e) {
-        const graphic = e.graphic
-        if (graphic) {
-          graphic.remove()
         }
       }
     }

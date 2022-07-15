@@ -7,7 +7,8 @@ import {
   MarsInput,
   MarsGui,
   MarsTree,
-  MarsDialog
+  MarsDialog,
+  MarsSwitch
 } from "@mars/components/MarsUI"
 import { Space } from "antd"
 import * as mapWork from "./map.js"
@@ -40,6 +41,7 @@ function isHaveChildren(arr: any, index: number) {
 function UIComponent() {
   const marsGuiRef = useRef<any>()
   const marsGuiRef2 = useRef<any>()
+  const marsGuiRef3 = useRef<any>()
   const options: GuiItem[] = [
     {
       type: "number",
@@ -68,54 +70,24 @@ function UIComponent() {
       field: "txtZ",
       label: "高度",
       value: 0,
+      extra(data) {
+        return (
+          <MarsCheckbox
+            onChange={(e) => {
+              mapWork.updateDepthTest(e.target.checked)
+            }}
+          >
+            深度检测
+          </MarsCheckbox>
+        )
+      },
       change(value) {
         marsGuiRef.current.updateField("txtZ", value)
         updataValue()
       }
-    },
-    {
-      type: "switch",
-      field: "depthTestAgainstTerrain",
-      label: "深度检测",
-      value: false,
-      change(value) {
-        marsGuiRef.current.updateField("depthTestAgainstTerrain", value)
-        updataValue()
-      }
-    },
-    {
-      type: "number",
-      field: "rotationX",
-      label: "方向X",
-      step: 0.1,
-      value: 0.0,
-      change(value) {
-        marsGuiRef.current.updateField("rotationX", value)
-        updataValue()
-      }
-    },
-    {
-      type: "number",
-      field: "rotationY",
-      label: "方向Y",
-      step: 0.1,
-      value: 0.0,
-      change(value) {
-        marsGuiRef.current.updateField("rotationY", value)
-        updataValue()
-      }
-    },
-    {
-      type: "number",
-      field: "rotationZ",
-      label: "方向Z(四周)",
-      step: 0.1,
-      value: 0.0,
-      change(value) {
-        marsGuiRef.current.updateField("rotationZ", value)
-        updataValue()
-      }
-    },
+    }
+  ]
+  const options2: GuiItem[] = [
     {
       type: "select",
       field: "axis",
@@ -131,30 +103,54 @@ function UIComponent() {
         { value: "Y_UP_TO_Z_UP", label: "Y轴 -->Z轴" }
       ],
       change(value) {
-        marsGuiRef.current.updateField("axis", value)
+        marsGuiRef2.current.updateField("axis", value)
         updataValue()
       }
     },
     {
-      type: "switch",
-      field: "tilesEditorEnabled",
-      label: "鼠标拖拽编辑",
-      value: false,
+      type: "number",
+      field: "rotationX",
+      label: "绕X轴旋转模型",
+      step: 0.1,
+      value: 0.0,
       change(value) {
-        marsGuiRef.current.updateField("tilesEditorEnabled", value)
+        marsGuiRef2.current.updateField("rotationX", value)
+        updataValue()
+      }
+    },
+    {
+      type: "number",
+      field: "rotationY",
+      label: "绕Y轴旋转模型",
+      step: 0.1,
+      value: 0.0,
+      change(value) {
+        marsGuiRef2.current.updateField("rotationY", value)
+        updataValue()
+      }
+    },
+    {
+      type: "number",
+      field: "rotationZ",
+      label: "绕Z轴旋转模型",
+      step: 0.1,
+      value: 0.0,
+      change(value) {
+        marsGuiRef2.current.updateField("rotationZ", value)
         updataValue()
       }
     }
   ]
-  const options2: GuiItem[] = [
+  // 其他参数
+  const options3: GuiItem[] = [
     {
       type: "number",
       field: "scale",
       label: "缩放比例",
       step: 0.1,
-      value: true,
+      value: 1.0,
       change(value) {
-        marsGuiRef.current.updateField("scale", value)
+        marsGuiRef3.current.updateField("scale", value)
         updataValue()
       }
     },
@@ -167,20 +163,7 @@ function UIComponent() {
       max: 3,
       step: 0.1,
       change(value) {
-        marsGuiRef.current.updateField("maximumScreenSpaceError", value)
-        updataValue()
-      }
-    },
-    {
-      type: "slider",
-      field: "luminanceAtZenith",
-      label: "材质底色",
-      value: 1,
-      min: 0.1,
-      max: 3,
-      step: 0.1,
-      change(value) {
-        marsGuiRef.current.updateField("luminanceAtZenith", value)
+        marsGuiRef3.current.updateField("maximumScreenSpaceError", value)
         updataValue()
       }
     },
@@ -193,7 +176,7 @@ function UIComponent() {
       max: 1,
       step: 0.1,
       change(value) {
-        marsGuiRef.current.updateField("opacity", value)
+        marsGuiRef3.current.updateField("opacity", value)
         updataValue()
       }
     }
@@ -201,35 +184,48 @@ function UIComponent() {
 
   const [inputUrl, setInputUrl] = useState("//data.mars3d.cn/3dtiles/max-fsdzm/tileset.json")
   const [agent, setAgent] = useState(false)
+  const [highlightEnable, setHighlightEnable] = useState(false)
+  const [popupEnable, setPopupEnable] = useState(true)
 
   const [treeData, setTree] = useState<any[]>()
   const [expandedKeys, setExpandedKeys] = useState<any[]>([]) // 默认展开的节点
   const [checkedKeys, setCheckedKeys] = useState<any[]>([]) // 默认勾选的节点
   const [cancelTree, setCancelTree] = useState(false)
 
-  const updataValue = useCallback(() => {
-    const data = marsGuiRef.current.getValues()
-    const data2 = marsGuiRef2.current.getValues()
-    const data3 = {
-      txtModel: inputUrl,
-      chkProxy: agent,
-      txtX: data.txtX,
-      txtY: data.txtY,
-      txtZ: data.txtZ,
-      depthTestAgainstTerrain: data.depthTestAgainstTerrain,
-      rotationZ: data.rotationZ,
-      rotationX: data.rotationX,
-      rotationY: data.rotationY,
-      scale: data2.scale,
-      axis: data.axis,
-      tilesEditorEnabled: data.tilesEditorEnabled,
-      maximumScreenSpaceError: data2.maximumScreenSpaceError,
-      luminanceAtZenith: data2.luminanceAtZenith,
-      opacity: data2.opacity
-    }
-    mapWork.updateModel(data3)
-    return data3
-  }, [agent, inputUrl])
+  const updataValue = useCallback(
+    (otherData = { popupEnable, highlightEnable }) => {
+      const data = marsGuiRef.current.getValues()
+      const data2 = marsGuiRef2.current.getValues()
+      const data3 = marsGuiRef3.current.getValues()
+
+      const data4 = {
+        name: "模型名称",
+        type: "3dtiles",
+        url: inputUrl,
+        maximumScreenSpaceError: data3.maximumScreenSpaceError, // 【重要】数据加大，能让最终成像变模糊
+        position: {
+          lng: data.txtX,
+          lat: data.txtY,
+          alt: data.txtZ
+        },
+        rotation: {
+          z: data2.rotationZ,
+          x: data2.rotationX,
+          y: data2.rotationY
+        },
+        scale: data3.scale,
+        depthTestAgainstTerrain: data.depthTestAgainstTerrain,
+        axis: data2.axis ? data2.axis : undefined, // 变换垂直轴
+        proxy: agent ? "//server.mars3d.cn/proxy/" : undefined, // 代理
+        opacity: data3.opacity,
+        show: true
+      }
+
+      mapWork.updateModel(data4, otherData)
+      return data4
+    },
+    [agent, inputUrl, popupEnable, highlightEnable]
+  )
 
   useEffect(() => {
     setTimeout(() => {
@@ -244,29 +240,29 @@ function UIComponent() {
 
   useMemo(() => {
     mapWork.eventTarget.on("tiles3dLayerLoad", function (event: any) {
-      const tileset = event.data
-      const tiles3dLayer = event.tiles3dLayer
-
+      const tiles3dLayer = event.layer
       // 取模型中心点信息
       const locParams = tiles3dLayer.center
 
       if (locParams.alt < -1000 || locParams.alt > 10000) {
         locParams.alt = 0 // 高度异常数据，自动赋值高度为0
       }
+
       marsGuiRef.current.updateField("txtX", locParams.lng.toFixed(6))
       marsGuiRef.current.updateField("txtY", locParams.lat.toFixed(6))
       marsGuiRef.current.updateField("txtZ", locParams.alt.toFixed(6))
 
-      marsGuiRef2.current.updateField("luminanceAtZenith", tileset.luminanceAtZenith)
-      marsGuiRef2.current.updateField("maximumScreenSpaceError", tileset.maximumScreenSpaceError)
+      marsGuiRef2.current.updateField("maximumScreenSpaceError", tiles3dLayer.tileset.maximumScreenSpaceError)
 
       if (tiles3dLayer.transform) {
-        marsGuiRef.current.updateField("rotationX", tiles3dLayer.rotation_x.toFixed(1))
-        marsGuiRef.current.updateField("rotationY", tiles3dLayer.rotation_y.toFixed(1))
-        marsGuiRef.current.updateField("rotationZ", tiles3dLayer.rotation_z.toFixed(1))
-
-        marsGuiRef2.current.updateField("scale", tiles3dLayer.scale || 1)
+        marsGuiRef2.current.updateField("rotationX", tiles3dLayer.rotation_x.toFixed(1))
+        marsGuiRef2.current.updateField("rotationY", tiles3dLayer.rotation_y.toFixed(1))
+        marsGuiRef2.current.updateField("rotationZ", tiles3dLayer.rotation_z.toFixed(1))
         marsGuiRef2.current.updateField("axis", tiles3dLayer.axis)
+
+        marsGuiRef3.current.updateField("scale", tiles3dLayer.scale || 1)
+      } else {
+        mapWork.updateHeightForSurfaceTerrain(locParams)
       }
     })
 
@@ -290,27 +286,40 @@ function UIComponent() {
       setExpandedKeys(expandedKeys)
     })
 
-    mapWork.eventTarget.on("tilesEditor", function (event: any) {
-      mapWork.editor(event.data, marsGuiRef.current.getValue("txtZ"))
-    })
-
     // 根据改变的位置触发不同的事件
     mapWork.eventTarget.on("changePoition", function (event: any) {
-      marsGuiRef.current.updateField("txtX", event.point.lng)
-      marsGuiRef.current.updateField("txtY", event.point.lat)
-      marsGuiRef.current.updateField("txtZ", event.point.alt)
+      marsGuiRef.current.updateField("txtX", event.center.lng)
+      marsGuiRef.current.updateField("txtY", event.center.lat)
+      marsGuiRef.current.updateField("txtZ", event.center.alt)
+
+      marsGuiRef2.current.updateField("rotationX", event.rotation.x)
+      marsGuiRef2.current.updateField("rotationY", event.rotation.y)
+      marsGuiRef2.current.updateField("rotationZ", event.rotation.z)
     })
 
-    mapWork.eventTarget.on("changeHeading", function (event: any) {
-      marsGuiRef.current.updateField("rotationZ", event.tiles3dLayer.rotation_z)
+    mapWork.eventTarget.on("changeHeight", function (event: any) {
+      marsGuiRef.current.updateField("txtZ", event.alt)
     })
   }, [])
 
   return (
     <>
-      <MarsPannel visible={true} right="10" top="10" width={400}>
-        <MarsCollapse defaultActiveKey={["1", "2", "3"]}>
-          <MarsCollapsePanel key="1" header="模型URL地址">
+      <MarsPannel visible={true} right="10" top="5" width={400}>
+        <MarsCollapse collapsible={"header"} defaultActiveKey={["1", "2", "3", "4"]}>
+          <MarsCollapsePanel
+            key="1"
+            header="模型URL地址"
+            extra={
+              <MarsButton
+                onClick={() => {
+                  setCancelTree(true)
+                  mapWork.showCompTree(inputUrl)
+                }}
+              >
+                查看构件
+              </MarsButton>
+            }
+          >
             <Space wrap>
               <span className="mars-pannel-item-label">模型URL:</span>
               <MarsInput
@@ -324,6 +333,10 @@ function UIComponent() {
               <MarsButton
                 onClick={() => {
                   mapWork.showModel(inputUrl)
+
+                  marsGuiRef3.current.updateField("opacity", 1)
+                  setHighlightEnable(false)
+                  setPopupEnable(true)
                 }}
               >
                 加载模型
@@ -337,12 +350,47 @@ function UIComponent() {
               </MarsCheckbox>
             </Space>
           </MarsCollapsePanel>
-          <MarsCollapsePanel key="2" header="位置方向">
+          <MarsCollapsePanel
+            key="2"
+            header="模型位置"
+            extra={
+              <MarsButton
+                onClick={() => {
+                  mapWork.locate()
+                }}
+              >
+                定位至模型
+              </MarsButton>
+            }
+          >
             <MarsGui options={options} formProps={{ labelCol: { span: 7 } }} ref={marsGuiRef}></MarsGui>
           </MarsCollapsePanel>
-          <MarsCollapsePanel key="3" header="其他参数">
+          <MarsCollapsePanel key="3" header="模型方向">
             <MarsGui options={options2} formProps={{ labelCol: { span: 7 } }} ref={marsGuiRef2}></MarsGui>
+          </MarsCollapsePanel>
+          <MarsCollapsePanel key="4" header="其他参数">
+            <MarsGui options={options3} formProps={{ labelCol: { span: 7 } }} ref={marsGuiRef3}></MarsGui>
             <Space>
+              <span>单击高亮构件:</span>
+              <MarsSwitch
+                checked={highlightEnable}
+                onChange={(data) => {
+                  setHighlightEnable(data)
+                  updataValue({ highlightEnable: data, popupEnable })
+                }}
+              ></MarsSwitch>
+
+              <span>单击popup弹窗:</span>
+              <MarsSwitch
+                checked={popupEnable}
+                onChange={(data) => {
+                  setPopupEnable(data)
+                  updataValue({ popupEnable: data, highlightEnable })
+                }}
+              ></MarsSwitch>
+            </Space>
+
+            <div className="f-tac f-pdg-10-t">
               <MarsButton
                 onClick={() => {
                   mapWork.saveBookmark(updataValue())
@@ -350,22 +398,7 @@ function UIComponent() {
               >
                 保存参数
               </MarsButton>
-              <MarsButton
-                onClick={() => {
-                  mapWork.locate()
-                }}
-              >
-                视角定位至模型
-              </MarsButton>
-              <MarsButton
-                onClick={() => {
-                  setCancelTree(true)
-                  mapWork.showCompTree(inputUrl)
-                }}
-              >
-                查看构件
-              </MarsButton>
-            </Space>
+            </div>
           </MarsCollapsePanel>
         </MarsCollapse>
       </MarsPannel>

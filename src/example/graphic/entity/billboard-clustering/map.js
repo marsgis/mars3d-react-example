@@ -25,8 +25,9 @@ export function onMounted(mapInstance) {
     // 点的聚合配置
     clustering: {
       enabled: true,
-      pixelRange: 20
-      // opacity: 1,
+      pixelRange: 20,
+      clampToGround: false
+      // opacity: 1
       // getImage: function (count) {   //getImage是完全自定义方式
       //   let colorIn
       //   if (count < 10) {
@@ -129,7 +130,7 @@ function addFeature(graphicLayer, arr) {
     const graphic = new mars3d.graphic.BillboardEntity({
       position: new mars3d.LngLatPoint(item.lng, item.lat, item.z || 0),
       style: {
-        image: "img/marker/mark3.png",
+        image: "img/marker/mark-blue.png",
         horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
         verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
         scaleByDistance: new Cesium.NearFarScalar(1000, 0.7, 5000000, 0.3),

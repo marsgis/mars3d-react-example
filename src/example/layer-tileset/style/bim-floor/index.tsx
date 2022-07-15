@@ -14,8 +14,8 @@ const list = [
 
 function UIComponent(props) {
   return (
-    <MarsPannel visible={true} right="10" top="10">
-      <Space>
+    <MarsPannel visible={true} right="10" top="10" width={74}>
+      <Space wrap>
         {list.map((item) => {
           return (
             <MarsButton key={item.name} onClick={item.callback}>

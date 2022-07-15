@@ -115,7 +115,7 @@ function UIComponent() {
             <MarsButton onClick={showSafetyNotice}>海上安全通告</MarsButton>
           </Space>
         </div>
-        <LayerState />
+        <LayerState direction="horizontal" />
       </MarsPannel>
 
       <MarsPannel visible={true} right={10} top={100} customClass="pannel">

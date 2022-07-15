@@ -4,7 +4,7 @@ import type { GuiItem } from "@mars/components/MarsUI"
 
 function UIComponent() {
   const changeOpacity = (attribute: string, val: number) => {
-    mapWork.changeOpacity(attribute, val)
+    mapWork.setLayerOptions(attribute, val)
   }
   const options: GuiItem[] = [
     {

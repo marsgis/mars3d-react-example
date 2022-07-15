@@ -19,9 +19,13 @@ function UIComponent() {
 
   return (
     <MarsPannel visible={true} top={10} right={10} width={350}>
-      <p className="f-mb">提示：单击分析按钮激活绘制分析，对绘制面(墙)内的进行以下计算。</p>
-      <p className="f-mb">1. 挖方量: 计算“基准面”到地表之间的凸出部分进行挖掉的体积。</p>
-      <p className="f-mb">2. 填方量：计算“基准面”与“墙底部”之间的缺少部分进行填平的体积。</p>
+      <p className="f-mb">提示：单击分析按钮激活绘制分析，对绘制面(墙)内</p>
+      <p className="f-mb">的进行以下计算。</p>
+      <p className="f-mb">1. 挖方量: 计算“基准面”到地表之间的凸出部分进行</p>
+      <p className="f-mb">挖掉的体积。</p>
+      <p className="f-mb">2. 填方量：计算“基准面”与“墙底部”之间的缺少部分</p>
+      <p className="f-mb"> 进行填平的体积。</p>
+
       <MarsGui
         ref={guiRef}
         formProps={{
@@ -59,7 +63,6 @@ function UIComponent() {
           }
         ]}
       ></MarsGui>
-
       <Space wrap>
         <MarsButton onClick={() => mapWork.analysisMeasure()}>方量分析</MarsButton>
         <MarsButton onClick={() => mapWork.clear()}>清除</MarsButton>

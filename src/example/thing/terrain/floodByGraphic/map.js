@@ -17,6 +17,7 @@ export function onMounted(mapInstance) {
 
   // 基于polygon矢量面抬高模拟，只支持单个区域
   floodByGraphic = new mars3d.thing.FloodByGraphic({
+    perPositionHeight: true,
     style: {
       color: "#007be6",
       opacity: 0.5,
@@ -42,11 +43,11 @@ export function onMounted(mapInstance) {
  * @returns {void} 无
  */
 export function onUnmounted() {
-  map = null
-
   clearDraw()
   floodByGraphic.remove()
   floodByGraphic = null
+
+  map = null
 }
 
 // 绘制矩形
@@ -67,11 +68,17 @@ export function btnDrawExtent(callback) {
       // 区域
       drawPotions = positions
 
-      // 求最大、最小高度值
-      showLoading()
-      const result = mars3d.PolyUtil.getHeightRange(positions, map.scene)
-      callback(result.minHeight, result.maxHeight)
-      hideLoading()
+      if (floodByGraphic.options.perPositionHeight) {
+        // eslint-disable-next-line
+        callback(-100, 100)
+      } else {
+        showLoading()
+        // 求最大、最小高度值
+        mars3d.PolyUtil.getHeightRange(positions, map.scene).then((result) => {
+          hideLoading()
+          callback(result.minHeight, result.maxHeight)
+        })
+      }
     }
   })
 }
@@ -91,11 +98,17 @@ export function btnDraw(callback) {
 
       drawPotions = positions
 
-      // 求最大、最小高度值
-      showLoading()
-      const result = mars3d.PolyUtil.getHeightRange(positions, map.scene)
-      callback(result.minHeight, result.maxHeight)
-      hideLoading()
+      if (floodByGraphic.options.perPositionHeight) {
+        // eslint-disable-next-line
+        callback(-100, 100)
+      } else {
+        showLoading()
+        // 求最大、最小高度值
+        mars3d.PolyUtil.getHeightRange(positions, map.scene).then((result) => {
+          hideLoading()
+          callback(result.minHeight, result.maxHeight)
+        })
+      }
     }
   })
 }
@@ -103,6 +116,7 @@ export function btnDraw(callback) {
 export function clearDraw() {
   drawPotions = null
   map.graphicLayer.clear()
+
   if (floodByGraphic) {
     floodByGraphic.clear()
   }
@@ -115,18 +129,15 @@ export function begin(data, callback) {
     return
   }
   map.graphicLayer.clear()
-  floodByGraphic.positions = drawPotions
-
-  const minValue = Number(data.minHeight)
-  const maxValue = Number(data.maxHeight)
-  const speed = Number(data.speed)
 
   floodByGraphic.setOptions({
-    minHeight: minValue,
-    maxHeight: maxValue,
-    speed: speed
+    positions: drawPotions,
+    minHeight: Number(data.minHeight),
+    maxHeight: Number(data.maxHeight),
+    speed: Number(data.speed)
   })
   floodByGraphic.start()
+
   callback()
 }
 

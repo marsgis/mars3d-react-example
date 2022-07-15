@@ -106,7 +106,7 @@ function initPath(data) {
       stop = juliaDate
     }
 
-    const primitive = new mars3d.graphic.PointPrimitive({
+    const graphic = new mars3d.graphic.PointPrimitive({
       position: position,
       style: {
         pixelSize: 4,
@@ -114,7 +114,7 @@ function initPath(data) {
       },
       popup: "编号:" + item.id + "<br/>时间:" + time
     })
-    graphicLayer.addGraphic(primitive)
+    graphicLayer.addGraphic(graphic)
   }
 
   // 设置时钟属性
@@ -152,6 +152,12 @@ function initPath(data) {
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
       pixelOffset: new Cesium.Cartesian2(10, -25) // 偏移量
     },
+    // billboard: {
+    //   image: "img/marker/lace-blue.png",
+    //   horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+    //   verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+    //   visibleDepth: false
+    // },
     model: {
       url: "//data.mars3d.cn/gltf/mars/wrj.glb",
       scale: 0.1,

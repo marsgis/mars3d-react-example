@@ -3,8 +3,6 @@ import * as mars3d from "mars3d"
 export let map // mars3d.Map三维地图对象
 export let graphicLayer // 矢量图层对象
 
-let rectangularSensor
-
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
@@ -35,6 +33,9 @@ export function onMounted(mapInstance) {
   // 创建矢量数据图层
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
+
+  // 添加演示数据
+  addDemoGraphic1()
 }
 
 /**
@@ -45,27 +46,17 @@ export function onUnmounted() {
   map = null
 }
 
-/**
- * 默认相阵控雷达
- * @param {number} heading 方向角
- * @param {number} pitch 仰角
- * @param {number} roll 左右（row）
- * @param {number} radius 半径
- * @param {number} xValue 上下夹角
- * @param {number} yValue 左右夹角
- * @returns {void}
- */
-export function addDemoGraphic1(params) {
-  rectangularSensor = new mars3d.graphic.RectangularSensor({
+export function addDemoGraphic1() {
+  const rectangularSensor = new mars3d.graphic.RectangularSensor({
     position: [117.218875, 31.817812, 138],
     style: {
-      heading: params.headingValue,
-      pitch: params.pitchValue,
-      roll: params.rollValue,
+      heading: 30,
+      pitch: 0,
+      roll: 0,
 
-      radius: params.radius, // 传感器的半径
-      xHalfAngleDegree: params.xValue, // 传感器水平半角
-      yHalfAngleDegree: params.yValue, // 传感器垂直半角
+      radius: 100000, // 传感器的半径
+      xHalfAngleDegree: 50, // 传感器水平半角
+      yHalfAngleDegree: 50, // 传感器垂直半角
 
       color: "#00ffff",
       opacity: 0.4,
@@ -83,120 +74,52 @@ export function addDemoGraphic1(params) {
   graphicLayer.addGraphic(rectangularSensor)
 }
 
-/**
- * 半径发生改变
- *
- * @export
- * @param {number} value 半径值
- * @returns {void}
- */
-export function radiusChange(value) {
-  graphicLayer.eachGraphic((rectangularSensor) => {
-    rectangularSensor.radius = value
-  })
+// 生成演示数据(测试数据量)
+export function addRandomGraphicByCount(count) {
+  graphicLayer.clear()
+  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
+
+  const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
+  const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
+  console.log("生成的测试网格坐标", result)
+
+  for (let j = 0; j < result.points.length; ++j) {
+    const position = result.points[j]
+    const index = j + 1
+
+    const graphic = new mars3d.graphic.RectangularSensor({
+      position: position,
+      style: {
+        radius: result.radius, // 传感器的半径
+        xHalfAngleDegree: 50, // 传感器水平半角
+        yHalfAngleDegree: 50, // 传感器垂直半角
+        color: "#00ffff",
+        opacity: 0.4,
+        lineColor: "#ffffff", // 线的颜色
+        showScanPlane: false, // 是否显示扫描面
+        depthTest: true
+      },
+      attr: { index: index }
+    })
+    graphicLayer.addGraphic(graphic)
+  }
+
+  graphicLayer.enabledEvent = true // 恢复事件
+  return result.points.length
 }
 
-/**
- * 方向发生改变
- *
- * @export
- * @param {number} value 角度
- * @returns {void}
- */
-export function headingChange(value) {
-  graphicLayer.eachGraphic((rectangularSensor) => {
-    rectangularSensor.heading = value
-  })
-}
-
-/**
- * 仰角发生改变
- *
- * @export
- * @param {number} value 仰角
- * @returns {void}
- */
-export function pitchChange(value) {
-  graphicLayer.eachGraphic((rectangularSensor) => {
-    rectangularSensor.pitch = value
-  })
-}
-
-/**
- * roll发生改变
- *
- * @export
- * @param {number} value 仰角
- * @returns {void}
- */
-export function rollChange(value) {
-  graphicLayer.eachGraphic((rectangularSensor) => {
-    rectangularSensor.roll = value
-  })
-}
-
-/**
- * 上下夹角
- *
- * @export
- * @param {number} value 夹角
- * @returns {void}
- */
-export function xHalfAngle(value) {
-  graphicLayer.eachGraphic((rectangularSensor) => {
-    rectangularSensor.style = { xHalfAngleDegree: value }
-  })
-}
-
-/**
- * 左右夹角
- *
- * @export
- * @param {number} value 夹角
- * @returns {void}
- */
-export function yHalfAngle(value) {
-  graphicLayer.eachGraphic((rectangularSensor) => {
-    rectangularSensor.style = { yHalfAngleDegree: value }
-  })
-}
-
-/**
- * 是否显示扫描面
- *
- * @export
- * @param {boolean} value  value = true/false
- * @returns {void}
- */
-export function ShowScanPlane(value) {
-  graphicLayer.eachGraphic((rectangularSensor) => {
-    rectangularSensor.style = { showScanPlane: value } // 是否显示扫描面
-  })
-}
-
-/**
- * 绘制相阵控雷达
- *
- * @param {number} heading 方向
- * @param {number} pitch 仰角
- * @param {number} roll 左右（row）
- * @param {number} radius 半径
- * @param {number} xHalfAngle 上下夹角
- * @param {number} yHalfAngle 左右夹角
- * @returns {void}
- */
-export function startDraw(params) {
-  // 开始绘制
+// 开始绘制 相阵控雷达
+export function startDrawGraphic() {
   graphicLayer.startDraw({
     type: "rectangularSensor",
     style: {
-      heading: params.headingValue,
-      pitch: params.pitchValue,
-      roll: params.rollValue,
+      heading: 0,
+      pitch: 0,
+      roll: 0,
 
-      radius: params.radius, // 传感器的半径
-      xHalfAngleDegree: params.xValue, // 传感器水平半角
-      yHalfAngleDegree: params.yValue, // 传感器垂直半角
+      radius: 10000, // 传感器的半径
+      xHalfAngleDegree: 50, // 传感器水平半角
+      yHalfAngleDegree: 50, // 传感器垂直半角
 
       color: "#00ffff",
       opacity: 0.4,

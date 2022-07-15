@@ -25,12 +25,11 @@ export const mapOptions = {
       symbol: {
         type: "billboardP",
         styleOptions: {
-          image: "img/marker/mark1.png",
-          scale: 0.7,
+          image: "img/marker/mark-red.png",
           verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
           scaleByDistance: true,
           scaleByDistance_far: 20000,
-          scaleByDistance_farValue: 0.5,
+          scaleByDistance_farValue: 0.6,
           scaleByDistance_near: 1000,
           scaleByDistance_nearValue: 1,
           clampToGround: true,
@@ -145,5 +144,5 @@ function addWmsLayer() {
 
 // 图层状态 在组件中进行管理的图层
 export function getManagerLayer() {
-  return map.getLayer("建筑物面WFS", "name")
+  return map.getLayerByAttr("建筑物面WFS", "name")
 }

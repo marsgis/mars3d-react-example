@@ -2,7 +2,6 @@ import * as mars3d from "mars3d"
 
 export let map // mars3d.Map三维地图对象
 export let graphicLayer // 图层
-let dynamicRiver // 最后一个河流对象
 
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
@@ -23,7 +22,7 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
-  // 创建Graphic图层
+  // 创建矢量数据图层
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -36,7 +35,21 @@ export function onMounted(mapInstance) {
   bindLayerContextMenu() // 在图层绑定右键菜单,对所有加到这个图层的矢量数据都生效
 
   // 加一些演示数据
-  dynamicRiver = new mars3d.graphic.DynamicRiver({
+  addDemoGraphic1()
+}
+
+/**
+ * 释放当前地图业务的生命周期函数
+ * @returns {void} 无
+ */
+export function onUnmounted() {
+  map = null
+  clear()
+}
+
+// 立体围墙扩散效果,面状
+function addDemoGraphic1() {
+  const dynamicRiver = new mars3d.graphic.DynamicRiver({
     positions: [
       [115.906607, 30.441582, 555.9],
       [115.899964, 30.438543, 467.3],
@@ -56,41 +69,56 @@ export function onMounted(mapInstance) {
   graphicLayer.addGraphic(dynamicRiver)
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
-export function onUnmounted() {
-  map = null
-  clear()
+// 生成演示数据(测试数据量)
+export function addRandomGraphicByCount(count) {
+  graphicLayer.clear()
+  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
+
+  const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
+  const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
+  console.log("生成的测试网格坐标", result)
+
+  for (let j = 0; j < result.points.length; ++j) {
+    const position = result.points[j]
+    const index = j + 1
+
+    const pt1 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 225, result.radius)
+    const pt2 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 315, result.radius)
+
+    const graphic = new mars3d.graphic.DynamicRiver({
+      positions: [pt1, position, pt2],
+      style: {
+        image: "./img/textures/poly-rivers.png",
+        width: 280,
+        height: 30,
+        speed: 10
+      },
+      attr: { index: index }
+    })
+    graphicLayer.addGraphic(graphic)
+  }
+
+  graphicLayer.enabledEvent = true // 恢复事件
+  return result.points.length
 }
 
-// 绘制河流
-export function drawLine(width, height, speed) {
-  map.graphicLayer.startDraw({
-    type: "polyline",
+// 开始绘制
+export function startDrawGraphic() {
+  graphicLayer.startDraw({
+    type: "dynamicRiver",
     style: {
-      color: "#55ff33",
-      width: 3
-    },
-    success: (graphic) => {
-      const points = graphic.points
-
-      console.log(JSON.stringify(graphic.coordinates)) // 打印下边界
-
-      graphic.remove() // 删除绘制的线
-      dynamicRiver = new mars3d.graphic.DynamicRiver({
-        positions: points,
-        style: {
-          image: "./img/textures/poly-rivers.png",
-          width: width,
-          height: height,
-          speed: speed
-        }
-      })
-      graphicLayer.addGraphic(dynamicRiver)
+      image: "./img/textures/poly-rivers.png",
+      width: 280,
+      height: 30,
+      speed: 10
     }
   })
+}
+
+let dynamicRiver
+export function getGraphic(graphicId) {
+  dynamicRiver = graphicLayer.getGraphicById(graphicId)
+  return dynamicRiver
 }
 
 // 宽发生改变
@@ -152,7 +180,6 @@ function throttle() {
 // 清除
 export function clear() {
   graphicLayer.clear()
-  dynamicRiver = null
 }
 
 // 在图层绑定Popup弹窗
@@ -181,12 +208,12 @@ export function bindLayerContextMenu() {
           return true
         }
       },
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         if (!graphic) {
           return
         }
-        const parent = graphic._parent // 右击是编辑点时
+        const parent = graphic.parent // 右击是编辑点时
         graphicLayer.removeGraphic(graphic)
         if (parent) {
           graphicLayer.removeGraphic(parent)

@@ -9,7 +9,7 @@ function UIComponent() {
   }, [])
 
   return (
-    <MarsPannel visible={true} left="10" top="10" height={45} width={160}>
+    <MarsPannel visible={true} left="10" top="10" height={43} width={148}>
       <MarsCheckbox
         onChange={(e) => {
           mapWork.chkPointerEvents(e.target.checked)

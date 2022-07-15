@@ -1,7 +1,11 @@
-import { QueryPoi } from "@mars/components/MarsSample/QueryPoi/index"
+import { activate } from "@mars/widgets/common/store/widget"
+import { useEffect } from "react"
 
 function UIComponent() {
-  return <QueryPoi />
+  useEffect(() => {
+    activate("SearchPoi")
+  }, [])
+  return null
 }
 
 export default UIComponent

@@ -23,6 +23,16 @@ export const mapOptions = {
         { field: "name", name: "名称" },
         { field: "height", name: "楼高", unit: "米" }
       ],
+      // 裁剪区域
+      planClip: {
+        positions: [
+          [121.477666, 31.217061, 19.1],
+          [121.531567, 31.217061, 19.1],
+          [121.531567, 31.258551, 19.1],
+          [121.477666, 31.258551, 19.1]
+        ],
+        clipOutSide: true
+      },
       show: true
     },
     {
@@ -32,12 +42,13 @@ export const mapOptions = {
       symbol: {
         styleOptions: {
           width: 2.0,
-          material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.ODLine, {
+          materialType: mars3d.MaterialType.ODLine,
+          materialOptions: {
             bgColor: new Cesium.Color(0.1, 0.7, 0.5, 0.4),
             color: new Cesium.Color(Math.random() * 0.5 + 0.5, Math.random() * 0.8 + 0.2, 0.0, 1.0),
             speed: 20 + 1.0 * Math.random(),
             startTime: Math.random()
-          })
+          }
         }
       },
       popup: "{Name}",
@@ -54,21 +65,7 @@ export const mapOptions = {
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
-
   map.basemap = 2017 // 切换到蓝色底图
-
-  // 3d模型裁剪
-  const tilesetPlanClip = new mars3d.thing.TilesetPlanClip({
-    layer: map.getLayer("上海市建筑物", "name"),
-    clipOutSide: true,
-    positions: [
-      [121.477666, 31.217061, 19.1],
-      [121.531567, 31.217061, 19.1],
-      [121.531567, 31.258551, 19.1],
-      [121.477666, 31.258551, 19.1]
-    ]
-  })
-  map.addThing(tilesetPlanClip)
 
   // 特效
   const bloomEffect = new mars3d.effect.BloomEffect({
@@ -96,7 +93,7 @@ export function onUnmounted() {
 }
 
 function addCityGraphics() {
-  // 创建Graphic图层
+  // 创建矢量数据图层
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -128,10 +125,11 @@ function addCityGraphics() {
     style: {
       diffHeight: 190,
       closure: true,
-      material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.RectSlide, {
+      materialType: mars3d.MaterialType.RectSlide,
+      materialOptions: {
         image: "img/tietu/circular.png",
         speed: 2
-      })
+      }
     }
   })
   graphicLayer.addGraphic(rotatWallImage)
@@ -147,9 +145,10 @@ function addCityGraphics() {
     style: {
       radius: 500,
       height: 50,
-      material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.Image2, {
+      materialType: mars3d.MaterialType.Image2,
+      materialOptions: {
         image: "/img/textures/circle-two.png"
-      }),
+      },
       rotation: new Cesium.CallbackProperty(getRotationValue, false),
       stRotation: new Cesium.CallbackProperty(getRotationValue, false)
     }
@@ -202,10 +201,11 @@ function addCityGraphics() {
     position: Cesium.Cartesian3.fromDegrees(121.501618, 31.235704, 24.2),
     style: {
       radius: 480.0,
-      material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.CircleScan, {
+      materialType: mars3d.MaterialType.CircleScan,
+      materialOptions: {
         image: "/img/textures/circle-scan.png",
         color: "#ffffff"
-      }),
+      },
       stRotation: new Cesium.CallbackProperty(getRotationValue, false),
       classificationType: Cesium.ClassificationType.BOTH,
       clampToGround: true
@@ -238,15 +238,15 @@ function addCityGraphics() {
         const thisPoint = Cesium.Cartesian3.fromDegrees(item.point[0], item.point[1], 1)
         const positions = mars3d.PolyUtil.getLinkedPointList(center, thisPoint, 40000, 100) // 计算曲线点
 
-        const primitive = new mars3d.graphic.PolylinePrimitive({
+        const graphic = new mars3d.graphic.PolylinePrimitive({
           positions: positions,
           style: {
             width: 4,
             material: lineMaterial // 动画线材质
           }
         })
-        primitive.bindPopup(item.name)
-        graphicLayer.addGraphic(primitive)
+        graphic.bindPopup(item.name)
+        graphicLayer.addGraphic(graphic)
 
         // 圆椎体
         const coneGlow = new mars3d.graphic.LightCone({
@@ -280,12 +280,13 @@ function addCityGraphics() {
       positions: [startPt, endPt],
       style: {
         width: 1,
-        material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.ODLine, {
+        materialType: mars3d.MaterialType.ODLine,
+        materialOptions: {
           color: "rgb(255, 255, 2)",
           bgColor: "rgb(255,255,255,0.01)",
           startTime: startTime,
           speed: speed
-        })
+        }
       }
     })
   }

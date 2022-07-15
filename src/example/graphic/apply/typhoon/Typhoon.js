@@ -87,11 +87,12 @@ class Typhoon {
         [firstItem.lon + 0.7, firstItem.lat - 0.4]
       ],
       style: {
-        material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.Text, {
+        materialType: mars3d.MaterialType.Text,
+        materialOptions: {
           text: this.options.name_cn,
           font_size: 60,
           fillColor: "red"
-        }),
+        },
         zIndex: 2
       },
       attr: firstItem
@@ -166,7 +167,7 @@ class Typhoon {
     const gifGraphic = new mars3d.graphic.DivGraphic({
       position: [endItem.lon, endItem.lat],
       style: {
-        html: `<img src="img/marker/typhoon.gif">`,
+        html: `<img src="img/icon/typhoon.gif">`,
         horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
         verticalOrigin: Cesium.VerticalOrigin.CENTER
       }
@@ -297,10 +298,11 @@ class Typhoon {
           positions: linePoint,
           availability: availability,
           style: {
-            material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.PolylineDash, {
+            materialType: mars3d.MaterialType.PolylineDash,
+            materialOptions: {
               dashLength: 20.0,
               color: "red"
-            })
+            }
           }
         })
         this.clickPtLayer.addGraphic(graphicLine)

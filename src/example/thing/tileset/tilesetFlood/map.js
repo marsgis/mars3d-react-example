@@ -1,15 +1,14 @@
 import * as mars3d from "mars3d"
 
 export let map // mars3d.Map三维地图对象
-export let tilesetFlood
-
+export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
 export const mapOptions = {
   scene: {
     center: { lat: 31.797067, lng: 117.21963, alt: 1512, heading: 360, pitch: -36 }
   }
 }
 
-export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+export let tilesetLayer
 
 /**
  * 初始化地图业务，生命周期钩子函数（必须）
@@ -19,6 +18,7 @@ export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
+  map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
 
   globalNotify(
     "已知问题提示",
@@ -26,9 +26,7 @@ export function onMounted(mapInstance) {
      (2) 目前不支持所有3dtile数据，请替换url进行自测`
   )
 
-
-  map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
-  addLayer()
+  showTehDemo()
 }
 
 /**
@@ -39,9 +37,9 @@ export function onUnmounted() {
   map = null
 }
 
-function addLayer() {
+function showTehDemo() {
   // 加模型
-  const tilesetLayer = new mars3d.layer.TilesetLayer({
+  tilesetLayer = new mars3d.layer.TilesetLayer({
     name: "合肥天鹅湖",
     type: "3dtiles",
     url: "//data.mars3d.cn/3dtiles/qx-teh/tileset.json",
@@ -56,16 +54,12 @@ function addLayer() {
   map.addLayer(tilesetLayer)
 
   // 会执行多次，重新加载一次完成后都会回调
-  tilesetLayer.on(mars3d.EventType.allTilesLoaded, function (event) {
-    console.log("触发allTilesLoaded事件", event)
-  })
+  // tilesetLayer.on(mars3d.EventType.allTilesLoaded, function (event) {
+  //   console.log("触发allTilesLoaded事件", event)
+  // })
 
   // 模型淹没处理类
-  tilesetFlood = new mars3d.thing.TilesetFlood({
-    layer: tilesetLayer,
-    floodAll: false
-  })
-  map.addThing(tilesetFlood)
+  const tilesetFlood = tilesetLayer.flood
 
   tilesetFlood.on(mars3d.EventType.start, function (e) {
     console.log("开始分析", e)
@@ -81,15 +75,15 @@ function addLayer() {
 
 // 高度选择
 export function onChangeHeight(height) {
-  tilesetFlood.height = height
+  tilesetLayer.flood.height = height
 }
 
 // 修改分析方式
 export function changeFloodType(val) {
   if (val === "1") {
-    tilesetFlood.floodAll = true
+    tilesetLayer.flood.floodAll = true
   } else {
-    tilesetFlood.floodAll = false
+    tilesetLayer.flood.floodAll = false
   }
 }
 
@@ -108,7 +102,7 @@ export function btnDrawExtent() {
       // 绘制成功后回调
       const positions = graphic.getOutlinePositions(false)
 
-      tilesetFlood.addArea(positions)
+      tilesetLayer.flood.addArea(positions)
     }
   })
 }
@@ -127,16 +121,16 @@ export function btnDraw() {
       // 绘制成功后回调
       const positions = graphic.positionsShow
 
-      tilesetFlood.addArea(positions)
+      tilesetLayer.flood.addArea(positions)
 
-      console.log("绘制坐标为", JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) // 方便测试拷贝坐标
+      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
     }
   })
 }
 
 // 开始分析
 export function begin(data) {
-  if (!tilesetFlood.floodAll && tilesetFlood.length === 0) {
+  if (!tilesetLayer.flood.floodAll && tilesetLayer.flood.length === 0) {
     globalMsg("请首先绘制分析区域！")
     return false
   }
@@ -155,16 +149,16 @@ export function begin(data) {
 
   console.log("当前参数", { minHeight: minValue, maxHeight: maxValue })
 
-  tilesetFlood.setOptions({
+  tilesetLayer.flood.setOptions({
     minHeight: minValue,
     maxHeight: maxValue,
     speed: speed
   })
 
-  tilesetFlood.start()
+  tilesetLayer.flood.start()
   return true
 }
 
 export function stop() {
-  tilesetFlood.clear()
+  tilesetLayer.flood.clear()
 }

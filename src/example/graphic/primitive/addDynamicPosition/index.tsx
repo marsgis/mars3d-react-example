@@ -6,7 +6,7 @@ function UIComponent() {
   return (
     <MarsPannel visible={true} top={10} right={10}>
       <div className="f-mb">
-        <LayerState />
+        <LayerState direction="horizontal" />
       </div>
       <Space>
         <span>动态贴模型示例</span>

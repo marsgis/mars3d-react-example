@@ -28,7 +28,7 @@ function UIComponent(props) {
         <MarsColor
           value={"#1d5996"}
           onChange={(data) => {
-            mapWork.selectColor(data.target.value)
+            mapWork.selectColor(data)
           }}
         ></MarsColor>
       </MarsFormItem>

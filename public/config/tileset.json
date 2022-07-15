@@ -214,11 +214,18 @@
     },
     {
       "pid": 202030,
-      "type": "gltf",
       "name": "闸门",
-      "url": "//data.mars3d.cn/gltf/mars/zhamen.glb",
-      "position": { "lng": 121.479813, "lat": 29.791278, "alt": 16 },
-      "style": { "heading": 105 },
+      "type": "graphic",
+      "data": [
+        {
+          "type": "modelP",
+          "position":[ 121.479813, 29.791278,16 ],
+          "style": {
+            "url": "//data.mars3d.cn/gltf/mars/zhamen.glb",
+            "heading": 105
+          }
+        }
+      ],
       "center": { "lat": 29.791607, "lng": 121.479925, "alt": 27, "heading": 198, "pitch": -18 }
     },
     {

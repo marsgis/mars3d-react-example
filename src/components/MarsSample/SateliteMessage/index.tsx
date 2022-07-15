@@ -29,13 +29,12 @@ export const SateliteMessage = () => {
   useMemo(() => {
     mapWork.eventTarget.on("satelliteChange", function (event: any) {
       const nowData = event.weixinData
-      const height = formatLength(nowData.td_gd)
-      setSatelliteParams({ ...nowData, td_gd: height })
+      setSatelliteParams({ ...nowData })
     })
   }, [])
 
   return (
-    <MarsPannel visible={true} right={10} bottom={50} width={293}>
+    <MarsPannel visible={true} right={10} bottom={56} width={293}>
       <table className="mars-table tb-border">
         <tbody>
           <tr>

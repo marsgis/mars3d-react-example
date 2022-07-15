@@ -46,8 +46,7 @@ function UIComponent() {
           title: item.name,
           key: item.id,
           id: item.id,
-          pId: item.pid,
-          uuid: item.uuid
+          pId: item.pid 
         }
         const nodeLayer = mapWork.createLayer(item) // 创建图层
         layersObj[item.id] = nodeLayer
@@ -79,8 +78,7 @@ function UIComponent() {
             title: layer.name,
             key: layer.id,
             id: layer.id,
-            pId: layer.pid,
-            uuid: layer.uuid
+            pId: layer.pid 
           }
           node.children = findChild(node, layers)
 

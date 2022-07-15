@@ -123,6 +123,7 @@ function createSatelliteList(arr) {
       sensorType: i % 2 === 1 ? mars3d.graphic.SatelliteSensor.Type.Rect : mars3d.graphic.SatelliteSensor.Type.Conic,
       angle1: random(20, 40),
       angle2: random(10, 20),
+      color: "rgba(0,255,255,0.5)",
       show: false
     }
     // 属性处理  END
@@ -183,8 +184,8 @@ function processInArea(weixin) {
       return
     }
 
-    dmzGraphic._lastInPoly[weixin.uuid] = dmzGraphic._lastInPoly[weixin.uuid] || {}
-    const lastState = dmzGraphic._lastInPoly[weixin.uuid]
+    dmzGraphic._lastInPoly[weixin.id] = dmzGraphic._lastInPoly[weixin.id] || {}
+    const lastState = dmzGraphic._lastInPoly[weixin.id]
 
     const thisIsInPoly = dmzGraphic.isInPoly(position)
     if (thisIsInPoly !== lastState.state) {
@@ -203,12 +204,13 @@ function processInArea(weixin) {
           style: {
             width: 7,
             // 动画线材质
-            material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
+            materialType: mars3d.MaterialType.LineFlow,
+            materialOptions: {
               url: "./img/textures/arrow-h.png",
               color: Cesium.Color.AQUA,
               repeat: new Cesium.Cartesian2(15, 1),
               speed: 60 // 时长，控制速度
-            }),
+            },
             arcType: Cesium.ArcType.NONE
           }
         })
@@ -227,7 +229,7 @@ function processInArea(weixin) {
         weixin.coneShow = false // 关闭视锥体
       }
 
-      dmzGraphic._lastInPoly[weixin.uuid].state = thisIsInPoly
+      dmzGraphic._lastInPoly[weixin.id].state = thisIsInPoly
     }
   })
 }

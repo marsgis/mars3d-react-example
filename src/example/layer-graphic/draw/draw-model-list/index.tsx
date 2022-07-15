@@ -4,6 +4,7 @@ import { useState, useCallback, useEffect } from "react"
 import { Space, Upload } from "antd"
 import { activate, disable, updateWidget, isActive } from "@mars/widgets/common/store/widget"
 import "./index.less"
+import { LocationTo } from "@mars/components/MarsSample/LocationTo"
 function UIComponent() {
   const [modelData, setmodelData] = useState([])
   const [selectOptions, setSelectOptions] = useState([])
@@ -36,20 +37,37 @@ function UIComponent() {
   }, [])
 
   useEffect(() => {
-    // 编辑修改了模型
-    mapWork.eventTarget.on("graphicEditor-update", async (e: any) => {
-      if (isActive("GraphicEditor")) {
-        updateWidget("GraphicEditor", { graphic: e.graphic })
-      } else {
-        activate({
-          name: "GraphicEditor",
-          data: { graphic: e.graphic }
-        })
-      }
+    // @ts-ignore
+    const mars3d = window.mars3d
+    // 矢量数据创建完成
+    mapWork.graphicLayer.on(mars3d.EventType.drawCreated, function (e) {
+      activate({
+        name: "GraphicEditor",
+        data: { graphic: e.graphic }
+      })
     })
-
-    // 停止编辑修改模型
-    mapWork.eventTarget.on("graphicEditor-stop", async (e: any) => {
+    // 修改了矢量数据
+    mapWork.graphicLayer.on(
+      [
+        mars3d.EventType.click,
+        mars3d.EventType.editStart,
+        mars3d.EventType.editMovePoint,
+        mars3d.EventType.editStyle,
+        mars3d.EventType.editRemovePoint
+      ],
+      function (e) {
+        if (isActive("GraphicEditor")) {
+          updateWidget("GraphicEditor", { graphic: e.graphic })
+        } else {
+          activate({
+            name: "GraphicEditor",
+            data: { graphic: e.graphic }
+          })
+        }
+      }
+    )
+    // 停止编辑
+    mapWork.graphicLayer.on([mars3d.EventType.editStop, mars3d.EventType.removeGraphic], function (e) {
       setTimeout(() => {
         if (!mapWork.graphicLayer.isEditing) {
           disable("GraphicEditor")
@@ -93,19 +111,21 @@ function UIComponent() {
   }
 
   return (
-    <MarsPannel visible={true} right={10} top={10} width="270">
+    <>
+    <MarsPannel visible={true} right={10} top={10} bottom={120} width="272">
       <MarsForm>
         <MarsFormItem label="模型列表">
           <Space style={{ cursor: "pointer" }}>
             <Upload {...props}>
-              <MarsIcon icon="folder-upload" width="19"></MarsIcon>
+              <MarsIcon icon="folder-upload" width="19" color="#fff"></MarsIcon>
             </Upload>
             <MarsIcon onClick={() => mapWork.saveGeoJSON()} icon="disk" width="17" color="#f2f2f2"></MarsIcon>
+            <MarsIcon onClick={() => mapWork.deleteAll()} icon="delete" width="17" color="#f2f2f2"></MarsIcon>
           </Space>
         </MarsFormItem>
         <MarsFormItem>
           <MarsCheckbox onChange={(e) => mapWork.chkTestTerrain(e.target.checked)}>深度检测</MarsCheckbox>
-          <MarsCheckbox onChange={(e) => mapWork.onlyPickModelPosition(e.target.checked)}>仅在3dtiles上标绘</MarsCheckbox>
+          <MarsCheckbox onChange={(e) => mapWork.onlyPickModelPosition(e.target.checked)}>仅在Tiles上拾取</MarsCheckbox>
         </MarsFormItem>
         <MarsFormItem>
           <MarsSelect onChange={(e) => handleChange(e)} defaultValue={"车辆"}>
@@ -133,6 +153,8 @@ function UIComponent() {
         </MarsFormItem>
       </MarsForm>
     </MarsPannel>
+    <LocationTo />
+    </>
   )
 }
 

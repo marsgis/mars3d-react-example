@@ -29,7 +29,7 @@ export default function (props) {
   }
 
   // 搜寻输入框数据之前的提示数据 以及搜寻过的历史数据  通过列表展现
-  const handleSearch = (val: string) => {
+  const handleSearch = async (val: string) => {
     if (val === "") {
       showHistoryList()
       mapWork.clearLayers()
@@ -40,19 +40,20 @@ export default function (props) {
       mapWork.centerAtLonLat(val)
       return
     }
-    setSearchListShow(false)
-    mapWork.queryData(val).then((result: any) => {
-      const list: { value: string }[] = []
-      result.list.forEach((item: any) => {
-        if (list.every((l) => l.value !== item.name)) {
-          list.push({
-            value: item.name
-          })
-        }
-      })
-      setDataSource(list)
-      setSearchListShow(true)
+    setSiteListShow(false)
+
+    const result = await mapWork.queryData(val)
+    const list: { value: string }[] = []
+    result.list.forEach((item: any) => {
+      if (list.every((l) => l.value !== item.name)) {
+        list.push({
+          value: item.name
+        })
+      }
     })
+
+    setDataSource(list)
+    setSearchListShow(true)
   }
 
   // 展示搜寻过的历史数据
@@ -73,9 +74,9 @@ export default function (props) {
 
   // 开始查询并加载数据
   const selectPoint = async (value: any) => {
-    if (!searchTxt) {
-      setSearchTxt(value)
-    }
+    // if (!searchTxt) {
+    setSearchTxt(value)
+    // }
     $showLoading()
     addHistory(value)
     await querySiteList(value, 1)
@@ -139,12 +140,13 @@ export default function (props) {
             onFocus={showHistoryList}
             allowClear
             onChange={(e) => {
+              setSiteListShow(false)
               setSearchTxt(e.target.value)
               handleSearch(e.target.value)
             }}
           ></MarsInput>
           <MarsButton className={styles["search-button"]}>
-            <MarsIcon icon="search" width="20" color="#fff" click="selectPoint(searchTxt)"></MarsIcon>
+            <MarsIcon icon="search" width="20" color="#fff" onClick={() => selectPoint(searchTxt)}></MarsIcon>
           </MarsButton>
         </div>
 

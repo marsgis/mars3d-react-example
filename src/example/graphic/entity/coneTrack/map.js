@@ -26,7 +26,10 @@ export function onMounted(mapInstance) {
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  bindLayerEvent() // 对图层绑定相关事件
+  // 在layer上绑定监听事件
+  graphicLayer.on(mars3d.EventType.click, function (event) {
+    console.log("监听layer，单击了矢量对象", event)
+  })
   bindLayerPopup() // 在图层上绑定popup,对所有加到这个图层的矢量数据都生效
   bindLayerContextMenu() // 在图层绑定右键菜单,对所有加到这个图层的矢量数据都生效
 
@@ -76,7 +79,7 @@ let coneTrack
 function addDemoGraphic2(graphicLayer) {
   const position = [116.28782, 30.971557, 5000]
   // 加个飞机
-  const primitive = new mars3d.graphic.ModelPrimitive({
+  const graphic = new mars3d.graphic.ModelPrimitive({
     position: position,
     style: {
       url: "//data.mars3d.cn/gltf/mars/feiji.glb",
@@ -85,7 +88,7 @@ function addDemoGraphic2(graphicLayer) {
     },
     attr: { remark: "示例2" }
   })
-  graphicLayer.addGraphic(primitive)
+  graphicLayer.addGraphic(graphic)
 
   // 圆锥追踪体
   coneTrack = new mars3d.graphic.ConeTrack({
@@ -94,9 +97,10 @@ function addDemoGraphic2(graphicLayer) {
     style: {
       length: 4000,
       angle: 5, // 半场角度
-      material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.CircleWave, {
+      materialType: mars3d.MaterialType.CircleWave,
+      materialOptions: {
         color: "#02ff00"
-      })
+      }
     }
   })
   graphicLayer.addGraphic(coneTrack)
@@ -177,11 +181,12 @@ function addDemoGraphic3(graphicLayer) {
       // length: 4000, //targetPosition存在时无需传
       angle: 3, // 半场角度
       // 自定义扩散波纹纹理
-      material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.CylinderWave, {
+      materialType: mars3d.MaterialType.CylinderWave,
+      materialOptions: {
         color: "#ffff00",
         repeat: 30.0,
         thickness: 0.2
-      })
+      }
     }
   })
   graphicLayer.addGraphic(coneTrack)
@@ -244,18 +249,34 @@ function addDemoGraphic4(graphicLayer) {
   graphicLayer.addGraphic(coneTrack)
 }
 
-// 在图层级处理一些事物
-function bindLayerEvent() {
-  // 在layer上绑定监听事件
-  graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("监听layer，单击了矢量对象", event)
-  })
-  /* graphicLayer.on(mars3d.EventType.mouseOver, function (event) {
-    console.log("监听layer，鼠标移入了矢量对象", event)
-  })
-  graphicLayer.on(mars3d.EventType.mouseOut, function (event) {
-    console.log("监听layer，鼠标移出了矢量对象", event)
-  }) */
+// 生成演示数据(测试数据量)
+export function addRandomGraphicByCount(count) {
+  graphicLayer.clear()
+  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
+
+  const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
+  const result = mars3d.PolyUtil.getGridPoints(bbox, count, 1000)
+  console.log("生成的测试网格坐标", result)
+
+  for (let j = 0; j < result.points.length; ++j) {
+    const position = result.points[j]
+    const index = j + 1
+
+    const graphic = new mars3d.graphic.ConeTrack({
+      position: position,
+      style: {
+        length: result.radius * 2,
+        topRadius: 0.0,
+        bottomRadius: result.radius,
+        color: Cesium.Color.fromRandom({ alpha: 0.6 })
+      },
+      attr: { index: index }
+    })
+    graphicLayer.addGraphic(graphic)
+  }
+
+  graphicLayer.enabledEvent = true // 恢复事件
+  return result.points.length
 }
 
 // 在图层绑定Popup弹窗
@@ -278,12 +299,12 @@ export function bindLayerContextMenu() {
       icon: "fa fa-edit",
       show: function (e) {
         const graphic = e.graphic
-        if (!graphic || !graphic.startEditing) {
+        if (!graphic || !graphic.hasEdit) {
           return false
         }
         return !graphic.isEditing
       },
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         if (!graphic) {
           return false
@@ -298,18 +319,18 @@ export function bindLayerContextMenu() {
       icon: "fa fa-edit",
       show: function (e) {
         const graphic = e.graphic
-        if (!graphic) {
+        if (!graphic || !graphic.hasEdit) {
           return false
         }
         return graphic.isEditing
       },
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         if (!graphic) {
           return false
         }
         if (graphic) {
-          graphicLayer.stopEditing(graphic)
+          graphic.stopEditing()
         }
       }
     },
@@ -324,12 +345,12 @@ export function bindLayerContextMenu() {
           return true
         }
       },
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         if (!graphic) {
           return
         }
-        const parent = graphic._parent // 右击是编辑点时
+        const parent = graphic.parent // 右击是编辑点时
         graphicLayer.removeGraphic(graphic)
         if (parent) {
           graphicLayer.removeGraphic(parent)

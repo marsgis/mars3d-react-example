@@ -51,7 +51,7 @@ function UIComponent() {
           </MarsButton>
         </Space>
       </MarsPannel>
-      <MarsPannel visible={showEcharts} left={10} width={"calc(100% - 20px)"} height={200} bottom={40}>
+      <MarsPannel visible={showEcharts} left={56} width={"calc(100% - 280px)"} height={260} bottom={40}>
         <div id="echartsView1" style={{ width: "100%", height: "100%" }}></div>
       </MarsPannel>
       <LocationTo />
@@ -71,8 +71,9 @@ function setEchartsData(data: any) {
   const option = {
     grid: {
       left: 10,
-      right: 10,
+      right: 40,
       bottom: 10,
+      top: 40,
       containLabel: true
     },
     dataZoom: [
@@ -111,13 +112,15 @@ function setEchartsData(data: any) {
       {
         name: "行程",
         type: "category",
+        nameTextStyle: { color: "rgb(255, 70, 131)" },
         boundaryGap: false,
         axisLine: {
           show: true
         },
         axisLabel: {
           show: true,
-          formatter: "{value} 米"
+          formatter: "{value} 米",
+          color: "#fff"
         },
         data: data.arrLen
       }
@@ -125,10 +128,12 @@ function setEchartsData(data: any) {
     yAxis: [
       {
         name: "高程",
+        nameTextStyle: { color: "rgb(255, 70, 131)" },
         type: "value",
         min: getMinZ(arrPoint),
         axisLabel: {
-          formatter: "{value} 米"
+          formatter: "{value} 米",
+          color: "#fff"
         }
       }
     ],

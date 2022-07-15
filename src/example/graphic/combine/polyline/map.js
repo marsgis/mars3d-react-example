@@ -6,7 +6,7 @@ export let graphicLayer // 矢量图层对象
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: 31.806147, lng: 117.236965, alt: 3307, heading: 359, pitch: -54 }
+    center: { lat: 31.571772, lng: 117.197378, alt: 26113, heading: 0, pitch: -47 }
   },
   terrain: {
     show: false
@@ -22,7 +22,7 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
-  // 创建Graphic图层
+  // 创建矢量数据图层
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -34,8 +34,9 @@ export function onMounted(mapInstance) {
 
   bindLayerPopup() // 在图层上绑定popup,对所有加到这个图层的矢量数据都生效
 
-  // 加一些演示数据
-  addDemoGraphic1(graphicLayer)
+  // 加演示数据
+  addRandomGraphicByCount(10000)
+  graphicLayer.flyTo()
 }
 
 /**
@@ -47,71 +48,35 @@ export function onUnmounted() {
   graphicLayer.remove()
 }
 
-function addDemoGraphic1(graphicLayer) {
-  // 加一些演示数据
-  Cesium.Resource.fetchJson({
-    url: "//data.mars3d.cn/file/geojson/buildings-hf.json"
-  })
-    .then((data) => {
-      const arr = mars3d.Util.geoJsonToGraphics(data, {
-        symbol: {
-          callback: function (attr, styleOpt) {
-            return {
-              width: 2.0,
-              color: Cesium.Color.fromRandom({ alpha: 1.0 }) // 随机色
-            }
-          }
-        }
-      })
-
-      globalMsg("共加载" + arr.length + "个线")
-
-      // 多个线对象的合并渲染。
-      const primitive = new mars3d.graphic.PolylineCombine({
-        instances: arr,
-
-        // 高亮时的样式
-        highlight: {
-          type: mars3d.EventType.click,
-          color: Cesium.Color.YELLOW
-        }
-      })
-      graphicLayer.addGraphic(primitive)
-    })
-    .catch(function (error) {
-      console.log("服务出错", error)
-    })
-}
-
-export function addDemoGraphic(count) {
+// 生成演示数据(测试数据量)
+export function addRandomGraphicByCount(count) {
   graphicLayer.clear()
+  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
 
-  showLoading()
-  const startTime = new Date().getTime()
-
-  count = count * 10000
+  const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
+  const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
+  console.log("生成的测试网格坐标", result)
 
   const arrData = []
-  for (let j = 0; j < count; ++j) {
-    const position = randomPoint()
-    const pt1 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 225, 100)
-    const pt3 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 315, 100)
+  for (let j = 0; j < result.points.length; ++j) {
+    const position = result.points[j]
+    const index = j + 1
+
+    const pt1 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 225, result.radius)
+    const pt2 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 315, result.radius)
 
     arrData.push({
-      positions: [pt1, position, pt3],
+      positions: [pt1, position, pt2],
       style: {
-        width: 2.0,
-        height: random(30, 5000),
+        width: 3.0,
         color: Cesium.Color.fromRandom({ alpha: 1.0 })
       },
-      attr: {
-        name: "第" + j + "个"
-      }
+      attr: { index: index }
     })
   }
 
   // 多个线对象的合并渲染。
-  const primitive = new mars3d.graphic.PolylineCombine({
+  const graphic = new mars3d.graphic.PolylineCombine({
     instances: arrData,
     // 高亮时的样式
     highlight: {
@@ -119,14 +84,10 @@ export function addDemoGraphic(count) {
       color: Cesium.Color.YELLOW
     }
   })
-  graphicLayer.addGraphic(primitive)
+  graphicLayer.addGraphic(graphic)
 
-  hideLoading()
-  const endTime = new Date().getTime()
-  // 两个时间戳相差的毫秒数
-  const usedTime = (endTime - startTime) / 1000
-
-  globalMsg("生成" + arrData.length + "条数据，共耗时" + usedTime.toFixed(2) + "秒")
+  graphicLayer.enabledEvent = true // 恢复事件
+  return result.points.length
 }
 
 // 在图层绑定Popup弹窗

@@ -10,7 +10,33 @@ export const mapOptions = {
   // },
   control: {
     infoBox: false
-  }
+  },
+  layers: [
+    {
+      name: "合肥市",
+      type: "geojson",
+      url: "//data.mars3d.cn/file/geojson/areas/340100_full.json",
+      symbol: {
+        styleOptions: {
+          fill: true,
+          randomColor: true, // 随机色
+          opacity: 0.3,
+          outline: true,
+          outlineStyle: {
+            color: "#FED976",
+            width: 3,
+            opacity: 1
+          },
+          highlight: {
+            opacity: 0.9
+          }
+        }
+      },
+      popup: "{name}",
+      flyTo: true,
+      show: true
+    }
+  ]
 }
 
 export const eventTarget = new mars3d.BaseClass()
@@ -30,7 +56,43 @@ export function onMounted(mapInstance) {
   })
   map.addLayer(graphicLayer)
 
-  bindLayerEvent()
+  // 在layer上绑定监听事件
+  graphicLayer.on(mars3d.EventType.click, function (event) {
+    console.log("监听layer，单击了矢量对象", event)
+  })
+
+  // 绑定layer标绘相关事件监听(可以自行加相关代码实现业务需求，此处主要做示例)
+  graphicLayer.on(mars3d.EventType.drawStart, function (e) {
+    console.log("开始绘制", e)
+  })
+  graphicLayer.on(mars3d.EventType.drawAddPoint, function (e) {
+    console.log("绘制过程中增加了点", e)
+  })
+  graphicLayer.on(mars3d.EventType.drawRemovePoint, function (e) {
+    console.log("绘制过程中删除了点", e)
+  })
+  graphicLayer.on(mars3d.EventType.drawCreated, function (e) {
+    console.log("创建完成", e)
+  })
+  graphicLayer.on(mars3d.EventType.editStart, function (e) {
+    console.log("开始编辑", e)
+  })
+  graphicLayer.on(mars3d.EventType.editMovePoint, function (e) {
+    console.log("编辑修改了点", e)
+  })
+  graphicLayer.on(mars3d.EventType.editAddPoint, function (e) {
+    console.log("编辑新增了点", e)
+  })
+  graphicLayer.on(mars3d.EventType.editRemovePoint, function (e) {
+    console.log("编辑删除了点", e)
+  })
+  graphicLayer.on(mars3d.EventType.editStop, function (e) {
+    console.log("停止编辑", e)
+  })
+  graphicLayer.on(mars3d.EventType.removeGraphic, function (e) {
+    console.log("删除了对象", e)
+  })
+
   bindLayerContextMenu() // 在图层绑定右键菜单,对所有加到这个图层的矢量数据都生效
 
   loadDemoData()
@@ -50,6 +112,7 @@ export function onUnmounted() {
 }
 
 export function drawPoint() {
+  // graphicLayer.isContinued = true
   graphicLayer.startDraw({
     type: "point",
     style: {
@@ -72,7 +135,7 @@ export function drawMarker() {
   graphicLayer.startDraw({
     type: "billboard",
     style: {
-      image: "img/marker/mark1.png",
+      image: "img/marker/mark-red.png",
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
       label: {
@@ -113,15 +176,21 @@ export function startDrawModel() {
 }
 
 export function drawPolyline(clampToGround) {
+  // map.highlightEnabled = false
+  // map.popup.enabled = false
+
   graphicLayer.startDraw({
     type: "polyline",
-    // maxPointNum: 2,  //限定最大点数，可以绘制2个点的线，自动结束
     style: {
       color: clampToGround ? "#ffff00" : "#3388ff",
       width: 3,
       clampToGround: clampToGround
     }
   })
+  // .then(() => {
+  //   map.highlightEnabled = true
+  //   map.popup.enabled = true
+  // })
 }
 
 export function drawPolygon(clampToGround) {
@@ -283,34 +352,6 @@ export function drawExtrudedCircle() {
   })
 }
 
-// 在图层级处理一些事物
-function bindLayerEvent() {
-  // 在layer上绑定监听事件
-  // graphicLayer.on(mars3d.EventType.click, function (event) {
-  //   console.log("监听layer，单击了矢量对象", event)
-  // })
-  /* graphicLayer.on(mars3d.EventType.mouseOver, function (event) {
-      console.log("监听layer，鼠标移入了矢量对象", event)
-    })
-    graphicLayer.on(mars3d.EventType.mouseOut, function (event) {
-      console.log("监听layer，鼠标移出了矢量对象", event)
-    }) */
-
-  // 数据编辑相关事件， 用于属性弹窗的交互
-  // graphicLayer.on(mars3d.EventType.drawCreated, function (e) {
-  //   eventTarget.fire("graphicEditor-start", e)
-  // })
-  graphicLayer.on(
-    [mars3d.EventType.editStart, mars3d.EventType.editMovePoint, mars3d.EventType.editStyle, mars3d.EventType.editRemovePoint],
-    function (e) {
-      eventTarget.fire("graphicEditor-update", e)
-    }
-  )
-  graphicLayer.on([mars3d.EventType.editStop, mars3d.EventType.removeGraphic], function (e) {
-    eventTarget.fire("graphicEditor-stop", e)
-  })
-}
-
 // 在图层绑定Popup弹窗
 export function bindLayerPopup() {
   graphicLayer.bindPopup(function (event) {
@@ -330,12 +371,12 @@ export function bindLayerContextMenu() {
       icon: "fa fa-edit",
       show: function (e) {
         const graphic = e.graphic
-        if (!graphic || !graphic.startEditing) {
+        if (!graphic || !graphic.hasEdit) {
           return false
         }
         return !graphic.isEditing
       },
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         if (!graphic) {
           return false
@@ -350,18 +391,18 @@ export function bindLayerContextMenu() {
       icon: "fa fa-edit",
       show: function (e) {
         const graphic = e.graphic
-        if (!graphic) {
+        if (!graphic || !graphic.hasEdit) {
           return false
         }
         return graphic.isEditing
       },
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         if (!graphic) {
           return false
         }
         if (graphic) {
-          graphicLayer.stopEditing(graphic)
+          graphic.stopEditing()
         }
       }
     },
@@ -376,12 +417,12 @@ export function bindLayerContextMenu() {
           return true
         }
       },
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         if (!graphic) {
           return
         }
-        const parent = graphic._parent // 右击是编辑点时
+        const parent = graphic.parent // 右击是编辑点时
         graphicLayer.removeGraphic(graphic)
         if (parent) {
           graphicLayer.removeGraphic(parent)
@@ -409,7 +450,7 @@ export function bindLayerContextMenu() {
           graphic.type === "wallP"
         )
       },
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         const strDis = mars3d.MeasureUtil.formatDistance(graphic.distance)
         globalAlert("该对象的长度为:" + strDis)
@@ -432,7 +473,7 @@ export function bindLayerContextMenu() {
           graphic.type === "polygonP"
         )
       },
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         const strDis = mars3d.MeasureUtil.formatDistance(graphic.distance)
         globalAlert("该对象的周长为:" + strDis)
@@ -457,7 +498,7 @@ export function bindLayerContextMenu() {
           graphic.type === "water"
         )
       },
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         const strArea = mars3d.MeasureUtil.formatArea(graphic.area)
         globalAlert("该对象的面积为:" + strArea)
@@ -600,9 +641,10 @@ export function saveWKT() {
 
 // 加载演示数据
 function loadDemoData() {
-  if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
-    return
-  }
+  // if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
+  //   // 本地不显示历史数据
+  //   return
+  // }
 
   mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/geojson/mars3d-draw.json" }).then(function (json) {
     graphicLayer.loadGeoJSON(json, { clear: true, flyTo: true })

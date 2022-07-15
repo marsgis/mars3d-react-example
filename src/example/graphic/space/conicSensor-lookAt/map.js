@@ -74,10 +74,11 @@ function addGraphicLayer() {
       leadTime: 0,
       trailTime: 2800,
       resolution: 1,
-      material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.PolylineGlow, {
+      materialType: mars3d.MaterialType.PolylineGlow,
+      materialOptions: {
         glowPower: 0.1,
         color: Cesium.Color.YELLOW
-      }),
+      },
       width: 10
     },
     model: {
@@ -133,9 +134,10 @@ function addGraphicLayer() {
     }, false),
     style: {
       arcType: Cesium.ArcType.NONE,
-      material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.PolylineDash, {
+      materialType: mars3d.MaterialType.PolylineDash,
+      materialOptions: {
         color: "#ff0000"
-      }),
+      },
       width: 1
     }
   })

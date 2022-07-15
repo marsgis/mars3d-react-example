@@ -82,10 +82,12 @@ function initData(arr) {
   allCount = arr.length
   globalMsg("当前外太空物数量: " + allCount)
 
-  // 创建Graphic图层
+  // 创建矢量数据图层
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
+  const countryNumber = { 美国: 1, 前苏联: 1, 中国: 1, 英国: 1, 法国: 1, 加拿大: 1, 澳大利亚: 1, 日本: 1, 印度: 1 }
+  const yearNumber = {}
   for (let i = 0; i < arr.length; i++) {
     const item = arr[i]
 
@@ -117,13 +119,27 @@ function initData(arr) {
       delete item.info
     }
 
-    const primitive = new mars3d.graphic.PointPrimitive({
+    // 获取所有的国家数量
+    if (countryNumber[getCountryName(item.country)]) {
+      countryNumber[getCountryName(item.country)]++
+    }
+    // 获取所有的年份
+    if (yearNumber[new Date(item.launchDate).getFullYear()]) {
+      yearNumber[new Date(item.launchDate).getFullYear()]++
+    } else {
+      yearNumber[new Date(item.launchDate).getFullYear()] = 1
+    }
+
+    const graphic = new mars3d.graphic.PointPrimitive({
       id: item.id,
       style: style,
       attr: item
     })
-    graphicLayer.addGraphic(primitive)
+    graphicLayer.addGraphic(graphic)
   }
+
+  // 在面板加载 echars 图表
+  eventTarget.fire("loadEchartsData", { allCount, countryNumber, yearNumber })
 
   graphicLayer.on(mars3d.EventType.click, function (event) {
     console.log("单击了卫星", event)

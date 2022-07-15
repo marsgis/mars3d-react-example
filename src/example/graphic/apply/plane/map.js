@@ -19,18 +19,6 @@ export const mapOptions = function (option) {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
-  addEntity()
-}
-
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
-export function onUnmounted() {
-  map = null
-}
-
-function addEntity() {
   // 创建矢量数据图层
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
@@ -58,162 +46,132 @@ function addEntity() {
     onEnd: function () {
       // 结束后自动移除
       graphic.style = { fill: false }
-
-      workPlane.activate() // 闪烁结束后开始飞行
+      startRoam()
     }
   })
 }
 
-const workPlane = {
-  flySpeed: 600, // 飞行速度
-  psNum: 400, // 投射间隔路程
-  frameNum: 0,
-  arr4LinePrimitive: [],
-  arrColor: [new Cesium.Color(1.0, 0.0, 0.0, 0.3), new Cesium.Color(0.0, 1.0, 0, 0.3), new Cesium.Color(0.0, 0.0, 1, 0.3)],
-  // 激活功能
-  activate() {
-    // 飞行路线
-    this.roamLine = new mars3d.graphic.RoamLine({
-      name: "无人机航拍",
-      speed: this.flySpeed,
-      positions: [
-        [116.077374, 31.294215, 1000],
-        [116.107153, 31.312963, 1000],
-        [116.103816, 31.316868, 1000],
-        [116.074092, 31.297972, 1000],
-        [116.07068, 31.301908, 1000],
-        [116.100465, 31.320893, 1000]
-      ],
-      model: {
-        url: "//data.mars3d.cn/gltf/mars/wrj.glb",
-        scale: 0.02,
-        minimumPixelSize: 50,
-        show: true
-      },
-      path: {
-        color: "#ffff00",
-        width: 3,
-        isAll: false,
-        show: true
-      },
-      clockLoop: false // 是否循环播放
-    })
-    graphicLayer.addGraphic(this.roamLine)
+/**
+ * 释放当前地图业务的生命周期函数
+ * @returns {void} 无
+ */
+export function onUnmounted() {
+  map = null
+}
 
-    this.roamLine.start()
-    this.roamLine.on(mars3d.EventType.end, this.disable, this)
+const arrColor = [new Cesium.Color(1.0, 0.0, 0.0, 0.3), new Cesium.Color(0.0, 1.0, 0, 0.3), new Cesium.Color(0.0, 0.0, 1, 0.3)]
 
-    // 视角切换（分步执行）
-    map.setCameraViewList([
-      {
-        lat: 31.261244,
-        lng: 116.087805,
-        alt: 4571.19,
-        heading: 2.3,
-        pitch: -45.4,
-        roll: 357.6,
-        stop: 4
-      },
-      {
-        lat: 31.299649,
-        lng: 116.129938,
-        alt: 2725.83,
-        heading: 290.2,
-        pitch: -34,
-        roll: 358.1,
-        stop: 4
-      },
-      {
-        lat: 31.288891,
-        lng: 116.106146,
-        alt: 4268.26,
-        heading: 325.4,
-        pitch: -55.7,
-        roll: 357.5
-      }
-    ])
+function startRoam() {
+  // 视角切换（分步执行）
+  map.setCameraViewList([
+    {
+      lat: 31.261244,
+      lng: 116.087805,
+      alt: 4571.19,
+      heading: 2.3,
+      pitch: -45.4,
+      roll: 357.6,
+      stop: 4
+    },
+    {
+      lat: 31.299649,
+      lng: 116.129938,
+      alt: 2725.83,
+      heading: 290.2,
+      pitch: -34,
+      roll: 358.1,
+      stop: 4
+    },
+    {
+      lat: 31.288891,
+      lng: 116.106146,
+      alt: 4268.26,
+      heading: 325.4,
+      pitch: -55.7,
+      roll: 357.5
+    }
+  ])
 
-    this.stepNum = Math.floor(this.psNum / (this.flySpeed / 100)) // 时间 = 路程 / 速度
-    map.on(mars3d.EventType.clockTick, this.clock_onTick, this) // 时钟跳动 每秒钟执行一次函数 场景事件
-  },
-  clock_onTick(e) {
+  // 飞行路线
+  const fixedRoute = new mars3d.graphic.FixedRoute({
+    name: "无人机航拍",
+    speed: 600,
+    positions: [
+      [116.077374, 31.294215, 1000],
+      [116.107153, 31.312963, 1000],
+      [116.103816, 31.316868, 1000],
+      [116.074092, 31.297972, 1000],
+      [116.07068, 31.301908, 1000],
+      [116.100465, 31.320893, 1000]
+    ],
+    autoStop: true,
+    model: {
+      url: "//data.mars3d.cn/gltf/mars/wrj.glb",
+      scale: 0.02,
+      minimumPixelSize: 50
+    },
+    path: {
+      color: "#ffff00",
+      width: 3,
+      leadTime: 0
+    }
+  })
+  graphicLayer.addGraphic(fixedRoute)
+
+  fixedRoute.start()
+
+  let frameNum = -1
+  let graphicFrustum
+
+  fixedRoute.on(mars3d.EventType.change, function () {
     if (!map.clock.shouldAnimate) {
       return
     }
-    this.frameNum++
 
     // 当前的路线中的点位
-    const currIndex = this.roamLine.currIndex // 当前飞行的线路,共五条线，从零开始
-
+    const currIndex = fixedRoute.currIndex
     if (currIndex % 2 === 0) {
-      if (this.frameNum % this.stepNum === 0) {
-        // 计算方向
-        let p1, p2
-        if (currIndex === 0 || !currIndex) {
-          p1 = this.roamLine.positions[0]
-          p2 = this.roamLine.positions[1]
-        } else {
-          p1 = this.roamLine.positions[currIndex + 1]
-          p2 = this.roamLine.positions[currIndex]
-        }
-        if (!p1 || !p2) {
-          return
-        }
-        // 获取起点坐标到终点坐标的 Heading Pitch Roll方向角度值
-        const hpr = mars3d.PointUtil.getHeadingPitchRollForLine(p1, p2)
-        // 将弧度转换为度
-        const heading = Cesium.Math.toDegrees(hpr.heading)
-
-        // 添加四棱锥体线
-        const graphicFrustum = new mars3d.graphic.FrustumPrimitive({
-          position: this.roamLine.position,
-          style: {
-            angle: 15,
-            angle2: 12,
-            heading: heading,
-            length: Cesium.Cartographic.fromCartesian(this.roamLine.position).height,
-            fill: false,
-            outline: true,
-            outlineColor: "#ffffff",
-            outlineOpacity: 1.0
-          },
-          asynchronous: false,
-          flat: true
-        })
-        graphicLayer.addGraphic(graphicFrustum)
-        this.arr4LinePrimitive.push(graphicFrustum)
-      }
-      if (this.frameNum % this.stepNum === 10) {
-        // 移除四棱锥体线 保持只有一个椎体线
-        if (this.arr4LinePrimitive.length > 0) {
-          graphicLayer.removeGraphic(this.arr4LinePrimitive.shift())
-        }
-      }
+      return
     }
 
-    if (this.frameNum % this.stepNum === 0 && currIndex % 2 === 0) {
-      if (this.arr4LinePrimitive.length > 0) {
-        const graphicFrustum = this.arr4LinePrimitive[this.arr4LinePrimitive.length - 1]
-        // 地面的4个顶点坐标
-        const positions = graphicFrustum.getRayEarthPositions()
-        // 添加地面矩形
-        const primitive = new mars3d.graphic.PolygonPrimitive({
-          positions: positions,
-          style: {
-            color: this.arrColor[graphicLayer.length % this.arrColor.length],
-            zIndex: graphicLayer.length
-          }
-        })
-        graphicLayer.addGraphic(primitive)
+    frameNum = ++frameNum % 400
+    if (frameNum !== 0) {
+      if (frameNum === 10 && graphicFrustum) {
+        graphicLayer.removeGraphic(graphicFrustum)
+        graphicFrustum = null
       }
+      return
     }
-  },
-  // 释放功能
-  disable() {
-    map.off(mars3d.EventType.clockTick, this.clock_onTick, this) // 时钟跳动 每秒钟执行一次函数 场景事件
-    this.roamLine.stop()
 
-    this.arr4LinePrimitive = []
-    this.frameNum = 0
-  }
+    // 添加四棱锥体线
+    graphicFrustum = new mars3d.graphic.FrustumPrimitive({
+      position: fixedRoute.position,
+      style: {
+        angle: 15,
+        angle2: 12,
+        heading: fixedRoute.model.heading,
+        length: Cesium.Cartographic.fromCartesian(fixedRoute.position).height,
+        fill: false,
+        outline: true,
+        outlineColor: "#ffffff",
+        outlineOpacity: 1.0
+      },
+      asynchronous: false,
+      flat: true
+    })
+    graphicLayer.addGraphic(graphicFrustum)
+
+    // 地面的4个顶点坐标
+    const positions = graphicFrustum.getRayEarthPositions()
+
+    // 添加地面矩形
+    const graphic = new mars3d.graphic.PolygonPrimitive({
+      positions: positions,
+      style: {
+        color: arrColor[graphicLayer.length % arrColor.length],
+        zIndex: graphicLayer.length
+      }
+    })
+    graphicLayer.addGraphic(graphic)
+  })
 }

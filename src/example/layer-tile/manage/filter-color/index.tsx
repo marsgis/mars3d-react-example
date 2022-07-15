@@ -8,19 +8,19 @@ function UIComponent() {
       <Space>
         <MarsButton
           onClick={() => {
-            mapWork.addLayer()
+            mapWork.addTileLayer()
           }}
         >
           叠加图层
         </MarsButton>
         <MarsButton
           onClick={() => {
-            mapWork.removeLayer()
+            mapWork.removeTileLayer()
           }}
         >
           移除图层
         </MarsButton>
-        <MarsColor value={"#4e70a6"} onChange={(e) => mapWork.setFilterColor(e.target.value)}></MarsColor>
+        <MarsColor value={"#4e70a6"} onChange={(e) => mapWork.setFilterColor(e)}></MarsColor>
       </Space>
     </MarsPannel>
   )

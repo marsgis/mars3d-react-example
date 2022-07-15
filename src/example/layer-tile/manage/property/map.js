@@ -55,12 +55,9 @@ export function onUnmounted() {
 
 /**
  * 参数发生变化
- *
- * @export changeOpacity
  * @param {string} attribute 改变的类型
  * @param {number} val 改变的值
- * @returns {void}
  */
-export function changeOpacity(attribute, val) {
+export function setLayerOptions(attribute, val) {
   tileLayer[attribute] = val
 }

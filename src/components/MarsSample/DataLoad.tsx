@@ -20,7 +20,7 @@ export const DataLoad = (props) => {
         onChange={(data: number) => setNum(data)}
       ></MarsInputNumber>
       {props.unit || "条"}
-      <MarsButton onClick={() => mapWork.addDemoGraphic(num)}>生成</MarsButton>
+      <MarsButton onClick={() => mapWork.addRandomGraphicByCount(num)}>生成</MarsButton>
       <MarsButton onClick={() => mapWork.graphicLayer.clear()}>清除</MarsButton>
     </Space>
   )

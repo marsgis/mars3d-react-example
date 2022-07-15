@@ -17,28 +17,38 @@ interface FileInfo {
   file: FileItem
   fileList: FileItem[]
 }
- 
 
 function UIComponent() {
   useEffect(() => {
-    // 编辑修改了模型
-    mapWork.eventTarget.on("graphicEditor-update", async (e: any) => { 
-      if (isActive("GraphicEditor")) {
-        updateWidget("GraphicEditor", { graphic: e.graphic })
-      } else {
-        activate({
-          name: "GraphicEditor",
-          data: { graphic: e.graphic }
-        })
-      } 
-    })
-
-    // 停止编辑修改模型
-    mapWork.eventTarget.on("graphicEditor-stop", async (e: any) => {
+    // @ts-ignore
+    const mars3d = window.mars3d
+    // 矢量数据创建完成
+    // mapWork.graphicLayer.on(mars3d.EventType.drawCreated, function (e) {
+    //   activate({
+    //     name: "GraphicEditor",
+    //     data: { graphic: e.graphic }
+    //   })
+    // })
+    // 修改了矢量数据
+    mapWork.graphicLayer.on(
+      [mars3d.EventType.editStart, mars3d.EventType.editMovePoint, mars3d.EventType.editStyle, mars3d.EventType.editRemovePoint],
+      function (e) {
+        if (isActive("GraphicEditor")) {
+          updateWidget("GraphicEditor", { graphic: e.graphic })
+        } else {
+          activate({
+            name: "GraphicEditor",
+            data: { graphic: e.graphic }
+          })
+        }
+      }
+    )
+    // 停止编辑
+    mapWork.graphicLayer.on([mars3d.EventType.editStop, mars3d.EventType.removeGraphic], function (e) {
       setTimeout(() => {
         if (!mapWork.graphicLayer.isEditing) {
           disable("GraphicEditor")
-        } 
+        }
       }, 100)
     })
   }, [])
@@ -51,7 +61,7 @@ function UIComponent() {
             {
               type: "checkbox",
               field: "control",
-              label: "图层状态",
+              label: "图层管理",
               value: ["show", "bindmenu", "iseditable"],
               options: [
                 {
@@ -75,7 +85,7 @@ function UIComponent() {
                   value: "iseditable"
                 },
                 {
-                  label: "仅在3dtiles上标绘",
+                  label: "仅在Tiles上拾取",
                   value: "only3dtiles"
                 }
               ],
@@ -90,7 +100,7 @@ function UIComponent() {
             },
             {
               type: "custom",
-              label: "图层管理",
+              label: "数据管理",
               element: (
                 <Space wrap>
                   <MarsButton onClick={() => mapWork.graphicLayer.clear()}>清除</MarsButton>
@@ -102,7 +112,7 @@ function UIComponent() {
                     onChange={onClickOpenJson}
                     beforeUpload={() => false}
                   >
-                    <MarsButton>打开...</MarsButton>
+                    <MarsButton>打开</MarsButton>
                   </Upload>
                   <MarsButton onClick={() => mapWork.saveGeoJSON()}>保存GeoJSON</MarsButton>
                   <MarsButton onClick={() => mapWork.saveKML()}>另存KML</MarsButton>
@@ -217,7 +227,7 @@ function onChangeHasEdit(enabledEdit: boolean) {
   mapWork.graphicLayer.hasEdit = enabledEdit
 }
 
-// 是否仅在3dtiles上标绘
+// 是否仅在Tiles上拾取
 function onChangeOnlyPickModel(onlyPickModelPosition: boolean) {
   mapWork.updateOnlyPickModelPosition(onlyPickModelPosition)
 }

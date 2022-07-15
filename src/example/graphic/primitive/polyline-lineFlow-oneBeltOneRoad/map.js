@@ -89,7 +89,7 @@ function showRoad(arr, options) {
       graphicLayer.addGraphic(billboardPrimitive)
 
       const html = `<div class="mars-load-location">
-        ${item.continent} - ${item.country} - <i style="color: #00ffff;">${item.name}</i>
+        ${item.continent} - ${item.country} - <span style="color: #00ffff;">${item.name}</span>
       </div>`
       billboardPrimitive.bindPopup(html)
     }
@@ -99,19 +99,20 @@ function showRoad(arr, options) {
   const positions = mars3d.PolyUtil.getBezierCurve(arrPosition)
   positions.push(arrPosition[arrPosition.length - 1])
 
-  const primitive = new mars3d.graphic.PolylinePrimitive({
+  const graphic = new mars3d.graphic.PolylinePrimitive({
     positions: positions,
     style: {
       width: 4,
-      material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
+      materialType: mars3d.MaterialType.LineFlow,
+      materialOptions: {
         image: "img/textures/line-pulse.png",
         color: options.color,
         repeat: new Cesium.Cartesian2(10.0, 1.0),
         speed: 2
-      })
+      }
     }
   })
-  graphicLayer.addGraphic(primitive)
+  graphicLayer.addGraphic(graphic)
 
-  primitive.bindTooltip(options.name)
+  graphic.bindTooltip(options.name)
 }

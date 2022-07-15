@@ -6,7 +6,10 @@ export let graphicLayer // 矢量图层对象
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: 32.432745, lng: 115.601935, alt: 131, heading: 237, pitch: -31 }
+    center: { lat: 32.432718, lng: 115.602003, alt: 108, heading: 237, pitch: -31 },
+    globe: {
+      depthTestAgainstTerrain: true
+    }
   }
 }
 
@@ -23,9 +26,9 @@ export function onMounted(mapInstance) {
   const waterLayer = new mars3d.layer.GeoJsonLayer({
     url: "//data.mars3d.cn/file/geojson/wangjiaba.json",
     symbol: {
-      type: "waterCombine",
+      type: "waterC",
       styleOptions: {
-        height: 32, // 水面高度
+        height: 18, // 水面高度
         normalMap: "img/textures/waterNormals.jpg", // 水正常扰动的法线图
         frequency: 9000.0, // 控制波数的数字。
         animationSpeed: 0.03, // 控制水的动画速度的数字。
@@ -38,7 +41,7 @@ export function onMounted(mapInstance) {
   })
   map.addLayer(waterLayer)
 
-  // 创建Graphic图层
+  // 创建矢量数据图层
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -57,49 +60,45 @@ export function onUnmounted() {
 function addWaterGate() {
   // 水柱位置
   const posArr = [
-    [115.600031, 32.43217, 38],
-    [115.600104, 32.432121, 38],
-    [115.600163, 32.432059, 38],
-    [115.600246, 32.432014, 38],
-    [115.600324, 32.431971, 38],
-    [115.600404, 32.431927, 38],
-    [115.600484, 32.431882, 38],
-    [115.600563, 32.431839, 38],
-    [115.600646, 32.431793, 38],
-    [115.600727, 32.431749, 38],
-    [115.600806, 32.431706, 38],
-    [115.600886, 32.431661, 38],
-    [115.600967, 32.431617, 38]
+    [115.600031, 32.43217, 28],
+    [115.600104, 32.432121, 28],
+    [115.600163, 32.432059, 28],
+    [115.600246, 32.432014, 28],
+    [115.600324, 32.431971, 28],
+    [115.600404, 32.431927, 28],
+    [115.600484, 32.431882, 28],
+    [115.600563, 32.431839, 28],
+    [115.600646, 32.431793, 28],
+    [115.600727, 32.431749, 28],
+    [115.600806, 32.431706, 28],
+    [115.600886, 32.431661, 28],
+    [115.600967, 32.431617, 28]
   ]
 
   for (let i = 0, len = posArr.length; i < len; i++) {
     const pos = posArr[i]
-    const position = Cesium.Cartesian3.fromDegrees(pos[0], pos[1], pos[2])
 
     const particleSystem = new mars3d.graphic.ParticleSystem({
       id: i + 1,
-      position: position, // 位置
+      position: pos, // 位置
       style: {
         image: "./img/particle/smoke.png",
-        particleSize: 28,
-        startColor: Cesium.Color.LIGHTCYAN.withAlpha(0.3), // 粒子出生时的颜色
-        endColor: Cesium.Color.WHITE.withAlpha(0.0), // 当粒子死亡时的颜色
+        particleSize: 16, // 粒子大小（单位：像素）
+        emissionRate: 100.0, // 发射速率 （单位：次/秒）
+        heading: 120, // 方向角
+        pitch: 45, // 俯仰角
+        gravity: -11, // 重力因子，会修改速度矢量以改变方向或速度（基于物理的效果）
+        transZ: 5, // 离地高度（单位：米）
+        // maxHeight: 2000, // 超出该高度后不显示粒子效果
 
-        startScale: 2.0, // 粒子出生时的比例，相对于原始大小
-        endScale: 4.0, // 粒子在死亡时的比例
-        minimumParticleLife: 1.1, // 设置粒子寿命的可能持续时间的最小界限（以秒为单位），粒子的实际寿命将随机生成
-        maximumParticleLife: 3.1, // 设置粒子寿命的可能持续时间的最大界限（以秒为单位），粒子的实际寿命将随机生成
-        minimumSpeed: 1.0, // 设置以米/秒为单位的最小界限，超过该最小界限，随机选择粒子的实际速度。
-        maximumSpeed: 4.0, // 设置以米/秒为单位的最大界限，超过该最大界限，随机选择粒子的实际速度。
-
-        emissionRate: 100.0, // 每秒要发射的粒子数。
-        lifetime: 8.0 // 粒子的生命周期为（以秒为单位）。
-      },
-      gravity: -11,
-      target: new Cesium.Cartesian3(-0.13, 0.09, 0.28), // 粒子的方向
-      maxHeight: 2000 // 超出该高度后不显示粒子效果
+        startColor: Cesium.Color.LIGHTCYAN.withAlpha(0.3), // 开始颜色
+        endColor: Cesium.Color.WHITE.withAlpha(0.0), // 结束颜色
+        minimumParticleLife: 1, // 最小寿命时间（秒）
+        maximumParticleLife: 4, // 最大寿命时间（秒）
+        minimumSpeed: 10.0, // 最小速度(米/秒)
+        maximumSpeed: 14.0 // 最大速度(米/秒)
+      }
     })
-
     graphicLayer.addGraphic(particleSystem)
   }
 }

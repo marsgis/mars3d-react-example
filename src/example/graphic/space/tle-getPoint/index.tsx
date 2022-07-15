@@ -1,9 +1,9 @@
 import { MarsButton, MarsCheckbox, MarsColor, MarsDatePicker, MarsPannel, MarsSlider, MarsTable } from "@mars/components/MarsUI"
 import { Space } from "antd"
+import moment from "moment"
 import dayjs, { Dayjs } from "dayjs"
 import { useMemo, useState } from "react"
 import * as mapWork from "./map.js"
-import moment from "moment"
 import "./index.less"
 let areaColor: any
 let slideOpacity = 0.4
@@ -39,8 +39,7 @@ function UIComponent() {
   }
 
   // 颜色改变
-  const onChangeColor = (e) => {
-    areaColor = e.target.value
+  const onChangeColor = (areaColor) => {
     mapWork.changeColorOpacity({
       areaColor: areaColor,
       slideOpacity: slideOpacity
@@ -63,7 +62,7 @@ function UIComponent() {
   }
 
   return (
-    <MarsPannel visible={true} top={10} right={10} height={300} >
+    <MarsPannel visible={true} top={10} right={10} height={300}>
       <div className="f-mb">
         <Space>
           <span>卫星张角:</span>
@@ -74,14 +73,22 @@ function UIComponent() {
       <div className="f-mb">
         <Space>
           <span>开始时间:</span>
-          <MarsDatePicker value={moment(startTime, "YYYY-MM-DD HH:mm:ss")} format="YYYY-MM-DD HH:mm:ss" onChange={onChangeStartTime}></MarsDatePicker>
+          <MarsDatePicker
+            value={startTime ? moment(startTime, "YYYY-MM-DD HH:mm:ss") : null}
+            format="YYYY-MM-DD HH:mm:ss"
+            onChange={onChangeStartTime}
+          ></MarsDatePicker>
         </Space>
       </div>
 
       <div className="f-mb">
         <Space>
           <span>结束时间:</span>
-          <MarsDatePicker value={moment(endTime, "YYYY-MM-DD HH:mm:ss")} format="YYYY-MM-DD HH:mm:ss" onChange={onChangeEndTime}></MarsDatePicker>
+          <MarsDatePicker
+            value={endTime ? moment(endTime, "YYYY-MM-DD HH:mm:ss") : null}
+            format="YYYY-MM-DD HH:mm:ss"
+            onChange={onChangeEndTime}
+          ></MarsDatePicker>
         </Space>
       </div>
 

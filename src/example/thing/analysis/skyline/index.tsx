@@ -24,8 +24,8 @@ function UIComponent() {
 
       <div>
         <Space>
-          <span>线宽:</span>
-          <MarsInputNumber style={{ width: "60px" }} defaultValue={3} min={1} max={10} onChange={lineWidth}></MarsInputNumber>像素
+          <span>线宽(像素)</span>
+          <MarsInputNumber style={{ width: "60px" }} defaultValue={3} min={1} max={10} onChange={lineWidth}></MarsInputNumber>
           <MarsButton onClick={() => mapWork.changeColor()}>换色</MarsButton>
         </Space>
       </div>

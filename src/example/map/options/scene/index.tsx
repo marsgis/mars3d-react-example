@@ -358,10 +358,10 @@ function UIComponent() {
           obj.rowSpan = 0
         }
         if (index === 9) {
-          obj.rowSpan = 6
+          obj.rowSpan = 7
         }
-        if (index === 15) {
-          obj.rowSpan = 11
+        if (index === 16) {
+          obj.rowSpan = 12
         }
         return obj
       },

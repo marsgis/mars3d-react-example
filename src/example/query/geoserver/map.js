@@ -65,14 +65,14 @@ function showGeoJsonLayer() {
   geoJsonLayer = new mars3d.layer.GeoJsonLayer({
     symbol: {
       styleOptions: {
-        image: "img/marker/mark3.png",
+        image: "img/marker/mark-blue.png",
         scale: 1,
         scaleByDistance: true,
         scaleByDistance_far: 20000,
         scaleByDistance_farValue: 0.5,
         scaleByDistance_near: 1000,
         scaleByDistance_nearValue: 1,
-        highlight: { type: "click", image: "img/marker/mark1.png" },
+        highlight: { type: "click", image: "img/marker/mark-red.png" },
         clampToGround: true,
         label: {
           text: "{项目名称}",

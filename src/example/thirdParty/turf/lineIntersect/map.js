@@ -27,7 +27,7 @@ export function onMounted(mapInstance) {
     {
       text: "删除对象",
       icon: "fa fa-trash-o",
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         if (graphic) {
           graphic.remove()

@@ -1,5 +1,4 @@
 import * as mars3d from "mars3d"
-import { $message } from "@mars/components/mars-ui/index"
 
 export let map // mars3d.Map三维地图对象
 export let graphicLayer
@@ -53,7 +52,7 @@ export function onMounted(mapInstance) {
     {
       text: "删除对象",
       icon: "fa fa-trash-o",
-      callback: function (e) {
+      callback: (e) => {
         const graphic = e.graphic
         if (graphic) {
           graphicLayer.removeGraphic(graphic)
@@ -94,7 +93,7 @@ function createVideoDom() {
     flvPlayer.load()
     flvPlayer.play()
   } else {
-    $message("不支持flv格式视频")
+    globalMsg("不支持flv格式视频")
   }
 
   setTimeout(() => {
@@ -105,9 +104,47 @@ function createVideoDom() {
       }
     } catch (e) {
       // 规避浏览器权限异常
-        globalMsg("当前浏览器已限制自动播放，请单击播放按钮")
-    } 
+      globalMsg("当前浏览器已限制自动播放，请单击播放按钮")
+    }
   }, 3000)
+}
+
+export function getGraphic(graphicId) {
+  video2D = graphicLayer.getGraphicById(graphicId)
+  return video2D
+}
+
+// 生成演示数据(测试数据量)
+export function addRandomGraphicByCount(count) {
+  graphicLayer.clear()
+  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
+
+  const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
+  const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
+  console.log("生成的测试网格坐标", result)
+
+  for (let j = 0; j < result.points.length; ++j) {
+    const position = result.points[j]
+    const index = j + 1
+
+    const graphic = new mars3d.graphic.Video2D({
+      position: position,
+      style: {
+        container: videoElement,
+        angle: 46.3,
+        angle2: 15.5,
+        heading: 178.5,
+        pitch: 8.2,
+        distance: 1178,
+        showFrustum: true
+      },
+      attr: { index: index }
+    })
+    graphicLayer.addGraphic(graphic)
+  }
+
+  graphicLayer.enabledEvent = true // 恢复事件
+  return result.points.length
 }
 
 // 加载已配置好的视频（此参数为界面上“打印参数”按钮获取的）
@@ -125,46 +162,28 @@ function addDemoGraphic1() {
     }
   })
   graphicLayer.addGraphic(video2D)
-
-  eventTarget.fire("loadVideo", {
-    value: {
-      cameraAngle: video2D.angle,
-      cameraAngle2: video2D.angle2,
-      heading: video2D.heading,
-      pitchValue: video2D.pitch,
-      distanceValue: video2D.distance,
-      opcity: video2D.opacity,
-      ckdFrustum: video2D.showFrustum
-    }
-  })
 }
 
 // 投射视频
-export function addVideo(data) {
+export function startDrawGraphic() {
   graphicLayer.clear()
   // 开始绘制
   graphicLayer.startDraw({
     type: "video2D",
     style: {
       container: videoElement,
-      angle: data.cameraAngle,
-      angle2: data.cameraAngle2,
-      heading: data.heading,
-      pitch: data.pitchValue,
-      opcity: data.opacity,
-      distance: data.distanceValue,
-      showFrustum: data.ckdFrustum
-    },
-    success: function (graphic) {
-      console.log("绘制完成", graphic)
-
-      video2D = graphic // 记录下
+      angle: 46.3,
+      angle2: 15.5,
+      heading: 178.5,
+      pitch: 8.2,
+      distance: 78,
+      showFrustum: true
     }
   })
 }
 
 // 按当前相机投射视频
-export function addThisCamera(data) {
+export function startDrawGraphic2() {
   graphicLayer.clear()
   // 取屏幕中心点
   const targetPosition = map.getCenter({ format: false })
@@ -180,19 +199,15 @@ export function addThisCamera(data) {
     targetPosition: targetPosition,
     style: {
       container: videoElement,
-      angle: data.cameraAngle,
-      angle2: data.cameraAngle2,
-      opacity: data.opcity,
-      showFrustum: data.ckdFrustum
+      angle: 46.3,
+      angle2: 15.5,
+      heading: 178.5,
+      pitch: 8.2,
+      distance: 78,
+      showFrustum: true
     }
   })
   graphicLayer.addGraphic(video2D)
-}
-
-// 清除
-export function clear() {
-  graphicLayer.clear()
-  video2D = null
 }
 
 export function playOrpause() {

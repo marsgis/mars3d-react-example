@@ -32,6 +32,11 @@ export function onMounted(mapInstance) {
   map.addLayer(geoJsonLayer)
 }
 
+// 图层状态 在组件中进行管理的图层
+export function getManagerLayer() {
+  return map.getLayerByAttr("马拉松", "name")
+}
+
 /**
  * 释放当前地图业务的生命周期函数
  * @returns {void} 无

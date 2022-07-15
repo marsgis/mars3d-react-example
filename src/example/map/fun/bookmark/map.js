@@ -40,14 +40,15 @@ export function butAddTxtName(name) {
     center: map.getCameraView()
   }
 
-  map.expImage({
-    download: false,
-    width: 300,
-    callback: function (image) {
-      item.image = image
+  map
+    .expImage({
+      download: false,
+      width: 300
+    })
+    .then((result) => {
+      item.img = result.image
       eventTarget.fire("addImgObject", { item })
-    }
-  })
+    })
 }
 
 // 飞向视角

@@ -162,10 +162,10 @@ function getEchartsOption() {
   const lineColor = ["#fff", "#f6fb05", "#00fcff"]
 
   // 城市点位图标
-  const symbolList = ["image://img/marker/symbol1.png", "image://img/marker/symbol2.png"]
+  const symbolList = ["image://img/icon/symbol1.png", "image://img/icon/symbol2.png"]
 
   // 线上的动态运动点图标
-  const pointSymbol = ["image://img/marker/linePoint1.png", "image://img/marker/linePoint2.png"]
+  const pointSymbol = ["image://img/icon/linePoint1.png", "image://img/icon/linePoint2.png"]
 
   // level = 1的地点添加图标
   items.forEach((el) => {

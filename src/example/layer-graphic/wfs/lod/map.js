@@ -35,28 +35,24 @@ function LodGraphicLayer() {
     minimumLevel: 11, // 限定层级，只加载该层级下的数据。[与效率相关的重要参数]
     debuggerTileInfo: true,
     // 根据LOD分块信息去请求对应的Tile瓦块内的数据
-    queryGridData: (grid, callback) => {
-      const extent = grid.extent
-      mars3d.Util.fetchJson({
+    queryGridData: (grid) => {
+      return mars3d.Util.fetchJson({
         url: "//server.mars3d.cn/server/pointRandom/",
         queryParameters: {
-          xmin: extent.xmin,
-          ymin: extent.ymin,
-          xmax: extent.xmax,
-          ymax: extent.ymax,
+          xmin: grid.extent.xmin,
+          ymin: grid.extent.ymin,
+          xmax: grid.extent.xmax,
+          ymax: grid.extent.ymax,
           count: 5
         }
+      }).then(function (data) {
+        grid.list = data // list标识回传数据
+        return grid
       })
-        .then(function (data) {
-          callback(grid, data) // 执行回调，回传数据
-        })
-        .catch(function (error) {
-          console.log("加载JSON出错", error)
-        })
     },
     // 根据 attr属性 创建 矢量对象[必须返回Graphic对象]
     createGraphic(grid, attr) {
-      const height = mars3d.PointUtil.getSurfaceHeight(map.scene, Cesium.Cartesian3.fromDegrees(attr.x, attr.y))
+      const height = mars3d.PointUtil.getHeight(map.scene, Cesium.Cartesian3.fromDegrees(attr.x, attr.y))
 
       const graphic = new mars3d.graphic.ModelPrimitive({
         position: [attr.x, attr.y, height],

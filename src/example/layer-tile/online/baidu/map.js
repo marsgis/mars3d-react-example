@@ -61,7 +61,7 @@ export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
-  eventTarget.fire("mapLoaded")
+  globalNotify("已知问题提示", `(1) 百度瓦片纠偏后在部分瓦片拼接处有文字注记对不齐情况。`)
 }
 
 /**
@@ -75,8 +75,8 @@ export function onUnmounted() {
 // 叠加的图层
 let tileLayer
 
-export function addLayer() {
-  removeLayer()
+export function addTileLayer() {
+  removeTileLayer()
 
   // 方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
   tileLayer = new mars3d.layer.BaiduLayer({
@@ -84,7 +84,8 @@ export function addLayer() {
   })
   map.addLayer(tileLayer)
 }
-export function removeLayer() {
+
+export function removeTileLayer() {
   if (tileLayer) {
     map.removeLayer(tileLayer, true)
     tileLayer = null

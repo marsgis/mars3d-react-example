@@ -39,6 +39,7 @@ export interface GuiItem {
   max?: number
   step?: number
   range?: boolean
+  placeholder?: string
   options?: any[]
   value?: string | boolean | number | any
   units?: string[]
@@ -257,7 +258,7 @@ export const MarsGui = forwardRef<any, MarsGuiProps>(
                       extraContent={extraContent}
                       {...item}
                       onChange={(data) => {
-                        const val = data.target ? data.target.value : data
+                        const val = data.target instanceof Object ? data.target.value : data
                         dispatch({
                           type: "updateItem",
                           field,

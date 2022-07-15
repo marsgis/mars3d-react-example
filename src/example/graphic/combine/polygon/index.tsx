@@ -1,18 +1,21 @@
-import { MarsForm, MarsFormItem, MarsPannel } from "@mars/components/MarsUI"
+import { MarsPannel, MarsButton } from "@mars/components/MarsUI"
+import { GraphicLayerState } from "@mars/components/MarsSample/GraphicLayerState"
+import { Space } from "antd"
 import * as mapWork from "./map.js"
-import { LayerState } from "@mars/components/MarsSample/LayerState"
-import { DataLoad } from "@mars/components/MarsSample/DataLoad"
 
 function UIComponent() {
   return (
-    <MarsPannel visible={true} right={10} top={10}>
-      <MarsForm>
-        <MarsFormItem>
-          <LayerState />
-        </MarsFormItem>
-      </MarsForm>
-      <DataLoad {...{ min: 0.1, max: 100, step: 0.1, unit: "万条" }}/>
-    </MarsPannel>
+    <>
+      <MarsPannel visible={true} top={10} right={10}>
+        <GraphicLayerState defaultCount={1000} enabledDraw={false} />
+        <div className="f-pdg-10-t">
+          <Space>
+            <span className="mars-pannel-item-label">样例数据:</span>
+            <MarsButton onClick={() => mapWork.addDemoGraphic1()}>合肥建筑物</MarsButton>
+          </Space>
+        </div>
+      </MarsPannel>
+    </>
   )
 }
 

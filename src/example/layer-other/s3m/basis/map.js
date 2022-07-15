@@ -34,7 +34,6 @@ export function onMounted(mapInstance) {
 
   globalNotify("已知问题提示", `当前使用的是原生Cesium+SuperMap3D插件方式，很多API不支持，完整方式需要参考Github开源代码切换Cesium到超图版Cesium。`)
 
-
   showMaxNiaochaoDemo()
 }
 

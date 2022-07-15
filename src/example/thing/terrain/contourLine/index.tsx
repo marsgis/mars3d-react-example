@@ -3,10 +3,13 @@ import type { GuiItem } from "@mars/components/MarsUI"
 import { Space } from "antd"
 import * as mapWork from "./map.js"
 import { useMemo, useState } from "react"
+import { nextTick } from "process"
 
 const flyto = (record: any) => {
   mapWork.flyToGraphic(record.key)
 }
+
+let seletData = []
 
 function UIComponent() {
   // 清除
@@ -141,9 +144,12 @@ function UIComponent() {
 
   useMemo(() => {
     mapWork.eventTabel.on("tableObject", function (event: any) {
-      setTableData([...event.table])
-      const seletData = event.table.map((item: any) => item.key)
-      setSelectRow(seletData)
+      setTableData([...event.tableItem.table])
+      // const seletData = event.table.map((item: any) => item.key)
+
+      seletData.push(event.tableItem.key)
+      console.log(seletData)
+      setSelectRow([...seletData])
     })
   }, [])
 
@@ -155,6 +161,7 @@ function UIComponent() {
     onChange: (selectedRowKeys: string[]) => {
       // 使得点击之后选项改变
       setSelectRow(selectedRowKeys)
+      seletData = selectedRowKeys
     },
     onSelect: (record, selected) => {
       mapWork.showHideArea(record.key, selected)

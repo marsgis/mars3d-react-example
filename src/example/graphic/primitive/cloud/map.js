@@ -21,7 +21,7 @@ export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
-  // 创建Graphic图层
+  // 创建矢量数据图层
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -41,7 +41,7 @@ export function onUnmounted() {
 }
 
 function addDemoGraphic1(graphicLayer) {
-  const primitive = new mars3d.graphic.CloudPrimitive({
+  const graphic = new mars3d.graphic.CloudPrimitive({
     position: [116.353072, 30.859836, 2000],
     style: {
       scale: new Cesium.Cartesian2(5500, 1000),
@@ -59,11 +59,11 @@ function addDemoGraphic1(graphicLayer) {
     },
     attr: { remark: "示例1" }
   })
-  graphicLayer.addGraphic(primitive)
+  graphicLayer.addGraphic(graphic)
 }
 
 function addDemoGraphic2(graphicLayer) {
-  const primitive = new mars3d.graphic.CloudPrimitive({
+  const graphic = new mars3d.graphic.CloudPrimitive({
     position: [116.332891, 30.856537, 1500],
     style: {
       scale: new Cesium.Cartesian2(3500, 800),
@@ -72,11 +72,11 @@ function addDemoGraphic2(graphicLayer) {
     },
     attr: { remark: "示例2" }
   })
-  graphicLayer.addGraphic(primitive)
+  graphicLayer.addGraphic(graphic)
 }
 
 function addDemoGraphic3(graphicLayer) {
-  const primitive = new mars3d.graphic.CloudPrimitive({
+  const graphic = new mars3d.graphic.CloudPrimitive({
     position: [116.371649, 30.851072, 1389],
     style: {
       scale: new Cesium.Cartesian2(5000, 1000),
@@ -85,11 +85,11 @@ function addDemoGraphic3(graphicLayer) {
     },
     attr: { remark: "示例3" }
   })
-  graphicLayer.addGraphic(primitive)
+  graphicLayer.addGraphic(graphic)
 }
 
 function addDemoGraphic4(graphicLayer) {
-  const primitive = new mars3d.graphic.CloudPrimitive({
+  const graphic = new mars3d.graphic.CloudPrimitive({
     position: new mars3d.LngLatPoint(116.350075, 30.848636, 1500),
     style: {
       scale: new Cesium.Cartesian2(2300, 900),
@@ -98,29 +98,22 @@ function addDemoGraphic4(graphicLayer) {
     },
     attr: { remark: "示例4" }
   })
-  graphicLayer.addGraphic(primitive)
+  graphicLayer.addGraphic(graphic)
 }
 
 // 批量生成测试数据
-export function addDemoGraphic(num) {
+export function addRandomGraphicByCount(num) {
   graphicLayer.clear()
-
-  showLoading()
-  const startTime = new Date().getTime()
-
-  let scaleX, scaleY, aspectRatio, cloudHeight, depth
 
   for (let j = 0; j < num; ++j) {
     const position = randomPoint()
+    const scaleX = getRandomNumberInRange(500, 2000)
+    const scaleY = scaleX / 2.0 - getRandomNumberInRange(0, scaleX / 4.0)
+    const depth = getRandomNumberInRange(30, 50)
+    const aspectRatio = getRandomNumberInRange(1.5, 2.1)
+    const cloudHeight = getRandomNumberInRange(5, 20)
 
-    scaleX = getRandomNumberInRange(500, 2000)
-    scaleY = scaleX / 2.0 - getRandomNumberInRange(0, scaleX / 4.0)
-
-    depth = getRandomNumberInRange(30, 50)
-    aspectRatio = getRandomNumberInRange(1.5, 2.1)
-    cloudHeight = getRandomNumberInRange(5, 20)
-
-    const primitive = new mars3d.graphic.CloudPrimitive({
+    const graphic = new mars3d.graphic.CloudPrimitive({
       position: position,
       style: {
         scale: new Cesium.Cartesian2(scaleX, scaleY),
@@ -128,16 +121,8 @@ export function addDemoGraphic(num) {
         slice: getRandomNumberInRange(0.2, 0.6)
       }
     })
-    graphicLayer.addGraphic(primitive)
+    graphicLayer.addGraphic(graphic)
   }
-
-  hideLoading()
-  const endTime = new Date().getTime()
-  // 两个时间戳相差的毫秒数
-  const usedTime = (endTime - startTime) / 1000
-  // console.log(usedTime);
-
-  globalMsg("共耗时" + usedTime.toFixed(2) + "秒")
 }
 
 // 取区域内的随机点
@@ -150,4 +135,16 @@ function randomPoint() {
 
 function getRandomNumberInRange(minValue, maxValue) {
   return minValue + Cesium.Math.nextRandomNumber() * (maxValue - minValue)
+}
+
+// 开始绘制
+export function startDrawGraphic() {
+  graphicLayer.startDraw({
+    type: "cloud",
+    style: {
+      scale: new Cesium.Cartesian2(2300, 900),
+      maximumSize: new Cesium.Cartesian3(13, 13, 13),
+      slice: 0.2
+    }
+  })
 }

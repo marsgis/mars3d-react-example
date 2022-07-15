@@ -98,7 +98,7 @@ function UIComponent() {
   }, [])
 
   return (
-    <MarsPannel visible={true} right={10} top={10}>
+    <MarsPannel visible={true} right={10} top={10} height={420}>
       <MarsTree
         treeData={treeData}
         onExpand={(expandedKeysValue) => setExpandedKeys(expandedKeysValue)}

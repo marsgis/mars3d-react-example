@@ -5,6 +5,7 @@ import { $notify as MarsNotify } from "./MarsNotify"
 import { $hideLoading as MarsHideLoading, $showLoading as MarsShowLoading } from "./MarsLoading"
 
 export * from "./MarsInput"
+export * from "./MarsColor"
 export * from "./MarsInputNumber"
 export * from "./MarsCheckBox"
 export * from "./MarsRadio"
