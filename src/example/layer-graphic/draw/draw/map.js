@@ -51,6 +51,7 @@ export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
   graphicLayer = new mars3d.layer.GraphicLayer({
+    // isRestorePositions: true,
     hasEdit: true,
     isAutoEditing: true // 绘制完成后是否自动激活编辑
   })

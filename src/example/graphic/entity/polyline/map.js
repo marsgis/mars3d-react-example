@@ -46,6 +46,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic12(graphicLayer)
   addDemoGraphic13(graphicLayer)
   addDemoGraphic14(graphicLayer)
+  addDemoGraphic15(graphicLayer)
 }
 
 /**
@@ -441,6 +442,40 @@ function addDemoGraphic14(graphicLayer) {
     attr: { remark: "示例14" }
   })
   graphicLayer.addGraphic(graphic)
+}
+
+function addDemoGraphic15(graphicLayer) {
+  const positions = [
+    [117.225254, 31.743174, 22.5],
+    [117.333836, 31.743008, 7.4],
+    [117.333411, 31.715264, 2.7],
+    [117.31401, 31.715658, 4.3],
+    [117.314371, 31.727136, 5.4],
+    [117.297682, 31.727056, 7.2],
+    [117.296586, 31.692789, 3.4],
+    [117.279685, 31.693365, 7.1],
+    [117.280136, 31.726877, 11.4],
+    [117.225741, 31.726757, 20.2],
+    [117.225387, 31.743153, 22.5]
+  ]
+
+  const graphic = new mars3d.graphic.PolylineEntity({
+    positions: mars3d.PolyUtil.interLine(positions, { minDistance: "auto" }), // 切分坐标，使流动材质均匀些
+    style: {
+      width: 7,
+      materialType: mars3d.MaterialType.LineFlow,
+      materialOptions: {
+        image: "/img/textures/line-interval.png",
+        axisY: false,
+        repeat: new Cesium.Cartesian2(10.0, 1.0),
+        color: "#ffffff",
+        speed: 10
+      }
+    },
+    attr: { remark: "示例4" }
+  })
+  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
+
 }
 
 // 生成演示数据(测试数据量)

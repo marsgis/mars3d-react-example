@@ -48,6 +48,7 @@ class CanvasBillboard extends mars3d.graphic.BillboardEntity {
     }
 
     const canvas = document.createElement("canvas")
+    canvas.id = this.id
     canvas.width = this.style.width
     canvas.height = this.style.height
 

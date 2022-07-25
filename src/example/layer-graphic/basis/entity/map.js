@@ -289,7 +289,6 @@ function addDemoGraphic14(graphicLayer) {
   const graphic = new mars3d.graphic.RectangleEntity({
     positions: [
       [116.383144, 30.819978, 444.42],
-
       [116.42216, 30.793431, 1048.07]
     ],
     style: {

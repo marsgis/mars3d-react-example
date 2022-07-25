@@ -13,8 +13,16 @@ export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
-
   map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
+
+  // 如果模型地址内有“+”符号，可以加下面方法进行自定义处理
+  Cesium.Resource.ReplaceUrl = function (url) {
+    if (url.endsWith(".b3dm") || url.endsWith(".b3dm")) {
+      return url.replace(/\+/gm, "%2B") // 将3dtiles中的“+”符号转义下
+    } else {
+      return url
+    }
+  }
 }
 
 /**

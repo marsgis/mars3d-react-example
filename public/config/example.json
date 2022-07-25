@@ -523,7 +523,7 @@
             "main": "control/basis/zoom"
           },
           {
-            "name": "鼠标按下特效",
+            "name": "鼠标滚轮特效",
             "thumbnail": "control-basis-mouseDownView.jpg",
             "main": "control/basis/mouseDownView"
           },
@@ -2140,8 +2140,7 @@
           {
             "name": "双屏对比",
             "thumbnail": "map-double-compare.jpg",
-            "main": "map/double/compare",
-            "resources": ["map.css"]
+            "main": "map/double/compare"
           },
           {
             "name": "二三维联动(与leaflet)",
