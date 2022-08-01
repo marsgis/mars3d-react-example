@@ -907,6 +907,7 @@
             "name": "Model 小模型",
             "thumbnail": "graphic-entity-model.jpg",
             "main": "graphic/entity/model",
+            "params": "data=gltf",
             "hasPannel": true
           },
           {
@@ -1110,6 +1111,7 @@
             "name": "Model 小模型",
             "thumbnail": "graphic-primitive-model.jpg",
             "main": "graphic/primitive/model",
+            "params": "data=gltf",
             "hasPannel": true
           },
           {
@@ -1295,6 +1297,7 @@
             "name": "ModelCombine 大量模型",
             "thumbnail": "graphic-combine-model.jpg",
             "main": "graphic/combine/model",
+            "params": "data=gltf",
             "hasPannel": true
           },
           {
@@ -1684,6 +1687,7 @@
             "thumbnail": "graphic-space-satellite-list.gif",
             "main": "graphic/space/satellite-list",
             "hasPannel": true,
+            "params": "data=satellite-list",
             "libs": ["mars3d", "mars3d-space"]
           },
           {
@@ -2225,7 +2229,7 @@
           },
           {
             "name": "视点飞行",
-            "thumbnail": "map-fun-setCameraViewList.jpg",
+            "thumbnail": "map-fun-setCameraViewList.gif",
             "main": "map/fun/setCameraViewList"
           },
           {
@@ -2294,7 +2298,7 @@
           },
           {
             "name": "雨天气",
-            "thumbnail": "effect-rain.jpg",
+            "thumbnail": "effect-rain.gif",
             "main": "effect/rain",
             "hasPannel": true
           },
@@ -2306,7 +2310,7 @@
           },
           {
             "name": "云图",
-            "thumbnail": "graphic-entity-rectangle-cloud.jpg",
+            "thumbnail": "graphic-entity-rectangle-cloud.gif",
             "main": "graphic/entity/rectangle-cloud"
           },
           {
@@ -2434,7 +2438,7 @@
           },
           {
             "name": "淹没分析(矢量面)",
-            "thumbnail": "thing-terrain-floodByGraphic.jpg",
+            "thumbnail": "thing-terrain-floodByGraphic.gif",
             "main": "thing/terrain/floodByGraphic",
             "hasPannel": true
           }
@@ -2735,13 +2739,13 @@
           },
           {
             "name": "转动（旗子）",
-            "thumbnail": "thirdParty-ammo-turnCloth.jpg",
+            "thumbnail": "thirdParty-ammo-turnCloth.gif",
             "main": "thirdParty/ammo/turnCloth",
             "libs": ["mars3d", "cesium-meshVisualizer"]
           },
           {
             "name": "转动（球）",
-            "thumbnail": "thirdParty-ammo-turnRope.jpg",
+            "thumbnail": "thirdParty-ammo-turnRope.gif",
             "main": "thirdParty/ammo/turnRope",
             "libs": ["mars3d", "cesium-meshVisualizer"]
           },
@@ -2753,7 +2757,7 @@
           },
           {
             "name": "撞击（断裂体）",
-            "thumbnail": "thirdParty-ammo-convexBreak.jpg",
+            "thumbnail": "thirdParty-ammo-convexBreak.gif",
             "main": "thirdParty/ammo/convexBreak",
             "libs": ["mars3d", "cesium-meshVisualizer"]
           }

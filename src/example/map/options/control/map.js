@@ -25,7 +25,7 @@ function initMap() {
       contextmenu: { hasDefault: true },
       mouseDownView: true,
       zoom: { insertIndex: 1 },
-      compass: { bottom: "toolbar", left: "5px" },
+      compass: { top: "10px", left: "5px" },
       distanceLegend: { left: "100px", bottom: "2px" }
     },
     basemaps: [

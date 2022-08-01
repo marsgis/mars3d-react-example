@@ -117,6 +117,34 @@ function addDemoGraphic1(graphicLayer) {
     })
 }
 
+// BusineDataLayer 业务数据(通过API接口获取)图层
+// function addDemoGraphic2() {
+//   const dataLayer = new mars3d.layer.BusineDataLayer({
+//     url: "//data.mars3d.cn/file/apidemo/gaoxiao.json",
+//     symbol: {
+//       type: "divLightPoint",
+//       styleOptions: {
+//         color: "#f33349",
+//         size: 10,
+//         distanceDisplayCondition: true,
+//         distanceDisplayCondition_far: 200000,
+//         distanceDisplayCondition_near: 0
+//       }
+//     },
+//     // 自定义解析坐标
+//     formatPosition: (attr, graphic) => {
+//       const postion = attr["经纬度"].split(",") // 取到经纬度坐标
+//       if (postion.length !== 2) {
+//         return null
+//       } else {
+//         return postion
+//       }
+//     },
+//     popup: "all"
+//   })
+//   map.addLayer(dataLayer)
+// }
+
 // 生成演示数据(测试数据量)
 export function addRandomGraphicByCount(count) {
   graphicLayer.clear()
