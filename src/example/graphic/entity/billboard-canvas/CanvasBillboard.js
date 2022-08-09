@@ -1,5 +1,5 @@
 // 通过Canvas绘制复杂或动态对象的图标点Graphic
-class CanvasBillboard extends mars3d.graphic.BillboardEntity {
+class CanvasBillboard extends mars3d.graphic.BillboardPrimitive {
   /**
    * 文字
    * @type {string}
@@ -66,7 +66,8 @@ class CanvasBillboard extends mars3d.graphic.BillboardEntity {
     ctx.fillText("℃", 220, canvas.height / 2)
 
     // 将图片赋予给矢量对象进行显示，this.image是父类的属性
-    this.image = canvas
+    // this.image = canvas
+    this.image = canvas.toDataURL("image/png")
   }
 }
 

@@ -2379,7 +2379,8 @@
             "name": "量算 (长度、面积、高度、角度)",
             "thumbnail": "thing-analysis-measure.jpg",
             "main": "thing/analysis/measure",
-            "hasPannel": true
+            "hasPannel": true,
+            "resources": ["/temp/css/divGraphic.css"]
           },
           {
             "name": "剖面分析",

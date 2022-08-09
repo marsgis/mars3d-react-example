@@ -56,7 +56,19 @@ export function removeAll() {
 // 空间距离
 export function measureLength() {
   measure.distance({
-    showAddText: true
+    showAddText: true,
+    label: {
+      // 自定义显示label的graphic类型
+      type: "div",
+      updateText: function (text, graphic) {
+        // updateText是必须，用于动态更新 text
+        graphic.html = `<div class="marsGreenGradientPnl" >${text}</div>`
+      },
+      // 下面是graphic对应类型本身的参数
+      html: `<div class="marsGreenGradientPnl" ></div>`,
+      horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+      verticalOrigin: Cesium.VerticalOrigin.BOTTOM
+    }
     // style: {
     //   color: '#ffff00',
     //   width: 3,
