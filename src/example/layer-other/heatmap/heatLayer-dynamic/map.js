@@ -66,9 +66,6 @@ function showHeatMap() {
       ratio = 0.0
     }
 
-    const gridData = new Array(100 * 100)
-    gridData.fill(0)
-
     lerpHeatMapData(heatMapData0, heatMapData1, ratio, resultHeatMapData)
 
     // 更新数据
