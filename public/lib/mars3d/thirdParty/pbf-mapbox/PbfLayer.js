@@ -126,20 +126,28 @@
         latitude = Cesium.Math.toDegrees(latitude)
 
         targetSources.forEach((s) => {
-          queryResult.push({
-            data: this.mapboxRenderer.queryRenderedFeatures({
-              source: s,
-              renderedZoom: zoom,
-              lng: longitude,
-              lat: latitude,
-              tileZ: zoom
-            })
+          let data = this.mapboxRenderer.queryRenderedFeatures({
+            source: s,
+            renderedZoom: zoom,
+            lng: longitude,
+            lat: latitude,
+            tileZ: zoom
           })
+
+          for (let key in data) {
+            let item = data[key]
+            for (let index = 0; index < item.length; index++) {
+              const element = item[index]
+              element.layer = key
+              queryResult.push({ properties: element })
+            }
+          }
         })
 
         // release tile
         renderRef.consumer.ctx = undefined
         this.mapboxRenderer.releaseRender(renderRef)
+
         return queryResult
       })
     }

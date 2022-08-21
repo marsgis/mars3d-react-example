@@ -147,23 +147,27 @@ export function bindMapDemo() {
         {
           text: "移动到此处",
           icon: "fa fa-send-o",
-          show: function (e) {
-            return Cesium.defined(e.cartesian)
-          },
-          callback: (e) => {
-            const cameraDistance = Cesium.Cartesian3.distance(e.cartesian, map.camera.positionWC) * 0.1
-
-            map.flyToPoint(e.cartesian, {
-              radius: cameraDistance, // 距离目标点的距离
-              maximumHeight: map.camera.positionCartographic.height
-            })
-          }
+          show: "flyToForContextmenuShow",
+          callback: "flyToForContextmenuClick" // 也支持“方法名称”方式(如config.json中配置时)
         }
       ]
     }
   ]
   map.bindContextMenu(mapContextmenuItems)
 }
+
+// 演示右键菜单“方法名称”方式(如config.json中配置时)
+window.flyToForContextmenuShow = function(event) {
+  return Cesium.defined(event.cartesian)
+}
+window.flyToForContextmenuClick = function(event) {
+  const cameraDistance = Cesium.Cartesian3.distance(event.cartesian, map.camera.positionWC) * 0.1
+  map.flyToPoint(event.cartesian, {
+    radius: cameraDistance, // 距离目标点的距离
+    maximumHeight: map.camera.positionCartographic.height
+  })
+}
+
 
 // 解除Map已绑定的右键菜单
 export function unBindMapDemo() {

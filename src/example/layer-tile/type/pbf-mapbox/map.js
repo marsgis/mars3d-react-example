@@ -23,7 +23,7 @@ export function onMounted(mapInstance) {
     `(1) 无数据区域mapbox-gl.js解析失败F12会有错误提示，但不影响使用。(2) 如果部分PBF数据未显示，需要扩展开发对应解析style代码。`
   )
 
-  addPbfLayer()
+  addPbfLayer2()
 }
 
 /**
@@ -37,9 +37,15 @@ export function onUnmounted() {
 function addPbfLayer() {
   // 在 lib\mars3d\thirdParty\pbf-mapbox\PbfLayer.js 中定义的
   const pbfLayer = new mars3d.layer.PbfLayer({
-    url: "https://api.maptiler.com/maps/basic/style.json?key=pSHUA9sSkNny3iqoWG4P"
+    url: "https://api.maptiler.com/maps/basic/style.json?key=pSHUA9sSkNny3iqoWG4P",
+    popup: "all"
   })
   map.addLayer(pbfLayer)
+
+  // 单击事件
+  pbfLayer.on(mars3d.EventType.click, function (event) {
+    console.log("单击了矢量数据，共" + event.features.length + "条", event)
+  })
 }
 
 function addPbfLayer2() {
@@ -481,7 +487,13 @@ function addPbfLayer2() {
 
   // 在 lib\mars3d\thirdParty\pbf-mapbox\PbfLayer.js 中定义的
   const pbfLayer = new mars3d.layer.PbfLayer({
-    style: exampleStyle
+    style: exampleStyle,
+    popup: "all"
   })
   map.addLayer(pbfLayer)
+
+  // 单击事件
+  pbfLayer.on(mars3d.EventType.click, function (event) {
+    console.log("单击了矢量数据，共" + event.features.length + "条", event)
+  })
 }
