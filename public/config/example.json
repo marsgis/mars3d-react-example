@@ -761,6 +761,12 @@
             "hasPannel": true
           },
           {
+            "name": "百度POI点查询",
+            "thumbnail": "query-baiduPOI.jpg",
+            "main": "query/baiduPOI",
+            "hasPannel": true
+          },
+          {
             "name": "高德POI点查询",
             "thumbnail": "query-gaodePOI.jpg",
             "main": "query/gaodePOI",
