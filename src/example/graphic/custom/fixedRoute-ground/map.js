@@ -69,7 +69,7 @@ function addGraphicLayer() {
     model: {
       url: "//data.mars3d.cn/gltf/mars/jingche/jingche.gltf",
       heading: 90,
-      noPitchRoll: true,
+      mergeOrientation: true, // 用于设置模型不是标准的方向时的纠偏处理,在orientation基础的方式值上加上设置是heading值
       minimumPixelSize: 50
     },
     polyline: {

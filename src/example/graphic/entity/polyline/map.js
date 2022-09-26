@@ -47,6 +47,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic13(graphicLayer)
   addDemoGraphic14(graphicLayer)
   addDemoGraphic15(graphicLayer)
+  addDemoGraphic16(graphicLayer)
 }
 
 /**
@@ -472,10 +473,32 @@ function addDemoGraphic15(graphicLayer) {
         speed: 10
       }
     },
-    attr: { remark: "示例4" }
+    attr: { remark: "示例15" }
   })
   graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
+}
 
+function addDemoGraphic16(graphicLayer) {
+  const graphic = new mars3d.graphic.PolylineEntity({
+    positions: [
+      [116.929192, 31.891959, 32.8],
+      [116.960064, 31.883802, 35.7],
+      [116.948047, 31.868749, 33.7]
+    ],
+    style: {
+      width: 3,
+      color: "#ff0000"
+    },
+    attr: { remark: "示例16" }
+  })
+  graphicLayer.addGraphic(graphic)
+
+  // 动态平滑追加点
+  const positions_draw = graphic.setCallbackPositions() // 切换坐标为动态回调模式
+  setInterval(() => {
+    const position = new mars3d.LngLatPoint(116.979661 + Math.random() * 0.01, 31.863542 + Math.random() * 0.01, 38).toCartesian()
+    positions_draw.push(position) // 追加点
+  }, 3000)
 }
 
 // 生成演示数据(测试数据量)

@@ -166,7 +166,7 @@ html {
   vertical-align: middle;
 }
 
-.cesium-viewer-toolbar > .cesium-toolbar-button,
+.cesium-viewer-toolbar>.cesium-toolbar-button,
 .cesium-navigationHelpButton-wrapper,
 .cesium-viewer-geocoderContainer {
   margin-bottom: 5px;
@@ -205,10 +205,12 @@ html {
   left: 40px;
   transform-origin: left bottom;
 }
+
 .cesium-navigation-help-instructions,
 .cesium-navigation-button {
   background-color: rgba(23, 49, 71, 0.8);
 }
+
 .cesium-navigation-button-selected,
 .cesium-navigation-button-unselected:hover {
   background-color: rgba(23, 49, 71, 1);
@@ -276,6 +278,7 @@ html {
   left: 10px;
   right: auto;
 }
+
 .cesium-cesiumInspector {
   background-color: rgba(23, 49, 71, 0.8);
 }
@@ -284,6 +287,7 @@ html {
 .mars3d-compass .mars3d-compass-outer {
   fill: rgba(23, 49, 71, 0.8);
 }
+
 .mars3d-contextmenu-ul,
 .mars3d-sub-menu {
   background-color: rgba(23, 49, 71, 0.8);
@@ -338,14 +342,17 @@ html {
 .mars3d-template-titile a {
   font-size: 16px;
 }
+
 .mars3d-popup-btn-custom {
   padding: 3px 10px;
   border: 1px solid #209ffd;
   background: #209ffd1c;
 }
+
 .mars3d-popup-content {
   margin: 15px;
 }
+
 .mars3d-divGraphic:hover {
   z-index: 999 !important;
 }

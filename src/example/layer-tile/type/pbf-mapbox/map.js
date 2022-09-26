@@ -6,7 +6,18 @@ export let map // mars3d.Map三维地图对象
 export const mapOptions = {
   scene: {
     center: { lat: 28.665233, lng: 108.757799, alt: 4255656, heading: 356, pitch: -87 }
-  }
+  },
+  // 方式1：在创建地球前的参数中配置
+  layers: [
+    {
+      name: "矢量瓦片图层",
+      icon: "img/basemaps/osm.png",
+      type: "pbf", // lib\mars3d\thirdParty\pbf-mapbox\PbfLayer.js 中定义的类型
+      url: "https://api.maptiler.com/maps/basic/style.json?key=pSHUA9sSkNny3iqoWG4P",
+      popup: "all",
+      show: true
+    }
+  ]
 }
 
 /**
@@ -34,19 +45,19 @@ export function onUnmounted() {
   map = null
 }
 
-function addPbfLayer() {
-  // 在 lib\mars3d\thirdParty\pbf-mapbox\PbfLayer.js 中定义的
-  const pbfLayer = new mars3d.layer.PbfLayer({
-    url: "https://api.maptiler.com/maps/basic/style.json?key=pSHUA9sSkNny3iqoWG4P",
-    popup: "all"
-  })
-  map.addLayer(pbfLayer)
+// function addPbfLayer() {
+//   // 在 lib\mars3d\thirdParty\pbf-mapbox\PbfLayer.js 中定义的
+//   const pbfLayer = new mars3d.layer.PbfLayer({
+//     url: "https://api.maptiler.com/maps/basic/style.json?key=pSHUA9sSkNny3iqoWG4P",
+//     popup: "all"
+//   })
+//   map.addLayer(pbfLayer)
 
-  // 单击事件
-  pbfLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了矢量数据，共" + event.features.length + "条", event)
-  })
-}
+//   // 单击事件
+//   pbfLayer.on(mars3d.EventType.click, function (event) {
+//     console.log("单击了矢量数据，共" + event.features.length + "条", event)
+//   })
+// }
 
 function addPbfLayer2() {
   const exampleStyle = {
