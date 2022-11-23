@@ -77,11 +77,11 @@ export function bindLayerDemo() {
       return attr.type + " 我是layer上绑定的Popup" + new Date().toLocaleTimeString()
 
       // return new Promise((resolve) => {
-      //   //这里可以进行后端接口请求数据，setTimeout测试异步
+      //   // 这里可以进行后端接口请求数据，setTimeout测试异步
       //   setTimeout(() => {
-      //     resolve("Promise异步回调显示的弹窗内容信息");
-      //   }, 2000);
-      // });
+      //     resolve("Promise异步回调显示的弹窗内容信息")
+      //   }, 2000)
+      // })
     },
     { timeRender: true, closeButton: false } // timeRender实时刷新
   )

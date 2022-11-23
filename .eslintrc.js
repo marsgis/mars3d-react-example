@@ -25,6 +25,7 @@ module.exports = {
     Terraformer: "readonly",
     AMap: "readonly",
     kgUtil: "readonly",
+    shpUtil: "readonly",
     netcdfjs: "readonly",
     ol: "readonly",
     olcs: "readonly"
@@ -37,7 +38,7 @@ module.exports = {
     "no-use-before-define": "off", // 允许 方法在未定义前使用
     "multiline-ternary": "off",
     "no-restricted-globals": "off",
-    "react-hooks/exhaustive-deps": "off", // 检查 effect 的依赖 
+    "react-hooks/exhaustive-deps": "off", // 检查 effect 的依赖
     "react-hooks/rules-of-hooks": "error", // 检查 Hook 的规则
     // mars3d-react-example项目专用的配置(目的便于示例的开发调试) end
 
@@ -48,7 +49,6 @@ module.exports = {
     "@typescript-eslint/explicit-module-boundary-types": "off", // ts：是否需要显式定义函数将返回什么类型
     "@typescript-eslint/ban-ts-comment": "off", // ts： 禁止ts注释
     "@typescript-eslint/no-unused-vars": "off", // ts：允许定义未引用使用的变量
-
 
     camelcase: "off", // 强制驼峰命名规则
     indent: "off", // 强制一致的缩进风格
