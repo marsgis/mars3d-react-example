@@ -227,7 +227,7 @@ export class TileLayerState extends Component<any, any> {
           })
         }
       })
-    }, 100)
+    }, 500)
   }
 
   setLayerOptions = (attribute: string, val: number) => {
