@@ -42,6 +42,10 @@ export function onMounted(mapInstance) {
     flyTo: true
   })
   map.addLayer(tilesetLayer)
+
+  // 也兼容原生cesium的tileset，按下面方式使用
+  // let tilesetPlanClip = new mars3d.thing.TilesetPlanClip()
+  // tilesetPlanClip.clipTarget = tileset
 }
 
 /**

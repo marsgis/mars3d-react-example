@@ -72,7 +72,7 @@ window.configLibs = {
   ],
   "cesium-weiVectorTile": [
     // 项目矢量瓦片方式加载GeoJson插件
-    "mars3d/thirdParty/weiVectorTile/CesiumVectorTile.min.js",
+    "mars3d/thirdParty/weiVectorTile/CesiumVectorTile.js",
     "mars3d/thirdParty/weiVectorTile/WeiVectorTileLayer.js",
   ],
   "cesium-meshVisualizer": [
@@ -127,8 +127,10 @@ window.configLibs = {
     "three/three.js"
   ],
   'kmlGeojson': [
-    // 项目KML/KMZ解析加载GeoJson插件
-    "kml/kml-geojson.js"
+    "geojson/kml-geojson.js"  // 项目KML/KMZ解析加载GeoJson插件
+  ],
+  'shpGeojson': [
+    "geojson/shp-geojson.js"  // 项目KML/KMZ解析加载GeoJson插件
   ],
   kriging: ["kriging/kriging.min.js"],
   three: ["three/three.js"],
@@ -136,5 +138,4 @@ window.configLibs = {
   'flv': ["video/flv/flv.min.js"],
 
 }
-
 

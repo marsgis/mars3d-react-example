@@ -26,7 +26,7 @@ export const mapOptions = {
       icon: "img/basemaps/blackMarble.png",
       type: "image",
       url: "//data.mars3d.cn/file/img/world/night2.jpg",
-      dayAlpha: 0.1,
+      dayAlpha: 0.0,
       nightAlpha: 1.0,
       brightness: 3.5,
       show: true
@@ -77,21 +77,15 @@ function addSatellite() {
     name: "BEIDOU M6",
     tle1: "1 38775U 12050B   19233.58396017  .00000002  00000-0  00000+0 0  9996",
     tle2: "2 38775  54.9682 146.4459 0022572 250.3518 274.6095  1.86232229 47268",
-    fixedFrameTransform: Cesium.Transforms.localFrameToFixedFrameGenerator("east", "south"),
     model: {
-      url: "//data.mars3d.cn/gltf/mars/weixin.gltf",
-      autoHeading: false,
-      show: true
+      url: "//data.mars3d.cn/gltf/mars/weixin.gltf"
     },
     path: {
-      color: "#36d9ec",
-      show: true
+      color: "#36d9ec"
     },
     cone: {
       sensorType: mars3d.graphic.SatelliteSensor.Type.Rect,
-      reverse: false,
       rayEllipsoid: true,
-      show: true,
       list: [
         {
           name: "高分相机A",
@@ -99,6 +93,7 @@ function addSatellite() {
           angle2: 4.03, // 视场张角2(度)
           pitchOffset: 3.7, // 安装偏转角(度)
           color: "#ff0000",
+          opacity: 0.5,
           show: true
         },
         {
@@ -107,6 +102,7 @@ function addSatellite() {
           angle2: 3.1, // 视场张角2(度)
           pitchOffset: -3.7, // 安装偏转角(度)
           color: "#0000ff",
+          opacity: 0.5,
           show: true
         },
         {
@@ -115,6 +111,7 @@ function addSatellite() {
           angle2: 4.5, // 视场张角2(度)
           pitchOffset: 4.35, // 安装偏转角(度)
           color: "#ffff00",
+          opacity: 0.5,
           show: true
         },
         {
@@ -123,6 +120,7 @@ function addSatellite() {
           angle2: 4.5, // 视场张角2(度)
           pitchOffset: -4.35, // 安装偏转角(度)
           color: "#00ffff",
+          opacity: 0.5,
           show: true
         }
       ]
@@ -151,7 +149,6 @@ function addSatellite() {
   // 动态扫描视锥体
   const saomiaoSensor = new mars3d.graphic.SatelliteSensor({
     position: weixin.property,
-    autoHeading: true,
     style: {
       sensorType: mars3d.graphic.SatelliteSensor.Type.Rect,
       angle1: 4.5,
@@ -171,7 +168,7 @@ function addSatellite() {
   let isUp = -1
 
   const update_old = saomiaoSensor.update
-  saomiaoSensor.update = function(frameState) {
+  saomiaoSensor.update = function (frameState) {
     if (currPitch <= -maxHeight && isUp !== 1) {
       isUp = 1
     } else if (currPitch >= maxHeight && isUp !== -1) {
@@ -180,7 +177,7 @@ function addSatellite() {
     currPitch += step * isUp
     saomiaoSensor.pitch = currPitch
 
-   return update_old.bind(this)(frameState)
+    return update_old.bind(this)(frameState)
   }
 }
 

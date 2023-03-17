@@ -191,7 +191,7 @@ class UIComponent extends Component<any, any> {
   render() {
     return (
       <MarsPannel visible={this.state.visible} right="10" top="10" bottom="60" width="400" onClose={() => this.hidePannel()}>
-        <MarsCollapse defaultActiveKey={["1", "2", "3"]} expandIconPosition="right">
+        <MarsCollapse defaultActiveKey={["1", "2", "3"]} expandIconPosition="start">
           <MarsCollapsePanel key="1" header="表单控件">
             <MarsForm labelCol={{ span: 5 }}>
               <MarsFormItem label="简单文本">

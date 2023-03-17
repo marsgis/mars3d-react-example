@@ -98,6 +98,15 @@ export function onMounted(mapInstance) {
 
   loadDemoData()
 
+  // map.on(mars3d.EventType.keyup, function (e) {
+  //   console.log("按下了键盘", e)
+
+  //   // ESC按键
+  //   if (e.keyCode === 27) {
+  //     graphicLayer._graphic_drawing._positions_draw.pop() // 删除最后一个点
+  //   }
+  // })
+
   // 自定义提示
   // mars3d.Lang["_单击开始绘制"][0] = "新的提示内容";
   // mars3d.Lang["_单击增加点右击删除点"][0] = "新的提示内容";

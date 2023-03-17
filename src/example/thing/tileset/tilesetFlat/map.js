@@ -66,7 +66,8 @@ export function showDytDemo() {
             [108.959106, 34.21953, 398.1]
           ]
         }
-      ]
+      ],
+      flatHeight: 420
     },
     flyTo: true
   })
@@ -91,28 +92,6 @@ export function showTehDemo() {
     skipLevelOfDetail: true,
     preferLeaves: true,
     center: { lat: 31.795308, lng: 117.21948, alt: 1820, heading: 0, pitch: -39 },
-    flyTo: true
-  })
-  map.addLayer(tilesetLayer)
-
-  // tilesetLayer.flat是TilesetFlat对象，因为与模型是1对1关系，已经内置进去
-  tilesetLayer.flat.on(mars3d.EventType.addItem, onAddFlatArea)
-}
-
-export function showQxShequDemo() {
-  removeLayer()
-
-  tilesetLayer = new mars3d.layer.TilesetLayer({
-    name: "县城社区",
-    url: "//data.mars3d.cn/3dtiles/qx-shequ/tileset.json",
-    position: { alt: 11.5 },
-    maximumScreenSpaceError: 1,
-    maximumMemoryUsage: 1024,
-    dynamicScreenSpaceError: true,
-    cullWithChildrenBounds: false,
-    skipLevelOfDetail: true,
-    preferLeaves: true,
-    center: { lat: 28.439062, lng: 119.479517, alt: 484, heading: 4, pitch: -63 },
     flyTo: true
   })
   map.addLayer(tilesetLayer)

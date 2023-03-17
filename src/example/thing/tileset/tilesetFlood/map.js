@@ -26,7 +26,7 @@ export function onMounted(mapInstance) {
      (2) 目前不支持所有3dtile数据，请替换url进行自测`
   )
 
-  showTehDemo()
+  showDytDemo()
 }
 
 /**
@@ -37,7 +37,37 @@ export function onUnmounted() {
   map = null
 }
 
-function showTehDemo() {
+export function showDytDemo() {
+  removeLayer()
+
+  // 加模型
+  tilesetLayer = new mars3d.layer.TilesetLayer({
+    name: "大雁塔",
+    url: "//data.mars3d.cn/3dtiles/qx-dyt/tileset.json",
+    position: { alt: -27 },
+    maximumScreenSpaceError: 1,
+    maximumMemoryUsage: 1024,
+    flyTo: true
+  })
+  map.addLayer(tilesetLayer)
+
+  // 模型淹没处理类
+  const tilesetFlood = tilesetLayer.flood
+  tilesetFlood.on(mars3d.EventType.start, function (e) {
+    console.log("开始分析", e)
+  })
+  tilesetFlood.on(mars3d.EventType.change, function (e) {
+    const height = e.height
+    eventTarget.fire("heightChange", { height })
+  })
+  tilesetFlood.on(mars3d.EventType.end, function (e) {
+    console.log("结束分析", e)
+  })
+}
+
+export function showTehDemo() {
+  removeLayer()
+
   // 加模型
   tilesetLayer = new mars3d.layer.TilesetLayer({
     name: "合肥天鹅湖",
@@ -49,7 +79,8 @@ function showTehDemo() {
     dynamicScreenSpaceError: true,
     cullWithChildrenBounds: false,
     skipLevelOfDetail: true,
-    preferLeaves: true
+    preferLeaves: true,
+    flyTo: true
   })
   map.addLayer(tilesetLayer)
 
@@ -71,6 +102,13 @@ function showTehDemo() {
   tilesetFlood.on(mars3d.EventType.end, function (e) {
     console.log("结束分析", e)
   })
+}
+
+function removeLayer() {
+  if (tilesetLayer) {
+    map.removeLayer(tilesetLayer, true)
+    tilesetLayer = null
+  }
 }
 
 // 高度选择

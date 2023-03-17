@@ -80,11 +80,10 @@ function addSatellite() {
     model: {
       url: "//data.mars3d.cn/gltf/mars/weixin.gltf",
       scale: 1,
-      minimumPixelSize: 90,
-      autoHeading: true,
-      show: true
+      minimumPixelSize: 90
     },
     label: {
+      text: "GAOFEN 1",
       color: "#ffffff",
       opacity: 1,
       font_family: "楷体",
@@ -103,18 +102,16 @@ function addSatellite() {
       scaleByDistance_far: 10000000,
       scaleByDistance_farValue: 0.4,
       scaleByDistance_near: 100000,
-      scaleByDistance_nearValue: 1,
-      show: true
+      scaleByDistance_nearValue: 1
     },
     cone: {
       sensorType: mars3d.graphic.SatelliteSensor.Type.Rect,
       angle1: 10,
       angle2: 5,
       color: "#6ef500",
-      show: true
+      opacity: 0.5
     },
     path: {
-      show: true,
       color: "#00ff00",
       opacity: 0.5,
       width: 1

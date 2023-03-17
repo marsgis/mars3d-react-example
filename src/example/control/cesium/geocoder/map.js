@@ -21,8 +21,8 @@ export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
   // 查询结果回调方法
-  map.controls.geocoder.viewModel.complete.addEventListener(function () {
-    const arrdata = map.controls.geocoder.viewModel.suggestions
+  map.controls.geocoder._czmContrl.viewModel.complete.addEventListener(function () {
+    const arrdata = map.controls.geocoder._czmContrl.viewModel.suggestions
     console.log("查询结果", arrdata)
   })
 }

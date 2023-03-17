@@ -89,6 +89,19 @@ export function addTileLayer() {
       }
     },
     popup: "all",
+    // popupOptions: {
+    //   autoClose: false,
+    //   closeOnClick: false,
+    //   checkData: function (attr, graphic) {
+    //     if (Cesium.defined(attr.OBJECTID)) {
+    //       return graphic.attr.OBJECTID === attr.OBJECTID
+    //     }
+    //     if (Cesium.defined(attr.NAME)) {
+    //       return graphic.attr.NAME === attr.NAME
+    //     }
+    //     return false
+    //   }
+    // },
     flyTo: true
   })
   map.addLayer(tileLayer)

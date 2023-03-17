@@ -79,12 +79,23 @@ function addGraphicLayer() {
   })
   graphicLayer.addGraphic(fixedRoute)
 
+  map.on(mars3d.EventType.keydown, function (event) {
+    // 空格 切换暂停/继续
+    if (event.keyCode === 32) {
+      if (fixedRoute.isPause) {
+        fixedRoute.proceed()
+      } else {
+        fixedRoute.pause()
+      }
+    }
+  })
+
   // 绑定popup
   bindPopup(fixedRoute)
 
   // ui面板信息展示
   fixedRoute.on(mars3d.EventType.change, (event) => {
-    eventTarget.fire("roamLineChange", event)
+    throttled(eventTarget.fire("roamLineChange", event), 500)
   })
 
   // 不贴地时，直接开始
@@ -179,3 +190,23 @@ function addParticleSystem(property) {
 // ui层使用
 export const formatDistance = mars3d.MeasureUtil.formatDistance
 export const formatTime = mars3d.Util.formatTime
+
+// 节流
+function throttled(fn, delay) {
+  let timer = null
+  let starttime = Date.now()
+  return function () {
+    const curTime = Date.now() // 当前时间
+    const remaining = delay - (curTime - starttime)
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const context = this
+    const args = arguments
+    clearTimeout(timer)
+    if (remaining <= 0) {
+      fn.apply(context, args)
+      starttime = Date.now()
+    } else {
+      timer = setTimeout(fn, remaining)
+    }
+  }
+}

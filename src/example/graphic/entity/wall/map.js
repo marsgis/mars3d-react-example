@@ -79,6 +79,7 @@ function addDemoGraphic1(graphicLayer) {
       materialOptions: {
         image: "img/textures/fence.png",
         color: "#00ff00",
+        mixt: true,
         speed: 10,
         axisY: true
       }

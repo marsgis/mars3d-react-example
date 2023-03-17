@@ -82,5 +82,11 @@ export function showModel(modelUrl) {
 
 export function setTranslation(x, y, z) {
   const translation = Cesium.Cartesian3.fromArray([x, y, z])
-  tiles3dLayer.tileset.modelMatrix = Cesium.Matrix4.fromTranslation(translation)
+  const modelMatrix = Cesium.Matrix4.fromTranslation(translation)
+  tiles3dLayer.tileset.modelMatrix = modelMatrix
+
+  // 打印值
+  const position = mars3d.PointUtil.getPositionByHprAndOffset(tiles3dLayer.position, new Cesium.Cartesian3(x, y, z))
+  const point = mars3d.LngLatPoint.parse(position)
+  console.log("新坐标为", point)
 }

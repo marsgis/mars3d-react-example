@@ -64,6 +64,10 @@ export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
+  globalNotify(
+    "已知问题提示",
+    `(1) mapbox的token已失效，请您自行申请替换mars3d.Token.updateMapbox("key value")。`
+  )
 
 }
 

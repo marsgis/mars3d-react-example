@@ -407,7 +407,7 @@ function UIComponent() {
         }
 
         if (comp === "color") {
-          return <MarsColor onChange={(e: any) => change(e.target.value)}></MarsColor>
+          return <MarsColor onChange={(e: any) => change(e)}></MarsColor>
         }
 
         if (comp === "range") {

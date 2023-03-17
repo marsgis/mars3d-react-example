@@ -15,6 +15,10 @@ export function onMounted(mapInstance) {
 
   bindMapDemo()
 
+  // map.on(mars3d.EventType.click, function (event) {
+  //   map.contextmenu._rightClickHandler(event)
+  // })
+
   map.on(mars3d.EventType.contextMenuOpen, function (event) {
     console.log("打开了右键菜单")
   })

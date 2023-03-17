@@ -1,5 +1,7 @@
-//按mars3d规范，封装的pbf图层
+// import * as mars3d from "mars3d"
+// const Cesium = mars3d.Cesium
 
+//按mars3d规范，封装的pbf图层
 ;(function (window) {
   let BasicRenderer = window.mapboxRenderer.BasicRenderer
 
@@ -191,6 +193,8 @@
   mars3d.LayerUtil.register(layerType, PbfLayer)
   mars3d.LayerUtil.registerImageryProvider(layerType, createImageryProvider)
 
-  //对外接口
+  // 对外接口
   window.mars3d.layer.PbfLayer = PbfLayer
 })(window)
+
+// export { PbfLayer }

@@ -31,9 +31,7 @@ export function onMounted(mapInstance) {
 
   // 切换场景后事件
   map.on(mars3d.EventType.morphComplete, function (event) {
-    setTimeout(function () {
-      map.setCameraView(lastCameraView)
-    }, 100)
+    map.setCameraView(lastCameraView, { duration: 0 })
   })
 }
 
@@ -47,15 +45,15 @@ export function onUnmounted() {
 
 // 切换为二维视图
 export function to2d() {
-  map.scene.morphTo2D()
+  map.scene.morphTo2D(0)
 }
 
 // 切换为三维视图
 export function to3d() {
-  map.scene.morphTo3D()
+  map.scene.morphTo3D(0)
 }
 
 // 切换为2.5D维视图
 export function toGLB() {
-  map.scene.morphToColumbusView()
+  map.scene.morphToColumbusView(0)
 }

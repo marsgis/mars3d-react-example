@@ -9,7 +9,7 @@ export const mapOptions = {
   scene: {
     center: { lat: 33.591015, lng: 119.032697, alt: 73, heading: 343, pitch: -21 },
     globe: {
-      depthTestAgainstTerrain: true
+      // depthTestAgainstTerrain: true
     }
   }
 }
@@ -45,7 +45,8 @@ export function onMounted(mapInstance) {
 
   snowCover = new mars3d.effect.SnowCoverEffect({
     maxHeight: 8000, // 大于此高度后不显示
-    alpha: 0.6
+    alpha: 0.6,
+    layer: tiles3dLayer// 如果传值3dtiles图层，只对该模型生效
   })
   map.addEffect(snowCover)
 }

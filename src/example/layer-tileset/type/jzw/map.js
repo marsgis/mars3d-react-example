@@ -1,6 +1,7 @@
 import * as mars3d from "mars3d"
 
 export let map // mars3d.Map三维地图对象
+
 let tiles3dLayer
 let brightnessEffect
 let bloomEffect
@@ -64,13 +65,18 @@ export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
-
   map.basemap = 2017 // 切换到蓝色底图
 
+  // 固定光照时间
+  map.clock.currentTime = Cesium.JulianDate.fromDate(new Date("2022-11-01 12:00:00"))
+  // map.clock.shouldAnimate = false
+
+  // 固定光照方向
   map.scene.light = new Cesium.DirectionalLight({
     direction: map.scene.camera.direction
   })
-  map.on(mars3d.EventType.cameraMoveEnd, function (event) {
+  map.camera.percentageChanged = 0.001
+  map.on(mars3d.EventType.cameraChanged, function (event) {
     map.scene.light.direction = map.scene.camera.direction
   })
 
@@ -79,9 +85,9 @@ export function onMounted(mapInstance) {
   })
   map.addEffect(bloomEffect)
 
-  setStyleDef()
-
   addbrightnessEffect(1.5)
+
+  setStyleDef()
 }
 
 /**
@@ -121,39 +127,18 @@ export function setStyleDef() {
   map.addLayer(tiles3dLayer)
 }
 
+// mars3d 内置marsJzwStyle属性
 export function setStyle1() {
   if (tiles3dLayer) {
     tiles3dLayer.remove()
   }
-
-  // 自定义特效 Shader
-  const fragmentShader = `
-          // 注意shader中写浮点数是，一定要带小数点，否则会报错，比如0需要写成0.0，1要写成1.0
-          float _baseHeight = 0.0; // 物体的基础高度，需要修改成一个合适的建筑基础高度
-          float _heightRange = 80.0; // 高亮的范围(_baseHeight ~ _baseHeight + _heightRange)
-          float _glowRange = 100.0; // 光环的移动范围(高度)
-
-          // 建筑基础色
-          float mars_height = marsJzwHeight - _baseHeight;
-          float mars_a11 = fract(czm_frameNumber / 120.0) * 3.14159265 * 2.0;
-          float mars_a12 = mars_height / _heightRange + sin(mars_a11) * 0.1;
-          gl_FragColor *= vec4(vec3(mars_a12), 1.0);// 渐变
-
-          // 动态光环
-          float time = fract(czm_frameNumber / 360.0);
-          time = abs(time - 0.5) * 2.0;
-          float mars_h = clamp(mars_height / _glowRange, 0.0, 1.0);
-          float mars_diff = step(0.005, abs(mars_h - time));
-          gl_FragColor.rgb += gl_FragColor.rgb * (1.0 - mars_diff);
-       `
 
   tiles3dLayer = new mars3d.layer.TilesetLayer({
     name: "合肥市建筑物",
     url: "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
     maximumScreenSpaceError: 1,
     maximumMemoryUsage: 1024,
-    // marsJzwStyle: true, //打开建筑物特效（内置Shader代码）
-    marsJzwStyle: fragmentShader, // 字符串值时，表示使用该字符串定义的自定义Shader
+    marsJzwStyle: true, // 打开建筑物特效（内置Shader代码）
     popup: [
       { field: "objectid", name: "编号" },
       { field: "name", name: "名称" },
@@ -163,82 +148,99 @@ export function setStyle1() {
   map.addLayer(tiles3dLayer)
 }
 
-// 不改动cesium源码版本的建筑物样式
+// customShader参数方式
 export function setStyle2() {
   const upZ = tiles3dLayer.upAxis === Cesium.Axis.Z
 
+  tiles3dLayer.marsJzwStyle = false
   tiles3dLayer.customShader = new Cesium.CustomShader({
     lightingModel: Cesium.LightingModel.UNLIT,
     fragmentShaderText: `
-    void fragmentMain(FragmentInput fsInput, inout czm_modelMaterial material)
-    {
-      vec4 position = czm_inverseModelView * vec4(fsInput.attributes.positionEC,1); // 位置
+      void fragmentMain(FragmentInput fsInput, inout czm_modelMaterial material)
+      {
+        vec4 position = czm_inverseModelView * vec4(fsInput.attributes.positionEC,1); // 位置
 
-      // 注意shader中写浮点数是，一定要带小数点，否则会报错，比如0需要写成0.0，1要写成1.0
-      float _baseHeight = 0.0; // 物体的基础高度，需要修改成一个合适的建筑基础高度
-      float _heightRange = 80.0; // 高亮的范围(_baseHeight ~ _baseHeight + _heightRange)
-      float _glowRange = 100.0; // 光环的移动范围(高度)
+        // 注意shader中写浮点数是，一定要带小数点，否则会报错，比如0需要写成0.0，1要写成1.0
+        float _baseHeight = 0.0; // 物体的基础高度，需要修改成一个合适的建筑基础高度
+        float _heightRange = 80.0; // 高亮的范围(_baseHeight ~ _baseHeight + _heightRange)
+        float _glowRange = 100.0; // 光环的移动范围(高度)
 
-      // 建筑基础色
-      float mars_height = ${upZ ? "position.z" : "position.y"} - _baseHeight;
-      float mars_a11 = fract(czm_frameNumber / 120.0) * 3.14159265 * 2.0;
-      float mars_a12 = mars_height / _heightRange + sin(mars_a11) * 0.1;
-      material.diffuse = vec3(0.0, 0.0, 1.0); // 颜色
-      material.diffuse *= vec3(mars_a12);// 渐变
+        // 建筑基础色
+        float mars_height = ${upZ ? "position.z" : "position.y"} - _baseHeight;
+        float mars_a11 = fract(czm_frameNumber / 120.0) * 3.14159265 * 2.0;
+        float mars_a12 = mars_height / _heightRange + sin(mars_a11) * 0.1;
 
-      // 动态光环
-      float time = fract(czm_frameNumber / 360.0);
-      time = abs(time - 0.5) * 2.0;
-      float mars_h = clamp(mars_height / _glowRange, 0.0, 1.0);
-      float mars_diff = step(0.005, abs(mars_h - time));
-      material.diffuse += material.diffuse * (1.0 - mars_diff);
-    } `
+        material.diffuse = vec3(0.0, 0.0, 1.0); // 颜色
+        material.diffuse *= vec3(mars_a12);// 渐变
+
+        // 动态光环
+        float time = fract(czm_frameNumber / 360.0);
+        time = abs(time - 0.5) * 2.0;
+        float mars_h = clamp(mars_height / _glowRange, 0.0, 1.0);
+        float mars_diff = step(0.005, abs(mars_h - time));
+        material.diffuse += material.diffuse * (1.0 - mars_diff);
+      } `
   })
   tiles3dLayer.reload()
 }
 
-// 不改动cesium源码 夜景贴图
+// customShader参数方式 夜景贴图
 export function setStyle3() {
-  tiles3dLayer.customShader = new Cesium.CustomShader({
-    lightingModel: Cesium.LightingModel.UNLIT,
-    varyings: {
-      v_mars3d_normalMC: Cesium.VaryingType.VEC3
-    },
-    uniforms: {
-      u_mars3d_texture: {
-        value: new Cesium.TextureUniform({
-          url: "/img/textures/buildings.png"
-        }),
-        type: Cesium.UniformType.SAMPLER_2D
-      }
-    },
-    vertexShaderText: /* glsl */ `
-    void vertexMain(VertexInput vsInput, inout czm_modelVertexOutput vsOutput){
-        v_mars3d_normalMC = vsInput.attributes.normalMC;
-      }`,
-    fragmentShaderText: /* glsl */ `
-    void fragmentMain(FragmentInput fsInput, inout czm_modelMaterial material) {
-      vec3 positionMC = fsInput.attributes.positionMC;
-      if (dot(vec3(0.0, 0.0, 1.0), v_mars3d_normalMC) > 0.95) {
-        //处理楼顶:统一处理成深色。
-        material.diffuse = vec3(0.079, 0.107, 0.111);
-      } else {
-        //处理四个侧面: 贴一样的图
-        float mars3d_width = 100.0;
-        float mars3d_height = 100.0;
-        float mars3d_textureX = 0.0;
-        float mars3d_dotXAxis = dot(vec3(0.0, 1.0, 0.0), v_mars3d_normalMC);
-        if (mars3d_dotXAxis > 0.52 || mars3d_dotXAxis < -0.52) {
-          mars3d_textureX = mod(positionMC.x, mars3d_width) / mars3d_width;
-        } else {
-          mars3d_textureX = mod(positionMC.y, mars3d_width) / mars3d_width;
+  if (tiles3dLayer) {
+    tiles3dLayer.remove()
+  }
+
+  tiles3dLayer = new mars3d.layer.TilesetLayer({
+    name: "合肥市建筑物",
+    url: "//data.mars3d.cn/3dtiles/jzw-hefei2/tileset.json",
+    maximumScreenSpaceError: 1,
+    maximumMemoryUsage: 1024,
+    customShader: new Cesium.CustomShader({
+      lightingModel: Cesium.LightingModel.UNLIT,
+      varyings: {
+        v_mars3d_normalMC: Cesium.VaryingType.VEC3
+      },
+      uniforms: {
+        u_mars3d_texture: {
+          value: new Cesium.TextureUniform({
+            url: "/img/textures/buildings.png"
+          }),
+          type: Cesium.UniformType.SAMPLER_2D
         }
-        float mars3d_textureY = mod(positionMC.z, mars3d_height) / mars3d_height;
-        material.diffuse = texture2D(u_mars3d_texture, vec2(mars3d_textureX, mars3d_textureY)).rgb;
-      }
-    }`
+      },
+      vertexShaderText: /* glsl */ `
+      void vertexMain(VertexInput vsInput, inout czm_modelVertexOutput vsOutput){
+          v_mars3d_normalMC = vsInput.attributes.normalMC;
+        }`,
+      fragmentShaderText: /* glsl */ `
+      void fragmentMain(FragmentInput fsInput, inout czm_modelMaterial material) {
+        vec3 positionMC = fsInput.attributes.positionMC;
+        if (dot(vec3(0.0, 1.0, 0.0), v_mars3d_normalMC) > 0.95) {
+          //处理楼顶:统一处理成深色。
+          material.diffuse = vec3(0.079, 0.107, 0.111);
+        } else {
+          //处理四个侧面: 贴一样的图
+          float mars3d_width = 100.0;
+          float mars3d_height = 100.0;
+          float mars3d_textureX = 0.0;
+          float mars3d_dotXAxis = dot(vec3(0.0, 0.0, 1.0), v_mars3d_normalMC);
+          if (mars3d_dotXAxis > 0.52 || mars3d_dotXAxis < -0.52) {
+            mars3d_textureX = mod(positionMC.x, mars3d_width) / mars3d_width;
+          } else {
+            mars3d_textureX = mod(positionMC.z, mars3d_width) / mars3d_width;
+          }
+          float mars3d_textureY = mod(positionMC.y, mars3d_height) / mars3d_height;
+          material.diffuse = texture(u_mars3d_texture, vec2(mars3d_textureX, mars3d_textureY)).rgb;
+        }
+      }`
+    }),
+    popup: [
+      { field: "objectid", name: "编号" },
+      { field: "name", name: "名称" },
+      { field: "height", name: "楼高", unit: "米" }
+    ]
   })
-  tiles3dLayer.reload()
+  map.addLayer(tiles3dLayer)
 }
 
 // 颜色改变
@@ -270,7 +272,6 @@ export function chkShadows(val) {
 export function chkBrightness(val) {
   brightnessEffect.enabled = val
 }
-
 
 export function alphaChange(value) {
   brightnessEffect.brightness = value

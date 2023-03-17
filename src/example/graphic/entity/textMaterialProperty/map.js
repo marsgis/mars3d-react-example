@@ -134,7 +134,8 @@ function addDemoGraphic3(graphicLayer) {
         color: "#00ff00",
         stroke: true,
         strokeWidth: 2,
-        strokeColor: "#ffffff"
+        strokeColor: "#ffffff",
+        speed: 10 // 滚动文字速度，0时不滚动
       },
       // 高亮时的样式（默认为鼠标移入，也可以指定type:'click'单击高亮），构造后也可以openHighlight、closeHighlight方法来手动调用
       highlight: {

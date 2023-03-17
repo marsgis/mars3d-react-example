@@ -30,7 +30,7 @@ export const mapOptions = {
       icon: "img/basemaps/blackMarble.png",
       type: "image",
       url: "//data.mars3d.cn/file/img/world/night2.jpg",
-      dayAlpha: 0.1,
+      dayAlpha: 0.0,
       nightAlpha: 1.0,
       brightness: 3.5,
       show: true
@@ -95,15 +95,15 @@ function createSatelliteList(arr) {
     // 属性处理
     item.model = {
       url: "//data.mars3d.cn/gltf/mars/weixin.gltf",
+      scale: 1,
+      minimumPixelSize: 50,
       ...(item.model || {}),
       distanceDisplayCondition: true,
       distanceDisplayCondition_near: 0,
-      distanceDisplayCondition_far: 20000000,
-      show: true
+      distanceDisplayCondition_far: 20000000
     }
     // 当视角距离超过20000000米(distanceDisplayCondition_far定义的) 后显示为点对象的样式
     item.point = {
-      show: true,
       color: "#ffff00",
       pixelSize: 5,
       distanceDisplayCondition: true,
@@ -111,8 +111,25 @@ function createSatelliteList(arr) {
       distanceDisplayCondition_far: Number.MAX_VALUE
     }
 
-    item.label = item.label || {}
-    item.label.show = true
+    item.label = item.label || {
+      color: "#ffffff",
+      opacity: 1,
+      font_size: 30,
+      font_family: "楷体",
+      outline: true,
+      outlineColor: "#000000",
+      outlineWidth: 3,
+      background: true,
+      backgroundColor: "#000000",
+      backgroundOpacity: 0.5,
+      pixelOffsetY: -20,
+      scaleByDistance: true,
+      scaleByDistance_far: 10000000,
+      scaleByDistance_farValue: 0.4,
+      scaleByDistance_near: 100000,
+      scaleByDistance_nearValue: 1
+    }
+    item.label.text = item.name
 
     // path显示后FPS下降的厉害
     item.path = item.path || {}
@@ -123,7 +140,7 @@ function createSatelliteList(arr) {
       sensorType: i % 2 === 1 ? mars3d.graphic.SatelliteSensor.Type.Rect : mars3d.graphic.SatelliteSensor.Type.Conic,
       angle1: random(20, 40),
       angle2: random(10, 20),
-      color: "rgba(0,255,255,0.5)",
+      color: "rgba(0,255,0,0.5)",
       show: false
     }
     // 属性处理  END

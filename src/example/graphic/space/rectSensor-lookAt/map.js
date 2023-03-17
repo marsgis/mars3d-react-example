@@ -65,13 +65,12 @@ function addGraphicLayer() {
     tle1: "1 39150U 13018A   21180.50843864  .00000088  00000-0  19781-4 0  9997",
     tle2: "2 39150  97.8300 252.9072 0018449 344.7422  15.3253 14.76581022440650",
     model: {
-      url: "//data.mars3d.cn/gltf/mars/weixin2.gltf",
+      url: "//data.mars3d.cn/gltf/mars/weixin.gltf",
       scale: 1,
-      minimumPixelSize: 90,
-      autoHeading: true,
-      show: true
+      minimumPixelSize: 90
     },
     label: {
+      text: "GAOFEN 1",
       color: "#ffffff",
       opacity: 1,
       font_family: "楷体",
@@ -90,11 +89,9 @@ function addGraphicLayer() {
       scaleByDistance_far: 10000000,
       scaleByDistance_farValue: 0.4,
       scaleByDistance_near: 100000,
-      scaleByDistance_nearValue: 1,
-      show: true
+      scaleByDistance_nearValue: 1
     },
     path: {
-      show: true,
       color: "#00ff00",
       opacity: 0.5,
       width: 1
@@ -110,11 +107,10 @@ function addGraphicLayer() {
     model: {
       url: "//data.mars3d.cn/gltf/mars/weixin.gltf",
       scale: 1,
-      minimumPixelSize: 90,
-      autoHeading: true,
-      show: true
+      minimumPixelSize: 90
     },
     label: {
+      text: "COSMOS 2251 DEB",
       color: "#ffffff",
       opacity: 1,
       font_family: "楷体",
@@ -133,11 +129,9 @@ function addGraphicLayer() {
       scaleByDistance_far: 10000000,
       scaleByDistance_farValue: 0.4,
       scaleByDistance_near: 100000,
-      scaleByDistance_nearValue: 1,
-      show: true
+      scaleByDistance_nearValue: 1
     },
     path: {
-      show: true,
       color: "#00ff00",
       opacity: 0.5,
       width: 1

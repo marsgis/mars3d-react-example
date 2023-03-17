@@ -163,7 +163,7 @@ function getDefaultContextMenu(map) {
           icon: mars3d.Icon.TilesetWireframeYes,
           show: function (e) {
             const model = map.pick3DTileset(e.cartesian) // 拾取绘制返回的模型
-            return !model.debugWireframe
+            return !model.debugWireframe && model._enableDebugWireframe
           },
           callback: (e) => {
             const model = map.pick3DTileset(e.cartesian) // 拾取绘制返回的模型
@@ -175,7 +175,7 @@ function getDefaultContextMenu(map) {
           icon: mars3d.Icon.TilesetWireframeNo,
           show: function (e) {
             const model = map.pick3DTileset(e.cartesian) // 拾取绘制返回的模型
-            return model.debugWireframe
+            return model.debugWireframe && model._enableDebugWireframe
           },
           callback: (e) => {
             const model = map.pick3DTileset(e.cartesian) // 拾取绘制返回的模型

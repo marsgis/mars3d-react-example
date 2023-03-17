@@ -5,7 +5,7 @@ import type { BaseSelectRef } from "rc-select"
 import "./index.less"
 
 export const MarsSelect = forwardRef<BaseSelectRef, SelectProps>((props, ref) => {
-  return <Select className="mars-select" dropdownClassName="mars-select-dropdown" ref={ref} {...props}></Select>
+  return <Select className="mars-select" popupClassName="mars-select-dropdown" ref={ref} {...props}></Select>
 })
 
 export const MarsOption = Select.Option

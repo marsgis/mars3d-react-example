@@ -21,7 +21,7 @@ export const MarsTree = forwardRef<any, TreeProps>((props, ref) => (
   <Tree
     className="mars-tree"
     ref={ref}
-    showLine={true}
+    showLine={false}
     showIcon={true}
     checkable
     icon={(props) => <TreeIcon {...props}></TreeIcon>}

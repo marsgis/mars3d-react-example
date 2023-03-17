@@ -1,4 +1,5 @@
 import { MarsPannel, MarsButton, MarsCheckbox, MarsInputNumber, MarsSlider, MarsGui } from "@mars/components/MarsUI"
+import type { GuiItem } from "@mars/components/MarsUI"
 import { Space } from "antd"
 import { useState, useMemo } from "react"
 import * as mapWork from "./map.js"
@@ -17,6 +18,8 @@ function UIComponent() {
   const [isStart, setIsStart] = useState(true)
 
   const [speed, setSpeed] = useState(80)
+
+  const [color, setColor] = useState("rgba(0, 123, 230, 0.5)")
 
   useMemo(() => {
     mapWork.eventTarget.on("heightChange", (e: any) => {
@@ -49,6 +52,15 @@ function UIComponent() {
   // 速度发生改变
   const onChangeSpeed = (val: number) => {
     setSpeed(val)
+  }
+
+  // 
+  const onChangeMinHeight = (val: number) => {
+    setVlaue({ ...floodParams, minHeight: val })
+  }
+
+  const onChangeMaxHeight = (val: number) => {
+    setVlaue({ ...floodParams, maxHeight: val })
   }
 
   // 高度发生改变
@@ -91,6 +103,20 @@ function UIComponent() {
     setIsStart(true)
   }
 
+  const options: GuiItem[] = [
+    {
+      type: "color",
+      field: "color",
+      value: color,
+      change(color) {
+        console.log("颜色", color)
+        setColor(color)
+        
+        mapWork.onChangeColor(color)
+      }
+    }
+  ]
+
   return (
     <MarsPannel visible={true} top={10} right={10}>
       {floodParams.height === 0 ? (
@@ -106,13 +132,13 @@ function UIComponent() {
           <div className="f-mb">
             <Space>
               <span>最低海拔</span>
-              <MarsInputNumber value={floodParams.minHeight} />米
+              <MarsInputNumber value={floodParams.minHeight} onChange={onChangeMinHeight} />米
             </Space>
           </div>
           <div className="f-mb">
             <Space>
               <span>最高海拔</span>
-              <MarsInputNumber value={floodParams.maxHeight} />米
+              <MarsInputNumber value={floodParams.maxHeight} onChange={onChangeMaxHeight} />米
             </Space>
           </div>
           <div className="f-mb">
@@ -120,6 +146,12 @@ function UIComponent() {
               <span>淹没速度</span>
               <MarsInputNumber value={speed} onChange={onChangeSpeed} />
               米/秒
+            </Space>
+          </div>
+          <div className="f-mb">
+            <Space>
+              <span>淹没颜色</span>
+              <MarsGui options={options} ></MarsGui>
             </Space>
           </div>
           <div className="f-tac">

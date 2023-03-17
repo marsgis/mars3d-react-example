@@ -46,6 +46,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic3(graphicLayer)
   addDemoGraphic4(graphicLayer)
   addDemoGraphic5(graphicLayer)
+  addDemoGraphic6(graphicLayer)
 }
 
 /**
@@ -221,11 +222,36 @@ function addDemoGraphic5(graphicLayer) {
       radius: 80,
       slices: 4, // 方形管道
       startAngle: 45,
+      vscale: 1.5, // 垂直缩放
       color: "#989898",
       outline: true,
       outlineColor: "#D7D7D7"
     },
     attr: { remark: "示例5" }
+  })
+  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
+}
+
+function addDemoGraphic6(graphicLayer) {
+
+  const graphic = new mars3d.graphic.PolylineVolumePrimitive({
+    positions: [
+      [117.285686, 31.770871, 16.4],
+      [117.295393, 31.763191, 14.3],
+      [117.297523, 31.75798, 13.7],
+      [117.296914, 31.742537, 11.3]
+    ],
+    style: {
+      shape: "pipeline",
+      radius: 80,
+      slices: 4, // 方形管道
+      startAngle: 45,
+      hscale: 1.5, // 垂直缩放
+      color: "#989898",
+      outline: true,
+      outlineColor: "#D7D7D7"
+    },
+    attr: { remark: "示例6" }
   })
   graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
 }

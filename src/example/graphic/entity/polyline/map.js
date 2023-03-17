@@ -48,6 +48,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic14(graphicLayer)
   addDemoGraphic15(graphicLayer)
   addDemoGraphic16(graphicLayer)
+  addDemoGraphic17(graphicLayer)
 }
 
 /**
@@ -252,6 +253,7 @@ function addDemoGraphic5(graphicLayer) {
   graphicLayer.addGraphic(graphic)
 }
 
+
 function addDemoGraphic6(graphicLayer) {
   const graphic = new mars3d.graphic.PolylineEntity({
     positions: [
@@ -284,9 +286,9 @@ function addDemoGraphic7(graphicLayer) {
       // 动画线材质
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
+        image: "img/textures/line-gradual.png",
         color: "#66bd63",
         repeat: new Cesium.Cartesian2(2.0, 1.0),
-        image: "img/textures/line-gradual.png",
         speed: 25
       }
     },
@@ -307,8 +309,9 @@ function addDemoGraphic8(graphicLayer) {
       // 动画线材质
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
-        color: "#1a9850",
         image: "img/textures/line-arrow-blue.png",
+        color: "#1a9850",
+        mixt: true,
         speed: 20,
         repeat: new Cesium.Cartesian2(5, 1)
       }
@@ -501,6 +504,30 @@ function addDemoGraphic16(graphicLayer) {
   }, 3000)
 }
 
+function addDemoGraphic17(graphicLayer) {
+  const graphic = new mars3d.graphic.PolylineEntity({
+    positions: [
+      [117.126296, 31.901182, 32.3],
+      [117.19873, 31.896307, 29],
+      [117.245564, 31.894645, 24.1]
+    ],
+    style: {
+      width: 20,
+      materialType: mars3d.MaterialType.LineThreeDash,
+      materialOptions: {
+        color: Cesium.Color.RED, // 中心线颜色
+        dashLength: 64, // 中心长度
+        widthRatio: 0.1, // 中心百分比
+        sidesColor: Cesium.Color.WHITE, // 外侧颜色
+        sidesDashLength: 32, // 外侧长度
+        sidesWidthRatio: 0.1 // 外侧百分比
+      }
+    },
+    attr: { remark: "示例17" }
+  })
+  graphicLayer.addGraphic(graphic)
+}
+
 // 生成演示数据(测试数据量)
 export function addRandomGraphicByCount(count) {
   graphicLayer.clear()
@@ -531,6 +558,8 @@ export function addRandomGraphicByCount(count) {
   graphicLayer.enabledEvent = true // 恢复事件
   return result.points.length
 }
+
+
 
 // 开始绘制
 export function startDrawGraphic() {

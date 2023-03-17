@@ -50,6 +50,7 @@ export function onUnmounted() {
 function addDemoGraphics() {
   for (let i = 0; i < 20; i++) {
     const graphic = new mars3d.graphic.ModelPrimitive({
+      // forwardExtrapolationType: Cesium.ExtrapolationType.HOLD,
       style: {
         url: "//data.mars3d.cn/gltf/mars/qiche.gltf",
         scale: 0.5,

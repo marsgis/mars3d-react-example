@@ -107,6 +107,10 @@ function addRoamLines() {
         [117.227675, 31.790077, 400],
         [117.279938, 31.797397, 400]
       ],
+      startTime: Cesium.JulianDate.addSeconds(map.clock.currentTime, 60, new Cesium.JulianDate()),
+      forwardExtrapolationType: Cesium.ExtrapolationType.NONE,
+      backwardExtrapolationType: Cesium.ExtrapolationType.NONE,
+      showStop: false,
       model: {
         url: "//data.mars3d.cn/gltf/mars/zhanji.glb",
         scale: 0.01,
@@ -274,6 +278,8 @@ function addRoamLines() {
 
   for (let i = 0, len = arrLine.length; i < len; i++) {
     const flydata = arrLine[i]
+
+    flydata.updateClock = false // 多个FixedRoute模型，避免时钟冲突
 
     flydata.label = {
       text: flydata.name,

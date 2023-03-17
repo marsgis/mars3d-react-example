@@ -27,7 +27,7 @@ export const mapOptions = {
       icon: "img/basemaps/blackMarble.png",
       type: "image",
       url: "//data.mars3d.cn/file/img/world/night2.jpg",
-      dayAlpha: 0.1,
+      dayAlpha: 0.0,
       nightAlpha: 1.0,
       brightness: 3.5,
       show: true
@@ -213,8 +213,6 @@ export function getRegion() {
     globalMsg("当前与地球无成像区边")
     return
   }
-  // 显示边界点，测试
-  map.graphicLayer.clear()
 
   coords.forEach((position) => {
     const graphic = new mars3d.graphic.PointPrimitive({

@@ -49,11 +49,12 @@ function addGraphicLayer() {
   map.addLayer(graphicLayer)
   // 取数据
   const property = getDynamicProperty()
+  const orientation = new Cesium.VelocityOrientationProperty(property)
 
   // 绘制轨道
   const graphic = new mars3d.graphic.PathEntity({
     position: property,
-    orientation: new Cesium.VelocityOrientationProperty(property),
+    orientation: orientation,
     style: {
       leadTime: 0,
       resolution: 1,
@@ -75,6 +76,7 @@ function addGraphicLayer() {
   // 视锥体 展示
   const satelliteSensor = new mars3d.graphic.SatelliteSensor({
     position: property,
+    orientation: orientation,
     style: {
       sensorType: mars3d.graphic.SatelliteSensor.Type.Rect,
       angle1: 20,
@@ -82,13 +84,9 @@ function addGraphicLayer() {
       pitch: 0,
       roll: 0,
       color: "rgba(110,245,0,0.5)"
-    },
-    trackedEntity: graphic,
-    autoHeading: true // 是否自动角度，根据trackedEntity监听的卫星模型
+    }
   })
   graphicLayer.addGraphic(satelliteSensor)
-
-  // satelliteSensor.trackedEntity = graphic
 }
 
 function getDynamicProperty() {

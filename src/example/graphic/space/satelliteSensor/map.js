@@ -148,7 +148,7 @@ export function updatePosition(x, y, z) {
 }
 
 export function locate() {
-  map.flyToGraphic(modelGraphic, { radius: modelGraphic.height * 2 })
+  satelliteSensor.flyTo({ radius: satelliteSensor.alt * 2 })
 }
 
 // 方向角改变
@@ -241,7 +241,6 @@ export function getRegion() {
     return
   }
   // 显示边界点，测试
-  map.graphicLayer.clear()
 
   coords.forEach((position) => {
     const graphic = new mars3d.graphic.PointPrimitive({

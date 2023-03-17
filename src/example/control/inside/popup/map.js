@@ -86,6 +86,13 @@ export function bindLayerDemo() {
     { timeRender: true, closeButton: false } // timeRender实时刷新
   )
 
+  // geoJsonLayer.on(mars3d.EventType.click, function (event) {
+  //   setTimeout(() => {
+  //     const popup = event.graphic.getPopup()
+  //     console.log("测试获取popup", popup)
+  //   }, 1000)
+  // })
+
   geoJsonLayer.on(mars3d.EventType.popupOpen, function (event) {
     const container = event.container // popup对应的DOM
     console.log("图层上打开了popup", container)
@@ -208,7 +215,6 @@ export function bindGraphicDemo1() {
     const container = event.container // popup对应的DOM
     console.log("移除了popup", container)
   })
-
 
   // 绑定Popup
   graphic.bindPopup(getInnerHtml).openPopup()

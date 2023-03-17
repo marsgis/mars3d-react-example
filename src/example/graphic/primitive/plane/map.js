@@ -279,6 +279,7 @@ export function bindLayerContextMenu() {
         }
       }
     },
+
     {
       text: "删除对象",
       icon: "fa fa-trash-o",

@@ -1,4 +1,5 @@
 import * as mars3d from "mars3d"
+const Cesium = mars3d.Cesium
 
 export let map // mars3d.Map三维地图对象
 export let graphicLayer // 矢量图层对象
@@ -342,7 +343,7 @@ function addDemoGraphic11(graphicLayer) {
       },
       clampToGround: true
     },
-    attr: { remark: "示例3" }
+    attr: { remark: "示例11" }
   })
   graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
 }
@@ -381,7 +382,7 @@ function addDemoGraphic12(graphicLayer) {
       arcType: Cesium.ArcType.GEODESIC,
       clampToGround: true
     },
-    attr: { remark: "示例6" }
+    attr: { remark: "示例12" }
   })
   graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
 }

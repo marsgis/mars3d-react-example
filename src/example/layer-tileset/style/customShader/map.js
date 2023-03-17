@@ -133,9 +133,66 @@ export function setStyle3() {
           mars3d_textureX = mod(positionMC.y, mars3d_width) / mars3d_width;
         }
         float mars3d_textureY = mod(positionMC.z, mars3d_height) / mars3d_height;
-        material.diffuse = texture2D(u_mars3d_texture, vec2(mars3d_textureX, mars3d_textureY)).rgb;
+        material.diffuse = texture(u_mars3d_texture, vec2(mars3d_textureX, mars3d_textureY)).rgb;
       }
     }`
   })
+  tiles3dLayer.reload()
+}
+
+//
+export function setStyle4() {
+  globalMsg(`当前效果是：色彩动态变化的特效`)
+
+  // 特效
+  const customShader = new Cesium.CustomShader({
+    uniforms: {
+      u_build0: {
+        type: Cesium.UniformType.SAMPLER_2D,
+        value: new Cesium.TextureUniform({
+          url: "/img/textures/buildings-blue.png"
+        })
+      },
+      u_build1: {
+        type: Cesium.UniformType.SAMPLER_2D,
+        value: new Cesium.TextureUniform({
+          url: "/img/textures/buildings-colors.png"
+        })
+      }
+    },
+    varyings: {
+      v_positionLC: Cesium.VaryingType.VEC4,
+      v_featureId: Cesium.VaryingType.FLOAT
+    },
+    vertexShaderText: `
+        void vertexMain(VertexInput vsInput, inout czm_modelVertexOutput vsOutput) {
+            v_positionLC = vec4(vsInput.attributes.positionMC.xyz, 1.0);
+            v_featureId = v_featureId_0;
+        }`,
+    fragmentShaderText: `
+        vec2 mars_rotate(vec2 uv, vec2 center, float rotation) {
+            float dx = uv.x - center.x;
+            float dy = uv.y - center.y;
+            float ex = dx * cos(rotation) - dy * sin(rotation);
+            float ey = dx * sin(rotation) + dy * cos(rotation);
+            return vec2(ex + center.x,  ey + center.y);
+        }
+        void fragmentMain(FragmentInput fsInput, inout czm_modelMaterial material) {
+            vec3 positionEC = fsInput.attributes.positionEC;
+            vec3 normalEC = fsInput.attributes.normalEC;
+            vec2 uv = fsInput.attributes.texCoord_0;
+            uv = mars_rotate(uv,vec2(0.5,0.5), 0.5);
+            vec3 positionMC = fsInput.attributes.positionMC;
+            float times = czm_frameNumber / 60.0;
+            vec4 textureColor = texture(u_build0,vec2(fract(float(uv.s) - times), uv.t));
+            vec4 textureColor2 = texture(u_build0,vec2(fract(uv.s),float(uv.t) - times));
+            vec4 textureColor3 = texture(u_build1,vec2(fract(uv.s),float(uv.t) - times));
+            // material
+            material.diffuse += textureColor.rgb + textureColor2.rgb + textureColor3.rgb;
+            material.alpha += textureColor.a + textureColor3.a;
+        }  `
+  })
+
+  tiles3dLayer.customShader = customShader
   tiles3dLayer.reload()
 }

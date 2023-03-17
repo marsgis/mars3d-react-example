@@ -6,8 +6,9 @@ export let map // mars3d.Map三维地图对象
 export const mapOptions = {
   scene: {
     center: { lat: 20.648765, lng: 129.340334, alt: 19999976, heading: 355, pitch: -89 },
+    scene3DOnly: true,
     contextOptions: {
-      requestWebgl2: false
+      requestWebgl1: true
     }
   },
   control: {
@@ -23,8 +24,24 @@ export const mapOptions = {
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
-
   map.basemap = 2017 // 蓝色底图
+
+  map.mouseEvent.enabledMoveTarget = false // 是否开启鼠标移动事件的拾取矢量数据
+
+  // map.scene.globe.showGroundAtmosphere = false// 关闭大气层
+  // map.scene.skyAtmosphere.show = true
+  // map.scene.fog.enabled = true
+  // map.scene.fog.density = 0.00005 // 地面 0.00005 海底0.00008
+  // map.scene.fog.minimumBrightness = 0.03 // 0.03
+
+  // map.scene.skyAtmosphere.hueShift = 0.0
+  // map.scene.skyAtmosphere.saturationShift = 0.1
+  // map.scene.skyAtmosphere.brightnessShift = 0.08 // 地面0.08 海底
+
+
+  globalNotify("已知问题提示", `(1) 当前示例仅支持WebGL1渲染，暂不支持WebGL2。`)
+
+
   addLayer()
 }
 

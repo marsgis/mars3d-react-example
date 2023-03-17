@@ -38,8 +38,8 @@ export const MarsColor = ({ value = "#FFFFFF", ...props }) => {
       <Popover
         trigger="click"
         placement={props.placement || "right"}
-        visible={pickerVisible}
-        onVisibleChange={(newVisible: boolean) => {
+        open={pickerVisible}
+        onOpenChange={(newVisible: boolean) => {
           setPickerVisible(newVisible)
         }}
         content={

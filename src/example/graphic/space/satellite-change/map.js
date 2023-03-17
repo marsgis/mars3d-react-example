@@ -72,19 +72,35 @@ function creatSatellite() {
     tle2: "2 39150  97.8300 252.9072 0018449 344.7422  15.3253 14.76581022440650",
     model: {
       url: "//data.mars3d.cn/gltf/mars/weixin.gltf",
-      show: true
+      scale: 1,
+      minimumPixelSize: 90
+    },
+    label: {
+      text: "GAOFEN 1",
+      font_family: "楷体",
+      font_size: 30,
+      color: "#ffffff",
+      outline: true,
+      outlineColor: "#000000",
+      outlineWidth: 3,
+      background: true,
+      backgroundColor: "#000000",
+      backgroundOpacity: 0.5,
+      pixelOffsetY: -20,
+      scaleByDistance: true,
+      scaleByDistance_far: 10000000,
+      scaleByDistance_farValue: 0.4,
+      scaleByDistance_near: 100000,
+      scaleByDistance_nearValue: 1
     },
     cone: {
       angle1: 40,
+      angle2: 10,
+      color: "rgba(255,0,0,0.5)",
       show: false
     },
-    label: {
-      font_family: "楷体",
-      font_size: 30,
-      show: true
-    },
     path: {
-      show: true
+      color: "#36d9ec"
     }
   })
 
@@ -103,7 +119,7 @@ function creatSatellite() {
   }, 3000)
 
   // 位置变化事件
-  graphicLayer.on(mars3d.EventType.change, function (event) {
+  weixin.on(mars3d.EventType.change, function (event) {
     // 判断卫星是否在面内
     const weixin = event.graphic
     if (!drawGraphic) {

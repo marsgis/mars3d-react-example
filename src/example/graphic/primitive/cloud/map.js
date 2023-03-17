@@ -6,10 +6,7 @@ export let graphicLayer
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: 30.791477, lng: 116.348231, alt: 6351, heading: 10, pitch: -36 },
-    contextOptions: {
-      requestWebgl2: false
-    }
+    center: { lat: 30.791477, lng: 116.348231, alt: 6351, heading: 10, pitch: -36 }
   }
 }
 

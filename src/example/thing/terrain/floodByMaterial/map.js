@@ -64,13 +64,14 @@ export function btnDrawExtent(callback) {
     type: "rectangle",
     style: {
       color: "rgba(0, 123, 230, 0.5)"
+      // clampToGround: true
     },
     success: function (graphic) {
       // 绘制成功后回调
       const positions = graphic.getOutlinePositions(false)
 
       // 更新最大、最小高度值
-      updateHeightRange(positions, callback)
+      updateHeightRange(graphic, positions, callback)
 
       // 区域
       floodByMaterial.addArea(positions)
@@ -87,22 +88,26 @@ export function btnDraw(callback) {
     style: {
       color: "rgba(0, 123, 230, 0.5)",
       outline: false
+      // clampToGround: true
     },
     success: function (graphic) {
       const positions = graphic.positionsShow
 
       // 更新最大、最小高度值
-      updateHeightRange(positions, callback)
+      updateHeightRange(graphic, positions, callback)
       floodByMaterial.addArea(positions)
     }
   })
 }
 
 // 求最大、最小高度值
-function updateHeightRange(positions, callback) {
+function updateHeightRange(graphic, positions, callback) {
   showLoading()
 
-  mars3d.PolyUtil.getHeightRange(positions, map.scene).then((result) => {
+  // 求最大、最小高度值
+  graphic.show = false // 会遮挡深度图，所以需要隐藏
+  mars3d.PolyUtil.interPolygonByDepth({ scene: map.scene, positions }).then((result) => {
+    graphic.show = true // 恢复显示
     const minHeight = Math.ceil(result.minHeight)
     const maxHeight = Math.floor(result.maxHeight)
 

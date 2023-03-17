@@ -64,27 +64,7 @@ function removeLayer() {
   }
 }
 
-// 示例：
-export function showAircraft() {
-  removeLayer()
 
-  graphicLayer = new mars3d.layer.CzmlLayer({
-    name: "飞行编队",
-    url: "//data.mars3d.cn/file/czml/flight.czml",
-    popup: "all",
-    flyTo: true
-  })
-  map.addLayer(graphicLayer)
-
-  // 绑定事件
-  graphicLayer.on(mars3d.EventType.load, function (data) {
-    console.log("数据加载完成", data)
-    eventTarget.fire("loadGraphicLayer", { data })
-  })
-  graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了图层", event)
-  })
-}
 
 // 示例：
 export function showCar() {
@@ -110,12 +90,34 @@ export function showCar() {
 }
 
 // 示例：
+export function showAircraft() {
+  removeLayer()
+
+  graphicLayer = new mars3d.layer.CzmlLayer({
+    name: "飞行编队",
+    url: "//data.mars3d.cn/file/czml/flight2.czml",
+    popup: "all",
+    flyTo: true
+  })
+  map.addLayer(graphicLayer)
+
+  // 绑定事件
+  graphicLayer.on(mars3d.EventType.load, function (data) {
+    console.log("数据加载完成", data)
+    eventTarget.fire("loadGraphicLayer", { data })
+  })
+  graphicLayer.on(mars3d.EventType.click, function (event) {
+    console.log("单击了图层", event)
+  })
+}
+
+// 示例：
 export function showShip() {
   removeLayer()
 
   graphicLayer = new mars3d.layer.CzmlLayer({
     name: "船舶编队",
-    url: "//data.mars3d.cn/file/czml/ship.czml",
+    url: "//data.mars3d.cn/file/czml/ship2.czml",
     popup: "all",
     flyTo: true
   })

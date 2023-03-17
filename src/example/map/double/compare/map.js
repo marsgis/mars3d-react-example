@@ -33,7 +33,9 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
-  // // 修改已有地图为50%
+  // addTestData()
+
+  // 修改已有地图为50%
   const mapOld = document.getElementById("centerDiv3D")
   mapOld.style.width = "50%"
 
@@ -51,7 +53,7 @@ export function onMounted(mapInstance) {
       }
     }
   }
-  console.log("分屏地图配置", mapOptions2)
+  console.log("分屏地图配置", mars3d.Util.clone(mapOptions2))
 
   const mapSplit = new mars3d.control.MapCompare({
     ...mapOptions2,
@@ -69,4 +71,25 @@ export function onMounted(mapInstance) {
  */
 export function onUnmounted() {
   map = null
+}
+
+
+
+function addTestData() {
+  const groupLayer = new mars3d.layer.GroupLayer({
+    name: "组图层"
+  })
+  const layer = new mars3d.layer.TilesetLayer({
+    name: "测试模型2",
+    url: "//data.mars3d.cn/3dtiles/bim-daxue/tileset.json",
+    position: { lng: 116.267315, lat: 31.457617, alt: 103 },
+    scale: 100,
+    maximumScreenSpaceError: 2,
+    maximumMemoryUsage: 2048,
+    dynamicScreenSpaceError: true,
+    cullWithChildrenBounds: false
+  })
+  groupLayer.addLayer(layer)
+
+  map.addLayer(groupLayer)
 }

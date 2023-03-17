@@ -1,12 +1,18 @@
 import { FixedRouteInfo } from "@mars/components/MarsSample/FixedRouteInfo/index"
 import { MarsButton, MarsPannel } from "@mars/components/MarsUI"
 import { Space } from "antd"
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import * as mapWork from "./map.js"
 
 function UIComponent() {
   const [isStart, setIsStart] = useState(false)
   const [isPause, setIsPause] = useState(false)
+
+  useMemo(() => {
+    mapWork.eventTarget.on("endRoam", () => {
+      udpateState()
+    })
+  }, [])
 
   // 按钮事件
   const btnStart = () => {

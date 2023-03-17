@@ -1,5 +1,5 @@
 import { FixedRouteInfo } from "@mars/components/MarsSample/FixedRouteInfo/index"
-import { MarsButton, MarsGui, MarsPannel } from "@mars/components/MarsUI"
+import { MarsButton, MarsGui, MarsPannel, MarsSlider, MarsForm, MarsSwitch, MarsFormItem } from "@mars/components/MarsUI"
 import { Space } from "antd"
 import { useState } from "react"
 import * as mapWork from "./map.js"
@@ -102,51 +102,6 @@ function UIComponent() {
       change(offsetX, data) {
         mapWork.updateCameraSetting(data)
       }
-    },
-    {
-      type: "switch",
-      field: "isHand",
-      label: "模型角度",
-      value: false,
-      change(value) {
-        setAngle(value)
-      }
-    },
-    {
-      type: "slider",
-      field: "slidePitchStep",
-      label: "pitch值(前后):",
-      step: 0.01,
-      min: 0,
-      max: 360,
-      value: 0,
-      show(data) {
-        return data.isHand
-      },
-      change(slidePitchStep, data) {
-        mapWork.fixedRoute.model.setStyle({
-          noPitchRoll: true, // 不使用路线自动的角度
-          pitch: Number(slidePitchStep)
-        })
-      }
-    },
-    {
-      type: "slider",
-      field: "slideRollStep",
-      label: "roll值(左右):",
-      step: 0.01,
-      min: 0,
-      max: 360,
-      value: 0,
-      show(data) {
-        return data.isHand
-      },
-      change(slideRollStep, data) {
-        mapWork.fixedRoute.model.setStyle({
-          noPitchRoll: true, // 不使用路线自动的角度
-          roll: Number(slideRollStep)
-        })
-      }
     }
   ]
 
@@ -219,6 +174,10 @@ function UIComponent() {
     mapWork.updateCameraSetting(params)
   }
 
+  const [headChecked, setHeadChecked] = useState(false)
+  const [pitchChecked, setPitchChecked] = useState(false)
+  const [rollChecked, setRollChecked] = useState(false)
+
   return (
     <>
       <MarsPannel visible={true} width={280} right={10} top={10}>
@@ -240,14 +199,79 @@ function UIComponent() {
             wrapperCol: { span: 16 }
           }}
         ></MarsGui>
-        {angle ? (
+        {/* {angle ? (
           <Space>
             <span>heading值:</span>
             <span>根据路线自动计算</span>
           </Space>
         ) : (
           ""
-        )}
+        )} */}
+        <MarsForm labelCol={{ span: 8 }}>
+          <MarsFormItem className="f-push-20-t" label="heading值">
+            <MarsSwitch
+              onClick={() => {
+                setHeadChecked(!headChecked)
+              }}
+            ></MarsSwitch>{" "}
+            {!headChecked ? (
+              "根据路线自动计算"
+            ) : (
+              <MarsSlider
+                min={0}
+                max={360}
+                step={1}
+                defaultValue={0}
+                onChange={(v) => {
+                  mapWork.fixedRoute.model.heading = v
+                }}
+                style={{ width: "100px", float: "right" }}
+              ></MarsSlider>
+            )}
+          </MarsFormItem>
+          <MarsFormItem className="f-push-20-t" label="pitch值">
+            <MarsSwitch
+              onClick={() => {
+                setPitchChecked(!pitchChecked)
+              }}
+            ></MarsSwitch>{" "}
+            {!pitchChecked ? (
+              "根据路线自动计算"
+            ) : (
+              <MarsSlider
+                min={0}
+                max={360}
+                step={1}
+                defaultValue={0}
+                onChange={(v) => {
+                  mapWork.fixedRoute.model.pitch = v
+                }}
+                style={{ width: "100px", float: "right" }}
+              ></MarsSlider>
+            )}
+          </MarsFormItem>
+          <MarsFormItem className="f-push-20-t" label="roll值">
+            <MarsSwitch
+              onClick={() => {
+                setRollChecked(!rollChecked)
+              }}
+            ></MarsSwitch>{" "}
+            {!rollChecked ? (
+              "根据路线自动计算"
+            ) : (
+              <MarsSlider
+                min={0}
+                max={360}
+                step={1}
+                defaultValue={0}
+                onChange={(v) => {
+                  mapWork.fixedRoute.model.roll = v
+                }}
+                style={{ width: "100px", float: "right" }}
+              ></MarsSlider>
+            )}
+          </MarsFormItem>
+        </MarsForm>
       </MarsPannel>
       <FixedRouteInfo />
     </>

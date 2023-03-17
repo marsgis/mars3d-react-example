@@ -35,6 +35,12 @@ function addSlope() {
       scale: 0.3, // 箭头长度的比例（范围0.1-0.9）
       color: Cesium.Color.YELLOW,
       width: 15, // 箭头宽度
+      // materialType: mars3d.MaterialType.LineFlow,
+      // materialOptions: {
+      //   color: "#1a9850",
+      //   image: "img/textures/line-arrow-right.png",
+      //   speed: 10
+      // },
       // clampToGround: true,
       show: true
     },

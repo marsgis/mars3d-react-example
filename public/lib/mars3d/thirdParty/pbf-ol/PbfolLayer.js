@@ -1,4 +1,7 @@
 /* MVT加载类 作者： 木遥（微信:  http://marsgis.cn/weixin.html ） */
+
+// import * as mars3d from "mars3d"
+
 ;(function (window) {
   function MvtImageryProvider(options) {
     options = Cesium.defaultValue(options, Cesium.defaultValue.EMPTY_OBJECT)
@@ -127,7 +130,7 @@
 
     readyPromise: {
       get: function () {
-        return this._readyPromise
+        return this._readyPromise.promise
       }
     },
 
@@ -299,6 +302,8 @@
   mars3d.LayerUtil.registerImageryProvider(layerType, createImageryProvider)
 
   //对外接口
-  window.mars3d.provider.MvtImageryProvider = MvtImageryProvider
-  window.mars3d.layer.PbfolLayer = PbfolLayer
+  mars3d.provider.MvtImageryProvider = MvtImageryProvider
+  mars3d.layer.PbfolLayer = PbfolLayer
 })(window)
+
+// export { PbfolLayer }

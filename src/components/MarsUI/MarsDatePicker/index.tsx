@@ -62,7 +62,7 @@ export const MarsDatePicker = (props: DatePickerProps) => {
     <DatePicker
       locale={LocalFormat.getDefinedChineseLocal()}
       className="mars-date-picker"
-      dropdownClassName="mars-datepicker-dropdown"
+      popupClassName="mars-datepicker-dropdown"
       defaultValue={moment(new Date(), "YYYY-MM-DD")}
       {...props}
     />

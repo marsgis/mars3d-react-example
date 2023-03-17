@@ -74,7 +74,9 @@ export function btnDrawExtent(callback) {
       } else {
         showLoading()
         // 求最大、最小高度值
-        mars3d.PolyUtil.getHeightRange(positions, map.scene).then((result) => {
+        graphic.show = false // 会遮挡深度图，所以需要隐藏
+        mars3d.PolyUtil.interPolygonByDepth({ scene: map.scene, positions }).then((result) => {
+          graphic.show = true // 恢复显示
           hideLoading()
           callback(result.minHeight, result.maxHeight)
         })
@@ -104,7 +106,9 @@ export function btnDraw(callback) {
       } else {
         showLoading()
         // 求最大、最小高度值
-        mars3d.PolyUtil.getHeightRange(positions, map.scene).then((result) => {
+        graphic.show = false // 会遮挡深度图，所以需要隐藏
+        mars3d.PolyUtil.interPolygonByDepth({ scene: map.scene, positions }).then((result) => {
+          graphic.show = true // 恢复显示
           hideLoading()
           callback(result.minHeight, result.maxHeight)
         })

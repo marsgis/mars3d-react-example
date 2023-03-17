@@ -60,8 +60,8 @@ export function onMounted(mapInstance) {
   // }, 5000)
 
   // style回调方法
-  tilesetLayer.style = function (event) {
-    const attr = event.properties
+  tilesetLayer.style = function (feature) {
+    const attr = mars3d.Util.get3DTileFeatureAttr(feature)
 
     // 下面可以根据属性做各类判断后返回不同颜色，隐藏的可以透明度为0
     if (attr.testStyle) {

@@ -29,7 +29,7 @@ export const mapOptions = {
       icon: "img/basemaps/blackMarble.png",
       type: "image",
       url: "//data.mars3d.cn/file/img/world/night2.jpg",
-      dayAlpha: 0.1,
+      dayAlpha: 0.0,
       nightAlpha: 1.0,
       brightness: 3.5,
       show: true
@@ -109,7 +109,6 @@ function createSatelliteList(arr) {
   })
 
   for (let i = 0; i < arr.length; i += 3) {
-    const item = arr[i]
     const weixin = new mars3d.graphic.Satellite({
       name: arr[i],
       tle1: arr[i + 1],
@@ -117,11 +116,10 @@ function createSatelliteList(arr) {
       model: {
         url: "//data.mars3d.cn/gltf/mars/weixin.gltf",
         scale: 1,
-        minimumPixelSize: 60,
-        autoHeading: true,
-        show: true
+        minimumPixelSize: 60
       },
       label: {
+        text: arr[i],
         color: "#ffffff",
         opacity: 1,
         font_family: "楷体",
@@ -140,19 +138,9 @@ function createSatelliteList(arr) {
         scaleByDistance_far: 10000000,
         scaleByDistance_farValue: 0.4,
         scaleByDistance_near: 100000,
-        scaleByDistance_nearValue: 1,
-        show: true
+        scaleByDistance_nearValue: 1
       },
-      // cone: {
-      //   sensorType: mars3d.graphic.SatelliteSensor.Type.Rect,
-      //   angle1: 30,
-      //   angle2: 15,
-      //   color: '#6ef500',
-      //   reverse: true,
-      //   show: true,
-      // },
       path: {
-        show: true,
         color: "#e2e2e2",
         opacity: 0.5,
         width: 1

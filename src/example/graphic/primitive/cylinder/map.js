@@ -102,8 +102,13 @@ function initGraphicManager(graphic) {
 }
 
 function addDemoGraphic2(graphicLayer) {
+  // const modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(
+  //   Cesium.Cartesian3.fromDegrees(116.22457, 30.883148, 1035.2),
+  //   new Cesium.HeadingPitchRoll(Cesium.Math.toRadians(90), 0, 0)
+  // )
   const graphic = new mars3d.graphic.CylinderPrimitive({
     position: new mars3d.LngLatPoint(116.22457, 30.883148, 1035.2),
+    // modelMatrix: modelMatrix,
     style: {
       length: 2000.0,
       topRadius: 0.0,
@@ -229,7 +234,7 @@ mars3d.MaterialUtil.register(CylinderFadeType, {
           vec2 st = materialInput.st;
           float time = fract(czm_frameNumber / 90.) ;
           vec2 new_st = fract(st- vec2(time,time));
-          vec4 colorImage = texture2D(image, new_st);
+          vec4 colorImage = texture(image, new_st);
           vec3 diffuse = colorImage.rgb;
           float alpha = colorImage.a;
           diffuse *= color.rgb;
@@ -368,6 +373,66 @@ export function bindLayerContextMenu() {
         if (graphic) {
           graphic.stopEditing()
         }
+      }
+    },
+    {
+      text: "启用按轴平移",
+      icon: "fa fa-pencil",
+      show: (event) => {
+        const graphic = event.graphic
+        if (!graphic || !graphic.hasEdit || !graphic.isEditing) {
+          return false
+        }
+        return !graphic.editing?.hasMoveMatrix
+      },
+      callback: (event) => {
+        const graphic = event.graphic
+        graphic.editing.startMoveMatrix(event.graphic, event)
+      }
+    },
+    {
+      text: "停止按轴平移",
+      icon: "fa fa-pencil",
+      show: (event) => {
+        const graphic = event.graphic
+        if (!graphic || !graphic.hasEdit || !graphic.isEditing) {
+          return false
+        }
+        return graphic.editing?.hasMoveMatrix
+      },
+      callback: (event) => {
+        const graphic = event.graphic
+        graphic.editing.stopMoveMatrix()
+      }
+    },
+    {
+      text: "启用按轴旋转",
+      icon: "fa fa-bullseye",
+      show: (event) => {
+        const graphic = event.graphic
+        if (!graphic || !graphic.hasEdit || !graphic.isEditing) {
+          return false
+        }
+        return !graphic.editing?.hasRotateMatrix
+      },
+      callback: (event) => {
+        const graphic = event.graphic
+        graphic.editing.startRotateMatrix(event.graphic, event)
+      }
+    },
+    {
+      text: "停止按轴旋转",
+      icon: "fa fa-bullseye",
+      show: (event) => {
+        const graphic = event.graphic
+        if (!graphic || !graphic.hasEdit || !graphic.isEditing) {
+          return false
+        }
+        return graphic.editing?.hasRotateMatrix
+      },
+      callback: (event) => {
+        const graphic = event.graphic
+        graphic.editing.stopRotateMatrix()
       }
     },
     {

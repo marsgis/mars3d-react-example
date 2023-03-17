@@ -31,7 +31,7 @@ export function onMounted(mapInstance) {
   })
 
   bindLayerPopup() // 在图层上绑定popup,对所有加到这个图层的矢量数据都生效 // 加一些演示数据
-  // addDemoGraphic1()
+  addDemoGraphic1()
 }
 
 /**
@@ -66,10 +66,9 @@ export function addDemoGraphic1() {
       instances: arr, // 公共样式
       style: {
         outline: true,
-        outlineColor: "#ffffff",
-        clampToGround: true
-      }, // 高亮时的样式
-
+        outlineColor: "#ffffff"
+      },
+      // 高亮时的样式
       highlight: {
         type: mars3d.EventType.click,
         color: Cesium.Color.YELLOW.withAlpha(0.9)

@@ -5,7 +5,7 @@ import "./index.less"
  * 消息提醒
  * @export
  * @copyright 火星科技 mars3d.cn
- * @author 火星吴彦祖 2022-01-01
+ * @author 火星渣渣灰 2022-01-01
  * @returns { void }
  */
 export const $notify = (message: any, description: any, options: any = {}, type: keyof typeof notification = "info") => {

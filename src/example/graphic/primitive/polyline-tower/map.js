@@ -135,21 +135,21 @@ function showData(arrdata) {
 
 // 绘制电线塔模型
 function drawWireTowerModel(position, degree, inthtml) {
-  const modelUrls = ["tower.glb", "V.glb", "vertical01.glb", "vertical02.glb"]
-  for (let j = 0; j < modelUrls.length; j++) {
-    const graphic = new mars3d.graphic.ModelPrimitive({
-      position: position,
-      style: {
-        url: "//data.mars3d.cn/gltf/mars/tower/" + modelUrls[j],
-        heading: degree,
-        scale: 1,
-        distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 4000.0)
-      }
-    })
-    graphicLayer.addGraphic(graphic)
+  // const modelUrls = ["tower.glb", "V.glb", "vertical01.glb", "vertical02.glb"] //格式cesium v1.97+不支持
+  // for (let j = 0; j < modelUrls.length; j++) {
+  //   const graphic = new mars3d.graphic.ModelPrimitive({
+  //     position: position,
+  //     style: {
+  //       url: "//data.mars3d.cn/gltf/mars/tower/" + modelUrls[j],
+  //       heading: degree,
+  //       scale: 1,
+  //       distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 4000.0)
+  //     }
+  //   })
+  //   graphicLayer.addGraphic(graphic)
 
-    graphic.bindPopup(inthtml)
-  }
+  //   graphic.bindPopup(inthtml)
+  // }
 }
 
 function drawGuideLine(positions, color) {

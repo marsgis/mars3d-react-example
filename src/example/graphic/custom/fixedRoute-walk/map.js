@@ -46,6 +46,8 @@ function addGraphicLayer() {
     name: "步行路线",
     frameRate: 1,
     speed: 40,
+    // autoStop: true, // 到达终点自动停止
+    clockLoop: true, // 循环播放
     positions: [
       [117.220356, 31.833959, 43.67],
       [117.220361, 31.835111, 44.36],
@@ -92,7 +94,7 @@ function addGraphicLayer() {
 
   // ui面板信息展示
   fixedRoute.on(mars3d.EventType.change, (event) => {
-    eventTarget.fire("roamLineChange", event)
+    throttled(eventTarget.fire("roamLineChange", event), 500)
   })
 
   fixedRoute.on(mars3d.EventType.endItem, function (event) {
@@ -100,6 +102,7 @@ function addGraphicLayer() {
   })
   fixedRoute.on(mars3d.EventType.end, function (event) {
     console.log("漫游结束", event)
+    eventTarget.fire("endRoam")
   })
 
   // 不贴地时，直接开始
@@ -171,3 +174,23 @@ function bindPopup(fixedRoute) {
 // ui层使用
 export const formatDistance = mars3d.MeasureUtil.formatDistance
 export const formatTime = mars3d.Util.formatTime
+
+// 节流
+function throttled(fn, delay) {
+  let timer = null
+  let starttime = Date.now()
+  return function () {
+    const curTime = Date.now() // 当前时间
+    const remaining = delay - (curTime - starttime)
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const context = this
+    const args = arguments
+    clearTimeout(timer)
+    if (remaining <= 0) {
+      fn.apply(context, args)
+      starttime = Date.now()
+    } else {
+      timer = setTimeout(fn, remaining)
+    }
+  }
+}

@@ -34,6 +34,8 @@ export function onMounted(mapInstance) {
   // 加一些演示数据
   addDemoGraphic1(graphicLayer)
   addDemoGraphic2(graphicLayer)
+  addDemoGraphic2_1(graphicLayer)
+  addDemoGraphic2_2(graphicLayer)
   addDemoGraphic3(graphicLayer)
   addDemoGraphic4(graphicLayer)
   addDemoGraphic5(graphicLayer)
@@ -156,6 +158,50 @@ function addDemoGraphic2(graphicLayer) {
       }
     },
     attr: { remark: "示例2" }
+  })
+  graphicLayer.addGraphic(graphic)
+}
+
+function addDemoGraphic2_1(graphicLayer) {
+  const graphic = new mars3d.graphic.PolylinePrimitive({
+    positions: [
+      [117.13312, 31.877271, 37.6],
+      [117.18517, 31.876315, 25.6],
+      [117.24824, 31.87394, 22.9]
+    ],
+    style: {
+      width: 4,
+      materialType: mars3d.MaterialType.LineDotDash, // 点划线 虚线
+      materialOptions: {
+        color: "#00ffff",
+        dashLength: 50
+      }
+    },
+    attr: { remark: "示例2-1" }
+  })
+  graphicLayer.addGraphic(graphic)
+}
+
+function addDemoGraphic2_2(graphicLayer) {
+  const graphic = new mars3d.graphic.PolylinePrimitive({
+    positions: [
+      [117.126296, 31.901182, 32.3],
+      [117.19873, 31.896307, 29],
+      [117.245564, 31.894645, 24.1]
+    ],
+    style: {
+      width: 20,
+      materialType: mars3d.MaterialType.LineThreeDash,
+      materialOptions: {
+        color: Cesium.Color.RED, // 中心线颜色
+        dashLength: 64, // 中心长度
+        widthRatio: 0.1, // 中心百分比
+        sidesColor: Cesium.Color.WHITE, // 外侧颜色
+        sidesDashLength: 32, // 外侧长度
+        sidesWidthRatio: 0.1 // 外侧百分比
+      }
+    },
+    attr: { remark: "示例2-2" }
   })
   graphicLayer.addGraphic(graphic)
 }
@@ -348,7 +394,7 @@ mars3d.MaterialUtil.register(LineSpriteType, {
       {
         czm_material material = czm_getDefaultMaterial(materialInput);
         vec2 st = materialInput.st;
-        vec4 colorImage = texture2D(image, vec2(fract(st.s - speed*czm_frameNumber/1000.0), st.t));
+        vec4 colorImage = texture(image, vec2(fract(st.s - speed*czm_frameNumber/1000.0), st.t));
         material.alpha = colorImage.a * globalAlpha;
         material.diffuse = colorImage.rgb * 1.5 ;
         return material;

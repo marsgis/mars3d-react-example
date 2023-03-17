@@ -5,7 +5,8 @@ export let map // mars3d.Map三维地图对象
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: 31.675177, lng: 117.323257, alt: 81193, heading: 359, pitch: -79 }
+    center: { lat: 31.675177, lng: 117.323257, alt: 81193, heading: 359, pitch: -79 },
+    highDynamicRange: false
   },
   // 方式1：在创建地球前的参数中配置
   basemaps: [
@@ -32,7 +33,15 @@ export const mapOptions = {
       type: "group",
       layers: [
         { name: "底图", type: "tdt", layer: "ter_d", key: mars3d.Token.tiandituArr },
-        { name: "注记", type: "tdt", layer: "ter_z", key: mars3d.Token.tiandituArr }
+        {
+          name: "注记",
+          type: "tdt",
+          layer: "ter_z",
+          key: mars3d.Token.tiandituArr,
+          // 表示缩小和放大瓦片数据的过滤方式。默认值为LINEAR线性结构，大部分地图调整为最近方式过滤能够有效提升地图清晰度。
+          minificationFilter: Cesium.TextureMinificationFilter.NEAREST,
+          magnificationFilter: Cesium.TextureMinificationFilter.NEAREST
+        }
       ]
     },
     {
@@ -131,7 +140,11 @@ export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
+  // 三维文字注记不清晰的原因：https://zhuanlan.zhihu.com/p/389945647
 
+  // 数值越高，性能越好，但视觉质量越差。默认值为2。
+  // 针对不同的地图数据源，该值在 0.66~1.33 之间地图清晰度最高。
+  map.scene.globe.maximumScreenSpaceError = 4 / 3
 }
 
 /**

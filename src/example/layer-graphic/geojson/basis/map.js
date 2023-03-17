@@ -20,6 +20,10 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
 
+  // map.on(mars3d.EventType.removeLayer, function (event) {
+  //   console.log("移除了图层", event)
+  // })
+
   showDraw()
 }
 
@@ -612,7 +616,7 @@ export function showGCJ02Data() {
 
   graphicLayer = new mars3d.layer.GeoJsonLayer({
     name: "纠偏后",
-    url: "https://geo.datav.aliyun.com/areas_v3/bound/340303.json",
+    url: "//data.mars3d.cn/file/geojson/areas/340303.json",
     chinaCRS: mars3d.ChinaCRS.GCJ02, // 标识数据坐标，内部会纠偏
     symbol: {
       styleOptions: {

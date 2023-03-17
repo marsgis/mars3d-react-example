@@ -38,7 +38,27 @@ export function onUnmounted() {
   map = null
 }
 
+export function showDytDemo() {
+  removeLayer()
+
+  // 加模型
+  tilesetLayer = new mars3d.layer.TilesetLayer({
+    name: "大雁塔",
+    url: "//data.mars3d.cn/3dtiles/qx-dyt/tileset.json",
+    position: { alt: -27 },
+    maximumScreenSpaceError: 1,
+    maximumMemoryUsage: 1024,
+    flyTo: true
+  })
+  map.addLayer(tilesetLayer)
+
+  // tilesetLayer.clip是TilesetClip对象，因为与模型是1对1关系，已经内置进去
+  tilesetLayer.clip.on(mars3d.EventType.addItem, onAddClipArea)
+}
+
 export function showTehDemo() {
+  removeLayer()
+
   tilesetLayer = new mars3d.layer.TilesetLayer({
     name: "合肥天鹅湖",
     type: "3dtiles",
@@ -50,6 +70,7 @@ export function showTehDemo() {
     cullWithChildrenBounds: false,
     skipLevelOfDetail: true,
     preferLeaves: true,
+    flyTo: true,
 
     // 可传入TilesetClip构造参数，下面是演示压平区域
     clip: {
@@ -76,6 +97,13 @@ export function showTehDemo() {
   tilesetLayer.clip.on(mars3d.EventType.addItem, onAddClipArea)
 }
 
+function removeLayer() {
+  if (tilesetLayer) {
+    map.removeLayer(tilesetLayer, true)
+    tilesetLayer = null
+  }
+}
+
 // 添加了压平区域后的回调事件
 function onAddClipArea(event) {
   eventTarget.fire("addItem", event)
@@ -98,7 +126,7 @@ export function btnDrawExtent() {
 
       console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
 
-     tilesetLayer.clip.addArea(positions)
+      tilesetLayer.clip.addArea(positions)
     }
   })
 }
@@ -128,7 +156,6 @@ export function removeAll() {
   map.graphicLayer.clear()
   tilesetLayer.clip.clear()
 }
-
 
 // 定位至模型
 export function flyToGraphic(item) {

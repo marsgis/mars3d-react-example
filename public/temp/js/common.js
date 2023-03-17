@@ -48,6 +48,7 @@ function globalInitMap(options) {
       window.mapOptions = options = mars3d.Util.merge(options, window.mapOptions)
     }
   }
+  console.log("地图构造参数为", options)
 
   // 创建三维地球场景
   return new mars3d.Map("mars3dContainer", options)

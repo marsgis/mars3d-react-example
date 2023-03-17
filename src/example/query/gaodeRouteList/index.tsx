@@ -73,6 +73,7 @@ function UIComponent() {
     tableScrollHeight.current = height
   }, 350)
 
+
   return (
     <MarsPannel visible={true} right="10" width={"295px"} top="10">
       <MarsFormItem label="方式">
@@ -108,7 +109,11 @@ function UIComponent() {
           <span>
             共<span style={{ color: "red" }}>{countNumber}</span>条POI点
           </span>
-          <MarsButton onClick={() => mapWork.endPoint()}>查询</MarsButton>
+          <MarsButton onClick={() => {
+            stateDataSource([])
+            mapWork.endPoint()
+
+          }}>查询</MarsButton>
         </Space>
       </MarsFormItem>
       <div className="f-tac">

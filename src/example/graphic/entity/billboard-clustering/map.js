@@ -6,7 +6,8 @@ export let graphicLayer // 矢量图层对象
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: 24.688611, lng: 119.260277, alt: 1673759, heading: 348, pitch: -69 }
+    center: { lat: 24.688611, lng: 119.260277, alt: 1673759, heading: 348, pitch: -69 },
+    mapMode2D: Cesium.MapMode2D.ROTATE // 避免切换到二维时图标有黑影
   }
 }
 
@@ -71,7 +72,19 @@ export function onMounted(mapInstance) {
   })
   map.addLayer(graphicLayer)
 
+  graphicLayer.on("clustering", function (event) {
+    console.log("新增聚合对象", event)
+  })
+
   graphicLayer.bindPopup(function (event) {
+    if (event.graphic.cluster && event.graphic.getGraphics) {
+      const graphics = event.graphic.getGraphics() // 对应的grpahic数组，可以自定义显示
+      if (graphics) {
+        const inthtml = `单击了聚合点(${graphics.length}个)`
+        return inthtml
+      }
+    }
+
     const item = event.graphic?.attr
     if (!item) {
       return false
@@ -106,7 +119,7 @@ export function onMounted(mapInstance) {
     if (map.camera.positionCartographic.height > 90000) {
       const graphic = event.graphic
       // graphic.closePopup()
-      if (graphic) {
+      if (graphic?.type) {
         // 单击了具体的点对象
         const position = graphic.positionShow
         map.flyToPoint(position, {

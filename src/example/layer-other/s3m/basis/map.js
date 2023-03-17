@@ -1,3 +1,4 @@
+// 仅mars3d v3.4 + cesium1.95之前版本支持超图图层
 import * as mars3d from "mars3d"
 
 export let map
@@ -14,7 +15,10 @@ export const mapOptions = {
       roll: 359.8
     },
     fxaa: true,
-    requestRenderMode: true // 显式渲染
+    requestRenderMode: true, // 显式渲染
+    contextOptions: {
+      requestWebgl1: true // 超图 不支持webgl2
+    }
   },
   control: {
     infoBox: false

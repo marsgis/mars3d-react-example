@@ -229,11 +229,9 @@ function addDemoGraphic4(graphicLayer) {
     model: {
       url: "//data.mars3d.cn/gltf/mars/weixin.gltf",
       scale: 1,
-      minimumPixelSize: 90,
-      autoHeading: true,
-      show: true
+      minimumPixelSize: 90
     },
-    path: { color: "#00ff00", opacity: 0.5, width: 1, show: true }
+    path: { color: "#00ff00", opacity: 0.5, width: 1 }
   })
   graphicLayer.addGraphic(weixin)
 

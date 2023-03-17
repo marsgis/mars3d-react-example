@@ -102,9 +102,9 @@ function showYearZT(data) {
     const num3 = attr["第三产业"]
     const numall = Number(num1 + num2 + num3).toFixed(2)
     const html = `${attr.name}<br/>
-                  <span style="color:#63AEFF">第一产业：${num1}</span><br/>
+                  <span style="color:#FF6D5D">第一产业：${num1}</span><br/>
                   <span style="color:#FFB861">第二产业：${num2}</span><br/>
-                  <span style="color:#FF6D5D">第三产业：${num3}</span>`
+                  <span style="color:#63AEFF">第三产业：${num3}</span>`
 
     const height1 = Math.floor(num1 * 10)
     const height2 = Math.floor(num2 * 10)

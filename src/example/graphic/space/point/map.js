@@ -22,7 +22,7 @@ export const mapOptions = {
   control: {
     clockAnimate: true, // 时钟动画控制(左下角)
     timeline: true, // 是否显示时间线控件
-    compass: { top: "10px", left: "5px" }
+    compass: { top: "50px", left: "5px" }
   },
   terrain: false
 }
@@ -253,11 +253,10 @@ function weixingStyle(item) {
     model: {
       url: "//data.mars3d.cn/gltf/mars/weixin.gltf",
       scale: 1,
-      autoHeading: true,
-      minimumPixelSize: 50,
-      show: !!item.name
+      minimumPixelSize: 50
     },
     label: {
+      text: item.name,
       color: "#ffffff",
       opacity: 1,
       font_family: "楷体",
@@ -276,11 +275,9 @@ function weixingStyle(item) {
       scaleByDistance_far: 10000000,
       scaleByDistance_farValue: 0.4,
       scaleByDistance_near: 100000,
-      scaleByDistance_nearValue: 1,
-      show: true
+      scaleByDistance_nearValue: 1
     },
     path: {
-      show: true,
       color: "#e2e2e2",
       opacity: 0.8,
       width: 1

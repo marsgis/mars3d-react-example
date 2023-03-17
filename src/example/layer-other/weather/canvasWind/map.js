@@ -19,19 +19,19 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
   map.basemap = 2017 // 蓝色底图
+  map.hasTerrain = false
 
   // 风场
   canvasWindLayer = new mars3d.layer.CanvasWindLayer({
+    worker: window.currentPath + "windWorker.js", // 启用多线程模式，注释后是单线程模式(非必须)
     color: "#ffffff", // 颜色
     frameRate: 20, // 每秒刷新次数
-    speedRate: 120, // 风前进速率
-    particlesNumber: 3000,
-    maxAge: 60,
-    lineWidth: 1
+    speedRate: 60, // 风前进速率
+    particlesNumber: 10000,
+    maxAge: 120,
+    lineWidth: 2
   })
   map.addLayer(canvasWindLayer)
-
-
 
   loadEarthData()
 }
@@ -103,14 +103,7 @@ export function loadEarthData() {
 }
 // 加载局部数据
 export function loadDongnanData() {
-  map.setCameraView({
-    y: 30.484229,
-    x: 116.627601,
-    z: 1719951,
-    heading: 0,
-    pitch: -90,
-    roll: 0
-  })
+  map.setCameraView({ lat: 30.484229, lng: 116.627601, alt: 1719951, heading: 0, pitch: -90, roll: 0 })
 
   canvasWindLayer.speedRate = 85
   canvasWindLayer.reverseY = true // true时表示 纬度顺序从小到到大

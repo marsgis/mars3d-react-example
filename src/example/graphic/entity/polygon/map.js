@@ -39,6 +39,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic5(graphicLayer)
   addDemoGraphic6(graphicLayer)
   addDemoGraphic7(graphicLayer)
+  addDemoGraphic8(graphicLayer)
 }
 
 /**
@@ -224,7 +225,6 @@ function addDemoGraphic7(graphicLayer) {
   // const extent = { xmin: 73.0, xmax: 136.0, ymin: 3.0, ymax: 59.0 } //中国区域
   const extent = { xmin: 117.153681, xmax: 117.243941, ymin: 31.668831, ymax: 31.731177 } // 合肥南
 
-
   const circleOuterPositions = mars3d.PolyUtil.getEllipseOuterPositions({
     position: [117.198898, 31.702784, 8],
     radius: 1000
@@ -254,7 +254,34 @@ function addDemoGraphic7(graphicLayer) {
       arcType: Cesium.ArcType.GEODESIC,
       clampToGround: true
     },
-    attr: { remark: "示例6" }
+    attr: { remark: "示例7" }
+  })
+  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
+}
+
+function addDemoGraphic8(graphicLayer) {
+  const graphic = new mars3d.graphic.PolygonEntity({
+    positions: [
+      [117.152677, 31.800113, 27.9],
+      [117.13312, 31.790543, 24.8],
+      [117.144908, 31.761589, 12],
+      [117.165334, 31.759237, 17.1]
+    ],
+    style: {
+      textureCoordinates: new Cesium.PolygonHierarchy([
+        new Cesium.Cartesian2(1, 1),
+        new Cesium.Cartesian2(1, 0),
+        new Cesium.Cartesian2(0, 0),
+        new Cesium.Cartesian2(1, 0)
+      ]),
+      clampToGround: true,
+      perPositionHeight: true,
+      materialType: mars3d.MaterialType.Image,
+      materialOptions: {
+        image: "img/tietu/gugong.jpg"
+      }
+    },
+    attr: { remark: "示例8" }
   })
   graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
 }

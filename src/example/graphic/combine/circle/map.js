@@ -97,7 +97,11 @@ export function addRandomGraphicByCount(count) {
 // 在图层绑定Popup弹窗
 export function bindLayerPopup() {
   graphicLayer.bindPopup(function (event) {
-    const attr = event.graphic.attr || {}
+    const attr = { ...event.graphic.attr }
+    // 删除不展示的属性
+    // delete attr.layer_name
+
+    // 增加自定义属性
     attr["类型"] = event.graphic.type
     attr["来源"] = "我是layer上绑定的Popup"
     attr["备注"] = "我支持鼠标交互"
