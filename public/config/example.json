@@ -618,6 +618,12 @@
             "main": "layer-tileset/type/basis",
             "params": "data=3dTiles",
             "hasPannel": true
+          },
+          {
+            "name": "I3S 三维模型图层",
+            "thumbnail": "layero-i3s-basis.jpg",
+            "main": "layer-other/i3s/basis",
+            "hasPannel": true
           }
         ]
       },
@@ -2336,6 +2342,12 @@
         "name": "鼠标交互控制",
         "children": [
           {
+            "name": "坐标拾取和转换",
+            "thumbnail": "util-pointTrans-selectPoint.jpg",
+            "main": "util/pointTrans/selectPoint",
+            "hasPannel": true
+          },
+          {
             "name": "鼠标中右键互换(操作习惯)",
             "thumbnail": "map-fun-changeMouseModel.jpg",
             "main": "map/fun/changeMouseModel",
@@ -2348,10 +2360,10 @@
             "hasPannel": true
           },
           {
-            "name": "坐标拾取和转换",
-            "thumbnail": "util-pointTrans-selectPoint.jpg",
-            "main": "util/pointTrans/selectPoint",
-            "hasPannel": true
+            "name": "DIV的transform缩放",
+            "thumbnail": "map-other-transform.jpg",
+            "main": "map/other/transform",
+            "resources": ["map.css"]
           }
         ]
       },

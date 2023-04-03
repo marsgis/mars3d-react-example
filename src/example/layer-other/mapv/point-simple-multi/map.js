@@ -17,6 +17,7 @@ export const mapOptions = {
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
+  map.basemap = 2017 // 蓝色底图
 
   mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/weibo.json" })
     .then(function (json) {
@@ -42,6 +43,9 @@ function createMapvLayer(rs) {
   const data3 = []
   for (let i = 0; i < rs[0].length; i++) {
     const geoCoord = rs[0][i].geoCoord
+
+    if (i % 10 !== 0) { continue }// 减少数据
+
     data1.push({
       geometry: {
         type: "Point",
@@ -52,6 +56,9 @@ function createMapvLayer(rs) {
 
   for (let i = 0; i < rs[1].length; i++) {
     const geoCoord = rs[1][i].geoCoord
+
+    if (i % 10 !== 0) { continue }// 减少数据
+
     data2.push({
       geometry: {
         type: "Point",
@@ -82,8 +89,8 @@ function createMapvLayer(rs) {
     }
   }
   addMapvLayer(data1, "rgba(200, 200, 0, 0.8)", 0.7)
-  addMapvLayer(data2, "rgba(255, 250, 0, 0.8)", 0.7)
-  addMapvLayer(data3, "rgba(255, 250, 250, 0.6)", 0.7)
+  // addMapvLayer(data2, "rgba(255, 250, 0, 0.8)", 0.7)
+  // addMapvLayer(data3, "rgba(255, 250, 250, 0.6)", 0.7)
   addMapvLayer(data2, "rgba(255, 250, 250, 0.9)", 1.1, animation)
 }
 

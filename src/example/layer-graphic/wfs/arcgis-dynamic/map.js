@@ -89,6 +89,7 @@ export function addLayer() {
     // url: '//server.mars3d.cn/arcgis/rest/services/crs/ssjzw4548/MapServer', //大地2000高斯投影坐标系
     // url: '//server.mars3d.cn/arcgis/rest/services/crs/ssjzw2000/MapServer',  //大地2000高斯投影坐标系
     // usePreCachedTilesIfAvailable: false, //大地2000高斯投影坐标系时，如果是瓦片，请打开此参数
+    // queryParameters: { returnGeometry: false },
     highlight: {
       clampToGround: true,
       fill: true,

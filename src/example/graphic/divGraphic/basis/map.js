@@ -29,6 +29,7 @@ export function onMounted(mapInstance) {
 
   // 在layer上绑定监听事件
   graphicLayer.on(mars3d.EventType.click, function (event) {
+    // event.stopPropagation()
     console.log("监听layer，单击了矢量对象", event)
   })
 

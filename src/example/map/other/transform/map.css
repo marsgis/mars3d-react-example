@@ -1,0 +1,4 @@
+.mars3d-container {
+  transform-origin: center center;
+  transform: scale(2); /*演示功能*/
+}

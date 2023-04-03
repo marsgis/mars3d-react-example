@@ -52,7 +52,6 @@ export function onUnmounted() {
 }
 
 function addDemoGraphic1() {
-  // 创建气象数据体渲染模型
   const volumeCloud = new mars3d.graphic.ReflectionWater({
     positions: [
       [117.216386, 31.815376, 35.16],
@@ -72,6 +71,7 @@ function addDemoGraphic1() {
   })
   graphicLayer.addGraphic(volumeCloud)
 }
+
 
 // 生成演示数据(测试数据量)
 export function addRandomGraphicByCount(count) {
@@ -108,6 +108,7 @@ export function addRandomGraphicByCount(count) {
   graphicLayer.enabledEvent = true // 恢复事件
   return result.points.length
 }
+
 
 // 开始绘制
 export function startDrawGraphic() {

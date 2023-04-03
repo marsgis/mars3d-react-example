@@ -148,7 +148,9 @@ function addDemoGraphic2(graphicLayer) {
 
   // 定时更新动态位置（setInterval为演示）
   setInterval(() => {
-    graphic.addDynamicPosition(randomPoint(), 20)
+    if (graphic.isAdded) {
+      graphic.addDynamicPosition(randomPoint(), 20)
+    }
   }, 20000)
 }
 

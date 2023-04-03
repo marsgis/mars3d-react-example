@@ -23,6 +23,7 @@ export function onMounted(mapInstance) {
   terrainUplift = new mars3d.thing.TerrainUplift({
     upHeight: 2000, // 抬升的高度
     image: "img/textures/poly-land.png",
+    // image: "./img/textures/mining.jpg",
     imageBottom: "img/textures/poly-land.png",
     diffHeight: 100,
     splitNum: 80 // 井边界插值数

@@ -42,6 +42,9 @@ export function onMounted(mapInstance) {
     }
   })
   map.addControl(overviewMap)
+
+  // 给鹰眼小地图添加一个矢量对象
+  addGraphicToOverviewMap(overviewMap)
 }
 
 /**
@@ -50,4 +53,24 @@ export function onMounted(mapInstance) {
  */
 export function onUnmounted() {
   map = null
+}
+
+function addGraphicToOverviewMap(overviewMap) {
+  const mapEx = overviewMap.smallMap // 也是 mars3d.Map 对象
+
+  const graphic = new mars3d.graphic.BillboardEntity({
+    position: new Cesium.CallbackProperty(() => {
+      return overviewMap.center
+    }, false),
+    style: {
+      image: "img/marker/street2.png",
+      scale: 0.5,
+      horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+      verticalOrigin: Cesium.VerticalOrigin.CENTER,
+      rotation: new Cesium.CallbackProperty(() => {
+        return map.camera.heading
+      }, false)
+    }
+  })
+  mapEx.graphicLayer.addGraphic(graphic)
 }
