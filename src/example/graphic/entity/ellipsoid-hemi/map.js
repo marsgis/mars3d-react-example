@@ -40,6 +40,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic7(graphicLayer)
   addDemoGraphic8(graphicLayer)
   addDemoGraphic9(graphicLayer)
+  addDemoGraphic10(graphicLayer)
 }
 
 /**
@@ -249,7 +250,7 @@ function addDemoGraphic6(graphicLayer) {
         image: "img/textures/poly-san.png",
         count: 1.0,
         color: "#00ffff",
-        speed: 20,
+        speed: 10,
         reverse: false,
         axisY: false,
         bloom: true
@@ -258,6 +259,20 @@ function addDemoGraphic6(graphicLayer) {
       // outlineColor: Cesium.Color.BLUE.withAlpha(0.6)
     },
     hasEdit: false,
+    // 添加扫描面
+    scanPlane: {
+      innerRadii: 2500,
+      step: 0.5, // 步长
+      style: {
+        color: "#00ffff",
+        opacity: 0.2,
+        outline: true,
+        minimumClockDegree: 90.0,
+        maximumClockDegree: 100.0,
+        minimumConeDegree: -30.0,
+        maximumConeDegree: 70.0
+      }
+    },
     attr: { remark: "示例6" }
   })
   graphicLayer.addGraphic(graphic)
@@ -324,6 +339,41 @@ function addDemoGraphic8(graphicLayer) {
 }
 
 function addDemoGraphic9(graphicLayer) {
+  const ellipsoid = new mars3d.graphic.EllipsoidEntity({
+    position: [116.105052, 30.816437, 991],
+    style: {
+      radii: 2500,
+      minimumClockDegree: -90.0,
+      maximumClockDegree: 180.0,
+      minimumConeDegree: 20.0,
+      maximumConeDegree: 90.0,
+      fill: false,
+      outline: true,
+      outlineColor: "rgba(0, 204, 0, 0.4)", // 绿色
+      stackPartitions: 30, // 竖向
+      slicePartitions: 30 // 横向
+    },
+    // 添加扫描面
+    scanPlane: {
+      step: 1.0, // 步长
+      min: -90.0, // 最小值
+      max: 180.0, // 最大值
+      style: {
+        innerRadii: 1000,
+        outline: true,
+        color: "rgba(255, 204, 0)",
+        outlineColor: "rgba(255, 204, 0, 0.1)",
+        minimumClockDegree: 90.0,
+        maximumClockDegree: 100.0,
+        minimumConeDegree: 20.0,
+        maximumConeDegree: 70.0
+      }
+    }
+  })
+  graphicLayer.addGraphic(ellipsoid)
+}
+
+function addDemoGraphic10(graphicLayer) {
   const point = [116.257171, 31.218046, 962.1]
 
   const graphicN = new mars3d.graphic.EllipsoidEntity({

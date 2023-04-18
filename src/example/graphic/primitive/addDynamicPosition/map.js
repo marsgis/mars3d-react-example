@@ -110,19 +110,24 @@ function addDemoGraphics() {
   }
 
   // 设置动态位置
-  graphicLayer.eachGraphic((graphic) => {
-    graphic.addDynamicPosition(randomPoint()) // 首次出现的位置
-  })
-  graphicLayer.eachGraphic((graphic) => {
-    graphic.addDynamicPosition(randomPoint(), 20) // 按20秒运动至指定位置
-  })
+  changePosition(0)
 
   // 定时更新动态位置（setInterval为演示）
+  const interval = 30
+  changePosition(interval)
   setInterval(() => {
-    graphicLayer.eachGraphic((graphic) => {
-      graphic.addDynamicPosition(randomPoint(), 20)
-    })
-  }, 20000)
+    changePosition(interval)
+  }, interval * 1000)
+}
+
+// 改变位置
+function changePosition(time) {
+  graphicLayer.eachGraphic((graphic) => {
+    if (graphic.isPrivate) {
+      return
+    }
+    graphic.addDynamicPosition(randomPoint(), time) // 按time秒运动至指定位置
+  })
 }
 
 // 取区域内的随机点

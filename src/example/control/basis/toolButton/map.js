@@ -61,6 +61,12 @@ export function onMounted(mapInstance) {
     }
   })
   map.addControl(toolButton3)
+
+
+  map.controls.homeButton.on(mars3d.EventType.click, function(event) {
+    globalMsg("单击了 homeButton 按钮")
+  })
+
 }
 
 /**

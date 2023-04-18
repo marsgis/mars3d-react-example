@@ -87,7 +87,7 @@ export function onMounted(mapInstance) {
 
   addbrightnessEffect(1.5)
 
-  setStyleDef()
+  setStyle1()
 }
 
 /**

@@ -46,7 +46,6 @@ export function onMounted(mapInstance) {
     map.scene.light.direction = map.scene.camera.direction
   })
 
-
   // 调试面板
   map.viewer.extend(Cesium.viewerCesiumInspectorMixin)
   map.scene.globe.depthTestAgainstTerrain = false
@@ -197,10 +196,22 @@ export function showQxShequDemo() {
     preferLeaves: true,
     center: { lat: 28.439577, lng: 119.476925, alt: 229, heading: 57, pitch: -29 },
 
+    queryParameters: {
+      // 可以传自定义url参数，如token等
+      token: "mars3d"
+    },
     enableDebugWireframe: true, // 是否可以进行三角网的切换显示
     flyTo: true
   })
   map.addLayer(tiles3dLayer)
+
+  // map.on(mars3d.EventType.terrainChange, function (event) {
+  //   if (map.hasTerrain) {
+  //     tiles3dLayer.alt = 11.5
+  //   } else {
+  //     tiles3dLayer.alt = -118.5
+  //   }
+  // })
 
   tiles3dLayer.readyPromise.then(function (layer) {
     console.log("load完成", layer)

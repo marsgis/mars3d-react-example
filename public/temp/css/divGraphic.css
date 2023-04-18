@@ -649,3 +649,38 @@
   }
 }
 
+
+/**************** seaRescue示例中的蓝黑面板 ****************/
+.marsBlueBlack {
+  width: 150px;
+  position: absolute;
+  left: 16px;
+  bottom: 31px;
+  cursor: default;
+  opacity: 0.96;
+  border: 1px solid #00b6ff;
+  box-shadow: 0px 2px 21px 0px rgba(33, 34, 39, 0.55);
+  box-sizing: border-box;
+}
+.marsBlueBlack::before {
+  content: "";
+  width: calc(100% + 22px);
+  height: 39px;
+  position: absolute;
+  bottom: -39px;
+  left: -22px;
+  background: url("../../img/icon/popupLbl.png") 0px 0px no-repeat;
+  background-position: 0px 0px;
+}
+
+.marsBlueBlack .marsBlueBlack-top {
+  background-color: #198eff;
+  font-size: 16px;
+  padding:6px;
+}
+
+.marsBlueBlack .marsBlueBlack-down {
+  background-color: black;
+  font-size: 12px;
+  padding:3px
+}

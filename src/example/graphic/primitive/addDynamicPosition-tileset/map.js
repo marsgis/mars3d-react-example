@@ -81,21 +81,25 @@ export function onMounted(mapInstance) {
     graphicLayer.addGraphic(graphic)
   }
 
-
   // 设置动态位置
-  graphicLayer.eachGraphic((graphic) => {
-    graphic.addDynamicPosition(randomPoint()) // 首次出现的位置
-  })
-  graphicLayer.eachGraphic((graphic) => {
-    graphic.addDynamicPosition(randomPoint(), 30) // 按30秒运动至指定位置
-  })
+  changePosition(0)
 
   // 定时更新动态位置（setInterval为演示）
+  const interval = 30
+  changePosition(interval)
   setInterval(() => {
-    graphicLayer.eachGraphic((graphic) => {
-      graphic.addDynamicPosition(randomPoint(), 30)
-    })
-  }, 30000)
+    changePosition(interval)
+  }, interval * 1000)
+}
+
+// 改变位置
+function changePosition(time) {
+  graphicLayer.eachGraphic((graphic) => {
+    if (graphic.isPrivate) {
+      return
+    }
+    graphic.addDynamicPosition(randomPoint(), time) // 按time秒运动至指定位置
+  })
 }
 
 /**
@@ -119,8 +123,6 @@ function random(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
-
-
 // 在图层绑定Popup弹窗
 export function bindLayerPopup() {
   graphicLayer.bindPopup(function (event) {
@@ -132,8 +134,6 @@ export function bindLayerPopup() {
     return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
   })
 }
-
-
 
 // 绑定右键菜单
 export function bindLayerContextMenu() {
@@ -163,5 +163,3 @@ export function bindLayerContextMenu() {
     }
   ])
 }
-
-

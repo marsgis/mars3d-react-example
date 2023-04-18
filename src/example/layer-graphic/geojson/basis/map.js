@@ -599,7 +599,7 @@ export function showGCJ02Data() {
 
   const gcjLayer = new mars3d.layer.GeoJsonLayer({
     name: "纠偏前",
-    url: "https://geo.datav.aliyun.com/areas_v3/bound/340303.json",
+    url: "//data.mars3d.cn/file/geojson/areas/340303.json",
     symbol: {
       styleOptions: {
         fill: false,

@@ -54,10 +54,9 @@ export const mapOptions = function (option) {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
-  const a = document.getElementsByClassName("mars3d-container")[0]
-  a.style.backgroundImage = "url(/img/tietu/backGroundImg.jpg)"
-  a.style.backgroundRepeat = "no-repeat"
-  a.style.backgroundSize = "100% 100%"
+  map.container.style.backgroundImage = "url(/img/tietu/backGroundImg.jpg)"
+  map.container.style.backgroundRepeat = "no-repeat"
+  map.container.style.backgroundSize = "100% 100%"
 }
 
 /**

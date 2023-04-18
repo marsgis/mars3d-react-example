@@ -22,6 +22,10 @@ export function onMounted(mapInstance) {
   // 方式2：在创建地球后按需调用addControl添加(直接new对应type类型的控件)
   // let compass = new mars3d.control.Compass({ top: "10px", right: "5px" })
   // map.addControl(compass)
+
+  map.controls.compass.on(mars3d.EventType.click, function(event) {
+    globalMsg("单击了 compass 控件")
+  })
 }
 
 /**
