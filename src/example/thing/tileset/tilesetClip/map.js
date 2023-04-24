@@ -21,11 +21,7 @@ export function onMounted(mapInstance) {
   map = mapInstance // 记录map
   map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
 
-  globalNotify(
-    "已知问题提示",
-    `(1) 对3dtiles数据有要求，仅适用于无自带着色器的纹理格式模型。
-     (2) 目前不支持所有3dtile数据，请替换url进行自测`
-  )
+  globalNotify("已知问题提示", `(1) 目前不支持所有类型3dtile数据，请替换url进行自测`)
 
   showTehDemo()
 }
@@ -85,6 +81,33 @@ export function showTehDemo() {
         }
       ]
     }
+  })
+  map.addLayer(tilesetLayer)
+
+  // 会执行多次，重新加载一次完成后都会回调
+  // tilesetLayer.on(mars3d.EventType.allTilesLoaded, function (event) {
+  //   console.log("触发allTilesLoaded事件", event)
+  // })
+
+  // tilesetLayer.clip是TilesetClip对象，因为与模型是1对1关系，已经内置进去
+  tilesetLayer.clip.on(mars3d.EventType.addItem, onAddClipArea)
+}
+
+export function showXianDemo() {
+  removeLayer()
+
+  tilesetLayer = new mars3d.layer.TilesetLayer({
+    name: "县城社区",
+    url: "//data.mars3d.cn/3dtiles/qx-shequ/tileset.json",
+    position: { alt: 11.5 },
+    maximumScreenSpaceError: 1,
+    maximumMemoryUsage: 1024,
+    skipLevelOfDetail: true,
+    preferLeaves: true,
+    dynamicScreenSpaceError: true,
+    cullWithChildrenBounds: false,
+    center: { lat: 28.440675, lng: 119.487735, alt: 639, heading: 269, pitch: -38 },
+    flyTo: true
   })
   map.addLayer(tilesetLayer)
 

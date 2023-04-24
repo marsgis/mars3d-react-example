@@ -42,6 +42,19 @@ const lantianSkybox = new mars3d.GroundSkyBox({
 export const mapOptions = {
   scene: {
     center: { lat: 31.830035, lng: 117.159801, alt: 409, heading: 41, pitch: 0 }
+    // scene: {
+    //   skyBox: {
+    //     type: "ground",
+    //     sources: {
+    //       positiveX: "img/skybox_near/lantian/Right.jpg",
+    //       negativeX: "img/skybox_near/lantian/Left.jpg",
+    //       positiveY: "img/skybox_near/lantian/Front.jpg",
+    //       negativeY: "img/skybox_near/lantian/Back.jpg",
+    //       positiveZ: "img/skybox_near/lantian/Up.jpg",
+    //       negativeZ: "img/skybox_near/lantian/Down.jpg"
+    //     }
+    //   }
+    // }
   }
 }
 

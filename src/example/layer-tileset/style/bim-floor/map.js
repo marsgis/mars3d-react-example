@@ -76,6 +76,7 @@ export function show(num) {
 // 说明：https://github.com/CesiumGS/3d-tiles/tree/master/specification/Styling
 
 function showCengByStyle(ceng) {
+  tiles3dLayer.closeHighlight()
   tiles3dLayer.style = new Cesium.Cesium3DTileStyle({
     color: {
       conditions: [

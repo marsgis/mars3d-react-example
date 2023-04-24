@@ -38,7 +38,7 @@ export function onMounted(mapInstance) {
     maximumMemoryUsage: 2048,
     dynamicScreenSpaceError: true,
     cullWithChildrenBounds: false,
-    luminanceAtZenith: 0.6,
+
 
     position: { lng: 117.096906, lat: 31.851564, alt: 45 },
     rotation: { z: 17.5 },

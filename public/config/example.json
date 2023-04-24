@@ -161,22 +161,18 @@
             "main": "thing/terrain/terrainPlanClip",
             "hasPannel": true
           },
-
           {
             "name": "地形压平",
             "thumbnail": "thing-terrain-terrainFlat.jpg",
             "main": "thing/terrain/terrainFlat",
-            "hasPannel": true,
-            "new": true
+            "hasPannel": true
           },
           {
             "name": "地形抬升",
             "thumbnail": "thing-terrain-terrainUp.jpg",
             "main": "thing/terrain/terrainUp",
-            "hasPannel": true,
-            "new": true
+            "hasPannel": true
           },
-
           {
             "name": "等高线",
             "thumbnail": "thing-terrain-contourLine.jpg",
@@ -666,15 +662,13 @@
             "hasPannel": true,
             "resources": ["HuxingLayer.js"]
           },
-
           {
             "name": "SHP转GeoJson加载",
             "thumbnail": "layerg-geojson-shp2json.jpg",
             "main": "layer-graphic/geojson/shp2json",
             "hasPannel": true,
             "libs": ["mars3d", "shpGeojson"],
-            "resources": ["Shp2JsonLayer.js"],
-            "new": true
+            "resources": ["Shp2JsonLayer.js"]
           },
           {
             "name": "KML/KMZ转GeoJson加载",
@@ -1112,8 +1106,7 @@
             "name": "双面渲染平面",
             "thumbnail": "graphic-primitive-doubleSidedPlane.jpg",
             "main": "graphic/primitive/doubleSidedPlane",
-            "hasPannel": true,
-            "new": true
+            "hasPannel": true
           },
           {
             "name": "Box 盒子",
@@ -1270,8 +1263,7 @@
             "name": "厚度墙 Demo",
             "thumbnail": "graphic-primitive-thickWall.jpg",
             "main": "graphic/primitive/thickWall",
-            "hasPannel": true,
-            "new": true
+            "hasPannel": true
           },
           {
             "name": "Rectangle 矩形",
@@ -1295,8 +1287,7 @@
             "name": "反射水面",
             "thumbnail": "graphic-primitive-reflectionWater.jpg",
             "main": "graphic/primitive/reflectionWater",
-            "hasPannel": true,
-            "new": true
+            "hasPannel": true
           },
           {
             "name": "井",
@@ -1518,6 +1509,11 @@
             "main": "graphic/custom/route-tileset"
           },
           {
+            "name": "AIS动态目标",
+            "thumbnail": "graphic-custom-route-ais.jpg",
+            "main": "graphic/custom/route-ais"
+          },
+          {
             "name": "FixedRoute 历史轨迹路线",
             "thumbnail": "graphic-custom-fixedRoute.jpg",
             "main": "graphic/custom/fixedRoute",
@@ -1558,8 +1554,7 @@
           {
             "name": "无人机航拍",
             "thumbnail": "graphic-custom-fixedRoute-shoot.jpg",
-            "main": "graphic/custom/fixedRoute-shoot",
-            "new": true
+            "main": "graphic/custom/fixedRoute-shoot"
           },
           {
             "name": "飞机路线",
@@ -1791,6 +1786,14 @@
             "main": "graphic/space/tle-getPoint",
             "hasPannel": true,
             "libs": ["mars3d", "mars3d-space"]
+          },
+          {
+            "name": "卫星推演",
+            "thumbnail": "graphic-space-deduce.jpg",
+            "main": "graphic/space/deduce",
+            "hasPannel": true,
+            "libs": ["mars3d", "mars3d-space"],
+            "resources": ["map.css"]
           }
         ]
       },
@@ -1814,6 +1817,12 @@
             "resources": ["/temp/css/UnidreamLED.css"]
           },
           {
+            "name": "行政区",
+            "thumbnail": "graphic-apply-quyu.jpg",
+            "main": "graphic/apply/quyu",
+            "resources": ["map.css"]
+          },
+          {
             "name": "行政区突出展示",
             "thumbnail": "graphic-apply-district.jpg",
             "main": "graphic/apply/district",
@@ -1824,11 +1833,6 @@
             "thumbnail": "graphic-apply-district2.jpg",
             "main": "graphic/apply/district2",
             "resources": ["district2.css"]
-          },
-          {
-            "name": "红蓝对抗演习",
-            "thumbnail": "graphic-apply-exercise.jpg",
-            "main": "graphic/apply/exercise"
           },
           {
             "name": "台风轨迹",
@@ -1847,6 +1851,26 @@
             "thumbnail": "graphic-apply-digitalCity.jpg",
             "main": "graphic/apply/digitalCity",
             "resources": ["city.css"]
+          },
+          {
+            "name": "红蓝对抗演习",
+            "thumbnail": "graphic-apply-exercise.jpg",
+            "main": "graphic/apply/exercise"
+          },
+          {
+            "name": "飞机巡航",
+            "thumbnail": "graphic-apply-cruise.jpg",
+            "main": "graphic/apply/cruise",
+            "hasPannel": true,
+            "resources": ["map.css"]
+          },
+          {
+            "name": "海洋应急",
+            "thumbnail": "graphic-apply-seaRescue.jpg",
+            "main": "graphic/apply/seaRescue",
+            "hasPannel": true,
+            "libs": ["mars3d", "mars3d-space", "mars3d-heatmap"],
+            "resources": ["/temp/css/divGraphic.css"]
           }
         ]
       },
@@ -2184,7 +2208,12 @@
             "main": "thing/tileset/tilesetClip",
             "hasPannel": true
           },
-
+          {
+            "name": "模型淹没分析",
+            "thumbnail": "thing-tileset-tilesetFlood.jpg",
+            "main": "thing/tileset/tilesetFlood",
+            "hasPannel": true
+          },
           {
             "name": "限高分析",
             "thumbnail": "thing-tileset-limitHeight.jpg",
@@ -2489,8 +2518,7 @@
             "name": "方量分析(体积)-离屏渲染方式",
             "thumbnail": "thing-analysis-measure-volume-depth.jpg",
             "main": "thing/analysis/measure-volume-depth",
-            "hasPannel": true,
-            "new": true
+            "hasPannel": true
           },
           {
             "name": "通视分析",

@@ -20,6 +20,56 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
+  // addGeojosnLayer()
+  addBusinessLayer()
+}
+
+function addGeojosnLayer() {
+  graphicLayer = new mars3d.layer.GeoJsonLayer({
+    name: "体育设施点",
+    popup: "all",
+    clustering: {
+      enabled: true,
+      pixelRange: 20,
+      clampToGround: false
+    },
+    center: { lat: 31.639275, lng: 117.388877, alt: 52574.8, heading: 339.3, pitch: -65 },
+    flyTo: true
+  })
+  map.addLayer(graphicLayer)
+
+  mars3d.Util.fetchJson({
+    url: "//data.mars3d.cn/file/geojson/hfty-point.json"
+  }).then((res) => {
+    const points = []
+    for (let i = 0; i < res.features.length; i++) {
+      const item = res.features[i]
+
+      const p = new mars3d.graphic.LabelEntity({
+        position: item.geometry.coordinates,
+        style: {
+          show: true,
+          text: "测试",
+          font_size: 14,
+          fill: true,
+          color: "#fcfa36",
+          font_family: "楷体",
+          font_weight: "bold",
+          outline: true,
+          outlineColor: "rgba(0,0,0,0.8)",
+          outlineWidth: 3,
+          background: true,
+          backgroundColor: "#009476",
+          visibleDepth: false
+        }
+      })
+      points.push(p)
+    }
+    graphicLayer.addGraphic(points)
+  })
+}
+
+function addBusinessLayer() {
   // 创建矢量数据图层（业务数据图层）
   graphicLayer = new mars3d.layer.BusineDataLayer({
     url: "//data.mars3d.cn/file/apidemo/mudi.json",
@@ -27,6 +77,19 @@ export function onMounted(mapInstance) {
     lngColumn: "lng",
     latColumn: "lat",
     altColumn: "z",
+    // 自定义创建对象，可替代symbol、
+    // onCreateGraphic: function (e) {
+    //   const graphic = new mars3d.graphic.BillboardEntity({
+    //     position: e.position,
+    //     style: {
+    //       image: "img/marker/lace-blue.png",
+    //       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+    //       verticalOrigin: Cesium.VerticalOrigin.BOTTOM
+    //     },
+    //     attr: e.attr
+    //   })
+    //   graphicLayer.addGraphic(graphic)
+    // },
     symbol: {
       type: "billboard", // 对应是 mars3d.graphic.BillboardEntity
       styleOptions: {

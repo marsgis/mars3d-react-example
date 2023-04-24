@@ -25,7 +25,7 @@ export function onMounted(mapInstance) {
     preferLeaves: true,
     dynamicScreenSpaceError: true,
     cullWithChildrenBounds: false,
-    luminanceAtZenith: 0.6,
+
     center: { lat: 28.440675, lng: 119.487735, alt: 639, heading: 269, pitch: -38 },
 
     // 可传入TilesetPlanClip构造参数，下面是演示裁剪区域

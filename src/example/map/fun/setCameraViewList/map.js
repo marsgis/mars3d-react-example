@@ -37,6 +37,8 @@ export function onMounted(mapInstance) {
 
   // 视角切换（分步执行）
   map.setCameraViewList(viewPoints)
+
+  // showCameraRoute(viewPoints) // 显示相机点的位置方向和路线，便于对比查看
 }
 
 /**
@@ -45,4 +47,64 @@ export function onMounted(mapInstance) {
  */
 export function onUnmounted() {
   map = null
+}
+
+// 显示相机点的位置方向和路线，便于对比查看
+function showCameraRoute(viewPoints) {
+  // 创建矢量数据图层
+  const graphicLayer = new mars3d.layer.GraphicLayer()
+  map.addLayer(graphicLayer)
+
+  const points = []
+  for (let i = 0; i < viewPoints.length; i++) {
+    const item = viewPoints[i]
+    const position = Cesium.Cartesian3.fromDegrees(item.lng, item.lat, item.alt)
+    points.push(position)
+
+    // 文本
+    const graphic = new mars3d.graphic.LabelPrimitive({
+      position: position,
+      style: {
+        text: i,
+        font_size: 14
+      }
+    })
+    graphicLayer.addGraphic(graphic)
+
+    // 相机角度示意
+    const camera = new Cesium.Camera(map.scene)
+    camera.position = position
+    camera.frustum.aspectRatio = 1
+    camera.frustum.fov = Cesium.Math.toRadians(45)
+    camera.frustum.near = 0.01
+    camera.frustum.far = 1
+    camera.setView({
+      destination: position,
+      orientation: { heading: Cesium.Math.toRadians(item.heading), pitch: Cesium.Math.toRadians(item.pitch) }
+    })
+
+    const frustumPrimitive = new mars3d.graphic.FrustumPrimitive({
+      position: position,
+      camera: camera,
+      style: {
+        angle: 45,
+        distance: 2,
+        fill: false,
+        outline: true,
+        outlineColor: "#ffffff",
+        outlineOpacity: 1.0
+      }
+    })
+    graphicLayer.addGraphic(frustumPrimitive)
+  }
+
+  // 线
+  const graphicLine = new mars3d.graphic.PolylinePrimitive({
+    positions: points,
+    style: {
+      width: 1,
+      color: "rgba(200,200,200,0.3)"
+    }
+  })
+  graphicLayer.addGraphic(graphicLine)
 }

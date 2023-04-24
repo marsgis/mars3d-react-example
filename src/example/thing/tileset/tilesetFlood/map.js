@@ -22,8 +22,7 @@ export function onMounted(mapInstance) {
 
   globalNotify(
     "已知问题提示",
-    `(1) 对3dtiles数据有要求，仅适用于无自带着色器的纹理格式模型。
-     (2) 目前不支持所有3dtile数据，请替换url进行自测`
+    `(1) 目前不支持所有类型3dtile数据，请替换url进行自测`
   )
 
   showDytDemo()
@@ -47,6 +46,7 @@ export function showDytDemo() {
     position: { alt: -27 },
     maximumScreenSpaceError: 1,
     maximumMemoryUsage: 1024,
+    editHeight: 420, // 相对高度 (单位：米)，基于 压平/淹没区域 最低点高度的偏移量
     flyTo: true
   })
   map.addLayer(tilesetLayer)
@@ -74,6 +74,7 @@ export function showTehDemo() {
     type: "3dtiles",
     url: "//data.mars3d.cn/3dtiles/qx-teh/tileset.json",
     position: { lng: 117.218434, lat: 31.81807, alt: 163 },
+    editHeight: -130.0, // 相对高度 (单位：米)，基于 压平/淹没区域 最低点高度的偏移量
     maximumScreenSpaceError: 16,
     maximumMemoryUsage: 1024,
     dynamicScreenSpaceError: true,

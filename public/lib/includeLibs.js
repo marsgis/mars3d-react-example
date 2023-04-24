@@ -136,6 +136,6 @@ window.configLibs = {
   three: ["three/three.js"],
   'hls': ["video/hls/hls.js"],
   'flv': ["video/flv/flv.min.js"],
-
+  tween: ["tween/Tween.js"]
 }
 

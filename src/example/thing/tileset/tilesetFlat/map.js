@@ -23,11 +23,7 @@ export function onMounted(mapInstance) {
   map = mapInstance // 记录map
   map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
 
-  globalNotify(
-    "已知问题提示",
-    `(1) 对3dtiles数据有要求，仅适用于无自带着色器的纹理格式模型。
-     (2) 目前不支持所有3dtile数据，请替换url进行自测`
-  )
+  globalNotify("已知问题提示", `(1) 目前不支持所有类型3dtile数据，请替换url进行自测`)
 
   // 创建矢量数据图层
   lineLayer = new mars3d.layer.GraphicLayer()
@@ -51,7 +47,7 @@ export function showDytDemo() {
   tilesetLayer = new mars3d.layer.TilesetLayer({
     name: "大雁塔",
     url: "//data.mars3d.cn/3dtiles/qx-dyt/tileset.json",
-    position: { alt: -27 },
+    position: { lng: 108.963363, lat: 34.221298, alt: -27 },
     maximumScreenSpaceError: 1,
     maximumMemoryUsage: 1024,
 
@@ -60,14 +56,14 @@ export function showDytDemo() {
       area: [
         {
           positions: [
-            [108.959062, 34.220134, 397.3],
-            [108.959802, 34.220147, 397.6],
-            [108.959779, 34.219506, 398.7],
-            [108.959106, 34.21953, 398.1]
+            [108.962938, 34.221141, 402.4],
+            [108.963847, 34.221141, 402.4],
+            [108.963847, 34.221868, 402.4],
+            [108.962938, 34.221868, 402.4]
           ]
         }
       ],
-      flatHeight: 420
+      editHeight: 420 // 相对高度 (单位：米)，基于 压平/淹没区域 最低点高度的偏移量
     },
     flyTo: true
   })
@@ -85,6 +81,7 @@ export function showTehDemo() {
     name: "合肥天鹅湖",
     url: "//data.mars3d.cn/3dtiles/qx-teh/tileset.json",
     position: { lng: 117.218434, lat: 31.81807, alt: 163 },
+    editHeight: -130.0, // 相对高度 (单位：米)，基于 压平/淹没区域 最低点高度的偏移量
     maximumScreenSpaceError: 16,
     maximumMemoryUsage: 1024,
     dynamicScreenSpaceError: true,
