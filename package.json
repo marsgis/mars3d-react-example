@@ -24,7 +24,7 @@
     "lodash": "^4.17.21",
     "@turf/turf": "^6.5.0",
     "mars3d": "~3.5.0",
-    "mars3d-cesium": "~1.104.0",
+    "mars3d-cesium": "~1.105.0",
     "monaco-editor": "^0.33.0",
     "nprogress": "^0.2.0",
     "react": "^18.1.0",
