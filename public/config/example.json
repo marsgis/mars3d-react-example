@@ -234,6 +234,12 @@
             "hasPannel": true
           },
           {
+            "name": "谷歌",
+            "thumbnail": "layert-online-google.jpg",
+            "main": "layer-tile/online/google",
+            "hasPannel": true
+          },
+          {
             "name": "微软Bing",
             "thumbnail": "layert-online-bing.jpg",
             "main": "layer-tile/online/bing",
@@ -255,18 +261,6 @@
             "name": "Cesium Ion服务",
             "thumbnail": "layert-online-ion.jpg",
             "main": "layer-tile/online/ion",
-            "hasPannel": true
-          },
-          {
-            "name": "谷歌【已被封】",
-            "thumbnail": "layert-online-google.jpg",
-            "main": "layer-tile/online/google",
-            "hasPannel": true
-          },
-          {
-            "name": "OSM【已被封】",
-            "thumbnail": "layert-online-osm.jpg",
-            "main": "layer-tile/online/osm",
             "hasPannel": true
           },
           {
@@ -2422,11 +2416,6 @@
             "main": "graphic/entity/rectangle-cloud"
           },
           {
-            "name": "水面倒影 Demo",
-            "thumbnail": "effect-inverted.jpg",
-            "main": "effect/inverted"
-          },
-          {
             "name": "对象描边",
             "thumbnail": "effect-outlineEffect.jpg",
             "main": "effect/outlineEffect"
@@ -2944,9 +2933,26 @@
     "icon": "fa-globe",
     "children": [
       {
-        "name": "存在问题的示例",
+        "name": "第三方原因的",
+        "details": "第三方服务、国家政策等原因造成的暂时不能用的功能",
+        "children": [
+          {
+            "name": "OSM【已被封】",
+            "thumbnail": "layert-online-osm.jpg",
+            "main": "layer-tile/online/osm",
+            "hasPannel": true
+          }
+        ]
+      },
+      {
+        "name": "存在问题的",
         "details": "当前存在问题的示例，有点鸡肋，仅供学习参考",
         "children": [
+          {
+            "name": "水面倒影 Demo",
+            "thumbnail": "effect-inverted.jpg",
+            "main": "effect/inverted"
+          },
           {
             "name": "PBF矢量瓦片(OL渲染)",
             "thumbnail": "layert-type-mvt.jpg",

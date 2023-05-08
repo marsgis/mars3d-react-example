@@ -128,6 +128,7 @@ function addDemoGraphic2(graphicLayer) {
     ],
     style: {
       width: 6,
+      sharpness: 0.95, // 曲线的弯曲程度
       materialType: mars3d.MaterialType.PolylineOutline,
       materialOptions: {
         color: Cesium.Color.ORANGE,

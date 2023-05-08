@@ -134,6 +134,36 @@ function showInterPolygonResult(list) {
   interGraphicLayer.addGraphic(primitiveLine)
 }
 
+export function interPolygonGrid(val) {
+  clearInterResult()
+
+  map.graphicLayer.startDraw({
+    type: "polygon",
+    style: {
+      color: "#29cf34",
+      opacity: 0.3,
+      outline: true,
+      outlineColor: "#ffffff"
+    },
+    success: function (graphic) {
+      const positions = graphic.positionsShow
+      map.graphicLayer.clear()
+
+      const result = mars3d.PolyUtil.getGridPointsByPoly(positions, val)
+      result.forEach((p, i) => {
+        const graphic = new mars3d.graphic.PointPrimitive({
+          position: p,
+          style: {
+            color: "#ff0000",
+            pixelSize: 6
+          }
+        })
+        interGraphicLayer.addGraphic(graphic)
+      })
+    }
+  })
+}
+
 /**
  * 面插值
  *

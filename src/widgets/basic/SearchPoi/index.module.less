@@ -72,8 +72,7 @@
 .query-site {
   position: absolute;
   border-top: none;
-  padding: 10px 20px;
-  padding-top: 0;
+  padding-bottom: 10px;
   width: 100%;
 
   border-bottom: 1px solid #008aff70;
@@ -88,6 +87,7 @@
   background-color: @mars-bg-base;
   .query-site__item {
     height: 80px;
+    padding: 0 20px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -96,16 +96,28 @@
     }
     .query-site__context {
       flex-grow: 1;
+      > p {
+        margin-bottom: 0;
+      }
       .query-site-text {
         font-size: 16px;
         width: 200px;
         font-family: Source Han Sans CN;
         font-weight: 400;
         color: @mars-base-color;
+        .query-site-text_num {
+          width: 19px;
+          height: 25px;
+          margin-right: 5px;
+          display: inline-block;
+          text-align: center;
+          background-image: url("@mars/assets/images/query-site-text_num.png");
+        }
       }
       .query-site-sub {
         font-size: 14px;
         width: 200px;
+        margin-left: 19px;
         font-family: Source Han Sans CN;
         font-weight: 400;
         color: @mars-content-color;
@@ -121,7 +133,7 @@
   .query-site__page {
     display: flex;
     justify-content: space-between;
-    padding: 10px 0;
+    padding: 10px 20px;
     .query-site-allcount {
       font-size: 14px;
     }

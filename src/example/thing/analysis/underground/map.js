@@ -6,8 +6,14 @@ let underground
 export const mapOptions = {
   scene: {
     center: { lat: 31.840106, lng: 117.216768, alt: 554, heading: 0, pitch: -59 },
+    orderIndependentTranslucency: false,
+    contextOptions: { webgl: { alpha: true } }, // 允许透明，只能Map初始化传入 [关键代码]
+    showMoon: false,
+    showSkyBox: false,
+    showSkyAtmosphere: false,
+    fog: false,
     globe: {
-      depthTestAgainstTerrain: true
+      depthTestAgainstTerrain: true // 开启深度检测
     }
   }
 }
@@ -20,6 +26,11 @@ export const mapOptions = {
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
+  map.container.style.backgroundColor = "#546a53" // 背景色
+
+
+  globalNotify("已知问题提示", `(1) 启用透明度后，放大层级底图瓦片衔接处有黑色缝隙 `)
+
 
   addLayer()
 }

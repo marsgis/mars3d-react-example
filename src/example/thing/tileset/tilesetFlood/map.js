@@ -22,7 +22,8 @@ export function onMounted(mapInstance) {
 
   globalNotify(
     "已知问题提示",
-    `(1) 目前不支持所有类型3dtile数据，请替换url进行自测`
+    `(1) 目前不支持所有类型3dtile数据，请替换url进行自测
+     (2) 部分模型不同LOD的内部高度不同，造成不同LOD的淹没高度不同`
   )
 
   showDytDemo()

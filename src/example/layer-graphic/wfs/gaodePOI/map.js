@@ -33,6 +33,8 @@ export function onUnmounted() {
 let geodePoiLayer
 
 function GeodePoiLayer() {
+  // 高德错误代码：https://lbs.amap.com/api/webservice/guide/tools/info/
+
   // 高德POI图层，演示大数据的分块加载
   geodePoiLayer = new mars3d.layer.GeodePoiLayer({
     minimumLevel: 13,

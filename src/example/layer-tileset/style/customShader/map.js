@@ -136,6 +136,27 @@ export function setStyle3() {
         material.diffuse = texture(u_mars3d_texture, vec2(mars3d_textureX, mars3d_textureY)).rgb;
       }
     }`
+    // fragmentShaderText: /* glsl 如果贴图方向不对，用下面这个 */ `
+    // void fragmentMain(FragmentInput fsInput, inout czm_modelMaterial material) {
+    //   vec3 positionMC = fsInput.attributes.positionMC;
+    //   if (dot(vec3(0.0, 1.0, 0.0), v_mars3d_normalMC) > 0.95) {
+    //     //处理楼顶:统一处理成深色。
+    //     material.diffuse = vec3(0.079, 0.107, 0.111);
+    //   } else {
+    //     //处理四个侧面: 贴一样的图
+    //     float mars3d_width = 100.0;
+    //     float mars3d_height = 100.0;
+    //     float mars3d_textureX = 0.0;
+    //     float mars3d_dotXAxis = dot(vec3(0.0, 0.0, 1.0), v_mars3d_normalMC);
+    //     if (mars3d_dotXAxis > 0.52 || mars3d_dotXAxis < -0.52) {
+    //       mars3d_textureX = mod(positionMC.x, mars3d_width) / mars3d_width;
+    //     } else {
+    //       mars3d_textureX = mod(positionMC.z, mars3d_width) / mars3d_width;
+    //     }
+    //     float mars3d_textureY = mod(positionMC.y, mars3d_height) / mars3d_height;
+    //     material.diffuse = texture(u_mars3d_texture, vec2(mars3d_textureX, mars3d_textureY)).rgb;
+    //   }
+    // }`
   })
   tiles3dLayer.reload()
 }

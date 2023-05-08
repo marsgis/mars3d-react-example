@@ -10,19 +10,12 @@ export const mapOptions = {
   // 方式1：在创建地球前的参数中配置
   basemaps: [
     {
-      name: "谷歌影像",
-      icon: "img/basemaps/google_img.png",
-      type: "xyz",
-      url: "https://boxa.earthol.com/map.jpg?lyrs=y&gl=cn&x={x}&y={y}&z={z}",
-      chinaCRS: mars3d.ChinaCRS.GCJ02,
-      show: true
-    },
-    {
       name: "谷歌影像(WGS84)",
       icon: "img/basemaps/google_img.png",
       type: "google",
       layer: "img_d",
-      chinaCRS: mars3d.ChinaCRS.WGS84
+      chinaCRS: mars3d.ChinaCRS.WGS84,
+      show: true
     },
     {
       name: "谷歌影像",
@@ -30,7 +23,7 @@ export const mapOptions = {
       type: "group",
       layers: [
         { name: "底图", type: "google", layer: "img_d", chinaCRS: mars3d.ChinaCRS.GCJ02 },
-        { name: "注记", type: "google", layer: "img_d", chinaCRS: mars3d.ChinaCRS.GCJ02 }
+        { name: "注记", type: "google", layer: "img_z", chinaCRS: mars3d.ChinaCRS.GCJ02 }
       ]
     },
     {

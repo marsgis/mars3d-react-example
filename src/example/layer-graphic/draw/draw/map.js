@@ -196,7 +196,13 @@ export function drawPolyline(clampToGround) {
       width: 3,
       clampToGround: clampToGround
     }
+    // 外部自定义校验坐标，return false 时坐标无效，不参与绘制
+    // validDrawPosition: function (position, graphic) {
+    //   const point = mars3d.LngLatPoint.fromCartesian(position)
+    //   return (point.lng > 115 && point.lng < 117)
+    // }
   })
+
   // .then(() => {
   //   map.highlightEnabled = true
   //   map.popup.enabled = true

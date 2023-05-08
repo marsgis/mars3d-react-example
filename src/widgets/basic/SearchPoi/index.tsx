@@ -18,6 +18,12 @@ export default function (props) {
   const [searchListShow, setSearchListShow] = useState(false)
   const [siteListShow, setSiteListShow] = useState(false)
 
+  useEffect(() => {
+    if (searchTxt === "") {
+      setSearchListShow(false)
+    }
+  })
+
   let timer = useRef<any>()
 
   const startCloseSearch = () => {
@@ -25,7 +31,7 @@ export default function (props) {
       setSearchListShow(false)
       clearTimeout(timer.current)
       timer = null
-    }, 100)
+    }, 500)
   }
 
   // 搜寻输入框数据之前的提示数据 以及搜寻过的历史数据  通过列表展现
@@ -169,12 +175,13 @@ export default function (props) {
                     <li key={i} className={styles["query-site__item"]} onClick={() => flyTo(item)}>
                       <div className={styles["query-site__context"]}>
                         <p className={`${styles["query-site-text"]} f-toe`} title={item.name}>
-                          {i + 1}、{item.name}
+                          <span className={styles["query-site-text_num"]}>{i + 1}</span>
+                          {item.name}
                         </p>
                         <p className={`${styles["query-site-sub"]} f-toe`}>{item.type}</p>
                       </div>
                       <a href={url + item.id} rel="noreferrer" target="_blank" className={styles["query-site__more"]}>
-                        更多&gt;&gt;
+                        <MarsIcon icon="double-right" width="20"></MarsIcon>
                       </a>
                     </li>
                   ))}

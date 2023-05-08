@@ -5,39 +5,40 @@ export let map // mars3d.Map三维地图对象
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: 19.171756, lng: 107.215418, alt: 9274074, heading: 0, pitch: -85 }
+    center: { lat: 31.816469, lng: 117.188323, alt: 6109.8, heading: 358.1, pitch: -64.6 }
   },
   // 方式1：在创建地球前的参数中配置
   basemaps: [
-    {
-      name: "光污染图层",
-      icon: "img/basemaps/blackMarble.png",
-      type: "wms",
-      url: "//www.lightpollutionmap.info/geoserver/gwc/service/wms",
-      layers: "PostGIS:VIIRS_2019",
-      crs: "EPSG:3857",
-      parameters: {
-        transparent: true,
-        format: "image/png"
-      },
-      alpha: 0.6, // 透明度
-      proxy: "//server.mars3d.cn/proxy/", // 代理服务，解决跨域问题
-      show: true
-    },
-    {
-      // wms也可以换一种xyz的直接写法
-      name: "光污染图层(XYZ方式)",
-      icon: "img/basemaps/blackMarble.png",
-      type: "xyz",
-      url: "//www.lightpollutionmap.info/geoserver/gwc/service/wms?transparent=true&format=image%2Fpng&service=WMS&version=1.1.1&request=GetMap&styles=&layers=PostGIS%3AVIIRS_2019&bbox={westProjected},{southProjected},{eastProjected},{northProjected}&width={width}&height={height}&srs=EPSG%3A3857",
-      alpha: 0.6, // 透明度
-      proxy: "//server.mars3d.cn/proxy/" // 代理服务，解决跨域问题
-    },
+    // {
+    //   name: "光污染图层",
+    //   icon: "img/basemaps/blackMarble.png",
+    //   type: "wms",
+    //   url: "//www.lightpollutionmap.info/geoserver/gwc/service/wms",
+    //   layers: "PostGIS:VIIRS_2019",
+    //   crs: "EPSG:3857",
+    //   parameters: {
+    //     transparent: true,
+    //     format: "image/png"
+    //   },
+    //   alpha: 0.6, // 透明度
+    //   proxy: "//server.mars3d.cn/proxy/", // 代理服务，解决跨域问题
+    //   show: true
+    // },
+    // {
+    //   // wms也可以换一种xyz的直接写法
+    //   name: "光污染图层(XYZ方式)",
+    //   icon: "img/basemaps/blackMarble.png",
+    //   type: "xyz",
+    //   url: "//www.lightpollutionmap.info/geoserver/gwc/service/wms?transparent=true&format=image%2Fpng&service=WMS&version=1.1.1&request=GetMap&styles=&layers=PostGIS%3AVIIRS_2019&bbox={westProjected},{southProjected},{eastProjected},{northProjected}&width={width}&height={height}&srs=EPSG%3A3857",
+    //   alpha: 0.6, // 透明度
+    //   proxy: "//server.mars3d.cn/proxy/" // 代理服务，解决跨域问题
+    // },
     {
       name: "单张图片",
       icon: "img/basemaps/offline.png",
       type: "image",
-      url: "//data.mars3d.cn/file/img/world/world.jpg"
+      url: "//data.mars3d.cn/file/img/world/world.jpg",
+      show: true
     }
   ]
 }
@@ -49,6 +50,8 @@ export const mapOptions = {
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
+
+  addTileLayer()
 }
 
 /**
@@ -88,7 +91,7 @@ export function addTileLayer() {
         axisY: true
       }
     },
-    popup: "all",
+    popup: "all"
     // popupOptions: {
     //   autoClose: false,
     //   closeOnClick: false,
@@ -102,7 +105,7 @@ export function addTileLayer() {
     //     return false
     //   }
     // },
-    flyTo: true
+    // flyTo: true
   })
   map.addLayer(tileLayer)
 
@@ -113,6 +116,12 @@ export function addTileLayer() {
   tileLayer.on(mars3d.EventType.click, function (event) {
     console.log("单击了矢量数据，共" + event.features.length + "条", event)
   })
+
+  setTimeout(() => {
+    map.mouseEvent.pickImageryLayerFeatures([117.169993, 31.842132, 214.6]).then((result) => {
+      console.log("手动模拟了单击，返回了：", result)
+    })
+  }, 6000)
 }
 
 export function addTileLayer2() {

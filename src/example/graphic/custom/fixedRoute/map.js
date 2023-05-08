@@ -90,6 +90,10 @@ function addRoamLines() {
         scale: 1,
         minimumPixelSize: 60
       },
+      billboard: {
+        image: "img/icon/huojian.svg",
+        scale: 0.3
+      },
       path: {
         color: "#ffff00",
         opacity: 0.5,

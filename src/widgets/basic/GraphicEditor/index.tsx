@@ -16,7 +16,7 @@ function GraphicEditor({ currentWidget, ...props }) {
   useEffect(() => {
     console.log("编辑面板接收到了graphic对象更新:", currentWidget)
     const gp = currentWidget?.data?.graphic
-    if (!gp) {
+    if (!gp || gp.isDestroy || !gp._layer) {
       return
     }
 
