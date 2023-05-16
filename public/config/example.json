@@ -1619,6 +1619,13 @@
             "main": "graphic/video/video3D-flv",
             "hasPannel": true,
             "libs": ["flv", "mars3d"]
+          },
+          {
+            "name": "视频编辑",
+            "thumbnail": "graphic-video-edit.jpg",
+            "main": "graphic/video/video-edit",
+            "hasPannel": true,
+            "new": true
           }
         ]
       },
