@@ -7,6 +7,10 @@ let canvasWindLayer
 export const mapOptions = {
   scene: {
     center: { lat: 24.677182, lng: 107.044123, alt: 20407002, heading: 0, pitch: -90 }
+    // mapMode2D: Cesium.MapMode2D.ROTATE,
+    // cameraController: {
+    //   maximumZoomDistance: 5000000000
+    // }
   }
 }
 
@@ -20,6 +24,8 @@ export function onMounted(mapInstance) {
   map = mapInstance // 记录map
   map.basemap = 2017 // 蓝色底图
   map.hasTerrain = false
+
+
 
   // 风场
   canvasWindLayer = new mars3d.layer.CanvasWindLayer({

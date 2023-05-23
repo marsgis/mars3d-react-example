@@ -24,6 +24,7 @@ export const mapOptions = {
     timeline: true, // 是否显示时间线控件
     compass: { top: "10px", left: "5px" }
   },
+  terrain: false,
   layers: [
     {
       name: "夜晚图片",

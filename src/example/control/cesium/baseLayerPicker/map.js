@@ -145,7 +145,7 @@ function getTerrainProviderViewModelsArr() {
       tooltip: "由 Cesium官方 提供的高分辨率全球地形",
       iconUrl: "img/basemaps/TerrainSTK.png",
       creationFunction: function () {
-        return Cesium.createWorldTerrain({
+        return Cesium.createWorldTerrainAsync({
           requestWaterMask: true,
           requestVertexNormals: true
         })

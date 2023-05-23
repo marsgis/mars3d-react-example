@@ -2,6 +2,7 @@
   {
     "name": "快速开始",
     "icon": "fa-globe",
+    "download": false,
     "children": [
       {
         "name": "创建三维场景",
@@ -136,8 +137,14 @@
             "thumbnail": "map-terrain-terrainProvider-tdt.jpg",
             "main": "map/terrain/terrainProvider-tdt",
             "hasPannel": true,
+            "download": false,
             "libs": ["mars3d", "mars3d-tdt"]
-          },
+          }
+        ]
+      },
+      {
+        "name": "地形参数",
+        "children": [
           {
             "name": "地形夸张",
             "thumbnail": "map-terrain-terrainExaggeration.jpg",
@@ -147,7 +154,7 @@
         ]
       },
       {
-        "name": "地形相关分析",
+        "name": "地形分析",
         "children": [
           {
             "name": "地形开挖",
@@ -186,7 +193,7 @@
             "hasPannel": true
           },
           {
-            "name": "淹没分析（globe材质）",
+            "name": "淹没分析",
             "thumbnail": "thing-terrain-floodByMaterial.jpg",
             "main": "thing/terrain/floodByMaterial",
             "hasPannel": true
@@ -200,7 +207,7 @@
     "icon": "fa-photo",
     "children": [
       {
-        "name": "在线地图服务",
+        "name": "在线地图加载",
         "details": "支持直接加载常用的互联网在线地图服务",
         "children": [
           {
@@ -272,23 +279,23 @@
         ]
       },
       {
-        "name": "支持的坐标系",
+        "name": "坐标系的支持",
         "details": "当前平台支持的底图坐标系演示",
         "children": [
           {
-            "name": "EPSG3857(Web墨卡托)",
+            "name": "EPSG3857 Web墨卡托坐标系",
             "thumbnail": "layert-crs-epsg3857.jpg",
             "main": "layer-tile/crs/epsg3857",
             "hasPannel": true
           },
           {
-            "name": "EPSG4326坐标系(WGS84)",
+            "name": "EPSG4326 WGS84坐标系",
             "thumbnail": "layert-crs-epsg4326.jpg",
             "main": "layer-tile/crs/epsg4326",
             "hasPannel": true
           },
           {
-            "name": "EPSG4490坐标系(大地2000)",
+            "name": "EPSG4490 大地2000坐标系",
             "thumbnail": "layert-crs-epsg4490.jpg",
             "main": "layer-tile/crs/epsg4490",
             "hasPannel": true
@@ -300,13 +307,13 @@
         "details": "支持加载在离线或私有环境发布的各种标准服务",
         "children": [
           {
-            "name": "image本地单张图片",
+            "name": "本地单张图片",
             "thumbnail": "layert-type-image.jpg",
             "main": "layer-tile/type/image",
             "hasPannel": true
           },
           {
-            "name": "image本地单张图片(区域影像)",
+            "name": "本地单张图片(区域影像)",
             "thumbnail": "layert-type-image-rectangle.jpg",
             "main": "layer-tile/type/image-rectangle",
             "hasPannel": true
@@ -320,21 +327,15 @@
             "hasPannel": true
           },
           {
-            "name": "xyz金字塔瓦片",
+            "name": "标准XYZ金字塔瓦片",
             "thumbnail": "layert-type-xyz.jpg",
             "main": "layer-tile/type/xyz",
             "hasPannel": true
           },
           {
-            "name": "xyz金字塔瓦片(区域影像)",
+            "name": "标准XYZ金字塔瓦片(区域影像)",
             "thumbnail": "layert-type-xyz-rectangle.jpg",
             "main": "layer-tile/type/xyz-rectangle",
-            "hasPannel": true
-          },
-          {
-            "name": "arcgis格式瓦片",
-            "thumbnail": "layert-type-arcgisCache.jpg",
-            "main": "layer-tile/type/arcgisCache",
             "hasPannel": true
           },
           {
@@ -350,29 +351,35 @@
             "hasPannel": true
           },
           {
+            "name": "ArcGIS格式瓦片",
+            "thumbnail": "layert-type-arcgisCache.jpg",
+            "main": "layer-tile/type/arcgisCache",
+            "hasPannel": true
+          },
+          {
             "name": "ArcGIS Server服务",
             "thumbnail": "layert-type-arcgis.jpg",
             "main": "layer-tile/type/arcgis",
             "hasPannel": true
           },
           {
-            "name": "谷歌地球企业版【需部署私服】",
+            "name": "谷歌地球企业版(需部署私服)",
             "thumbnail": "layert-type-gee.jpg",
             "main": "layer-tile/type/gee"
           }
         ]
       },
       {
-        "name": "图层参数及控制",
+        "name": "图层控制",
         "children": [
           {
-            "name": "图层管理",
+            "name": "图层叠加及管理",
             "thumbnail": "layert-manage-list.jpg",
             "main": "layer-tile/manage/list",
             "hasPannel": true
           },
           {
-            "name": "瓦片底图的参数调试",
+            "name": "瓦片图层参数调试",
             "thumbnail": "layert-manage-edit.jpg",
             "main": "layer-tile/manage/edit",
             "hasPannel": true
@@ -416,6 +423,7 @@
       {
         "name": "Cesium内置控件",
         "details": "Cesium内置的控件，构造地图时按需传参配置",
+        "download": false,
         "children": [
           {
             "name": "底图切换控制",
@@ -472,7 +480,7 @@
             "hasPannel": true
           },
           {
-            "name": "键盘漫游模式",
+            "name": "键盘漫游",
             "thumbnail": "control-inside-keyboardRoam.jpg",
             "main": "control/inside/keyboardRoam",
             "hasPannel": true
@@ -544,16 +552,18 @@
             "name": "移动端位置定位",
             "thumbnail": "control-other-geolocation.jpg",
             "main": "control/other/geolocation",
-            "resources": ["https://webapi.amap.com/maps?v=1.4.15&key=616e615727a1134331ff9459856653f1", "Geolocation.js", "Geolocation.css"]
+            "resources": ["https://webapi.amap.com/maps?v=1.4.15&key=616e615727a1134331ff9459856653f1", "Geolocation.js", "Geolocation.css"],
+            "download": false
           },
           {
             "name": "POI兴趣点搜索(自定义Control)",
             "thumbnail": "control-other-poiQueryButton.jpg",
             "main": "control/other/poiQueryButton",
-            "resources": ["PoiQueryButton.css", "PoiQueryButton.js"]
+            "resources": ["PoiQueryButton.css", "PoiQueryButton.js"],
+            "download": false
           },
           {
-            "name": "控件控制(显示及关闭)",
+            "name": "控件的控制(显示及关闭)",
             "thumbnail": "control-other-display.jpg",
             "main": "control/other/display",
             "hasPannel": true
@@ -643,7 +653,7 @@
             "resources": ["HuxingLayer.js"]
           },
           {
-            "name": "SHP转GeoJson加载",
+            "name": "SHP文件的加载(转GeoJson)",
             "thumbnail": "layerg-geojson-shp2json.jpg",
             "main": "layer-graphic/geojson/shp2json",
             "hasPannel": true,
@@ -651,7 +661,7 @@
             "resources": ["Shp2JsonLayer.js"]
           },
           {
-            "name": "KML/KMZ转GeoJson加载",
+            "name": "KML/KMZ文件的加载(转GeoJson)",
             "thumbnail": "layerg-geojson-kml2json.jpg",
             "main": "layer-graphic/geojson/kml2json",
             "hasPannel": true,
@@ -659,7 +669,7 @@
             "resources": ["Kml2JsonLayer.js"]
           },
           {
-            "name": "WKT转GeoJson加载",
+            "name": "WKT格式的加载(转GeoJson)",
             "thumbnail": "layerg-geojson-wkt.jpg",
             "main": "layer-graphic/geojson/wkt",
             "hasPannel": true,
@@ -696,18 +706,21 @@
           {
             "name": "ArcGIS WFS图层贴模型",
             "thumbnail": "layerg-wfs-arcgis-feature-surface.jpg",
-            "main": "layer-graphic/wfs/arcgis-feature-surface"
+            "main": "layer-graphic/wfs/arcgis-feature-surface",
+            "download": false
           },
           {
             "name": "高德POI图层",
             "thumbnail": "layerg-wfs-gaodePOI.jpg",
             "main": "layer-graphic/wfs/gaodePOI",
-            "hasPannel": true
+            "hasPannel": true,
+            "download": false
           }
         ]
       },
       {
         "name": "其他矢量图层",
+        "download": false,
         "children": [
           {
             "name": "经纬网图层",
@@ -847,7 +860,8 @@
             "name": "图标点+文字(含聚合)",
             "thumbnail": "graphic-entity-billboard-clustering.jpg",
             "main": "graphic/entity/billboard-clustering",
-            "hasPannel": true
+            "hasPannel": true,
+            "download": false
           },
           {
             "name": "Canvas图片点",
@@ -905,7 +919,8 @@
             "thumbnail": "graphic-entity-cylinder-gdp.jpg",
             "main": "graphic/entity/cylinder-gdp",
             "libs": ["echarts-gl", "mars3d"],
-            "resources": ["cylinderGdp.css"]
+            "resources": ["cylinderGdp.css"],
+            "download": false
           },
           {
             "name": "圆锥追踪体",
@@ -956,13 +971,15 @@
             "name": "无人机飞行轨迹",
             "thumbnail": "graphic-entity-path-wrj.gif",
             "main": "graphic/entity/path-wrj",
-            "hasPannel": true
+            "hasPannel": true,
+            "download": false
           },
           {
             "name": "战机绕圈巡航轨迹",
             "thumbnail": "graphic-entity-path-zhanji.gif",
             "main": "graphic/entity/path-zhanji",
-            "hasPannel": true
+            "hasPannel": true,
+            "download": false
           },
           {
             "name": "Polyline 线",
@@ -1019,16 +1036,18 @@
             "hasPannel": true
           },
           {
-            "name": "箭头军标",
+            "name": "军标",
             "thumbnail": "graphic-entity-arrow.jpg",
             "main": "graphic/entity/arrow",
-            "hasPannel": true
+            "hasPannel": true,
+            "resources": ["CloseVurveEntity.js", "CurveEntity.js"]
           },
           {
             "name": "Property属性机制演示",
             "thumbnail": "graphic-entity-property.jpg",
             "main": "graphic/entity/property",
-            "hasPannel": true
+            "hasPannel": true,
+            "download": false
           }
         ]
       },
@@ -1037,7 +1056,7 @@
         "details": "适用于几千条数据的加载场景。Primitive 是更底层的实现方式，渲染效率更高，但功能性较差。",
         "children": [
           {
-            "name": "Label 文字(支持大数据)",
+            "name": "LabelP 文字(支持大数据)",
             "thumbnail": "graphic-primitive-label.jpg",
             "main": "graphic/primitive/label",
             "hasPannel": true
@@ -1049,7 +1068,7 @@
             "hasPannel": true
           },
           {
-            "name": "Point 点(支持大数据)",
+            "name": "PointP 点(支持大数据)",
             "thumbnail": "graphic-primitive-point.jpg",
             "main": "graphic/primitive/point",
             "hasPannel": true
@@ -1061,7 +1080,7 @@
             "hasPannel": true
           },
           {
-            "name": "Billboard 图标点(支持大数据)",
+            "name": "BillboardP 图标点(支持大数据)",
             "thumbnail": "graphic-primitive-billboard.jpg",
             "main": "graphic/primitive/billboard",
             "hasPannel": true
@@ -1069,15 +1088,17 @@
           {
             "name": "AQI空气质量指数(Billboard案例)",
             "thumbnail": "graphic-primitive-billboard-worker.jpg",
-            "main": "graphic/primitive/billboard-worker"
+            "main": "graphic/primitive/billboard-worker",
+            "download": false
           },
           {
             "name": "图标点+文字",
             "thumbnail": "graphic-primitive-billboard-list.jpg",
-            "main": "graphic/primitive/billboard-list"
+            "main": "graphic/primitive/billboard-list",
+            "download": false
           },
           {
-            "name": "Plane 平面",
+            "name": "PlaneP 平面",
             "thumbnail": "graphic-primitive-plane.jpg",
             "main": "graphic/primitive/plane",
             "hasPannel": true
@@ -1089,19 +1110,19 @@
             "hasPannel": true
           },
           {
-            "name": "Box 盒子",
+            "name": "BoxP 盒子",
             "thumbnail": "graphic-primitive-box.jpg",
             "main": "graphic/primitive/box",
             "hasPannel": true
           },
           {
-            "name": "Circle 圆、椭圆、圆柱",
+            "name": "CircleP 圆、椭圆、圆柱",
             "thumbnail": "graphic-primitive-circle.jpg",
             "main": "graphic/primitive/circle",
             "hasPannel": true
           },
           {
-            "name": "Cylinder 圆锥、圆柱",
+            "name": "CylinderP 圆锥、圆柱",
             "thumbnail": "graphic-primitive-cylinder.jpg",
             "main": "graphic/primitive/cylinder",
             "hasPannel": true
@@ -1125,7 +1146,7 @@
             "hasPannel": true
           },
           {
-            "name": "Ellipsoid 球、半球、椭球",
+            "name": "EllipsoidP 球、半球、椭球",
             "thumbnail": "graphic-primitive-ellipsoid.jpg",
             "main": "graphic/primitive/ellipsoid",
             "hasPannel": true
@@ -1137,7 +1158,7 @@
             "hasPannel": true
           },
           {
-            "name": "Model 小模型",
+            "name": "ModelP 小模型",
             "thumbnail": "graphic-primitive-model.jpg",
             "main": "graphic/primitive/model",
             "params": "data=gltf",
@@ -1157,7 +1178,7 @@
             "hidden": true
           },
           {
-            "name": "Polyline 线",
+            "name": "PolylineP 线",
             "thumbnail": "graphic-primitive-polyline.jpg",
             "main": "graphic/primitive/polyline",
             "hasPannel": true
@@ -1198,13 +1219,13 @@
             "libs": ["echarts", "mars3d"]
           },
           {
-            "name": "PolylineVolume 管道线",
+            "name": "PolylineVolumeP 管道线",
             "thumbnail": "graphic-primitive-polylineVolume.jpg",
             "main": "graphic/primitive/polylineVolume",
             "hasPannel": true
           },
           {
-            "name": "Corridor 走廊",
+            "name": "CorridorP 走廊",
             "thumbnail": "graphic-primitive-corridor.jpg",
             "main": "graphic/primitive/corridor",
             "hasPannel": true
@@ -1222,7 +1243,7 @@
             "hasPannel": true
           },
           {
-            "name": "Wall 墙",
+            "name": "WallP 墙",
             "thumbnail": "graphic-primitive-wall.jpg",
             "main": "graphic/primitive/wall",
             "hasPannel": true
@@ -1246,13 +1267,13 @@
             "hasPannel": true
           },
           {
-            "name": "Rectangle 矩形",
+            "name": "RectangleP 矩形",
             "thumbnail": "graphic-primitive-rectangle.jpg",
             "main": "graphic/primitive/rectangle",
             "hasPannel": true
           },
           {
-            "name": "Polygon 面",
+            "name": "PolygonP 面",
             "thumbnail": "graphic-primitive-polygon.jpg",
             "main": "graphic/primitive/polygon",
             "hasPannel": true
@@ -1284,7 +1305,8 @@
           {
             "name": "矿区岩层效果(井与开挖的实际应用)",
             "thumbnail": "thing-terrain-terrainClip-image.jpg",
-            "main": "thing/terrain/terrainClip-image"
+            "main": "thing/terrain/terrainClip-image",
+            "download": false
           }
         ]
       },
@@ -1453,12 +1475,14 @@
             "main": "graphic/divGraphic/video-hls",
             "libs": ["hls", "mars3d"],
             "resources": ["camera.css", "/temp/css/divGraphic.css"],
-            "hidden": true
+            "hidden": true,
+            "download": false
           }
         ]
       },
       {
         "name": "其他矢量对象",
+        "download": false,
         "children": [
           {
             "name": "粒子效果",
@@ -1876,7 +1900,8 @@
             "name": "标绘数据展示(马拉松)",
             "thumbnail": "layerg-draw-drawRead.jpg",
             "main": "layer-graphic/draw/drawRead",
-            "hasPannel": true
+            "hasPannel": true,
+            "download": false
           },
           {
             "name": "军事标绘",
@@ -1917,6 +1942,7 @@
     "children": [
       {
         "name": "相关矢量对象",
+        "download": false,
         "children": [
           {
             "name": "ModelEntity对象",
@@ -1980,72 +2006,73 @@
     "icon": "fa-building-o",
     "children": [
       {
-        "name": "各类3dtiles模型",
+        "name": "各类模型的支持",
         "children": [
           {
-            "name": "3dtiles图层",
-            "thumbnail": "layer3d-type-list.jpg",
-            "main": "layer-tileset/type/list",
-            "hasPannel": true,
-            "resources": ["city.css"]
-          },
-          {
-            "name": "县城城区（倾斜摄影）",
+            "name": "倾斜摄影(县城城区)",
             "thumbnail": "layer3d-type-basis.jpg",
             "main": "layer-tileset/type/basis",
             "hasPannel": true,
             "params": "data=qx-shequ"
           },
           {
-            "name": "文庙（倾斜摄影）",
+            "name": "倾斜摄影(文庙)",
             "thumbnail": "layer3d-type-simiao.jpg",
             "main": "layer-tileset/type/basis",
             "hasPannel": true,
             "params": "data=qx-simiao"
           },
           {
-            "name": "高压线塔杆（点云）",
+            "name": "激光点云(高压线塔杆)",
             "thumbnail": "layer3d-type-ganta.jpg",
             "main": "layer-tileset/type/basis",
             "hasPannel": true,
             "params": "data=pnts-ganta"
           },
           {
-            "name": "桥梁(BIM建模)",
+            "name": "BIM建模(桥梁)",
             "thumbnail": "layer3d-type-bim-qiaoliang.jpg",
             "main": "layer-tileset/type/bim-qiaoliang",
             "hasPannel": true
           },
           {
-            "name": "教学楼(BIM建模)",
+            "name": "BIM建模(教学楼)",
             "thumbnail": "layer3d-type-bim-daxue.jpg",
             "main": "layer-tileset/type/bim-daxue",
             "hasPannel": true
           },
           {
-            "name": "石化厂（人工建模）",
+            "name": "人工建模(石化厂)",
             "thumbnail": "layer3d-type-shihua.jpg",
             "main": "layer-tileset/type/basis",
             "hasPannel": true,
             "params": "data=max-shihua"
           },
           {
-            "name": "地下管网（人工建模）",
+            "name": "人工建模(地下管网)",
             "thumbnail": "layer3d-type-piping.jpg",
             "main": "layer-tileset/type/piping",
             "hasPannel": true
           },
           {
-            "name": "合肥市区（城市白模）",
+            "name": "城市白模(合肥市区)",
             "thumbnail": "layer3d-type-jzw.gif",
             "main": "layer-tileset/type/jzw",
             "hasPannel": true
           },
           {
-            "name": "全球城市白膜(OSM在线)",
+            "name": "城市白膜(全球OSM在线)",
             "thumbnail": "layer3d-type-osmBuildings.jpg",
             "main": "layer-tileset/type/osmBuildings",
             "hasPannel": true
+          },
+          {
+            "name": "3dtiles图层",
+            "thumbnail": "layer3d-type-list.jpg",
+            "main": "layer-tileset/type/list",
+            "hasPannel": true,
+            "resources": ["city.css"],
+            "download": false
           }
         ]
       },
@@ -2061,16 +2088,22 @@
             "name": "classificationType单体化模型(叠加另外1个3dtiles)",
             "thumbnail": "layer3d-monomer-tileset-classificationType.jpg",
             "main": "layer-tileset/monomer/tileset-classificationType",
-            "hasPannel": true
+            "hasPannel": true,
+            "download": false
           },
           {
-            "name": "分栋矢量单体化(叠加矢量数据)",
+            "name": "矢量单体化(叠加WFS服务)",
+            "thumbnail": "layer3d-monomer-wfs.jpg",
+            "main": "layer-tileset/monomer/wfs"
+          },
+          {
+            "name": "矢量单体化(叠加矢量数据)",
             "thumbnail": "layer3d-monomer-building.jpg",
             "main": "layer-tileset/monomer/building",
             "hasPannel": true
           },
           {
-            "name": "分栋矢量单体化编辑",
+            "name": "矢量单体化编辑",
             "thumbnail": "layer3d-monomer-building-edit.jpg",
             "main": "layer-tileset/monomer/building-edit",
             "hasPannel": true
@@ -2092,11 +2125,6 @@
             "thumbnail": "layer3d-monomer-household-edit.jpg",
             "main": "layer-tileset/monomer/household-edit",
             "hasPannel": true
-          },
-          {
-            "name": "矢量单体化(叠加WFS服务)",
-            "thumbnail": "layer3d-monomer-wfs.jpg",
-            "main": "layer-tileset/monomer/wfs"
           }
         ]
       },
@@ -2142,7 +2170,7 @@
         "name": "模型编辑控制",
         "children": [
           {
-            "name": "3dtiles模型位置及参数编辑",
+            "name": "三维模型位置及参数编辑",
             "thumbnail": "layer3d-manager-edit.jpg",
             "main": "layer-tileset/manager/edit",
             "hasPannel": true
@@ -2160,7 +2188,7 @@
             "hasPannel": true
           },
           {
-            "name": "单模型场景2(无地球)",
+            "name": "单模型场景(无地球+背景图片)",
             "thumbnail": "layer3d-manager-oneself2.jpg",
             "main": "layer-tileset/manager/oneself2",
             "hasPannel": true
@@ -2171,19 +2199,19 @@
         "name": "模型相关分析",
         "children": [
           {
-            "name": "模型Plan剖切(BIM)",
+            "name": "模型平面剖切(BIM)",
             "thumbnail": "thing-tileset-tilesetPlanClip.jpg",
             "main": "thing/tileset/tilesetPlanClip",
             "hasPannel": true
           },
           {
-            "name": "模型Plan剖切(倾斜摄影)",
+            "name": "模型平面剖切(倾斜摄影)",
             "thumbnail": "thing-tileset-tilesetPlanClip-qx.jpg",
             "main": "thing/tileset/tilesetPlanClip-qx",
             "hasPannel": true
           },
           {
-            "name": "模型Box盒子裁剪",
+            "name": "模型盒子裁剪",
             "thumbnail": "thing-tileset-tilesetBoxClip.jpg",
             "main": "thing/tileset/tilesetBoxClip",
             "hasPannel": true
@@ -2195,7 +2223,7 @@
             "hasPannel": true
           },
           {
-            "name": "模型裁剪开挖",
+            "name": "模型裁剪",
             "thumbnail": "thing-tileset-tilesetClip.jpg",
             "main": "thing/tileset/tilesetClip",
             "hasPannel": true
@@ -2231,7 +2259,7 @@
         "name": "视图切换和对比",
         "children": [
           {
-            "name": "二维三维视图切换",
+            "name": "二三维切换",
             "thumbnail": "map-options-scene-sceneMode.jpg",
             "main": "map/options/scene-sceneMode",
             "hasPannel": true
@@ -2254,13 +2282,6 @@
             "thumbnail": "map-double-openlayers.jpg",
             "main": "map/double/openlayers",
             "libs": ["olcesium", "mars3d"],
-            "resources": ["map.css"]
-          },
-          {
-            "name": "街景联动",
-            "thumbnail": "map-double-streetview.jpg",
-            "main": "map/double/streetview",
-            "hasPannel": true,
             "resources": ["map.css"]
           }
         ]
@@ -2840,6 +2861,7 @@
       },
       {
         "name": "Three.js支持",
+        "download": false,
         "children": [
           {
             "name": "集成Demo",
@@ -2852,6 +2874,7 @@
       },
       {
         "name": "ammo物理引擎支持",
+        "download": false,
         "children": [
           {
             "name": "车辆运动",
@@ -2935,9 +2958,11 @@
       }
     ]
   },
+
   {
     "name": "非正式示例",
     "icon": "fa-globe",
+    "download": false,
     "children": [
       {
         "name": "第三方原因的",
@@ -2948,6 +2973,13 @@
             "thumbnail": "layert-online-osm.jpg",
             "main": "layer-tile/online/osm",
             "hasPannel": true
+          },
+          {
+            "name": "街景联动【需要Token】",
+            "thumbnail": "map-double-streetview.jpg",
+            "main": "map/double/streetview",
+            "hasPannel": true,
+            "resources": ["map.css"]
           }
         ]
       },

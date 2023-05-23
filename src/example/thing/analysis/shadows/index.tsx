@@ -73,6 +73,26 @@ function UIComponent() {
             </MarsButton>
           </Space>
         </MarsFormItem>
+        <MarsFormItem label="阴影分析">
+          <Space>
+            <MarsButton
+              onClick={() => {
+                console.log("---", currDate)
+                
+                mapWork.drawArea(currDate)
+              }}
+            >
+              绘制
+            </MarsButton>
+            <MarsButton
+              onClick={() => {
+                mapWork.clearArea()
+              }}
+            >
+              清除
+            </MarsButton>
+          </Space>
+        </MarsFormItem>
       </MarsPannel>
     </>
   )

@@ -49,6 +49,10 @@ export function showNewYorkDemo() {
   i3sLayer = new mars3d.layer.I3SLayer({
     name: "New York",
     url: "https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/NYC_Attributed_v17/SceneServer",
+    geoidTiledTerrainProvider: {
+      url: "https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/EGM2008/ImageServer"
+    },
+    traceFetches: false, // for tracing I3S fetches
     skipLevelOfDetail: false,
     debugShowBoundingVolume: false,
     center: { lat: 40.710975, lng: -74.023923, alt: 768.9, heading: 93.3, pitch: -23.3 },
@@ -73,6 +77,9 @@ export function showSanFranciscoDemo() {
   i3sLayer = new mars3d.layer.I3SLayer({
     name: "旧金山",
     url: "https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/SanFrancisco_3DObjects_1_7/SceneServer/layers/0",
+    // geoidTiledTerrainProvider: {
+    //   url: "https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/EGM2008/ImageServer"
+    // },
     skipLevelOfDetail: false,
     debugShowBoundingVolume: false,
     flyTo: true

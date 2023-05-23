@@ -27,21 +27,21 @@ export function onMounted(mapInstance) {
     // template: function (locationData) {
     //   let pitch
     //   if (locationData.pitch < 0) {
-    //     pitch = '俯视:' + -locationData.pitch
+    //     pitch = "俯视:" + -locationData.pitch
     //   } else {
-    //     pitch = '仰视:' + locationData.pitch
+    //     pitch = "仰视:" + locationData.pitch
     //   }
 
-    //   let dfmX = mars3d.Util.formatDegree(locationData.lng)
-    //   let dfmY = mars3d.Util.formatDegree(locationData.lat)
+    //   const dfmX = mars3d.PointTrans.degree2dms(locationData.lng).str
+    //   const dfmY = mars3d.PointTrans.degree2dms(locationData.lat).str
 
-    //   return ` <div>经度:${locationData.lat} , ${dfmX}</div>
-    //           <div>纬度:${locationData.lng} , ${dfmY}</div>
+    //   return ` <div>经度:${locationData.lat} , ${dfmY}</div>
+    //           <div>纬度:${locationData.lng} , ${dfmX}</div>
     //           <div>海拔：${locationData.alt}米</div>
     //           <div>方向：${locationData.heading}度</div>
     //           <div>${pitch}度</div>
     //           <div>视高：${locationData.cameraHeight}米</div>`
-    // },
+    // }
   })
   map.addControl(locationBar)
 }

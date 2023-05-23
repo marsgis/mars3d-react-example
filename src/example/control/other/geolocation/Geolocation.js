@@ -5,7 +5,7 @@ class Geolocation extends mars3d.control.ToolButton {
   /**
    * 创建_container控件容器对象的方法，
    * 只会调用一次
-   * @return {void}  无
+   * @return {Promise<object>}  无
    * @private
    */
   _mountedHook() {

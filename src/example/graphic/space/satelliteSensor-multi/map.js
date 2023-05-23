@@ -15,12 +15,13 @@ const converter = Cesium.Transforms.eastNorthUpToFixedFrame
 export const mapOptions = {
   scene: {
     center: { lat: 0.072832, lng: 151.409367, alt: 29330818, heading: 10, pitch: -90 },
-    globe: { enableLighting: true }
+    globe: { enableLighting: true },
+    cameraController: {
+      maximumZoomDistance: 9000000000,
+      constrainedAxis: false // 解除在南北极区域鼠标操作限制
+    }
   },
-  cameraController: {
-    maximumZoomDistance: 9000000000,
-    constrainedAxis: false // 解除在南北极区域鼠标操作限制
-  },
+  terrain: false,
   layers: [
     {
       name: "夜晚图片",

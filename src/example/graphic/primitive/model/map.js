@@ -176,6 +176,7 @@ function addDemoGraphic2(graphicLayer) {
 
   // 手动按需启动动画
   graphic.on(mars3d.EventType.load, function (event) {
+    console.log("风机 模型加载完成", event)
     const model = event.model
 
     // 参考API: http://mars3d.cn/api/cesium/ModelAnimationCollection.html

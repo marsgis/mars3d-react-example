@@ -112,16 +112,17 @@ export function addTileLayer() {
   // 单击事件
   tileLayer.on(mars3d.EventType.loadConfig, function (event) {
     console.log("加载了GetCapabilities", event)
+
+    setTimeout(() => {
+      map.mouseEvent.pickImageryLayerFeatures([117.169993, 31.842132, 214.6]).then((result) => {
+        console.log("手动模拟了单击，返回了：", result)
+      })
+    }, 6000)
   })
   tileLayer.on(mars3d.EventType.click, function (event) {
     console.log("单击了矢量数据，共" + event.features.length + "条", event)
   })
 
-  setTimeout(() => {
-    map.mouseEvent.pickImageryLayerFeatures([117.169993, 31.842132, 214.6]).then((result) => {
-      console.log("手动模拟了单击，返回了：", result)
-    })
-  }, 6000)
 }
 
 export function addTileLayer2() {

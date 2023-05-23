@@ -1,5 +1,5 @@
 import { MarsPannel, MarsIcon, MarsInput, MarsButton, MarsPagination, $showLoading, $hideLoading, $message, $alert } from "@mars/components/MarsUI"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { isLonLat } from "@mars/utils/mars-util"
 import * as mapWork from "./map"
 import { useLifecycle } from "@mars/widgets/common/uses/useLifecycle"

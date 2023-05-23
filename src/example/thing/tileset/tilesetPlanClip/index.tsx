@@ -32,6 +32,34 @@ function UIComponent() {
       change(data) {
         mapWork.rangeNormalZ(data)
       }
+    },
+    {
+      type: "slider",
+      field: "rotationAngle1",
+      label: "旋转角度1:",
+      step: 0.1,
+      min: 0,
+      max: 360,
+      value: 0,
+      extra: "当前值{rotationAngle1}",
+      extraWidth: 80,
+      change(data) {
+        mapWork.rangeAngle1(data)
+      }
+    },
+    {
+      type: "slider",
+      field: "rotationAngle2",
+      label: "旋转角度2:",
+      step: 0.1,
+      min: 0,
+      max: 180,
+      value: 0,
+      extra: "当前值{rotationAngle2}",
+      extraWidth: 80,
+      change(data) {
+        mapWork.rangeAngle2(data)
+      }
     }
   ]
 

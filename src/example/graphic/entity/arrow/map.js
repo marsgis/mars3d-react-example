@@ -22,7 +22,6 @@ export function onMounted(mapInstance) {
 
   globalNotify("已知问题提示", `(1) 当在180度经线或南北极时,存在渲染错乱问题。`)
 
-
   // 创建矢量数据图层
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
@@ -43,6 +42,9 @@ export function onMounted(mapInstance) {
   addDemoGraphic6(graphicLayer)
   addDemoGraphic7(graphicLayer)
   addDemoGraphic8(graphicLayer)
+  addDemoGraphic9(graphicLayer)
+  addDemoGraphic10(graphicLayer)
+  addDemoGraphic11(graphicLayer)
 }
 
 /**
@@ -57,7 +59,7 @@ function addDemoGraphic1(graphicLayer) {
   const graphic = new mars3d.graphic.StraightArrow({
     positions: [
       [117.76314, 30.671648, 440.5],
-      [117.885026, 32.030943, -648.1]
+      [117.885026, 32.030943, 440.5]
     ],
     style: {
       color: "#ff0000",
@@ -76,7 +78,7 @@ function addDemoGraphic2(graphicLayer) {
   const graphic = new mars3d.graphic.FineArrow({
     positions: [
       [118.351476, 30.646825, 286.6],
-      [118.419077, 32.05059, -493.2]
+      [118.419077, 32.05059, 286.6]
     ],
     style: {
       color: "#ff0000",
@@ -95,7 +97,7 @@ function addDemoGraphic3(graphicLayer) {
   const graphic = new mars3d.graphic.FineArrowYW({
     positions: [
       [119.527562, 30.549996, 481.3],
-      [119.645216, 31.987335, -449.9]
+      [119.645216, 31.987335, 481.3]
     ],
     style: {
       color: "#ff0000",
@@ -113,10 +115,10 @@ function addDemoGraphic3(graphicLayer) {
 function addDemoGraphic4(graphicLayer) {
   const graphic = new mars3d.graphic.AttackArrow({
     positions: [
-      [119.162167, 30.627124, 21.7],
+      [119.162167, 30.627124, 206.6],
       [118.734841, 30.661996, 206.6],
-      [119.136736, 31.175837, -505.6],
-      [119.001217, 32.015687, -633.3]
+      [119.136736, 31.175837, 206.6],
+      [119.001217, 32.015687, 206.6]
     ],
     style: {
       color: "#ff0000",
@@ -134,10 +136,10 @@ function addDemoGraphic4(graphicLayer) {
 function addDemoGraphic5(graphicLayer) {
   const graphic = new mars3d.graphic.AttackArrowYW({
     positions: [
-      [120.472593, 30.475435, -245.4],
+      [120.472593, 30.475435, 1429.5],
       [120.859927, 30.410491, 1429.5],
-      [120.874151, 31.09718, -239.4],
-      [120.709928, 31.883932, -597.5]
+      [120.874151, 31.09718, 1429.5],
+      [120.709928, 31.883932, 1429.5]
     ],
     style: {
       materialType: mars3d.MaterialType.PolyGradient,
@@ -155,9 +157,9 @@ function addDemoGraphic5(graphicLayer) {
 function addDemoGraphic6(graphicLayer) {
   const graphic = new mars3d.graphic.AttackArrowPW({
     positions: [
-      [120.159212, 30.51614, -81.9],
-      [120.073352, 31.163911, -557.6],
-      [120.248902, 31.922699, -738.8]
+      [120.159212, 30.51614, 0],
+      [120.073352, 31.163911, 0],
+      [120.248902, 31.922699, 0]
     ],
     style: {
       color: "#ff0000",
@@ -197,9 +199,9 @@ function addDemoGraphic7(graphicLayer) {
 function addDemoGraphic8(graphicLayer) {
   const graphic = new mars3d.graphic.GatheringPlace({
     positions: [
-      [116.76866, 31.79288, -267.2],
-      [117.336959, 31.678728, -952.4],
-      [117.363407, 32.203935, -607.7]
+      [116.76866, 31.79288, 0],
+      [117.336959, 31.678728, 0],
+      [117.363407, 32.203935, 0]
     ],
     style: {
       materialType: mars3d.MaterialType.PolyGradient,
@@ -213,6 +215,63 @@ function addDemoGraphic8(graphicLayer) {
       clampToGround: true
     },
     attr: { remark: "示例8" }
+  })
+  graphicLayer.addGraphic(graphic)
+}
+
+// 该方法演示 自定义点状军标（png或svg图片即可），复杂的也可以Canvas绘制，参考  graphic\entity\billboard-canvas\CanvasBillboard.js
+function addDemoGraphic9(graphicLayer) {
+  const graphic = new mars3d.graphic.BillboardEntity({
+    position: [116.699972, 29.004322],
+    style: {
+      image: "img/marker/80800.png",
+      width: 100,
+      height: 100,
+      horizontalOrigin: Cesium.HorizontalOrigin.LEFT, // 横向的定位点，LEFT左侧
+      verticalOrigin: Cesium.VerticalOrigin.BOTTOM // 竖向的定位点，BOTTOM底部
+    },
+    attr: { remark: "示例9 - 自定义点状军标" }
+  })
+  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
+}
+
+// 该方法演示 自定义线状军标（定义在 CurveEntity.js 中） ，可以参考自行扩展算法实现相关标号
+function addDemoGraphic10(graphicLayer) {
+  // eslint-disable-next-line no-undef
+  const graphic = new CurveEntity({
+    positions: [
+      [118.901633, 29.84308, 423.4],
+      [118.030482, 29.323071, 214.3],
+      [118.935367, 28.88123, 208.9],
+      [117.973442, 28.441806, 223.9]
+    ],
+    style: {
+      color: "#0000ff",
+      opacity: 0.6,
+      width: 4
+    },
+    attr: { remark: "示例10 - 自定义线状军标" }
+  })
+  graphicLayer.addGraphic(graphic)
+}
+
+// 该方法演示 自定义面状军标（定义在 CloseVurveEntity.js 中） ，可以参考自行扩展算法实现相关标号
+function addDemoGraphic11(graphicLayer) {
+  // eslint-disable-next-line no-undef
+  const graphic = new CloseVurveEntity({
+    positions: [
+      [120.2849, 29.773135, 26.8],
+      [119.26029, 28.767787, 297.3],
+      [120.904109, 28.756734, 698.9]
+    ],
+    style: {
+      color: "#0000ff",
+      opacity: 0.6,
+      outline: true,
+      outlineWidth: 3,
+      outlineColor: "#ffffff"
+    },
+    attr: { remark: "示例11 - 自定义面状军标" }
   })
   graphicLayer.addGraphic(graphic)
 }

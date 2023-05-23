@@ -8,7 +8,7 @@ class FloorGraphic extends mars3d.graphic.BasePointEntity {
   /**
    * 对象添加到图层前创建一些对象的钩子方法，
    * 只会调用一次
-   * @return {void}  无
+   * @return {Promise<object>}  无
    * @private
    */
   _mountedHook() {

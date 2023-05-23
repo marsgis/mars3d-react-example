@@ -15,6 +15,10 @@ export const mapOptions = {
       type: "xyz",
       url: "http://t3.tianditu.gov.cn/img_c/wmts?service=WMTS&version=1.0.0&request=GetTile&tilematrix={z}&layer=img&style=default&tilerow={y}&tilecol={x}&tilematrixset=c&format=tiles&tk=6c99c7793f41fccc4bd595b03711913e",
       crs: "EPSG:4490", // 标识坐标系
+      // queryParameters: {
+      //   // 可以传自定义url参数，如token等
+      //   token: "mars3d"
+      // },
       show: true
     }
   ],
@@ -23,16 +27,11 @@ export const mapOptions = {
       name: "山东电子",
       icon: "img/basemaps/google_vec.png",
       type: "xyz",
-      url: "http://www.sdmap.gov.cn/tileservice/SDPubMap?layer=SDPubMap&style=default&tilematrixset=default028mm&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fpng&TileMatrix={z}&TileCol={x}&TileRow={y}",
+      url: "http://service1.sdmap.gov.cn/tileservice/sdpubmap?layer=SDPubMap&style=default&tilematrixset=default028mm&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image/png&TileMatrix={z}&TileCol={x}&TileRow={y}&tk=2ec5b748cca9b24b6474d6857deec02e",
       crs: "EPSG:4490",
-      rectangle: { xmin: 114.3, xmax: 123.2, ymin: 34.165, ymax: 38.626 },
-      minimumLevel: 5,
+      rectangle: { xmin: 114.229839088925, xmax: 123.400530149205, ymin: 33.9389305555556, ymax: 38.9048194444444 },
+      minimumLevel: 7,
       maximumLevel: 18,
-      alpha: 1,
-      queryParameters: {
-        // 可以传自定义url参数，如token等
-        token: "mars3d"
-      },
       show: true
     }
     // {

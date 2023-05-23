@@ -6,7 +6,14 @@ export let map // mars3d.Map三维地图对象
 export const mapOptions = {
   scene: {
     center: { lat: 21.373802, lng: 105.112505, alt: 12964001, heading: 2, pitch: -85 },
-    highDynamicRange: false
+    highDynamicRange: false,
+    globe: {
+      enableLighting: true
+    }
+  },
+  terrain: false,
+  control: {
+    terrainProviderViewModels: []
   },
   // 方式1：在创建地球前的参数中配置
   basemaps: [
