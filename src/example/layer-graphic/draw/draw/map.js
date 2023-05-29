@@ -54,8 +54,14 @@ export function onMounted(mapInstance) {
     // isRestorePositions: true,
     hasEdit: true,
     isAutoEditing: true // 绘制完成后是否自动激活编辑
+    // drawEndEventType: mars3d.EventType.rightClick,
+    // drawDelEventType: mars3d.EventType.middleClick
   })
   map.addLayer(graphicLayer)
+
+  // mars3d.Lang["_双击完成绘制"][0] = "右击完成绘制"
+  // mars3d.Lang["_右击删除点"][0] = "中键单击完成绘制"
+
 
   // 在layer上绑定监听事件
   graphicLayer.on(mars3d.EventType.click, function (event) {
