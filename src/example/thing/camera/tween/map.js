@@ -22,15 +22,14 @@ let roaming
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
-  const tiles3dLayer = new mars3d.layer.TilesetLayer({
-    url: "//data.mars3d.cn/3dtiles/max-ditiezhan/tileset.json",
-    maximumScreenSpaceError: 1,
-    maximumMemoryUsage: 1024,
-    popup: "all"
-  })
-  map.addLayer(tiles3dLayer)
+  // const tiles3dLayer = new mars3d.layer.TilesetLayer({
+  //   url: "//data.mars3d.cn/3dtiles/max-ditiezhan/tileset.json",
+  //   maximumScreenSpaceError: 1,
+  //   maximumMemoryUsage: 1024,
+  //   popup: "all"
+  // })
+  // map.addLayer(tiles3dLayer)
 
-  // 108.380053,22.736443,-1
 
   const viewPoints = [
     { id: 0, name: "地铁口", lat: 22.7407925, lng: 108.3793365, alt: 89.7, heading: 37.4, pitch: -7.1, duration: 2 },

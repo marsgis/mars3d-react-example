@@ -54,8 +54,8 @@ export function onMounted(mapInstance) {
 
   // 相机原地左一直旋转
   // setInterval(function () {
-  //     map.keyboardRoam.rotateCamera(mars3d.KeyboardType.LEFT_ROTATE);
-  // }, 100);
+  //   map.keyboardRoam.rotateCamera(mars3d.MoveType.LEFT_ROTATE)
+  // }, 100)
 }
 
 /**

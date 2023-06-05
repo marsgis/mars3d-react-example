@@ -29,7 +29,7 @@ export function onUnmounted() {
 }
 
 function addSlope() {
-  // 剖度坡向
+  // 坡度坡向
   slope = new mars3d.thing.Slope({
     arrow: {
       scale: 0.3, // 箭头长度的比例（范围0.1-0.9）

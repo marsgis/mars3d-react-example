@@ -41,6 +41,16 @@ export function onMounted(mapInstance) {
   // showCameraRoute(viewPoints) // 显示相机点的位置方向和路线，便于对比查看
 }
 
+export function pauseCameraViewList() {
+  map.pauseCameraViewList()
+}
+
+export function proceedCameraViewList() {
+  map.proceedCameraViewList()
+}
+
+
+
 /**
  * 释放当前地图业务的生命周期函数
  * @returns {void} 无

@@ -110,6 +110,7 @@ function addDemoGraphic1(graphicLayer) {
 
 function addDemoGraphic2(graphicLayer) {
   const graphic = new mars3d.graphic.PathEntity({
+    // maxCacheCount: -1,
     style: {
       width: 2,
       color: "#00ffff",

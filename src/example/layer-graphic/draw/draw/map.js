@@ -63,6 +63,13 @@ export function onMounted(mapInstance) {
   // mars3d.Lang["_右击删除点"][0] = "中键单击完成绘制"
 
 
+  // map.on(mars3d.EventType.mouseOver, function (event) {
+  //   console.log("mouseover")
+  // })
+  map.on(mars3d.EventType.mouseOut, function (event) {
+    map.closeSmallTooltip()
+  })
+
   // 在layer上绑定监听事件
   graphicLayer.on(mars3d.EventType.click, function (event) {
     console.log("监听layer，单击了矢量对象", event)

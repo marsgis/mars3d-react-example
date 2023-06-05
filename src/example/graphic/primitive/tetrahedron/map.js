@@ -21,6 +21,17 @@ export function onMounted(mapInstance) {
   map = mapInstance // 记录map
   map.basemap = 2017 // 切换至蓝色底图
 
+  globalNotify("已知问题提示", `(1)Tetrahedron与OutlineEffect特效shader冲突，暂时无法共用`)
+
+  // 添加特效 【已知冲突问题】
+  // const outlineEffect = new mars3d.effect.OutlineEffect({
+  //   color: "#FFFF00",
+  //   width: 4,
+  //   eventType: mars3d.EventType.click,
+  //   showPlane: true
+  // })
+  // map.addEffect(outlineEffect)
+
   // 添加参考三维模型;
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     name: "合肥市建筑物",
