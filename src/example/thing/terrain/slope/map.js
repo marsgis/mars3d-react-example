@@ -55,8 +55,8 @@ function addSlope() {
     console.log("分析完成", event)
 
     const positions = event.positions
-    if (positions.length > 2) {
-      positions[0] = mars3d.PointUtil.setPositionsHeight(positions[0], event.minHeight - 100)
+    if (positions.length >= 2) {
+      positions[0] = mars3d.PointUtil.setPositionsHeight(positions[0], event.minHeight - 1000)
       positions[positions.length - 1] = mars3d.PointUtil.setPositionsHeight(positions[positions.length - 1], event.maxHeight + 100)
       contourLine.positions = positions
     }

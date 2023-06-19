@@ -37,6 +37,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic3(graphicLayer)
   addDemoGraphic4(graphicLayer)
   addDemoGraphic5(graphicLayer)
+  addDemoGraphic6(graphicLayer)
 }
 
 /**
@@ -167,6 +168,29 @@ function addDemoGraphic5(graphicLayer) {
   })
   graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
 }
+
+
+function addDemoGraphic6(graphicLayer) {
+  const graphic = new mars3d.graphic.Sector({
+    position: [117.172735, 31.660464, 17],
+    style: {
+      radius: 5000,
+      startAngle: 90, // 开始角度(正东方向为0,顺时针到360度)
+      endAngle: 20,
+      materialType: "Circle3Wave",
+      materialOptions: {
+        color1: Cesium.Color.RED,
+        color2: Cesium.Color.YELLOW,
+        color3: Cesium.Color.BLUE,
+        alpha: 0.4,
+        speed: 10.0
+      }
+    },
+    attr: { remark: "示例5" }
+  })
+  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
+}
+
 
 // 生成演示数据(测试数据量)
 export function addRandomGraphicByCount(count) {

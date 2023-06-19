@@ -282,3 +282,27 @@ function showXQ() {
   const showHistoryLayer = true
   eventTarget.fire("showWebsite", { showHistoryLayer })
 }
+
+// 在原始ceisum对象绑定popup
+export function bindCesiumEntityDemo() {
+  const blueBox = map.viewer.entities.add({
+    name: "Blue box",
+    position: Cesium.Cartesian3.fromDegrees(116.316945, 30.893873, 1000),
+    box: {
+      dimensions: new Cesium.Cartesian3(4000.0, 3000.0, 5000.0),
+      material: Cesium.Color.BLUE
+    }
+  })
+
+  const innerHtml = `<table style="width:280px;">
+    <tr><th scope="col" colspan="4"  style="text-align:center;font-size:15px;">在原始ceisum对象绑定popup</th></tr>
+    <tr><td >说明：</td><td >在原始ceisum对象绑定popup </td></tr>
+    <tr><td >方式：</td><td >可以绑定任意html </td></tr>
+    <tr><td >备注：</td><td >我是在原始ceisum对象绑定popup</td></tr>
+  </table>`
+
+  blueBox._popupConfig = {
+    content: innerHtml, // 支持回调方法，同bindPopup的第1个参数
+    options: { offsetY: -30, closeOnClick: false, autoClose: false } // 同bindPopup的第2个参数
+  }
+}

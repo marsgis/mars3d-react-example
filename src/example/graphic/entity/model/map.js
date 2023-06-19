@@ -220,6 +220,12 @@ function addDemoGraphic3(graphicLayer) {
     attr: { remark: "示例3" }
   })
   graphicLayer.addGraphic(graphic)
+
+  // graphic.readyPromise.then(() => {
+  //   graphic.startEditing()
+  //   graphic.editing._hasEditHeading = true
+  //   graphic.editing.updateDraggers()
+  // })
 }
 
 function addDemoGraphic4(graphicLayer) {

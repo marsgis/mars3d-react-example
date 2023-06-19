@@ -1,4 +1,5 @@
 import * as mars3d from "mars3d"
+import * as mapv from "mapv"
 
 export let map // mars3d.Map三维地图对象
 
@@ -37,10 +38,10 @@ export function onUnmounted() {
 
 // 创建mapv图层
 function createMapvLayer(geojson) {
-  const geojsonDataSet = this.mapv.geojson.getDataSet(geojson)
+  const geojsonDataSet = mapv.geojson.getDataSet(geojson)
 
   const to = "北京"
-  const qianxi = new this.mapv.DataSet([
+  const qianxi = new mapv.DataSet([
     {
       from: "河北",
       count: 354551,
@@ -102,8 +103,8 @@ function createMapvLayer(geojson) {
 
   const qianxiData = qianxi.get()
   for (let i = 0; i < qianxiData.length; i++) {
-    const fromCenter = this.mapv.utilCityCenter.getCenterByCityName(qianxiData[i].from)
-    const toCenter = this.mapv.utilCityCenter.getCenterByCityName(qianxiData[i].to)
+    const fromCenter = mapv.utilCityCenter.getCenterByCityName(qianxiData[i].from)
+    const toCenter = mapv.utilCityCenter.getCenterByCityName(qianxiData[i].to)
     if (!fromCenter || !toCenter) {
       continue
     }
@@ -136,7 +137,7 @@ function createMapvLayer(geojson) {
       text: qianxiData[i].to
     })
 
-    const curve = this.mapv.utilCurve.getPoints([fromCenter, toCenter])
+    const curve = mapv.utilCurve.getPoints([fromCenter, toCenter])
 
     for (let j = 0; j < curve.length; j++) {
       timeData.push({

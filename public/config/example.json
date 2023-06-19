@@ -114,6 +114,13 @@
             "thumbnail": "map-other-offline.jpg",
             "main": "map/other/offline",
             "hasPannel": true
+          },
+          {
+            "name": "浏览器缓存数据",
+            "thumbnail": "map-other-networkPlug.jpg",
+            "main": "map/other/networkPlug",
+            "libs": ["mars3d", "localforage", "cesium-networkPlug"],
+            "new": true
           }
         ]
       }
@@ -1033,7 +1040,8 @@
             "name": "扇形",
             "thumbnail": "graphic-entity-polygon-sector.jpg",
             "main": "graphic/entity/polygon-sector",
-            "hasPannel": true
+            "hasPannel": true,
+            "resources": ["Circle3WaveMaterialProperty.js"]
           },
           {
             "name": "军标",
@@ -2346,7 +2354,8 @@
           {
             "name": "视点飞行",
             "thumbnail": "map-fun-setCameraViewList.gif",
-            "main": "map/fun/setCameraViewList"
+            "main": "map/fun/setCameraViewList",
+            "hasPannel": true
           },
           {
             "name": "绕点环绕飞行",
@@ -2893,12 +2902,6 @@
             "thumbnail": "thirdParty-ammo-turnRope.gif",
             "main": "thirdParty/ammo/turnRope",
             "libs": ["mars3d", "cesium-meshVisualizer"]
-          },
-          {
-            "name": "撞击（断裂体）",
-            "thumbnail": "thirdParty-ammo-convexBreak.gif",
-            "main": "thirdParty/ammo/convexBreak",
-            "libs": ["mars3d", "cesium-meshVisualizer"]
           }
         ]
       },
@@ -3009,5 +3012,5 @@
         ]
       }
     ]
-  }  
+  }
 ]

@@ -13,7 +13,7 @@ function UIComponent() {
       min: -20,
       max: 30,
       value: 0,
-      extra: "当前值{distanceVal}",
+      extra: "值：{distanceVal}",
       extraWidth: 80,
       change(data) {
         mapWork.rangeDistance(data)
@@ -27,7 +27,7 @@ function UIComponent() {
       min: -10,
       max: 10,
       value: 0,
-      extra: "当前值{normalVal}",
+      extra: "值：{normalVal}",
       extraWidth: 80,
       change(data) {
         mapWork.rangeNormalZ(data)
@@ -41,7 +41,7 @@ function UIComponent() {
       min: 0,
       max: 360,
       value: 0,
-      extra: "当前值{rotationAngle1}",
+      extra: "值：{rotationAngle1}",
       extraWidth: 80,
       change(data) {
         mapWork.rangeAngle1(data)
@@ -55,7 +55,7 @@ function UIComponent() {
       min: 0,
       max: 180,
       value: 0,
-      extra: "当前值{rotationAngle2}",
+      extra: "值：{rotationAngle2}",
       extraWidth: 80,
       change(data) {
         mapWork.rangeAngle2(data)

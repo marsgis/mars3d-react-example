@@ -90,7 +90,7 @@ function createSatelliteList(arr) {
     highlightSatellite()
   })
 
-  for (let i = 0; i < arr.length; i++) {
+  for (let i = 0; i < 1; i++) {
     const item = arr[i]
 
     // 属性处理
@@ -135,7 +135,7 @@ function createSatelliteList(arr) {
     // path显示后FPS下降的厉害
     item.path = item.path || {}
     item.path.color = Cesium.defaultValue(item.path.color, "#e2e2e2")
-    item.path.closure = Cesium.defaultValue(item.path.closure, true)
+    item.path.closure = false
 
     item.cone = {
       sensorType: i % 2 === 1 ? mars3d.graphic.SatelliteSensor.Type.Rect : mars3d.graphic.SatelliteSensor.Type.Conic,

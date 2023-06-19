@@ -1,4 +1,5 @@
 import * as mars3d from "mars3d"
+import * as mapv from "mapv"
 
 export let map // mars3d.Map三维地图对象
 
@@ -70,8 +71,8 @@ function createMapvLayer(rs) {
           cityBegin = item[1]
         }
         if (item[0] !== "起点城市" || (item[0] !== "迁出城市" && item.length > 1)) {
-          const cityCenter1 = this.mapv.utilCityCenter.getCenterByCityName(item[0].replace(/市|省/, ""))
-          const cityCenter2 = this.mapv.utilCityCenter.getCenterByCityName(cityBegin.replace(/市|省/, "").trim())
+          const cityCenter1 = mapv.utilCityCenter.getCenterByCityName(item[0].replace(/市|省/, ""))
+          const cityCenter2 = mapv.utilCityCenter.getCenterByCityName(cityBegin.replace(/市|省/, "").trim())
           if (cityCenter1) {
             if (Math.random() > 0.7) {
               curive(cityCenter2, cityCenter1, 50)

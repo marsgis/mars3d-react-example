@@ -5,10 +5,10 @@ import * as mapWork from "./map.js"
 
 function UIComponent() {
   const [PolygonNumber, setPolygonNumber] = useState(10)
-  const [inputNumberPolygonDepth, setInputNumberPolygonDepth] = useState(100)
-  const [inputNumberPolygon, setInputNumberPolygon] = useState(100)
+  const [inputNumberPolygonDepth, setInputNumberPolygonDepth] = useState(300)
+  const [inputNumberPolygon, setInputNumberPolygon] = useState(10)
   const [inputNumberPolyline, setInputNumberPolyline] = useState(100)
-  const [inputNumberPolylineDepth, setInputNumberPolylineDepth] = useState(100)
+  const [inputNumberPolylineDepth, setInputNumberPolylineDepth] = useState(300)
 
   return (
     <MarsPannel visible={true} right="10" top="10">

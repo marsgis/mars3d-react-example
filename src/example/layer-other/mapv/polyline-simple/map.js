@@ -1,4 +1,5 @@
 import * as mars3d from "mars3d"
+import * as mapv from "mapv"
 
 export let map // mars3d.Map三维地图对象
 
@@ -69,8 +70,8 @@ function createMapvLayer() {
 
   // 自定义数据
   while (randomCount--) {
-    const cityCenter1 = this.mapv.utilCityCenter.getCenterByCityName(citys[parseInt(Math.random() * citys.length)])
-    const cityCenter2 = this.mapv.utilCityCenter.getCenterByCityName(citys[parseInt(Math.random() * citys.length)])
+    const cityCenter1 = mapv.utilCityCenter.getCenterByCityName(citys[parseInt(Math.random() * citys.length)])
+    const cityCenter2 = mapv.utilCityCenter.getCenterByCityName(citys[parseInt(Math.random() * citys.length)])
     data.push({
       geometry: {
         type: "LineString",

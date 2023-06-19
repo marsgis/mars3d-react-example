@@ -159,13 +159,14 @@ function addDemoGraphic3(graphicLayer) {
 function addDemoGraphic4(graphicLayer) {
   const graphic = new mars3d.graphic.PointPrimitive({
     name: "根据视距显示点",
-    position: new mars3d.LngLatPoint(116.329102, 30.977955, 1548.6),
+    position: new mars3d.LngLatPoint(116.329102, 30.977955, 0),
     style: {
       color: "#0000ff",
       pixelSize: 20,
       outlineColor: "#ffffff",
       outlineWidth: 2,
-      distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0.0, 100000)
+      distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0.0, 100000),
+      clampToGround: true
     },
     attr: { remark: "示例4" }
   })

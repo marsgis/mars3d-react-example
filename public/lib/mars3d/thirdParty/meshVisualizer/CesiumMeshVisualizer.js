@@ -2210,7 +2210,7 @@ define('Core/GeometryUtils',[
     *@return {Boolean}
     */
     GeometryUtils.isGeometry3js = function (geometry) {
-        return (typeof THREE !== 'undefined' && (geometry instanceof THREE.Geometry || geometry instanceof THREE.BufferGeometry))
+        return (typeof THREE !== 'undefined' && (geometry instanceof THREE.BufferGeometry || geometry instanceof THREE.BufferGeometry))
             || (geometry.attributes && geometry.attributes.position && geometry.index)
             || (geometry.vertices && geometry.faces);
     }
@@ -2266,7 +2266,7 @@ define('Core/GeometryUtils',[
 
     /**
     *
-    *@param {THREE.Geometry}geometry3js
+    *@param {THREE.BufferGeometry}geometry3js
     *@return {Cesium.Geometry}
     */
     GeometryUtils.fromGeometry3js = function (geometry3js) {
@@ -2313,7 +2313,7 @@ define('Core/GeometryUtils',[
     /**
     *
     *@param {Cesium.Geometry}geometry
-    *@return {THREE.Geometry}
+    *@return {THREE.BufferGeometry}
     */
     GeometryUtils.toGeometry3js = function (geometry) {
         if (typeof THREE === 'undefined') {
@@ -2323,7 +2323,7 @@ define('Core/GeometryUtils',[
         var positions = geometry.attributes.position.values;
         var positionIdx = 0;
 
-        var geometry3js = new THREE.Geometry();
+        var geometry3js = new THREE.BufferGeometry();
 
         for (var i = 0; i < positions.length  ; i += 3) {
             positionIdx = i * 3;
@@ -2343,13 +2343,13 @@ define('Core/GeometryUtils',[
     }
 
     /**
-   *@param {Cesium.Geometry|THREE.Geometry}
+   *@param {Cesium.Geometry|THREE.BufferGeometry}
    *@param {Cesium.Cartesian3}[offset]
    *@return {CSG}
    */
     GeometryUtils.toCSG = function (geometry, offset) {
         if (!(typeof THREE === 'undefined')) {
-            if (geometry instanceof THREE.Geometry) {
+            if (geometry instanceof THREE.BufferGeometry) {
                 return GeometryUtils._toCSG3js(geometry, offset);
             }
         }
@@ -2406,11 +2406,11 @@ define('Core/GeometryUtils',[
     /**
     *@param {CSG}csg_model
     *@param {Boolean}[toGeometry3js=false]
-    *@return {Cesium.Geometry|THREE.Geometry}
+    *@return {Cesium.Geometry|THREE.BufferGeometry}
     */
     GeometryUtils.fromCSG = function (csg_model, toGeometry3js) {
         if (!(typeof THREE === 'undefined')) {
-            if (geometry instanceof THREE.Geometry) {
+            if (geometry instanceof THREE.BufferGeometry) {
                 return GeometryUtils._fromCSG3js(geometry, offset);
             }
         }
@@ -2481,7 +2481,7 @@ define('Core/GeometryUtils',[
             geometry = three_model.geometry;
             offset = offset || three_model.position;
             rotation = rotation || three_model.rotation;
-        } else if (three_model instanceof THREE.Geometry) {
+        } else if (three_model instanceof THREE.BufferGeometry) {
             geometry = three_model;
             offset = offset || new THREE.Vector3(0, 0, 0);
             rotation = rotation || new THREE.Euler(0, 0, 0);
@@ -2527,7 +2527,7 @@ define('Core/GeometryUtils',[
             throw new Error("THREE 未加载");
         }
         var i, j, vertices, face,
-            three_geometry = new THREE.Geometry(),
+            three_geometry = new THREE.BufferGeometry(),
             polygons = csg_model.toPolygons();
 
         if (!CSG) {
@@ -2678,7 +2678,7 @@ define('Core/Mesh',[
     /**
     *
     *@param {Object|geometry}options
-    *@param {Cesium.Geometry|Cesium.CSG|THREE.Geometry|THREE.BufferGeometry}options.geometry
+    *@param {Cesium.Geometry|Cesium.CSG|THREE.BufferGeometry|THREE.BufferGeometry}options.geometry
     *@param {Cesium.MeshMaterial}options.material
     *@param {Boolean}[options.show=true]
     *@param {Cesium.Cartesian3}[options.position]

@@ -17,10 +17,25 @@ export const mapOptions = {
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
-
   map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
 
-  // 加模型
+  // // 创建矢量数据图层
+  // const graphicLayer = new mars3d.layer.GraphicLayer()
+  // map.addLayer(graphicLayer)
+
+  // // 加gltf模型
+  // const graphic = new mars3d.graphic.ModelPrimitive({
+  //   name: "风机",
+  //   position: [117.221189, 31.814105, 30],
+  //   style: {
+  //     url: "//data.mars3d.cn/gltf/mars/fengche.gltf",
+  //     colorBlendMode: Cesium.ColorBlendMode.MIX,
+  //     scale: 50
+  //   }
+  // })
+  // graphicLayer.addGraphic(graphic)
+
+  // 加3dtiles模型
   const tilesetLayer = new mars3d.layer.TilesetLayer({
     name: "合肥天鹅湖",
     type: "3dtiles",

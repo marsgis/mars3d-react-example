@@ -18,48 +18,13 @@ class ThreeLayer extends BaseLayer {
   }
 
   /**
-   * 对象添加到地图前创建一些对象的钩子方法，
-   * 只会调用一次
-   * @return {void}  无
-   * @private
-   */
-  _mountedHook() {
-    if (!THREE) {
-      throw new Error("请引入 three.js 库 ")
-    }
-
-    const scene = this._map.scene
-
-    const threeContainer = mars3d.DomUtil.create("div", "mars3d-threejs")
-    threeContainer.style.position = "absolute"
-    threeContainer.style.top = "0px"
-    threeContainer.style.left = "0px"
-    threeContainer.style.width = scene.canvas.clientWidth + "px"
-    threeContainer.style.height = scene.canvas.clientHeight + "px"
-    threeContainer.style.pointerEvents = this._pointerEvents ? "auto" : "none" // auto时可以交互，但是没法放大地球， none 没法交互
-    this._container = threeContainer
-
-    const fov = 45
-    const aspect = scene.canvas.clientWidth / scene.canvas.clientHeight
-    const near = 1
-    const far = 10 * 1000 * 1000 // needs to be far to support Cesium's world-scale rendering
-
-    this.scene = new THREE.Scene()
-    this.camera = new THREE.PerspectiveCamera(fov, aspect, near, far)
-    this.renderer = new THREE.WebGLRenderer({ alpha: true })
-    threeContainer.appendChild(this.renderer.domElement)
-  }
-
-  /**
    * 对象添加到地图上的创建钩子方法，
    * 每次add时都会调用
    * @return {void}  无
    * @private
    */
   _addedHook() {
-    if (this._container) {
-      this._map.container.appendChild(this._container)
-    }
+    this.initThree()
 
     this._map.viewer.useDefaultRenderLoop = false // 关闭自动渲染
 
@@ -84,43 +49,59 @@ class ThreeLayer extends BaseLayer {
 
     this._map.viewer.useDefaultRenderLoop = true
 
-    if (this._container) {
-      this._map.container.removeChild(this._container)
+    if (this._threeCanvas) {
+      this._map.container.removeChild(this._threeCanvas)
+      delete this._threeCanvas
     }
+  }
+
+  initThree() {
+    if (!THREE) {
+      throw new Error("请引入 three.js 库 ")
+    }
+
+    const width = this._map.scene.canvas.clientWidth
+    const height = this._map.scene.canvas.clientHeight
+
+    const threeContainer = mars3d.DomUtil.create("canvas", "mars3d-threejs", this._map.container)
+    threeContainer.style.position = "absolute"
+    threeContainer.style.top = "0px"
+    threeContainer.style.left = "0px"
+    threeContainer.style.width = width + "px"
+    threeContainer.style.height = height + "px"
+    threeContainer.style.pointerEvents = this._pointerEvents ? "auto" : "none" // auto时可以交互，但是没法放大地球， none 没法交互
+    this._threeCanvas = threeContainer
+
+    const fov = 45
+    const aspect = width / height
+    const near = 1
+    const far = 10 * 1000 * 1000 // needs to be far to support Cesium's world-scale rendering
+
+    this.renderer = new THREE.WebGLRenderer({
+      canvas: threeContainer,
+      alpha: true,
+      logarithmicDepthBuffer: true,
+      antialias: true
+    })
+    this.camera = new THREE.PerspectiveCamera(fov, aspect, near, far)
+    this.scene = new THREE.Scene()
   }
 
   update() {
     this.renderCesium()
-    this.renderThreeObj()
-    this.renderCamera()
+    this.renderThreeJS()
   }
 
   renderCesium() {
     this._map.viewer.render()
   }
 
-  renderThreeObj() {
-    const width = this._container.clientWidth
-    const height = this._container.clientHeight
-    this.renderer.setSize(width, height)
-    this.renderer.render(this.scene, this.camera)
-  }
-
-  renderCamera() {
-    // register Three.js scene with Cesium
-    this.camera.fov = Cesium.Math.toDegrees(this._map.camera.frustum.fovy) // ThreeJS FOV is vertical
-    this.camera.updateProjectionMatrix()
-
-    // Clone Cesium Camera projection position so the
-    // Three.js Object will appear to be at the same place as above the Cesium Globe
-
+  renderThreeJS() {
     this.camera.matrixAutoUpdate = false
-
-    this.camera.lookAt(new THREE.Vector3(0, 0, 0))
-
     const cvm = this._map.camera.viewMatrix
     const civm = this._map.camera.inverseViewMatrix
 
+    this.camera.lookAt(new THREE.Vector3(0, 0, 0))
     this.camera.matrixWorld.set(
       civm[0],
       civm[4],
@@ -139,7 +120,6 @@ class ThreeLayer extends BaseLayer {
       civm[11],
       civm[15]
     )
-
     this.camera.matrixWorldInverse.set(
       cvm[0],
       cvm[4],
@@ -159,13 +139,37 @@ class ThreeLayer extends BaseLayer {
       cvm[15]
     )
 
+    this.renderer.setPixelRatio(window.devicePixelRatio)
+
     const width = this._map.scene.canvas.clientWidth
     const height = this._map.scene.canvas.clientHeight
+    const canvas = this.renderer.domElement
+    const needResize = canvas.width !== width || canvas.height !== height
+    if (needResize) {
+      this.resize()
+      this.renderer.setSize(width, height, false)
+    }
     this.camera.aspect = width / height
-    this.renderer.setSize(width, height)
+    this.camera.fov = Cesium.Math.toDegrees(this._map.camera.frustum.fovy) // ThreeJS FOV is vertical
     this.camera.updateProjectionMatrix()
-
-    this.renderer.clear()
     this.renderer.render(this.scene, this.camera)
+  }
+
+  /**
+   * 改变图层canvas容器尺寸
+   * @return {void}  无
+   */
+  resize() {
+    if (this._threeCanvas) {
+      const width = this._map.scene.canvas.clientWidth
+      const height = this._map.scene.canvas.clientHeight
+
+      const threeContainer = this._threeCanvas
+      threeContainer.style.position = "absolute"
+      threeContainer.style.top = "0px"
+      threeContainer.style.left = "0px"
+      threeContainer.style.width = width + "px"
+      threeContainer.style.height = height + "px"
+    }
   }
 }

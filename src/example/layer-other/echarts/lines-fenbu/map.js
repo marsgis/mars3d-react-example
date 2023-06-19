@@ -368,7 +368,7 @@ function getEchartsOption() {
           symbolSize: 5
         },
         lineStyle: {
-          // color: covertColor(item[1]), // TODO : 无法奏效
+          // color: covertColor(item[1]), //   无法奏效
           color: "#56e88c",
           width: 1,
           opacity: 0.4,

@@ -55,7 +55,9 @@ export function onMounted(mapInstance) {
     return inHtml
   })
 
-  queryGaodePOI = new mars3d.query.GaodePOI()
+  queryGaodePOI = new mars3d.query.GaodePOI({
+    // proxy: new Cesium.DefaultProxy("//server.mars3d.cn/proxy/")
+  })
 
   // 右键菜单
   const defaultContextmenuItems = map.getDefaultContextMenu()

@@ -84,9 +84,6 @@ window.configLibs = {
     // ammo物理引擎支持
     "three/three.js",
     "ammo/ammo.js",
-    "ammo/ex/ConvexObjectBreaker.js", // 仅convexBreak使用
-    "ammo/ex/QuickHull.js", // 仅convexBreak使用
-    "ammo/ex/geometries/ConvexGeometry.js", // 仅convexBreak使用
     "mars3d/thirdParty/meshVisualizer/CesiumMeshVisualizer.js"
   ],
   "cesium-sensorVolumes": [
