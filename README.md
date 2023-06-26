@@ -30,7 +30,7 @@
 
 ## 项目特性
 
-- **最新技术栈**：使用 React/vite2 等前端前沿技术开发
+- **最新技术栈**：使用 React/Vite 等前端前沿技术开发
 - **TypeScript**: 应用程序级 JavaScript 的语言
 
 
