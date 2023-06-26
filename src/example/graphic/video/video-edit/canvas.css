@@ -1,0 +1,19 @@
+.canvas-container {
+    width: 360px;
+    height: 202px;
+    margin: 0 auto;
+    margin-top: 10px;
+    background-color: transparent;
+}
+
+.video_test {
+    width: 360px;
+    height: 202px;
+    position: absolute;
+}
+
+.drawCanvas {
+    position: absolute;
+    left: -500;
+    z-index: 1000;
+}

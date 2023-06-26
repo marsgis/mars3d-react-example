@@ -89,7 +89,6 @@ function addDemoGraphic1() {
   })
   graphicLayer.addGraphic(video2D)
 
-
   // setTimeout(() => {
   //   video2D.setStyle({
   //     url: "//data.mars3d.cn/file/video/lukou.mp4"
@@ -231,7 +230,7 @@ export function showFrustum(isCheckde) {
 // 修改视频的透明度   opacity 透明度数值
 export function onChangeOpacity(opacity) {
   if (selectedView) {
-    selectedView.opacity = opacity
+    selectedView.setOpacity(opacity)
   }
 }
 

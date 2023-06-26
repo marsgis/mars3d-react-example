@@ -170,38 +170,48 @@ function addDemoGraphic2() {
 }
 
 function addDemoGraphic3() {
+  const propertyFJ = getSampledPositionProperty([
+    [117.210592, 31.842438, 100],
+    [117.207898, 31.842374, 100],
+    [117.205376, 31.842337, 100],
+    [117.204489, 31.842824, 100]
+  ])
+
   const video3D = new mars3d.graphic.Video3D({
-    position: [117.205457, 31.842984, 63.9],
+    position: propertyFJ,
     style: {
       url: "//data.mars3d.cn/file/video/menqian.mp4",
-      maskImage: "img/textures/video-mask.png", // 羽化视频四周，融合更美观
-      angle: 46.3,
-      angle2: 15.5,
+      // maskImage: "img/textures/video-mask.png", // 羽化视频四周，融合更美观
+      angle: 20,
+      angle2: 10,
       heading: 178.5,
       pitch: -90,
       showFrustum: true
     },
-    attr: { remark: "示例2" }
+    attr: { remark: "示例3" }
   })
   graphicLayer.addGraphic(video3D)
 
-  map.viewer.entities.add({
-    position: new Cesium.CallbackProperty(() => {
-      return video3D.position
-    }, false),
-    point: {
-      pixelSize: 10
-    }
-  })
-
-  map.on(mars3d.EventType.mouseMove, function (event) {
-    if (event.cartesian && video3D.isAdded) {
-      video3D.position = mars3d.PointUtil.addPositionsHeight(event.cartesian, 10)
-    }
-  })
+  // map.on(mars3d.EventType.mouseMove, function (event) {
+  //   if (event.cartesian && video3D.isAdded) {
+  //     video3D.position = mars3d.PointUtil.addPositionsHeight(event.cartesian, 10)
+  //   }
+  // })
 }
+// 计算演示的SampledPositionProperty轨迹
+function getSampledPositionProperty(points) {
+  const property = new Cesium.SampledPositionProperty()
+  property.forwardExtrapolationType = Cesium.ExtrapolationType.HOLD
 
-
+  const start = map.clock.currentTime
+  const positions = mars3d.LngLatArray.toCartesians(points)
+  for (let i = 0; i < positions.length; i++) {
+    const time = Cesium.JulianDate.addSeconds(start, i * 30, new Cesium.JulianDate())
+    const position = positions[i]
+    property.addSample(time, position)
+  }
+  return property
+}
 
 export function onChangeAngle(value) {
   if (selectedView) {

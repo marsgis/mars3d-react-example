@@ -21,20 +21,6 @@ function UIComponent() {
     },
     {
       type: "slider",
-      field: "normalVal",
-      label: "斜切偏移量:",
-      step: 0.1,
-      min: -10,
-      max: 10,
-      value: 0,
-      extra: "值：{normalVal}",
-      extraWidth: 80,
-      change(data) {
-        mapWork.rangeNormalZ(data)
-      }
-    },
-    {
-      type: "slider",
       field: "rotationAngle1",
       label: "旋转角度1:",
       step: 0.1,

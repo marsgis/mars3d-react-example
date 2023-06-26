@@ -30,7 +30,10 @@ export function onMounted(mapInstance) {
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  addGraphicLayer()
+  // 加载完成在加载小车，否则地形未加载完成，小车会处于地下
+  map.on(mars3d.EventType.load, function (event) {
+    addGraphicLayer()
+  })
 }
 
 /**

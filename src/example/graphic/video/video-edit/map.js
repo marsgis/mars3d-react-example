@@ -1,4 +1,5 @@
 import * as mars3d from "mars3d"
+const Cesium = mars3d.Cesium
 
 export let map // mars3d.Map三维地图对象
 export let graphicLayer // 矢量图层对象
@@ -6,14 +7,9 @@ export let graphicLayer // 矢量图层对象
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: 23.729961, lng: 116.284734, alt: 1868672, heading: 355, pitch: -65 },
-    cameraController: {
-      constrainedAxis: false // 解除在南北极区域鼠标操作限制
-    }
+    center: { lat: 31.842839, lng: 117.204275, alt: 269.9, heading: 179, pitch: -77.7 }
   }
 }
-
-export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
 
 /**
  * 初始化地图业务，生命周期钩子函数（必须）
@@ -22,7 +18,7 @@ export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出
  * @returns {void} 无
  */
 export function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // 记录首次创建的map
 
   // 创建矢量数据图层
   graphicLayer = new mars3d.layer.GraphicLayer()
@@ -35,7 +31,8 @@ export function onMounted(mapInstance) {
   bindLayerPopup() // 在图层上绑定popup,对所有加到这个图层的矢量数据都生效
   bindLayerContextMenu() // 在图层绑定右键菜单,对所有加到这个图层的矢量数据都生效
 
-  addDemoGraphic1()
+  // 加一些演示数据
+  addDemoGraphic1(graphicLayer)
 }
 
 /**
@@ -44,66 +41,28 @@ export function onMounted(mapInstance) {
  */
 export function onUnmounted() {
   map = null
+
+  graphicLayer.remove()
+  graphicLayer = null
 }
 
-// 初始化创建一个圆柱体
-function addDemoGraphic1() {
-  // 加个模型
-  const graphic = new mars3d.graphic.ModelEntity({
-    name: "地面站模型",
-    position: [117.170264, 31.840312, 258],
+let videoPolygon
+
+function addDemoGraphic1(graphicLayer) {
+  videoPolygon = new mars3d.graphic.VideoPrimitive({
+    positions: [
+      [117.204858, 31.842209, 45.6],
+      [117.204087, 31.842184, 43.6],
+      [117.204087, 31.842668, 43.6],
+      [117.204827, 31.842712, 43.6]
+    ],
     style: {
-      url: "//data.mars3d.cn/gltf/mars/leida.glb",
-      scale: 1,
-      minimumPixelSize: 40,
-      clampToGround: true
+      url: "//data.mars3d.cn/file/video/lukou.mp4",
+      opacity: 0.9,
+      distanceDisplayCondition_far: 5000
     }
   })
-  graphicLayer.addGraphic(graphic)
-
-  // 测试连接线
-  const testLine = new mars3d.graphic.PolylineEntity({
-    id: "testLine",
-    positions: new Cesium.CallbackProperty(function (time) {
-      const localEnd = conicSensor?.rayPosition
-      if (!localEnd) {
-        return []
-      }
-      return [conicSensor.position, localEnd]
-    }, false),
-    style: {
-      arcType: Cesium.ArcType.NONE,
-      materialType: mars3d.MaterialType.PolylineDash,
-      materialOptions: {
-        color: "#ff0000"
-      },
-      width: 1
-    }
-  })
-  graphicLayer.addGraphic(testLine)
-
-  const conicSensor = new mars3d.graphic.ConicSensor({
-    position: [117.170264, 31.840312, 363],
-    style: {
-      angle: 5,
-      length: 700000,
-      // length: new Cesium.CallbackProperty(function (time) {
-      //   length += 100 //测试动态length
-      //   return length
-      // }, false),
-      heading: 0,
-      pitch: 40,
-      roll: 0,
-      color: "rgba(255,0,0,0.4)",
-      outlineColor: "rgba(255,255,255,0.9)",
-      flat: true
-    }
-  })
-  graphicLayer.addGraphic(conicSensor)
-
-  conicSensor.on(mars3d.EventType.remove, function () {
-    graphicLayer.removeGraphic(testLine)
-  })
+  graphicLayer.addGraphic(videoPolygon)
 }
 
 // 生成演示数据(测试数据量)
@@ -119,16 +78,15 @@ export function addRandomGraphicByCount(count) {
     const position = result.points[j]
     const index = j + 1
 
-    const graphic = new mars3d.graphic.ConicSensor({
-      position: position,
+    const pt1 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 45, result.radius)
+    const pt2 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 90 + 45, result.radius)
+    const pt3 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 180 + 45, result.radius)
+    const pt4 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 270 + 45, result.radius)
+
+    const graphic = new mars3d.graphic.VideoPrimitive({
+      positions: [pt1, pt2, pt3, pt4],
       style: {
-        angle: 5,
-        length: result.radius * 2,
-        heading: 0,
-        pitch: 40,
-        roll: 0,
-        color: "rgba(255,0,0,0.4)",
-        outlineColor: "rgba(255,255,255,0.9)"
+        url: "//data.mars3d.cn/file/video/lukou.mp4"
       },
       attr: { index: index }
     })
@@ -139,20 +97,48 @@ export function addRandomGraphicByCount(count) {
   return result.points.length
 }
 
-// 开始绘制 相阵控雷达
+export function updateROI(uvROI) {
+  if (!videoPolygon || videoPolygon.isDestroy) {
+    return
+  }
+  videoPolygon.rois = uvROI
+}
+
+export function clearROI() {
+  if (!videoPolygon || videoPolygon.isDestroy) {
+    return
+  }
+  videoPolygon.rois = undefined
+}
+
+export const choosePoint = (isChoosePoint) => {
+  if (!videoPolygon || videoPolygon.isDestroy) {
+    return
+  }
+
+  if (isChoosePoint) {
+    videoPolygon.startEditingGrid()
+  } else {
+    videoPolygon.stopEditingGrid()
+  }
+}
+
+// 开始绘制
 export function startDrawGraphic() {
-  graphicLayer.startDraw({
-    type: "conicSensor",
-    style: {
-      angle: 5,
-      length: 5000,
-      heading: 0,
-      pitch: 40,
-      roll: 0,
-      color: "rgba(255,0,0,0.4)",
-      outlineColor: "rgba(255,255,255,0.9)"
-    }
-  })
+  graphicLayer
+    .startDraw({
+      type: "videoPrimitive",
+      style: {
+        url: "//data.mars3d.cn/file/video/lukou.mp4",
+        opacity: 0.8
+      },
+      success: function (graphic) {
+        videoPolygon = graphic
+      }
+    })
+    .then((graphic) => {
+      videoPolygon = graphic
+    })
 }
 
 // 在图层绑定Popup弹窗
@@ -211,6 +197,46 @@ export function bindLayerContextMenu() {
       }
     },
     {
+      text: "开始编辑网格点",
+      icon: "fa fa-edit",
+      show: function (e) {
+        const graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
+        return !graphic.isEditingGrid
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
+        if (graphic) {
+          graphic.startEditingGrid()
+        }
+      }
+    },
+    {
+      text: "停止编辑网格点",
+      icon: "fa fa-edit",
+      show: function (e) {
+        const graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
+        return graphic.isEditingGrid
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
+        if (graphic) {
+          graphic.stopEditingGrid()
+        }
+      }
+    },
+    {
       text: "删除对象",
       icon: "fa fa-trash-o",
       show: (event) => {
@@ -231,6 +257,25 @@ export function bindLayerContextMenu() {
         if (parent) {
           graphicLayer.removeGraphic(parent)
         }
+      }
+    },
+
+    {
+      text: "计算周长",
+      icon: "fa fa-medium",
+      callback: (e) => {
+        const graphic = e.graphic
+        const strDis = mars3d.MeasureUtil.formatDistance(graphic.distance)
+        globalAlert("该对象的周长为:" + strDis)
+      }
+    },
+    {
+      text: "计算面积",
+      icon: "fa fa-reorder",
+      callback: (e) => {
+        const graphic = e.graphic
+        const strArea = mars3d.MeasureUtil.formatArea(graphic.area)
+        globalAlert("该对象的面积为:" + strArea)
       }
     }
   ])

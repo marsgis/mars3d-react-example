@@ -1,14 +1,15 @@
-import { MarsPannel, MarsButton, MarsGui, MarsCheckbox } from "@mars/components/MarsUI"
+import { MarsPannel, MarsButton, MarsGui, MarsCheckbox, $message } from "@mars/components/MarsUI"
 import * as mapWork from "./map.js"
 import { Space } from "antd"
 import type { GuiItem } from "@mars/components/MarsUI"
 import { useEffect, useMemo, useState } from "react"
 import "./index.less"
 
+let showHideCone = false
 function UIComponent() {
   useEffect(() => {
     mapWork.centerPoint(10)
-  })
+  }, [])
 
   const options: GuiItem[] = [
     {
@@ -52,6 +53,11 @@ function UIComponent() {
       extra: "当前值{angle1}",
       extraWidth: 90,
       change(angle) {
+        if (!showHideCone) {
+          $message("已自动打开视椎体")
+          showHideCone = true
+          mapWork.chkShowModelMatrix(true)
+        }
         mapWork.angle(angle)
       }
     }
@@ -80,7 +86,13 @@ function UIComponent() {
         <div className="f-mb">
           <Space>
             <span>视椎体状态:</span>
-            <MarsCheckbox defaultChecked={false} onChange={(e) => mapWork.chkShowModelMatrix(e.target.checked)}>
+            <MarsCheckbox
+              checked={showHideCone}
+              onChange={(e) => {
+                showHideCone = e.target.checked
+                mapWork.chkShowModelMatrix(e.target.checked)
+              }}
+            >
               显示/隐藏
             </MarsCheckbox>
             <MarsButton onClick={() => mapWork.locate()}>定位至卫星</MarsButton>

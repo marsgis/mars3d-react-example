@@ -1,16 +1,17 @@
 import { MarsButton, MarsCheckbox, MarsColor, MarsDatePicker, MarsPannel, MarsSlider, MarsTable } from "@mars/components/MarsUI"
 import { Space } from "antd"
 import moment from "moment"
-import dayjs, { Dayjs } from "dayjs"
 import { useMemo, useState } from "react"
 import * as mapWork from "./map.js"
 import "./index.less"
-let areaColor: any
+
 let slideOpacity = 0.4
 let slideAngle = 10
 function UIComponent() {
   const [startTime, setStartTime] = useState(null) // 开始时间
   const [endTime, setEndTime] = useState(null) // 结束时间
+
+  const [areaColor, setAreaColor] = useState("red") // 颜色
 
   useMemo(() => {
     mapWork.eventTarget.on("loadStatellite", (event: any) => {
@@ -40,6 +41,7 @@ function UIComponent() {
 
   // 颜色改变
   const onChangeColor = (areaColor) => {
+    setAreaColor(areaColor)
     mapWork.changeColorOpacity({
       areaColor: areaColor,
       slideOpacity: slideOpacity

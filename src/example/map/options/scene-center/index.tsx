@@ -1,7 +1,8 @@
-import { MarsPannel, MarsButton, MarsCollapse, MarsCollapsePanel } from "@mars/components/MarsUI"
+import { MarsPannel, MarsButton, MarsCollapse, MarsCollapsePanel, MarsFormItem, MarsInput } from "@mars/components/MarsUI"
 import { Row, Col, Space } from "antd"
 import * as mapWork from "./map.js"
 import "./index.less"
+import { useState } from "react"
 
 // 创建地图
 const cameraData = [
@@ -52,6 +53,27 @@ const cameraData = [
   }
 ]
 function UIComponent() {
+  let obj 
+  const [formObj, setFormObj] = useState({
+    lng: 0,
+    lat: 0, 
+    alt: 0, 
+    heading: 0, 
+    pitch: 0, 
+    roll: 0 
+  })
+  
+  
+
+  setTimeout(() => {
+    obj = mapWork.map.getCameraView({ simplify: false }) 
+    setFormObj(obj)
+    mapWork.map.on("cameraChanged", function (event) {
+      obj = mapWork.map.getCameraView({ simplify: false })
+      setFormObj(obj)
+    })
+  }, 500)
+
   return (
     <MarsPannel visible={true} top={10} right={10} width={310}>
       <MarsCollapse defaultActiveKey={["1", "2"]}>
@@ -72,6 +94,36 @@ function UIComponent() {
                 </MarsButton>
               )
             })}
+            <MarsFormItem label="经度值">
+              <MarsInput
+              value={formObj.lng}
+              ></MarsInput>
+            </MarsFormItem>
+            <MarsFormItem label="纬度值">
+              <MarsInput
+              value={formObj.lat}
+              ></MarsInput>
+            </MarsFormItem>
+            <MarsFormItem label="高度值">
+              <MarsInput
+              value={formObj.alt}
+              ></MarsInput>
+            </MarsFormItem>
+            <MarsFormItem label="方向角">
+              <MarsInput
+              value={formObj.heading}
+              ></MarsInput>
+            </MarsFormItem>
+            <MarsFormItem label="俯仰角">
+              <MarsInput
+              value={formObj.pitch}
+              ></MarsInput>
+            </MarsFormItem>
+            <MarsFormItem label="翻滚角">
+              <MarsInput
+              value={formObj.roll}
+              ></MarsInput>
+            </MarsFormItem>
           </Space>
         </MarsCollapsePanel>
       </MarsCollapse>

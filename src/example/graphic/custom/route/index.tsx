@@ -59,7 +59,7 @@ function UIComponent() {
     },
     onSelect: (record: any, selected: boolean) => {
       // 对车子进行的操作
-      mapWork.onSelect(record, selected)
+      mapWork.onSelect(record.key, selected)
     }
   }
 

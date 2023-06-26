@@ -43,3 +43,13 @@ export function shadingMaterials(val) {
     map.changeMouseModel(false)
   }
 }
+
+
+// 解除ALT按键的操作
+// const getInputAction_old = Cesium.ScreenSpaceEventHandler.prototype.getInputAction
+// Cesium.ScreenSpaceEventHandler.prototype.getInputAction = function (type, modifier) {
+//   if (modifier === Cesium.KeyboardEventModifier.ALT) {
+//     modifier = undefined
+//   }
+//   return getInputAction_old.bind(this)(type, modifier)
+// }
