@@ -17,9 +17,7 @@ const raderParsms = {
 }
 
 function UIComponent() {
-  useEffect(() => {
-    mapWork.addDemoGraphic1(raderParsms)
-  }, [])
+
 
   return (
     <MarsPannel visible={true} right={10} top={10}>

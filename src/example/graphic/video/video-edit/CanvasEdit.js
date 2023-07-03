@@ -4,7 +4,6 @@ const parameter = {
   radius: 4
 }
 
-
 class CanvasEdit {
   constructor(canvas) {
     this._canvas = canvas

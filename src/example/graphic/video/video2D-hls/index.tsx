@@ -160,10 +160,11 @@ function UIComponent() {
 
   return (
     <>
-      <MarsPannel visible={true} right="10" top="10" width="420">
+      <MarsPannel visible={true} right="10" top="10" width="440">
         <GraphicLayerState
           defaultCount={10}
-          interaction={false}
+          interaction={true}
+          drawLabel2={"按当前相机"}
           customEditor={"video2D"}
           onStartEditor={(data: any) => {
             const graphic = mapWork.getGraphic(data.graphicId)

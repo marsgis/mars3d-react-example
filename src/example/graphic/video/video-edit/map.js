@@ -1,5 +1,5 @@
 import * as mars3d from "mars3d"
-const Cesium = mars3d.Cesium
+import { CanvasEdit } from "./CanvasEdit"
 
 export let map // mars3d.Map三维地图对象
 export let graphicLayer // 矢量图层对象
@@ -44,6 +44,10 @@ export function onUnmounted() {
 
   graphicLayer.remove()
   graphicLayer = null
+}
+
+export function creatCanvas(drawVideo) {
+  return new CanvasEdit(drawVideo)
 }
 
 let videoPolygon

@@ -8,7 +8,7 @@ export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: 31.516143, lng: 117.282937, alt: 46242, heading: 2, pitch: -49 }
+    center: { lat: 31.811646, lng: 117.22232, alt: 842.4, heading: 358.5, pitch: -45 }
   }
 }
 

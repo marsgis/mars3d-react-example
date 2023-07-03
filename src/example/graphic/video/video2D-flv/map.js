@@ -41,6 +41,7 @@ export function onMounted(mapInstance) {
 
   // 2.在layer上绑定监听事件
   graphicLayer.on(mars3d.EventType.click, function (event) {
+    video2D = event.graphic
     console.log("监听layer，单击了矢量对象", event)
   })
 

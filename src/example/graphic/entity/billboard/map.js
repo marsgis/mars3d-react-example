@@ -202,6 +202,7 @@ function addDemoGraphic4(graphicLayer) {
 
   // graphic转json，clone一个对象
   const json = graphic.toJSON()
+  delete json.id // 防止id冲突，实际业务中根据需要修改
   console.log("转换后的json", json)
 
   json.position = [116.5, 31.0, 1000] // 新的坐标

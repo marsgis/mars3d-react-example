@@ -71,7 +71,7 @@ function UIComponent() {
   const [totalTimes, setTotalTimes] = useState<string>() // 总时长
   const [currentWork, setCurrentWork] = useState<string>()
   const [selectedKeys, setSelectedKeys] = useState<any>()
-  let [counter, setCounter] = useState<any>()
+  const [counter, setCounter] = useState<any>()
 
   const [isPlay, setIsPlay] = useState(false)
   const [isPause, setIsPause] = useState(false)
@@ -138,7 +138,7 @@ function UIComponent() {
       setSelectedKeys([animate.key])
       setCurrentWork(`${animate.title}(${animate.times}秒)`)
       setCounter(animate.times)
-      countOn()
+      countOn(animate.times)
       animate.widget()
       currentIndex++
       timer = setTimeout(() => {
@@ -149,11 +149,12 @@ function UIComponent() {
     }
   }
 
-  const countOn = () => {
+  const countOn = (time) => {
     interval = setInterval(() => {
-      counter--
-      setCounter(counter)
-      if (counter <= 0) {
+      time--
+      
+      setCounter(time)
+      if (time <= 0) {
         clearInterval(interval)
       }
     }, 1000)

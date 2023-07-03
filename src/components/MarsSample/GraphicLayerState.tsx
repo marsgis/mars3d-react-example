@@ -241,7 +241,7 @@ export class GraphicLayerState extends Component<any, any> {
   constructor(props) {
     super(props)
     this.state = {
-      drawLabel1: props.drawLabel1 || "图上标绘",
+      drawLabel1: props.drawLabel1 || "标绘",
       drawLabel2: props.drawLabel2 || null,
       interaction: props.interaction === undefined ? true : props.interaction, // 是否可以鼠标拾取和交互
       enabledDraw: props.enabledDraw === undefined ? true : props.enabledDraw, // 是否可以绘制
@@ -369,7 +369,7 @@ export class GraphicLayerState extends Component<any, any> {
       const graphicLayer = getManagerLayer()
       this.initGraphicableData(graphicLayer)
 
-      graphicLayer.on(mars3d.EventType.addGraphic, (event: any) => {
+      graphicLayer.on(mars3d.EventType.drawCreated, (event: any) => {
         const item = event.graphic
         if (item.isPrivate) {
           return
@@ -546,7 +546,17 @@ export class GraphicLayerState extends Component<any, any> {
 
   // drawLabel2
   onClickStartDraw2() {
-    mapWork.startDrawGraphic2()
+    const graphic = mapWork.startDrawGraphic2()
+    graphicDataList.push({
+      key: graphic.id,
+      name: getGraphicName(graphic)
+    })
+    rowKeys.push(graphic.id)
+
+    this.setState({
+      graphicDataList: [...graphicDataList],
+      rowKeys: [...rowKeys]
+    })
   }
 
   // 是否编辑

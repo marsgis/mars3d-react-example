@@ -1656,6 +1656,7 @@
             "name": "视频编辑",
             "thumbnail": "graphic-video-edit.jpg",
             "main": "graphic/video/video-edit",
+            "resources": ["CanvasEdit.js"],
             "hasPannel": true,
             "new": true
           }

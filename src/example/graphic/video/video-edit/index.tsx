@@ -2,27 +2,50 @@ import { MarsCheckbox, MarsButton, MarsPannel } from "@mars/components/MarsUI"
 import "./canvas.css"
 import { Space } from "antd"
 import * as mapWork from "./map.js"
-import * as canvasWork from "./CanvasEdit.js"
 import { useState, useEffect } from "react"
 import { GraphicLayerState } from "@mars/components/MarsSample/GraphicLayerState"
 
 let drawVideoCanvas
 function UIComponent() {
   const [uVList, setUVList] = useState([])
+  let lastList = [
+    [0, 1],
+    [1, 1],
+    [1, 0],
+    [0, 0]
+  ]
 
   useEffect(() => {
     if (uVList.length >= 3) {
       mapWork.updateROI(uVList)
     }
-  }, [uVList.length])
+  }, [uVList])
 
   useEffect(() => {
     const drawVideo = document.getElementById("drawVideo")
-    drawVideoCanvas = new canvasWork.CanvasEdit(drawVideo)
+    drawVideoCanvas = mapWork.creatCanvas(drawVideo)
     drawVideo.addEventListener("mousemove", () => {
-      setUVList(canvasWork.uvList)
+      const list = drawVideoCanvas.uvList
+      if (list.length >= 3 && isSame(list, lastList)) {
+        setUVList(lastList.slice())
+      }
     })
   }, [])
+
+  function isSame(leftList, rightList) {
+    if (leftList.length !== rightList.length) {
+      lastList = leftList
+      return true
+    }
+    
+    for (let i = 0; i < leftList.length; i++) {
+      if (leftList[i][0] !== rightList[i][0] || leftList[i][1] !== rightList[i][1]) {
+        lastList = leftList
+        return true
+      } 
+    }
+    return false
+  }
 
   const [isDrawing, setIsDrawing] = useState(false)
   function draw() {

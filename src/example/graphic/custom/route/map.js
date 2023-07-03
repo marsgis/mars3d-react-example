@@ -106,6 +106,11 @@ function showCarList(arr) {
     // car.flyToPoint({ radius: 1000 })
   })
 
+  // 点击编辑弹出框中的删除按钮时，删除表格数据
+  graphicLayer.on("removeGraphic", (e) => {
+    eventTarget.fire("removeCar", { id: e.graphic.options.id })
+  })
+
   let lastClickCar
 
   for (let i = 0; i < arr.length; i++) {
