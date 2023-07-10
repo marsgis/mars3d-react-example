@@ -27,7 +27,6 @@ export function onMounted(mapInstance) {
     url: "//data.mars3d.cn/3dtiles/max-shihua/tileset.json",
     position: { lng: 117.077158, lat: 31.659116, alt: 24.6 },
     maximumScreenSpaceError: 1,
-    maximumMemoryUsage: 1024,
     highlight: { type: "click", outlineEffect: true, width: 8, color: "#FFFF00" },
     popup: "all"
   })

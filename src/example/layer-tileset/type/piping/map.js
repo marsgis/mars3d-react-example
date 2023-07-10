@@ -33,7 +33,6 @@ export function onMounted(mapInstance) {
     position: { lng: 117.215457, lat: 31.843363, alt: -3.6 },
     rotation: { z: 336.7 },
     maximumScreenSpaceError: 2,
-    maximumMemoryUsage: 1024,
     highlight: { type: "click", outlineEffect: true, width: 8, color: "#FFFF00" },
     popup: "all",
     center: { lat: 31.838081, lng: 117.216584, alt: 406, heading: 1, pitch: -34 }

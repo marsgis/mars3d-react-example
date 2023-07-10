@@ -42,7 +42,6 @@ export function addLayer(height) {
     position: { lng: 117.215457, lat: 31.843363, alt: -3.6 },
     rotation: { z: 336.7 },
     maximumScreenSpaceError: 2,
-    maximumMemoryUsage: 1024,
     highlight: { type: "click", color: "#00FFFF" },
     popup: "all",
     center: { lat: 31.840525, lng: 117.217024, alt: 495.12, heading: 0, pitch: -59.3, roll: 0 }

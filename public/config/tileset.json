@@ -8,7 +8,6 @@
       "name": "合肥市区",
       "url": "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
       "maximumScreenSpaceError": 1,
-      "maximumMemoryUsage": 1024,
       "marsJzwStyle": true,
       "highlight": { "type": "click", "color": "#FFFF00" },
       "popup": [
@@ -24,7 +23,6 @@
       "name": "合肥市区2",
       "url": "//data.mars3d.cn/3dtiles/jzw-hefei2/tileset.json",
       "maximumScreenSpaceError": 1,
-      "maximumMemoryUsage": 1024,
       "style": {
         "color": {
           "conditions": [["true", "color('rgba(42, 160, 224, 1)')"]]
@@ -46,7 +44,6 @@
       "name": "上海市区",
       "url": "//data.mars3d.cn/3dtiles/jzw-shanghai/tileset.json",
       "maximumScreenSpaceError": 4,
-      "maximumMemoryUsage": 1024,
       "style": {
         "color": {
           "conditions": [
@@ -112,7 +109,6 @@
       "position": { "lng": 117.203994, "lat": 31.857999, "alt": 28.9 },
       "rotation": { "z": 168.1 },
       "maximumScreenSpaceError": 8,
-      "maximumMemoryUsage": 2048,
       "skipLevelOfDetail": true,
       "loadSiblings": true,
       "cullRequestsWhileMoving": true,
@@ -135,7 +131,6 @@
       "position": { "lng": 117.096906, "lat": 31.851564, "alt": 45 },
       "rotation": { "z": 17.5 },
       "maximumScreenSpaceError": 16,
-      "maximumMemoryUsage": 1024,
       "skipLevelOfDetail": true,
       "loadSiblings": true,
       "cullRequestsWhileMoving": true,
@@ -156,7 +151,6 @@
       "name": "居民楼(分层分户)",
       "url": "//data.mars3d.cn/3dtiles/max-fcfh/tileset.json",
       "maximumScreenSpaceError": 1,
-      "maximumMemoryUsage": 1024,
       "highlight": { "type": "click", "color": "#00FF00" },
       "popup": "all",
       "scenetree": "scenetree.json",
@@ -170,7 +164,6 @@
       "position": { "lng": 117.094224, "lat": 31.815859, "alt": 26.4 },
       "rotation": { "z": 116.2 },
       "maximumScreenSpaceError": 1,
-      "maximumMemoryUsage": 1024,
       "highlight": { "type": "click", "color": "#00FF00" },
       "popup": "all",
       "scenetree": "scenetree.json",
@@ -185,7 +178,6 @@
       "position": { "lng": 117.215457, "lat": 31.843363, "alt": -3.6 },
       "rotation": { "z": 336.7 },
       "maximumScreenSpaceError": 2,
-      "maximumMemoryUsage": 1024,
       "highlight": { "type": "click", "color": "#ffff00" },
       "popup": "all",
       "center": { "lat": 31.838821, "lng": 117.216402, "alt": 461, "heading": 0, "pitch": -46 },
@@ -199,7 +191,6 @@
       "url": "//data.mars3d.cn/3dtiles/max-shihua/tileset.json",
       "position": { "lng": 117.077158, "lat": 31.659116, "alt": 24.6 },
       "maximumScreenSpaceError": 1,
-      "maximumMemoryUsage": 1024,
       "highlight": { "type": "click", "color": "#00FF00" },
       "popup": "all",
       "scenetree": "scenetree.json",
@@ -236,7 +227,6 @@
       "url": "//data.mars3d.cn/3dtiles/max-fsdzm/tileset.json",
       "position": { "alt": 15.2 },
       "maximumScreenSpaceError": 1,
-      "maximumMemoryUsage": 1024,
       "center": { "lat": 29.792675, "lng": 121.480207, "alt": 190.8, "heading": 196.1, "pitch": -49 }
     },
     { "id": 2030, "pid": 20, "name": "倾斜摄影", "type": "group" },
@@ -247,7 +237,6 @@
       "url": "//data.mars3d.cn/3dtiles/qx-dyt/tileset.json",
       "position": { "alt": -27 },
       "maximumScreenSpaceError": 1,
-      "maximumMemoryUsage": 1024,
       "center": {
         "lat": 34.214367,
         "lng": 108.959067,
@@ -291,8 +280,7 @@
           "name": "校园",
           "url": "//data.mars3d.cn/3dtiles/qx-xuexiao/tileset.json",
           "position": { "alt": 15.8 },
-          "maximumScreenSpaceError": 1,
-          "maximumMemoryUsage": 1024
+          "maximumScreenSpaceError": 1
         }
       ]
     },
@@ -304,7 +292,6 @@
       "url": "//data.mars3d.cn/3dtiles/qx-hfdxy/tileset.json",
       "position": { "alt": -24 },
       "maximumScreenSpaceError": 1,
-      "maximumMemoryUsage": 1024,
       "center": { "lat": 31.841523, "lng": 117.205761, "alt": 166, "heading": 1, "pitch": -33 }
     },
     {
@@ -315,7 +302,6 @@
       "url": "//data.mars3d.cn/3dtiles/qx-shequ/tileset.json",
       "position": { "alt": 11.5 },
       "maximumScreenSpaceError": 2,
-      "maximumMemoryUsage": 2048,
       "dynamicScreenSpaceError": true,
       "cullWithChildrenBounds": false,
       "center": { "lat": 28.440864, "lng": 119.486477, "alt": 588.23, "heading": 268.6, "pitch": -37.8 },
@@ -329,7 +315,6 @@
       "url": "//data.mars3d.cn/3dtiles/qx-teh/tileset.json",
       "position": { "lng": 117.218434, "lat": 31.81807, "alt": 163 },
       "maximumScreenSpaceError": 16,
-      "maximumMemoryUsage": 1024,
       "dynamicScreenSpaceError": true,
       "cullWithChildrenBounds": false,
       "skipLevelOfDetail": true,
@@ -371,7 +356,6 @@
           "url": "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
           "position": { "alt": 80.6 },
           "maximumScreenSpaceError": 2,
-          "maximumMemoryUsage": 2048,
           "dynamicScreenSpaceError": true,
           "cullWithChildrenBounds": false,
           "skipLevelOfDetail": true,

@@ -38,7 +38,6 @@ function addTilesetLayer() {
     name: "合肥市建筑物",
     url: "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
     maximumScreenSpaceError: 1,
-    maximumMemoryUsage: 1024,
     marsJzwStyle: true, // 打开建筑物特效（内置Shader代码）
     style: {
       color: {

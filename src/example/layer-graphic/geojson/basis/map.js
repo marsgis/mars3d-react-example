@@ -509,7 +509,6 @@ export function showMonomer() {
       url: "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
       position: { alt: 80.6 },
       maximumScreenSpaceError: 1,
-      maximumMemoryUsage: 1024,
       show: true
     })
     map.addLayer(tilesetLayer)

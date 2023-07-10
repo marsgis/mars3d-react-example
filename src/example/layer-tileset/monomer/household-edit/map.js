@@ -27,7 +27,6 @@ export function onMounted(mapInstance) {
     url: "//data.mars3d.cn/3dtiles/qx-xuexiao/tileset.json",
     position: { alt: 15.8 },
     maximumScreenSpaceError: 1,
-    maximumMemoryUsage: 1024,
     center: { lat: 43.821193, lng: 125.143124, alt: 990, heading: 342, pitch: -50 }
   })
   map.addLayer(tiles3dLayer)

@@ -117,7 +117,6 @@ export function setStyleDef() {
     name: "合肥市建筑物",
     url: "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
     maximumScreenSpaceError: 1,
-    maximumMemoryUsage: 1024,
     popup: [
       { field: "objectid", name: "编号" },
       { field: "name", name: "名称" },
@@ -137,7 +136,6 @@ export function setStyle1() {
     name: "合肥市建筑物",
     url: "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
     maximumScreenSpaceError: 1,
-    maximumMemoryUsage: 1024,
     marsJzwStyle: true, // 打开建筑物特效（内置Shader代码）
     popup: [
       { field: "objectid", name: "编号" },
@@ -194,7 +192,6 @@ export function setStyle3() {
     name: "合肥市建筑物",
     url: "//data.mars3d.cn/3dtiles/jzw-hefei2/tileset.json",
     maximumScreenSpaceError: 1,
-    maximumMemoryUsage: 1024,
     customShader: new Cesium.CustomShader({
       lightingModel: Cesium.LightingModel.UNLIT,
       varyings: {

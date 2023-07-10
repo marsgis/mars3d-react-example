@@ -22,8 +22,7 @@ export function onMounted(mapInstance) {
     name: "大雁塔",
     url: "//data.mars3d.cn/3dtiles/qx-dyt/tileset.json",
     position: { alt: -27 },
-    maximumScreenSpaceError: 1,
-    maximumMemoryUsage: 1024
+    maximumScreenSpaceError: 1
   })
   map.addLayer(tiles3dLayer)
 

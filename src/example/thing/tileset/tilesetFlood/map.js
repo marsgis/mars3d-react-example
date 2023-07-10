@@ -46,7 +46,6 @@ export function showDytDemo() {
     url: "//data.mars3d.cn/3dtiles/qx-dyt/tileset.json",
     position: { alt: -27 },
     maximumScreenSpaceError: 1,
-    maximumMemoryUsage: 1024,
     editHeight: 420, // 相对高度 (单位：米)，基于 压平/淹没区域 最低点高度的偏移量
     flyTo: true
   })
@@ -77,7 +76,6 @@ export function showTehDemo() {
     position: { lng: 117.218434, lat: 31.81807, alt: 163 },
     editHeight: -130.0, // 相对高度 (单位：米)，基于 压平/淹没区域 最低点高度的偏移量
     maximumScreenSpaceError: 16,
-    maximumMemoryUsage: 1024,
     dynamicScreenSpaceError: true,
     cullWithChildrenBounds: false,
     skipLevelOfDetail: true,

@@ -166,14 +166,6 @@ function removeLayer() {
   }
 }
 
-/**
-maximumMemoryUsage 参数详细解释：这个参数默认是512，也即是当几何体和纹理资源大于512MB的时候，Cesium就会淘汰掉当前帧中没有visited的所有块，这个值其实很小，也是cesium为了避免资源占用过高的一个保障，不过上述我们也估算过最差情况下，没有做纹理crn压缩的情况下，这个值很容易被超过，导致很多人误以为cesium的淘汰没有效果。
-
-这个值如果设置的过小，导致cesium几乎每帧都在尝试淘汰数据，增加了遍历的时间，也同时增加了崩溃的风险。
-这个值如果设置的过大，cesium的淘汰机制失效，那么容易导致显存超过显卡内存，也会导致崩溃。
-
-这个值应该处于最差视角下资源占用 和 显存最大量之间。结论：这个参数要根据当前显卡显存来配置，如果我们场景只显示这一个倾斜数据，这个可以设置到显存的50 % 左右，比如我的显存是6G，这个可以设置到3000左右。那么既保证不超过显存限制，又可以最大利用显存缓存，配合crn压缩之后，这个几乎可以保证你第二次查看倾斜同一位置的时候，看不到加载过程，非常棒。
-*/
 
 /**
  * 倾斜摄影 县城社区
@@ -189,7 +181,6 @@ export function showQxShequDemo() {
     url: "//data.mars3d.cn/3dtiles/qx-shequ/tileset.json",
     position: { alt: 11.5 },
     maximumScreenSpaceError: 1,
-    maximumMemoryUsage: 1024,
     dynamicScreenSpaceError: true,
     cullWithChildrenBounds: false,
     skipLevelOfDetail: true,
@@ -242,7 +233,6 @@ export function showQxSimiaoDemo() {
     url: "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
     position: { alt: 80.6 },
     maximumScreenSpaceError: 1,
-    maximumMemoryUsage: 1024,
     // "skipLevelOfDetail": true,
     // "loadSiblings": true,
     // "cullRequestsWhileMoving": true,
@@ -288,7 +278,6 @@ export function showJzwHefeiDemo() {
     name: "合肥市建筑物",
     url: "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
     maximumScreenSpaceError: 1,
-    maximumMemoryUsage: 1024,
     // marsJzwStyle: true, // 打开建筑物特效（内置Shader代码）
     marsJzwStyle: `
     void fragmentMain(FragmentInput fsInput, inout czm_modelMaterial material)
@@ -386,7 +375,6 @@ export function showMaxShihuaDemo() {
     url: "//data.mars3d.cn/3dtiles/max-shihua/tileset.json",
     position: { lng: 117.077158, lat: 31.659116, alt: 24.6 },
     maximumScreenSpaceError: 1,
-    maximumMemoryUsage: 1024,
 
     // 以下参数可以参考用于3dtiles总数据大，清晰度过高情况下进行性能优化。这不是一个通用的解决方案，但可以以此为参考。
     skipLevelOfDetail: true,
@@ -439,7 +427,6 @@ export function showBimQiaoliangDemo() {
 
     // 以下参数可以参考用于3dtiles总数据大，清晰度过高情况下进行性能优化。这不是一个通用的解决方案，但可以以此为参考。
     maximumScreenSpaceError: 16, // 【重要】数值加大，能让最终成像变模糊
-    maximumMemoryUsage: 512, // 【重要】内存建议显存大小的50%左右，内存分配变小有利于倾斜摄影数据回收，提升性能体验
 
     skipLevelOfDetail: true, // 是Cesium在1.5x 引入的一个优化参数，这个参数在金字塔数据加载中，可以跳过一些级别，这样整体的效率会高一些，数据占用也会小一些。但是带来的异常是：1） 加载过程中闪烁，看起来像是透过去了，数据载入完成后正常。2，有些异常的面片，这个还是因为两级LOD之间数据差异较大，导致的。当这个参数设置false，两级之间的变化更平滑，不会跳跃穿透，但是清晰的数据需要更长，而且还有个致命问题，一旦某一个tile数据无法请求到或者失败，导致一直不清晰。所以我们建议：对于网络条件好，并且数据总量较小的情况下，可以设置false，提升数据显示质量。
     loadSiblings: true, // 如果为true则不会在已加载完模型后，自动从中心开始超清化模型
@@ -490,7 +477,6 @@ export function showBimDitiezhanDemo() {
     name: "轻轨地铁站",
     url: "//data.mars3d.cn/3dtiles/bim-ditiezhan/tileset.json",
     maximumScreenSpaceError: 16,
-    maximumMemoryUsage: 1024,
     position: { lng: 117.203994, lat: 31.857999, alt: 28.9 },
     rotation: { z: 168.1 },
 

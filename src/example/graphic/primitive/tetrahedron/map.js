@@ -26,7 +26,6 @@ export function onMounted(mapInstance) {
     name: "合肥市建筑物",
     url: "//data.mars3d.cn/3dtiles/jzw-hefei2/tileset.json",
     maximumScreenSpaceError: 1,
-    maximumMemoryUsage: 1024,
     style: {
       color: {
         conditions: [["true", `color("rgba(42, 160, 224, 1)")`]]

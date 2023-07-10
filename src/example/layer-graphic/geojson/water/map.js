@@ -17,7 +17,6 @@ export const mapOptions = {
       url: "//data.mars3d.cn/3dtiles/max-fsdzm/tileset.json",
       position: { alt: 15.2 },
       maximumScreenSpaceError: 1,
-      maximumMemoryUsage: 1024,
       show: true
     },
     {

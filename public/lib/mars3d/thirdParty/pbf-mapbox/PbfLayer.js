@@ -1,9 +1,18 @@
 // import * as mars3d from "mars3d"
 // const Cesium = mars3d.Cesium
 
-//按mars3d规范，封装的pbf图层
-;(function (window) {
-  let BasicRenderer = window.mapboxRenderer.BasicRenderer
+// 按mars3d规范，封装的pbf图层
+(function (window) {
+  const BasicRenderer = window.mapboxRenderer.BasicRenderer
+
+  // 创建一个全局变量作为pbfBasicRenderer渲染模板，避免出现16个canvas上下文的浏览器限制，以便Cesium ImageLayer.destory()正常工作。
+  // https://github.com/mapbox/mapbox-gl-js/issues/7332
+  const OFFSCREEN_CANV_SIZE = 1024
+  const baseCanv = document.createElement("canvas")
+  baseCanv.style.imageRendering = "pixelated"
+  baseCanv.addEventListener("webglcontextlost", () => console.log("webglcontextlost"), false)
+  baseCanv.width = OFFSCREEN_CANV_SIZE
+  baseCanv.height = OFFSCREEN_CANV_SIZE
 
   class MVTImageryProvider {
     /**
@@ -19,10 +28,29 @@
      *
      */
     constructor(options) {
-      this.mapboxRenderer = new BasicRenderer({ style: options.style })
+      this.options = options
+
+      let pbfStyle = options.style
+      this.mapboxRenderer = new BasicRenderer({
+        style: pbfStyle
+      })
+      this.mapboxRenderer._transformRequest = (url, resourceType) => {
+        return this.transformRequest(url, resourceType)
+      }
+      this.mapboxRenderer._canvas = baseCanv
+      this.mapboxRenderer._canvas.addEventListener("webglcontextrestored", () => this.mapboxRenderer._createGlContext(), false)
+      this.mapboxRenderer._createGlContext()
+
+      if (options.showCanvas) {
+        this.mapboxRenderer.showCanvasForDebug()
+      }
+
       this.ready = false
-      this.readyPromise = this.mapboxRenderer._style.loadedPromise.then(() => (this.ready = true))
-      this.tilingScheme = new Cesium.WebMercatorTilingScheme()
+      this.readyPromise = this.mapboxRenderer._style.loadedPromise.then(() => {
+        this.ready = true
+      })
+
+      this.tilingScheme = options.tilingScheme ?? new Cesium.WebMercatorTilingScheme()
       this.rectangle = this.tilingScheme.rectangle
       this.tileSize = this.tileWidth = this.tileHeight = options.tileSize || 512
       this.maximumLevel = options.maximumLevel || Number.MAX_SAFE_INTEGER
@@ -31,8 +59,15 @@
       this.errorEvent = new Cesium.Event()
       this.credit = new Cesium.Credit(options.credit || "", false)
       this.proxy = new Cesium.DefaultProxy("")
-      this.hasAlphaChannel = options.hasAlphaChannel !== undefined ? options.hasAlphaChannel : true
+      this.hasAlphaChannel = options.hasAlphaChannel ?? true
       this.sourceFilter = options.sourceFilter
+    }
+
+    transformRequest = (url) => {
+      if (this.options.transformUrl) {
+        url = this.options.transformUrl(url)
+      }
+      return { url: url, headers: this.options.headers || {}, credentials: "" }
     }
 
     getTileCredits(x, y, level) {
@@ -40,11 +75,14 @@
     }
 
     createTile() {
-      let canv = document.createElement("canvas")
+      const canv = document.createElement("canvas")
       canv.width = this.tileSize
       canv.height = this.tileSize
       canv.style.imageRendering = "pixelated"
-      canv.getContext("2d").globalCompositeOperation = "copy"
+      const ctx = canv.getContext("2d")
+      if (ctx) {
+        ctx.globalCompositeOperation = "copy"
+      }
       return canv
     }
 
@@ -52,16 +90,24 @@
       const { x, y, zoom } = coord
       const TILE_SIZE = this.tileSize
       // 3x3 grid of source tiles, where the region of interest is that corresponding to the central source tile
-      let ret = []
+      const ret = []
       const maxTile = (1 << zoom) - 1
       for (let xx = -1; xx <= 1; xx++) {
         let newx = x + xx
-        if (newx < 0) newx = maxTile
-        if (newx > maxTile) newx = 0
+        if (newx < 0) {
+          newx = maxTile
+        }
+        if (newx > maxTile) {
+          newx = 0
+        }
         for (let yy = -1; yy <= 1; yy++) {
-          let newy = y + yy
-          if (newy < 0) continue
-          if (newy > maxTile) continue
+          const newy = y + yy
+          if (newy < 0) {
+            continue
+          }
+          if (newy > maxTile) {
+            continue
+          }
           ret.push({
             source: source,
             z: zoom,
@@ -77,7 +123,9 @@
     }
 
     requestImage(x, y, zoom, releaseTile = true) {
-      if (zoom > this.maximumLevel || zoom < this.minimumLevel) return Promise.reject(undefined)
+      if (zoom > this.maximumLevel || zoom < this.minimumLevel) {
+        return Promise.reject(undefined)
+      }
 
       this.mapboxRenderer.filterForZoom(zoom)
       const tilesSpec = this.mapboxRenderer.getVisibleSources().reduce((a, s) => a.concat(this._getTilesSpec({ x, y, zoom }, s)), [])
@@ -108,6 +156,7 @@
               resolve(canv)
               // releaseTile默认为true，对应Cesium请求图像的情形
               this.mapboxRenderer.releaseRender(renderRef)
+                this.mapboxRenderer._style.sourceCaches?.origin?._tileCache.reset()
             } else {
               // releaseTile为false时在由pickFeature手动调用，在渲染完成之后在pickFeature里边手动释放tile
               resolve(renderRef)
@@ -119,7 +168,7 @@
 
     pickFeatures(x, y, zoom, longitude, latitude) {
       return this.requestImage(x, y, zoom, false).then((renderRef) => {
-        let targetSources = this.mapboxRenderer.getVisibleSources()
+        let targetSources = this.mapboxRenderer.getVisibleSources(zoom)
         targetSources = this.sourceFilter ? this.sourceFilter(targetSources) : targetSources
 
         const queryResult = []
@@ -128,7 +177,7 @@
         latitude = Cesium.Math.toDegrees(latitude)
 
         targetSources.forEach((s) => {
-          let data = this.mapboxRenderer.queryRenderedFeatures({
+          const data = this.mapboxRenderer.queryRenderedFeatures({
             source: s,
             renderedZoom: zoom,
             lng: longitude,
@@ -136,8 +185,8 @@
             tileZ: zoom
           })
 
-          for (let key in data) {
-            let item = data[key]
+          for (const key in data) {
+            const item = data[key]
             for (let index = 0; index < item.length; index++) {
               const element = item[index]
               element.layer = key
@@ -149,7 +198,7 @@
         // release tile
         renderRef.consumer.ctx = undefined
         this.mapboxRenderer.releaseRender(renderRef)
-
+        this.mapboxRenderer._style.sourceCaches?.origin?._tileCache.reset()
         return queryResult
       })
     }
@@ -162,7 +211,7 @@
   }
 
   class PbfLayer extends mars3d.layer.BaseTileLayer {
-    //构建ImageryProvider
+    // 构建ImageryProvider
     _createImageryProvider(options) {
       return createImageryProvider(options)
     }
@@ -188,8 +237,8 @@
 
   PbfLayer.createImageryProvider = createImageryProvider
 
-  //注册下
-  const layerType = "pbf" //图层类型
+  // 注册下
+  const layerType = "pbf" // 图层类型
   mars3d.LayerUtil.register(layerType, PbfLayer)
   mars3d.LayerUtil.registerImageryProvider(layerType, createImageryProvider)
 

@@ -25,7 +25,6 @@ export function onMounted(mapInstance) {
   // const tiles3dLayer = new mars3d.layer.TilesetLayer({
   //   url: "//data.mars3d.cn/3dtiles/max-ditiezhan/tileset.json",
   //   maximumScreenSpaceError: 1,
-  //   maximumMemoryUsage: 1024,
   //   popup: "all"
   // })
   // map.addLayer(tiles3dLayer)

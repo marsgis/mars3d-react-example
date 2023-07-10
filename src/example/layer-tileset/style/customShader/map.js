@@ -25,7 +25,6 @@ export function onMounted(mapInstance) {
     name: "上海市建筑物",
     url: "//data.mars3d.cn/3dtiles/jzw-shanghai/tileset.json",
     maximumScreenSpaceError: 8,
-    maximumMemoryUsage: 1024,
     popup: "all"
   })
   map.addLayer(tiles3dLayer)

@@ -20,7 +20,6 @@ export function onMounted(mapInstance) {
     url: "//data.mars3d.cn/3dtiles/qx-shequ/tileset.json",
     position: { alt: 11.5 },
     maximumScreenSpaceError: 1,
-    maximumMemoryUsage: 1024,
     skipLevelOfDetail: true,
     preferLeaves: true,
     dynamicScreenSpaceError: true,

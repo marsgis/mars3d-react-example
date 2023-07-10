@@ -13,7 +13,6 @@ export const mapOptions = {
       name: "上海市建筑物",
       url: "//data.mars3d.cn/3dtiles/jzw-shanghai/tileset.json",
       maximumScreenSpaceError: 1,
-      maximumMemoryUsage: 1024,
       style: {
         color: "rgb(0, 99, 255)"
       },

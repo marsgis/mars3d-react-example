@@ -35,10 +35,8 @@ export function onMounted(mapInstance) {
     name: "桥梁",
     url: "//data.mars3d.cn/3dtiles/bim-qiaoliang/tileset.json",
     maximumScreenSpaceError: 16,
-    maximumMemoryUsage: 2048,
     dynamicScreenSpaceError: true,
     cullWithChildrenBounds: false,
-
 
     position: { lng: 117.096906, lat: 31.851564, alt: 45 },
     rotation: { z: 17.5 },

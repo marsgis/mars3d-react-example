@@ -66,7 +66,6 @@ export function showModel(url) {
     name: "模型名称",
     url: url,
     maximumScreenSpaceError: 16,
-    maximumMemoryUsage: 1024,
     popup: "all",
     flyTo: true
   })

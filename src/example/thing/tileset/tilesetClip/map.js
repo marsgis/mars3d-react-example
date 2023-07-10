@@ -43,7 +43,6 @@ export function showDytDemo() {
     url: "//data.mars3d.cn/3dtiles/qx-dyt/tileset.json",
     position: { alt: -27 },
     maximumScreenSpaceError: 1,
-    maximumMemoryUsage: 1024,
     flyTo: true
   })
   map.addLayer(tilesetLayer)
@@ -61,7 +60,6 @@ export function showTehDemo() {
     url: "//data.mars3d.cn/3dtiles/qx-teh/tileset.json",
     position: { lng: 117.218434, lat: 31.81807, alt: 163 },
     maximumScreenSpaceError: 16,
-    maximumMemoryUsage: 1024,
     dynamicScreenSpaceError: true,
     cullWithChildrenBounds: false,
     skipLevelOfDetail: true,
@@ -101,7 +99,6 @@ export function showXianDemo() {
     url: "//data.mars3d.cn/3dtiles/qx-shequ/tileset.json",
     position: { alt: 11.5 },
     maximumScreenSpaceError: 1,
-    maximumMemoryUsage: 1024,
     skipLevelOfDetail: true,
     preferLeaves: true,
     dynamicScreenSpaceError: true,

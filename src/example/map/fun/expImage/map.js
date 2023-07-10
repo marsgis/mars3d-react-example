@@ -41,8 +41,7 @@ export function onMounted(mapInstance) {
   const tilesetLayer = new mars3d.layer.TilesetLayer({
     url: "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
     position: { alt: 80.6 },
-    maximumScreenSpaceError: 1,
-    maximumMemoryUsage: 1024
+    maximumScreenSpaceError: 1
   })
   map.addLayer(tilesetLayer)
 

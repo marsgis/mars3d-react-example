@@ -23,7 +23,6 @@ export const mapOptions = {
       url: "//data.mars3d.cn/3dtiles/bim-daxue/tileset.json",
       position: { lng: 117.251229, lat: 31.844015, alt: 31.2 },
       maximumScreenSpaceError: 16,
-      maximumMemoryUsage: 1024,
       highlight: {
         type: mars3d.EventType.click, // 默认为鼠标移入高亮，也可以指定click单击高亮
         color: "#00FF00"
