@@ -135,7 +135,8 @@ function addDemoGraphic4(graphicLayer) {
       noWhite: false,
       dimensions_x: 1500,
       dimensions_y: 1000,
-      heading: 90
+      heading: 90,
+      label: { text: "我是label文本", pixelOffsetY: -30 }
     },
     attr: { remark: "示例4" }
   })

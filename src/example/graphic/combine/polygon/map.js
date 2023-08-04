@@ -66,7 +66,8 @@ export function addDemoGraphic1() {
       instances: arr, // 公共样式
       style: {
         outline: true,
-        outlineColor: "#ffffff"
+        outlineColor: "#ffffff",
+        flat: true
       },
       // 高亮时的样式
       highlight: {

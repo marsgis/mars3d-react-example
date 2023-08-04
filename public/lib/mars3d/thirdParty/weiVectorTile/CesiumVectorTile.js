@@ -593,7 +593,8 @@
       /* 4 */
       /***/ function (module, exports, __webpack_require__) {
         "use strict"
-        /* WEBPACK VAR INJECTION */ ;(function (Buffer) {
+        /* WEBPACK VAR INJECTION */
+        ;(function (Buffer) {
           exports.base64 = true
           exports.array = true
           exports.string = true
@@ -627,14 +628,15 @@
           }
 
           /* WEBPACK VAR INJECTION */
-        }.call(this, __webpack_require__(5).Buffer))
+        }).call(this, __webpack_require__(5).Buffer)
 
         /***/
       },
       /* 5 */
       /***/ function (module, exports, __webpack_require__) {
         "use strict"
-        /* WEBPACK VAR INJECTION */ ;(function (global) {
+        /* WEBPACK VAR INJECTION */
+        ;(function (global) {
           /*!
            * The buffer module from node.js, for the browser.
            *
@@ -2388,14 +2390,15 @@
           }
 
           /* WEBPACK VAR INJECTION */
-        }.call(this, __webpack_require__(7)))
+        }).call(this, __webpack_require__(7))
 
         /***/
       },
       /* 6 */
       /***/ function (module, exports, __webpack_require__) {
         "use strict"
-        /* WEBPACK VAR INJECTION */ ;(function (global) {
+        /* WEBPACK VAR INJECTION */
+        ;(function (global) {
           var proj4 = __webpack_require__(63)
           if (proj4.default) {
             proj4 = proj4.default
@@ -2559,7 +2562,7 @@
           module.exports = shp
 
           /* WEBPACK VAR INJECTION */
-        }.call(this, __webpack_require__(7)))
+        }).call(this, __webpack_require__(7))
 
         /***/
       },
@@ -3581,7 +3584,8 @@
       /* 12 */
       /***/ function (module, exports, __webpack_require__) {
         "use strict"
-        /* WEBPACK VAR INJECTION */ ;(function (Buffer) {
+        /* WEBPACK VAR INJECTION */
+        ;(function (Buffer) {
           module.exports = function (data, encoding) {
             return new Buffer(data, encoding)
           }
@@ -3590,7 +3594,7 @@
           }
 
           /* WEBPACK VAR INJECTION */
-        }.call(this, __webpack_require__(5).Buffer))
+        }).call(this, __webpack_require__(5).Buffer)
 
         /***/
       },
@@ -6450,7 +6454,7 @@ Usage:
 
               if (
                 s.match_length <= 5 &&
-                (s.strategy === Z_FILTERED || (s.match_length === MIN_MATCH && s.strstart - s.match_start > 4096) /*TOO_FAR*/)
+                (s.strategy === Z_FILTERED || (s.match_length === MIN_MATCH && s.strstart - s.match_start > 4096)) /*TOO_FAR*/
               ) {
                 /* If prev_match is also MIN_MATCH, match_start is garbage
                  * but we will ignore the current match anyway.
@@ -12541,7 +12545,8 @@ exports.inflateUndermine = inflateUndermine;
       /* 51 */
       /***/ function (module, exports, __webpack_require__) {
         "use strict"
-        /* WEBPACK VAR INJECTION */ ;(function (global) {
+        /* WEBPACK VAR INJECTION */
+        ;(function (global) {
           var fallback = __webpack_require__(52)
           var Buffer = __webpack_require__(5).Buffer
           module.exports = async function binaryAjax(url) {
@@ -12569,7 +12574,7 @@ exports.inflateUndermine = inflateUndermine;
           }
 
           /* WEBPACK VAR INJECTION */
-        }.call(this, __webpack_require__(7)))
+        }).call(this, __webpack_require__(7))
 
         /***/
       },
@@ -12615,7 +12620,8 @@ exports.inflateUndermine = inflateUndermine;
       /* 53 */
       /***/ function (module, exports, __webpack_require__) {
         "use strict"
-        /* WEBPACK VAR INJECTION */ ;(function (global) {
+        /* WEBPACK VAR INJECTION */
+        ;(function (global) {
           var Mutation = global.MutationObserver || global.WebKitMutationObserver
 
           var scheduleDrain
@@ -12685,7 +12691,7 @@ exports.inflateUndermine = inflateUndermine;
           }
 
           /* WEBPACK VAR INJECTION */
-        }.call(this, __webpack_require__(7)))
+        }).call(this, __webpack_require__(7))
 
         /***/
       },
@@ -24333,20 +24339,15 @@ exports.inflateUndermine = inflateUndermine;
         })
 
         // EXTERNAL MODULE: external {"commonjs2":"mars3d-cesium","amd":"mars3d-cesium","commonjs":"mars3d-cesium","root":"Cesium"}
-        var external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_ = __webpack_require__(0)
+        var Cesium = __webpack_require__(0)
 
         // CONCATENATED MODULE: ./src/VectorStyle.js
 
         function getColor(color) {
           if (typeof color == "string") {
-            color = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Color"].fromCssColorString(color)
+            color = Cesium["Color"].fromCssColorString(color)
           } else if (Array.isArray(color)) {
-            color = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Color"].fromBytes(
-              color[0],
-              color[1],
-              color[2],
-              color[3]
-            )
+            color = Cesium["Color"].fromBytes(color[0], color[1], color[2], color[3])
           }
 
           return color
@@ -24397,119 +24398,55 @@ exports.inflateUndermine = inflateUndermine;
             return options
           }
 
-          options = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defaultValue"](options, {})
-          this.fillColor = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defaultValue"](
-            getColor(options.fillColor),
-            getColor([0, 255, 255, 30])
-          )
-          this.fill = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defaultValue"](options.fill, true)
+          options = Cesium["defaultValue"](options, {})
+          this.fillColor = Cesium["defaultValue"](getColor(options.fillColor), getColor([0, 255, 255, 30]))
+          this.fill = Cesium["defaultValue"](options.fill, true)
           this.labelStroke = options.labelStroke
-          this.labelStrokeWidth = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defaultValue"](
-            options.labelStrokeWidth,
-            1
-          )
-          this.labelStrokeColor = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defaultValue"](
-            getColor(options.labelStrokeColor),
-            getColor([160, 99, 57])
-          ) //线样式
+          this.labelStrokeWidth = Cesium["defaultValue"](options.labelStrokeWidth, 1)
+          this.labelStrokeColor = Cesium["defaultValue"](getColor(options.labelStrokeColor), getColor([160, 99, 57])) //线样式
 
-          this.outlineColor = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defaultValue"](
-            getColor(options.outlineColor),
-            getColor("yellow")
-          )
+          this.outlineColor = Cesium["defaultValue"](getColor(options.outlineColor), getColor("yellow"))
           this.backgroundColor = getColor(options.backgroundColor)
-          this.lineWidth = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defaultValue"](
-            options.lineWidth,
-            1.5
-          )
-          this.outline = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defaultValue"](options.outline, true) //注记样式
+          this.lineWidth = Cesium["defaultValue"](options.lineWidth, 1.5)
+          this.outline = Cesium["defaultValue"](options.outline, true) //注记样式
 
-          this.fontColor = getColor(
-            external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defaultValue"](options.fontColor, "black")
-          )
-          this.fontSize = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defaultValue"](options.fontSize, 16)
-          this.fontFamily = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defaultValue"](
-            options.fontFamily,
-            "宋体"
-          )
-          this.pointSize = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defaultValue"](
-            options.pointSize,
-            4
-          )
-          this.pointColor = getColor(
-            external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defaultValue"](options.pointColor, "yellow")
-          )
-          this.pointStyle = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defaultValue"](
-            options.pointStyle,
-            "Ring"
-          ) //'Solid','Ring','Circle'
+          this.fontColor = getColor(Cesium["defaultValue"](options.fontColor, "black"))
+          this.fontSize = Cesium["defaultValue"](options.fontSize, 16)
+          this.fontFamily = Cesium["defaultValue"](options.fontFamily, "宋体")
+          this.pointSize = Cesium["defaultValue"](options.pointSize, 4)
+          this.pointColor = getColor(Cesium["defaultValue"](options.pointColor, "yellow"))
+          this.pointStyle = Cesium["defaultValue"](options.pointStyle, "Ring") //'Solid','Ring','Circle'
 
-          this.labelPropertyName = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defaultValue"](
-            options.labelPropertyName,
-            "NAME"
-          )
-          this.ringRadius = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defaultValue"](
-            options.ringRadius,
-            2
-          )
-          this.circleLineWidth = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defaultValue"](
-            options.circleLineWidth,
-            2
-          )
+          this.labelPropertyName = Cesium["defaultValue"](options.labelPropertyName, "NAME")
+          this.ringRadius = Cesium["defaultValue"](options.ringRadius, 2)
+          this.circleLineWidth = Cesium["defaultValue"](options.circleLineWidth, 2)
 
-          if (external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defined"](options.showMaker)) {
-            this.showMarker = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defaultValue"](
-              options.showMaker,
-              true
-            )
+          if (Cesium["defined"](options.showMaker)) {
+            this.showMarker = Cesium["defaultValue"](options.showMaker, true)
           }
 
-          if (external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defined"](options.showMarker)) {
-            this.showMarker = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defaultValue"](
-              options.showMarker,
-              true
-            )
+          if (Cesium["defined"](options.showMarker)) {
+            this.showMarker = Cesium["defaultValue"](options.showMarker, true)
           }
 
-          this.showLabel = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defaultValue"](
-            options.showLabel,
-            true
-          )
-          this.showCenterLabel = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defaultValue"](
-            options.showCenterLabel,
-            false
-          )
+          this.showLabel = Cesium["defaultValue"](options.showLabel, true)
+          this.showCenterLabel = Cesium["defaultValue"](options.showCenterLabel, false)
           this.centerLabelPropertyName = options.centerLabelPropertyName
-          this.labelOffsetX = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defaultValue"](
-            options.labelOffsetX,
-            0
-          )
-          this.labelOffsetY = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defaultValue"](
-            options.labelOffsetY,
-            0
-          )
+          this.labelOffsetX = Cesium["defaultValue"](options.labelOffsetX, 0)
+          this.labelOffsetY = Cesium["defaultValue"](options.labelOffsetY, 0)
           this.markerImage = options.markerImage
           this.lineDash = options.lineDash //this.lineOffset = options.lineOffset;
 
-          this.lineCap = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defaultValue"](
-            options.lineCap,
-            "butt"
-          )
-          this.lineJoin = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defaultValue"](
-            options.lineJoin,
-            "miter"
-          )
+          this.lineCap = Cesium["defaultValue"](options.lineCap, "butt")
+          this.lineJoin = Cesium["defaultValue"](options.lineJoin, "miter")
           this.shadowColor = getColor(options.shadowColor)
           this.shadowBlur = options.shadowBlur
           this.shadowOffsetX = options.shadowOffsetX
           this.shadowOffsetY = options.shadowOffsetY
-          this.miterLimit = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defaultValue"](
-            options.miterLimit,
-            10
-          )
+          this.miterLimit = Cesium["defaultValue"](options.miterLimit, 10)
           this.markerImageEl = null
           var makerImagePromise = null
-          var deferred = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defer"]()
+          var deferred = Cesium["defer"]()
           this.readyPromise = deferred.promise
           var that = this
 
@@ -24542,11 +24479,8 @@ exports.inflateUndermine = inflateUndermine;
 
           for (var i in this) {
             if (this.hasOwnProperty(i)) {
-              if (
-                typeof external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_ != "undefined" &&
-                this[i] instanceof external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Color"]
-              ) {
-                style[i] = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Color"].clone(this[i])
+              if (typeof Cesium != "undefined" && this[i] instanceof Cesium["Color"]) {
+                style[i] = Cesium["Color"].clone(this[i])
               } else {
                 style[i] = this[i]
               }
@@ -24743,10 +24677,7 @@ exports.inflateUndermine = inflateUndermine;
             h = 0
 
           for (var i = 0; i < lines.length; i++) {
-            var tempCv = Object(external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["writeTextToCanvas"])(
-              lines[i],
-              options
-            )
+            var tempCv = Object(Cesium["writeTextToCanvas"])(lines[i], options)
 
             if (tempCv) {
               lineImgs.push(tempCv)
@@ -24986,7 +24917,7 @@ exports.inflateUndermine = inflateUndermine;
         }
         function parseShpFiles(files, encoding) {
           if (!files || files.length > 0) {
-            var df = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defer"]()
+            var df = Cesium["defer"]()
             var promise = df.promise
             var shpFile, dbfFile, prjFile
 
@@ -25080,7 +25011,7 @@ exports.inflateUndermine = inflateUndermine;
 
           var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}
 
-          if (!external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defined"](options.source)) {
+          if (!Cesium["defined"](options.source)) {
             return
           }
 
@@ -25104,68 +25035,35 @@ exports.inflateUndermine = inflateUndermine;
           }
 
           this._rectangle = options.rectangle
-          this._tilingScheme = new external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["GeographicTilingScheme"]({
+          this._tilingScheme = new Cesium["GeographicTilingScheme"]({
             ellipsoid: options.ellipsoid
           })
-          this._tileWidth = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defaultValue"](
-            options.tileWidth,
-            256
-          )
-          this._tileHeight = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defaultValue"](
-            options.tileHeight,
-            256
-          )
+          this._tileWidth = Cesium["defaultValue"](options.tileWidth, 256)
+          this._tileHeight = Cesium["defaultValue"](options.tileHeight, 256)
           this._url = options.source
           this._fileExtension = ext
-          this._removeDuplicate = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defaultValue"](
-            options.removeDuplicate,
-            true
-          )
-          this._allowPick = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defaultValue"](
-            options.allowPick,
-            false
-          )
-          this._simplifyTolerance = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defaultValue"](
-            options.simplifyTolerance,
-            0.01
-          )
-          this._simplify = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defaultValue"](
-            options.simplify,
-            false
-          ) //this._multipleTask = Cesium.defaultValue(options.multipleTask, true);
+          this._removeDuplicate = Cesium["defaultValue"](options.removeDuplicate, true)
+          this._allowPick = Cesium["defaultValue"](options.allowPick, false)
+          this._simplifyTolerance = Cesium["defaultValue"](options.simplifyTolerance, 0.01)
+          this._simplify = Cesium["defaultValue"](options.simplify, false) //this._multipleTask = Cesium.defaultValue(options.multipleTask, true);
           //this._taskWaitTime = Cesium.defaultValue(options.taskWaitTime, 10);
 
-          this._maximumLevel = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defaultValue"](
-            options.maximumLevel,
-            22
-          )
-          this._minimumLevel = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defaultValue"](
-            options.minimumLevel,
-            3
-          )
-          this._showMaximumLevel = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defaultValue"](
-            options.showMaximumLevel,
-            true
-          )
+          this._maximumLevel = Cesium["defaultValue"](options.maximumLevel, 22)
+          this._minimumLevel = Cesium["defaultValue"](options.minimumLevel, 3)
+          this._showMaximumLevel = Cesium["defaultValue"](options.showMaximumLevel, true)
           this._makerImage = options.markerImage
-          this._tileCacheSize = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defaultValue"](
-            options.tileCacheSize,
-            200
-          )
+          this._tileCacheSize = Cesium["defaultValue"](options.tileCacheSize, 200)
 
           if (typeof_default()(options.defaultStyle) == "object" && !(options.defaultStyle instanceof VectorStyle)) {
             options.defaultStyle = new VectorStyle(options.defaultStyle)
           }
 
-          this._defaultStyle = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defaultValue"](
-            options.defaultStyle,
-            VectorStyle.Default.clone()
-          )
+          this._defaultStyle = Cesium["defaultValue"](options.defaultStyle, VectorStyle.Default.clone())
           this._styleFilter = typeof options.styleFilter == "function" ? options.styleFilter : undefined
           this.clustering = options.clustering
-          this._errorEvent = new external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Event"]()
-          this._featuresPicked = new external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Event"]()
-          this._readyPromise = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defer"]()
+          this._errorEvent = new Cesium["Event"]()
+          this._featuresPicked = new Cesium["Event"]()
+          this._readyPromise = Cesium["defer"]()
           this._ready = false
           this._state = VectorTileImageryProvider.State.READY
           this._cache = {}
@@ -25200,7 +25098,7 @@ exports.inflateUndermine = inflateUndermine;
             )
           }
 
-          var shpDf = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defer"]()
+          var shpDf = Cesium["defer"]()
           promises.push(shpDf.promise)
           this._state = VectorTileImageryProvider.State.SHPLOADING
 
@@ -25223,7 +25121,7 @@ exports.inflateUndermine = inflateUndermine;
               case ".json":
               case ".geojson":
               case ".topojson":
-                external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Resource"]
+                Cesium["Resource"]
                   .fetchJson(this._url)
                   .then(function (geojson) {
                     onSuccess(geojson)
@@ -25465,12 +25363,7 @@ exports.inflateUndermine = inflateUndermine;
               bbox[3] = bbox[3] + 0.1
             } // that.rectangle = Cesium.Cesium.Rectangle.fromDegrees(that._bbox[0], that._bbox[1], that._bbox[2], that._bbox[3]);
 
-            that._bbox = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Rectangle"].fromDegrees(
-              bbox[0],
-              bbox[1],
-              bbox[2],
-              bbox[3]
-            )
+            that._bbox = Cesium["Rectangle"].fromDegrees(bbox[0], bbox[1], bbox[2], bbox[3])
 
             if (!that._rectangle) {
               that._rectangle = that._bbox
@@ -25750,10 +25643,7 @@ exports.inflateUndermine = inflateUndermine;
           this._context = this._canvas.getContext("2d")
 
           if (this._defaultStyle.backgroundColor) {
-            if (
-              this._defaultStyle.backgroundColor instanceof
-              external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Color"]
-            ) {
+            if (this._defaultStyle.backgroundColor instanceof Cesium["Color"]) {
               this._context.fillStyle = this._defaultStyle.backgroundColor.toCssColorString()
             } else {
               this._context.fillStyle = this._defaultStyle.backgroundColor
@@ -25764,17 +25654,13 @@ exports.inflateUndermine = inflateUndermine;
 
           this._context.lineWidth = this._defaultStyle.lineWidth
 
-          if (
-            this._defaultStyle.outlineColor instanceof external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Color"]
-          ) {
+          if (this._defaultStyle.outlineColor instanceof Cesium["Color"]) {
             this._context.strokeStyle = this._defaultStyle.outlineColor.toCssColorString() // "rgb(255,255,0)";
           } else {
             this._context.strokeStyle = this._defaultStyle.outlineColor // "rgb(255,255,0)";
           }
 
-          if (
-            this._defaultStyle.fillColor instanceof external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Color"]
-          ) {
+          if (this._defaultStyle.fillColor instanceof Cesium["Color"]) {
             this._context.fillStyle = this._defaultStyle.fillColor.toCssColorString() // "rgba(0,255,255,0.0)";
           } else {
             this._context.fillStyle = this._defaultStyle.fillColor // "rgba(0,255,255,0.0)";
@@ -25784,10 +25670,10 @@ exports.inflateUndermine = inflateUndermine;
         VectorTileImageryProvider.prototype._clipGeojson = function (rectangle) {
           // let that = this;
           var bbox = [
-            external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Math"].toDegrees(rectangle.west),
-            external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Math"].toDegrees(rectangle.south),
-            external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Math"].toDegrees(rectangle.east),
-            external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Math"].toDegrees(rectangle.north)
+            Cesium["Math"].toDegrees(rectangle.west),
+            Cesium["Math"].toDegrees(rectangle.south),
+            Cesium["Math"].toDegrees(rectangle.east),
+            Cesium["Math"].toDegrees(rectangle.north)
           ] // let polygonBBox = turf.bboxPolygon(bbox);
           //    turf.polygon([[
           //    [bbox[0], bbox[1]],//sw
@@ -26167,14 +26053,8 @@ exports.inflateUndermine = inflateUndermine;
                 stroke: style.labelStroke,
                 strokeWidth: style.labelStrokeWidth,
                 strokeColor:
-                  typeof style.labelStrokeColor == "string"
-                    ? external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Color"].fromCssColorString(
-                        style.labelStrokeColor
-                      )
-                    : style.labelStrokeColor,
-                fillColor: external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Color"].fromCssColorString(
-                  style.color
-                )
+                  typeof style.labelStrokeColor == "string" ? Cesium["Color"].fromCssColorString(style.labelStrokeColor) : style.labelStrokeColor,
+                fillColor: Cesium["Color"].fromCssColorString(style.color)
               })
               var _textHeight = textImg.height
               var _textWidth = textImg.width
@@ -26235,14 +26115,8 @@ exports.inflateUndermine = inflateUndermine;
             pointSize: style.pointSize,
             fontSize: style.fontSize,
             fontFamily: style.fontFamily,
-            color:
-              style.fontColor instanceof external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Color"]
-                ? style.fontColor.toCssColorString()
-                : style.fontColor,
-            backgroundColor:
-              style.pointColor instanceof external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Color"]
-                ? style.pointColor.toCssColorString()
-                : style.pointColor,
+            color: style.fontColor instanceof Cesium["Color"] ? style.fontColor.toCssColorString() : style.fontColor,
+            backgroundColor: style.pointColor instanceof Cesium["Color"] ? style.pointColor.toCssColorString() : style.pointColor,
             pointStyle: style.pointStyle,
             //'Solid','Ring','Circle'
             ringRadius: style.ringRadius,
@@ -26294,14 +26168,8 @@ exports.inflateUndermine = inflateUndermine;
                 pointSize: style.pointSize,
                 fontSize: style.fontSize,
                 fontFamily: style.fontFamily,
-                color:
-                  style.fontColor instanceof external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Color"]
-                    ? style.fontColor.toCssColorString()
-                    : style.fontColor,
-                backgroundColor:
-                  style.pointColor instanceof external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Color"]
-                    ? style.pointColor.toCssColorString()
-                    : style.pointColor,
+                color: style.fontColor instanceof Cesium["Color"] ? style.fontColor.toCssColorString() : style.fontColor,
+                backgroundColor: style.pointColor instanceof Cesium["Color"] ? style.pointColor.toCssColorString() : style.pointColor,
                 pointStyle: style.pointStyle,
                 //'Solid','Ring','Circle'
                 ringRadius: style.ringRadius,
@@ -26319,13 +26187,13 @@ exports.inflateUndermine = inflateUndermine;
 
             context.lineWidth = style.lineWidth
 
-            if (style.outlineColor instanceof external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Color"]) {
+            if (style.outlineColor instanceof Cesium["Color"]) {
               context.strokeStyle = style.outlineColor.toCssColorString() // "rgb(255,255,0)";
             } else {
               context.strokeStyle = style.outlineColor // "rgb(255,255,0)";
             }
 
-            if (style.fillColor instanceof external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Color"]) {
+            if (style.fillColor instanceof Cesium["Color"]) {
               context.fillStyle = style.fillColor.toCssColorString() // "rgba(0,255,255,0.0)";
             } else {
               context.fillStyle = style.fillColor // "rgba(0,255,255,0.0)";
@@ -26337,10 +26205,7 @@ exports.inflateUndermine = inflateUndermine;
 
             context.lineCap = style.lineCap
 
-            if (
-              style.shadowColor &&
-              style.shadowColor instanceof external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Color"]
-            ) {
+            if (style.shadowColor && style.shadowColor instanceof Cesium["Color"]) {
               context.shadowColor = style.shadowColor.toCssColorString()
             } else {
               context.shadowColor = style.shadowColor
@@ -26511,10 +26376,10 @@ exports.inflateUndermine = inflateUndermine;
           var rectangle = this._tilingScheme.tileXYToRectangle(x, y, level)
 
           var boundingRect = {
-            xMin: external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Math"].toDegrees(rectangle.west),
-            yMin: external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Math"].toDegrees(rectangle.south),
-            xMax: external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Math"].toDegrees(rectangle.east),
-            yMax: external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Math"].toDegrees(rectangle.north)
+            xMin: Cesium["Math"].toDegrees(rectangle.west),
+            yMin: Cesium["Math"].toDegrees(rectangle.south),
+            xMax: Cesium["Math"].toDegrees(rectangle.east),
+            yMax: Cesium["Math"].toDegrees(rectangle.north)
           }
 
           var clippedGeojson = that._clipGeojson(rectangle)
@@ -26555,10 +26420,10 @@ exports.inflateUndermine = inflateUndermine;
           var that = this
           var cacheId = x + "," + y + "," + level
           var boundingRect = {
-            xMin: external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Math"].toDegrees(rectangle.west),
-            yMin: external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Math"].toDegrees(rectangle.south),
-            xMax: external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Math"].toDegrees(rectangle.east),
-            yMax: external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Math"].toDegrees(rectangle.north)
+            xMin: Cesium["Math"].toDegrees(rectangle.west),
+            yMin: Cesium["Math"].toDegrees(rectangle.south),
+            xMax: Cesium["Math"].toDegrees(rectangle.east),
+            yMax: Cesium["Math"].toDegrees(rectangle.north)
           }
           this._state = VectorTileImageryProvider.State.CLIPPING
           requestAnimationFrame(function () {
@@ -26632,7 +26497,7 @@ exports.inflateUndermine = inflateUndermine;
         }
 
         VectorTileImageryProvider.prototype._getTileImage = function (x, y, level, rectangle) {
-          var defer = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defer"]()
+          var defer = Cesium["defer"]()
           var that = this //从缓存中查询
 
           var cacheId = x + "," + y + "," + level
@@ -26681,7 +26546,7 @@ exports.inflateUndermine = inflateUndermine;
           if (bgColor) {
             var ctx = emptycv.getContext("2d")
 
-            if (bgColor instanceof external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Color"]) {
+            if (bgColor instanceof Cesium["Color"]) {
               ctx.fillStyle = bgColor.toCssColorString()
             } else {
               ctx.fillStyle = bgColor
@@ -26720,19 +26585,19 @@ exports.inflateUndermine = inflateUndermine;
           tileWidth = tileWidth ? tileWidth : 256
           tileHeight = tileHeight ? tileHeight : 256
           vectorTileImageryProviders.sort(function (a, b) {
-            if (!external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defined"](a.zIndex)) {
+            if (!Cesium["defined"](a.zIndex)) {
               return -1
             }
 
-            if (!external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defined"](b.zIndex)) {
+            if (!Cesium["defined"](b.zIndex)) {
               return 1
             }
 
             return a.zIndex - b.zIndex
           })
-          var tilingScheme = new external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["GeographicTilingScheme"]()
-          var nw = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Rectangle"].northwest(rectangle)
-          var se = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Rectangle"].southeast(rectangle)
+          var tilingScheme = new Cesium["GeographicTilingScheme"]()
+          var nw = Cesium["Rectangle"].northwest(rectangle)
+          var se = Cesium["Rectangle"].southeast(rectangle)
           var lt = tilingScheme.positionToTileXY(nw, level)
           var rb = tilingScheme.positionToTileXY(se, level)
           var w = (rb.x - lt.x + 1) * tileWidth,
@@ -26768,7 +26633,7 @@ exports.inflateUndermine = inflateUndermine;
         //   return undefined;
         // };
 
-        var scratchRect = new external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Rectangle"]() //实现Cesium.ImageryProvidery要素查询（拾取）接口，除了返回结果可以在Cesium内置的InfoBox显示之外，还触发featuresPicked事件。
+        var scratchRect = new Cesium["Rectangle"]() //实现Cesium.ImageryProvidery要素查询（拾取）接口，除了返回结果可以在Cesium内置的InfoBox显示之外，还触发featuresPicked事件。
 
         VectorTileImageryProvider.prototype.pickFeatures = function (x, y, level, longitude, latitude) {
           var that = this
@@ -26783,10 +26648,7 @@ exports.inflateUndermine = inflateUndermine;
           this.tilingScheme.tileXYToRectangle(x, y, level, scratchRect)
           var res = turf_root_turf_["radiansToLength"](scratchRect.width / 256, "kilometers") //分辨率，单位公里，即当前视图下一个像素点边长所表示距离
 
-          var pt = turf_root_turf_["point"]([
-            external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Math"].toDegrees(longitude),
-            external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Math"].toDegrees(latitude)
-          ])
+          var pt = turf_root_turf_["point"]([Cesium["Math"].toDegrees(longitude), Cesium["Math"].toDegrees(latitude)])
           var style = this.defaultStyle
           turf_root_turf_["featureEach"](this._geoJSON, function (fc) {
             var srcFc = fc
@@ -26831,7 +26693,7 @@ exports.inflateUndermine = inflateUndermine;
 
             if (found) {
               //查找成功
-              var fcInfo = new external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["ImageryLayerFeatureInfo"]()
+              var fcInfo = new Cesium["ImageryLayerFeatureInfo"]()
               fcInfo.data = srcFc
               fcInfo.description = JSON.stringify(srcFc.properties, null, 2)
 
@@ -26844,17 +26706,11 @@ exports.inflateUndermine = inflateUndermine;
               var srcGeometry = srcFc.geometry
 
               if (srcGeometry.type == "Point" || srcGeometry.type == "MultiPoint") {
-                fcInfo.position = new external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Cartographic"](
-                  longitude,
-                  latitude
-                )
+                fcInfo.position = new Cesium["Cartographic"](longitude, latitude)
               } else {
                 var centroidPt = turf_root_turf_["centroid"](srcFc)
                 var coord = turf_root_turf_["getCoords"](centroidPt)
-                fcInfo.position = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["Cartographic"].fromDegrees(
-                  coord[0],
-                  coord[1]
-                )
+                fcInfo.position = Cesium["Cartographic"].fromDegrees(coord[0], coord[1])
               }
 
               pickedFeatures.push(fcInfo)
@@ -26862,7 +26718,7 @@ exports.inflateUndermine = inflateUndermine;
           })
 
           if (pickedFeatures.length) {
-            var df = external_commonjs2_mars3d_cesium_amd_mars3d_cesium_commonjs_mars3d_cesium_root_Cesium_["defer"]()
+            var df = Cesium["defer"]()
             var startTime = new Date()
             Promise.all(pickedFeatures)
               .then(function (pickedFeatures) {

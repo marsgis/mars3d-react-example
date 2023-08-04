@@ -141,6 +141,16 @@ function addDemoGraphic2(graphicLayer) {
     attr: { remark: "示例2" }
   })
   graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
+
+  // 设置自转动画
+  let angle
+  map.on(mars3d.EventType.clockTick, function (clock) {
+    angle = (Cesium.Math.TWO_PI * clock.multiplier * clock.currentTime.secondsOfDay) / 86400 // 计算旋转角度
+  })
+  graphic.entity.orientation = new Cesium.CallbackProperty((time) => {
+    return Cesium.Quaternion.fromAxisAngle(Cesium.Cartesian3.UNIT_Z, angle)
+  }, false)
+
 }
 
 function addDemoGraphic3(graphicLayer) {

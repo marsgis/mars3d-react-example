@@ -1,6 +1,6 @@
 {
   "name": "mars3d-react-example",
-  "version": "3.5.0",
+  "version": "3.6.0",
   "description": "基于 React 的 Mars3D 功能示例项目",
   "scripts": {
     "serve": "vite --host",
@@ -23,8 +23,8 @@
     "echarts": "^5.3.2",
     "lodash": "^4.17.21",
     "@turf/turf": "^6.5.0",
-    "mars3d": "~3.5.12",
-    "mars3d-cesium": "~1.107.0",
+    "mars3d": "~3.6.0",
+    "mars3d-cesium": "~1.108.0",
     "monaco-editor": "^0.33.0",
     "nprogress": "^0.2.0",
     "react": "^18.1.0",
@@ -67,7 +67,7 @@
     "vite-plugin-style-import": "^2.0.0"
   },
   "engines": {
-    "node": ">=14.18.0",
+   "node": ">=16.0.0",
     "npm": "^7.23.0"
   },
   "repository": {

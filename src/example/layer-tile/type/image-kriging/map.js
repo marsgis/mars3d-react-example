@@ -33,8 +33,10 @@ let tileLayer
 export function addTileLayer() {
   removeTileLayer()
 
-  queryTemperatureData()
+  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/geojson/temperature.json" })
     .then(function (geojson) {
+      console.log("加载数据完成", geojson)
+
       // eslint-disable-next-line no-undef
       const image = loadkriging(geojson.features, kriging_bounds, kriging_colors)
       tileLayer = new mars3d.layer.ImageLayer({
@@ -61,10 +63,7 @@ export function removeTileLayer() {
   }
 }
 
-// 数据获取
-function queryTemperatureData() {
-  return mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/geojson/temperature.json" })
-}
+
 
 // 根据 克里金法 插值绘制图片
 function loadkriging(tempture, bounds, colors) {

@@ -12,6 +12,9 @@ let measure
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
+  // 修改编辑点样式，比如大小
+  mars3d.DrawUtil.setPointStyle({ pixelSize: 14 })
+
   measure = new mars3d.thing.Measure({
     label: {
       color: "#ffffff",

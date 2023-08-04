@@ -100,12 +100,6 @@ export function chkClippingPlanes(val) {
 export function terrainClips(heightVal) {
   // 挖地区域
   terrainPlanClip = new mars3d.thing.TerrainClip({
-    positions: [
-      [117.214769, 31.842048, 42.63],
-      [117.217764, 31.842048, 42.63],
-      [117.217764, 31.843312, 42.63],
-      [117.214769, 31.843312, 42.63]
-    ],
     diffHeight: heightVal, // 高度
     image: "./img/textures/poly-stone.jpg",
     imageBottom: "./img/textures/poly-soil.jpg",
@@ -113,6 +107,12 @@ export function terrainClips(heightVal) {
   })
   map.addThing(terrainPlanClip)
 
+  terrainPlanClip.addArea([
+    [117.214769, 31.842048, 42.63],
+    [117.217764, 31.842048, 42.63],
+    [117.217764, 31.843312, 42.63],
+    [117.214769, 31.843312, 42.63]
+  ])
 }
 
 export function heightChange(num) {
@@ -121,6 +121,8 @@ export function heightChange(num) {
 
 // 绘制矩形
 export function drawExtent() {
+  terrainPlanClip.clear()
+
   map.graphicLayer.startDraw({
     type: "rectangle",
     style: {
@@ -129,7 +131,6 @@ export function drawExtent() {
       outline: false
     },
     success: function (graphic) {
-      terrainPlanClip.clear()
       // 绘制成功后回调
       const positions = graphic.getOutlinePositions(false)
       map.graphicLayer.clear()
@@ -137,13 +138,15 @@ export function drawExtent() {
       console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
 
       // 挖地区域
-      terrainPlanClip.positions = positions
+      terrainPlanClip.addArea(positions)
     }
   })
 }
 
 // 绘制多边形
 export function drawPolygon() {
+  terrainPlanClip.clear()
+
   map.graphicLayer.startDraw({
     type: "polygon",
     style: {
@@ -152,7 +155,6 @@ export function drawPolygon() {
       clampToGround: true
     },
     success: function (graphic) {
-      terrainPlanClip.clear()
       // 绘制成功后回调
       const positions = graphic.positionsShow
       map.graphicLayer.clear()
@@ -160,7 +162,7 @@ export function drawPolygon() {
       console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
 
       // 挖地区域
-      terrainPlanClip.positions = positions
+      terrainPlanClip.addArea(positions)
     }
   })
 }

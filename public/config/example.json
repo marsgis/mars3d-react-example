@@ -119,8 +119,7 @@
             "name": "浏览器缓存数据",
             "thumbnail": "map-other-networkPlug.jpg",
             "main": "map/other/networkPlug",
-            "libs": ["mars3d", "localforage", "cesium-networkPlug"],
-            "new": true
+            "libs": ["mars3d", "localforage", "cesium-networkPlug"]
           }
         ]
       }
@@ -334,6 +333,13 @@
             "hasPannel": true
           },
           {
+            "name": "极坐标图(image应用案例)",
+            "thumbnail": "layert-type-image-echarts.jpg",
+            "main": "layer-tile/type/image-echarts",
+            "libs": ["mars3d", "echarts"],
+            "new":true
+          },
+          {
             "name": "标准XYZ金字塔瓦片",
             "thumbnail": "layert-type-xyz.jpg",
             "main": "layer-tile/type/xyz",
@@ -368,6 +374,13 @@
             "thumbnail": "layert-type-arcgis.jpg",
             "main": "layer-tile/type/arcgis",
             "hasPannel": true
+          },
+          {
+            "name": "ArcGIS PBF矢量瓦片",
+            "thumbnail": "layert-type-protomaps.jpg",
+            "main": "layer-tile/type/pbf-protomaps",
+            "hasPannel": true,
+            "libs": ["mars3d", "cesium-pbf-protomaps"]
           },
           {
             "name": "谷歌地球企业版(需部署私服)",
@@ -418,6 +431,13 @@
             "name": "绘制反选遮罩层",
             "thumbnail": "layerg-geojson-mask.jpg",
             "main": "layer-graphic/geojson/mask"
+          },
+          {
+            "name": "瓦片图层贴模型",
+            "thumbnail": "layer-tile-clampToTileset.jpg",
+            "main": "layer-tile/manage/clampToTileset",
+            "hasPannel": true,
+            "new": true
           }
         ]
       }
@@ -862,13 +882,6 @@
             "main": "graphic/entity/billboard",
             "hasPannel": true,
             "resources": ["/lib/dom2img/gifler.min.js"]
-          },
-          {
-            "name": "图标点+文字(含聚合)",
-            "thumbnail": "graphic-entity-billboard-clustering.jpg",
-            "main": "graphic/entity/billboard-clustering",
-            "hasPannel": true,
-            "download": false
           },
           {
             "name": "Canvas图片点",
@@ -1493,6 +1506,27 @@
         "download": false,
         "children": [
           {
+            "name": "点光源",
+            "thumbnail": "graphic-custom-pointLight.jpg",
+            "main": "graphic/custom/pointLight",
+            "hasPannel": true,
+            "new": true
+          },
+          {
+            "name": "聚光灯",
+            "thumbnail": "graphic-custom-spotLight.jpg",
+            "main": "graphic/custom/spotLight",
+            "hasPannel": true,
+            "new": true
+          },
+          {
+            "name": "气象云三维体",
+            "thumbnail": "graphic-custom-volumeCloud.jpg",
+            "main": "graphic/custom/volumeCloud",
+            "hasPannel": true,
+            "new": true
+          },
+          {
             "name": "粒子效果",
             "thumbnail": "graphic-particleSystem-basis.jpg",
             "main": "graphic/particleSystem/basis",
@@ -1657,8 +1691,7 @@
             "thumbnail": "graphic-video-edit.jpg",
             "main": "graphic/video/video-edit",
             "resources": ["CanvasEdit.js"],
-            "hasPannel": true,
-            "new": true
+            "hasPannel": true
           }
         ]
       },
@@ -1916,6 +1949,12 @@
             "name": "军事标绘",
             "thumbnail": "layerg-draw-military.jpg",
             "main": "layer-graphic/draw/military",
+            "hasPannel": true
+          },
+          {
+            "name": "点对象聚合",
+            "thumbnail": "layerg-fun-clustering.jpg",
+            "main": "layer-graphic/fun/clustering",
             "hasPannel": true
           },
           {
@@ -2255,6 +2294,13 @@
             "main": "layer-other/heatmap/heatLayer-tileset",
             "hasPannel": true,
             "libs": ["mars3d", "mars3d-heatmap"]
+          },
+          {
+            "name": "地震模拟",
+            "thumbnail": "thing-tileset-shake.jpg",
+            "main": "thing/tileset/shake",
+            "hasPannel": true,
+            "new": true
           }
         ]
       }
@@ -2381,6 +2427,14 @@
             "thumbnail": "thing-camera-cameraHistory.jpg",
             "main": "thing/camera/cameraHistory",
             "hasPannel": true
+          },
+          {
+            "name": "角色控制",
+            "thumbnail": "thing-camera-roleController.jpg",
+            "main": "thing/camera/roleController",
+            "hasPannel": true,
+            "resources": ["CesiumRoleController.js"],
+            "new": true
           },
           {
             "name": "动画漫游(tween插值)",
@@ -2572,9 +2626,22 @@
             "hasPannel": true
           },
           {
+            "name": "可视域分析(合并渲染)",
+            "thumbnail": "graphic-custom-visibility.jpg",
+            "main": "graphic/custom/visibility",
+            "hasPannel": true,
+            "new": true
+          },
+          {
             "name": "地表透明(地下模式)",
             "thumbnail": "thing-analysis-underground.gif",
             "main": "thing/analysis/underground",
+            "hasPannel": true
+          },
+          {
+            "name": "淹没分析(矢量面)",
+            "thumbnail": "thing-terrain-floodByGraphic.gif",
+            "main": "thing/terrain/floodByGraphic",
             "hasPannel": true
           },
           {
@@ -2590,10 +2657,18 @@
             "hasPannel": true
           },
           {
-            "name": "淹没分析(矢量面)",
-            "thumbnail": "thing-terrain-floodByGraphic.gif",
-            "main": "thing/terrain/floodByGraphic",
-            "hasPannel": true
+            "name": "天际线体",
+            "thumbnail": "graphic-custom-skylineBody.jpg",
+            "main": "graphic/custom/skylineBody",
+            "hasPannel": true,
+            "new": true
+          },
+          {
+            "name": "开敞度分析",
+            "thumbnail": "graphic-custom-viewDome.jpg",
+            "main": "graphic/custom/viewDome",
+            "hasPannel": true,
+            "new": true
           }
         ]
       },

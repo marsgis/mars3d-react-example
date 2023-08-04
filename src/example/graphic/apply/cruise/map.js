@@ -154,7 +154,7 @@ let isinHenan = false
 let isinNanjing = false
 
 function addEllipsoidGraphics({ position, name, ellipsoidStyle, title, desc }) {
-  const model = new mars3d.graphic.ModelEntity({
+  const model = new mars3d.graphic.ModelPrimitive({
     name: name + "地面站模型",
     position: position,
     style: {
@@ -422,7 +422,7 @@ function addWeixinGraphic() {
   const point = new mars3d.LngLatPoint(116.716398, 39.907914, 100000)
 
   // 添加卫星
-  const modelGraphic = new mars3d.graphic.ModelEntity({
+  const modelGraphic = new mars3d.graphic.ModelPrimitive({
     name: "卫星模型",
     position: point,
     style: {

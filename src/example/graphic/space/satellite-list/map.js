@@ -90,7 +90,7 @@ function createSatelliteList(arr) {
     highlightSatellite()
   })
 
-  for (let i = 0; i < 1; i++) {
+  for (let i = 0; i < arr.length; i++) {
     const item = arr[i]
 
     // 属性处理

@@ -114,6 +114,10 @@ export function getGraphic(graphicId) {
   return video2D
 }
 
+export function setViedoGraphic(graphic) {
+  video2D = graphic
+}
+
 // 生成演示数据(测试数据量)
 export function addRandomGraphicByCount(count) {
   graphicLayer.clear()

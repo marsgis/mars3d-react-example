@@ -92,6 +92,9 @@ function addDemoGraphic2(graphicLayer) {
         text: "火星科技",
         font_size: 70,
         color: "#3388cc",
+        // stroke: true,
+        // strokeColor: "#ff0000",
+        // strokeWidth: 2,
         outlineWidth: 4
       }
     },
@@ -234,21 +237,25 @@ export function startDrawGraphic2() {
 
 // 根据中心点来计算矩形
 export function onClickDrawPoint() {
-  graphicLayer.startDraw({
-    type: "point",
-    style: {
-      color: "#ffff00",
-      clampToGround: true
-    },
-    success: function (graphic) {
+  graphicLayer
+    .startDraw({
+      type: "point",
+      style: {
+        color: "#ffff00",
+        clampToGround: true
+      }
+    })
+    .then((graphic) => {
       const position = graphic.positionShow
+      graphic.remove()
+
       const positions = mars3d.PolyUtil.getRectPositionsByCenter({
         center: position,
         width: 60,
         height: 10
       })
 
-      const rectangleEntity = new mars3d.graphic.RectanglePrimitive({
+      const rectangle = new mars3d.graphic.RectanglePrimitive({
         positions: positions,
         style: {
           materialType: mars3d.MaterialType.Text,
@@ -258,9 +265,10 @@ export function onClickDrawPoint() {
           clampToGround: true
         }
       })
-      graphicLayer.addGraphic(rectangleEntity)
-    }
-  })
+      graphicLayer.addGraphic(rectangle)
+
+      graphicLayer.fire(mars3d.EventType.drawCreated, { graphic: rectangle })
+    })
 }
 
 // 在图层绑定Popup弹窗

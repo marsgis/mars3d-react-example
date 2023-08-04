@@ -31,7 +31,7 @@ export function onMounted(mapInstance) {
   rainEffect = new mars3d.effect.RainEffect({
     speed: 10,
     size: 20,
-    direction: -30
+    direction: 10
   })
   map.addEffect(rainEffect)
 }

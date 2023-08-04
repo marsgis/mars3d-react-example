@@ -32,11 +32,12 @@ class Shp2JsonLayer extends mars3d.layer.GeoJsonLayer {
     // url是需要包括shp、dbf、prj等文件的zip压缩包
     if (this.options.url) {
       shpUtil
-        .toGeoJSON(this.options.url, undefined, "gbk")
+        .toGeoJSON(this.options.url, undefined, "gbk", this.options.crs)
         .then((data) => {
           if (this._state === mars3d.State.REMOVED) {
             return
           }
+          console.log("转换完成的数据是", data)
           this._load_data(data)
         })
         .catch(function (error) {

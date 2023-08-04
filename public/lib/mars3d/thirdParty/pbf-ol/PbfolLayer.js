@@ -270,7 +270,7 @@
       }
     }
     //构建ImageryProvider
-    _createImageryProvider(options) {
+    async _createImageryProvider(options) {
       return createImageryProvider(options)
     }
 
@@ -291,7 +291,7 @@
     }
   }
 
-  function createImageryProvider(options) {
+  async function createImageryProvider(options) {
     return new MvtImageryProvider(options)
   }
   PbfolLayer.createImageryProvider = createImageryProvider

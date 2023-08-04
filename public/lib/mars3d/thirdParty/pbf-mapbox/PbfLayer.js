@@ -2,7 +2,7 @@
 // const Cesium = mars3d.Cesium
 
 // 按mars3d规范，封装的pbf图层
-(function (window) {
+;(function (window) {
   const BasicRenderer = window.mapboxRenderer.BasicRenderer
 
   // 创建一个全局变量作为pbfBasicRenderer渲染模板，避免出现16个canvas上下文的浏览器限制，以便Cesium ImageLayer.destory()正常工作。
@@ -156,7 +156,7 @@
               resolve(canv)
               // releaseTile默认为true，对应Cesium请求图像的情形
               this.mapboxRenderer.releaseRender(renderRef)
-                this.mapboxRenderer._style.sourceCaches?.origin?._tileCache.reset()
+              this.mapboxRenderer._style.sourceCaches?.origin?._tileCache.reset()
             } else {
               // releaseTile为false时在由pickFeature手动调用，在渲染完成之后在pickFeature里边手动释放tile
               resolve(renderRef)
@@ -212,27 +212,22 @@
 
   class PbfLayer extends mars3d.layer.BaseTileLayer {
     // 构建ImageryProvider
-    _createImageryProvider(options) {
+    async _createImageryProvider(options) {
       return createImageryProvider(options)
     }
   }
 
-  function createImageryProvider(options) {
-    return new Promise((resolve, reject) => {
-      if (options.url) {
-        Cesium.Resource.fetchJson(options).then((data) => {
-          const provider = new MVTImageryProvider({ ...options, style: data })
-          provider.readyPromise.then(() => {
-            resolve(provider)
-          })
-        })
-      } else {
-        const provider = new MVTImageryProvider(options)
-        provider.readyPromise.then(() => {
-          resolve(provider)
-        })
-      }
-    })
+  async function createImageryProvider(options) {
+    if (options.url) {
+      let data = await Cesium.Resource.fetchJson(options)
+      const provider = new MVTImageryProvider({ ...options, style: data })
+      await provider.readyPromise
+      return provider
+    } else {
+      const provider = new MVTImageryProvider(options)
+      await provider.readyPromise
+      return provider
+    }
   }
 
   PbfLayer.createImageryProvider = createImageryProvider

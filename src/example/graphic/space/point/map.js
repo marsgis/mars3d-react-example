@@ -113,8 +113,8 @@ function initData(arr) {
       item.perigee = item.info[9] // 近地点高度[公里]
       item.rcs = item.info[10] // 雷达截面
       // item.dataStatus = item.info[11]; // 数据状态码
-      item.orbitCenter = item.info[12] // 轨道中心
-      item.orbitType = item.info[13] // 轨道类型
+      item.orbitCenter = item.info[12] || "EA" // 轨道中心
+      item.orbitType = item.info[13] || "ORB" // 轨道类型
 
       delete item.info
     }
@@ -152,9 +152,9 @@ function initData(arr) {
     }
     if (satelliteObj) {
       const item = satelliteObj.attr
-      if (!item.name) {
-        return
-      }
+      // if (!item.name) {
+      //   return
+      // }
 
       let launchDate, status, country, launchSite
       if (item.launchDate) {
@@ -179,9 +179,9 @@ function initData(arr) {
       const inhtml = `<a href="https://www.n2yo.com/satellite/?s=${item.id}" target="_blank">N2YO...</a>`
 
       const weixinList = [
-        item.name,
+        item.name || "未知",
         item.id,
-        item.cospar,
+        item.cospar || "未知",
         item.type,
         status,
         country,

@@ -28,8 +28,8 @@ export function onMounted(mapInstance) {
         [117.251193, 31.843746, 47.7]
       ],
       edgeColor: Cesium.Color.GREY,
-      edgeWidth: 2.0,
-      showPlane: true
+      edgeWidth: 2.0
+      // showPlane: true
     },
     flyTo: true
   })

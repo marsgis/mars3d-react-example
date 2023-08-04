@@ -92,6 +92,12 @@ function addDemoGraphic2(graphicLayer) {
     attr: { remark: "示例2" }
   })
   graphicLayer.addGraphic(graphic)
+
+  // 按时间范围显示对象 0-10，20-30
+  graphic.availability = new Cesium.TimeIntervalCollection([
+    new Cesium.TimeInterval({ start: map.clock.currentTime, stop: Cesium.JulianDate.addSeconds(map.clock.currentTime, 10, new Cesium.JulianDate()) }),
+    new Cesium.TimeInterval({ start: Cesium.JulianDate.addSeconds(map.clock.currentTime, 20, new Cesium.JulianDate()), stop: Cesium.JulianDate.addSeconds(map.clock.currentTime, 30, new Cesium.JulianDate()) })
+  ])
 }
 
 function addDemoGraphic3(graphicLayer) {

@@ -510,7 +510,7 @@ const styleConfig = {
   billboard: {
     name: "图标点标记",
     primitive: true,
-    extends: ["divBillboard"],
+    extends: ["divBillboard", "canvasBillboard"],
     style: [
       { name: "image", label: "图标", type: "label", defval: "" },
       { name: "opacity", label: "透明度", type: "slider", defval: 1.0, min: 0, max: 1, step: 0.01 },
@@ -1815,8 +1815,17 @@ const styleConfig = {
     name: "双曲面雷达范围",
     style: [
       { name: "color", label: "颜色", type: "color", defval: "#ffffff" },
-      { name: "radius", label: "内曲面半径", type: "number", min: 1.0, max: 999999999.0, step: 1, defval: 1.0 },
-      { name: "startRadius", label: "外曲面半径", type: "number", min: 1.0, max: 999999999.0, step: 1, defval: 1.0 },
+      { name: "radius", label: "内曲面半径", type: "number", min: 1.0, max: 999999999.0, step: 1, defval: 1.0, toFixed: 1 },
+      {
+        name: "startRadius",
+        label: "外曲面半径",
+        type: "number",
+        min: 1.0,
+        max: 999999999.0,
+        step: 1,
+        defval: 1.0,
+        toFixed: 1
+      },
 
       { name: "heading", label: "方向角", type: "slider", min: 0.0, max: 360.0, step: 0.01, defval: 0.0 },
       { name: "pitch", label: "俯仰角", type: "slider", min: 0.0, max: 360.0, step: 0.01, defval: 0.0 },
@@ -1826,6 +1835,48 @@ const styleConfig = {
       { name: "endFovH", label: "右横截面角度", type: "slider", min: -180.0, max: 180.0, step: 0.01, defval: 1.0 },
       { name: "startFovV", label: "垂直起始角度", type: "slider", min: 0.0, max: 90.0, step: 0.01, defval: 1.0 },
       { name: "endFovV", label: "垂直结束角度", type: "slider", min: 0.0, max: 90.0, step: 0.01, defval: 1.0 }
+    ]
+  },
+
+  satellite: {
+    name: "卫星",
+    primitive: false,
+    style: [
+      { name: "tle1", label: "tle1", type: "text", defval: "" },
+      { name: "tle2", label: "tle2", type: "text", defval: "" },
+
+      { name: "path_width", label: "线宽", type: "number", step: 1, defval: 4.0 },
+      { name: "path_color", label: "颜色", type: "color", defval: "#3388ff" },
+
+      { name: "model_url", label: "路径", type: "text", defval: "" },
+      { name: "model_scale", label: "比例", type: "number", step: 1, defval: 1.0 },
+      { name: "model_minimumPixelSize", label: "最小像素大小", type: "number", step: 1, defval: 0.0 },
+      {
+        name: "model_distanceDisplayCondition",
+        label: "是否按视距显示",
+        type: "radio",
+        defval: false
+      },
+      {
+        name: "model_distanceDisplayCondition_far",
+        label: "最大距离",
+        type: "number",
+        step: 1,
+        defval: 100000.0,
+        show(style, allStyle, graphicType) {
+          return style.model_distanceDisplayCondition
+        }
+      },
+      {
+        name: "model_distanceDisplayCondition_near",
+        label: "最小距离",
+        type: "number",
+        step: 1,
+        defval: 0.0,
+        show(style, allStyle, graphicType) {
+          return style.model_distanceDisplayCondition
+        }
+      }
     ]
   },
   conicSensor: {
@@ -1862,8 +1913,7 @@ const styleConfig = {
     style: [
       { name: "color", label: "光颜色", type: "color", defval: "rgba(0,255,0,0.4)" },
       { name: "intensity", label: "光强度", type: "number", min: 1.0, max: 10000.0, step: 1, defval: 1.0 },
-      { name: "radius", label: "点光源半径", type: "number", min: 1.0, max: 10000.0, step: 1, defval: 1.0 },
-      { name: "addHeight", label: "偏移高度", type: "number", min: 0.0, max: 999999999.0, step: 1, defval: 0.0 }
+      { name: "radius", label: "点光源半径", type: "number", min: 1.0, max: 10000.0, step: 1, defval: 1.0 }
     ]
   },
   spotLight: {
@@ -1875,8 +1925,34 @@ const styleConfig = {
       { name: "heading", label: "方向角", type: "slider", min: 0.0, max: 360.0, step: 0.01, defval: 0.0 },
       { name: "pitch", label: "俯仰角", type: "slider", min: 0.0, max: 360.0, step: 0.01, defval: 0.0 },
       { name: "innerCone", label: "内圆锥角", type: "slider", min: 0.0, max: 45, step: 0.1, defval: 10.0 },
-      { name: "outerCone", label: "外圆锥角", type: "slider", min: 0.0, max: 45, step: 0.1, defval: 10.0 },
-      { name: "addHeight", label: "偏移高度", type: "number", min: 0.0, max: 999999999.0, step: 1, defval: 0.0 }
+      { name: "outerCone", label: "外圆锥角", type: "slider", min: 0.0, max: 45, step: 0.1, defval: 10.0 }
+    ]
+  },
+
+  pointVisibility: {
+    name: "圆形可视域区域",
+    style: [
+      { name: "radius", label: "半径", type: "slider", min: 1.0, max: 3000.0, step: 1, defval: 1.0 },
+      { name: "showFrustum", label: "视椎体框线", type: "radio", defval: false }
+    ]
+  },
+  coneVisibility: {
+    name: "扇形可视域区域",
+    style: [
+      { name: "radius", label: "半径", type: "slider", min: 1.0, max: 3000.0, step: 1, defval: 1.0 },
+      { name: "heading", label: "方向角", type: "slider", min: 0.0, max: 360.0, step: 0.01, defval: 0.0 },
+      { name: "pitch", label: "俯仰角", type: "slider", min: 0.0, max: 360.0, step: 0.01, defval: 0.0 },
+      { name: "roll", label: "翻滚角", type: "slider", min: 0.0, max: 360.0, step: 0.01, defval: 0.0 },
+      { name: "showFrustum", label: "视椎体框线", type: "radio", defval: false }
+    ]
+  },
+
+  viewDome: {
+    name: "开敞度分析球",
+    style: [
+      { name: "radius", label: "半径", type: "number", min: 1.0, max: 999999999.0, step: 1, defval: 1.0 },
+      { name: "visibleColor", label: "可见区域颜色", type: "color", defval: "rgba(0,183,239, 0.5)" },
+      { name: "hiddenColor", label: "不可见区域颜色", type: "color", defval: "rgba(227,108,9, 0.5)" }
     ]
   },
 
@@ -2225,8 +2301,8 @@ const styleConfig = {
       { name: "width", label: "墙厚度", type: "number", step: 1, defval: 9999.0 },
       { name: "color", label: "颜色", type: "color", defval: "#3388ff" },
       { name: "opacity", label: "透明度", type: "number", step: 0.1, min: 0.0, max: 1.0, defval: 1.0 },
-      { name: "closure", label: "是否闭合", type: "radio", defval: false }, 
-      { name: "hasShadows", label: "是否阴影", type: "radio", defval: false }, 
+      { name: "closure", label: "是否闭合", type: "radio", defval: false },
+      { name: "hasShadows", label: "是否阴影", type: "radio", defval: false }
     ]
   },
   diffuseWall: {

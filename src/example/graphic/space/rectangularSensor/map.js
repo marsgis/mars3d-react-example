@@ -47,6 +47,22 @@ export function onUnmounted() {
 }
 
 export function addDemoGraphic1() {
+  // 加个模型
+  const model = new mars3d.graphic.ModelPrimitive({
+    name: "地面站模型",
+    position: [117.218875, 31.817812, 138],
+    style: {
+      url: "//data.mars3d.cn/gltf/mars/leida.glb",
+      scale: 50,
+      heading: 30,
+      pitch: 0,
+      roll: 0,
+      minimumPixelSize: 40
+    },
+    fixedFrameTransform: Cesium.Transforms.eastNorthUpToFixedFrame
+  })
+  graphicLayer.addGraphic(model)
+
   const rectangularSensor = new mars3d.graphic.RectangularSensor({
     position: [117.218875, 31.817812, 138],
     style: {

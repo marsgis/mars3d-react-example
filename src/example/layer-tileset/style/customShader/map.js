@@ -40,7 +40,6 @@ export function onUnmounted() {
 
 export function setStyleDef() {
   tiles3dLayer.customShader = undefined
-  tiles3dLayer.reload()
 }
 
 export function setStyle1() {
@@ -55,7 +54,6 @@ export function setStyle1() {
         material.diffuse.g = -fsInput.attributes.positionEC.z / 1.0e4;
       } `
   })
-  tiles3dLayer.reload()
 }
 
 export function setStyle2() {
@@ -90,7 +88,6 @@ export function setStyle2() {
         material.diffuse += material.diffuse * (1.0 - mars_diff);
       } `
   })
-  tiles3dLayer.reload()
 }
 
 //  夜景贴图
@@ -157,7 +154,6 @@ export function setStyle3() {
     //   }
     // }`
   })
-  tiles3dLayer.reload()
 }
 
 //
@@ -214,5 +210,4 @@ export function setStyle4() {
   })
 
   tiles3dLayer.customShader = customShader
-  tiles3dLayer.reload()
 }

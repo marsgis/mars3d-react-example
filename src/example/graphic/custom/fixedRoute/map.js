@@ -226,11 +226,16 @@ function addRoamLines() {
         scale: 1,
         minimumPixelSize: 60
       },
-      path: {
-        color: "#ffff00",
-        opacity: 0.5,
-        width: 1,
-        leadTime: 0
+      polyline: {
+        width: 10,
+        materialType: mars3d.MaterialType.LineFlow,
+        materialOptions: {
+          image: "img/textures/line-arrow-blue.png",
+          color: "#ff0000",
+          mixt: true,
+          speed: 20,
+          repeat: new Cesium.Cartesian2(10, 1)
+        }
       }
     },
     {
@@ -280,6 +285,9 @@ function addRoamLines() {
     }
   ]
 
+  let startTime
+  let stopTime
+
   for (let i = 0, len = arrLine.length; i < len; i++) {
     const flydata = arrLine[i]
 
@@ -310,14 +318,26 @@ function addRoamLines() {
       distanceDisplayCondition_near: 80000,
       distanceDisplayCondition_far: Number.MAX_VALUE
     }
-    // flydata.forwardExtrapolationType = Cesium.ExtrapolationType.NONE;
+
+    // flydata.forwardExtrapolationType = Cesium.ExtrapolationType.NONE
+    // flydata.backwardExtrapolationType = Cesium.ExtrapolationType.NONE
 
     const fixedRoute = new mars3d.graphic.FixedRoute(flydata)
     graphicLayer.addGraphic(fixedRoute)
 
     // 启动漫游
     fixedRoute.start()
+
+    if (i === 0) {
+      startTime = fixedRoute.startTime
+      stopTime = fixedRoute.stopTime
+    } else {
+      startTime = Cesium.JulianDate.lessThan(startTime, fixedRoute.startTime) ? startTime : fixedRoute.startTime
+      stopTime = Cesium.JulianDate.greaterThan(stopTime, fixedRoute.stopTime) ? stopTime : fixedRoute.stopTime
+    }
   }
+
+  map.controls.timeline.zoomTo(startTime, stopTime)
 }
 
 // 在图层绑定Popup弹窗

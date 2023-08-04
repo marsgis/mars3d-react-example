@@ -9,7 +9,9 @@
 window.configLibs = {
   /// ///////////////////////Mars3D及其插件////////////////////////
   mars3d: [
-    // 三维地球“主库”
+    // // 三维地球“主库”
+    // "https://unpkg.com/mars3d-cesium@1.107.0/Build/Cesium/Widgets/widgets.css", //cdn
+    // "https://unpkg.com/mars3d-cesium@1.107.0/Build/Cesium/Cesium.js",
     "Cesium/Widgets/widgets.css", // cesium
     "Cesium/Cesium.js",
     "turf/turf.min.js",
@@ -49,11 +51,6 @@ window.configLibs = {
   "mars3d-tdt": [
     // 天地图三维
     "mars3d/plugins/tdt/mars3d-tdt.js"
-  ],
-  "mars3d-supermap": [
-    // 超图S3M服务
-    "mars3d/plugins/supermap/SuperMap3D.js", // s3m支持原生cesium的独立插件
-    "mars3d/plugins/supermap/mars3d-supermap.js" // mars3d-supermap简化调用封装
   ],
 
 

@@ -300,6 +300,9 @@ export class GraphicLayerState extends Component<any, any> {
         }
       ] // 表头
     }
+    if (props.getChildThis) {
+      props.getChildThis(this)
+    }
   }
 
   componentDidMount(): void {
@@ -546,17 +549,7 @@ export class GraphicLayerState extends Component<any, any> {
 
   // drawLabel2
   onClickStartDraw2() {
-    const graphic = mapWork.startDrawGraphic2()
-    graphicDataList.push({
-      key: graphic.id,
-      name: getGraphicName(graphic)
-    })
-    rowKeys.push(graphic.id)
-
-    this.setState({
-      graphicDataList: [...graphicDataList],
-      rowKeys: [...rowKeys]
-    })
+    mapWork.startDrawGraphic2()
   }
 
   // 是否编辑
@@ -647,6 +640,7 @@ export class GraphicLayerState extends Component<any, any> {
     if (fileType === "json" || fileType === "geojson") {
       const reader = new FileReader()
       reader.readAsText(item, "UTF-8")
+      const that = this
       reader.onloadend = function (e) {
         const geojson = JSON.parse(String(this.result))
 
@@ -656,6 +650,8 @@ export class GraphicLayerState extends Component<any, any> {
         } else {
           graphicLayer.loadGeoJSON(geojson, { flyTo: true })
         }
+        // 导入文件时表格展示导入的数据
+        that?.initGraphicableData(graphicLayer)
       }
     } else if (fileType === "kml") {
       const reader = new FileReader()

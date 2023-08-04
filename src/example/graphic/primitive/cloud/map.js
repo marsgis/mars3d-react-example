@@ -21,6 +21,8 @@ export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
+  globalNotify("已知问题提示", "(1) 删除单个数据时Cesium内部偶尔会删除2个数据")
+
   // 创建矢量数据图层
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)

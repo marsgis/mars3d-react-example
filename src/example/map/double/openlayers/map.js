@@ -5,10 +5,7 @@ export let map // mars3d.Map三维地图对象
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: 31.841977, lng: 117.141788, alt: 1043, heading: 90, pitch: -51 },
-    fxaa: true,
-    baseLayerPicker: false,
-    sceneModePicker: false
+    center: { lat: 30.753913, lng: 116.271687, alt: 7959.2, heading: 5.5, pitch: -39.1 }
   },
   layers: [
     {
@@ -73,6 +70,16 @@ export function onMounted(mapInstance) {
 
   // 联动控制器
   const ol3d = new olcs.OLCesium({ map: map2d, viewer: map.viewer })
+
+  // 移除ol同步的底图
+  const layers = map.imageryLayers._layers
+  for (let i = layers.length - 1; i >= 0; i--) {
+    const imageLayer = layers[i]
+    if (imageLayer._mars3d_config) {
+      continue
+    }
+    map.imageryLayers.remove(imageLayer)
+  }
 }
 
 /**

@@ -75,7 +75,7 @@ export function setStyle2() {
       material.diffuse += material.diffuse * (1.0 - mars_diff);
     } `
   })
-  tiles3dLayer.reload()
+  // tiles3dLayer.reload()
 }
 
 export function setStyle3() {

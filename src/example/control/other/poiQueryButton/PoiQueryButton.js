@@ -457,3 +457,4 @@ class PoiQueryButton extends mars3d.control.BaseControl {
     }, 3000)
   }
 }
+mars3d.ControlUtil.register("poiQueryButton", PoiQueryButton)

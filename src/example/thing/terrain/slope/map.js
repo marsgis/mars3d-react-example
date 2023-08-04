@@ -54,13 +54,6 @@ function addSlope() {
   slope.on(mars3d.EventType.end, function (event) {
     console.log("分析完成", event)
 
-    const positions = event.positions
-    if (positions.length >= 2) {
-      positions[0] = mars3d.PointUtil.setPositionsHeight(positions[0], event.minHeight - 1000)
-      positions[positions.length - 1] = mars3d.PointUtil.setPositionsHeight(positions[positions.length - 1], event.maxHeight + 100)
-      contourLine.positions = positions
-    }
-
     // event.data[0] 数组内返回值说明： {
     //     position:position,  //坐标位置
     //     slope: slopeValDou, //度数法值，α(坡度)=arc tan (高程差/水平距离)
@@ -96,6 +89,7 @@ export function btnDrawExtent(splitNum) {
 
       console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
 
+      contourLine.positions = positions
       slope.add(positions, {
         splitNum: splitNum, // splitNum插值分割的个数
         radius: 1, // 缓冲半径（影响坡度坡向的精度）
@@ -124,6 +118,7 @@ export function btnDraw(splitNum) {
 
       console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
 
+      contourLine.positions = positions
       slope.add(positions, {
         splitNum: splitNum, // splitNum插值分割的个数
         radius: 1, // 缓冲半径（影响坡度坡向的精度）

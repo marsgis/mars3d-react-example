@@ -248,7 +248,17 @@ function addDemoGraphic4(graphicLayer) {
     style: {
       url: "//data.mars3d.cn/gltf/mars/wrj.glb",
       scale: 0.1,
-      minimumPixelSize: 20
+      minimumPixelSize: 20,
+
+      distanceDisplayCondition: true,
+      distanceDisplayCondition_near: 0,
+      distanceDisplayCondition_far: 8000,
+      distanceDisplayBillboard: {
+        // 当视角距离超过一定距离(distanceDisplayCondition_far定义的) 后显示为图标对象的样式
+        image: "img/icon/huojian.svg",
+        scale: 0.5,
+        alignedAxis: new Cesium.VelocityVectorProperty(propertyFJ, true)
+      }
     },
     path: {
       width: 2,

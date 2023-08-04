@@ -33,30 +33,33 @@ export function onMounted(mapInstance) {
   map.addLayer(tilesetLayer)
 
   // 从数据库读取属性后，按下面格式组织好赋值即可[不适合大模型]
-  tilesetLayer.setProperties("id", [
-    {
+  tilesetLayer.readyPromise.then(() => {
+    bindSetPropertiesToTile(tilesetLayer.tileset)
+
+    addProperties({
       id: "55a7cf9c71f1c9c495413f934dd1a158",
       name: "大烟囱1 - 我是setProperties更新的", // 修改原有属性
       column1: "我是setProperties更新的", // 新增的属性
       testStyle: true // 新增的属性
-    },
-    {
+    })
+    addProperties({
       id: "559cb990c9dffd8675f6bc2186971dc2",
       name: "大烟囱2 - 我是setProperties更新的", // 修改原有属性
       column1: "我是setProperties更新的", // 新增的属性
       testStyle: true // 新增的属性
-    }
-  ])
+    })
 
-  // 还原或删除赋予的属性
-  // setTimeout(() => {
-  //   tilesetLayer.setProperties()// 清除所有
-  //   tilesetLayer.setProperties("id", [
-  //     {
-  //       id: "55a7cf9c71f1c9c495413f934dd1a158"
-  //     }
-  //   ])
-  // }, 5000)
+    setTimeout(() => {
+      // 还原或删除赋予的属性
+      removeProperties({
+        id: "559cb990c9dffd8675f6bc2186971dc2",
+        name: "大烟囱2 - 我是还原的", // 修改原有属性
+        column1: undefined,
+        testStyle: undefined
+      })
+      console.log("大烟囱2 还原了属性值")
+    }, 5000)
+  })
 
   // style回调方法
   tilesetLayer.style = function (feature) {
@@ -80,7 +83,6 @@ export function onMounted(mapInstance) {
   // setTimeout(() => {
   //   tilesetLayer.style = undefined
   // }, 5000)
-
 }
 
 /**
@@ -89,4 +91,82 @@ export function onMounted(mapInstance) {
  */
 export function onUnmounted() {
   map = null
+}
+
+const idField = "id" // 唯一标识对应的属性字段名称
+const newProperties = {}
+const loadFeatureList = new mars3d.MarsArray()
+
+// 绑定处理的事件
+function bindSetPropertiesToTile(tileset) {
+  tileset.tileLoad.addEventListener(function (tile) {
+    processTileFeatures(tile, (feature) => {
+      const id = feature.getProperty(idField)
+      const attr = newProperties[id]
+      if (id && attr) {
+        setFeatureProperties(feature, attr)
+        loadFeatureList.set(id, feature)
+      }
+    })
+  })
+
+  tileset.tileUnload.addEventListener(function (tile) {
+    processTileFeatures(tile, (feature) => {
+      const id = feature.getProperty(idField)
+      if (id) {
+        loadFeatureList.remove(id)
+      }
+    })
+  })
+}
+
+// 增加属性
+function addProperties(properties) {
+  const id = properties[idField]
+  newProperties[id] = properties
+}
+
+// 移除属性
+function removeProperties(properties) {
+  const id = properties[idField]
+  if (id) {
+    delete newProperties[id]
+
+    const feature = loadFeatureList.get(id)
+    setFeatureProperties(feature, properties)
+  }
+}
+
+function processTileFeatures(tile, callback) {
+  const content = tile.content
+  const innerContents = content.innerContents
+  if (Cesium.defined(innerContents)) {
+    const length = innerContents.length
+    for (let i = 0; i < length; ++i) {
+      processContentFeatures(innerContents[i], callback)
+    }
+  } else {
+    processContentFeatures(content, callback)
+  }
+}
+function processContentFeatures(content, callback) {
+  const featuresLength = content.featuresLength
+  for (let i = 0; i < featuresLength; ++i) {
+    const feature = content.getFeature(i)
+    callback(feature)
+  }
+}
+// 更新feature属性
+function setFeatureProperties(feature, newAttr) {
+  if (!feature || !newAttr) {
+    return
+  }
+
+  for (const key in newAttr) {
+    const val = newAttr[key]
+    if (feature.hasProperty(key) && feature.getProperty(key) === val) {
+      continue
+    }
+    feature.setProperty(key, val)
+  }
 }

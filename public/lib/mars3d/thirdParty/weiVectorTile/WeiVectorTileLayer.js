@@ -5,12 +5,14 @@
 ;(function (window) {
   class WeiVectorTileLayer extends mars3d.layer.BaseTileLayer {
     //构建ImageryProvider
-    _createImageryProvider(options) {
+    async _createImageryProvider(options) {
       return createImageryProvider(options)
     }
   }
-  function createImageryProvider(options) {
-    return new CesiumVectorTile.VectorTileImageryProvider(options) //CesiumVectorTile.js中
+  async function createImageryProvider(options) {
+    let provider = new CesiumVectorTile.VectorTileImageryProvider(options) //CesiumVectorTile.js中
+    await provider.readyPromise
+    return provider
   }
   WeiVectorTileLayer.createImageryProvider = createImageryProvider
 

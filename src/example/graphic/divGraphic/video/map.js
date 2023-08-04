@@ -59,6 +59,7 @@ export function onMounted(mapInstance) {
   addRandomGraphicByCount(graphicLayer, [117.078331, 31.660016, 47.2])
 
   // console.log("导出数据测试", graphicLayer.toJSON())
+  // const layer = mars3d.LayerUtil.create(json)
 }
 
 /**

@@ -55,6 +55,12 @@ export function onMounted(mapInstance) {
   // setInterval(function () {
   //   map.keyboardRoam.rotateCamera(mars3d.MoveType.LEFT_ROTATE)
   // }, 100)
+
+  // // 模拟键盘按键操作，按下事件
+  // map.keyboardRoam._onKeyDown({ keyCode: 38 })
+
+  // // 模拟键盘按键操作，释放事件
+  // map.keyboardRoam._onKeyUp({ keyCode: 38 })
 }
 
 /**

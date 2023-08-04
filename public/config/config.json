@@ -12,7 +12,7 @@
       "showSkyAtmosphere": true,
       "fog": true,
       "fxaa": true,
-      "requestRenderMode": true,
+      "requestRenderMode": false,
       "globe": {
         "depthTestAgainstTerrain": false,
         "baseColor": "#546a53",
@@ -252,8 +252,7 @@
         "pid": 50,
         "name": "行政区划界线",
         "type": "tdt",
-        "url": "https://t{s}.tianditu.gov.cn/mapservice/swdx?T=ibo_w&x={x}&y={y}&l={z}",
-        "maximumLevel": 10,
+        "layer": "xzqh",
         "mapSplit": false
       },
       {

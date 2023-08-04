@@ -57,7 +57,7 @@ function addGraphicLayer() {
       [116.18739, 30.854441, 244.53],
       [116.205214, 30.859332, 300.96]
     ],
-    clockLoop: true, // 是否循环播放
+    clockLoop: false, // 是否循环播放
     camera: {
       type: "gs",
       pitch: -30,
@@ -82,6 +82,21 @@ function addGraphicLayer() {
   })
   graphicLayer.addGraphic(fixedRoute)
 
+  // 绑定popup
+  bindPopup(fixedRoute)
+
+  fixedRoute.on(mars3d.EventType.start, function (event) {
+    console.log("漫游开始start")
+  })
+  fixedRoute.on(mars3d.EventType.end, function (event) {
+    console.log("漫游结束end")
+  })
+  // ui面板信息展示
+  fixedRoute.on(mars3d.EventType.change, (event) => {
+    // console.log("漫游change", event)
+    throttled(eventTarget.fire("roamLineChange", event), 500)
+  })
+
   map.on(mars3d.EventType.keydown, function (event) {
     // 空格 切换暂停/继续
     if (event.keyCode === 32) {
@@ -91,14 +106,6 @@ function addGraphicLayer() {
         fixedRoute.pause()
       }
     }
-  })
-
-  // 绑定popup
-  bindPopup(fixedRoute)
-
-  // ui面板信息展示
-  fixedRoute.on(mars3d.EventType.change, (event) => {
-    throttled(eventTarget.fire("roamLineChange", event), 500)
   })
 
   // 不贴地时，直接开始

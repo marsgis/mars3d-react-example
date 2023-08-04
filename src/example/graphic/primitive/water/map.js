@@ -251,7 +251,7 @@ export function startDrawGraphic() {
   graphicLayer.startDraw({
     type: "water",
     style: {
-      height: 3, // 水面高度
+      // height: 3, // 水面高度
       normalMap: "img/textures/waterNormals.jpg", // 水正常扰动的法线图
       frequency: 8000.0, // 控制波数的数字。
       animationSpeed: 0.02, // 控制水的动画速度的数字。

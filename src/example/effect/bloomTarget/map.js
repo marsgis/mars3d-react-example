@@ -155,36 +155,30 @@ export function onUnmounted() {
 
 // 从模型读取指定构件 加到 特效
 function addTileToTargetEffect(tiles3dLayer, effect) {
-  const listGJ = new mars3d.MarsArray()
+  const loadFeatureList = new mars3d.MarsArray()
   tiles3dLayer.tileset.tileLoad.addEventListener(function (tile) {
     processTileFeatures(tile, function (feature) {
       const attr = mars3d.Util.get3DTileFeatureAttr(feature) // 取属性
 
       // 根据条件判断，将feature记录
       if (attr.id === "4734ba6f3de83d861c3176a6273cac6d") {
-        listGJ.set(feature.featureId, feature.pickId)
-        effect.selected = listGJ.values
+        loadFeatureList.set(feature.featureId, feature.pickId)
+        effect.selected = loadFeatureList.values
       }
     })
   })
 
   tiles3dLayer.tileset.tileUnload.addEventListener(function (tile) {
     processTileFeatures(tile, function (feature) {
-      if (listGJ.contains(feature.featureId)) {
-        listGJ.remove(feature.featureId)
-        effect.selected = listGJ.values
+      if (loadFeatureList.contains(feature.featureId)) {
+        loadFeatureList.remove(feature.featureId)
+        effect.selected = loadFeatureList.values
       }
     })
   })
 }
 
-function processContentFeatures(content, callback) {
-  const featuresLength = content.featuresLength
-  for (let i = 0; i < featuresLength; ++i) {
-    const feature = content.getFeature(i)
-    callback(feature)
-  }
-}
+
 
 function processTileFeatures(tile, callback) {
   const content = tile.content
@@ -196,5 +190,12 @@ function processTileFeatures(tile, callback) {
     }
   } else {
     processContentFeatures(content, callback)
+  }
+}
+function processContentFeatures(content, callback) {
+  const featuresLength = content.featuresLength
+  for (let i = 0; i < featuresLength; ++i) {
+    const feature = content.getFeature(i)
+    callback(feature)
   }
 }

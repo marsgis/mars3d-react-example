@@ -34,7 +34,7 @@ export function onMounted(mapInstance) {
   bindLayerContextMenu() // 在图层绑定右键菜单,对所有加到这个图层的矢量数据都生效
 
   // 加个模型
-  const graphic = new mars3d.graphic.ModelEntity({
+  const graphic = new mars3d.graphic.ModelPrimitive({
     name: "地面站模型",
     position: [117.170264, 31.840312, 258],
     style: {
