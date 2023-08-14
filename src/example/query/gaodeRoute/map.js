@@ -67,7 +67,7 @@ export function removeAll() {
  * 起点按钮
  *
  * @export
- * @param {string} type 不同方式路线查询
+ * @param {number} type 不同方式路线查询
  * @returns {string}
  */
 export function startPoint(type) {

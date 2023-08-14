@@ -83,41 +83,74 @@ class PoiQueryButton extends mars3d.control.BaseControl {
     )
 
     // 鼠标移入移出
+    let numTime = null
     let cacheTarget
+    // 搜索框移入
     this._container.addEventListener("mouseover", (e) => {
+      if (numTime) {
+        clearTimeout(numTime)
+        numTime = null
+      }
+      if (this._queryInputContainer.style.display !== "block") {
+        this._queryInputContainer.style.top = this._container.offsetTop + "px"
+        this._queryResultContainer.style.height = this.parentContainer.offsetHeight - this._container.offsetTop - 31 + "px"
+
+        this.toolActive()
+      }
+    })
+    // 搜索框移出
+    this._container.addEventListener("mouseout", (e) => {
+      numTime = setTimeout(() => {
+        console.log("触发 mouseout ？ _container")
+        cacheTarget = null
+
+        const queryVal = this._queryInputContainer.querySelector(".searchInput").value
+        if (queryVal.length === 0) {
+          this.clear()
+          this.toolSearchNoShow("none")
+        }
+      }, 500)
+    })
+
+    // input面板，在queryPoiButton下面
+    this._queryInputContainer = mars3d.DomUtil.create("div", "toolSearch")
+    this.parentContainer.appendChild(this._queryInputContainer)
+
+    // 搜索框移除
+    this._queryInputContainer.addEventListener("mouseover", (e) => { 
+      if (numTime) {
+        clearTimeout(numTime)
+        numTime = null
+      }
+    })
+
+    this._queryInputContainer.addEventListener("input", (e) => { 
+      if (numTime) {
+        clearTimeout(numTime)
+        numTime = null
+      }
       // 缓存，提高效率
       if (cacheTarget === this.id) {
         return
       }
       cacheTarget = this.id
-
-      if (this._queryInputContainer.style.display !== "block") {
-        this.toolSearchNoShow("block")
-        this.toolActive()
-        mars3d.DomUtil.addClass(this._container, "queryPoiButton")
-
-        this._container.style.height = this.parentContainer.offsetHeight + 40 + "px"
-        this._queryResultContainer.style.height = this.parentContainer.offsetHeight - 10 + "px"
-      }
+      this.toolSearchNoShow("block")
     })
-    this._container.addEventListener("mouseout", (e) => {
-      cacheTarget = null
-      const queryVal = this._queryInputContainer.querySelector(".searchInput").value
-      if (queryVal.length === 0) {
-        this.clear()
-        this.toolSearchNoShow("none")
-        mars3d.DomUtil.removeClass(this._container, "queryPoiButton")
-        this._container.style.height = ""
-      }
-    })
+    this._queryInputContainer.addEventListener("mouseout", (e) => {
+      numTime = setTimeout(() => { 
+        cacheTarget = null
 
-    // input面板，在queryPoiButton下面
-    this._queryInputContainer = mars3d.DomUtil.create("div", "toolSearch")
-    this._container.appendChild(this._queryInputContainer)
+        const queryVal = this._queryInputContainer.querySelector(".searchInput").value
+        if (queryVal.length === 0) {
+          this.clear()
+          this.toolSearchNoShow("none") 
+        }
+      }, 500)
+    })
 
     // 搜寻结果，在mars3dContainer面板下面
     this._queryResultContainer = mars3d.DomUtil.create("div", "poiButtonResult")
-    this._container.appendChild(this._queryResultContainer)
+    this.parentContainer.appendChild(this._queryResultContainer)
     this.toolSearchNoShow("none")
 
     // 创建input输入框
@@ -133,7 +166,7 @@ class PoiQueryButton extends mars3d.control.BaseControl {
       this._queryInputContainer.querySelector(".searchInput").value = ""
       this.clear()
       this.toolSearchNoShow("none")
-      mars3d.DomUtil.removeClass(this._container, "queryPoiButton")
+      // mars3d.DomUtil.removeClass(this._container, "queryPoiButton")
       this._container.style.height = ""
       cacheTarget = null
     })

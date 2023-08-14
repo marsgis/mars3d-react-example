@@ -130,7 +130,7 @@ function startRoam() {
 
     // 当前的路线中的点位
     const currIndex = fixedRoute.currIndex
-    if (currIndex % 2 === 0) {
+    if (currIndex % 2 === 1) {
       return
     }
 

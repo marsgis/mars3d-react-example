@@ -136,6 +136,11 @@ export function drawArea(date) {
   })
 }
 
+const colorRamp = new mars3d.ColorRamp({
+  steps: [5, 15, 25, 35, 50, 80],
+  colors: ["rgb(0, 228, 0)", "rgb(256, 256, 0)", "rgb(256, 126, 0)", "rgb(256, 0, 0)", "rgb(153, 0, 76)", "rgb(126, 0, 35)"]
+})
+
 function showRateResult(result) {
   console.log("分析结果", result)
 
@@ -147,7 +152,7 @@ function showRateResult(result) {
       position: p,
       style: {
         pixelSize: 10,
-        color: getColor(rate) // 计算颜色，色带颜色
+        color: colorRamp.getColor(rate) // 计算颜色，色带颜色
       },
       popup: `阴影率: ${rate.toFixed(2)}%`
     })
@@ -155,39 +160,40 @@ function showRateResult(result) {
   })
 }
 
-// 获取色带
-function getImageData() {
-  const nWidth = 100
-  const canvas = document.createElement("canvas")
-  canvas.width = nWidth
-  canvas.height = nWidth
-  const ctx = canvas.getContext("2d")
-  ctx.beginPath()
-  /* 指定渐变区域 */
-  const grad = ctx.createLinearGradient(0, 0, nWidth, 0)
-  /* 指定几个颜色 */
-  grad.addColorStop(0.05, "rgb(0, 228, 0)") // green
-  grad.addColorStop(0.15, "rgb(256, 256, 0)") // yellow
-  grad.addColorStop(0.25, "rgb(256, 126, 0)") // orange
-  grad.addColorStop(0.35, "rgb(256, 0, 0)") // red
-  grad.addColorStop(0.5, "rgb(153, 0, 76)") // purple
-  grad.addColorStop(0.8, "rgb(126, 0, 35)") // maroon
-  /* 将这个渐变设置为fillStyle */
-  ctx.fillStyle = grad
-  /* 绘制矩形 */
-  ctx.rect(0, 0, nWidth, nWidth)
-  ctx.fill()
-  return ctx.getImageData(0, 0, nWidth, 1).data
-}
+// // 获取色带
+// function getImageData() {
+//   const nWidth = 100
+//   const canvas = document.createElement("canvas")
+//   canvas.width = nWidth
+//   canvas.height = nWidth
+//   const ctx = canvas.getContext("2d")
+//   ctx.beginPath()
+//   /* 指定渐变区域 */
+//   const grad = ctx.createLinearGradient(0, 0, nWidth, 0)
+//   /* 指定几个颜色 */
+//   grad.addColorStop(0.05, "rgb(0, 228, 0)") // green
+//   grad.addColorStop(0.15, "rgb(256, 256, 0)") // yellow
+//   grad.addColorStop(0.25, "rgb(256, 126, 0)") // orange
+//   grad.addColorStop(0.35, "rgb(256, 0, 0)") // red
+//   grad.addColorStop(0.5, "rgb(153, 0, 76)") // purple
+//   grad.addColorStop(0.8, "rgb(126, 0, 35)") // maroon
 
-const imgData = getImageData()
+//   /* 将这个渐变设置为fillStyle */
+//   ctx.fillStyle = grad
+//   /* 绘制矩形 */
+//   ctx.rect(0, 0, nWidth, nWidth)
+//   ctx.fill()
+//   return ctx.getImageData(0, 0, nWidth, 1).data
+// }
 
-// 计算颜色，色带颜色
-function getColor(rate) {
-  if (rate > 100) {
-    return "rgba(126,0,35,0.8)"
-  } else {
-    rate = Math.round(rate)
-    return `rgba(${imgData[rate * 4]},${imgData[rate * 4 + 1]},${imgData[rate * 4 + 2]},0.8)`
-  }
-}
+// const imgData = getImageData()
+
+// // 计算颜色，色带颜色
+// function getColor(rate) {
+//   if (rate > 100) {
+//     return "rgba(126,0,35,0.8)"
+//   } else {
+//     rate = Math.round(rate)
+//     return `rgba(${imgData[rate * 4]},${imgData[rate * 4 + 1]},${imgData[rate * 4 + 2]},0.8)`
+//   }
+// }

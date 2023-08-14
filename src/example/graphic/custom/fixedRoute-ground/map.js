@@ -93,6 +93,9 @@ function addGraphicLayer() {
   })
   // ui面板信息展示
   fixedRoute.on(mars3d.EventType.change, (event) => {
+    // const popup = event.graphic.getPopup()
+    // const container = popup?.container // popup对应的DOM
+
     // console.log("漫游change", event)
     throttled(eventTarget.fire("roamLineChange", event), 500)
   })

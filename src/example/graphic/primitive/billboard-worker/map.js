@@ -5,7 +5,6 @@ import * as mars3d from "mars3d"
 export let map // mars3d.Map三维地图对象
 export let graphicLayer // 矢量图层对象
 
-let imgData = null
 let lastExtent = null
 let bWorking = false
 let currentData
@@ -29,8 +28,6 @@ export const mapOptions = {
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
-
-  imgData = getImageData()
 
   // 创建矢量数据图层
   graphicLayer = new mars3d.layer.GraphicLayer()
@@ -107,6 +104,11 @@ function startWorker(strBounds) {
   }
 }
 
+const colorRamp = new mars3d.ColorRamp({
+  steps: [25, 75, 125, 175, 250, 400],
+  colors: ["rgb(0, 228, 0)", "rgb(256, 256, 0)", "rgb(256, 126, 0)", "rgb(256, 0, 0)", "rgb(153, 0, 76)", "rgb(126, 0, 35)"]
+})
+
 function createGraphics(currentData) {
   graphicLayer.clear()
   console.log("加载数据", currentData)
@@ -120,7 +122,7 @@ function createGraphics(currentData) {
       position: [item.lon, item.lat],
       style: {
         image: mars3d.Util.getCircleImage(item.aqi, {
-          color: getColor(item.aqi),
+          color: colorRamp.getColor(item.aqi),
           radius: 25
         }),
         scale: 1,
@@ -131,38 +133,5 @@ function createGraphics(currentData) {
       attr: item
     })
     graphicLayer.addGraphic(graphic)
-  }
-}
-
-// 获取色带
-function getImageData() {
-  const nWidth = 500
-  const canvas = document.createElement("canvas")
-  canvas.width = nWidth
-  canvas.height = nWidth
-  const ctx = canvas.getContext("2d")
-  ctx.beginPath()
-  /* 指定渐变区域 */
-  const grad = ctx.createLinearGradient(0, 0, nWidth, 0)
-  /* 指定几个颜色 */
-  grad.addColorStop(0.05, "rgb(0, 228, 0)") // green
-  grad.addColorStop(0.15, "rgb(256, 256, 0)") // yellow
-  grad.addColorStop(0.25, "rgb(256, 126, 0)") // orange
-  grad.addColorStop(0.35, "rgb(256, 0, 0)") // red
-  grad.addColorStop(0.5, "rgb(153, 0, 76)") // purple
-  grad.addColorStop(0.8, "rgb(126, 0, 35)") // maroon
-  /* 将这个渐变设置为fillStyle */
-  ctx.fillStyle = grad
-  /* 绘制矩形 */
-  ctx.rect(0, 0, nWidth, nWidth)
-  ctx.fill()
-  return ctx.getImageData(0, 0, nWidth, 1).data
-}
-
-function getColor(aqi) {
-  if (aqi > 500) {
-    return "rgba(126,0,35,0.8)"
-  } else {
-    return `rgba(${imgData[aqi * 4]},${imgData[aqi * 4 + 1]},${imgData[aqi * 4 + 2]},0.8)`
   }
 }

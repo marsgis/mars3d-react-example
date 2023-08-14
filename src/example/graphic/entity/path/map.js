@@ -144,15 +144,20 @@ function addDemoGraphic2(graphicLayer) {
   })
   graphicLayer.addGraphic(graphic)
 
-  graphic.addDynamicPosition(randomPoint(), 0)
-  graphic.addDynamicPosition(randomPoint(), 20)
+  // 设置动态位置
+  changePosition(graphic, 0)
 
   // 定时更新动态位置（setInterval为演示）
+  const interval = 20
+  changePosition(graphic, interval)
   setInterval(() => {
-    if (graphic.isAdded) {
-      graphic.addDynamicPosition(randomPoint(), 20)
-    }
-  }, 20000)
+    changePosition(graphic, interval)
+  }, interval * 1000)
+}
+
+// 改变位置
+function changePosition(graphic, time) {
+  graphic.addDynamicPosition(randomPoint(), time) // 按time秒运动至指定位置
 }
 
 // 取区域内的随机点

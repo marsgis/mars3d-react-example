@@ -85,7 +85,7 @@ function addDemoGraphic3(graphicLayer) {
     style: {
       url: "//data.mars3d.cn/gltf/mars/qiche.gltf",
       scale: 0.5,
-      heading: 30,
+      heading: 90,
       minimumPixelSize: 100
     }
   })
@@ -94,6 +94,7 @@ function addDemoGraphic3(graphicLayer) {
   // 移动模型
   graphicCar.moveTo({
     position: [116.259138, 30.855247, 562],
+    orientation: true,
     time: 8 // 移动的时长(单位 秒)
   })
 }

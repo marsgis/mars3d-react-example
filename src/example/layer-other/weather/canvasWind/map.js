@@ -25,17 +25,19 @@ export function onMounted(mapInstance) {
   map.basemap = 2017 // 蓝色底图
   map.hasTerrain = false
 
-
-
   // 风场
   canvasWindLayer = new mars3d.layer.CanvasWindLayer({
     worker: window.currentPath + "windWorker.js", // 启用多线程模式，注释后是单线程模式(非必须)
-    color: "#ffffff", // 颜色
     frameRate: 20, // 每秒刷新次数
     speedRate: 60, // 风前进速率
     particlesNumber: 10000,
     maxAge: 120,
-    lineWidth: 2
+    lineWidth: 2,
+    // 单颜色
+    color: "#ffffff"
+    // 多颜色
+    // colors: ["rgb(0, 228, 0)", "rgb(256, 256, 0)", "rgb(256, 126, 0)", "rgb(256, 0, 0)", "rgb(153, 0, 76)", "rgb(126, 0, 35)"],
+    // steps: [1.0, 2.0, 5.4, 7.9, 10.7, 13.8]
   })
   map.addLayer(canvasWindLayer)
 
