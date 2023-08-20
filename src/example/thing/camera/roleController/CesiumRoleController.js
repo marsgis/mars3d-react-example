@@ -138,22 +138,25 @@ class CesiumRoleController {
   }
 
   setFlagStatus(key, value) {
-    switch (key.keyCode) {
-      case 65:
-        this.flag.moveLeft = value
-        break
-      case 87:
-        this.validateKey(value)
-        this.flag.moveUp = value
-        break
-      case 68:
-        this.flag.moveRight = value
-        break
-      case 83:
-        this.validateKey(value)
-        this.flag.moveDown = value
-        break
+    if (this.rolePrimitive) {
+      switch (key.keyCode) {
+        case 65:
+          this.flag.moveLeft = value
+          break
+        case 87:
+          this.validateKey(value)
+          this.flag.moveUp = value
+          break
+        case 68:
+          this.flag.moveRight = value
+          break
+        case 83:
+          this.validateKey(value)
+          this.flag.moveDown = value
+          break
+      }
     }
+
   }
 
   validateKey(value) {
@@ -285,6 +288,7 @@ class CesiumRoleController {
       minimumPixelSize: 128
     })
     this.rolePrimitive = this.viewer.scene.primitives.add(model)
+
     this.rolePrimitive.readyEvent.addEventListener(() => {
       if (Options.animation) {
         this.rolePrimitive.activeAnimations.add({

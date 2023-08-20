@@ -140,6 +140,11 @@ function showCarList(arr) {
         ...modelParam,
         clampToGround: true
       },
+      // billboard: {
+      //   image: "img/icon/huojian.svg",
+      //   scale: 0.5,
+      //   alignedAxis: true
+      // },
       circle: {
         radius: 50,
         materialType: mars3d.MaterialType.CircleWave,

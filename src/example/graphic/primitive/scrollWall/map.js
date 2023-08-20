@@ -61,10 +61,18 @@ function addDemoGraphic1(graphicLayer) {
       color: "#f2fa19",
       speed: 10,
       reverse: false, // 方向：true往上、false往下
-
+      label: {
+        text: "我是走马灯围墙",
+        font_size: 18,
+        color: "#ffffff",
+        show: false
+      },
       // 高亮时的样式（默认为鼠标移入，也可以指定type:'click'单击高亮），构造后也可以openHighlight、closeHighlight方法来手动调用
       highlight: {
-        color: "#ff0000"
+        color: "#ff0000",
+        label: {
+          show: true
+        }
       }
     },
     attr: { remark: "示例1", xiaoguo: "鼠标移入时展示高亮效果" }

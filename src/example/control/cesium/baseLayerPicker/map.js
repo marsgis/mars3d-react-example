@@ -18,6 +18,10 @@ export const mapOptions = function (option) {
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
+
+  map.on(mars3d.EventType.changeBasemap, (event) => {
+    console.log("切换了底图，当前底图为", map.basemap)
+  })
 }
 
 /**

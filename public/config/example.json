@@ -337,7 +337,7 @@
             "thumbnail": "layert-type-image-echarts.jpg",
             "main": "layer-tile/type/image-echarts",
             "libs": ["mars3d", "echarts"],
-            "new":true
+            "new": true
           },
           {
             "name": "标准XYZ金字塔瓦片",
@@ -453,20 +453,55 @@
         "download": false,
         "children": [
           {
-            "name": "底图切换控制",
+            "name": "HomeButton 视角复位按钮",
+            "thumbnail": "control-cesium-homeButton.jpg",
+            "main": "control/cesium/homeButton"
+          },
+          {
+            "name": "BaseLayerPicker 底图切换按钮",
             "thumbnail": "control-cesium-baseLayerPicker.jpg",
             "main": "control/cesium/baseLayerPicker"
           },
           {
-            "name": "偏振立体(vr)",
-            "thumbnail": "control-cesium-webvr.jpg",
-            "main": "control/cesium/webvr"
+            "name": "FullscreenButton 全屏按钮",
+            "thumbnail": "control-cesium-fullscreenButton.jpg",
+            "main": "control/cesium/fullscreenButton"
           },
           {
-            "name": "POI兴趣点搜索(Cesium原生)",
+            "name": "Geocoder POI兴趣点搜索按钮",
             "thumbnail": "control-cesium-geocoder.jpg",
             "main": "control/cesium/geocoder",
             "resources": ["cesiumControl.css"]
+          },
+          {
+            "name": "ProjectionPicker 投影切换按钮",
+            "thumbnail": "control-cesium-projectionPicker.jpg",
+            "main": "control/cesium/projectionPicker"
+          },
+          {
+            "name": "SceneModePicker 二三维切换按钮",
+            "thumbnail": "map-cesium-sceneModePicker.jpg",
+            "main": "control/cesium/sceneModePicker"
+          },
+          {
+            "name": "NavigationHelpButton 帮助按钮",
+            "thumbnail": "control-cesium-navigationHelpButton.jpg",
+            "main": "control/cesium/navigationHelpButton"
+          },
+          {
+            "name": "Animation 时钟仪表面板",
+            "thumbnail": "control-cesium-animation.jpg",
+            "main": "control/cesium/animation"
+          },
+          {
+            "name": "Timeline 时间线面板",
+            "thumbnail": "control-cesium-timeline.jpg",
+            "main": "control/cesium/timeline"
+          },
+          {
+            "name": "偏振立体(VR)",
+            "thumbnail": "control-cesium-webvr.jpg",
+            "main": "control/cesium/webvr"
           }
         ]
       },
