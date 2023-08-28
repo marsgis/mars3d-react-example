@@ -1,17 +1,26 @@
-import { MarsDialog, MarsIcon } from "@mars/components/MarsUI"
+import { MarsDialog, MarsIcon, MarsTabs, MarsTabPane } from "@mars/components/MarsUI"
 import { Space } from "antd"
 import * as mars3d from "mars3d"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import MarsStyle from "./MarsStyle"
+import MarsAvailability from "./MarsAvailability"
 import _ from "lodash"
 import "./index.less"
 
 function GraphicEditor({ currentWidget, ...props }) {
   const [graphic, setGraphic] = useState(null)
   const [style, setStyle] = useState(null)
+  const [availability, setAvailability] = useState(null)
+
   const [layerName, setLayerName] = useState("")
   const [customType, setCustomType] = useState("")
   const [graphicType, setGraphicType] = useState("")
+
+  const [acTab, setAcTab] = useState("style")
+
+  const tabChange = useCallback((key: string) => {
+    setAcTab(key)
+  }, [])
 
   useEffect(() => {
     console.log("编辑面板接收到了graphic对象更新:", currentWidget)
@@ -22,15 +31,30 @@ function GraphicEditor({ currentWidget, ...props }) {
 
     setLayerName(gp._layer.name)
     setCustomType(currentWidget.data?.styleType || gp.options.styleType)
-    setGraphicType(gp.type) 
+    setGraphicType(gp.type)
     setStyle(_.cloneDeep(gp?.style))
+    // console.log("availability", gp?.availability)
+    setAvailability(_.cloneDeep(gp?.availability))
 
     setGraphic(gp)
-
   }, [currentWidget])
 
   return (
-    <MarsDialog title="属性编辑" width="260" top="60" bottom="40" left="10" minWidth={200} {...props}>
+    <MarsDialog
+      title="属性编辑"
+      width="260"
+      top="60"
+      bottom="40"
+      left="10"
+      minWidth={200}
+      {...props}
+      footer={
+        <MarsTabs tabPosition="bottom" activeKey={acTab} type="card" onTabClick={tabChange}>
+          <MarsTabPane key="style" tab="样式"></MarsTabPane>
+          <MarsTabPane key="availability" tab="时序"></MarsTabPane>
+        </MarsTabs>
+      }
+    >
       {graphic && (
         <>
           <div className="top-handle-bar">
@@ -52,18 +76,32 @@ function GraphicEditor({ currentWidget, ...props }) {
             </Space>
           </div>
           <div className="attr-editor-main">
-            <MarsStyle
-              style={style}
-              graphic={graphic}
-              layerName={layerName}
-              customType={customType}
-              graphicType={graphicType}
-              onChange={(data) => {
-                console.log("修改了style样式", data)
-                graphic.setStyle(_.cloneDeep(data))
-                // setStyle(_.cloneDeep(data))
-              }}
-            ></MarsStyle>
+            {acTab === "style" && (
+              <MarsStyle
+                style={style}
+                graphic={graphic}
+                layerName={layerName}
+                customType={customType}
+                graphicType={graphicType}
+                onChange={(data) => {
+                  console.log("修改了style样式", data)
+                  graphic.setStyle(_.cloneDeep(data))
+                  // setStyle(_.cloneDeep(data))
+                }}
+              ></MarsStyle>
+            )}
+            {acTab === "availability" && (
+              <MarsAvailability
+                availability={availability}
+                onChange={(data) => {
+                  if (data && data.length) {
+                    graphic.availability = data
+                  } else {
+                    graphic.availability = null
+                  }
+                }}
+              ></MarsAvailability>
+            )}
           </div>
         </>
       )}
