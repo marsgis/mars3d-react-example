@@ -336,8 +336,7 @@
             "name": "极坐标图(image应用案例)",
             "thumbnail": "layert-type-image-echarts.jpg",
             "main": "layer-tile/type/image-echarts",
-            "libs": ["mars3d", "echarts"],
-            "new": true
+            "libs": ["mars3d", "echarts"]
           },
           {
             "name": "标准XYZ金字塔瓦片",
@@ -436,8 +435,7 @@
             "name": "瓦片图层贴模型",
             "thumbnail": "layer-tile-clampToTileset.jpg",
             "main": "layer-tile/manage/clampToTileset",
-            "hasPannel": true,
-            "new": true
+            "hasPannel": true
           }
         ]
       }
@@ -1544,22 +1542,19 @@
             "name": "点光源",
             "thumbnail": "graphic-custom-pointLight.jpg",
             "main": "graphic/custom/pointLight",
-            "hasPannel": true,
-            "new": true
+            "hasPannel": true
           },
           {
             "name": "聚光灯",
             "thumbnail": "graphic-custom-spotLight.jpg",
             "main": "graphic/custom/spotLight",
-            "hasPannel": true,
-            "new": true
+            "hasPannel": true
           },
           {
             "name": "气象云三维体",
             "thumbnail": "graphic-custom-volumeCloud.jpg",
             "main": "graphic/custom/volumeCloud",
-            "hasPannel": true,
-            "new": true
+            "hasPannel": true
           },
           {
             "name": "粒子效果",
@@ -2334,8 +2329,7 @@
             "name": "地震模拟",
             "thumbnail": "thing-tileset-shake.jpg",
             "main": "thing/tileset/shake",
-            "hasPannel": true,
-            "new": true
+            "hasPannel": true
           }
         ]
       }
@@ -2468,8 +2462,7 @@
             "thumbnail": "thing-camera-roleController.jpg",
             "main": "thing/camera/roleController",
             "hasPannel": true,
-            "resources": ["CesiumRoleController.js"],
-            "new": true
+            "resources": ["CesiumRoleController.js"]
           },
           {
             "name": "动画漫游(tween插值)",
@@ -2545,12 +2538,14 @@
           {
             "name": "对象描边",
             "thumbnail": "effect-outlineEffect.jpg",
-            "main": "effect/outlineEffect"
+            "main": "effect/outlineEffect",
+            "hasPannel": true
           },
           {
             "name": "对象泛光",
             "thumbnail": "effect-bloomTarget.jpg",
-            "main": "effect/bloomTarget"
+            "main": "effect/bloomTarget",
+            "hasPannel": true
           },
           {
             "name": "泛光特效",
@@ -2664,8 +2659,7 @@
             "name": "可视域分析(合并渲染)",
             "thumbnail": "graphic-custom-visibility.jpg",
             "main": "graphic/custom/visibility",
-            "hasPannel": true,
-            "new": true
+            "hasPannel": true
           },
           {
             "name": "地表透明(地下模式)",
@@ -2695,15 +2689,13 @@
             "name": "天际线体",
             "thumbnail": "graphic-custom-skylineBody.jpg",
             "main": "graphic/custom/skylineBody",
-            "hasPannel": true,
-            "new": true
+            "hasPannel": true
           },
           {
             "name": "开敞度分析",
             "thumbnail": "graphic-custom-viewDome.jpg",
             "main": "graphic/custom/viewDome",
-            "hasPannel": true,
-            "new": true
+            "hasPannel": true
           }
         ]
       },
@@ -3104,7 +3096,8 @@
           {
             "name": "水面倒影 Demo",
             "thumbnail": "effect-inverted.jpg",
-            "main": "effect/inverted"
+            "main": "effect/inverted",
+            "hasPannel": true
           },
           {
             "name": "PBF矢量瓦片(OL渲染)",

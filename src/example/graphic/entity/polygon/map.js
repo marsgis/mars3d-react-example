@@ -272,16 +272,15 @@ function addDemoGraphic8(graphicLayer) {
         new Cesium.Cartesian2(1, 1),
         new Cesium.Cartesian2(1, 0),
         new Cesium.Cartesian2(0, 0),
-        new Cesium.Cartesian2(1, 0)
+        new Cesium.Cartesian2(0, 1)
       ]),
-      clampToGround: true,
-      perPositionHeight: true,
       materialType: mars3d.MaterialType.Image,
       materialOptions: {
         image: "img/tietu/gugong.jpg"
       }
     },
     attr: { remark: "示例8" }
+    // hasEdit: false
   })
   graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
 }

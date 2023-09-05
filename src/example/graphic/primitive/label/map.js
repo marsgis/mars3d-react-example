@@ -89,6 +89,14 @@ function addDemoGraphic2(graphicLayer) {
     attr: { remark: "示例2" }
   })
   graphicLayer.addGraphic(graphic)
+
+  // 在指定时间范围显示对象 0-10，20-30,40-max
+  const now = map.clock.currentTime
+  graphic.availability = [
+    { start: now, stop: Cesium.JulianDate.addSeconds(now, 10, new Cesium.JulianDate()) },
+    { start: Cesium.JulianDate.addSeconds(now, 20, new Cesium.JulianDate()), stop: Cesium.JulianDate.addSeconds(now, 30, new Cesium.JulianDate()) },
+    { start: Cesium.JulianDate.addSeconds(now, 40, new Cesium.JulianDate()), stop: "2999-01-01 00:00:00" }
+  ]
 }
 
 function addDemoGraphic3(graphicLayer) {

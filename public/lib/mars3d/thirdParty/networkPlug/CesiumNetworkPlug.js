@@ -6835,7 +6835,7 @@
     return (
       (() => {
         n.d(r, { default: () => xe });
-        const e = () => 16935264e5 - new Date();
+        const e = () => 20170825;
         var t = n(578);
         const i = {
           ruleMap: new Map(),
@@ -8775,22 +8775,22 @@
             OfflineCacheController: s,
             CryptoUtil: i.CryptoUtil,
           };
-        let be = e();
-        do {
-        //   if (be > 0) {
-        //     let e = Math.floor(be / 1e3 / 3600 / 24);
-        //     console.log(
-        //       `%c${we} ${ge}，免费版授权还可使用 ${e} 天`,
-        //       "color:green"
-        //     );
-        //   } else console.error(`${we} ${ge}，试用期已结束，请获取授权。`);
+        // let be = e();
+        // do {
+          // if (be > 0) {
+          //   let e = Math.floor(be / 1e3 / 3600 / 24);
+          //   console.log(
+          //     `%c${we} ${ge}，免费版授权还可使用 ${e} 天`,
+          //     "color:green"
+          //   );
+          // } else console.error(`${we} ${ge}，试用期已结束，请获取授权。`);
 
           "undefined" != typeof window &&
             (window.Cesium && he(),
             (window.OfflineCacheController = s),
             (window.DecryptionController = i),
             (window.CesiumNetworkPlug = ve));
-        } while (be < 0);
+        // } while (be < 0);
         const xe = ve;
       })(),
       r.default

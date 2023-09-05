@@ -52,33 +52,20 @@ export function onMounted(mapInstance) {
     }
   })
 
+  // map.scene.debugShowFramesPerSecond = true
+
   terrainClip = new mars3d.thing.TerrainClip({
     image: false,
     splitNum: 80 // 井边界插值数
   })
   map.addThing(terrainClip)
 
-  addArea()
-}
+  mars3d.Util.fetchJson({ url: "http://data.mars3d.cn/file/geojson/areas/340100.json" })
+    .then(function (geojson) {
+      const arr = mars3d.Util.geoJsonToGraphics(geojson) // 解析geojson
+      const options = arr[0]
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
-export function onUnmounted() {
-  map = null
-}
-
-// 添加安徽省底图和墙
-function addArea() {
-  // 成都某市边界线墙
-  const citySide = new mars3d.layer.GeoJsonLayer({
-    url: "http://data.mars3d.cn/file/geojson/areas/340100.json",
-    chinaCRS: mars3d.ChinaCRS.GCJ02, // 标识数据坐标，内部会纠偏
-    // format: simplifyGeoJSON, // 用于自定义处理geojson - 简化坐标(边界闪光有毛刺，可进行简化)
-    // 自定义解析数据
-    onCreateGraphic: function (options) {
-      terrainClip.addArea(options.positions)
+      terrainClip.addArea(options.positions, { simplify: { tolerance: 0.002 } })
       terrainClip.clipOutSide = true
 
       const polylineGraphic = new mars3d.graphic.PolylineEntity({
@@ -95,7 +82,7 @@ function addArea() {
           }
         }
       })
-      citySide.addGraphic(polylineGraphic)
+      graphicLayer.addGraphic(polylineGraphic)
 
       const wall = new mars3d.graphic.WallPrimitive({
         positions: options.positions,
@@ -110,20 +97,20 @@ function addArea() {
           }
         }
       })
-      citySide.addGraphic(wall)
-    }
-  })
-  map.addLayer(citySide)
+      graphicLayer.addGraphic(wall)
+    })
+    .catch(function (error) {
+      console.log("加载JSON出错", error)
+    })
 
-  const areaSide = new mars3d.layer.GeoJsonLayer({
-    url: "http://data.mars3d.cn/file/geojson/areas/340100_full.json",
-    // format: simplifyGeoJSON, // 用于自定义处理geojson - 简化坐标(边界闪光有毛刺，可进行简化)
-    // 自定义解析数据
-    onCreateGraphic: function (options) {
-      const attr = options.attr // 属性信息
+  mars3d.Util.fetchJson({ url: "http://data.mars3d.cn/file/geojson/areas/340100_full.json" }).then(function (geojson) {
+    const arr = mars3d.Util.geoJsonToGraphics(geojson) // 解析geojson
+    for (let i = 0; i < arr.length; i++) {
+      const item = arr[i]
+      const attr = item.attr // 属性信息
 
       const graphic = new mars3d.graphic.PolylinePrimitive({
-        positions: options.positions,
+        positions: item.positions,
         style: {
           color: "rgba(255,255,255,0.3)",
           depthFail: true,
@@ -131,12 +118,19 @@ function addArea() {
         },
         attr: attr
       })
-      areaSide.addGraphic(graphic)
+      graphicLayer.addGraphic(graphic)
 
       addCenterGraphi(attr)
     }
   })
-  map.addLayer(areaSide)
+}
+
+/**
+ * 释放当前地图业务的生命周期函数
+ * @returns {void} 无
+ */
+export function onUnmounted() {
+  map = null
 }
 
 function addCenterGraphi(attr) {

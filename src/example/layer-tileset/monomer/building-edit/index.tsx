@@ -48,7 +48,7 @@ function UIComponent() {
 
       activate({
         name: "GraphicEditor",
-        data: { graphic: e.graphic }
+        data: { graphic: e.graphic, hideAvailability: true }
       })
     },
     [activate]

@@ -3,7 +3,6 @@ import * as mars3d from "mars3d"
 export let map // mars3d.Map三维地图对象
 export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
 
-
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
@@ -73,7 +72,8 @@ function addGraphicLayer() {
     model: {
       url: "//data.mars3d.cn/gltf/mars/weixin.gltf",
       scale: 1,
-      minimumPixelSize: 90
+      minimumPixelSize: 90,
+      silhouette: false
     },
     label: {
       text: "高分1号",
@@ -107,6 +107,18 @@ function addGraphicLayer() {
       color: "#00ff00",
       opacity: 0.5,
       width: 1
+    },
+    highlight: {
+      type: mars3d.EventType.click,
+      model: {
+        silhouette: true,
+        silhouetteColor: "#ffff00",
+        silhouetteSize: 3
+      },
+      path: {
+        color: "#ffff00",
+        width: 2
+      }
     },
     attr: { name: "高分1号" }
   })

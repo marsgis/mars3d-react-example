@@ -1,20 +1,26 @@
 import { MarsDialog, MarsIcon, MarsTabs, MarsTabPane } from "@mars/components/MarsUI"
+import { useLifecycle } from "@mars/widgets/common/uses/useLifecycle"
 import { Space } from "antd"
 import * as mars3d from "mars3d"
 import { useEffect, useState, useCallback } from "react"
 import MarsStyle from "./MarsStyle"
 import MarsAvailability from "./MarsAvailability"
+import * as mapWork from "./map"
 import _ from "lodash"
 import "./index.less"
 
 function GraphicEditor({ currentWidget, ...props }) {
+  useLifecycle(mapWork)
+
   const [graphic, setGraphic] = useState(null)
   const [style, setStyle] = useState(null)
   const [availability, setAvailability] = useState(null)
+  const [showAvailability, setShowAvailability] = useState(true)
 
   const [layerName, setLayerName] = useState("")
   const [customType, setCustomType] = useState("")
   const [graphicType, setGraphicType] = useState("")
+
 
   const [acTab, setAcTab] = useState("style")
 
@@ -25,6 +31,10 @@ function GraphicEditor({ currentWidget, ...props }) {
   useEffect(() => {
     console.log("编辑面板接收到了graphic对象更新:", currentWidget)
     const gp = currentWidget?.data?.graphic
+    if (currentWidget?.data?.hideAvailability) {
+      setShowAvailability(false)
+    }
+
     if (!gp || gp.isDestroy || !gp._layer) {
       return
     }
@@ -42,7 +52,7 @@ function GraphicEditor({ currentWidget, ...props }) {
   return (
     <MarsDialog
       title="属性编辑"
-      width="260"
+      width="315"
       top="60"
       bottom="40"
       left="10"
@@ -51,7 +61,12 @@ function GraphicEditor({ currentWidget, ...props }) {
       footer={
         <MarsTabs tabPosition="bottom" activeKey={acTab} type="card" onTabClick={tabChange}>
           <MarsTabPane key="style" tab="样式"></MarsTabPane>
-          <MarsTabPane key="availability" tab="时序"></MarsTabPane>
+          {
+            showAvailability ? <MarsTabPane key="availability" tab="时序"></MarsTabPane> : ""
+
+          }
+
+
         </MarsTabs>
       }
     >

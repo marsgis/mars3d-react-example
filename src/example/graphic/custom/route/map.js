@@ -136,6 +136,13 @@ function showCarList(arr) {
     const car = new mars3d.graphic.Route({
       id: item.id,
       name: item.name,
+      // maxCacheCount: -1,
+      polyline: {
+        color: colors[i],
+        width: 2,
+        clampToGround: true,
+        maxDistance: 500
+      },
       model: {
         ...modelParam,
         clampToGround: true
@@ -157,12 +164,6 @@ function showCarList(arr) {
         },
         clampToGround: true,
         show: false
-      },
-      polyline: {
-        color: colors[i],
-        width: 2,
-        clampToGround: true,
-        maxDistance: 500
       },
       attr: item
     })

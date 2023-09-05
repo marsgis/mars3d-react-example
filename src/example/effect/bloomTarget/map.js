@@ -9,6 +9,8 @@ export const mapOptions = {
   }
 }
 
+let bloomTargetEffect
+
 /**
  * 初始化地图业务，生命周期钩子函数（必须）
  * 框架在地图初始化完成后自动调用该函数
@@ -122,7 +124,7 @@ export function onMounted(mapInstance) {
   graphicLayer.addGraphic(graphic4)
 
   // 添加特效
-  const bloomTargetEffect = new mars3d.effect.BloomTargetEffect({
+  bloomTargetEffect = new mars3d.effect.BloomTargetEffect({
     // objectsToExclude: [tiles3dLayer, graphicModel], // 排除不拾取的对象
     eventType: mars3d.EventType.click, // 单击时拾取
     color: Cesium.Color.YELLOW,
@@ -178,8 +180,6 @@ function addTileToTargetEffect(tiles3dLayer, effect) {
   })
 }
 
-
-
 function processTileFeatures(tile, callback) {
   const content = tile.content
   const innerContents = content.innerContents
@@ -198,4 +198,48 @@ function processContentFeatures(content, callback) {
     const feature = content.getFeature(i)
     callback(feature)
   }
+}
+
+export function setBloomTargetEffect(val) {
+  bloomTargetEffect.enabled = val
+}
+
+export function setBrightness(val) {
+  bloomTargetEffect.brightness = val
+}
+
+export function setDelta(val) {
+  bloomTargetEffect.delta = val
+}
+
+export function setStep(val) {
+  bloomTargetEffect.stepSize = val
+}
+
+export function setSigma(val) {
+  bloomTargetEffect.sigma = val
+}
+
+export function setContrast(val) {
+  bloomTargetEffect.contrast = val
+}
+
+export function setBlurSamples(val) {
+  bloomTargetEffect.blurSamples = val
+}
+
+export function setThreshole(val) {
+  bloomTargetEffect.threshole = val
+}
+
+export function setRatio(val) {
+  bloomTargetEffect.ratio = val
+}
+
+export function setSmoothWidth(val) {
+  bloomTargetEffect.smoothWidth = val
+}
+
+export function setColor(val) {
+  bloomTargetEffect.color = val
 }

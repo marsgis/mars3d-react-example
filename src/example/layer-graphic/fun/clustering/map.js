@@ -29,7 +29,8 @@ function addGraphicLayer() {
     clustering: {
       enabled: true,
       pixelRange: 20,
-      clampToGround: false
+      clampToGround: false,
+      addHeight: 1000
     },
     popup: "all",
     center: { lat: 31.639275, lng: 117.388877, alt: 52574.8, heading: 339.3, pitch: -65 },
@@ -83,7 +84,8 @@ function addBusinessLayer() {
     clustering: {
       enabled: true,
       pixelRange: 20,
-      clampToGround: false
+      clampToGround: false,
+      addHeight: 1000
       // opacity: 1
       // getImage: function (count) {   //getImage是完全自定义方式
       //   let colorIn
@@ -247,4 +249,8 @@ export function getDataSurfaceHeight() {
 
 export function enabledAggressive(val) {
   graphicLayer.clustering = val
+}
+
+export function layerShowChange(val) {
+  graphicLayer.show = val
 }

@@ -38,6 +38,27 @@ export function onMounted(mapInstance) {
     console.log("监听layer，单击了矢量对象", event)
   })
 
+  graphicLayer.on(mars3d.EventType.dblClick, function (event) {
+    const graphic = event.graphic
+    if (graphic) {
+      map.flyToPoint(graphic.position, {
+        radius: Cesium.Cartesian3.distance(graphic.position, map.camera.positionWC),
+        complete: (e) => {
+          graphic.setCameraOptions({
+            type: "gs",
+            radius: Cesium.Cartesian3.distance(graphic.position, map.camera.positionWC)
+          })
+        }
+      })
+    }
+  })
+
+  map.on(mars3d.EventType.click, function (event) {
+    if (!event.graphic) {
+      mars3d.graphic.Route.clearLastCamera()
+    }
+  })
+
   bindLayerPopup() // 在图层上绑定popup,对所有加到这个图层的矢量数据都生效
   bindLayerContextMenu() // 在图层绑定右键菜单,对所有加到这个图层的矢量数据都生效
 

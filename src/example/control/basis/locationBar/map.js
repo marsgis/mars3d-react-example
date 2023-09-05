@@ -21,9 +21,8 @@ export function onMounted(mapInstance) {
 
   // 方式2：在创建地球后按需调用addControl添加(直接new对应type类型的控件)
   const locationBar = new mars3d.control.LocationBar({
-    fps: true,
     template:
-      "<div>经度:{lng}</div><div>纬度:{lat}</div> <div>海拔：{alt}米</div> <div>层级：{level}</div><div>方向：{heading}度</div> <div>俯仰角：{pitch}度</div><div>视高：{cameraHeight}米</div>"
+      "<div>经度:{lng}</div><div>纬度:{lat}</div> <div>海拔：{alt}米</div> <div>层级：{level}</div><div>方向：{heading}度</div> <div>俯仰角：{pitch}度</div><div>视高：{cameraHeight}米</div><div>帧率：{fps} FPS</div>"
     // template: function (locationData) {
     //   let pitch
     //   if (locationData.pitch < 0) {

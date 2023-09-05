@@ -60,7 +60,7 @@ function addDemoGraphic1(data) {
       rows: data.rows, // 行网格数
       cols: data.cols, // 列网格数
       heights: data.heights, // 高网格数
-      values: data.values, // 3D 数据集数组, 数组长度应该是 rows*cols*heights, 顺序为为 row -> col -> height
+      values: data.values, // 3D 数据集数组, 数组长度应该是 rows*cols*heights, 顺序为： [height1-row1-col1, height1-row1-col2,…… ,height1-row2-col1, height1-row2-col2,…… ,height2-row1-col1, height2-row1-col2,……]
 
       xmin: data.xmin, // 最小经度（度数，-180-180）
       xmax: data.xmax, // 最大经度（度数，-180-180）

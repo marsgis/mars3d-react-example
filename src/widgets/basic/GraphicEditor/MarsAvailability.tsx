@@ -1,32 +1,63 @@
 import { MarsCollapse, MarsCollapsePanel, MarsButton, MarsIcon, MarsDatePicker } from "@mars/components/MarsUI"
 import { Space } from "antd"
 import { Fragment, useCallback, useState, useEffect, useRef } from "react"
-import { cloneDeep } from "lodash"
-import dayjs, { Dayjs } from "dayjs"
 import moment from "moment"
 import type { Moment } from "moment"
-import * as mars3d from "mars3d"
-
-const Cesium = mars3d.Cesium
+import * as mapWork from "./map"
 
 interface MarsAttrProps {
   availability: any
   onChange?: (value?: any) => void
 }
 
-function PointPosition({ julianObj = { start: null, stop: null }, onChange }) {
+function PointPosition({ julianObj = { start: null, stop: null }, reqRange, onChange }) {
   const values = useRef(julianObj)
 
   useEffect(() => {
-    console.log("julianObj", julianObj)
     values.current = julianObj
   }, [julianObj])
+
+  const disabledDate = (current: Moment, avaList: any, index: number, key: string) => {
+    let startTime: any = null
+    let endTime: any = null
+
+    const lastTimeSlot = avaList[index - 1]
+    const currentTimeSlot = avaList[index]
+    const nextTimeSlot = avaList[index + 1]
+
+    switch (key) {
+      case "start":
+        if (lastTimeSlot) {
+          startTime = moment(lastTimeSlot.stop, "YYYY-MM-DD HH:mm:ss")?.add(1, "second")
+        }
+        endTime = moment(currentTimeSlot.stop, "YYYY-MM-DD HH:mm:ss")?.subtract(1, "second")
+        break
+      case "stop":
+        startTime = moment(currentTimeSlot.start, "YYYY-MM-DD HH:mm:ss")?.add(1, "second")
+        if (nextTimeSlot) {
+          endTime = moment(nextTimeSlot.start, "YYYY-MM-DD HH:mm:ss")?.subtract(1, "second")
+        }
+
+        break
+
+      default:
+        break
+    }
+
+    if (endTime && startTime) {
+      return current && (current < startTime || current > endTime)
+    } else if (startTime) {
+      return current && current < startTime
+    } else if (endTime) {
+      return current && current > endTime
+    } else {
+      return null
+    }
+  }
 
   const itemChange = useCallback(
     (v, i) => {
       values.current[i] = v
-      console.log("itemChange values.current", values.current)
-      console.log("itemChange v", v)
       onChange && onChange(values.current)
     },
     [values, onChange]
@@ -40,11 +71,14 @@ function PointPosition({ julianObj = { start: null, stop: null }, onChange }) {
           <td>
             <MarsDatePicker
               defaultValue={julianObj.start ? moment(julianObj.start, "YYYY-MM-DD HH:mm:ss") : null}
+              disabledDate={(current: Moment) => disabledDate(current, reqRange.list, reqRange.index, "start")}
+              format="YYYY-MM-DD HH:mm:ss"
+              allowClear={false}
+              showNow={false}
+              showTime={{ format: "YYYY-MM-DD HH:mm:ss", defaultValue: moment("00:00:00", "HH:mm:ss") }}
               onChange={(date: Moment, dateString: string) => {
                 itemChange(date, "start")
               }}
-              format="YYYY-MM-DD HH:mm:ss"
-              showTime={{ format: "YYYY-MM-DD HH:mm:ss" }}
             ></MarsDatePicker>
           </td>
         </tr>
@@ -53,12 +87,14 @@ function PointPosition({ julianObj = { start: null, stop: null }, onChange }) {
           <td>
             <MarsDatePicker
               defaultValue={julianObj.stop ? moment(julianObj.stop, "YYYY-MM-DD HH:mm:ss") : null}
+              disabledDate={(current: Moment) => disabledDate(current, reqRange.list, reqRange.index, "stop")}
+              format="YYYY-MM-DD HH:mm:ss"
+              allowClear={false}
+              showNow={false}
+              showTime={{ format: "YYYY-MM-DD HH:mm:ss" }}
               onChange={(date: Moment, dateString: string) => {
-                console.log("value", date)
                 itemChange(date, "stop")
               }}
-              format="YYYY-MM-DD HH:mm:ss"
-              showTime={{ format: "YYYY-MM-DD HH:mm:ss" }}
             ></MarsDatePicker>
           </td>
         </tr>
@@ -76,32 +112,33 @@ export default function MarsAvailability({ availability, onChange = () => {} }: 
     if (!availability) {
       return
     }
-    if (!Array.isArray(availability)) {
+
+    if (availability._intervals && !Array.isArray(availability)) {
       availability = availability._intervals
     }
 
-    const data = availability?.map((julianObj) => {
-      const timeObj = { start: null, stop: null }
+    const data = Array.isArray(availability)
+      ? availability?.map((julianObj) => {
+          const timeObj = { start: null, stop: null }
 
-      for (const key in julianObj) {
-        const isJulianDate = typeof julianObj[key] !== "string"
+          for (const key in julianObj) {
+            const isJulianDate = typeof julianObj[key] !== "string"
 
-        let value = null
-        if (Object.keys(timeObj).includes(key)) {
-          if (julianObj[key]) {
-            value = isJulianDate ? moment(Cesium.JulianDate.toDate(julianObj[key])) : moment(julianObj[key])
+            let value = null
+            if (Object.keys(timeObj).includes(key)) {
+              if (julianObj[key]) {
+                value = isJulianDate ? moment(mapWork.julianToDate(julianObj[key])) : moment(julianObj[key])
+              }
+              timeObj[key] = value
+            }
           }
-          timeObj[key] = value
-        }
-      }
 
-      return timeObj
-    })
+          return timeObj
+        }) || []
+      : []
 
     setAvaiData([...data])
     timeList = data
-
-    console.log("timeList", data)
   }, [availability])
 
   const availabilityChange = (noData: boolean = false) => {
@@ -109,7 +146,7 @@ export default function MarsAvailability({ availability, onChange = () => {} }: 
       timeList?.map((dayjsDate) => {
         const timeObj = {}
         for (const key in dayjsDate) {
-          timeObj[key] = dayjsDate[key] ? dayjs(dayjsDate[key]).format("YYYY-MM-DD HH:mm:ss") : null
+          timeObj[key] = dayjsDate[key] ? moment(dayjsDate[key]).format("YYYY-MM-DD HH:mm:ss") : null
         }
 
         return timeObj
@@ -125,17 +162,28 @@ export default function MarsAvailability({ availability, onChange = () => {} }: 
   }
 
   const addAvailability = () => {
-    timeList.push({ start: null, stop: null })
+    let newTimeSlot = { start: null, stop: null }
+    const avaLength = timeList.length
+    if (!avaLength) {
+      newTimeSlot = mapWork.getMapCurrentTime()
+    } else {
+      const copiedTime = timeList[avaLength - 1]
+
+      newTimeSlot.start = moment(copiedTime.stop, "YYYY-MM-DD HH:mm:ss").add(5, "second")
+      newTimeSlot.stop = moment(newTimeSlot.start, "YYYY-MM-DD HH:mm:ss").add(5, "second")
+    }
+
+    timeList.push({ start: moment(newTimeSlot.start), stop: moment(newTimeSlot.stop) })
 
     setAvaiData([...timeList])
     availabilityChange()
   }
-  const addItem = (item: any, index: number) => {
-    timeList.splice(index, 0, cloneDeep(item))
+  // const addItem = (item: any, index: number) => {
+  //   timeList.splice(index, 0, cloneDeep(item))
 
-    setAvaiData([...timeList])
-    availabilityChange()
-  }
+  //   setAvaiData([...timeList])
+  //   availabilityChange()
+  // }
 
   const removeAvailability = () => {
     availabilityChange(true)
@@ -163,12 +211,11 @@ export default function MarsAvailability({ availability, onChange = () => {} }: 
             <div className="position-title">
               <span>第 {i + 1} 个时间段</span>
               <Space className="position-title__subfix">
-                <MarsIcon icon="add-one" width="16" onClick={() => addItem(item, i)}></MarsIcon>
+                {/* <MarsIcon icon="add-one" width="16" onClick={() => addItem(item, i)}></MarsIcon> */}
                 <MarsIcon icon="delete" width="16" onClick={() => removeItem(item, i)}></MarsIcon>
               </Space>
             </div>
-            {/* {JSON.stringify(avaiData)} */}
-            <PointPosition julianObj={item} onChange={(value) => availabilityChange()}></PointPosition>
+            <PointPosition julianObj={item} reqRange={{ list: avaiData, index: i }} onChange={(value) => availabilityChange()}></PointPosition>
           </Fragment>
         ))}
       </MarsCollapsePanel>

@@ -29,6 +29,10 @@ export const eventTarget = new mars3d.BaseClass()
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
+  if (map.controls.timeline) {
+    map.controls.timeline.zoomTo(map.clock.startTime, map.clock.stopTime)
+  }
+
   // 创建矢量数据图层
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
@@ -159,26 +163,16 @@ function addPlane(property, team) {
 
 // 【动态】进攻箭头标号
 function addAttackArrow(property, team) {
-  // property.forwardExtrapolationType = Cesium.ExtrapolationType.HOLD;
+  property.forwardExtrapolationType = Cesium.ExtrapolationType.HOLD
 
-  const times = [].concat(property._property._times)
-  const positions = [property.getValue(times.shift())]
   const graphicTriangle = new mars3d.graphic.AttackArrowPW({
     positions: new Cesium.CallbackProperty(function (time) {
-      for (let index = 0, len = times.length; index < len; index++) {
-        const item = times[index]
-        if (item.secondsOfDay === Math.round(time.secondsOfDay)) {
-          if (property.getValue(time)) {
-            positions.push(property.getValue(time))
-            times.shift()
-            break
-          }
-        }
-      }
+      const result = mars3d.PointUtil.getPropertyIndex(property, time)
+      const values = property._property._values.slice(0, result.index * 3)
+      const positions = Cesium.Cartesian3.unpackArray(values)
 
-      const point = property.getValue(time)
-      if (point) {
-        return positions.concat(point)
+      if (result.position) {
+        return positions.concat(result.position)
       } else {
         return positions
       }

@@ -25184,7 +25184,7 @@ exports.inflateUndermine = inflateUndermine;
               turf_root_turf_["featureEach"](geoJSON, function (fc) {
                 var geometry = fc.geometry
 
-                if (geometry) {
+                if (!geometry) {
                   return
                 }
 
@@ -26033,6 +26033,7 @@ exports.inflateUndermine = inflateUndermine;
           }
 
           if (style.showLabel) {
+            debugger
             var text = pointFeature.properties[labelPropertyName]
 
             if (text) {

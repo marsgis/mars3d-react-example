@@ -12,6 +12,8 @@ export const mapOptions = {
   }
 }
 
+let invertedEffect
+
 /**
  * 初始化地图业务，生命周期钩子函数（必须）
  * 框架在地图初始化完成后自动调用该函数
@@ -34,7 +36,7 @@ export function onMounted(mapInstance) {
   map.addLayer(tiles3dLayer)
 
   // 倒影效果
-  const invertedEffect = new mars3d.effect.InvertedEffect()
+  invertedEffect = new mars3d.effect.InvertedEffect()
   map.addEffect(invertedEffect)
 }
 
@@ -44,4 +46,8 @@ export function onMounted(mapInstance) {
  */
 export function onUnmounted() {
   map = null
+}
+
+export function changeState(val) {
+  invertedEffect.enabled = val
 }

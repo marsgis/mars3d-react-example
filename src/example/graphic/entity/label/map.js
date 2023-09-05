@@ -93,11 +93,13 @@ function addDemoGraphic2(graphicLayer) {
   })
   graphicLayer.addGraphic(graphic)
 
-  // 按时间范围显示对象 0-10，20-30
-  graphic.availability = new Cesium.TimeIntervalCollection([
-    new Cesium.TimeInterval({ start: map.clock.currentTime, stop: Cesium.JulianDate.addSeconds(map.clock.currentTime, 10, new Cesium.JulianDate()) }),
-    new Cesium.TimeInterval({ start: Cesium.JulianDate.addSeconds(map.clock.currentTime, 20, new Cesium.JulianDate()), stop: Cesium.JulianDate.addSeconds(map.clock.currentTime, 30, new Cesium.JulianDate()) })
-  ])
+  // 在指定时间范围显示对象 0-10，20-30,40-max
+  const now = map.clock.currentTime
+  graphic.availability = [
+    { start: now, stop: Cesium.JulianDate.addSeconds(now, 10, new Cesium.JulianDate()) },
+    { start: Cesium.JulianDate.addSeconds(now, 20, new Cesium.JulianDate()), stop: Cesium.JulianDate.addSeconds(now, 30, new Cesium.JulianDate()) },
+    { start: Cesium.JulianDate.addSeconds(now, 40, new Cesium.JulianDate()), stop: "2999-01-01 00:00:00" }
+  ]
 }
 
 function addDemoGraphic3(graphicLayer) {
@@ -171,7 +173,6 @@ export function addRandomGraphicByCount(count) {
     })
     graphicLayer.addGraphic(graphic)
   }
-
 
   graphicLayer.enabledEvent = true // 恢复事件
   return result.points.length

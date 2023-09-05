@@ -169,6 +169,8 @@ function startRoam() {
       positions: positions,
       style: {
         color: arrColor[graphicLayer.length % arrColor.length],
+        // image: "img/tietu/gugong.jpg",
+        // stRotationDegree: fixedRoute.model.heading,
         zIndex: graphicLayer.length
       }
     })

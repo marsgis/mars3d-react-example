@@ -9,6 +9,8 @@ export const mapOptions = {
   }
 }
 
+let outlineEffect
+
 /**
  * 初始化地图业务，生命周期钩子函数（必须）
  * 框架在地图初始化完成后自动调用该函数
@@ -118,7 +120,7 @@ export function onMounted(mapInstance) {
   graphicLayer.addGraphic(graphic4)
 
   // 添加特效
-  const outlineEffect = new mars3d.effect.OutlineEffect({
+  outlineEffect = new mars3d.effect.OutlineEffect({
     color: "#FFFF00",
     width: 4,
     eventType: mars3d.EventType.click
@@ -188,4 +190,38 @@ function processTileFeatures(tile, callback) {
   } else {
     processContentFeatures(content, callback)
   }
+}
+
+export function changeState(val) {
+  outlineEffect.enabled = val
+}
+export function changeWidth(val) {
+  outlineEffect.width = val
+}
+
+export function changeColor(val) {
+  outlineEffect.color = val
+}
+
+export function changeColorHidden(val) {
+  outlineEffect.colorHidden = val
+}
+
+export function changeShowPlane(val) {
+  outlineEffect.showPlane = val
+}
+
+export function changePlaneAngle(val) {
+  outlineEffect.planeAngle = val
+}
+
+export function changeGlow(val) {
+  outlineEffect.glow = val
+}
+export function changeGlowPower(val) {
+  outlineEffect.glowPower = val
+}
+
+export function changeGlowStrength(val) {
+  outlineEffect.glowStrength = val
 }
