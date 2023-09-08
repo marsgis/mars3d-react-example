@@ -2,8 +2,8 @@
 /**
  * Mars3D三维可视化平台  mars3d
  *
- * 版本信息：v3.6.4
- * 编译日期：2023-09-05 14:30:35
+ * 版本信息：v3.6.5
+ * 编译日期：2023-09-08 17:15:08
  * 版权所有：Copyright by 火星科技  http://mars3d.cn
  * 使用单位：免费公开版 ，2023-03-17
  */
@@ -4941,81 +4941,6 @@ declare class FlatBillboard extends BaseCombine {
      * @returns 当前对象本身
      */
     redraw(style?: any): BasePrimitive;
-}
-
-/**
- * 大数据 四棱锥体 集合 (合并渲染) Primitive图元 矢量对象
- * @param options - 参数对象，包括以下：
- * @param [options.instances] - 面信息数组，单个对象包括：
- * @param options.instances.position - 坐标位置
- * @param [options.instances.style] - 样式信息
- * @param [options.instances.attr] - 矢量数据的 属性信息，可以任意附加属性。
- * @param [options.style] - 所有面的公共样式信息
- * @param [options.highlight] - 鼠标移入或单击后的对应高亮的部分样式(仅支持Color纯色材质)
- * @param [options.highlight.type] - 触发高亮的方式，默认鼠标移入，可以指定为type:'click'为单击后高亮
- * @param [options.appearance] - [cesium原生]用于渲染图元的外观。
- * @param [options.attributes] - [cesium原生]每个实例的属性。
- * @param [options.depthFailAppearance] - 当深度测试失败时，用于为该图元着色的外观。
- * @param [options.vertexCacheOptimize = false] - 当true，几何顶点优化前和后顶点着色缓存。
- * @param [options.interleave = false] - 当true时，几何顶点属性被交叉，这可以略微提高渲染性能，但会增加加载时间。
- * @param [options.compressVertices = true] - 当true时，几何顶点被压缩，这将节省内存。提升效率。
- * @param [options.releaseGeometryInstances = true] - 当true时，图元不保留对输入geometryInstances的引用以节省内存。
- * @param [options.allowPicking = true] - 当true时，每个几何图形实例只能通过{@link Scene#pick}进行挑选。当false时，保存GPU内存。
- * @param [options.cull = true] - 当true时，渲染器会根据图元的边界体积来剔除它们的截锥和地平线。设置为false，如果你手动剔除图元，可以获得较小的性能提升。
- * @param [options.asynchronous = true] - 确定该图元是异步创建还是阻塞创建，直到就绪。
- * @param [options.debugShowBoundingVolume = false] - 仅供调试。确定该图元命令的边界球是否显示。
- * @param [options.debugShowShadowVolume = false] - 仅供调试。贴地时，确定是否绘制了图元中每个几何图形的阴影体积。必须是true创建卷之前要释放几何图形或选项。releaseGeometryInstance必须是false。
- * @param [options.popup] - 绑定的popup弹窗值，也可以bindPopup方法绑定
- * @param [options.popupOptions] - popup弹窗时的配置参数
- * @param [options.tooltip] - 绑定的tooltip弹窗值，也可以bindTooltip方法绑
- * @param [options.tooltipOptions] - tooltip弹窗时的配置参数
- * @param [options.contextmenuItems] - 当矢量数据支持右键菜单时，也可以bindContextMenu方法绑定
- * @param [options.id = createGuid()] - 矢量数据id标识
- * @param [options.name = ''] - 矢量数据名称
- * @param [options.show = true] - 矢量数据是否显示
- * @param [options.availability] - 指定时间范围内显示该对象
- * @param [options.eventParent] - 指定的事件冒泡对象，默认为所加入的图层对象，false时不冒泡事件
- * @param [options.allowDrillPick] - 是否允许鼠标穿透拾取
- * @param [options.flyTo] - 加载完成数据后是否自动飞行定位到数据所在的区域。
- * @param [options.flyToOptions] - 加载完成数据后是否自动飞行定位到数据所在的区域的对应 {@link BaseGraphic#flyTo}方法参数。
- */
-declare class FrustumCombine extends BasePointCombine {
-    constructor(options: {
-        instances?: {
-            position: LngLatPoint | Cesium.Cartesian3 | any[] | any;
-            style?: FrustumPrimitive.StyleOptions | any;
-            attr?: any;
-        }[];
-        style?: FrustumPrimitive.StyleOptions | any;
-        highlight?: {
-            type?: string;
-        };
-        appearance?: Cesium.Appearance;
-        attributes?: Cesium.Appearance;
-        depthFailAppearance?: Cesium.Appearance;
-        vertexCacheOptimize?: boolean;
-        interleave?: boolean;
-        compressVertices?: boolean;
-        releaseGeometryInstances?: boolean;
-        allowPicking?: boolean;
-        cull?: boolean;
-        asynchronous?: boolean;
-        debugShowBoundingVolume?: boolean;
-        debugShowShadowVolume?: boolean;
-        popup?: string | any[] | ((...params: any[]) => any);
-        popupOptions?: Popup.StyleOptions | any;
-        tooltip?: string | any[] | ((...params: any[]) => any);
-        tooltipOptions?: Tooltip.StyleOptions | any;
-        contextmenuItems?: any;
-        id?: string | number;
-        name?: string;
-        show?: boolean;
-        availability?: Cesium.TimeIntervalCollection | Cesium.TimeInterval | any[] | any;
-        eventParent?: BaseClass | boolean;
-        allowDrillPick?: boolean | ((...params: any[]) => any);
-        flyTo?: boolean;
-        flyToOptions?: any;
-    });
 }
 
 /**
@@ -16373,6 +16298,7 @@ declare namespace FrustumPrimitive {
  * @param [options.attr] - 附件的属性信息，可以任意附加属性，导出geojson或json时会自动处理导出。
  * @param [options.targetPosition] - 追踪的目标位置
  * @param [options.camera] - 支持直接传入相机对象，替代style中的方向参数
+ * @param [options.fixedFrameTransform = Cesium.Transforms.northEastDownToFixedFrame] - 参考系
  * @param [options.appearance] - [cesium原生]用于渲染图元的外观。
  * @param [options.attributes] - [cesium原生]每个实例的属性。
  * @param [options.depthFailAppearance] - 当深度测试失败时，用于为该图元着色的外观。
@@ -16406,6 +16332,7 @@ declare class FrustumPrimitive extends BasePointPrimitive {
         attr?: any;
         targetPosition?: LngLatPoint | Cesium.Cartesian3 | number[];
         camera?: Cesium.Camera;
+        fixedFrameTransform?: Cesium.Transforms.LocalFrameToFixedFrame;
         appearance?: Cesium.Appearance;
         attributes?: Cesium.Appearance;
         depthFailAppearance?: Cesium.Appearance;
@@ -17811,6 +17738,8 @@ declare namespace ReflectionWater {
      * @property [ripple = 50.0] - 波纹大小（数值越大，波纹越密集）
      * @property [distortion = 3.7] - 倒影的扭曲程度
      * @property [shiny = 100.0] - 光照强度
+     * @property [animationSpeed = 1.0] - 控制水的动画速度的数字。
+     * @property [specularIntensity = 0.3] - 控制镜面反射强度的数字。
      * @property [lightDirection = new Cesium.Cartesian3(0, 0, 1)] - 光照方向，单位向量。原点为水面中心点，水面中心点由 options.positions 决定，X、Y、Z轴对应水面中心点的东、北、上方向。（默认为0,0,1）
      * @property [stRotation = 0] - 水流方向的角度（弧度值），正北为0，逆时针旋转
      * @property [stRotationDegree = 0] - 水流方向的角度（度数值，0-360度），与stRotation二选一
@@ -17830,6 +17759,8 @@ declare namespace ReflectionWater {
         ripple?: number;
         distortion?: number;
         shiny?: number;
+        animationSpeed?: number;
+        specularIntensity?: number;
         lightDirection?: Cesium.Cartesian3;
         stRotation?: number;
         stRotationDegree?: number;
@@ -31916,6 +31847,7 @@ declare namespace QueryArcServer {
  * ArcGIS WFS矢量服务查询类
  * @param options - 参数对象，包括以下：
  * @param options.url - ArcGIS服务地址, 示例：'http://server.mars3d.cn/arcgis/rest/services/mars/hefei/MapServer/37'
+ * @param [options.token] - 用于通过ArcGIS MapServer服务进行身份验证的ArcGIS令牌。
  * @param [options.pageSize = 10] - 每页条数 *
  * @param [options.headers = {}] - 将被添加到HTTP请求头。
  * @param [options.proxy] - 加载资源时使用的代理。
@@ -31932,6 +31864,7 @@ declare namespace QueryArcServer {
 declare class QueryArcServer extends BaseClass {
     constructor(options: {
         url: string;
+        token?: string;
         pageSize?: number;
         headers?: any;
         proxy?: Cesium.DefaultProxy;
@@ -32364,7 +32297,7 @@ declare namespace Measure {
 /**
  * 图上量算
  * @param [options] - 参数对象，包括以下：
- * @param [options.hasEdit = false] - 是否可编辑
+ * @param [options.hasEdit = true] - 是否可编辑
  * @param [options.isAutoEditing = true] - 完成测量时是否自动启动编辑(需要hasEdit:true时)
  * @param [options.isContinued = false] - 是否连续测量
  * @param [options.label] - 测量结果文本的样式
@@ -33826,7 +33759,7 @@ declare class TerrainFlat extends TerrainEditBase {
  * @param [options.image] - 开挖区域的井墙面贴图URL。未传入该值时，不显示开挖区域的井。
  * @param [options.imageBottom] - 当显示开挖区域的井时，井底面贴图URL
  * @param [options.diffHeight] - 当显示开挖区域的井时，设置区域的挖掘深度（单位：米）
- * @param [splitNum = 30] - 当显示开挖区域的井时，井墙面每两点之间插值个数
+ * @param [options.splitNum = 30] - 当显示开挖区域的井时，井墙面每两点之间插值个数
  * @param [options.id = createGuid()] - 对象的id标识
  * @param [options.enabled = true] - 对象的启用状态
  * @param [options.eventParent] - 指定的事件冒泡对象，默认为所加入的map对象，false时不冒泡事件
@@ -33838,10 +33771,11 @@ declare class TerrainPlanClip extends BaseThing {
         image?: string;
         imageBottom?: string;
         diffHeight?: number;
+        splitNum?: number;
         id?: string | number;
         enabled?: boolean;
         eventParent?: BaseClass | boolean;
-    }, splitNum?: number);
+    });
     /**
      * 开挖区域的 坐标位置数组
      */

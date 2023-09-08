@@ -120,7 +120,7 @@ export function mapFlyToPositions() {
 }
 
 export function mapFlyToPoint() {
-  map.flyToPoint([113.939351, 36.068144, 350.9])
+  map.flyToPoint([113.939351, 36.068144, 350.9], { radius: 50000 })
 }
 
 export function mapCancelFlyTo() {

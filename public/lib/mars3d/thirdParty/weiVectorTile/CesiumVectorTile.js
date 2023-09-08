@@ -26033,7 +26033,6 @@ exports.inflateUndermine = inflateUndermine;
           }
 
           if (style.showLabel) {
-            debugger
             var text = pointFeature.properties[labelPropertyName]
 
             if (text) {

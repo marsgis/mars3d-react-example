@@ -50,8 +50,19 @@ export function onMounted(mapInstance) {
   })
   map.addControl(mapSplit)
 
+  mapSplit.on(mars3d.EventType.mouseMove, function (event) {
+    console.log("拖动了mapSplit控件", event)
+  })
 
   window.mapSplit = mapSplit // only for test
+
+  // 增加2个div文本
+  const addHTML = `
+    <div style="position: absolute;top: 20px;left: -335px;width: 300px;height: 48px;line-height: 48px;border-radius: 3px;background-color: rgba(0,0,0,.6);font-size: 16px;color: #fff;text-align: center;pointer-events: none;"> 左侧影像：2021年8月卫星遥感影像 </div>
+    <div style="position: absolute;top: 20px;left: 45px;width: 300px;height: 48px;line-height: 48px;border-radius: 3px;background-color: rgba(0,0,0,.6);font-size: 16px;color: #fff;text-align: center;pointer-events: none;"> 右侧影像：2022年8月卫星遥感影像 </div>
+  `
+  const splitter = mars3d.DomUtil.parseDom(addHTML, true)
+  mapSplit.container.appendChild(splitter)
 
   // 加载模型图层 [也支持setLayerSplitDirection方法来设置图层]
   // const tiles3dLayer = new mars3d.layer.TilesetLayer({

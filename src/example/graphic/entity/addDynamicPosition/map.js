@@ -37,6 +37,7 @@ export function onMounted(mapInstance) {
   // 加一些演示数据
   for (let i = 0; i < 20; i++) {
     const graphic = new mars3d.graphic.ModelEntity({
+      viewFrom: new Cesium.Cartesian3(-500, -500, 200),
       style: {
         url: "//data.mars3d.cn/gltf/mars/qiche.gltf",
         scale: 0.5,
@@ -75,6 +76,7 @@ export function onMounted(mapInstance) {
   }
   for (let i = 0; i < 20; i++) {
     const graphic = new mars3d.graphic.BillboardEntity({
+      viewFrom: new Cesium.Cartesian3(-500, -500, 200),
       style: {
         image: "img/marker/mark-blue.png",
         horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
@@ -118,7 +120,7 @@ function changePosition(time) {
     if (graphic.isPrivate) {
       return
     }
-    graphic.addDynamicPosition(randomPoint(), time)// 按time秒运动至指定位置
+    graphic.addDynamicPosition(randomPoint(), time) // 按time秒运动至指定位置
   })
 }
 

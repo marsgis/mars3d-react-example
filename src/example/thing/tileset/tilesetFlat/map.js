@@ -205,5 +205,18 @@ function addTestLine(positions) {
   })
   lineLayer.addGraphic(graphic)
 
+  // const graphic = new mars3d.graphic.PolygonEntity({
+  //   positions: positions,
+  //   style: {
+  //     materialType: mars3d.MaterialType.Image,
+  //     materialOptions: {
+  //       image: "img/textures/poly-soil.jpg",
+  //       opacity: 0.8 // 透明度
+  //     },
+  //     clampToGround: true
+  //   }
+  // })
+  // lineLayer.addGraphic(graphic)
+
   return graphic.id
 }

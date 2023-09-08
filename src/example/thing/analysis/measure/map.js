@@ -71,6 +71,7 @@ export function measureLength() {
       html: `<div class="marsGreenGradientPnl" ></div>`,
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM
+      // pointerEvents: false
     }
     // style: {
     //   color: '#ffff00',
