@@ -228,9 +228,9 @@ function UIComponent() {
   )
 
   useEffect(() => {
-    setTimeout(() => {
-      mapWork.showModel(inputUrl)
-    }, 1000)
+    // setTimeout(() => {
+    //   mapWork.showModel(inputUrl)
+    // }, 1000)
   }, [inputUrl])
 
   const checkedChange = useCallback((keys: any, item: any) => {
@@ -300,6 +300,10 @@ function UIComponent() {
     mapWork.eventTarget.on("changeHeight", function (event: any) {
       marsGuiRef.current.updateField("txtZ", event.alt)
     })
+    mapWork.eventTarget.on("historyUrl", function (event: any) { 
+      setInputUrl(event.url)
+      mapWork.showModel(inputUrl)
+    })
   }, [])
 
   return (
@@ -326,7 +330,7 @@ function UIComponent() {
                 style={{ width: "280px" }}
                 defaultValue={inputUrl}
                 onChange={(e) => {
-                  setInputUrl(e + "")
+                  setInputUrl(e.target.value + "")
                 }}
               ></MarsInput>
 
