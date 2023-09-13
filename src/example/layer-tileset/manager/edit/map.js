@@ -37,6 +37,11 @@ export function onMounted(mapInstance) {
       return url
     }
   }
+
+  // 读取localStorage值
+  localforage.getItem(storageName).then(function (lastUrl) {
+    eventTarget.fire("historyUrl", { url: lastUrl })
+  })
 }
 
 /**
@@ -53,7 +58,7 @@ function removeLayer() {
     tiles3dLayer = null
   }
 }
-
+const storageName = "layer-tileset-manager-edit"
 export function showModel(url) {
   removeLayer()
 
@@ -71,10 +76,18 @@ export function showModel(url) {
   })
   map.addLayer(tiles3dLayer)
 
-  // 加载完成事件
-  tiles3dLayer.on(mars3d.EventType.load, function (event) {
-    eventTarget.fire("tiles3dLayerLoad", { layer: tiles3dLayer })
-  })
+  tiles3dLayer.readyPromise
+    .then(() => {
+      // 加载完成
+      console.log("模型加载完成", tiles3dLayer)
+
+      localforage.setItem(storageName, url) // 记录历史值
+      eventTarget.fire("tiles3dLayerLoad", { layer: tiles3dLayer })
+    })
+    .catch((e) => {
+      // 加载失败
+      console.log("模型加载失败", e)
+    })
 
   // 加载完成事件
   tiles3dLayer.on(mars3d.EventType.updatePosition, function (event) {

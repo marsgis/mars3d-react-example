@@ -247,6 +247,12 @@
             "hasPannel": true
           },
           {
+            "name": "超图Supermap",
+            "thumbnail": "layert-online-supermap.jpg",
+            "main": "layer-tile/online/supermap",
+            "hasPannel": true
+          },
+          {
             "name": "谷歌",
             "thumbnail": "layert-online-google.jpg",
             "main": "layer-tile/online/google",
@@ -2251,6 +2257,7 @@
             "name": "三维模型位置及参数编辑",
             "thumbnail": "layer3d-manager-edit.jpg",
             "main": "layer-tileset/manager/edit",
+            "libs": ["mars3d", "localforage"],
             "hasPannel": true
           },
           {

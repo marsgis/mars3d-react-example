@@ -2,8 +2,8 @@
 /**
  * Mars3D三维可视化平台  mars3d
  *
- * 版本信息：v3.6.5
- * 编译日期：2023-09-12 12:41:31
+ * 版本信息：v3.6.6
+ * 编译日期：2023-09-12 20:31:25
  * 版权所有：Copyright by 火星科技  http://mars3d.cn
  * 使用单位：免费公开版 ，2023-03-17
  */
@@ -19606,7 +19606,7 @@ declare class ArcGisWfsLayer extends LodGraphicLayer {
             pixelRange?: number;
             minimumClusterSize?: number;
             clampToGround?: boolean;
-            style?: BillboardEntity.StyleOptions | any;
+            style?: BillboardEntity.StyleOption | PointEntity.StyleOptions | any | any;
             radius?: number;
             radiusIn?: number;
             fontColor?: string;
@@ -19883,7 +19883,7 @@ declare class BusineDataLayer extends GraphicLayer {
             pixelRange?: number;
             minimumClusterSize?: number;
             clampToGround?: boolean;
-            style?: BillboardEntity.StyleOptions | any;
+            style?: BillboardEntity.StyleOption | PointEntity.StyleOptions | any | any;
             radius?: number;
             fontColor?: string;
             color?: string;
@@ -20024,7 +20024,7 @@ declare class GeodePoiLayer extends LodGraphicLayer {
             pixelRange?: number;
             minimumClusterSize?: number;
             clampToGround?: boolean;
-            style?: BillboardEntity.StyleOptions | any;
+            style?: BillboardEntity.StyleOption | PointEntity.StyleOptions | any | any;
             radius?: number;
             radiusIn?: number;
             fontColor?: string;
@@ -20239,7 +20239,7 @@ declare class GeoJsonLayer extends GraphicLayer {
             pixelRange?: number;
             minimumClusterSize?: number;
             clampToGround?: boolean;
-            style?: BillboardEntity.StyleOptions | any;
+            style?: BillboardEntity.StyleOption | PointEntity.StyleOptions | any | any;
             radius?: number;
             fontColor?: string;
             color?: string;
@@ -20652,7 +20652,7 @@ declare class GraphicLayer extends BaseGraphicLayer {
             pixelRange?: number;
             minimumClusterSize?: number;
             clampToGround?: boolean;
-            style?: BillboardEntity.StyleOptions | any;
+            style?: BillboardEntity.StyleOption | PointEntity.StyleOptions | any | any;
             radius?: number;
             fontColor?: string;
             color?: string;
@@ -21273,7 +21273,7 @@ declare class I3SLayer extends BaseGraphicLayer {
     /**
      * 模型的向上轴，比如Cesium.Axis.Z 或 Cesium.Axis.Y
      */
-    readonly upAxis: Cesium.Axis;
+    readonly modelUpAxis: Cesium.Axis;
     /**
      * 遍历每一个Tileset子图层并将其作为参数传递给回调函数
      * @param method - 回调方法
@@ -22015,7 +22015,7 @@ declare class TilesetLayer extends BaseGraphicLayer {
     /**
      * 模型的向上轴，比如Cesium.Axis.Z 或 Cesium.Axis.Y
      */
-    readonly upAxis: Cesium.Axis;
+    readonly modelUpAxis: Cesium.Axis;
     /**
      * 旋转方向，示例：{ x: 0, y: 0, z: 0 }
      */
@@ -22337,7 +22337,7 @@ declare class WfsLayer extends LodGraphicLayer {
             pixelRange?: number;
             minimumClusterSize?: number;
             clampToGround?: boolean;
-            style?: BillboardEntity.StyleOptions | any;
+            style?: BillboardEntity.StyleOption | PointEntity.StyleOptions | any | any;
             radius?: number;
             fontColor?: string;
             color?: string;
