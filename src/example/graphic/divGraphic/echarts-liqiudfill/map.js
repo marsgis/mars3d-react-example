@@ -22,7 +22,7 @@ export function onMounted(mapInstance) {
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     name: "石化工厂",
     url: "http://data.mars3d.cn/3dtiles/max-shihua/tileset.json",
-    position: { lng: 117.077158, lat: 31.659116, alt: 24.6 },
+    position: { lng: 117.077158, lat: 31.659116, alt: -2.0 },
     maximumScreenSpaceError: 1,
     popup: "all"
   })

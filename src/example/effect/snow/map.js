@@ -30,7 +30,7 @@ export function onMounted(mapInstance) {
   // 添加参考三维模型
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     url: "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
-    position: { alt: 80.6 },
+    position: { alt: 38.8 },
     maximumScreenSpaceError: 1,
     dynamicScreenSpaceError: true,
     cullWithChildrenBounds: false

@@ -19,17 +19,7 @@ export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
-  addMeasure()
-}
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
-export function onUnmounted() {
-  map = null
-}
 
-function addMeasure() {
   measureObj = new mars3d.thing.Measure({
     // 设置文本样式
     label: {
@@ -64,7 +54,40 @@ function addMeasure() {
       eventTarget.fire("measureClick", { value: e.graphic?.measured })
     }
   })
+
+  // 加一些演示数据
+  addDemoGraphic1(measureObj.graphicLayer)
 }
+/**
+ * 释放当前地图业务的生命周期函数
+ * @returns {void} 无
+ */
+export function onUnmounted() {
+  map = null
+}
+
+function addDemoGraphic1(graphicLayer) {
+  const graphic = new mars3d.graphic.SectionMeasure({
+    exact: true,
+    positions: [
+      [116.193794, 30.994415, 654.8],
+      [116.236077, 30.925154, 506.2],
+      [116.314569, 30.864239, 408.7],
+      [116.341924, 30.847984, 381.8],
+      [116.392754, 30.854264, 581.7],
+      [116.415222, 30.880092, 580.5],
+      [116.567457, 30.85223, 314.6]
+    ],
+    style: {
+      width: 5,
+      color: "#3388ff"
+    },
+    attr: { remark: "示例1" }
+  })
+  graphicLayer.addGraphic(graphic)
+}
+
+
 
 export function removeAll() {
   measureObj.clear()

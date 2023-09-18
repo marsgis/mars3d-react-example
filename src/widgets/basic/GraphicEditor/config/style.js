@@ -1960,7 +1960,7 @@ const styleConfig = {
   polyline: {
     name: "线",
     primitive: true,
-    extends: ["curve", "distanceMeasure", "heightMeasure"],
+    extends: ["curve","brushLine", "distanceMeasure", "heightMeasure"],
     style: [
       { name: "width", label: "线宽", type: "number", step: 1, defval: 4.0 },
       {

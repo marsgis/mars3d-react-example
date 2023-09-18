@@ -23,7 +23,7 @@ export function onMounted(mapInstance) {
   // 模型
   tiles3dLayer = new mars3d.layer.TilesetLayer({
     name: "合肥市建筑物",
-    url: "//data.mars3d.cn/3dtiles/jzw-hefei2/tileset.json",
+    url: "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
     maximumScreenSpaceError: 1,
     style: {
       color: {

@@ -31,7 +31,7 @@ export function onMounted(mapInstance) {
     type: "3dtiles",
     name: "校园",
     url: "//data.mars3d.cn/3dtiles/qx-xuexiao/tileset.json",
-    position: { alt: 15.8 },
+    position: { alt: 282.0 },
     maximumScreenSpaceError: 1
   })
   map.addLayer(tilesetLayer)
@@ -61,6 +61,8 @@ export function onMounted(mapInstance) {
     ]
   })
   map.addLayer(geoJsonLayerDTH)
+
+  mars3d.DrawUtil.setPointStyle({ has3dtiles: true })// 编辑点贴模型
 
   graphicLayer = new mars3d.layer.GraphicLayer({
     hasEdit: true,

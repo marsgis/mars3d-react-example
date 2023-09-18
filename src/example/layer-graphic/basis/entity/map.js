@@ -304,6 +304,9 @@ function addDemoGraphic14(graphicLayer) {
 }
 
 function addDemoGraphic15(graphicLayer) {
+  const groupGraphic = new mars3d.graphic.GroupGraphic() // 组对象
+  graphicLayer.addGraphic(groupGraphic)
+
   const graphic = new mars3d.graphic.PolygonEntity({
     positions: [
       [116.510278, 30.834372, 567.29],
@@ -325,7 +328,19 @@ function addDemoGraphic15(graphicLayer) {
     },
     attr: { remark: "示例15" }
   })
-  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
+  groupGraphic.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
+
+  const graphicLabel = new mars3d.graphic.LabelEntity({
+    position: new mars3d.LngLatPoint(116.505298, 30.81396, 420),
+    style: {
+      text: "我是水面",
+      font_size: 20,
+      visibleDepth: false
+    },
+    attr: { remark: "示例15-label" }
+  })
+  groupGraphic.addGraphic(graphicLabel)
+
 }
 
 // 绑定右键菜单

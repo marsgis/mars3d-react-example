@@ -62,7 +62,9 @@ function showWeiVectorTileLayer() {
         // lineDash: [3, 10],
         lineWidth: 2,
 
-        showMaker: false,
+        showMaker: false, // 点状的时候需要打开
+        // markerImage: "img/marker/lace-red.png",
+
         showCenterLabel: false
         // showCenterLabel: true, //是否显示文本，仅对线和面数据有效
         // centerLabelPropertyName: 'NAME',
@@ -78,9 +80,14 @@ function showWeiVectorTileLayer() {
       allowPick: true, // 允许单击
       // 以下为mars3d参数,API参考http://mars3d.cn/api/BaseTileLayer.html#.ConstructorOptions
       maxLength: -1,
-      popup: "名称：{name} <br /> 日期：{address}"
+      popup: "名称：{name} <br /> 日期：{address}",
+      flyTo: true
     })
     map.addLayer(tileLayer)
+
+    tileLayer.on(mars3d.EventType.load, function (event) {
+      console.log("加载完成", event)
+    })
 
     tileLayer.on(mars3d.EventType.click, function (event) {
       console.log("单击了图层", event)

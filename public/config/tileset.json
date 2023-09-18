@@ -8,6 +8,11 @@
       "name": "合肥市区",
       "url": "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
       "maximumScreenSpaceError": 1,
+      "style": {
+        "color": {
+          "conditions": [["true", "color('rgba(42, 160, 224, 1)')"]]
+        }
+      },
       "marsJzwStyle": true,
       "highlight": { "type": "click", "color": "#FFFF00" },
       "popup": [
@@ -20,14 +25,9 @@
     {
       "pid": 2040,
       "type": "3dtiles",
-      "name": "合肥市区2",
-      "url": "//data.mars3d.cn/3dtiles/jzw-hefei2/tileset.json",
+      "name": "合肥市区-带贴图",
+      "url": "//data.mars3d.cn/3dtiles/jzw-hefei-cz/tileset.json",
       "maximumScreenSpaceError": 1,
-      "style": {
-        "color": {
-          "conditions": [["true", "color('rgba(42, 160, 224, 1)')"]]
-        }
-      },
       "marsJzwStyle": true,
       "highlight": { "type": "click", "color": "#FFFF00" },
       "popup": [
@@ -189,7 +189,7 @@
       "type": "3dtiles",
       "name": "石化工厂",
       "url": "//data.mars3d.cn/3dtiles/max-shihua/tileset.json",
-      "position": { "lng": 117.077158, "lat": 31.659116, "alt": 24.6 },
+      "position": { "lng": 117.077158, "lat": 31.659116, "alt": -2.0 },
       "maximumScreenSpaceError": 1,
       "highlight": { "type": "click", "color": "#00FF00" },
       "popup": "all",
@@ -279,7 +279,7 @@
           "type": "3dtiles",
           "name": "校园",
           "url": "//data.mars3d.cn/3dtiles/qx-xuexiao/tileset.json",
-          "position": { "alt": 15.8 },
+          "position": { "alt": 282.0},
           "maximumScreenSpaceError": 1
         }
       ]
@@ -290,7 +290,7 @@
       "type": "3dtiles",
       "name": "合肥大学科技园",
       "url": "//data.mars3d.cn/3dtiles/qx-hfdxy/tileset.json",
-      "position": { "alt": -24 },
+      "position": { "alt": 43.7 },
       "maximumScreenSpaceError": 1,
       "center": { "lat": 31.841523, "lng": 117.205761, "alt": 166, "heading": 1, "pitch": -33 }
     },
@@ -300,7 +300,7 @@
       "type": "3dtiles",
       "name": "县城社区",
       "url": "//data.mars3d.cn/3dtiles/qx-shequ/tileset.json",
-      "position": { "alt": 11.5 },
+      "position": { "alt": 148.2 },
       "maximumScreenSpaceError": 2,
       "dynamicScreenSpaceError": true,
       "cullWithChildrenBounds": false,
@@ -330,7 +330,7 @@
         {
           "type": "geojson",
           "name": "文庙-单体化",
-          "url": " //data.mars3d.cn/file/geojson/dth-wm.json",
+          "url": "//data.mars3d.cn/file/geojson/dth-wm.json",
           "symbol": {
             "type": "polygonP",
             "styleOptions": {
@@ -354,7 +354,7 @@
           "type": "3dtiles",
           "name": "文庙",
           "url": "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
-          "position": { "alt": 80.6 },
+          "position": { "alt": 38.8 },
           "maximumScreenSpaceError": 2,
           "dynamicScreenSpaceError": true,
           "cullWithChildrenBounds": false,

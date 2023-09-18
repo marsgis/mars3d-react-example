@@ -24,7 +24,7 @@ export function onMounted(mapInstance) {
     type: "3dtiles",
     name: "石化工厂",
     url: "//data.mars3d.cn/3dtiles/max-shihua/tileset.json",
-    position: { lng: 117.077158, lat: 31.659116, alt: 24.6 },
+    position: { lng: 117.077158, lat: 31.659116, alt: -2.0 },
     maximumScreenSpaceError: 1,
     highlight: { type: "click", color: "#00ffff" },
     popup: "all"

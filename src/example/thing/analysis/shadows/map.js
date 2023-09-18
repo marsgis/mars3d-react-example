@@ -33,7 +33,7 @@ export function onMounted(mapInstance) {
   // 加个模型
   const tilesetLayer = new mars3d.layer.TilesetLayer({
     url: "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
-    position: { alt: 80.6 },
+    position: { alt: 38.8 },
     maximumScreenSpaceError: 1,
     shadows: Cesium.ShadowMode.ENABLED
   })

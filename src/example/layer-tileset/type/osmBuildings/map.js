@@ -56,9 +56,9 @@ export function setStyle2() {
       vec4 position = czm_inverseModelView * vec4(fsInput.attributes.positionEC,1); // 位置
 
       // 注意shader中写浮点数是，一定要带小数点，否则会报错，比如0需要写成0.0，1要写成1.0
-      float _baseHeight = 0.0; // 物体的基础高度，需要修改成一个合适的建筑基础高度
-      float _heightRange = 80.0; // 高亮的范围(_baseHeight ~ _baseHeight + _heightRange)
-      float _glowRange = 60.0; // 光环的移动范围(高度)
+      float _baseHeight = 50.0; // 物体的基础高度，需要修改成一个合适的建筑基础高度
+      float _heightRange = 380.0; // 高亮的范围(_baseHeight ~ _baseHeight + _heightRange)
+      float _glowRange = 400.0; // 光环的移动范围(高度)
 
       // 建筑基础色
       float mars_height = position.z - _baseHeight;

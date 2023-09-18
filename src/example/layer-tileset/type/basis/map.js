@@ -179,7 +179,7 @@ export function showQxShequDemo() {
   tiles3dLayer = new mars3d.layer.TilesetLayer({
     name: "县城社区",
     url: "//data.mars3d.cn/3dtiles/qx-shequ/tileset.json",
-    position: { alt: 11.5 },
+    position: { alt: 148.2 },
     maximumScreenSpaceError: 1,
     dynamicScreenSpaceError: true,
     cullWithChildrenBounds: false,
@@ -231,7 +231,7 @@ export function showQxSimiaoDemo() {
   tiles3dLayer = new mars3d.layer.TilesetLayer({
     name: "文庙",
     url: "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
-    position: { alt: 80.6 },
+    position: { alt: 38.8 },
     maximumScreenSpaceError: 1,
     // "skipLevelOfDetail": true,
     // "loadSiblings": true,
@@ -284,9 +284,9 @@ export function showJzwHefeiDemo() {
       vec4 position = czm_inverseModelView * vec4(fsInput.attributes.positionEC,1); // 位置
 
       // 注意shader中写浮点数是，一定要带小数点，否则会报错，比如0需要写成0.0，1要写成1.0
-      float _baseHeight = 0.0; // 物体的基础高度，需要修改成一个合适的建筑基础高度
-      float _heightRange = 80.0; // 高亮的范围(_baseHeight ~ _baseHeight + _heightRange)
-      float _glowRange = 100.0; // 光环的移动范围(高度)
+      float _baseHeight = 50.0; // 物体的基础高度，需要修改成一个合适的建筑基础高度
+      float _heightRange = 380.0; // 高亮的范围(_baseHeight ~ _baseHeight + _heightRange)
+      float _glowRange = 400.0; // 光环的移动范围(高度)
 
       // 建筑基础色
       //vec4 diffuse = vec4(0.2,  0.5, 1.0, 1.0); // 固定颜色
@@ -371,7 +371,7 @@ export function showMaxShihuaDemo() {
   tiles3dLayer = new mars3d.layer.TilesetLayer({
     name: "石化工厂",
     url: "//data.mars3d.cn/3dtiles/max-shihua/tileset.json",
-    position: { lng: 117.077158, lat: 31.659116, alt: 24.6 },
+    position: { lng: 117.077158, lat: 31.659116, alt: -2.0 },
     maximumScreenSpaceError: 1,
 
     // 以下参数可以参考用于3dtiles总数据大，清晰度过高情况下进行性能优化。这不是一个通用的解决方案，但可以以此为参考。

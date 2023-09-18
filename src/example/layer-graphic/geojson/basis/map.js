@@ -507,7 +507,7 @@ export function showMonomer() {
       name: "文庙",
       type: "3dtiles",
       url: "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
-      position: { alt: 80.6 },
+      position: { alt: 38.8 },
       maximumScreenSpaceError: 1,
       show: true
     })

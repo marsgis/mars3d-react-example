@@ -21,7 +21,7 @@ export function onMounted(mapInstance) {
   map.basemap = 2017 // 切换到蓝色底图
 
   const tilesetLayer = new mars3d.layer.TilesetLayer({
-    url: "//data.mars3d.cn/3dtiles/jzw-hefei2/tileset.json",
+    url: "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
     maximumScreenSpaceError: 1,
     style: {
       color: {

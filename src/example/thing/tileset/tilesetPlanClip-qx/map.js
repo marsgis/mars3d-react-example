@@ -18,7 +18,7 @@ export function onMounted(mapInstance) {
   tilesetLayer = new mars3d.layer.TilesetLayer({
     name: "县城社区",
     url: "//data.mars3d.cn/3dtiles/qx-shequ/tileset.json",
-    position: { alt: 11.5 },
+    position: { alt: 148.2 },
     maximumScreenSpaceError: 1,
     skipLevelOfDetail: true,
     preferLeaves: true,

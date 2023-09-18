@@ -26,7 +26,7 @@ export function onMounted(mapInstance) {
     name: "县城社区",
     url: "//data.mars3d.cn/3dtiles/qx-shequ/tileset.json",
     maximumScreenSpaceError: 1,
-    position: { alt: 11.5 }
+    position: { alt: 148.2 }
   })
   map.addLayer(tiles3dLayer)
 

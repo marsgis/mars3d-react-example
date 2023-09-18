@@ -30,7 +30,7 @@ export function onMounted(mapInstance) {
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     url: "//data.mars3d.cn/3dtiles/qx-shequ/tileset.json",
     maximumScreenSpaceError: 1,
-    position: { alt: 11.5 }
+    position: { alt: 148.2 }
   })
   map.addLayer(tiles3dLayer)
 

@@ -23,7 +23,7 @@ export function onMounted(mapInstance) {
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     name: "校园",
     url: "//data.mars3d.cn/3dtiles/qx-xuexiao/tileset.json",
-    position: { alt: 15.8 },
+    position: { alt: 282.0 },
     maximumScreenSpaceError: 1
   })
   map.addLayer(tiles3dLayer)

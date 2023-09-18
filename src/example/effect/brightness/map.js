@@ -11,8 +11,8 @@ export const mapOptions = {
     {
       pid: 2040,
       type: "3dtiles",
-      name: "合肥市区2",
-      url: "//data.mars3d.cn/3dtiles/jzw-hefei2/tileset.json",
+      name: "合肥市区",
+      url: "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
       maximumScreenSpaceError: 1,
       style: {
         color: {

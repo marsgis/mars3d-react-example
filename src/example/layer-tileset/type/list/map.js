@@ -2,7 +2,6 @@ import * as mars3d from "mars3d"
 
 export let map // mars3d.Map三维地图对象
 let tilesetClip
-let queryGaodePOI
 
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
@@ -26,7 +25,6 @@ export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
   queryTilesetData()
-  queryGaodePOI = new mars3d.query.GaodePOI()
 }
 
 /**
@@ -52,26 +50,22 @@ export function removeLayer(layer) {
   map.removeLayer(layer)
 }
 
-// export function cutModel(layer) {
-//   // 3d模型裁剪
-//   const tilesetPlanClip = new mars3d.thing.TilesetClip({
-//     layer: layer,
-//     clipOutSide: true, // 外裁剪
-//     positions: [
-//       [117.196484, 31.803549],
-//       [117.196484, 31.835931],
-//       [117.247038, 31.835931],
-//       [117.247038, 31.803549]
-//     ]
-//   })
-//   map.addThing(tilesetPlanClip)
-// }
+// 数据获取
+function queryTilesetData() {
+  mars3d.Util.fetchJson({ url: "config/tileset.json" })
+    .then(function (arr) {
+      const modelData = arr.layers
+      eventTarget.fire("loadTypeList", { modelData })
+    })
+    .catch(function (error) {
+      console.log("加载JSON出错", error)
+    })
+}
 
 export function cutModel(layer) {
   // 3d模型裁剪
   tilesetClip = new mars3d.thing.TilesetClip({
     layer: layer,
-    clipOutSide: false, // 内裁剪
     positions: [
       [117.217052, 31.828226, 33],
       [117.226442, 31.826613, 36.3],
@@ -84,16 +78,4 @@ export function cutModel(layer) {
     ]
   })
   map.addThing(tilesetClip)
-}
-
-// 数据获取
-function queryTilesetData() {
-  mars3d.Util.fetchJson({ url: "config/tileset.json" })
-    .then(function (arr) {
-      const modelData = arr.layers
-      eventTarget.fire("loadTypeList", { modelData })
-    })
-    .catch(function (error) {
-      console.log("加载JSON出错", error)
-    })
 }

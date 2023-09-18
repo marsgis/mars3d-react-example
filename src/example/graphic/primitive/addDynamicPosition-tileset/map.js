@@ -25,7 +25,7 @@ export function onMounted(mapInstance) {
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     name: "文庙",
     url: "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
-    position: { alt: 80.6 },
+    position: { alt: 38.8 },
     maximumScreenSpaceError: 1
   })
   map.addLayer(tiles3dLayer)
