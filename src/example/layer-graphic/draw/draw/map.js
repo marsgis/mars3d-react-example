@@ -62,7 +62,6 @@ export function onMounted(mapInstance) {
   // mars3d.Lang["_双击完成绘制"][0] = "右击完成绘制"
   // mars3d.Lang["_右击删除点"][0] = "中键单击完成绘制"
 
-
   // map.on(mars3d.EventType.mouseOver, function (event) {
   //   console.log("mouseover")
   // })
@@ -220,6 +219,17 @@ export function drawPolyline(clampToGround) {
   //   map.highlightEnabled = true
   //   map.popup.enabled = true
   // })
+}
+
+export function drawBrushLine(clampToGround) {
+  graphicLayer.startDraw({
+    type: "brushLine",
+    style: {
+      color: clampToGround ? "#ffff00" : "#3388ff",
+      width: 3,
+      clampToGround: clampToGround
+    }
+  })
 }
 
 export function drawPolygon(clampToGround) {

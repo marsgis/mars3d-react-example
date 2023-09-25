@@ -58,9 +58,9 @@ export function chooseStree() {
 
   tileLayer.show = true
 
-  if (typeView !== 0) {
-    viewTo3d()
-  }
+  // if (typeView !== 0) {
+  //   viewTo3d()
+  // }
 
   graphicLayer.startDraw({
     type: "billboard",

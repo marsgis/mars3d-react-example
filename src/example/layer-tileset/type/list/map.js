@@ -61,21 +61,3 @@ function queryTilesetData() {
       console.log("加载JSON出错", error)
     })
 }
-
-export function cutModel(layer) {
-  // 3d模型裁剪
-  tilesetClip = new mars3d.thing.TilesetClip({
-    layer: layer,
-    positions: [
-      [117.217052, 31.828226, 33],
-      [117.226442, 31.826613, 36.3],
-      [117.226796, 31.807994, 21.8],
-      [117.209922, 31.808607, 34.8],
-      [117.209823, 31.816096, 23.9],
-      [117.214736, 31.816278, 34],
-      [117.214412, 31.82334, 33.6],
-      [117.216856, 31.823559, 28.4]
-    ]
-  })
-  map.addThing(tilesetClip)
-}

@@ -42,42 +42,6 @@ function addMeasure() {
   })
   map.addThing(measure)
 
-  // 直接传入坐标分析
-  measure
-    .volume({
-      positions: mars3d.PointTrans.lonlats2cartesians([
-        [116.191817, 30.864845, 309.3],
-        [116.192869, 30.8757, 521.81],
-        [116.190478, 30.886266, 672.79],
-        [116.19247, 30.893748, 448.91],
-        [116.200836, 30.889954, 379.92],
-        [116.204063, 30.882578, 532.5],
-        [116.203027, 30.873828, 498.8],
-        [116.201795, 30.865941, 443.06]
-      ]),
-      splitNum: 6,
-      height: 450
-    })
-    .then((e) => {
-      measureVolume = e
-      showHeightVal()
-    })
-
-  // 有模型时
-  // tiles3dLayer.readyPromise.then((layer) => {
-  //   // 关键代码,等模型readyPromise加载后执行volume
-  //   measureVolume = measure.volume({
-  //     positions: mars3d.PointTrans.lonlats2cartesians([
-  //       [119.033856, 33.591473, 14.5],
-  //       [119.033098, 33.591836, 13.2],
-  //       [119.033936, 33.592146, 16.9]
-  //     ]),
-  //     has3dtiles: true, //关键代码，标识有模型
-  //     splitNum: 6,
-  //     height: 150
-  //   })
-  // })
-
   measure.on(mars3d.EventType.start, function (event) {
     console.log("开始分析", event)
     clearInterResult()
@@ -89,6 +53,45 @@ function addMeasure() {
     console.log("分析完成", event)
     hideLoading()
   })
+
+  // 加一些演示数据
+  setTimeout(() => {
+    addDemoGraphic1(measure.graphicLayer)
+  }, 3000)
+
+  // 有模型时
+  // tiles3dLayer.readyPromise.then((layer) => {
+  //   // 关键代码,等模型readyPromise加载后执行volume
+  //   addDemoGraphic1(measure.graphicLayer)
+  // })
+}
+
+function addDemoGraphic1(graphicLayer) {
+  const graphic = new mars3d.graphic.VolumeMeasure({
+    splitNum: 6,
+    height: 450,
+    positions: [
+      [116.191817, 30.864845, 309.3],
+      [116.192869, 30.8757, 521.81],
+      [116.190478, 30.886266, 672.79],
+      [116.19247, 30.893748, 448.91],
+      [116.200836, 30.889954, 379.92],
+      [116.204063, 30.882578, 532.5],
+      [116.203027, 30.873828, 498.8],
+      [116.201795, 30.865941, 443.06]
+    ],
+    style: {
+      width: 5,
+      color: "#3388ff"
+    },
+    attr: { remark: "示例1" }
+  })
+  graphic.on(mars3d.EventType.end, function () {
+    showHeightVal()
+  })
+  graphicLayer.addGraphic(graphic)
+
+  measureVolume = graphic
 }
 
 // 点选高度

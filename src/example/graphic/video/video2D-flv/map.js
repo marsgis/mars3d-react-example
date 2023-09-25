@@ -73,7 +73,7 @@ export function onUnmounted() {
   map = null
 }
 
-const flvUrl = "https://sf1-hscdn-tos.pstatp.com/obj/media-fe/xgplayer_doc_video/flv/xgplayer-demo-360p.flv"
+const flvUrl = "https://sample-videos.com/video123/flv/720/big_buck_bunny_720p_1mb.flv"
 
 function createVideoDom() {
   videoElement = mars3d.DomUtil.create("video", "", document.body)
