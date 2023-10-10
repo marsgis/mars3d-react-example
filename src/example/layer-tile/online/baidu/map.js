@@ -2,6 +2,9 @@ import * as mars3d from "mars3d"
 
 export let map // mars3d.Map三维地图对象
 
+const creditHtml = `© 2023 Baidu - <span>审图号：GS(2023)3206号</span>
+- 甲测资字11111342- <a target="_blank" href="https://map.baidu.com/zt/client/service/index.html">服务条款</a>`
+
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
@@ -15,6 +18,7 @@ export const mapOptions = {
       icon: "img/basemaps/gaode_vec.png",
       type: "baidu",
       layer: "vec",
+      credit: creditHtml,
       show: true
     },
     {
@@ -24,21 +28,24 @@ export const mapOptions = {
       layers: [
         { name: "底图", type: "baidu", layer: "img_d" },
         { name: "注记", type: "baidu", layer: "img_z" }
-      ]
+      ],
+      credit: creditHtml
     },
     {
       name: "百度深蓝色",
       icon: "img/basemaps/bd-c-midnight.png",
       type: "baidu",
       layer: "custom",
-      style: "midnight"
+      style: "midnight",
+      credit: creditHtml
     },
     {
       name: "百度黑色",
       icon: "img/basemaps/bd-c-dark.png",
       type: "baidu",
       layer: "custom",
-      style: "dark"
+      style: "dark",
+      credit: creditHtml
     },
     {
       name: "离线百度瓦片(示例)",
@@ -60,6 +67,7 @@ export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
+  addCreditDOM()
 
   globalNotify("已知问题提示", `(1) 百度瓦片纠偏后在部分瓦片拼接处有文字注记对不齐情况。`)
 }
@@ -69,6 +77,7 @@ export function onMounted(mapInstance) {
  * @returns {void} 无
  */
 export function onUnmounted() {
+  removeCreditDOM()
   map = null
 }
 
@@ -89,5 +98,29 @@ export function removeTileLayer() {
   if (tileLayer) {
     map.removeLayer(tileLayer, true)
     tileLayer = null
+  }
+}
+
+// 在下侧状态栏增加一个额外div展示图层版权信息
+let creditDOM
+function addCreditDOM() {
+  const locationBar = map.controls.locationBar?.container
+  if (locationBar) {
+    creditDOM = mars3d.DomUtil.create("div", "mars3d-locationbar-content mars3d-locationbar-autohide", locationBar)
+    creditDOM.style["pointer-events"] = "all"
+    creditDOM.style.float = "left"
+    creditDOM.style.marginLeft = "20px"
+
+    creditDOM.innerHTML = map.basemap?.options?.credit || ""
+
+    map.on(mars3d.EventType.changeBasemap, function (event) {
+      creditDOM.innerHTML = event.layer?.options?.credit || ""
+    })
+  }
+}
+function removeCreditDOM() {
+  if (creditDOM) {
+    mars3d.DomUtil.remove(creditDOM)
+    creditDOM = null
   }
 }

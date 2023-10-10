@@ -76,6 +76,15 @@ function addDemoGraphic1() {
         distanceDisplayCondition: true,
         distanceDisplayCondition_far: 500000,
         distanceDisplayCondition_near: 0
+      },
+      textureCoordinates: {
+        positions: [
+          new Cesium.Cartesian2(0, 1),
+          new Cesium.Cartesian2(0, 0),
+          new Cesium.Cartesian2(0.5, 0),
+          new Cesium.Cartesian2(1, 0),
+          new Cesium.Cartesian2(1, 1)
+        ]
       }
     },
     attr: { remark: "示例1" }
@@ -198,8 +207,7 @@ function addDemoGraphic4() {
       specularIntensity: 0.8, // 控制镜面反射强度的数字。
       baseWaterColor: "#006ab4", // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
       blendColor: "#006ab4", // 从水中混合到非水域时使用的rgba颜色对象。
-      opacity: 0.6, // 透明度
-      clampToGround: false // 是否贴地
+      opacity: 0.6 // 透明度
     },
     attr: { remark: "示例4" }
   })

@@ -2,6 +2,10 @@ import * as mars3d from "mars3d"
 
 export let map // mars3d.Map三维地图对象
 
+const creditHtml = `©2023 中科星图- <span>审图号：GS (2023) 1924号</span>
+-  甲测资字11111577 - <a href="https://geovisearth.com/declaration#/user" target="_blank" trace="tos">服务条款</a> `
+
+
 // 星图官方地址：https://datacloud.geovisearth.com/support/map/summary
 
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
@@ -31,7 +35,8 @@ export const mapOptions = {
           subdomains: "123"
         }
       ],
-      show: true
+      show: true,
+      credit: creditHtml
     },
     {
       pid: 10,
@@ -39,7 +44,8 @@ export const mapOptions = {
       icon: "/img/basemaps/tdt_vec.png",
       type: "xyz",
       url: "https://tiles{s}.geovisearth.com/base/v1/vec/{z}/{x}/{y}?token=82455ef06c72bb3a35bbb4d7d05fd9eceb96a94dc942a056b8feb0e5928ed96f",
-      subdomains: "123"
+      subdomains: "123",
+      credit: creditHtml
     }
   ]
 }
@@ -54,6 +60,7 @@ export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
+  addCreditDOM()
 }
 
 /**
@@ -61,6 +68,7 @@ export function onMounted(mapInstance) {
  * @returns {void} 无
  */
 export function onUnmounted() {
+  removeCreditDOM()
   map = null
 }
 
@@ -82,5 +90,30 @@ export function removeTileLayer() {
   if (tileLayer) {
     map.removeLayer(tileLayer, true)
     tileLayer = null
+  }
+}
+
+
+// 在下侧状态栏增加一个额外div展示图层版权信息
+let creditDOM
+function addCreditDOM() {
+  const locationBar = map.controls.locationBar?.container
+  if (locationBar) {
+    creditDOM = mars3d.DomUtil.create("div", "mars3d-locationbar-content mars3d-locationbar-autohide", locationBar)
+    creditDOM.style["pointer-events"] = "all"
+    creditDOM.style.float = "left"
+    creditDOM.style.marginLeft = "20px"
+
+    creditDOM.innerHTML = map.basemap?.options?.credit || ""
+
+    map.on(mars3d.EventType.changeBasemap, function (event) {
+      creditDOM.innerHTML = event.layer?.options?.credit || ""
+    })
+  }
+}
+function removeCreditDOM() {
+  if (creditDOM) {
+    mars3d.DomUtil.remove(creditDOM)
+    creditDOM = null
   }
 }

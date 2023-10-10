@@ -10,8 +10,8 @@ window.configLibs = {
   /// ///////////////////////Mars3D及其插件////////////////////////
   mars3d: [
     // // 三维地球“主库”
-    // "https://unpkg.com/mars3d-cesium@1.107.0/Build/Cesium/Widgets/widgets.css", //cdn
-    // "https://unpkg.com/mars3d-cesium@1.107.0/Build/Cesium/Cesium.js",
+    // "https://unpkg.com/mars3d-cesium@1.108.0/Build/Cesium/Widgets/widgets.css", //cdn
+    // "https://unpkg.com/mars3d-cesium@1.108.0/Build/Cesium/Cesium.js",
     "Cesium/Widgets/widgets.css", // cesium
     "Cesium/Cesium.js",
     "turf/turf.min.js",

@@ -27,6 +27,19 @@ export function onMounted(mapInstance) {
     `(1) 目前不支持EPSG:3857 Web墨卡托投影坐标系的瓦片进行贴模型。(2)多个图层调整时会全部重新渲染 (3)不支持图层亮度对比度等样式属性`
   )
 
+  // const graphic = new mars3d.graphic.RectanglePrimitive({
+  //   positions: [
+  //     [119.474794, 28.442985, 142.6],
+  //     [119.478693, 28.43993, 131.1]
+  //   ],
+  //   style: {
+  //     color: Cesium.Color.BLUE,
+  //     clampToGround: true
+  //   },
+  //   attr: { remark: "示例4" }
+  // })
+  // map.graphicLayer.addGraphic(graphic)
+
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     name: "县城社区",
     url: "//data.mars3d.cn/3dtiles/qx-shequ/tileset.json",

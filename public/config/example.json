@@ -90,7 +90,8 @@
             "name": "多语言支持",
             "thumbnail": "map-options-lang.jpg",
             "main": "map/options/lang",
-            "hasPannel": true
+            "hasPannel": true,
+            "resources": ["CustomLang.js"]
           }
         ]
       },
@@ -1100,7 +1101,7 @@
             "thumbnail": "graphic-entity-arrow.jpg",
             "main": "graphic/entity/arrow",
             "hasPannel": true,
-            "resources": ["CloseVurveEntity.js", "CurveEntity.js"]
+            "resources": ["EditCurve.js", "CloseVurveEntity.js", "CurveEntity.js"]
           },
           {
             "name": "Property属性机制演示",
@@ -2623,6 +2624,12 @@
             "name": "剖面分析",
             "thumbnail": "thing-analysis-measure-section.jpg",
             "main": "thing/analysis/measure-section",
+            "hasPannel": true
+          },
+          {
+            "name": "剖面分析（模型上分析）",
+            "thumbnail": "util-polyUtil-computeSurfacePoints.jpg",
+            "main": "util/polyUtil/computeSurfacePoints",
             "hasPannel": true
           },
           {

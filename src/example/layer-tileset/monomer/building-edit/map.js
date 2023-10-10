@@ -68,7 +68,7 @@ export function onMounted(mapInstance) {
     hasEdit: true,
     isAutoEditing: true, // 绘制完成后是否自动激活编辑
     symbol: {
-      type: "polygonP",
+      type: "polygon",
       merge: true, // 是否合并并覆盖json中已有的style，默认不合并
       styleOptions: {
         color: "rgba(255, 255, 0, 0.4)",

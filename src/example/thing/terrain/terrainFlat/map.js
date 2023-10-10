@@ -9,6 +9,8 @@ export const mapOptions = {
   }
 }
 
+let lineLayer // 矢量图层对象,用于graphic绑定展示
+
 export const eventTabel = new mars3d.BaseClass()
 
 /**
@@ -19,6 +21,12 @@ export const eventTabel = new mars3d.BaseClass()
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
+
+
+  // 创建矢量数据图层
+  lineLayer = new mars3d.layer.GraphicLayer()
+  map.addLayer(lineLayer)
+
 }
 
 /**
@@ -32,6 +40,8 @@ export function onUnmounted() {
 export function addTerrainClip() {
   terrainFlat = new mars3d.thing.TerrainFlat()
   map.addThing(terrainFlat)
+
+  // terrainFlat.on(mars3d.EventType.addItem, onAddFlatArea)
 
   const areaItem = terrainFlat.addArea(
     [
@@ -109,6 +119,7 @@ export function btnDraw(height) {
 export function removeAll() {
   terrainFlat.clear() // 清除挖地区域
   table = []
+  lineLayer.clear()
 }
 
 // 改变切割的深度
@@ -124,7 +135,9 @@ export function chkClippingPlanes(val) {
 let table = []
 // 区域表格添加一行记录
 function addTableItem(item) {
-  table.push({ key: item.id, name: "压平区域" + item.id })
+  item.lineId = addTestLine(item.positions)
+
+  table.push({ key: item.id, name: "压平区域" + item.id, lineId: item.lineId })
 
   eventTabel.fire("tableObject", { table })
 }
@@ -138,9 +151,14 @@ export function flyToGraphic(item) {
   map.flyToPositions(graphic.positions)
 }
 
-export function deletedGraphic(item) {
-  const graphic = terrainFlat.getAreaById(item)
+export function deletedGraphic(areaId, lineId) {
+  const graphic = terrainFlat.getAreaById(areaId)
   terrainFlat.removeArea(graphic)
+
+  if (lineId) {
+    const graphicLine = lineLayer.getGraphicById(lineId)
+    lineLayer.removeGraphic(graphicLine)
+  }
 }
 
 export function showHideArea(id, selected) {
@@ -149,4 +167,38 @@ export function showHideArea(id, selected) {
   } else {
     terrainFlat.hideArea(id)
   }
+}
+
+// 是否显示测试边界线
+export function chkShowLine(val) {
+  lineLayer.show = val
+}
+
+function addTestLine(positions) {
+  const graphic = new mars3d.graphic.PolylineEntity({
+    positions: positions,
+    style: {
+      closure: true,
+      color: "#ffffff",
+      opacity: 0.8,
+      width: 2,
+      clampToGround: true
+    }
+  })
+  lineLayer.addGraphic(graphic)
+
+  // const graphic = new mars3d.graphic.PolygonEntity({
+  //   positions: positions,
+  //   style: {
+  //     materialType: mars3d.MaterialType.Image,
+  //     materialOptions: {
+  //       image: "img/textures/poly-soil.jpg",
+  //       opacity: 0.8 // 透明度
+  //     },
+  //     clampToGround: true
+  //   }
+  // })
+  // lineLayer.addGraphic(graphic)
+
+  return graphic.id
 }

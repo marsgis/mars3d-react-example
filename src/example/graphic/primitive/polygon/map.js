@@ -97,6 +97,12 @@ function addDemoGraphic2(graphicLayer) {
     ],
     style: {
       image: "img/textures/poly-soil.jpg",
+      // image: "img/tietu/gugong.jpg",
+      vertexFormat: Cesium.MaterialAppearance.MaterialSupport.TEXTURED.vertexFormat,
+      textureCoordinates: {
+        positions: [new Cesium.Cartesian2(0, 1), new Cesium.Cartesian2(0, 0), new Cesium.Cartesian2(0.5, 0), new Cesium.Cartesian2(0.5, 1)] // 矩形平铺
+      },
+      clampToGround: true,
 
       label: {
         text: "我是火星科技",
@@ -284,6 +290,16 @@ function addDemoGraphic9(graphicLayer) {
       materialOptions: {
         color: "#3388cc",
         alphaPower: 1.5
+      },
+      vertexFormat: Cesium.MaterialAppearance.MaterialSupport.TEXTURED.vertexFormat,
+      textureCoordinates: {
+        positions: [
+          new Cesium.Cartesian2(0, 1),
+          new Cesium.Cartesian2(0, 0),
+          new Cesium.Cartesian2(0.5, 0),
+          new Cesium.Cartesian2(1, 0),
+          new Cesium.Cartesian2(1, 1)
+        ]
       },
       label: {
         text: "Mars3D平台",

@@ -289,9 +289,17 @@ export function showJzwHefeiDemo() {
       float _glowRange = 400.0; // 光环的移动范围(高度)
 
       // 建筑基础色
-      //vec4 diffuse = vec4(0.2,  0.5, 1.0, 1.0); // 固定颜色
-      vec4 diffuse = vec4(material.diffuse, material.alpha); // 颜色
-      float mars_height = (u_mars3d_jzw_upz ? position.z : position.y) - _baseHeight;
+      vec4 diffuse = vec4(0.2,  0.5, 1.0, 1.0); // 固定颜色
+      //vec4 diffuse = vec4(material.diffuse, material.alpha); // 颜色
+
+      float modelHeight = position.z;
+      if(u_mars3d_jzw_upAxis == 1) {
+        modelHeight = position.y;
+      } else if(u_mars3d_jzw_upAxis == 0){
+        modelHeight = position.x;
+      }
+
+      float mars_height = modelHeight - _baseHeight;
       diffuse *= vec4(vec3(mars_height / _heightRange), 1.0);  // 渐变
 
       // 动态光环

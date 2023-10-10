@@ -38,6 +38,18 @@ export function onMounted(mapInstance) {
   })
   map.addLayer(tiles3dLayer)
 
+  const wallGraphic = new mars3d.graphic.WallEntity({
+    positions: [
+      [117.208707, 31.840096, 42.5],
+      [117.203055, 31.839958, 41.6]
+    ],
+    style: {
+      diffHeight: 200,
+      color: "#FFFFFF"
+    }
+  })
+  map.graphicLayer.addGraphic(wallGraphic)
+
   // 创建矢量数据图层
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
@@ -99,12 +111,8 @@ export function startDrawGraphic() {
   graphicLayer.startDraw({
     type: "video3D",
     style: {
-      url: "//data.mars3d.cn/file/video/lukou.mp4",
-      maskImage: "img/textures/video-mask.png", // 羽化视频四周，融合更美观
-      angle: 33.3,
-      angle2: 23.4,
-      heading: 140.7,
-      pitch: -82.1
+      url: "//data.mars3d.cn/file/video/lukou.mp4"
+      // maskImage: "img/textures/video-mask.png" // 羽化视频四周，融合更美观
     }
   })
 }
