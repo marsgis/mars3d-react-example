@@ -41,9 +41,6 @@ export function onUnmounted() {
 
 let modelGraphic
 
-const reverse = true // z轴方向，true朝向空中，false朝向地心
-const converter = Cesium.Transforms.eastNorthUpToFixedFrame
-// const converter = Cesium.Transforms.localFrameToFixedFrameGenerator('east', 'south')
 
 // 初始化创建一个卫星视锥体
 export function addDemoGraphic1(sensorParams) {
@@ -78,9 +75,7 @@ export function addDemoGraphic1(sensorParams) {
       roll: sensorParams.rollValue,
       color: "rgba(0,255,255,0.7)",
       flat: true
-    },
-    fixedFrameTransform: converter,
-    reverse: reverse
+    }
   })
   graphicLayer.addGraphic(satelliteSensor)
   eventTarget.fire("addTableData", { graphicLayer })

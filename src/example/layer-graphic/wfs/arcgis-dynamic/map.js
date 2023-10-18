@@ -82,13 +82,13 @@ export function addLayer() {
   arcGisLayer = new mars3d.layer.ArcGisLayer({
     name: "合肥建筑物",
     url: "//server.mars3d.cn/arcgis/rest/services/mars/guihua/MapServer",
+    // usePreCachedTilesIfAvailable: false, // 非标准瓦片 或 大地2000高斯投影坐标系时，请打开此参数
     // layerDefs: `{ 0: "用地编号 = 'R2'" }`,
 
     // url: '//server.mars3d.cn/arcgis/rest/services/crs/ssjzw4326/MapServer',
     // url: '//server.mars3d.cn/arcgis/rest/services/crs/ssjzw4490/MapServer', //大地2000地理坐标系
     // url: '//server.mars3d.cn/arcgis/rest/services/crs/ssjzw4548/MapServer', //大地2000高斯投影坐标系
     // url: '//server.mars3d.cn/arcgis/rest/services/crs/ssjzw2000/MapServer',  //大地2000高斯投影坐标系
-    // usePreCachedTilesIfAvailable: false, //大地2000高斯投影坐标系时，如果是瓦片，请打开此参数
     // queryParameters: { returnGeometry: false },
     highlight: {
       clampToGround: true,

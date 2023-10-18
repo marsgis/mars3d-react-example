@@ -7,9 +7,6 @@ let satelliteSensor
 let satelliteSensor2
 let modelGraphic
 
-const reverse = true // z轴方向，true朝向空中，false朝向地心
-const converter = Cesium.Transforms.eastNorthUpToFixedFrame
-// let converter = Cesium.Transforms.localFrameToFixedFrameGenerator('east', 'south')
 
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
@@ -93,9 +90,8 @@ export function addModelGraphic(sensorParams) {
       pitch: sensorParams.pitchValue,
       roll: sensorParams.rollValue,
       color: "rgba(0,255,255,0.7)"
-    },
-    fixedFrameTransform: converter,
-    reverse: reverse
+    }
+    // lookAt: Cesium.Cartesian3.fromDegrees(28.54, -26.45, 0)
   })
   graphicLayer.addGraphic(satelliteSensor)
 
@@ -110,9 +106,7 @@ export function addModelGraphic(sensorParams) {
       pitch: -sensorParams.pitchValue,
       roll: sensorParams.rollValue,
       color: "rgba(255,255,0,0.7)"
-    },
-    fixedFrameTransform: converter,
-    reverse: reverse
+    }
   })
   graphicLayer.addGraphic(satelliteSensor2)
 }

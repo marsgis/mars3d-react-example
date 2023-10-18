@@ -2,8 +2,8 @@
 /**
  * Mars3D三维可视化平台  mars3d
  *
- * 版本信息：v3.6.8
- * 编译日期：2023-10-09 17:41:17
+ * 版本信息：v3.6.9
+ * 编译日期：2023-10-17 12:43:40
  * 版权所有：Copyright by 火星科技  http://mars3d.cn
  * 使用单位：免费公开版 ，2023-03-17
  */
@@ -916,159 +916,198 @@ declare enum Icon {
 
 /**
  * 多语种文本配置，
- * 值为数组，对应{@link LangType}按照固定顺序排列,如：[中文简体,中文繁體,English]
  * @example
- * // 更新Lang值
- * mars3d.Util.setLangText("_右击菜单删除", "新的提示语句", mars3d.LangType.ZH)
+ * // 更新Lang单个值
+ * map.setLangText("_放大", "Zoom In")
+ *
+ * // 更新Lang多个值
+ * map.setLangText({
+ *   _放大: "Zoom In",
+ *   _缩小: "Zoom Out",
+ *   //其他需要更新的文本
+ * })
  *
  * // 获取Lang值
- * const text = mars3d.Util.getLangText("_右击菜单删除", mars3d.LangType.ZH)
+ * const text = map.getLangText("_放大")
  */
 declare enum Lang {
-    "_放大" = "[\"\u653E\u5927\",\"\u653E\u5927\",\"Zoom In\"]",
-    "_缩小" = "[\"\u7F29\u5C0F\",\"\u7E2E\u5C0F\",\"Zoom Out\"]",
-    "_查看此处坐标" = "[\"\u67E5\u770B\u6B64\u5904\u5750\u6807\",\"\u67E5\u770B\u6B64\u8655\u5750\u6A19\",\"Location info\"]",
-    "_位置信息" = "[\"\u4F4D\u7F6E\u4FE1\u606F\",\"\u4F4D\u7F6E\u4FE1\u606F\",\"The location information\"]",
-    "_经度" = "[\"\u7ECF\u5EA6\",\"\u7D93\u5EA6\",\"Lon\"]",
-    "_纬度" = "[\"\u7EAC\u5EA6\",\"\u7DEF\u5EA6\",\"Lat\"]",
-    "_海拔" = "[\"\u9AD8\u7A0B\",\"\u9AD8\u7A0B\",\"Alt\"]",
-    "_横坐标" = "[\"\u6A2A\u5750\u6807\",\"\u6A6B\u5750\u6A19\",\"X\"]",
-    "_纵坐标" = "[\"\u7EB5\u5750\u6807\",\"\u7E31\u5750\u6A19\",\"Y\"]",
-    "_查看当前视角" = "[\"\u67E5\u770B\u5F53\u524D\u89C6\u89D2\",\"\u67E5\u770B\u7576\u524D\u8996\u89D2\",\"Camera info\"]",
-    "_当前视角信息" = "[\"\u5F53\u524D\u89C6\u89D2\u4FE1\u606F\",\"\u7576\u524D\u8996\u89D2\u4FE1\u606F\",\"Current Camera Information\"]",
-    "_视角切换" = "[\"\u89C6\u89D2\u5207\u6362\",\"\u8996\u89D2\u5207\u63DB\",\"Camera\"]",
-    "_禁止进入地下" = "[\"\u7981\u6B62\u8FDB\u5165\u5730\u4E0B\",\"\u7981\u6B62\u9032\u5165\u5730\u4E0B\",\"Do not go underground\"]",
-    "_允许进入地下" = "[\"\u5141\u8BB8\u8FDB\u5165\u5730\u4E0B\",\"\u5141\u8A31\u9032\u5165\u5730\u4E0B\",\"Access to the ground\"]",
-    "_绕此处环绕飞行" = "[\"\u7ED5\u6B64\u5904\u73AF\u7ED5\u98DE\u884C\",\"\u7E5E\u6B64\u8655\u74B0\u7E5E\u98DB\u884C\",\"Fly around here\"]",
-    "_关闭环绕飞行" = "[\"\u5173\u95ED\u73AF\u7ED5\u98DE\u884C\",\"\u95DC\u9589\u74B0\u7E5E\u98DB\u884C\",\"Close off circling\"]",
-    "_移动到此处" = "[\"\u79FB\u52A8\u5230\u6B64\u5904\",\"\u79FB\u52D5\u5230\u6B64\u8655\",\"Move it over here\"]",
-    "_第一视角站到此处" = "[\"\u7B2C\u4E00\u89C6\u89D2\u7AD9\u5230\u6B64\u5904\",\"\u7B2C\u4E00\u8996\u89D2\u7AD9\u5230\u6B64\u8655\",\"First view is here\"]",
-    "_开启键盘漫游" = "[\"\u5F00\u542F\u952E\u76D8\u6F2B\u6E38\",\"\u958B\u5553\u9375\u76E4\u6F2B\u904A\",\"Enable keyboard roaming\"]",
-    "_关闭键盘漫游" = "[\"\u5173\u95ED\u952E\u76D8\u6F2B\u6E38\",\"\u95DC\u9589\u9375\u76E4\u6F2B\u904A\",\"Turn off keyboard roaming\"]",
-    "_跟踪锁定" = "[\"\u8DDF\u8E2A\u9501\u5B9A\",\"\u8DDF\u8E2A\u9396\u5B9A\",\"TrackedEntity\"]",
-    "_取消锁定" = "[\"\u53D6\u6D88\u9501\u5B9A\",\"\u53D6\u6D88\u9396\u5B9A\",\"Unlocked\"]",
-    "_三维模型" = "[\"\u4E09\u7EF4\u6A21\u578B\",\"\u4E09\u7DAD\u6A21\u578B\",\"3DTiles\"]",
-    "_显示三角网" = "[\"\u663E\u793A\u4E09\u89D2\u7F51\",\"\u986F\u793A\u4E09\u89D2\u7DB2\",\"Display Wireframe\"]",
-    "_关闭三角网" = "[\"\u5173\u95ED\u4E09\u89D2\u7F51\",\"\u95DC\u9589\u4E09\u89D2\u7DB2\",\"Close Wireframe\"]",
-    "_显示包围盒" = "[\"\u663E\u793A\u5305\u56F4\u76D2\",\"\u986F\u793A\u5305\u570D\u76D2\",\"Display BoundingVolume\"]",
-    "_关闭包围盒" = "[\"\u5173\u95ED\u5305\u56F4\u76D2\",\"\u95DC\u9589\u5305\u570D\u76D2\",\"Close BoundingVolume\"]",
-    "_地形服务" = "[\"\u5730\u5F62\u670D\u52A1\",\"\u5730\u5F62\u670D\u52D9\",\"Terrain\"]",
-    "_开启地形" = "[\"\u5F00\u542F\u5730\u5F62\",\"\u986F\u793A\u5730\u5F62\",\"Open terrain\"]",
-    "_关闭地形" = "[\"\u5173\u95ED\u5730\u5F62\",\"\u95DC\u9589\u5730\u5F62\",\"Close terrain\"]",
-    "_图上标记" = "[\"\u56FE\u4E0A\u6807\u8BB0\",\"\u5716\u4E0A\u6A19\u8A18\",\"Drawing\"]",
-    "_标记点" = "[\"\u6807\u8BB0\u70B9\",\"\u6A19\u8A18\u9EDE\",\"Mark points\"]",
-    "_标记线" = "[\"\u6807\u8BB0\u7EBF\",\"\u6A19\u8A18\u7DDA\",\"Tag line\"]",
-    "_标记面" = "[\"\u6807\u8BB0\u9762\",\"\u6A19\u8A18\u9762\",\"Mark surface\"]",
-    "_标记圆" = "[\"\u6807\u8BB0\u5706\",\"\u6A19\u8A18\u5713\",\"Mark round\"]",
-    "_标记矩形" = "[\"\u6807\u8BB0\u77E9\u5F62\",\"\u6A19\u8A18\u77E9\u5F62\",\"Mark rectangular\"]",
-    "_允许编辑" = "[\"\u5141\u8BB8\u7F16\u8F91\",\"\u5141\u8A31\u7DE8\u8F2F\",\"Allowed to edit\"]",
-    "_禁止编辑" = "[\"\u7981\u6B62\u7F16\u8F91\",\"\u7981\u6B62\u7DE8\u8F2F\",\"Prohibit to edit\"]",
-    "_导出GeoJSON" = "[\"\u5BFC\u51FAGeoJSON\",\"\u5C0E\u51FAGeoJSON\",\"Export GeoJSON\"]",
-    "_清除所有标记" = "[\"\u6E05\u9664\u6240\u6709\u6807\u8BB0\",\"\u6E05\u9664\u6240\u6709\u6A19\u8A18\",\"Clear\"]",
-    "_特效效果" = "[\"\u7279\u6548\u6548\u679C\",\"\u7279\u6548\u6548\u679C\",\"Effects\"]",
-    "_开启下雨" = "[\"\u5F00\u542F\u4E0B\u96E8\",\"\u958B\u5553\u4E0B\u96E8\",\"Enable rain\"]",
-    "_关闭下雨" = "[\"\u5173\u95ED\u4E0B\u96E8\",\"\u95DC\u9589\u4E0B\u96E8\",\"Close rain\"]",
-    "_开启下雪" = "[\"\u5F00\u542F\u4E0B\u96EA\",\"\u958B\u5553\u4E0B\u96EA\",\"Enable snow\"]",
-    "_关闭下雪" = "[\"\u5173\u95ED\u4E0B\u96EA\",\"\u95DC\u9589\u4E0B\u96EA\",\"Close snow\"]",
-    "_开启雾天气" = "[\"\u5F00\u542F\u96FE\u5929\u6C14\",\"\u958B\u5553\u9727\u5929\u6C23\",\"Enable fog\"]",
-    "_关闭雾天气" = "[\"\u5173\u95ED\u96FE\u5929\u6C14\",\"\u95DC\u9589\u9727\u5929\u6C23\",\"Close fog\"]",
-    "_开启泛光" = "[\"\u5F00\u542F\u6CDB\u5149\",\"\u958B\u5553\u6CDB\u5149\",\"Enable bloom\"]",
-    "_关闭泛光" = "[\"\u5173\u95ED\u6CDB\u5149\",\"\u95DC\u9589\u6CDB\u5149\",\"Close bloom\"]",
-    "_开启亮度" = "[\"\u5F00\u542F\u4EAE\u5EA6\",\"\u958B\u5553\u4EAE\u5EA6\",\"Enable brightness\"]",
-    "_关闭亮度" = "[\"\u5173\u95ED\u4EAE\u5EA6\",\"\u95DC\u9589\u4EAE\u5EA6\",\"Close brightness\"]",
-    "_开启夜视" = "[\"\u5F00\u542F\u591C\u89C6\",\"\u958B\u5553\u591C\u8996\",\"Enable night vision\"]",
-    "_关闭夜视" = "[\"\u5173\u95ED\u591C\u89C6\",\"\u95DC\u9589\u591C\u8996\",\"Close night vision\"]",
-    "_开启黑白" = "[\"\u5F00\u542F\u9ED1\u767D\",\"\u958B\u5553\u9ED1\u767D\",\"Enable black and white\"]",
-    "_关闭黑白" = "[\"\u5173\u95ED\u9ED1\u767D\",\"\u95DC\u9589\u9ED1\u767D\",\"Close black and white\"]",
-    "_开启拾取高亮" = "[\"\u5F00\u542F\u62FE\u53D6\u9AD8\u4EAE\",\"\u958B\u5553\u62FE\u53D6\u9AD8\u4EAE\",\"Enable Pick highlighted\"]",
-    "_关闭拾取高亮" = "[\"\u5173\u95ED\u62FE\u53D6\u9AD8\u4EAE\",\"\u95DC\u9589\u62FE\u53D6\u9AD8\u4EAE\",\"Close Pick highlighted\"]",
-    "_场景设置" = "[\"\u573A\u666F\u8BBE\u7F6E\",\"\u5834\u666F\u8A2D\u7F6E\",\"Scene\"]",
-    "_开启深度监测" = "[\"\u5F00\u542F\u6DF1\u5EA6\u76D1\u6D4B\",\"\u958B\u5553\u6DF1\u5EA6\u76E3\u6E2C\",\"Enable depth test against terrain\"]",
-    "_关闭深度监测" = "[\"\u5173\u95ED\u6DF1\u5EA6\u76D1\u6D4B\",\"\u95DC\u9589\u6DF1\u5EA6\u76E3\u6E2C\",\"Close depth test against terrain\"]",
-    "_显示星空背景" = "[\"\u663E\u793A\u661F\u7A7A\u80CC\u666F\",\"\u986F\u793A\u661F\u7A7A\u80CC\u666F\",\"Enable skyBox\"]",
-    "_关闭星空背景" = "[\"\u5173\u95ED\u661F\u7A7A\u80CC\u666F\",\"\u95DC\u9589\u661F\u7A7A\u80CC\u666F\",\"Close skyBox\"]",
-    "_开启日照阴影" = "[\"\u5F00\u542F\u65E5\u7167\u9634\u5F71\",\"\u958B\u5553\u65E5\u7167\u9670\u5F71\",\"Enable shadow\"]",
-    "_关闭日照阴影" = "[\"\u5173\u95ED\u65E5\u7167\u9634\u5F71\",\"\u95DC\u9589\u65E5\u7167\u9670\u5F71\",\"Close shadow\"]",
-    "_开启大气渲染" = "[\"\u5F00\u542F\u5927\u6C14\u6E32\u67D3\",\"\u958B\u5553\u5927\u6C23\u6E32\u67D3\",\"Enable sky atmosphere\"]",
-    "_关闭大气渲染" = "[\"\u5173\u95ED\u5927\u6C14\u6E32\u67D3\",\"\u95DC\u9589\u5927\u6C23\u6E32\u67D3\",\"Close sky atmosphere\"]",
-    "_场景出图" = "[\"\u573A\u666F\u51FA\u56FE\",\"\u5834\u666F\u51FA\u5716\",\"Export image\"]",
-    "_图上量算" = "[\"\u56FE\u4E0A\u91CF\u7B97\",\"\u5716\u4E0A\u91CF\u7B97\",\"Measure\"]",
-    "_删除测量" = "[\"\u5220\u9664\u6D4B\u91CF\",\"\u522A\u9664\u6E2C\u91CF\",\"Delete\"]",
-    "_角度" = "[\"\u89D2\u5EA6\",\"\u89D2\u5EA6\",\"Angle\"]",
-    "_距离" = "[\"\u8DDD\u79BB\",\"\u8DDD\u96E2\",\"Distance\"]",
-    "_面积" = "[\"\u9762\u79EF\",\"\u9762\u7A4D\",\"Area\"]",
-    "_总长" = "[\"\u603B\u957F\",\"\u7E3D\u9577\",\"Total distance\"]",
-    "_起点" = "[\"\u8D77\u70B9\",\"\u8D77\u9EDE\",\"Start\"]",
-    "_高度差" = "[\"\u9AD8\u5EA6\u5DEE\",\"\u9AD8\u5EA6\u5DEE\",\"Height difference\"]",
-    "_空间距离" = "[\"\u7A7A\u95F4\u8DDD\u79BB\",\"\u7A7A\u9593\u8DDD\u96E2\",\"Space distance\"]",
-    "_水平距离" = "[\"\u6C34\u5E73\u8DDD\u79BB\",\"\u6C34\u5E73\u8DDD\u96E2\",\"Horizontal distance\"]",
-    "_正在计算体积" = "[\"\u6B63\u5728\u8BA1\u7B97\u4F53\u79EF\",\"\u6B63\u5728\u8A08\u7B97\u9AD4\u7A4D\",\"Calculating volume\"]",
-    "_填方体积" = "[\"\u586B\u65B9\u4F53\u79EF\",\"\u586B\u65B9\u9AD4\u7A4D\",\"The volume of fill\"]",
-    "_挖方体积" = "[\"\u6316\u65B9\u4F53\u79EF\",\"\u6316\u65B9\u9AD4\u7A4D\",\"Excavation volume\"]",
-    "_横切面积" = "[\"\u6A2A\u5207\u9762\u79EF\",\"\u6A6B\u5207\u9762\u7A4D\",\"Crosscutting area\"]",
-    "_面上" = "[\"\u9762\u4E0A\",\"\u9762\u4E0A\",\"Up\"]",
-    "_面下" = "[\"\u9762\u4E0B\",\"\u9762\u4E0B\",\"Down\"]",
-    "_米" = "[\"\u7C73\",\"\u7C73\",\"m\"]",
-    "_公里" = "[\"\u516C\u91CC\",\"\u516C\u88CF\",\"km\"]",
-    "_万米" = "[\"\u4E07\u7C73\",\"\u4E07\u7C73\",\"myriametre\"]",
-    "_海里" = "[\"\u6D77\u91CC\",\"\u6D77\u88CF\",\"mile\"]",
-    "_丈" = "[\"\u4E08\",\"\u4E08\",\"zhang\"]",
-    "_平方米" = "[\"\u5E73\u65B9\u7C73\",\"\u5E73\u65B9\u7C73\",\"m\u00B2\"]",
-    "_平方公里" = "[\"\u5E73\u65B9\u516C\u91CC\",\"\u5E73\u65B9\u516C\u88CF\",\"km\u00B2\"]",
-    "_亩" = "[\"\u4EA9\",\"\u755D\",\"mu\"]",
-    "_公顷" = "[\"\u516C\u9877\",\"\u516C\u9803\",\"ha\"]",
-    "_立方米" = "[\"\u65B9\",\"\u65B9\",\"m\u00B3\"]",
-    "_万立方米" = "[\"\u4E07\u65B9\",\"\u4E07\u65B9\",\"wm\u00B3\"]",
-    "_单击开始绘制" = "[\"\u5355\u51FB\u5F00\u59CB\u7ED8\u5236\",\"\u55AE\u64CA\u958B\u59CB\u7E6A\u5236\",\"Click to start drawing\"]",
-    "_单击完成绘制" = "[\"\u5355\u51FB\u5B8C\u6210\u7ED8\u5236\",\"\u55AE\u64CA\u5B8C\u6210\u7E6A\u5236\",\"Click to finish drawing\"]",
-    "_双击完成绘制" = "[\"\u53CC\u51FB\u5B8C\u6210\u7ED8\u5236\",\"\u96D9\u64CA\u5B8C\u6210\u7E6A\u5236\",\"Double click to finish drawing\"]",
-    "_单击增加点" = "[\"\u5355\u51FB\u589E\u52A0\u70B9\",\"\u55AE\u64CA\u589E\u52A0\u9EDE\",\"left click add point\"]",
-    "_右击删除点" = "[\"\u53F3\u51FB\u5220\u9664\u70B9\",\"\u53F3\u64CA\u522A\u9664\u9EDE\",\"right click delete point\"]",
-    "_单击后激活编辑" = "[\"\u5355\u51FB\u540E\u6FC0\u6D3B\u7F16\u8F91\",\"\u55AE\u64CA\u5F8C \u6FC0\u6D3B\u7DE8\u8F2F\",\"Click to activate editing\"]",
-    "_右击菜单删除" = "[\"\u53F3\u51FB\u83DC\u5355\u5220\u9664\",\"\u53F3\u64CA\u83DC\u55AE\u522A\u9664\",\"Right click menu to delete\"]",
-    "_更多功能请右击" = "[\"\u66F4\u591A\u529F\u80FD\u8BF7\u53F3\u51FB\",\"\u66F4\u591A\u529F\u80FD\u8ACB\u53F3\u64CA\",\"For more functions, right click\"]",
-    "_停止编辑" = "[\"\u505C\u6B62\u7F16\u8F91\",\"\u505C\u6B62\u7DE8\u8F2F\",\"Stop editing\"]",
-    "_删除该点" = "[\"\u5220\u9664\u8BE5\u70B9\",\"\u522A\u9664\u8A72\u9EDE\",\"Delete that point\"]",
-    "_按轴平移" = "[\"\u6309\u8F74\u5E73\u79FB\",\"\u6309\u8EF8\u5E73\u79FB\",\"Translation by axis\"]",
-    "_停止按轴平移" = "[\"\u505C\u6B62\u6309\u8F74\u5E73\u79FB\",\"\u505C\u6B62\u6309\u8EF8\u5E73\u79FB\",\"Stop translation along axis\"]",
-    "_按轴旋转" = "[\"\u6309\u8F74\u65CB\u8F6C\",\"\u6309\u8EF8\u65CB\u8F49\",\"Rotation on axis\"]",
-    "_停止按轴旋转" = "[\"\u505C\u6B62\u6309\u8F74\u65CB\u8F6C\",\"\u505C\u6B62\u6309\u8EF8\u65CB\u8F49\",\"Stop rotation on axis\"]",
-    "_调整比例" = "[\"\u8C03\u6574\u6BD4\u4F8B\",\"\u8ABF\u6574\u6BD4\u4F8B\",\"Edit Scale\"]",
-    "_停止调整比例" = "[\"\u505C\u6B62\u8C03\u6574\u6BD4\u4F8B\",\"\u505C\u6B62\u8ABF\u6574\u6BD4\u4F8B\",\"Stop edit scale\"]",
-    "_释放后完成修改" = "[\"\u91CA\u653E\u540E\u5B8C\u6210\u4FEE\u6539\",\"\u91CB\u653E\u5F8C\u5B8C\u6210\u4FEE\u6539\",\"Complete the modification after release\"]",
-    "_该对象不允许编辑" = "[\"\u8BE5\u5BF9\u8C61\u4E0D\u5141\u8BB8\u7F16\u8F91\",\"\u8A72\u5C0D\u8C61\u4E0D\u5141\u8A31\u7DE8\u8F2F\",\"This object does not allow editing\"]",
-    "_拖动该点后" = "[\"\u62D6\u52A8\u8BE5\u70B9\u540E\",\"\u62D6\u52D5\u8A72\u9EDE\u5F8C\",\"Drag that point\"]",
-    "_拖动对象后" = "[\"\u62D6\u52A8\u5BF9\u8C61\u540E\",\"\u62D6\u52D5\u5C0D\u8C61\u5F8C\",\"Drag that object\"]",
-    "_修改位置" = "[\"\u4FEE\u6539\u4F4D\u7F6E\",\"\u4FEE\u6539\u4F4D\u7F6E\",\"Modify the position\"]",
-    "_整体平移" = "[\"\u6574\u4F53\u5E73\u79FB\",\"\u6574\u9AD4\u5E73\u79FB\",\"The overall translation\"]",
-    "_增加点" = "[\"\u589E\u52A0\u70B9\",\"\u589E\u52A0\u9EDE\",\"Add point\"]",
-    "_修改高度" = "[\"\u4FEE\u6539\u9AD8\u5EA6\",\"\u4FEE\u6539\u9AD8\u5EA6\",\"Modify the height\"]",
-    "_修改半径" = "[\"\u4FEE\u6539\u534A\u5F84\",\"\u4FEE\u6539\u534A\u5F91\",\"Modify the radius\"]",
-    "_修改长度" = "[\"\u4FEE\u6539\u957F\u5EA6(X\u65B9\u5411)\",\"\u4FEE\u6539\u9577\u5EA6(X\u65B9\u5411)\",\"Modify the length(X direction )\"]",
-    "_修改宽度" = "[\"\u4FEE\u6539\u5BBD\u5EA6(Y\u65B9\u5411)\",\"\u4FEE\u6539\u5BEC\u5EA6(Y\u65B9\u5411)\",\"Change the width(Y direction)\"]",
-    "_修改方向" = "[\"\u4FEE\u6539\u65B9\u5411\",\"\u4FEE\u6539\u65B9\u5411\",\"Change direction\"]",
-    "_修改缩放比例" = "[\"\u4FEE\u6539\u7F29\u653E\u6BD4\u4F8B\",\"\u4FEE\u6539\u7E2E\u653E\u6BD4\u4F8B\",\"Modify the Scale\"]",
-    "_无法删除不能少于最小点数" = "[\"\u65E0\u6CD5\u5220\u9664\uFF0C\u70B9\u6570\u91CF\u4E0D\u80FD\u5C11\u4E8E\",\"\u7121\u6CD5\u522A\u9664\uFF0C\u9EDE\u6578\u91CF\u4E0D\u80FD\u5C11\u4E8E\",\"Cannot delete, the number of dots cannot be less than\"]",
-    "_删除" = "[\"\u5220\u9664\",\"\u522A\u9664\",\"Delete\"]",
-    "_加载模型中" = "[\"\u52A0\u8F7D\u6A21\u578B\u4E2D\u2026\",\"\u52A0\u8F7D\u6A21\u578B\u4E2D\u2026\",\"Load Model\u2026\"]"
-}
-
-/**
- * 语言类型  枚举
- */
-declare enum LangType {
     /**
-     * 简体中文
+     * Cesium renderError 错误弹窗
      */
-    ZH = 0,
-    /**
-     * 繁体中文(香港、台湾等地区)
-     */
-    ZHHK = 1,
-    /**
-     * English英文  en
-     */
-    EN = 2
+    RenderingHasStopped = "WebGL\u53D1\u751F\u6E32\u67D3\u9519\u8BEF,\u6E32\u67D3\u5DF2\u7ECF\u505C\u6B62,\u8BF7\u5237\u65B0\u9875\u9762\u3002",
+    ErrorConstructingCesiumWidget = "WebGL\u53D1\u751F\u6E32\u67D3\u9519\u8BEF,\u6E32\u67D3\u5DF2\u7ECF\u505C\u6B62,\u8BF7\u5237\u65B0\u9875\u9762\u3002",
+    Today = "\u4ECA\u5929",
+    TodayRealTime = "\u4ECA\u5929\uFF08\u5B9E\u9645\u65F6\u95F4\uFF09",
+    Pause = "\u6682\u505C",
+    PlayReverse = "\u540E\u9000\u64AD\u653E",
+    PlayForward = "\u524D\u8FDB\u64AD\u653E",
+    CurrentTimeNotInRange = "\u5F53\u524D\u65F6\u95F4\u4E0D\u5728\u8303\u56F4\u5185",
+    Imagery = "\u5F71\u50CF",
+    CesiumIon = "\u5B98\u65B9ION",
+    Other = "\u5176\u4ED6",
+    Terrain = "\u5730\u5F62\u670D\u52A1",
+    WGS84Ellipsoid = "WGS84 \u692D\u7403",
+    CesiumWorldTerrain = "Cesium \u4E16\u754C\u5730\u5F62\u56FE",
+    WGS84EllipsoidESPG4326 = "WGS84\u6807\u51C6\u692D\u7403\uFF0C\u53C8\u79F0EPSG\uFF1A4326",
+    HighResolutionGlobalTerrain = "\u9AD8\u5206\u8FA8\u7387\u5168\u7403\u5730\u5F62\u56FE\u5757\u96C6\u7531\u51E0\u4E2A\u6570\u636E\u6E90\u7EC4\u6210\uFF0C\u7531Cesium ion\u6258\u7BA1",
+    FullScreen = "\u5168\u5C4F",
+    ExitFullScreen = "\u9000\u51FA\u5168\u5C4F",
+    FullScreenUnavailable = "\u5168\u5C4F\u4E0D\u53EF\u7528",
+    EnterAnAddressOrLandmark = "\u8BF7\u8F93\u5165\u5730\u5740...",
+    Searching = "\u67E5\u8BE2\u4E2D...",
+    ViewHome = "\u521D\u59CB\u89C6\u56FE",
+    NavigationInstructions = "\u5E2E\u52A9",
+    Mouse = "\u9F20\u6807\u64CD\u4F5C",
+    Touch = "\u89E6\u6478\u624B\u52BF",
+    PanView = "\u5E73\u79FB\u89C6\u56FE",
+    LeftClickDrag = "\u9F20\u6807\u5DE6\u952E+\u62D6\u62FD",
+    ZoomView = "\u7F29\u653E\u89C6\u56FE",
+    RightClick = "\u53F3\u952E+\u62D6\u62FD\uFF0C\u6216\u8005",
+    MouseWheelScroll = "\u4E2D\u952E\u6EDA\u52A8",
+    RotateView = "\u65CB\u8F6C\u89C6\u56FE",
+    MiddleClickDrag = "\u4E2D\u952E\u6309\u4E0B\u62D6\u62FD\uFF0C\u6216\u8005",
+    CtrlAndClickDrag = "\u6309Ctrl\u952E \u540C\u65F6 \u5DE6/\u53F3\u952E\u62D6\u62FD",
+    OneFingerDrag = "\u5355\u6307\u62D6\u52A8",
+    TwoFingerPinch = "\u53CC\u6307\u5411\u5185\u6216\u5411\u5916\u6ED1\u52A8",
+    TiltView = "\u503E\u659C\u89C6\u56FE",
+    TwoFingerDragSameDirection = "\u53CC\u6307\u6309\u76F8\u540C\u65B9\u5411\u62D6\u52A8",
+    TwoFingerDragOppositeDirection = "\u53CC\u6307\u6309\u76F8\u53CD\u65B9\u5411\u62D6\u52A8",
+    PerspectiveProjection = "\u900F\u89C6\u6295\u5F71",
+    OrthographicProjection = "\u6B63\u5C04\u6295\u5F71",
+    _2D = "\u4E8C\u7EF4\u89C6\u56FE",
+    _3D = "\u4E09\u7EF4\u89C6\u56FE",
+    ColumbusView = "\u54E5\u4F26\u5E032.5D\u89C6\u56FE",
+    EnterVRMode = "\u8FDB\u5165VR\u6A21\u5F0F",
+    ExitVRMode = "\u9000\u51FAVR\u6A21\u5F0F",
+    VRModeIsUnavailable = "VR\u6A21\u5F0F\u4E0D\u53EF\u7528",
+    "_放大" = "\u653E\u5927",
+    "_缩小" = "\u7F29\u5C0F",
+    "_暂停" = "\u6682\u505C",
+    "_继续" = "\u7EE7\u7EED",
+    "_查看此处坐标" = "\u67E5\u770B\u6B64\u5904\u5750\u6807",
+    "_位置信息" = "\u4F4D\u7F6E\u4FE1\u606F",
+    "_经度" = "\u7ECF\u5EA6",
+    "_纬度" = "\u7EAC\u5EA6",
+    "_海拔" = "\u9AD8\u7A0B",
+    "_横坐标" = "\u6A2A\u5750\u6807",
+    "_纵坐标" = "\u7EB5\u5750\u6807",
+    "_查看当前视角" = "\u67E5\u770B\u5F53\u524D\u89C6\u89D2",
+    "_当前视角信息" = "\u5F53\u524D\u89C6\u89D2\u4FE1\u606F",
+    "_视角切换" = "\u89C6\u89D2\u5207\u6362",
+    "_禁止进入地下" = "\u7981\u6B62\u8FDB\u5165\u5730\u4E0B",
+    "_允许进入地下" = "\u5141\u8BB8\u8FDB\u5165\u5730\u4E0B",
+    "_绕此处环绕飞行" = "\u7ED5\u6B64\u5904\u73AF\u7ED5\u98DE\u884C",
+    "_关闭环绕飞行" = "\u5173\u95ED\u73AF\u7ED5\u98DE\u884C",
+    "_移动到此处" = "\u79FB\u52A8\u5230\u6B64\u5904",
+    "_第一视角站到此处" = "\u7B2C\u4E00\u89C6\u89D2\u7AD9\u5230\u6B64\u5904",
+    "_开启键盘漫游" = "\u5F00\u542F\u952E\u76D8\u6F2B\u6E38",
+    "_关闭键盘漫游" = "\u5173\u95ED\u952E\u76D8\u6F2B\u6E38",
+    "_跟踪锁定" = "\u8DDF\u8E2A\u9501\u5B9A",
+    "_取消锁定" = "\u53D6\u6D88\u9501\u5B9A",
+    "_三维模型" = "\u4E09\u7EF4\u6A21\u578B",
+    "_显示三角网" = "\u663E\u793A\u4E09\u89D2\u7F51",
+    "_关闭三角网" = "\u5173\u95ED\u4E09\u89D2\u7F51",
+    "_显示包围盒" = "\u663E\u793A\u5305\u56F4\u76D2",
+    "_关闭包围盒" = "\u5173\u95ED\u5305\u56F4\u76D2",
+    "_地形服务" = "\u5730\u5F62\u670D\u52A1",
+    "_开启地形" = "\u5F00\u542F\u5730\u5F62",
+    "_关闭地形" = "\u5173\u95ED\u5730\u5F62",
+    "_图上标记" = "\u56FE\u4E0A\u6807\u8BB0",
+    "_标记点" = "\u6807\u8BB0\u70B9",
+    "_标记线" = "\u6807\u8BB0\u7EBF",
+    "_标记面" = "\u6807\u8BB0\u9762",
+    "_标记圆" = "\u6807\u8BB0\u5706",
+    "_标记矩形" = "\u6807\u8BB0\u77E9\u5F62",
+    "_允许编辑" = "\u5141\u8BB8\u7F16\u8F91",
+    "_禁止编辑" = "\u7981\u6B62\u7F16\u8F91",
+    "_导出GeoJSON" = "\u5BFC\u51FAGeoJSON",
+    "_清除所有标记" = "\u6E05\u9664\u6240\u6709\u6807\u8BB0",
+    "_特效效果" = "\u7279\u6548\u6548\u679C",
+    "_开启下雨" = "\u5F00\u542F\u4E0B\u96E8",
+    "_关闭下雨" = "\u5173\u95ED\u4E0B\u96E8",
+    "_开启下雪" = "\u5F00\u542F\u4E0B\u96EA",
+    "_关闭下雪" = "\u5173\u95ED\u4E0B\u96EA",
+    "_开启雾天气" = "\u5F00\u542F\u96FE\u5929\u6C14",
+    "_关闭雾天气" = "\u5173\u95ED\u96FE\u5929\u6C14",
+    "_开启泛光" = "\u5F00\u542F\u6CDB\u5149",
+    "_关闭泛光" = "\u5173\u95ED\u6CDB\u5149",
+    "_开启亮度" = "\u5F00\u542F\u4EAE\u5EA6",
+    "_关闭亮度" = "\u5173\u95ED\u4EAE\u5EA6",
+    "_开启夜视" = "\u5F00\u542F\u591C\u89C6",
+    "_关闭夜视" = "\u5173\u95ED\u591C\u89C6",
+    "_开启黑白" = "\u5F00\u542F\u9ED1\u767D",
+    "_关闭黑白" = "\u5173\u95ED\u9ED1\u767D",
+    "_开启拾取高亮" = "\u5F00\u542F\u62FE\u53D6\u9AD8\u4EAE",
+    "_关闭拾取高亮" = "\u5173\u95ED\u62FE\u53D6\u9AD8\u4EAE",
+    "_场景设置" = "\u573A\u666F\u8BBE\u7F6E",
+    "_开启深度监测" = "\u5F00\u542F\u6DF1\u5EA6\u76D1\u6D4B",
+    "_关闭深度监测" = "\u5173\u95ED\u6DF1\u5EA6\u76D1\u6D4B",
+    "_显示星空背景" = "\u663E\u793A\u661F\u7A7A\u80CC\u666F",
+    "_关闭星空背景" = "\u5173\u95ED\u661F\u7A7A\u80CC\u666F",
+    "_开启日照阴影" = "\u5F00\u542F\u65E5\u7167\u9634\u5F71",
+    "_关闭日照阴影" = "\u5173\u95ED\u65E5\u7167\u9634\u5F71",
+    "_开启大气渲染" = "\u5F00\u542F\u5927\u6C14\u6E32\u67D3",
+    "_关闭大气渲染" = "\u5173\u95ED\u5927\u6C14\u6E32\u67D3",
+    "_场景出图" = "\u573A\u666F\u51FA\u56FE",
+    "_图上量算" = "\u56FE\u4E0A\u91CF\u7B97",
+    "_删除测量" = "\u5220\u9664\u6D4B\u91CF",
+    "_角度" = "\u89D2\u5EA6",
+    "_距离" = "\u8DDD\u79BB",
+    "_面积" = "\u9762\u79EF",
+    "_总长" = "\u603B\u957F",
+    "_起点" = "\u8D77\u70B9",
+    "_高度差" = "\u9AD8\u5EA6\u5DEE",
+    "_空间距离" = "\u7A7A\u95F4\u8DDD\u79BB",
+    "_水平距离" = "\u6C34\u5E73\u8DDD\u79BB",
+    "_正在计算体积" = "\u6B63\u5728\u8BA1\u7B97\u4F53\u79EF",
+    "_填方体积" = "\u586B\u65B9\u4F53\u79EF",
+    "_挖方体积" = "\u6316\u65B9\u4F53\u79EF",
+    "_横切面积" = "\u6A2A\u5207\u9762\u79EF",
+    "_面上" = "\u9762\u4E0A",
+    "_面下" = "\u9762\u4E0B",
+    "_米" = "\u7C73",
+    "_公里" = "\u516C\u91CC",
+    "_万米" = "\u4E07\u7C73",
+    "_海里" = "\u6D77\u91CC",
+    "_丈" = "\u4E08",
+    "_平方米" = "\u5E73\u65B9\u7C73",
+    "_平方公里" = "\u5E73\u65B9\u516C\u91CC",
+    "_亩" = "\u4EA9",
+    "_公顷" = "\u516C\u9877",
+    "_立方米" = "\u65B9",
+    "_万立方米" = "\u4E07\u65B9",
+    "_单击开始绘制" = "\u5355\u51FB\u5F00\u59CB\u7ED8\u5236",
+    "_单击完成绘制" = "\u5355\u51FB\u5B8C\u6210\u7ED8\u5236",
+    "_双击完成绘制" = "\u53CC\u51FB\u5B8C\u6210\u7ED8\u5236",
+    "_单击增加点" = "\u5355\u51FB\u589E\u52A0\u70B9",
+    "_右击删除点" = "\u53F3\u51FB\u5220\u9664\u70B9",
+    "_单击后激活编辑" = "\u5355\u51FB\u540E\u6FC0\u6D3B\u7F16\u8F91",
+    "_右击菜单删除" = "\u53F3\u51FB\u83DC\u5355\u5220\u9664",
+    "_更多功能请右击" = "\u66F4\u591A\u529F\u80FD\u8BF7\u53F3\u51FB",
+    "_停止编辑" = "\u505C\u6B62\u7F16\u8F91",
+    "_删除该点" = "\u5220\u9664\u8BE5\u70B9",
+    "_按轴平移" = "\u6309\u8F74\u5E73\u79FB",
+    "_停止按轴平移" = "\u505C\u6B62\u6309\u8F74\u5E73\u79FB",
+    "_按轴旋转" = "\u6309\u8F74\u65CB\u8F6C",
+    "_停止按轴旋转" = "\u505C\u6B62\u6309\u8F74\u65CB\u8F6C",
+    "_调整比例" = "\u8C03\u6574\u6BD4\u4F8B",
+    "_停止调整比例" = "\u505C\u6B62\u8C03\u6574\u6BD4\u4F8B",
+    "_释放后完成修改" = "\u91CA\u653E\u540E\u5B8C\u6210\u4FEE\u6539",
+    "_该对象不允许编辑" = "\u8BE5\u5BF9\u8C61\u4E0D\u5141\u8BB8\u7F16\u8F91",
+    "_拖动该点后" = "\u62D6\u52A8\u8BE5\u70B9\u540E",
+    "_拖动对象后" = "\u62D6\u52A8\u5BF9\u8C61\u540E",
+    "_修改位置" = "\u4FEE\u6539\u4F4D\u7F6E",
+    "_整体平移" = "\u6574\u4F53\u5E73\u79FB",
+    "_增加点" = "\u589E\u52A0\u70B9",
+    "_修改高度" = "\u4FEE\u6539\u9AD8\u5EA6",
+    "_修改半径" = "\u4FEE\u6539\u534A\u5F84",
+    "_修改长度" = "\u4FEE\u6539\u957F\u5EA6(X\u65B9\u5411)",
+    "_修改宽度" = "\u4FEE\u6539\u5BBD\u5EA6(Y\u65B9\u5411)",
+    "_修改方向" = "\u4FEE\u6539\u65B9\u5411",
+    "_修改缩放比例" = "\u4FEE\u6539\u7F29\u653E\u6BD4\u4F8B",
+    "_无法删除不能少于最小点数" = "\u65E0\u6CD5\u5220\u9664\uFF0C\u70B9\u6570\u91CF\u4E0D\u80FD\u5C11\u4E8E",
+    "_删除" = "\u5220\u9664",
+    "_加载模型中" = "\u52A0\u8F7D\u6A21\u578B\u4E2D\u2026"
 }
 
 /**
@@ -1680,7 +1719,7 @@ declare class BaseControl extends BaseThing {
         enabled?: boolean;
         parentContainer?: HTMLElement;
         insertIndex?: number;
-        insertBefore?: HTMLElement;
+        insertBefore?: HTMLElement | string;
         eventParent?: BaseClass | boolean;
     });
     /**
@@ -1773,7 +1812,7 @@ declare class ClockAnimate extends BaseControl {
         enabled?: boolean;
         parentContainer?: HTMLElement;
         insertIndex?: number;
-        insertBefore?: HTMLElement;
+        insertBefore?: HTMLElement | string;
     });
 }
 
@@ -1814,7 +1853,7 @@ declare class Compass extends BaseControl {
         enabled?: boolean;
         parentContainer?: HTMLElement;
         insertIndex?: number;
-        insertBefore?: HTMLElement;
+        insertBefore?: HTMLElement | string;
     });
     /**
      * 更新 外部圆环区域的SVG图片
@@ -1858,9 +1897,12 @@ declare class Compass extends BaseControl {
  * 时钟仪表控制 控件 (Cesium原生)
  * @param [options] - 参数对象，包括以下：
  * @param [options.ticks = [0.1, 0.25, 0.5, 1.0, 2.0, 5.0, 10.0, 15.0, 30.0, 60.0, 120.0, 300.0, 600.0, 900.0, 1800.0, 3600.0]] - 可选的步长
+ * @param [formatTimeStr = true] - 是否格式化时间文本为普通格式 ，比如 yyyy-MM-dd 、HH:mm:ss
  * @param [options.id = createGuid()] - 对象的id标识
  * @param [options.enabled = true] - 对象的启用状态
  * @param [options.parentContainer] - 控件加入的父容器，默认为map所在的DOM map.container
+ * @param [options.insertIndex] - 可以自定义插入到父容器中的index顺序，默认是插入到最后面。
+ * @param [options.insertBefore] - 可以自定义插入到指定兄弟容器的前面，与insertIndex二选一。
  */
 declare class Animation extends BaseCzmControl {
     constructor(options?: {
@@ -1868,7 +1910,9 @@ declare class Animation extends BaseCzmControl {
         id?: string | number;
         enabled?: boolean;
         parentContainer?: HTMLElement;
-    });
+        insertIndex?: number;
+        insertBefore?: HTMLElement | string;
+    }, formatTimeStr?: boolean);
 }
 
 /**
@@ -1877,12 +1921,16 @@ declare class Animation extends BaseCzmControl {
  * @param [options.id = createGuid()] - 对象的id标识
  * @param [options.enabled = true] - 对象的启用状态
  * @param [options.destroyCzm = true] - remove移除时是否销毁Cesium对象，true时销毁，false时只是DOM隐藏
+ * @param [options.insertIndex] - 可以自定义插入到父容器中的index顺序，默认是插入到最后面。
+ * @param [options.insertBefore] - 可以自定义插入到指定兄弟容器的前面，与insertIndex二选一。
  */
 declare class BaseCzmControl extends BaseControl {
     constructor(options?: {
         id?: string | number;
         enabled?: boolean;
         destroyCzm?: boolean;
+        insertIndex?: number;
+        insertBefore?: HTMLElement | string;
     });
 }
 
@@ -1892,12 +1940,16 @@ declare class BaseCzmControl extends BaseControl {
  * @param [options.id = createGuid()] - 对象的id标识
  * @param [options.enabled = true] - 对象的启用状态
  * @param [options.parentContainer] - 控件加入的父容器，默认为map所在的DOM map.container
+ * @param [options.insertIndex] - 可以自定义插入到父容器中的index顺序，默认是插入到最后面。
+ * @param [options.insertBefore] - 可以自定义插入到指定兄弟容器的前面，与insertIndex二选一。
  */
 declare class BaseLayerPicker extends BaseCzmControl {
     constructor(options?: {
         id?: string | number;
         enabled?: boolean;
         parentContainer?: HTMLElement;
+        insertIndex?: number;
+        insertBefore?: HTMLElement | string;
     });
     /**
      * 父容器DOM对象
@@ -1911,12 +1963,16 @@ declare class BaseLayerPicker extends BaseCzmControl {
  * @param [options.id = createGuid()] - 对象的id标识
  * @param [options.enabled = true] - 对象的启用状态
  * @param [options.parentContainer] - 控件加入的父容器，默认为map所在的DOM map.toolbar
+ * @param [options.insertIndex] - 可以自定义插入到父容器中的index顺序，默认是插入到最后面。
+ * @param [options.insertBefore] - 可以自定义插入到指定兄弟容器的前面，与insertIndex二选一。
  */
 declare class FullscreenButton extends BaseCzmControl {
     constructor(options?: {
         id?: string | number;
         enabled?: boolean;
         parentContainer?: HTMLElement;
+        insertIndex?: number;
+        insertBefore?: HTMLElement | string;
     });
     /**
      * 父容器DOM对象
@@ -1930,12 +1986,16 @@ declare class FullscreenButton extends BaseCzmControl {
  * @param [options.id = createGuid()] - 对象的id标识
  * @param [options.enabled = true] - 对象的启用状态
  * @param [options.parentContainer] - 控件加入的父容器，默认为map所在的DOM map.toolbar
+ * @param [options.insertIndex] - 可以自定义插入到父容器中的index顺序，默认是插入到最后面。
+ * @param [options.insertBefore] - 可以自定义插入到指定兄弟容器的前面，与insertIndex二选一。
  */
 declare class Geocoder extends BaseCzmControl {
     constructor(options?: {
         id?: string | number;
         enabled?: boolean;
         parentContainer?: HTMLElement;
+        insertIndex?: number;
+        insertBefore?: HTMLElement | string;
     });
     /**
      * 父容器DOM对象
@@ -1950,6 +2010,8 @@ declare class Geocoder extends BaseCzmControl {
  * @param [options.id = createGuid()] - 对象的id标识
  * @param [options.enabled = true] - 对象的启用状态
  * @param [options.parentContainer] - 控件加入的父容器，默认为map所在的DOM map.toolbar
+ * @param [options.insertIndex] - 可以自定义插入到父容器中的index顺序，默认是插入到最后面。
+ * @param [options.insertBefore] - 可以自定义插入到指定兄弟容器的前面，与insertIndex二选一。
  */
 declare class HomeButton extends BaseCzmControl {
     constructor(options?: {
@@ -1957,6 +2019,8 @@ declare class HomeButton extends BaseCzmControl {
         id?: string | number;
         enabled?: boolean;
         parentContainer?: HTMLElement;
+        insertIndex?: number;
+        insertBefore?: HTMLElement | string;
     });
     /**
      * 父容器DOM对象
@@ -1970,12 +2034,16 @@ declare class HomeButton extends BaseCzmControl {
  * @param [options.id = createGuid()] - 对象的id标识
  * @param [options.enabled = true] - 对象的启用状态
  * @param [options.parentContainer] - 控件加入的父容器，默认为map所在的DOM map.toolbar
+ * @param [options.insertIndex] - 可以自定义插入到父容器中的index顺序，默认是插入到最后面。
+ * @param [options.insertBefore] - 可以自定义插入到指定兄弟容器的前面，与insertIndex二选一。
  */
 declare class NavigationHelpButton extends BaseCzmControl {
     constructor(options?: {
         id?: string | number;
         enabled?: boolean;
         parentContainer?: HTMLElement;
+        insertIndex?: number;
+        insertBefore?: HTMLElement | string;
     });
     /**
      * 父容器DOM对象
@@ -1989,12 +2057,16 @@ declare class NavigationHelpButton extends BaseCzmControl {
  * @param [options.id = createGuid()] - 对象的id标识
  * @param [options.enabled = true] - 对象的启用状态
  * @param [options.parentContainer] - 控件加入的父容器，默认为map所在的DOM map.toolbar
+ * @param [options.insertIndex] - 可以自定义插入到父容器中的index顺序，默认是插入到最后面。
+ * @param [options.insertBefore] - 可以自定义插入到指定兄弟容器的前面，与insertIndex二选一。
  */
 declare class ProjectionPicker extends BaseCzmControl {
     constructor(options?: {
         id?: string | number;
         enabled?: boolean;
         parentContainer?: HTMLElement;
+        insertIndex?: number;
+        insertBefore?: HTMLElement | string;
     });
     /**
      * 父容器DOM对象
@@ -2009,6 +2081,8 @@ declare class ProjectionPicker extends BaseCzmControl {
  * @param [options.id = createGuid()] - 对象的id标识
  * @param [options.enabled = true] - 对象的启用状态
  * @param [options.parentContainer] - 控件加入的父容器，默认为map所在的DOM map.toolbar
+ * @param [options.insertIndex] - 可以自定义插入到父容器中的index顺序，默认是插入到最后面。
+ * @param [options.insertBefore] - 可以自定义插入到指定兄弟容器的前面，与insertIndex二选一。
  */
 declare class SceneModePicker extends BaseCzmControl {
     constructor(options?: {
@@ -2016,6 +2090,8 @@ declare class SceneModePicker extends BaseCzmControl {
         id?: string | number;
         enabled?: boolean;
         parentContainer?: HTMLElement;
+        insertIndex?: number;
+        insertBefore?: HTMLElement | string;
     });
     /**
      * 父容器DOM对象
@@ -2028,6 +2104,7 @@ declare class SceneModePicker extends BaseCzmControl {
  * @param [options] - 参数对象，包括以下：
  * @param [options.zoom = true] - 刻度面板是否可以鼠标滚轮进行缩放
  * @param [options.maxSpan = 1] - 刻度放大的最大刻度跨度，单位：秒
+ * @param [formatTimeStr = true] - 是否格式化时间文本为普通格式 ，比如 yyyy-MM-dd 、HH:mm:ss
  * @param [options.style] - 可以CSS样式，如:
  * @param [options.style.top] - css定位top位置, 如 top: '10px'
  * @param [options.style.bottom = 0] - css定位bottom位置
@@ -2036,6 +2113,8 @@ declare class SceneModePicker extends BaseCzmControl {
  * @param [options.id = createGuid()] - 对象的id标识
  * @param [options.enabled = true] - 对象的启用状态
  * @param [options.parentContainer] - 控件加入的父容器，默认为map所在的DOM map.container
+ * @param [options.insertIndex] - 可以自定义插入到父容器中的index顺序，默认是插入到最后面。
+ * @param [options.insertBefore] - 可以自定义插入到指定兄弟容器的前面，与insertIndex二选一。
  */
 declare class Timeline extends BaseCzmControl {
     constructor(options?: {
@@ -2050,7 +2129,9 @@ declare class Timeline extends BaseCzmControl {
         id?: string | number;
         enabled?: boolean;
         parentContainer?: HTMLElement;
-    });
+        insertIndex?: number;
+        insertBefore?: HTMLElement | string;
+    }, formatTimeStr?: boolean);
     /**
      * @param startTime - 开始时间
      * @param stopTime - 结束时间
@@ -2064,12 +2145,16 @@ declare class Timeline extends BaseCzmControl {
  * @param [options.id = createGuid()] - 对象的id标识
  * @param [options.enabled = true] - 对象的启用状态
  * @param [options.parentContainer] - 控件加入的父容器，默认为map所在的DOM map.toolbar
+ * @param [options.insertIndex] - 可以自定义插入到父容器中的index顺序，默认是插入到最后面。
+ * @param [options.insertBefore] - 可以自定义插入到指定兄弟容器的前面，与insertIndex二选一。
  */
 declare class VRButton extends BaseCzmControl {
     constructor(options?: {
         id?: string | number;
         enabled?: boolean;
         parentContainer?: HTMLElement;
+        insertIndex?: number;
+        insertBefore?: HTMLElement | string;
     });
     /**
      * 父容器DOM对象
@@ -2115,7 +2200,7 @@ declare class DistanceLegend extends BaseControl {
         enabled?: boolean;
         parentContainer?: HTMLElement;
         insertIndex?: number;
-        insertBefore?: HTMLElement;
+        insertBefore?: HTMLElement | string;
     });
     /**
      * 当前比例尺值（单位：米）
@@ -2178,7 +2263,6 @@ declare namespace LocationBar {
  * @param [options.enabled = true] - 对象的启用状态
  * @param [options.parentContainer] - 控件加入的父容器，默认为map所在的DOM map.container
  * @param [options.insertIndex] - 可以自定义插入到父容器中的index顺序，默认是插入到最后面。
- * @param [options.insertBefore] - 可以自定义插入到指定兄弟容器的前面，与insertIndex二选一。
  */
 declare class LocationBar extends BaseControl {
     constructor(options?: {
@@ -2197,7 +2281,7 @@ declare class LocationBar extends BaseControl {
         enabled?: boolean;
         parentContainer?: HTMLElement;
         insertIndex?: number;
-        insertBefore?: HTMLElement;
+        insertBefore?: HTMLElement | string;
     });
     /**
      * 显示的数据
@@ -2237,7 +2321,7 @@ declare class MapCompare extends BaseControl {
         enabled?: boolean;
         parentContainer?: HTMLElement;
         insertIndex?: number;
-        insertBefore?: HTMLElement;
+        insertBefore?: HTMLElement | string;
     });
     /**
      * 对比的地图对象
@@ -2276,7 +2360,7 @@ declare class MapSplit extends BaseControl {
         enabled?: boolean;
         parentContainer?: HTMLElement;
         insertIndex?: number;
-        insertBefore?: HTMLElement;
+        insertBefore?: HTMLElement | string;
     });
     /**
      * 左侧区域瓦片图层
@@ -2332,7 +2416,7 @@ declare class MouseDownView extends BaseControl {
         enabled?: boolean;
         parentContainer?: HTMLElement;
         insertIndex?: number;
-        insertBefore?: HTMLElement;
+        insertBefore?: HTMLElement | string;
     });
 }
 
@@ -2383,7 +2467,7 @@ declare class OverviewMap extends BaseControl {
         enabled?: boolean;
         parentContainer?: HTMLElement;
         insertIndex?: number;
-        insertBefore?: HTMLElement;
+        insertBefore?: HTMLElement | string;
     });
     /**
      * 鹰眼小地图对象
@@ -2449,7 +2533,7 @@ declare class ToolButton extends BaseControl {
         enabled?: boolean;
         parentContainer?: HTMLElement;
         insertIndex?: number;
-        insertBefore?: HTMLElement;
+        insertBefore?: HTMLElement | string;
     });
     /**
      * 父容器DOM对象
@@ -2478,7 +2562,7 @@ declare class Zoom extends BaseControl {
         enabled?: boolean;
         parentContainer?: HTMLElement;
         insertIndex?: number;
-        insertBefore?: HTMLElement;
+        insertBefore?: HTMLElement | string;
     });
     /**
      * 父容器DOM对象
@@ -7131,8 +7215,10 @@ declare namespace VolumeCloud {
  * 体渲染气象云 矢量对象，该对象暂不支持鼠标交互和拾取
  * @param options - 参数对象，包括以下：
  * @param options.data - 数据
+ * @param [options.colors] - 色带颜色数组
+ * @param [options.steps] - 色带对应的数值数组
  * @param [options.threshold = 65/255] - 筛选值
- * @param [options.steps = 600] - 精细度
+ * @param [options.detail = 1000] - 精细度
  * @param [options.xCut = -0.5] - X轴裁剪,取值范围：-0.5至0.5
  * @param [options.yCut = -0.5] - Y轴裁剪,取值范围：-0.5至0.5
  * @param [options.zCut = 0.5] - Z轴裁剪,取值范围：-0.5至0.5
@@ -7144,8 +7230,10 @@ declare namespace VolumeCloud {
 declare class VolumeCloud extends BasePrimitive {
     constructor(options: {
         data: VolumeCloud.DataOptions;
+        colors?: string[];
+        steps?: number[];
         threshold?: number;
-        steps?: number;
+        detail?: number;
         xCut?: number;
         yCut?: number;
         zCut?: number;
@@ -7336,7 +7424,7 @@ declare namespace DivGraphic {
  * @param [options.hasEdit = true] - 是否允许编辑
  * @param [options.hasEditContextMenu = true] - 编辑时，是否绑定右键编辑菜单
  * @param [options.testPoint] - 测试点 的对应样式 ，可以进行用于比较测试div的位置，方便调试CSS。
- * @param [options.pointerEvents] - DIV是否可以鼠标交互，为false时可以穿透操作及缩放地图，但无法进行鼠标交互及触发相关事件。
+ * @param [options.pointerEvents] - DIV是否可以鼠标交互，为false时可以穿透操作及缩放地图，但无法进行鼠标交互及触发相关事件。如果传入值后，这个值优先级最高。
  * @param [options.hasZIndex = false] - 是否自动调整DIV的层级顺序。
  * @param [options.zIndex = "auto"] - 指定固定的zIndex层级属性(当hasZIndex为true时无效)
  * @param [options.depthTest = true] - 是否打开深度判断（true时判断是否在球背面）
@@ -14964,11 +15052,19 @@ declare class BasePrimitive extends BaseGraphic {
     /**
      * 当加载primitive数据的内部Cesium容器
      */
-    primitiveCollection: Cesium.PrimitiveCollection | Cesium.LabelCollection | Cesium.BillboardCollection | Cesium.PointPrimitiveCollection | Cesium.CloudCollection;
+    readonly primitiveCollection: Cesium.PrimitiveCollection | Cesium.LabelCollection | Cesium.BillboardCollection | Cesium.PointPrimitiveCollection | Cesium.CloudCollection;
     /**
      * 矢量数据对应的 Cesium内部对象
      */
     readonly primitive: Cesium.Primitive | Cesium.GroundPrimitive | Cesium.ClassificationPrimitive | any;
+    /**
+     * 矢量数据对应的渲染是否完成
+     */
+    readonly ready: boolean;
+    /**
+     * 获取Primitive对象渲染完成的Promise承诺(仅部分支持,不支持对象会打印log)
+     */
+    readonly readyPromise: Promise<any>;
     /**
      * 返回实例可修改的属性。{@link Cesium.GeometryInstance}
      * @example
@@ -17057,7 +17153,7 @@ declare class ModelPrimitive extends BasePointPrimitive {
      */
     scaleZ: number;
     /**
-     * 获取图层完成解析加载完成的Promise承诺, 等价于load事件(区别在于load事件必须在load完成前绑定才能监听)。
+     * 获取模型完成解析加载完成的Promise承诺, 等价于load事件(区别在于load事件必须在load完成前绑定才能监听)。
      */
     readonly readyPromise: Promise<Cesium.Model>;
     /**
@@ -26088,7 +26184,7 @@ declare class ContextMenu extends BaseControl {
         enabled?: boolean;
         parentContainer?: HTMLElement;
         insertIndex?: number;
-        insertBefore?: HTMLElement;
+        insertBefore?: HTMLElement | string;
         eventParent?: BaseClass | boolean;
     });
     /**
@@ -26125,7 +26221,7 @@ declare class KeyboardRoam extends BaseControl {
         enabled?: boolean;
         parentContainer?: HTMLElement;
         insertIndex?: number;
-        insertBefore?: HTMLElement;
+        insertBefore?: HTMLElement | string;
         eventParent?: BaseClass | boolean;
     });
     /**
@@ -26262,6 +26358,1023 @@ declare class MouseEvent {
      * @returns 完成时承诺
      */
     pickImageryLayerFeatures(position: LngLatPoint | Cesium.Cartesian3 | any): Promise<any>;
+}
+
+/**
+ * 地图类 ，这是构造三维地球的一切的开始起点。
+ * @param id - 地图div容器的id 或 已构造好的Viewer对象
+ * @param [options = {}] - 参数对象:
+ * @param [options.scene] - 场景参数
+ * @param [options.control] - 添加的控件
+ * @param [options.effect] - 添加的特效
+ * @param [options.mouse] - 鼠标操作相关配置参数
+ * @param [options.terrain] - 地形服务配置
+ * @param [options.basemaps] - 底图图层配置
+ * @param [options.layers] - 可以叠加显示的图层配置
+ * @param [options.chinaCRS = ChinaCRS.WGS84] - 标识当前三维场景的国内坐标系（用于部分图层内对比判断来自动纠偏或加偏）
+ * @param [options.lang] - 使用的语言文本键值对对象，可传入外部自定义的任意语言文本。
+ * @param [options.templateValues] - 图层中统一的url模版，比如可以将服务url前缀统一使用模板，方便修改或动态配置。
+ * @param [options.token] - 覆盖SDK内的{@link Token}所有第3方Token默认值
+ */
+declare class Map extends BaseClass {
+    constructor(id: string | Cesium.Viewer, options?: {
+        scene?: Map.sceneOptions;
+        control?: Map.controlOptions;
+        effect?: Map.effectOptions;
+        mouse?: Map.mouseOptions;
+        terrain?: Map.terrainOptions;
+        basemaps?: Map.basemapOptions[];
+        layers?: Map.layerOptions[];
+        chinaCRS?: ChinaCRS;
+        lang?: any | Lang;
+        templateValues?: any;
+        token?: Map.tokenOptions;
+    });
+    /**
+     * 当前类的构造参数
+     */
+    readonly options: any;
+    /**
+     * 地图对应的Cesium原生的  [Cesium.Viewer对象]{@link http://mars3d.cn/api/cesium/Viewer.html}
+     */
+    readonly viewer: Cesium.Viewer;
+    /**
+     * 获取地图DOM容器。
+     */
+    readonly container: HTMLDivElement;
+    /**
+     * 获取ToolBar控件DOM容器，
+     * 其样式为cesium-viewer-toolbar
+     */
+    readonly toolbar: HTMLDivElement;
+    /**
+     * 获取Canvas画布
+     */
+    readonly canvas: HTMLCanvasElement;
+    /**
+     * 获取场景。 [Cesium.Scene]{@link http://mars3d.cn/api/cesium/Scene.html}
+     */
+    readonly scene: Cesium.Scene;
+    /**
+     * 获取相机 [Cesium.Camera]{@link http://mars3d.cn/api/cesium/Camera.html}
+     */
+    readonly camera: Cesium.Camera;
+    /**
+     * 获取将在地球上渲染的ImageryLayer图像图层的集合
+     */
+    readonly imageryLayers: Cesium.ImageryLayerCollection;
+    /**
+     * 获取要可视化的 DataSource 实例集。
+     */
+    readonly dataSources: Cesium.DataSourceCollection;
+    /**
+     * 获取未绑定到特定数据源的实体的集合。这是 dataSourceDisplay.defaultDataSource.entities 的快捷方式。
+     */
+    readonly entities: Cesium.EntityCollection;
+    /**
+     * 获取时钟 [Cesium.Clock]{@link http://mars3d.cn/api/cesium/Clock.html}
+     */
+    readonly clock: Cesium.Clock;
+    /**
+     * 当前时间
+     */
+    currentTime: Cesium.JulianDate;
+    /**
+     * 获取 CesiumWidget
+     */
+    readonly cesiumWidget: Cesium.CesiumWidget;
+    /**
+     * 获取或设置相机当前正在跟踪的Entity实例。
+     */
+    trackedEntity: Cesium.Entity | BaseEntity | undefined | any;
+    /**
+     * 获取或设置当前的地形服务
+     */
+    terrainProvider: Cesium.TerrainProvider | any;
+    /**
+     * 是否开启地形
+     */
+    hasTerrain: boolean;
+    /**
+     * 获取或设置当前显示的底图，设置时可以传入图层id或name
+     */
+    basemap: string | number | BaseTileLayer;
+    /**
+     * 是否只拾取模型上的点
+     */
+    onlyPickModelPosition: boolean;
+    /**
+     * 是否只拾取地形上的点，忽略模型和矢量数据
+     */
+    onlyPickTerrainPosition: boolean;
+    /**
+     * 获取鼠标事件控制器
+     */
+    readonly mouseEvent: MouseEvent;
+    /**
+     * 右键菜单控件对象
+     */
+    readonly contextmenu: ContextMenu;
+    /**
+     * 获取键盘漫游控制器
+     */
+    readonly keyboardRoam: KeyboardRoam;
+    /**
+     * 获取地图上已构造的控件对象
+     */
+    readonly controls: any;
+    /**
+     * 获取地图上已构造的effect特效对象
+     */
+    readonly effects: any;
+    /**
+     * 默认绑定的图层，简单场景时快捷方便使用
+     */
+    readonly graphicLayer: GraphicLayer;
+    /**
+     * 获取当前地图层级（概略），一般为0-21层
+     */
+    readonly level: number;
+    /**
+     * 是否固定光照，
+     *  true：可避免gltf、3dtiles模型随时间存在亮度不一致。
+     */
+    fixedLight: boolean;
+    /**
+     * 使用的语言文本配置
+     */
+    lang: Lang | any;
+    /**
+     * 鼠标滚轮放大的步长比例
+     */
+    zoomFactor: number;
+    /**
+     * 是否全局启用highlight ，如果在某些场景，如标绘时，可以手动关闭下
+     */
+    highlightEnabled: boolean;
+    /**
+     * 获取将在地球上渲染的ImageryLayer图像图层的集合[贴模型时]
+     */
+    readonly imageryLayersForClamp: Cesium.ImageryLayerCollection;
+    /**
+     * 设置Map所有参数构造参数 【测试中功能，可能部分参数无法更新,欢迎反馈问题 】
+     * @param newOptions - Map所有参数构造参数
+     * @returns 当前对象本身，可以链式调用
+     */
+    setOptions(newOptions: any): Map;
+    /**
+     * 设置Scene场景参数
+     * @param options - 参数
+     * @returns 当前对象本身，可以链式调用
+     */
+    setSceneOptions(options: Map.sceneOptions): Map;
+    /**
+     * 获取地图的配置参数，即new Map传入的参数。
+     * @returns 地图的配置参数
+     */
+    getOptions(): any;
+    /**
+     * 获取地图的当前实时状态对应的配置参数。
+     * @returns 地图的配置参数
+     */
+    getCurrentOptions(): any;
+    /**
+     * 获取平台内置的右键菜单，图标可以覆盖 mars3d.Icon.* 值
+     * @returns 右键菜单
+     */
+    getDefaultContextMenu(): any;
+    /**
+     * 取地图屏幕中心点坐标
+     * @returns 屏幕中心点坐标
+     */
+    getCenter(): LngLatPoint;
+    /**
+     * 取相机到屏幕中心点的距离
+     * @returns 相机到屏幕中心点的距离，单位：米
+     */
+    getCameraDistance(): number;
+    /**
+     * 提取地球当前视域边界,示例：{ xmin: 70,  xmax: 140,  ymin: 0,  ymax: 55, height: 0, }
+     * @param [options = {}] - 参数对象:
+     * @param [options.formatNum = false] - 是否格式化小数位，只保留6位小数
+     * @param [options.scale = 0] - 在每个方向上按给定比例扩展（大于0）或缩小（-1到0时）当前边界所创建的边界。比率为0.5时，边界在每个方向上扩展了50%。
+     * @returns 当前视域边界
+     */
+    getExtent(options?: {
+        formatNum?: boolean;
+        scale?: number;
+    }): any;
+    /**
+     * 判断坐标点是否在当前视域内
+     * @param position - 坐标
+     * @returns 当前视域边界
+     */
+    isInView(position: Cesium.Cartesian3): boolean;
+    /**
+     * 当存在地形夸张时，获取其实际的高度值
+     * @param alt - 鼠标拾取的高度值
+     * @returns 其实际的高度值
+     */
+    getRealAlt(alt: number): number;
+    /**
+     * 截图，导出地图场景图片
+     * @param [options = {}] - 参数对象:
+     * @param [options.download = true] - 是否自动下载图片
+     * @param [options.filename = '场景出图_' + width + 'x' + height] - 图片名称
+     * @param [options.width = canvas.width] - 图片的高度像素值
+     * @param [options.height = canvas.height] - 图片的高度像素值
+     * @param [options.type = 'image/jpeg'] - 图片格式
+     * @param [options.encoderOptions = 0.92] - 在指定图片格式为 image/jpeg 或 image/webp的情况下，可以从 0 到 1 的区间内选择图片的质量。如果超出取值范围，将会使用默认值 0.92。其他参数会被忽略。
+     * @returns 截图完成后的回调方法的Promise
+     */
+    expImage(options?: {
+        download?: boolean;
+        filename?: string;
+        width?: number;
+        height?: number;
+        type?: string;
+        encoderOptions?: number;
+    }): Promise<any>;
+    /**
+     * 设置鼠标的默认状态样式
+     * @param [val] - cursor样式
+     * @returns 无
+     */
+    setCursor(val?: string): void;
+    /**
+     * 获取坐标位置的3dtiles模型对象
+     * @param positions - 坐标  或 坐标数组
+     * @returns 3dtiles模型对象
+     */
+    pick3DTileset(positions: Cesium.Cartesian3 | Cesium.Cartesian3[]): Cesium.Cesium3DTileset | undefined;
+    /**
+     * 获取坐标位置的3dtiles模型图层
+     * @param positions - 坐标  或 坐标数组
+     * @returns 3dtiles模型图层
+     */
+    pickTilesetLayer(positions: Cesium.Cartesian3 | Cesium.Cartesian3[]): TilesetLayer | undefined;
+    /**
+     * 重新设置basemps底图图层，对options.basemaps重新赋值
+     * @param arr - 底图图层配置
+     * @param [reload = true] - 是否重新构造
+     * @returns 图层数组
+     */
+    setBasemapsOptions(arr: Map.basemapOptions[], reload?: boolean): BaseLayer[];
+    /**
+     * 重新设置layers图层，对options.layers重新赋值
+     * @param arr - 可以叠加显示的图层配置
+     * @returns 图层数组
+     */
+    setLayersOptions(arr: Map.layerOptions[]): BaseLayer[];
+    /**
+     * 获取图层ID值，按顺序取值。
+     * 没有id的图层，会自动使用本方法进行id赋值处理
+     * @returns 图层ID
+     */
+    getNextLayerId(): number;
+    /**
+     * 添加图层到地图上
+     * @param layer - 图层对象
+     * @param [showVal] - 如果传值，覆盖图层的show属性
+     * @returns 图层加载完成承诺
+     */
+    addLayer(layer: BaseLayer, showVal?: boolean): Promise<boolean | any>;
+    /**
+     * 移除图层
+     * @param layer - 需要移除的图层
+     * @param [hasDestroy] - 是否释放 destroy
+     * @returns 当前对象本身，可以链式调用
+     */
+    removeLayer(layer: BaseLayer, hasDestroy?: boolean): Map;
+    /**
+     * 是否有指定的图层存在（就是已经addLayer的图层）
+     * @param layer - 指定的图层或图层ID
+     * @returns 是否存在
+     */
+    hasLayer(layer: string | number | BaseLayer): boolean;
+    /**
+     * 遍历每一个图层并将其作为参数传递给回调函数
+     * @param method - 回调方法
+     * @param [context] - 侦听器的上下文(this关键字将指向的对象)。
+     * @param [reverse] - 是否倒序执行
+     * @returns 当前对象本身,可以链式调用
+     */
+    eachLayer(method: (...params: any[]) => any, context?: any, reverse?: boolean): Map;
+    /**
+     * 根据指定属性获取图层，包括config.json配置的图层
+     * @param attrValue - 属性值
+     * @param [attrName = 'id'] - 属性键
+     * @returns 图层对象
+     */
+    getLayer(attrValue: string | number, attrName?: string): BaseLayer | any;
+    /**
+     * 根据ID或取图层 ，包括config.json配置的图层
+     * @param id - 图层id或uuid
+     * @returns 图层对象
+     */
+    getLayerById(id: string | number): BaseLayer | any;
+    /**
+     * 根据指定属性获取图层
+     * @param attrValue - 属性值
+     * @param [attrName = 'id'] - 属性键
+     * @returns 图层对象
+     */
+    getLayerByAttr(attrValue: string | number, attrName?: string): BaseLayer | any;
+    /**
+     * 根据指定属性获取图层列表
+     * @param attrValue - 属性值
+     * @param [attrName = 'id'] - 属性键
+     * @returns 图层对象列表
+     */
+    getLayersByAttr(attrValue: string | number, attrName?: string): BaseLayer[] | any;
+    /**
+     * 获取所有图层
+     * @param [options] - 参数对象，包括以下：
+     * @param [options.basemaps] - 默认不比较及处理，true:返回所有basemps中配置图层，false：排除所有所有basemps中配置图层
+     * @param [options.layers] - 默认不比较及处理，true:返回所有operationallayers中配置图层，false：排除所有operationallayers中配置图层
+     * @param [options.childs = true] - 是否获取GroupLayer内的子图层
+     * @returns 图层数组
+     */
+    getLayers(options?: {
+        basemaps?: boolean;
+        layers?: boolean;
+        childs?: boolean;
+    }): BaseLayer[] | any[];
+    /**
+     * 获取所有basemps底图图层
+     * @param [removeEmptyGroup = false] - 是否移除 空图层组
+     * @returns 图层数组
+     */
+    getBasemaps(removeEmptyGroup?: boolean): BaseLayer[] | any[];
+    /**
+     * 获取所有瓦片图层，可以用于卷帘对比
+     * @returns 图层数组
+     */
+    getTileLayers(): BaseTileLayer[] | any[];
+    /**
+     * 添加控件到地图上
+     * @param control - 控件对象
+     * @param [enabledVal] - 如果传值，覆盖控件的enabled属性
+     * @returns 当前对象本身，可以链式调用
+     */
+    addControl(control: BaseControl, enabledVal?: boolean): Map;
+    /**
+     * 移除控件
+     * @param control - 需要移除的控件
+     * @param [hasDestroy] - 是否释放
+     * @returns 当前对象本身，可以链式调用
+     */
+    removeControl(control: BaseControl, hasDestroy?: boolean): Map;
+    /**
+     * 是否有指定的控件存在（就是已经addControl的控件）
+     * @param control - 指定的控件或控件ID
+     * @returns 是否存在
+     */
+    hasControl(control: BaseControl | string): boolean;
+    /**
+     * 遍历每一个控件并将其作为参数传递给回调函数
+     * @param method - 回调方法
+     * @param [context] - 侦听器的上下文(this关键字将指向的对象)。
+     * @param [reverse] - 是否倒序执行
+     * @returns 当前对象本身,可以链式调用
+     */
+    eachControl(method: (...params: any[]) => any, context?: any, reverse?: boolean): Map;
+    /**
+     * 根据指定属性获取控件
+     * @param attrValue - 属性值
+     * @param [attrName = 'type'] - 属性键
+     * @returns 控件对象
+     */
+    getControl(attrValue: string | number | boolean, attrName?: string): BaseControl;
+    /**
+     * 添加特效对象到地图上
+     * @param effect - 特效对象
+     * @returns 当前对象本身，可以链式调用
+     */
+    addEffect(effect: BaseEffect): Map;
+    /**
+     * 移除特效对象
+     * @param effect - 需要移除的特效对象
+     * @param [hasDestroy] - 是否释放
+     * @returns 当前对象本身，可以链式调用
+     */
+    removeEffect(effect: BaseEffect, hasDestroy?: boolean): Map;
+    /**
+     * 根据指定属性获取Thing对象
+     * @param key - 属性值（如id、name值）
+     * @param [attrName = 'type'] - 属性名称
+     * @returns Thing对象
+     */
+    getEffect(key: string | any, attrName?: string): BaseEffect;
+    /**
+     * 添加Thing对象到地图上
+     * @param item - Thing对象
+     * @returns 当前对象本身，可以链式调用
+     */
+    addThing(item: BaseThing): Map;
+    /**
+     * 移除Thing对象
+     * @param item - 需要移除的Thing对象
+     * @param [hasDestroy] - 是否释放
+     * @returns 当前对象本身，可以链式调用
+     */
+    removeThing(item: BaseThing, hasDestroy?: boolean): Map;
+    /**
+     * 是否有指定的Thing对象存在（就是已经addThing的图层）
+     * @param thing - 指定的Thing对象或Thing对象ID
+     * @returns 是否存在
+     */
+    hasThing(thing: BaseThing | string): boolean;
+    /**
+     * 遍历每一个Thing对象并将其作为参数传递给回调函数
+     * @param method - 回调方法
+     * @param [context] - 侦听器的上下文(this关键字将指向的对象)。
+     * @param [reverse] - 是否倒序执行
+     * @returns 当前对象本身,可以链式调用
+     */
+    eachThing(method: (...params: any[]) => any, context?: any, reverse?: boolean): Map;
+    /**
+     * 根据指定属性获取Thing对象
+     * @param attrValue - 属性值
+     * @param [attrName = 'id'] - 属性名称
+     * @returns Thing对象
+     */
+    getThing(attrValue: string | number | boolean, attrName?: string): BaseThing;
+    /**
+     * 获取当前key对应语言的文本内容。
+     * @param key - 文本key
+     * @returns lang参数指定的对应文本内容
+     */
+    getLangText(key: string): string;
+    /**
+     * 设置当前key对应语言的文本内容。
+     * @param key - 文本key ，如果是object时更新对应的多个键值对
+     * @param text - 文本内容
+     */
+    setLangText(key: string | any, text: string): void;
+    /**
+     * 放大地图
+     * @param [relativeAmount = 2] - 相对量
+     * @param [mandatory] - 是否强制更新，忽略screenSpaceCameraController的enableInputs/enableZoom限制
+     * @returns 是否有移动位置
+     */
+    zoomIn(relativeAmount?: number, mandatory?: boolean): boolean;
+    /**
+     * 缩小地图
+     * @param [relativeAmount = 2] - 相对量
+     * @param [mandatory] - 是否强制更新，忽略screenSpaceCameraController的enableInputs/enableZoom限制
+     * @returns 是否有移动位置
+     */
+    zoomOut(relativeAmount?: number, mandatory?: boolean): boolean;
+    /**
+     * 设置鼠标操作习惯方式。
+     * 默认为中键旋转，右键拉伸远近。传`rightTilt:true`可以设置为右键旋转，中键拉伸远近。
+     * @param [rightTilt = false] - 是否右键旋转
+     * @returns 无
+     */
+    changeMouseModel(rightTilt?: boolean): void;
+    /**
+     * 清除鼠标操作限定的Pitch范围
+     * @returns 无
+     */
+    clearPitchRange(): void;
+    /**
+     * 设置鼠标操作限定的Pitch范围
+     * @param max - 最大值（角度值）
+     * @param [min = -90] - 最小值（角度值）
+     * @returns 无
+     */
+    setPitchRange(max: number, min?: number): void;
+    /**
+     * 设置相机pitch值，保持地图中心位置不变。
+     * @param pitch - 俯仰角度值， -90至90
+     * @param [options] - 具有以下属性的对象:
+     * @param [options.heading] - 方向角度值，绕垂直于地心的轴旋转角度, 0至360
+     * @param [options.duration] - 飞行持续时间（秒）。如果省略，内部会根据飞行距离计算出理想的飞行时间。
+     * @param [options.complete] - 飞行完成后要执行的函数。
+     * @param [options.cancel] - 飞行取消时要执行的函数。
+     * @returns 如果飞行成功则解析为true的承诺，如果当前未在场景中可视化目标或取消飞行，则为false的Promise
+     */
+    setPitch(pitch: number, options?: {
+        heading?: number;
+        duration?: number;
+        complete?: Cesium.Camera.FlightCompleteCallback;
+        cancel?: Cesium.Camera.FlightCancelledCallback;
+    }): Promise<boolean>;
+    /**
+     * 设置相机heading值，保持地图中心位置不变。
+     * @param heading - 方向角度值， 0-360
+     * @param [options] - 具有以下属性的对象:
+     * @param [options.pitch] - 俯仰角度值，绕垂直于地心的轴旋转角度, -90至90
+     * @param [options.duration] - 飞行持续时间（秒）。如果省略，内部会根据飞行距离计算出理想的飞行时间。
+     * @param [options.complete] - 飞行完成后要执行的函数。
+     * @param [options.cancel] - 飞行取消时要执行的函数。
+     * @returns 如果飞行成功则解析为true的承诺，如果当前未在场景中可视化目标或取消飞行，则为false的Promise
+     */
+    setHeading(heading: number, options?: {
+        pitch?: number;
+        duration?: number;
+        complete?: Cesium.Camera.FlightCompleteCallback;
+        cancel?: Cesium.Camera.FlightCancelledCallback;
+    }): Promise<boolean>;
+    /**
+     * 停止视角定位等操作
+     * @returns 当前对象本身，可以链式调用
+     */
+    cancelFlyTo(): Map;
+    /**
+     * 获取当前相机视角参数，
+     * 示例：{"lat":30.526361,"lng":116.335987,"alt":45187,"heading":0,"pitch":-45}
+     * @param [options = {}] - 参数对象:
+     * @param [options.simplify = true] - 是否简化，true时不返回roll并无小数，false时返回roll和保留角度1位小数位
+     * @returns 当前相机视角参数
+     */
+    getCameraView(options?: {
+        simplify?: boolean;
+    }): any;
+    /**
+     * 将相机本身定位至指定位置
+     * @param cameraView - 飞行参数
+     * @param cameraView.lng - 经度值, 180 - 180
+     * @param cameraView.lat - 纬度值, -90 - 90
+     * @param [cameraView.alt] - 高度值
+     * @param [cameraView.heading] - 方向角度值，绕垂直于地心的轴旋转角度, 0至360
+     * @param [cameraView.pitch] - 俯仰角度值，绕纬度线旋转角度, -90至90
+     * @param [cameraView.roll] - 翻滚角度值，绕经度线旋转角度, -90至90
+     * @param [options = {}] - 参数对象:
+     * @param [options.duration] - 飞行时间（单位：秒）。如果省略，SDK内部会根据飞行距离计算出理想的飞行时间。
+     * @param [options.complete] - 飞行完成后要执行的函数。
+     * @param [options.cancel] - 飞行取消时要执行的函数。
+     * @param [options.endTransform] - 变换矩阵表示飞行结束时相机所处的参照系。
+     * @param [options.maximumHeight] - 飞行高峰时的最大高度。
+     * @param [options.pitchAdjustHeight] - 如果相机飞得比这个值高，在飞行过程中调整俯仰以向下看，并保持地球在视口。
+     * @param [options.flyOverLongitude] - 地球上的两点之间总有两条路。这个选项迫使相机选择战斗方向飞过那个经度。
+     * @param [options.flyOverLongitudeWeight] - 仅在通过flyOverLongitude指定的lon上空飞行，只要该方式的时间不超过flyOverLongitudeWeight的短途时间。
+     * @param [options.convert = true] - 是否将目的地从世界坐标转换为场景坐标（仅在不使用3D时相关）。
+     * @param [options.easingFunction] - 控制在飞行过程中如何插值时间。
+     * @returns 如果飞行成功则解析为true的承诺，如果当前未在场景中可视化目标或取消飞行，则为false的Promise
+     */
+    setCameraView(cameraView: {
+        lng: number;
+        lat: number;
+        alt?: number;
+        heading?: number;
+        pitch?: number;
+        roll?: number;
+    }, options?: {
+        duration?: number;
+        complete?: Cesium.Camera.FlightCompleteCallback;
+        cancel?: Cesium.Camera.FlightCancelledCallback;
+        endTransform?: Cesium.Matrix4;
+        maximumHeight?: number;
+        pitchAdjustHeight?: number;
+        flyOverLongitude?: number;
+        flyOverLongitudeWeight?: number;
+        convert?: boolean;
+        easingFunction?: Cesium.EasingFunction.Callback;
+    }): Promise<boolean>;
+    /**
+     * 将相机本身定位至指定位置，同 setCameraView 方法
+     * 为了兼容老版本用户习惯和center参数名称一致而用的别名方法。
+     * @param cameraView - 飞行参数，同 setCameraView 方法
+     * @param [options = {}] - 参数对象，同 setCameraView 方法
+     * @returns 如果飞行成功则解析为true的承诺，如果当前未在场景中可视化目标或取消飞行，则为false的Promise
+     */
+    centerAt(cameraView: any, options?: any): Promise<boolean>;
+    /**
+     * 飞行到默认视角，
+     * 一般为config.json中的center参数配置的视角。
+     * @param [options = {}] - 参数对象:
+     * @param [options.duration] - 飞行时间（单位：秒）。如果省略，SDK内部会根据飞行距离计算出理想的飞行时间。
+     * @returns 无
+     */
+    flyHome(options?: {
+        duration?: number;
+    }): void;
+    /**
+     * 定位到多个相机视角位置，按数组顺序播放
+     * @param arr - 视角参数数组，每个对象包含：
+     * @param arr.lng - 经度值, -180 至 180
+     * @param arr.lat - 纬度值, -90 至 90
+     * @param arr.alt - 高度值
+     * @param arr.heading - 方向角度值，绕垂直于地心的轴旋转角度, 0至360
+     * @param arr.pitch - 俯仰角度值，绕纬度线旋转角度, -90至90
+     * @param arr.roll - 翻滚角度值，绕经度线旋转角度, -90至90
+     * @param [arr.duration] - 飞行时间（单位：秒）。如果省略，SDK内部会根据飞行距离计算出理想的飞行时间。
+     * @param [arr.stop = 1] - 该步骤飞行结束的停留时间（单位：秒）。
+     * @param [arr.onStart] - 该步骤飞行开始前的回调方法
+     * @param [arr.onEnd] - 该步骤飞行开始结束后的回调方法
+     * @param [options = {}] - 参数对象:
+     * @param [options.complete] - 全部飞行完成后要执行的函数。
+     * @param [options.cancel] - 飞行取消时要执行的函数。
+     * @param [options.endTransform] - 变换矩阵表示飞行结束时相机所处的参照系。
+     * @param [options.maximumHeight] - 飞行高峰时的最大高度。
+     * @param [options.pitchAdjustHeight] - 如果相机飞得比这个值高，在飞行过程中调整俯仰以向下看，并保持地球在视口。
+     * @param [options.flyOverLongitude] - 地球上的两点之间总有两条路。这个选项迫使相机选择战斗方向飞过那个经度。
+     * @param [options.flyOverLongitudeWeight] - 仅在通过flyOverLongitude指定的lon上空飞行，只要该方式的时间不超过flyOverLongitudeWeight的短途时间。
+     * @param [options.convert = true] - 是否将目的地从世界坐标转换为场景坐标（仅在不使用3D时相关）。
+     * @param [options.easingFunction = Cesium.EasingFunction.LINEAR_NONE] - 控制在飞行过程中如何插值时间。
+     * @returns 无
+     */
+    setCameraViewList(arr: {
+        lng: number;
+        lat: number;
+        alt: number;
+        heading: number;
+        pitch: number;
+        roll: number;
+        duration?: number;
+        stop?: number;
+        onStart?: (...params: any[]) => any;
+        onEnd?: (...params: any[]) => any;
+    }[], options?: {
+        complete?: Cesium.Camera.FlightCompleteCallback;
+        cancel?: Cesium.Camera.FlightCancelledCallback;
+        endTransform?: Cesium.Matrix4;
+        maximumHeight?: number;
+        pitchAdjustHeight?: number;
+        flyOverLongitude?: number;
+        flyOverLongitudeWeight?: number;
+        convert?: boolean;
+        easingFunction?: Cesium.EasingFunction.Callback;
+    }): void;
+    /**
+     * 暂停执行 setCameraViewList
+     * @returns 无
+     */
+    pauseCameraViewList(): void;
+    /**
+     * 继续执行 setCameraViewList
+     * @returns 无
+     */
+    proceedCameraViewList(): void;
+    /**
+     * 飞行至Cesium相关矢量对象处，是Cesium本身的flyTo方法。
+     *
+     * 将相机移至提供的一个或多个实体或数据源。如果数据源仍在加载过程中，或者可视化仍在加载中，此方法在执行飞行之前等待数据准备就绪。
+     * 偏移量是在以边界球中心为中心的局部东北向上参考框中的航向/俯仰/范围。航向角和俯仰角是在局部的东西向北参考系中定义的。航向是从y轴到x轴的角度。间距是从xy平面开始的旋转。正螺距角度在平面上方。负俯仰角在平面下方。范围是到中心的距离。如果范围是零，则将计算范围以使整个边界球都可见。
+     *
+     * 在2D模式下，必须有一个俯视图。摄像机将被放置在目标上方并向下看。上方的高度目标将是范围。航向将根据偏移量确定。如果标题不能根据偏移量确定，航向将为北。
+     * @param target - 需要定位的Cesium内部对象。您还可以传递一个： Cesium.Entity|Cesium.Entity[]|Cesium.EntityCollection|Cesium.DataSource|Cesium.ImageryLayer|Cesium.Cesium3DTileset|Cesium.TimeDynamicPointCloud|Promise.<Entity|Entity[]|Cesium.EntityCollection|Cesium.DataSource|Cesium.ImageryLayer|Cesium.Cesium3DTileset|Cesium.TimeDynamicPointCloud>
+     * @param [options] - 具有以下属性的对象:
+     * @param [options.duration = 3.0] - 飞行持续时间（秒）。
+     * @param [options.maximumHeight] - 飞行高峰时的最大高度。
+     * @param [options.offset] - 在局部东北朝上的参考框中，距目标的偏移量为中心。
+     * @returns 如果飞行成功则解析为true的承诺，如果当前未在场景中可视化目标或取消飞行，则为false的Promise
+     */
+    flyTo(target: any, options?: {
+        duration?: number;
+        maximumHeight?: number;
+        offset?: Cesium.HeadingPitchRange;
+    }): Promise<boolean>;
+    /**
+     * 飞行定位到 Graphic矢量对象 处
+     * @param graphic - 矢量对象
+     * @param [options = {}] - 参数对象:
+     * @param [options.radius] - 点状数据时，相机距离目标点的距离（单位：米）
+     * @param [options.scale = 1.2] - 线面数据时，缩放比例，可以控制视角比矩形略大一些，这样效果更友好。
+     * @param [options.minHeight] - 定位时相机的最小高度值，用于控制避免异常数据
+     * @param [options.maxHeight] - 定位时相机的最大高度值，用于控制避免异常数据
+     * @param [options.heading] - 方向角度值，绕垂直于地心的轴旋转角度, 0至360
+     * @param [options.pitch] - 俯仰角度值，绕纬度线旋转角度, -90至90
+     * @param [options.roll] - 翻滚角度值，绕经度线旋转角度,-90至90
+     * @param [options.duration] - 飞行时间（单位：秒）。如果省略，SDK内部会根据飞行距离计算出理想的飞行时间。
+     * @param [options.complete] - 飞行完成后要执行的函数。
+     * @param [options.cancel] - 飞行取消时要执行的函数。
+     * @param [options.endTransform] - 变换矩阵表示飞行结束时相机所处的参照系。
+     * @param [options.maximumHeight] - 飞行高峰时的最大高度。
+     * @param [options.pitchAdjustHeight] - 如果相机飞得比这个值高，在飞行过程中调整俯仰以向下看，并保持地球在视口。
+     * @param [options.flyOverLongitude] - 地球上的两点之间总有两条路。这个选项迫使相机选择战斗方向飞过那个经度。
+     * @param [options.flyOverLongitudeWeight] - 仅在通过flyOverLongitude指定的lon上空飞行，只要该方式的时间不超过flyOverLongitudeWeight的短途时间。
+     * @param [options.convert = true] - 是否将目的地从世界坐标转换为场景坐标（仅在不使用3D时相关）。
+     * @param [options.easingFunction] - 控制在飞行过程中如何插值时间。
+     * @returns 如果飞行成功则解析为true的承诺，如果当前未在场景中可视化目标或取消飞行，则为false的Promise
+     */
+    flyToGraphic(graphic: BaseGraphic | BaseGraphic[], options?: {
+        radius?: number;
+        scale?: number;
+        minHeight?: number;
+        maxHeight?: number;
+        heading?: number;
+        pitch?: number;
+        roll?: number;
+        duration?: number;
+        complete?: Cesium.Camera.FlightCompleteCallback;
+        cancel?: Cesium.Camera.FlightCancelledCallback;
+        endTransform?: Cesium.Matrix4;
+        maximumHeight?: number;
+        pitchAdjustHeight?: number;
+        flyOverLongitude?: number;
+        flyOverLongitudeWeight?: number;
+        convert?: boolean;
+        easingFunction?: Cesium.EasingFunction.Callback;
+    }): Promise<boolean>;
+    /**
+     * 定位至坐标数组
+     * @param positions - 坐标数组
+     * @param [options = {}] - 参数对象:
+     * @param [options.radius] - 点状数据时，相机距离目标点的距离（单位：米）
+     * @param [options.scale = 1.2] - 线面数据时，缩放比例，可以控制视角比矩形略大一些，这样效果更友好。
+     * @param [options.minHeight] - 定位时相机的最小高度值，用于控制避免异常数据
+     * @param [options.maxHeight] - 定位时相机的最大高度值，用于控制避免异常数据
+     * @param [options.heading] - 方向角度值，绕垂直于地心的轴旋转角度, 0至360
+     * @param [options.pitch] - 俯仰角度值，绕纬度线旋转角度, -90至90
+     * @param [options.roll] - 翻滚角度值，绕经度线旋转角度, -90至90
+     * @param [options.duration] - 飞行时间（单位：秒）。如果省略，SDK内部会根据飞行距离计算出理想的飞行时间。
+     * @param [options.complete] - 飞行完成后要执行的函数。
+     * @param [options.cancel] - 飞行取消时要执行的函数。
+     * @param [options.endTransform] - 变换矩阵表示飞行结束时相机所处的参照系。
+     * @param [options.maximumHeight] - 飞行高峰时的最大高度。
+     * @param [options.pitchAdjustHeight] - 如果相机飞得比这个值高，在飞行过程中调整俯仰以向下看，并保持地球在视口。
+     * @param [options.flyOverLongitude] - 地球上的两点之间总有两条路。这个选项迫使相机选择战斗方向飞过那个经度。
+     * @param [options.flyOverLongitudeWeight] - 仅在通过flyOverLongitude指定的lon上空飞行，只要该方式的时间不超过flyOverLongitudeWeight的短途时间。
+     * @param [options.convert = true] - 是否将目的地从世界坐标转换为场景坐标（仅在不使用3D时相关）。
+     * @param [options.easingFunction] - 控制在飞行过程中如何插值时间。
+     * @returns 如果飞行成功则解析为true的承诺，如果当前未在场景中可视化目标或取消飞行，则为false的Promise
+     */
+    flyToPositions(positions: Cesium.Cartesian3[], options?: {
+        radius?: number;
+        scale?: number;
+        minHeight?: number;
+        maxHeight?: number;
+        heading?: number;
+        pitch?: number;
+        roll?: number;
+        duration?: number;
+        complete?: Cesium.Camera.FlightCompleteCallback;
+        cancel?: Cesium.Camera.FlightCancelledCallback;
+        endTransform?: Cesium.Matrix4;
+        maximumHeight?: number;
+        pitchAdjustHeight?: number;
+        flyOverLongitude?: number;
+        flyOverLongitudeWeight?: number;
+        convert?: boolean;
+        easingFunction?: Cesium.EasingFunction.Callback;
+    }): Promise<boolean>;
+    /**
+     * 相机飞行定位至矩形区域
+     * @param extent - 飞行参数, Object时可以传入：
+     * @param extent.xmin - 最小经度值, -180 至 180
+     * @param extent.xmax - 最大经度值, -180 至 180
+     * @param extent.ymin - 最小纬度值, -90 至 90
+     * @param extent.ymax - 最大纬度值, -90 至 90
+     * @param [extent.height] - 矩形高度值, 默认取地形高度值
+     * @param [options = {}] - 参数对象:
+     * @param [options.scale] - 缩放比例，可以控制视角比矩形略大一些，这样效果更友好。
+     * @param [options.minHeight] - 定位时相机的最小高度值，用于控制避免异常数据
+     * @param [options.maxHeight] - 定位时相机的最大高度值，用于控制避免异常数据
+     * @param [options.heading] - 方向角度值，绕垂直于地心的轴旋转角度, 0至360
+     * @param [options.pitch] - 俯仰角度值，绕纬度线旋转角度, -90至90
+     * @param [options.roll] - 翻滚角度值，绕经度线旋转角度, -90至90
+     * @param [options.duration] - 飞行时间（单位：秒）。如果省略，SDK内部会根据飞行距离计算出理想的飞行时间。
+     * @param [options.complete] - 飞行完成后要执行的函数。
+     * @param [options.cancel] - 飞行取消时要执行的函数。
+     * @param [options.endTransform] - 变换矩阵表示飞行结束时相机所处的参照系。
+     * @param [options.maximumHeight] - 飞行高峰时的最大高度。
+     * @param [options.pitchAdjustHeight] - 如果相机飞得比这个值高，在飞行过程中调整俯仰以向下看，并保持地球在视口。
+     * @param [options.flyOverLongitude] - 地球上的两点之间总有两条路。这个选项迫使相机选择战斗方向飞过那个经度。
+     * @param [options.flyOverLongitudeWeight] - 仅在通过flyOverLongitude指定的lon上空飞行，只要该方式的时间不超过flyOverLongitudeWeight的短途时间。
+     * @param [options.convert = true] - 是否将目的地从世界坐标转换为场景坐标（仅在不使用3D时相关）。
+     * @param [options.easingFunction] - 控制在飞行过程中如何插值时间。
+     * @returns 如果飞行成功则解析为true的承诺，如果当前未在场景中可视化目标或取消飞行，则为false的Promise
+     */
+    flyToExtent(extent: {
+        xmin: number;
+        xmax: number;
+        ymin: number;
+        ymax: number;
+        height?: number;
+    }, options?: {
+        scale?: number;
+        minHeight?: number;
+        maxHeight?: number;
+        heading?: number;
+        pitch?: number;
+        roll?: number;
+        duration?: number;
+        complete?: Cesium.Camera.FlightCompleteCallback;
+        cancel?: Cesium.Camera.FlightCancelledCallback;
+        endTransform?: Cesium.Matrix4;
+        maximumHeight?: number;
+        pitchAdjustHeight?: number;
+        flyOverLongitude?: number;
+        flyOverLongitudeWeight?: number;
+        convert?: boolean;
+        easingFunction?: Cesium.EasingFunction.Callback;
+    }): Promise<boolean>;
+    /**
+     * 定位至目标点(非相机位置)
+     * @param point - 目标点位置（视角中心点）
+     * @param [options = {}] - 具有以下属性的对象:
+     * @param [options.radius] - 相机距离目标点的距离（单位：米）
+     * @param [options.heading] - 方向角度值，绕垂直于地心的轴旋转角度, 0至360
+     * @param [options.pitch] - 俯仰角度值，绕纬度线旋转角度, -90至90
+     * @param [options.roll] - 翻滚角度值，绕经度线旋转角度, -90至90
+     * @param [options.duration] - 飞行持续时间（秒）。如果省略，内部会根据飞行距离计算出理想的飞行时间。
+     * @param [options.clampToGround] - 是否贴地对象,true时异步计算实际高度值后进行定位。
+     * @param [options.complete] - 飞行完成后要执行的函数。
+     * @param [options.cancel] - 飞行取消时要执行的函数。
+     * @param [options.endTransform] - 表示飞行完成后摄像机将位于的参考帧的变换矩阵。
+     * @param [options.maximumHeight] - 飞行高峰时的最大高度。
+     * @param [options.pitchAdjustHeight] - 如果相机的飞行角度高于该值，请在飞行过程中调整俯仰角度以向下看，并将地球保持在视口中。
+     * @param [options.flyOverLongitude] - 地球上2点之间总是有两种方式。此选项会迫使相机选择战斗方向以在该经度上飞行。
+     * @param [options.flyOverLongitudeWeight] - 仅在通过flyOverLongitude指定的lon上空飞行，只要该方式的时间不超过flyOverLongitudeWeight的短途时间。
+     * @param [options.easingFunction] - 控制在飞行过程中如何插值时间。
+     * @returns 如果飞行成功则解析为true的承诺，如果当前未在场景中可视化目标或取消飞行，则为false的Promise
+     */
+    flyToPoint(point: LngLatPoint | Cesium.Cartesian3 | number[], options?: {
+        radius?: number;
+        heading?: number;
+        pitch?: number;
+        roll?: number;
+        duration?: number;
+        clampToGround?: boolean;
+        complete?: Cesium.Camera.FlightCompleteCallback;
+        cancel?: Cesium.Camera.FlightCancelledCallback;
+        endTransform?: Cesium.Matrix4;
+        maximumHeight?: number;
+        pitchAdjustHeight?: number;
+        flyOverLongitude?: number;
+        flyOverLongitudeWeight?: number;
+        easingFunction?: Cesium.EasingFunction.Callback;
+    }): Promise<boolean>;
+    /**
+     * 是否在调用了openFlyAnimation正在进行开场动画
+     * @returns 是否在开场动画
+     */
+    isFlyAnimation(): boolean;
+    /**
+     * 执行开场动画，动画播放地球飞行定位到指定区域（1.旋转地球+2.降低高度+3.指定视角）
+     * @param [options = {}] - 参数对象:
+     * @param [options.center = getCameraView()] - 飞行到的指定区域视角参数
+     * @param [options.duration1 = 2] - 第一步旋转地球时长，单位：秒
+     * @param [options.easingFunction1 = Cesium.EasingFunction.LINEAR_NONE] - 第一步旋转地球飞行中，控制如何在飞行期间内插值时间参数。
+     * @param [options.duration2 = 2] - 第二步降低高度时长，单位：秒
+     * @param [options.easingFunction2] - 第二步降低高度飞行中，控制如何在飞行期间内插值时间参数。
+     * @param [options.duration3 = 2] - 第三步指定视角飞行时长，单位：秒
+     * @param [options.easingFunction3] - 第三步指定视角飞行中，控制如何在飞行期间内插值时间参数。
+     * @returns 如果飞行成功则解析为true的承诺，如果当前未在场景中可视化目标或取消飞行，则为false的Promise
+     */
+    openFlyAnimation(options?: {
+        center?: any;
+        duration1?: number;
+        easingFunction1?: Cesium.EasingFunction.Callback;
+        duration2?: number;
+        easingFunction2?: Cesium.EasingFunction.Callback;
+        duration3?: number;
+        easingFunction3?: Cesium.EasingFunction.Callback;
+    }): Promise<boolean>;
+    /**
+     * 执行旋转地球动画
+     * @param [options = {}] - 参数对象:
+     * @param [options.duration = 10] - 动画时长（单位：秒）
+     * @param [options.center = getCameraView()] - 飞行到的指定区域视角参数
+     * @returns 如果飞行成功则解析为true的承诺，如果当前未在场景中可视化目标或取消飞行，则为false的Promise
+     */
+    rotateAnimation(options?: {
+        duration?: number;
+        center?: any;
+    }): Promise<boolean>;
+    /**
+     * 判断指定对象是否为当前场景中正在高亮的对象
+     * @param target - 判断的高亮的对象（如graphic或layer等）
+     * @returns 无
+     */
+    isHighlighting(target: any): void;
+    /**
+     * 清除已高亮的矢量对象
+     * @returns 无
+     */
+    closeHighlight(): void;
+    /**
+     * 高亮矢量对象
+     * @param graphic - 矢量对象
+     * @param highlightStyle - 高亮的样式，具体见各{@link GraphicType}矢量数据的style参数。
+     * @param [event] - 鼠标事件对象
+     * @returns 无
+     */
+    openHighlight(graphic: BaseGraphic | any, highlightStyle: any, event?: any): void;
+    /**
+     * 打开Popup弹窗
+     * @param position - 矢量对象 或 显示的位置
+     * @param content - 弹窗内容html字符串，或者 回调方法 或者矢量对象/图层。
+     * @param [options] - 配置参数
+     * @returns 当前对象本身，可以链式调用
+     */
+    openPopup(position: LngLatPoint | Cesium.Cartesian3 | number[], content: string | ((...params: any[]) => any) | BaseGraphic | BaseGraphicLayer, options?: Popup.StyleOptions | any): Map;
+    /**
+     * 关闭Popup弹窗
+     * @returns 当前对象本身，可以链式调用
+     */
+    closePopup(): Map;
+    /**
+     * 打开Tooltip弹窗
+     * @param position - 矢量对象 或 显示的位置
+     * @param content - 弹窗内容html字符串，或者 回调方法
+     * @param [options] - 配置参数
+     * @returns 当前对象本身，可以链式调用
+     */
+    openTooltip(position: LngLatPoint | Cesium.Cartesian3 | number[], content: string | ((...params: any[]) => any), options?: Tooltip.StyleOptions | any): Map;
+    /**
+     * 关闭Tooltip弹窗
+     * @returns 当前对象本身，可以链式调用
+     */
+    closeTooltip(): Map;
+    /**
+     * 获取绑定的右键菜单数组
+     * @returns 右键菜单数组
+     */
+    getContextMenu(): any;
+    /**
+     * 绑定地图的默认右键菜单
+     * @example
+     * //内置的默认右键菜单获取方法
+     *     let defaultContextmenuItems =map.getDefaultContextMenu()
+     *     map.bindContextMenu(defaultContextmenuItems)
+     * @param content - 右键菜单配置数组，数组中每一项包括：
+     * @param [content.text] - 菜单文字
+     * @param [content.icon] - 图标,可以是：图片url路径、base64字符串、svg字符串、字体图标class名
+     * @param [content.show] - 菜单项是否显示的回调方法
+     * @param [content.callback] - 菜单项单击后的回调方法
+     * @param [content.children] - 当有二级子菜单时，配置数组。
+     * @param [options = {}] - 控制参数
+     * @param [options.offsetX] - 用于非规则对象时，横向偏移的px像素值
+     * @param [options.offsetY] - 用于非规则对象时，垂直方向偏移的px像素值
+     * @returns 当前对象本身，可以链式调用
+     */
+    bindContextMenu(content: {
+        text?: string;
+        icon?: string;
+        show?: ((...params: any[]) => any) | boolean;
+        callback?: (...params: any[]) => any;
+        children?: any;
+    }[], options?: {
+        offsetX?: number;
+        offsetY?: number;
+    }): Map;
+    /**
+     * 解除绑定的右键菜单
+     * @returns 当前对象本身，可以链式调用
+     */
+    unbindContextMenu(): Map;
+    /**
+     * 打开右键菜单
+     * @param [position] - 显示的位置
+     * @returns 当前对象本身，可以链式调用
+     */
+    openContextMenu(position?: Cesium.Cartesian3): Map;
+    /**
+     * 关闭右键菜单
+     * @returns 当前对象本身，可以链式调用
+     */
+    closeContextMenu(): Map;
+    /**
+     * 显示小提示窗，一般用于鼠标操作的提示。
+     * @param position - 显示的屏幕坐标位置 或 笛卡尔坐标位置
+     * @param message - 显示的内容
+     * @returns 当前对象本身，可以链式调用
+     */
+    openSmallTooltip(position: Cesium.Cartesian2 | Cesium.Cartesian3, message: any): Map;
+    /**
+     * 关闭小提示窗
+     * @returns 当前对象本身，可以链式调用
+     */
+    closeSmallTooltip(): Map;
+    /**
+     * 移除所有加载的图层、控件、对象。慎用
+     * @param [hasDestroy = true] - 是否释放对象
+     * @returns 无
+     */
+    clear(hasDestroy?: boolean): void;
+    /**
+     * 销毁地图
+     * @returns 无
+     */
+    destroy(): void;
+    /**
+     * 绑定指定类型事件监听器,
+     * 支持在监听中调用 event.stopPropagation(); 阻止事件冒泡
+     * @param types - 事件类型
+     * @param fn - 绑定的监听器回调方法
+     * @param [context] - 侦听器的上下文(this关键字将指向的对象)。
+     * @returns 当前对象本身,可以链式调用
+     */
+    on(types: EventType | string | EventType[] | string[] | any, fn: (...params: any[]) => any, context?: any): BaseClass;
+    /**
+     * 解除绑定指定类型事件监听器
+     * @param [types] - 事件类型,未传值时解绑所有事件
+     * @param [fn] - 绑定的监听器回调方法,未传值时解绑所有指定类型对应事件，特殊说明：map.on监听的Cesium相关原生事件时必须传入该参数
+     * @param [context] - 侦听器的上下文(this关键字将指向的对象)。
+     * @returns 当前对象本身,可以链式调用
+     */
+    off(types?: EventType | string | EventType[], fn?: (...params: any[]) => any, context?: any): BaseClass;
+    /**
+     * 是否有绑定指定的事件
+     * @param type - 事件类型
+     * @param [propagate] - 是否判断指定的父类 (用addEventParent设置的)
+     * @returns 是否存在
+     */
+    listens(type: EventType | string, propagate?: BaseClass): boolean;
 }
 
 declare namespace Map {
@@ -26747,1012 +27860,6 @@ declare namespace Map {
         contextMenuClose: string;
         contextMenuClick: string;
     };
-}
-
-/**
- * 地图类 ，这是构造三维地球的一切的开始起点。
- * @param id - 地图div容器的id 或 已构造好的Viewer对象
- * @param [options = {}] - 参数对象:
- * @param [options.scene] - 场景参数
- * @param [options.control] - 添加的控件
- * @param [options.effect] - 添加的特效
- * @param [options.mouse] - 鼠标操作相关配置参数
- * @param [options.terrain] - 地形服务配置
- * @param [options.basemaps] - 底图图层配置
- * @param [options.layers] - 可以叠加显示的图层配置
- * @param [options.chinaCRS = ChinaCRS.WGS84] - 标识当前三维场景的国内坐标系（用于部分图层内对比判断来自动纠偏或加偏）
- * @param [options.lang] - 使用的语言（如中文、英文等）。
- * @param [options.templateValues] - 图层中统一的url模版，比如可以将服务url前缀统一使用模板，方便修改或动态配置。
- * @param [options.token] - 覆盖SDK内的{@link Token}所有第3方Token默认值
- */
-declare class Map extends BaseClass {
-    constructor(id: string | Cesium.Viewer, options?: {
-        scene?: Map.sceneOptions;
-        control?: Map.controlOptions;
-        effect?: Map.effectOptions;
-        mouse?: Map.mouseOptions;
-        terrain?: Map.terrainOptions;
-        basemaps?: Map.basemapOptions[];
-        layers?: Map.layerOptions[];
-        chinaCRS?: ChinaCRS;
-        lang?: LangType;
-        templateValues?: any;
-        token?: Map.tokenOptions;
-    });
-    /**
-     * 当前类的构造参数
-     */
-    readonly options: any;
-    /**
-     * 地图对应的Cesium原生的  [Cesium.Viewer对象]{@link http://mars3d.cn/api/cesium/Viewer.html}
-     */
-    readonly viewer: Cesium.Viewer;
-    /**
-     * 获取地图DOM容器。
-     */
-    readonly container: HTMLDivElement;
-    /**
-     * 获取ToolBar控件DOM容器，
-     * 其样式为cesium-viewer-toolbar
-     */
-    readonly toolbar: HTMLDivElement;
-    /**
-     * 获取Canvas画布
-     */
-    readonly canvas: HTMLCanvasElement;
-    /**
-     * 获取场景。 [Cesium.Scene]{@link http://mars3d.cn/api/cesium/Scene.html}
-     */
-    readonly scene: Cesium.Scene;
-    /**
-     * 获取相机 [Cesium.Camera]{@link http://mars3d.cn/api/cesium/Camera.html}
-     */
-    readonly camera: Cesium.Camera;
-    /**
-     * 获取将在地球上渲染的ImageryLayer图像图层的集合
-     */
-    readonly imageryLayers: Cesium.ImageryLayerCollection;
-    /**
-     * 获取要可视化的 DataSource 实例集。
-     */
-    readonly dataSources: Cesium.DataSourceCollection;
-    /**
-     * 获取未绑定到特定数据源的实体的集合。这是 dataSourceDisplay.defaultDataSource.entities 的快捷方式。
-     */
-    readonly entities: Cesium.EntityCollection;
-    /**
-     * 获取时钟 [Cesium.Clock]{@link http://mars3d.cn/api/cesium/Clock.html}
-     */
-    readonly clock: Cesium.Clock;
-    /**
-     * 当前时间
-     */
-    currentTime: Cesium.JulianDate;
-    /**
-     * 获取 CesiumWidget
-     */
-    readonly cesiumWidget: Cesium.CesiumWidget;
-    /**
-     * 获取或设置相机当前正在跟踪的Entity实例。
-     */
-    trackedEntity: Cesium.Entity | BaseEntity | undefined | any;
-    /**
-     * 获取或设置当前的地形服务
-     */
-    terrainProvider: Cesium.TerrainProvider | any;
-    /**
-     * 是否开启地形
-     */
-    hasTerrain: boolean;
-    /**
-     * 获取或设置当前显示的底图，设置时可以传入图层id或name
-     */
-    basemap: string | number | BaseTileLayer;
-    /**
-     * 是否只拾取模型上的点
-     */
-    onlyPickModelPosition: boolean;
-    /**
-     * 是否只拾取地形上的点，忽略模型和矢量数据
-     */
-    onlyPickTerrainPosition: boolean;
-    /**
-     * 获取鼠标事件控制器
-     */
-    readonly mouseEvent: MouseEvent;
-    /**
-     * 右键菜单控件对象
-     */
-    readonly contextmenu: ContextMenu;
-    /**
-     * 获取键盘漫游控制器
-     */
-    readonly keyboardRoam: KeyboardRoam;
-    /**
-     * 获取地图上已构造的控件对象
-     */
-    readonly controls: any;
-    /**
-     * 获取地图上已构造的effect特效对象
-     */
-    readonly effects: any;
-    /**
-     * 默认绑定的图层，简单场景时快捷方便使用
-     */
-    readonly graphicLayer: GraphicLayer;
-    /**
-     * 获取当前地图层级（概略），一般为0-21层
-     */
-    readonly level: number;
-    /**
-     * 是否固定光照，
-     *  true：可避免gltf、3dtiles模型随时间存在亮度不一致。
-     */
-    fixedLight: boolean;
-    /**
-     * 使用的语言（如中文、英文等）。
-     */
-    lang: LangType;
-    /**
-     * 鼠标滚轮放大的步长比例
-     */
-    zoomFactor: number;
-    /**
-     * 是否全局启用highlight ，如果在某些场景，如标绘时，可以手动关闭下
-     */
-    highlightEnabled: boolean;
-    /**
-     * 获取将在地球上渲染的ImageryLayer图像图层的集合[贴模型时]
-     */
-    readonly imageryLayersForClamp: Cesium.ImageryLayerCollection;
-    /**
-     * 设置Map所有参数构造参数 【测试中功能，可能部分参数无法更新,欢迎反馈问题 】
-     * @param newOptions - Map所有参数构造参数
-     * @returns 当前对象本身，可以链式调用
-     */
-    setOptions(newOptions: any): Map;
-    /**
-     * 设置Scene场景参数
-     * @param options - 参数
-     * @returns 当前对象本身，可以链式调用
-     */
-    setSceneOptions(options: Map.sceneOptions): Map;
-    /**
-     * 获取地图的配置参数，即new Map传入的参数。
-     * @returns 地图的配置参数
-     */
-    getOptions(): any;
-    /**
-     * 获取地图的当前实时状态对应的配置参数。
-     * @returns 地图的配置参数
-     */
-    getCurrentOptions(): any;
-    /**
-     * 获取平台内置的右键菜单，图标可以覆盖 mars3d.Icon.* 值
-     * @returns 右键菜单
-     */
-    getDefaultContextMenu(): any;
-    /**
-     * 取地图屏幕中心点坐标
-     * @returns 屏幕中心点坐标
-     */
-    getCenter(): LngLatPoint;
-    /**
-     * 取相机到屏幕中心点的距离
-     * @returns 相机到屏幕中心点的距离，单位：米
-     */
-    getCameraDistance(): number;
-    /**
-     * 提取地球当前视域边界,示例：{ xmin: 70,  xmax: 140,  ymin: 0,  ymax: 55, height: 0, }
-     * @param [options = {}] - 参数对象:
-     * @param [options.formatNum = false] - 是否格式化小数位，只保留6位小数
-     * @param [options.scale = 0] - 在每个方向上按给定比例扩展（大于0）或缩小（-1到0时）当前边界所创建的边界。比率为0.5时，边界在每个方向上扩展了50%。
-     * @returns 当前视域边界
-     */
-    getExtent(options?: {
-        formatNum?: boolean;
-        scale?: number;
-    }): any;
-    /**
-     * 判断坐标点是否在当前视域内
-     * @param position - 坐标
-     * @returns 当前视域边界
-     */
-    isInView(position: Cesium.Cartesian3): boolean;
-    /**
-     * 当存在地形夸张时，获取其实际的高度值
-     * @param alt - 鼠标拾取的高度值
-     * @returns 其实际的高度值
-     */
-    getRealAlt(alt: number): number;
-    /**
-     * 截图，导出地图场景图片
-     * @param [options = {}] - 参数对象:
-     * @param [options.download = true] - 是否自动下载图片
-     * @param [options.filename = '场景出图_' + width + 'x' + height] - 图片名称
-     * @param [options.width = canvas.width] - 图片的高度像素值
-     * @param [options.height = canvas.height] - 图片的高度像素值
-     * @param [options.type = 'image/jpeg'] - 图片格式
-     * @param [options.encoderOptions = 0.92] - 在指定图片格式为 image/jpeg 或 image/webp的情况下，可以从 0 到 1 的区间内选择图片的质量。如果超出取值范围，将会使用默认值 0.92。其他参数会被忽略。
-     * @returns 截图完成后的回调方法的Promise
-     */
-    expImage(options?: {
-        download?: boolean;
-        filename?: string;
-        width?: number;
-        height?: number;
-        type?: string;
-        encoderOptions?: number;
-    }): Promise<any>;
-    /**
-     * 设置鼠标的默认状态样式
-     * @param [val] - cursor样式
-     * @returns 无
-     */
-    setCursor(val?: string): void;
-    /**
-     * 获取坐标位置的3dtiles模型对象
-     * @param positions - 坐标  或 坐标数组
-     * @returns 3dtiles模型对象
-     */
-    pick3DTileset(positions: Cesium.Cartesian3 | Cesium.Cartesian3[]): Cesium.Cesium3DTileset | undefined;
-    /**
-     * 获取坐标位置的3dtiles模型图层
-     * @param positions - 坐标  或 坐标数组
-     * @returns 3dtiles模型图层
-     */
-    pickTilesetLayer(positions: Cesium.Cartesian3 | Cesium.Cartesian3[]): TilesetLayer | undefined;
-    /**
-     * 重新设置basemps底图图层，对options.basemaps重新赋值
-     * @param arr - 底图图层配置
-     * @param [reload = true] - 是否重新构造
-     * @returns 图层数组
-     */
-    setBasemapsOptions(arr: Map.basemapOptions[], reload?: boolean): BaseLayer[];
-    /**
-     * 重新设置layers图层，对options.layers重新赋值
-     * @param arr - 可以叠加显示的图层配置
-     * @returns 图层数组
-     */
-    setLayersOptions(arr: Map.layerOptions[]): BaseLayer[];
-    /**
-     * 获取图层ID值，按顺序取值。
-     * 没有id的图层，会自动使用本方法进行id赋值处理
-     * @returns 图层ID
-     */
-    getNextLayerId(): number;
-    /**
-     * 添加图层到地图上
-     * @param layer - 图层对象
-     * @param [showVal] - 如果传值，覆盖图层的show属性
-     * @returns 图层加载完成承诺
-     */
-    addLayer(layer: BaseLayer, showVal?: boolean): Promise<boolean | any>;
-    /**
-     * 移除图层
-     * @param layer - 需要移除的图层
-     * @param [hasDestroy] - 是否释放 destroy
-     * @returns 当前对象本身，可以链式调用
-     */
-    removeLayer(layer: BaseLayer, hasDestroy?: boolean): Map;
-    /**
-     * 是否有指定的图层存在（就是已经addLayer的图层）
-     * @param layer - 指定的图层或图层ID
-     * @returns 是否存在
-     */
-    hasLayer(layer: string | number | BaseLayer): boolean;
-    /**
-     * 遍历每一个图层并将其作为参数传递给回调函数
-     * @param method - 回调方法
-     * @param [context] - 侦听器的上下文(this关键字将指向的对象)。
-     * @param [reverse] - 是否倒序执行
-     * @returns 当前对象本身,可以链式调用
-     */
-    eachLayer(method: (...params: any[]) => any, context?: any, reverse?: boolean): Map;
-    /**
-     * 根据指定属性获取图层，包括config.json配置的图层
-     * @param attrValue - 属性值
-     * @param [attrName = 'id'] - 属性键
-     * @returns 图层对象
-     */
-    getLayer(attrValue: string | number, attrName?: string): BaseLayer | any;
-    /**
-     * 根据ID或取图层 ，包括config.json配置的图层
-     * @param id - 图层id或uuid
-     * @returns 图层对象
-     */
-    getLayerById(id: string | number): BaseLayer | any;
-    /**
-     * 根据指定属性获取图层
-     * @param attrValue - 属性值
-     * @param [attrName = 'id'] - 属性键
-     * @returns 图层对象
-     */
-    getLayerByAttr(attrValue: string | number, attrName?: string): BaseLayer | any;
-    /**
-     * 根据指定属性获取图层列表
-     * @param attrValue - 属性值
-     * @param [attrName = 'id'] - 属性键
-     * @returns 图层对象列表
-     */
-    getLayersByAttr(attrValue: string | number, attrName?: string): BaseLayer[] | any;
-    /**
-     * 获取所有图层
-     * @param [options] - 参数对象，包括以下：
-     * @param [options.basemaps] - 默认不比较及处理，true:返回所有basemps中配置图层，false：排除所有所有basemps中配置图层
-     * @param [options.layers] - 默认不比较及处理，true:返回所有operationallayers中配置图层，false：排除所有operationallayers中配置图层
-     * @param [options.childs = true] - 是否获取GroupLayer内的子图层
-     * @returns 图层数组
-     */
-    getLayers(options?: {
-        basemaps?: boolean;
-        layers?: boolean;
-        childs?: boolean;
-    }): BaseLayer[] | any[];
-    /**
-     * 获取所有basemps底图图层
-     * @param [removeEmptyGroup = false] - 是否移除 空图层组
-     * @returns 图层数组
-     */
-    getBasemaps(removeEmptyGroup?: boolean): BaseLayer[] | any[];
-    /**
-     * 获取所有瓦片图层，可以用于卷帘对比
-     * @returns 图层数组
-     */
-    getTileLayers(): BaseTileLayer[] | any[];
-    /**
-     * 添加控件到地图上
-     * @param control - 控件对象
-     * @param [enabledVal] - 如果传值，覆盖控件的enabled属性
-     * @returns 当前对象本身，可以链式调用
-     */
-    addControl(control: BaseControl, enabledVal?: boolean): Map;
-    /**
-     * 移除控件
-     * @param control - 需要移除的控件
-     * @param [hasDestroy] - 是否释放
-     * @returns 当前对象本身，可以链式调用
-     */
-    removeControl(control: BaseControl, hasDestroy?: boolean): Map;
-    /**
-     * 是否有指定的控件存在（就是已经addControl的控件）
-     * @param control - 指定的控件或控件ID
-     * @returns 是否存在
-     */
-    hasControl(control: BaseControl | string): boolean;
-    /**
-     * 遍历每一个控件并将其作为参数传递给回调函数
-     * @param method - 回调方法
-     * @param [context] - 侦听器的上下文(this关键字将指向的对象)。
-     * @param [reverse] - 是否倒序执行
-     * @returns 当前对象本身,可以链式调用
-     */
-    eachControl(method: (...params: any[]) => any, context?: any, reverse?: boolean): Map;
-    /**
-     * 根据指定属性获取控件
-     * @param attrValue - 属性值
-     * @param [attrName = 'type'] - 属性键
-     * @returns 控件对象
-     */
-    getControl(attrValue: string | number | boolean, attrName?: string): BaseControl;
-    /**
-     * 添加特效对象到地图上
-     * @param effect - 特效对象
-     * @returns 当前对象本身，可以链式调用
-     */
-    addEffect(effect: BaseEffect): Map;
-    /**
-     * 移除特效对象
-     * @param effect - 需要移除的特效对象
-     * @param [hasDestroy] - 是否释放
-     * @returns 当前对象本身，可以链式调用
-     */
-    removeEffect(effect: BaseEffect, hasDestroy?: boolean): Map;
-    /**
-     * 根据指定属性获取Thing对象
-     * @param key - 属性值（如id、name值）
-     * @param [attrName = 'type'] - 属性名称
-     * @returns Thing对象
-     */
-    getEffect(key: string | any, attrName?: string): BaseEffect;
-    /**
-     * 添加Thing对象到地图上
-     * @param item - Thing对象
-     * @returns 当前对象本身，可以链式调用
-     */
-    addThing(item: BaseThing): Map;
-    /**
-     * 移除Thing对象
-     * @param item - 需要移除的Thing对象
-     * @param [hasDestroy] - 是否释放
-     * @returns 当前对象本身，可以链式调用
-     */
-    removeThing(item: BaseThing, hasDestroy?: boolean): Map;
-    /**
-     * 是否有指定的Thing对象存在（就是已经addThing的图层）
-     * @param thing - 指定的Thing对象或Thing对象ID
-     * @returns 是否存在
-     */
-    hasThing(thing: BaseThing | string): boolean;
-    /**
-     * 遍历每一个Thing对象并将其作为参数传递给回调函数
-     * @param method - 回调方法
-     * @param [context] - 侦听器的上下文(this关键字将指向的对象)。
-     * @param [reverse] - 是否倒序执行
-     * @returns 当前对象本身,可以链式调用
-     */
-    eachThing(method: (...params: any[]) => any, context?: any, reverse?: boolean): Map;
-    /**
-     * 根据指定属性获取Thing对象
-     * @param attrValue - 属性值
-     * @param [attrName = 'id'] - 属性名称
-     * @returns Thing对象
-     */
-    getThing(attrValue: string | number | boolean, attrName?: string): BaseThing;
-    /**
-     * 根据设置的lang参数，获取当前key对应语言的文本内容。
-     * @param key - 文本key
-     * @returns lang参数指定的对应文本内容
-     */
-    getLangText(key: string): void;
-    /**
-     * 放大地图
-     * @param [relativeAmount = 2] - 相对量
-     * @param [mandatory] - 是否强制更新，忽略screenSpaceCameraController的enableInputs/enableZoom限制
-     * @returns 是否有移动位置
-     */
-    zoomIn(relativeAmount?: number, mandatory?: boolean): boolean;
-    /**
-     * 缩小地图
-     * @param [relativeAmount = 2] - 相对量
-     * @param [mandatory] - 是否强制更新，忽略screenSpaceCameraController的enableInputs/enableZoom限制
-     * @returns 是否有移动位置
-     */
-    zoomOut(relativeAmount?: number, mandatory?: boolean): boolean;
-    /**
-     * 设置鼠标操作习惯方式。
-     * 默认为中键旋转，右键拉伸远近。传`rightTilt:true`可以设置为右键旋转，中键拉伸远近。
-     * @param [rightTilt = false] - 是否右键旋转
-     * @returns 无
-     */
-    changeMouseModel(rightTilt?: boolean): void;
-    /**
-     * 清除鼠标操作限定的Pitch范围
-     * @returns 无
-     */
-    clearPitchRange(): void;
-    /**
-     * 设置鼠标操作限定的Pitch范围
-     * @param max - 最大值（角度值）
-     * @param [min = -90] - 最小值（角度值）
-     * @returns 无
-     */
-    setPitchRange(max: number, min?: number): void;
-    /**
-     * 设置相机pitch值，保持地图中心位置不变。
-     * @param pitch - 俯仰角度值， -90至90
-     * @param [options] - 具有以下属性的对象:
-     * @param [options.heading] - 方向角度值，绕垂直于地心的轴旋转角度, 0至360
-     * @param [options.duration] - 飞行持续时间（秒）。如果省略，内部会根据飞行距离计算出理想的飞行时间。
-     * @param [options.complete] - 飞行完成后要执行的函数。
-     * @param [options.cancel] - 飞行取消时要执行的函数。
-     * @returns 如果飞行成功则解析为true的承诺，如果当前未在场景中可视化目标或取消飞行，则为false的Promise
-     */
-    setPitch(pitch: number, options?: {
-        heading?: number;
-        duration?: number;
-        complete?: Cesium.Camera.FlightCompleteCallback;
-        cancel?: Cesium.Camera.FlightCancelledCallback;
-    }): Promise<boolean>;
-    /**
-     * 设置相机heading值，保持地图中心位置不变。
-     * @param heading - 方向角度值， 0-360
-     * @param [options] - 具有以下属性的对象:
-     * @param [options.pitch] - 俯仰角度值，绕垂直于地心的轴旋转角度, -90至90
-     * @param [options.duration] - 飞行持续时间（秒）。如果省略，内部会根据飞行距离计算出理想的飞行时间。
-     * @param [options.complete] - 飞行完成后要执行的函数。
-     * @param [options.cancel] - 飞行取消时要执行的函数。
-     * @returns 如果飞行成功则解析为true的承诺，如果当前未在场景中可视化目标或取消飞行，则为false的Promise
-     */
-    setHeading(heading: number, options?: {
-        pitch?: number;
-        duration?: number;
-        complete?: Cesium.Camera.FlightCompleteCallback;
-        cancel?: Cesium.Camera.FlightCancelledCallback;
-    }): Promise<boolean>;
-    /**
-     * 停止视角定位等操作
-     * @returns 当前对象本身，可以链式调用
-     */
-    cancelFlyTo(): Map;
-    /**
-     * 获取当前相机视角参数，
-     * 示例：{"lat":30.526361,"lng":116.335987,"alt":45187,"heading":0,"pitch":-45}
-     * @param [options = {}] - 参数对象:
-     * @param [options.simplify = true] - 是否简化，true时不返回roll并无小数，false时返回roll和保留角度1位小数位
-     * @returns 当前相机视角参数
-     */
-    getCameraView(options?: {
-        simplify?: boolean;
-    }): any;
-    /**
-     * 将相机本身定位至指定位置
-     * @param cameraView - 飞行参数
-     * @param cameraView.lng - 经度值, 180 - 180
-     * @param cameraView.lat - 纬度值, -90 - 90
-     * @param [cameraView.alt] - 高度值
-     * @param [cameraView.heading] - 方向角度值，绕垂直于地心的轴旋转角度, 0至360
-     * @param [cameraView.pitch] - 俯仰角度值，绕纬度线旋转角度, -90至90
-     * @param [cameraView.roll] - 翻滚角度值，绕经度线旋转角度, -90至90
-     * @param [options = {}] - 参数对象:
-     * @param [options.duration] - 飞行时间（单位：秒）。如果省略，SDK内部会根据飞行距离计算出理想的飞行时间。
-     * @param [options.complete] - 飞行完成后要执行的函数。
-     * @param [options.cancel] - 飞行取消时要执行的函数。
-     * @param [options.endTransform] - 变换矩阵表示飞行结束时相机所处的参照系。
-     * @param [options.maximumHeight] - 飞行高峰时的最大高度。
-     * @param [options.pitchAdjustHeight] - 如果相机飞得比这个值高，在飞行过程中调整俯仰以向下看，并保持地球在视口。
-     * @param [options.flyOverLongitude] - 地球上的两点之间总有两条路。这个选项迫使相机选择战斗方向飞过那个经度。
-     * @param [options.flyOverLongitudeWeight] - 仅在通过flyOverLongitude指定的lon上空飞行，只要该方式的时间不超过flyOverLongitudeWeight的短途时间。
-     * @param [options.convert = true] - 是否将目的地从世界坐标转换为场景坐标（仅在不使用3D时相关）。
-     * @param [options.easingFunction] - 控制在飞行过程中如何插值时间。
-     * @returns 如果飞行成功则解析为true的承诺，如果当前未在场景中可视化目标或取消飞行，则为false的Promise
-     */
-    setCameraView(cameraView: {
-        lng: number;
-        lat: number;
-        alt?: number;
-        heading?: number;
-        pitch?: number;
-        roll?: number;
-    }, options?: {
-        duration?: number;
-        complete?: Cesium.Camera.FlightCompleteCallback;
-        cancel?: Cesium.Camera.FlightCancelledCallback;
-        endTransform?: Cesium.Matrix4;
-        maximumHeight?: number;
-        pitchAdjustHeight?: number;
-        flyOverLongitude?: number;
-        flyOverLongitudeWeight?: number;
-        convert?: boolean;
-        easingFunction?: Cesium.EasingFunction.Callback;
-    }): Promise<boolean>;
-    /**
-     * 将相机本身定位至指定位置，同 setCameraView 方法
-     * 为了兼容老版本用户习惯和center参数名称一致而用的别名方法。
-     * @param cameraView - 飞行参数，同 setCameraView 方法
-     * @param [options = {}] - 参数对象，同 setCameraView 方法
-     * @returns 如果飞行成功则解析为true的承诺，如果当前未在场景中可视化目标或取消飞行，则为false的Promise
-     */
-    centerAt(cameraView: any, options?: any): Promise<boolean>;
-    /**
-     * 飞行到默认视角，
-     * 一般为config.json中的center参数配置的视角。
-     * @param [options = {}] - 参数对象:
-     * @param [options.duration] - 飞行时间（单位：秒）。如果省略，SDK内部会根据飞行距离计算出理想的飞行时间。
-     * @returns 无
-     */
-    flyHome(options?: {
-        duration?: number;
-    }): void;
-    /**
-     * 定位到多个相机视角位置，按数组顺序播放
-     * @param arr - 视角参数数组，每个对象包含：
-     * @param arr.lng - 经度值, -180 至 180
-     * @param arr.lat - 纬度值, -90 至 90
-     * @param arr.alt - 高度值
-     * @param arr.heading - 方向角度值，绕垂直于地心的轴旋转角度, 0至360
-     * @param arr.pitch - 俯仰角度值，绕纬度线旋转角度, -90至90
-     * @param arr.roll - 翻滚角度值，绕经度线旋转角度, -90至90
-     * @param [arr.duration] - 飞行时间（单位：秒）。如果省略，SDK内部会根据飞行距离计算出理想的飞行时间。
-     * @param [arr.stop = 1] - 该步骤飞行结束的停留时间（单位：秒）。
-     * @param [arr.onStart] - 该步骤飞行开始前的回调方法
-     * @param [arr.onEnd] - 该步骤飞行开始结束后的回调方法
-     * @param [options = {}] - 参数对象:
-     * @param [options.complete] - 全部飞行完成后要执行的函数。
-     * @param [options.cancel] - 飞行取消时要执行的函数。
-     * @param [options.endTransform] - 变换矩阵表示飞行结束时相机所处的参照系。
-     * @param [options.maximumHeight] - 飞行高峰时的最大高度。
-     * @param [options.pitchAdjustHeight] - 如果相机飞得比这个值高，在飞行过程中调整俯仰以向下看，并保持地球在视口。
-     * @param [options.flyOverLongitude] - 地球上的两点之间总有两条路。这个选项迫使相机选择战斗方向飞过那个经度。
-     * @param [options.flyOverLongitudeWeight] - 仅在通过flyOverLongitude指定的lon上空飞行，只要该方式的时间不超过flyOverLongitudeWeight的短途时间。
-     * @param [options.convert = true] - 是否将目的地从世界坐标转换为场景坐标（仅在不使用3D时相关）。
-     * @param [options.easingFunction = Cesium.EasingFunction.LINEAR_NONE] - 控制在飞行过程中如何插值时间。
-     * @returns 无
-     */
-    setCameraViewList(arr: {
-        lng: number;
-        lat: number;
-        alt: number;
-        heading: number;
-        pitch: number;
-        roll: number;
-        duration?: number;
-        stop?: number;
-        onStart?: (...params: any[]) => any;
-        onEnd?: (...params: any[]) => any;
-    }[], options?: {
-        complete?: Cesium.Camera.FlightCompleteCallback;
-        cancel?: Cesium.Camera.FlightCancelledCallback;
-        endTransform?: Cesium.Matrix4;
-        maximumHeight?: number;
-        pitchAdjustHeight?: number;
-        flyOverLongitude?: number;
-        flyOverLongitudeWeight?: number;
-        convert?: boolean;
-        easingFunction?: Cesium.EasingFunction.Callback;
-    }): void;
-    /**
-     * 暂停执行 setCameraViewList
-     * @returns 无
-     */
-    pauseCameraViewList(): void;
-    /**
-     * 继续执行 setCameraViewList
-     * @returns 无
-     */
-    proceedCameraViewList(): void;
-    /**
-     * 飞行至Cesium相关矢量对象处，是Cesium本身的flyTo方法。
-     *
-     * 将相机移至提供的一个或多个实体或数据源。如果数据源仍在加载过程中，或者可视化仍在加载中，此方法在执行飞行之前等待数据准备就绪。
-     * 偏移量是在以边界球中心为中心的局部东北向上参考框中的航向/俯仰/范围。航向角和俯仰角是在局部的东西向北参考系中定义的。航向是从y轴到x轴的角度。间距是从xy平面开始的旋转。正螺距角度在平面上方。负俯仰角在平面下方。范围是到中心的距离。如果范围是零，则将计算范围以使整个边界球都可见。
-     *
-     * 在2D模式下，必须有一个俯视图。摄像机将被放置在目标上方并向下看。上方的高度目标将是范围。航向将根据偏移量确定。如果标题不能根据偏移量确定，航向将为北。
-     * @param target - 需要定位的Cesium内部对象。您还可以传递一个： Cesium.Entity|Cesium.Entity[]|Cesium.EntityCollection|Cesium.DataSource|Cesium.ImageryLayer|Cesium.Cesium3DTileset|Cesium.TimeDynamicPointCloud|Promise.<Entity|Entity[]|Cesium.EntityCollection|Cesium.DataSource|Cesium.ImageryLayer|Cesium.Cesium3DTileset|Cesium.TimeDynamicPointCloud>
-     * @param [options] - 具有以下属性的对象:
-     * @param [options.duration = 3.0] - 飞行持续时间（秒）。
-     * @param [options.maximumHeight] - 飞行高峰时的最大高度。
-     * @param [options.offset] - 在局部东北朝上的参考框中，距目标的偏移量为中心。
-     * @returns 如果飞行成功则解析为true的承诺，如果当前未在场景中可视化目标或取消飞行，则为false的Promise
-     */
-    flyTo(target: any, options?: {
-        duration?: number;
-        maximumHeight?: number;
-        offset?: Cesium.HeadingPitchRange;
-    }): Promise<boolean>;
-    /**
-     * 飞行定位到 Graphic矢量对象 处
-     * @param graphic - 矢量对象
-     * @param [options = {}] - 参数对象:
-     * @param [options.radius] - 点状数据时，相机距离目标点的距离（单位：米）
-     * @param [options.scale = 1.2] - 线面数据时，缩放比例，可以控制视角比矩形略大一些，这样效果更友好。
-     * @param [options.minHeight] - 定位时相机的最小高度值，用于控制避免异常数据
-     * @param [options.maxHeight] - 定位时相机的最大高度值，用于控制避免异常数据
-     * @param [options.heading] - 方向角度值，绕垂直于地心的轴旋转角度, 0至360
-     * @param [options.pitch] - 俯仰角度值，绕纬度线旋转角度, -90至90
-     * @param [options.roll] - 翻滚角度值，绕经度线旋转角度,-90至90
-     * @param [options.duration] - 飞行时间（单位：秒）。如果省略，SDK内部会根据飞行距离计算出理想的飞行时间。
-     * @param [options.complete] - 飞行完成后要执行的函数。
-     * @param [options.cancel] - 飞行取消时要执行的函数。
-     * @param [options.endTransform] - 变换矩阵表示飞行结束时相机所处的参照系。
-     * @param [options.maximumHeight] - 飞行高峰时的最大高度。
-     * @param [options.pitchAdjustHeight] - 如果相机飞得比这个值高，在飞行过程中调整俯仰以向下看，并保持地球在视口。
-     * @param [options.flyOverLongitude] - 地球上的两点之间总有两条路。这个选项迫使相机选择战斗方向飞过那个经度。
-     * @param [options.flyOverLongitudeWeight] - 仅在通过flyOverLongitude指定的lon上空飞行，只要该方式的时间不超过flyOverLongitudeWeight的短途时间。
-     * @param [options.convert = true] - 是否将目的地从世界坐标转换为场景坐标（仅在不使用3D时相关）。
-     * @param [options.easingFunction] - 控制在飞行过程中如何插值时间。
-     * @returns 如果飞行成功则解析为true的承诺，如果当前未在场景中可视化目标或取消飞行，则为false的Promise
-     */
-    flyToGraphic(graphic: BaseGraphic | BaseGraphic[], options?: {
-        radius?: number;
-        scale?: number;
-        minHeight?: number;
-        maxHeight?: number;
-        heading?: number;
-        pitch?: number;
-        roll?: number;
-        duration?: number;
-        complete?: Cesium.Camera.FlightCompleteCallback;
-        cancel?: Cesium.Camera.FlightCancelledCallback;
-        endTransform?: Cesium.Matrix4;
-        maximumHeight?: number;
-        pitchAdjustHeight?: number;
-        flyOverLongitude?: number;
-        flyOverLongitudeWeight?: number;
-        convert?: boolean;
-        easingFunction?: Cesium.EasingFunction.Callback;
-    }): Promise<boolean>;
-    /**
-     * 定位至坐标数组
-     * @param positions - 坐标数组
-     * @param [options = {}] - 参数对象:
-     * @param [options.radius] - 点状数据时，相机距离目标点的距离（单位：米）
-     * @param [options.scale = 1.2] - 线面数据时，缩放比例，可以控制视角比矩形略大一些，这样效果更友好。
-     * @param [options.minHeight] - 定位时相机的最小高度值，用于控制避免异常数据
-     * @param [options.maxHeight] - 定位时相机的最大高度值，用于控制避免异常数据
-     * @param [options.heading] - 方向角度值，绕垂直于地心的轴旋转角度, 0至360
-     * @param [options.pitch] - 俯仰角度值，绕纬度线旋转角度, -90至90
-     * @param [options.roll] - 翻滚角度值，绕经度线旋转角度, -90至90
-     * @param [options.duration] - 飞行时间（单位：秒）。如果省略，SDK内部会根据飞行距离计算出理想的飞行时间。
-     * @param [options.complete] - 飞行完成后要执行的函数。
-     * @param [options.cancel] - 飞行取消时要执行的函数。
-     * @param [options.endTransform] - 变换矩阵表示飞行结束时相机所处的参照系。
-     * @param [options.maximumHeight] - 飞行高峰时的最大高度。
-     * @param [options.pitchAdjustHeight] - 如果相机飞得比这个值高，在飞行过程中调整俯仰以向下看，并保持地球在视口。
-     * @param [options.flyOverLongitude] - 地球上的两点之间总有两条路。这个选项迫使相机选择战斗方向飞过那个经度。
-     * @param [options.flyOverLongitudeWeight] - 仅在通过flyOverLongitude指定的lon上空飞行，只要该方式的时间不超过flyOverLongitudeWeight的短途时间。
-     * @param [options.convert = true] - 是否将目的地从世界坐标转换为场景坐标（仅在不使用3D时相关）。
-     * @param [options.easingFunction] - 控制在飞行过程中如何插值时间。
-     * @returns 如果飞行成功则解析为true的承诺，如果当前未在场景中可视化目标或取消飞行，则为false的Promise
-     */
-    flyToPositions(positions: Cesium.Cartesian3[], options?: {
-        radius?: number;
-        scale?: number;
-        minHeight?: number;
-        maxHeight?: number;
-        heading?: number;
-        pitch?: number;
-        roll?: number;
-        duration?: number;
-        complete?: Cesium.Camera.FlightCompleteCallback;
-        cancel?: Cesium.Camera.FlightCancelledCallback;
-        endTransform?: Cesium.Matrix4;
-        maximumHeight?: number;
-        pitchAdjustHeight?: number;
-        flyOverLongitude?: number;
-        flyOverLongitudeWeight?: number;
-        convert?: boolean;
-        easingFunction?: Cesium.EasingFunction.Callback;
-    }): Promise<boolean>;
-    /**
-     * 相机飞行定位至矩形区域
-     * @param extent - 飞行参数, Object时可以传入：
-     * @param extent.xmin - 最小经度值, -180 至 180
-     * @param extent.xmax - 最大经度值, -180 至 180
-     * @param extent.ymin - 最小纬度值, -90 至 90
-     * @param extent.ymax - 最大纬度值, -90 至 90
-     * @param [extent.height] - 矩形高度值, 默认取地形高度值
-     * @param [options = {}] - 参数对象:
-     * @param [options.scale] - 缩放比例，可以控制视角比矩形略大一些，这样效果更友好。
-     * @param [options.minHeight] - 定位时相机的最小高度值，用于控制避免异常数据
-     * @param [options.maxHeight] - 定位时相机的最大高度值，用于控制避免异常数据
-     * @param [options.heading] - 方向角度值，绕垂直于地心的轴旋转角度, 0至360
-     * @param [options.pitch] - 俯仰角度值，绕纬度线旋转角度, -90至90
-     * @param [options.roll] - 翻滚角度值，绕经度线旋转角度, -90至90
-     * @param [options.duration] - 飞行时间（单位：秒）。如果省略，SDK内部会根据飞行距离计算出理想的飞行时间。
-     * @param [options.complete] - 飞行完成后要执行的函数。
-     * @param [options.cancel] - 飞行取消时要执行的函数。
-     * @param [options.endTransform] - 变换矩阵表示飞行结束时相机所处的参照系。
-     * @param [options.maximumHeight] - 飞行高峰时的最大高度。
-     * @param [options.pitchAdjustHeight] - 如果相机飞得比这个值高，在飞行过程中调整俯仰以向下看，并保持地球在视口。
-     * @param [options.flyOverLongitude] - 地球上的两点之间总有两条路。这个选项迫使相机选择战斗方向飞过那个经度。
-     * @param [options.flyOverLongitudeWeight] - 仅在通过flyOverLongitude指定的lon上空飞行，只要该方式的时间不超过flyOverLongitudeWeight的短途时间。
-     * @param [options.convert = true] - 是否将目的地从世界坐标转换为场景坐标（仅在不使用3D时相关）。
-     * @param [options.easingFunction] - 控制在飞行过程中如何插值时间。
-     * @returns 如果飞行成功则解析为true的承诺，如果当前未在场景中可视化目标或取消飞行，则为false的Promise
-     */
-    flyToExtent(extent: {
-        xmin: number;
-        xmax: number;
-        ymin: number;
-        ymax: number;
-        height?: number;
-    }, options?: {
-        scale?: number;
-        minHeight?: number;
-        maxHeight?: number;
-        heading?: number;
-        pitch?: number;
-        roll?: number;
-        duration?: number;
-        complete?: Cesium.Camera.FlightCompleteCallback;
-        cancel?: Cesium.Camera.FlightCancelledCallback;
-        endTransform?: Cesium.Matrix4;
-        maximumHeight?: number;
-        pitchAdjustHeight?: number;
-        flyOverLongitude?: number;
-        flyOverLongitudeWeight?: number;
-        convert?: boolean;
-        easingFunction?: Cesium.EasingFunction.Callback;
-    }): Promise<boolean>;
-    /**
-     * 定位至目标点(非相机位置)
-     * @param point - 目标点位置（视角中心点）
-     * @param [options = {}] - 具有以下属性的对象:
-     * @param [options.radius] - 相机距离目标点的距离（单位：米）
-     * @param [options.heading] - 方向角度值，绕垂直于地心的轴旋转角度, 0至360
-     * @param [options.pitch] - 俯仰角度值，绕纬度线旋转角度, -90至90
-     * @param [options.roll] - 翻滚角度值，绕经度线旋转角度, -90至90
-     * @param [options.duration] - 飞行持续时间（秒）。如果省略，内部会根据飞行距离计算出理想的飞行时间。
-     * @param [options.clampToGround] - 是否贴地对象,true时异步计算实际高度值后进行定位。
-     * @param [options.complete] - 飞行完成后要执行的函数。
-     * @param [options.cancel] - 飞行取消时要执行的函数。
-     * @param [options.endTransform] - 表示飞行完成后摄像机将位于的参考帧的变换矩阵。
-     * @param [options.maximumHeight] - 飞行高峰时的最大高度。
-     * @param [options.pitchAdjustHeight] - 如果相机的飞行角度高于该值，请在飞行过程中调整俯仰角度以向下看，并将地球保持在视口中。
-     * @param [options.flyOverLongitude] - 地球上2点之间总是有两种方式。此选项会迫使相机选择战斗方向以在该经度上飞行。
-     * @param [options.flyOverLongitudeWeight] - 仅在通过flyOverLongitude指定的lon上空飞行，只要该方式的时间不超过flyOverLongitudeWeight的短途时间。
-     * @param [options.easingFunction] - 控制在飞行过程中如何插值时间。
-     * @returns 如果飞行成功则解析为true的承诺，如果当前未在场景中可视化目标或取消飞行，则为false的Promise
-     */
-    flyToPoint(point: LngLatPoint | Cesium.Cartesian3 | number[], options?: {
-        radius?: number;
-        heading?: number;
-        pitch?: number;
-        roll?: number;
-        duration?: number;
-        clampToGround?: boolean;
-        complete?: Cesium.Camera.FlightCompleteCallback;
-        cancel?: Cesium.Camera.FlightCancelledCallback;
-        endTransform?: Cesium.Matrix4;
-        maximumHeight?: number;
-        pitchAdjustHeight?: number;
-        flyOverLongitude?: number;
-        flyOverLongitudeWeight?: number;
-        easingFunction?: Cesium.EasingFunction.Callback;
-    }): Promise<boolean>;
-    /**
-     * 是否在调用了openFlyAnimation正在进行开场动画
-     * @returns 是否在开场动画
-     */
-    isFlyAnimation(): boolean;
-    /**
-     * 执行开场动画，动画播放地球飞行定位到指定区域（1.旋转地球+2.降低高度+3.指定视角）
-     * @param [options = {}] - 参数对象:
-     * @param [options.center = getCameraView()] - 飞行到的指定区域视角参数
-     * @param [options.duration1 = 2] - 第一步旋转地球时长，单位：秒
-     * @param [options.easingFunction1 = Cesium.EasingFunction.LINEAR_NONE] - 第一步旋转地球飞行中，控制如何在飞行期间内插值时间参数。
-     * @param [options.duration2 = 2] - 第二步降低高度时长，单位：秒
-     * @param [options.easingFunction2] - 第二步降低高度飞行中，控制如何在飞行期间内插值时间参数。
-     * @param [options.duration3 = 2] - 第三步指定视角飞行时长，单位：秒
-     * @param [options.easingFunction3] - 第三步指定视角飞行中，控制如何在飞行期间内插值时间参数。
-     * @returns 如果飞行成功则解析为true的承诺，如果当前未在场景中可视化目标或取消飞行，则为false的Promise
-     */
-    openFlyAnimation(options?: {
-        center?: any;
-        duration1?: number;
-        easingFunction1?: Cesium.EasingFunction.Callback;
-        duration2?: number;
-        easingFunction2?: Cesium.EasingFunction.Callback;
-        duration3?: number;
-        easingFunction3?: Cesium.EasingFunction.Callback;
-    }): Promise<boolean>;
-    /**
-     * 执行旋转地球动画
-     * @param [options = {}] - 参数对象:
-     * @param [options.duration = 10] - 动画时长（单位：秒）
-     * @param [options.center = getCameraView()] - 飞行到的指定区域视角参数
-     * @returns 如果飞行成功则解析为true的承诺，如果当前未在场景中可视化目标或取消飞行，则为false的Promise
-     */
-    rotateAnimation(options?: {
-        duration?: number;
-        center?: any;
-    }): Promise<boolean>;
-    /**
-     * 清除已高亮的矢量对象
-     * @param [result] - 事件对象
-     * @returns 无
-     */
-    closeHighlight(result?: any): void;
-    /**
-     * 高亮矢量对象
-     * @param graphic - 矢量对象
-     * @param highlightStyle - 高亮的样式，具体见各{@link GraphicType}矢量数据的style参数。
-     * @param [event] - 鼠标事件对象
-     * @returns 无
-     */
-    openHighlight(graphic: BaseGraphic | any, highlightStyle: any, event?: any): void;
-    /**
-     * 打开Popup弹窗
-     * @param position - 矢量对象 或 显示的位置
-     * @param content - 弹窗内容html字符串，或者 回调方法 或者矢量对象/图层。
-     * @param [options] - 配置参数
-     * @returns 当前对象本身，可以链式调用
-     */
-    openPopup(position: LngLatPoint | Cesium.Cartesian3 | number[], content: string | ((...params: any[]) => any) | BaseGraphic | BaseGraphicLayer, options?: Popup.StyleOptions | any): Map;
-    /**
-     * 关闭Popup弹窗
-     * @returns 当前对象本身，可以链式调用
-     */
-    closePopup(): Map;
-    /**
-     * 打开Tooltip弹窗
-     * @param position - 矢量对象 或 显示的位置
-     * @param content - 弹窗内容html字符串，或者 回调方法
-     * @param [options] - 配置参数
-     * @returns 当前对象本身，可以链式调用
-     */
-    openTooltip(position: LngLatPoint | Cesium.Cartesian3 | number[], content: string | ((...params: any[]) => any), options?: Tooltip.StyleOptions | any): Map;
-    /**
-     * 关闭Tooltip弹窗
-     * @returns 当前对象本身，可以链式调用
-     */
-    closeTooltip(): Map;
-    /**
-     * 获取绑定的右键菜单数组
-     * @returns 右键菜单数组
-     */
-    getContextMenu(): any;
-    /**
-     * 绑定地图的默认右键菜单
-     * @example
-     * //内置的默认右键菜单获取方法
-     *     let defaultContextmenuItems =map.getDefaultContextMenu()
-     *     map.bindContextMenu(defaultContextmenuItems)
-     * @param content - 右键菜单配置数组，数组中每一项包括：
-     * @param [content.text] - 菜单文字
-     * @param [content.icon] - 图标,可以是：图片url路径、base64字符串、svg字符串、字体图标class名
-     * @param [content.show] - 菜单项是否显示的回调方法
-     * @param [content.callback] - 菜单项单击后的回调方法
-     * @param [content.children] - 当有二级子菜单时，配置数组。
-     * @param [options = {}] - 控制参数
-     * @param [options.offsetX] - 用于非规则对象时，横向偏移的px像素值
-     * @param [options.offsetY] - 用于非规则对象时，垂直方向偏移的px像素值
-     * @returns 当前对象本身，可以链式调用
-     */
-    bindContextMenu(content: {
-        text?: string;
-        icon?: string;
-        show?: ((...params: any[]) => any) | boolean;
-        callback?: (...params: any[]) => any;
-        children?: any;
-    }[], options?: {
-        offsetX?: number;
-        offsetY?: number;
-    }): Map;
-    /**
-     * 解除绑定的右键菜单
-     * @returns 当前对象本身，可以链式调用
-     */
-    unbindContextMenu(): Map;
-    /**
-     * 打开右键菜单
-     * @param [position] - 显示的位置
-     * @returns 当前对象本身，可以链式调用
-     */
-    openContextMenu(position?: Cesium.Cartesian3): Map;
-    /**
-     * 关闭右键菜单
-     * @returns 当前对象本身，可以链式调用
-     */
-    closeContextMenu(): Map;
-    /**
-     * 显示小提示窗，一般用于鼠标操作的提示。
-     * @param position - 显示的屏幕坐标位置 或 笛卡尔坐标位置
-     * @param message - 显示的内容
-     * @returns 当前对象本身，可以链式调用
-     */
-    openSmallTooltip(position: Cesium.Cartesian2 | Cesium.Cartesian3, message: any): Map;
-    /**
-     * 关闭小提示窗
-     * @returns 当前对象本身，可以链式调用
-     */
-    closeSmallTooltip(): Map;
-    /**
-     * 移除所有加载的图层、控件、对象。慎用
-     * @param [hasDestroy = true] - 是否释放对象
-     * @returns 无
-     */
-    clear(hasDestroy?: boolean): void;
-    /**
-     * 销毁地图
-     * @returns 无
-     */
-    destroy(): void;
-    /**
-     * 绑定指定类型事件监听器,
-     * 支持在监听中调用 event.stopPropagation(); 阻止事件冒泡
-     * @param types - 事件类型
-     * @param fn - 绑定的监听器回调方法
-     * @param [context] - 侦听器的上下文(this关键字将指向的对象)。
-     * @returns 当前对象本身,可以链式调用
-     */
-    on(types: EventType | string | EventType[] | string[] | any, fn: (...params: any[]) => any, context?: any): BaseClass;
-    /**
-     * 解除绑定指定类型事件监听器
-     * @param [types] - 事件类型,未传值时解绑所有事件
-     * @param [fn] - 绑定的监听器回调方法,未传值时解绑所有指定类型对应事件，特殊说明：map.on监听的Cesium相关原生事件时必须传入该参数
-     * @param [context] - 侦听器的上下文(this关键字将指向的对象)。
-     * @returns 当前对象本身,可以链式调用
-     */
-    off(types?: EventType | string | EventType[], fn?: (...params: any[]) => any, context?: any): BaseClass;
-    /**
-     * 是否有绑定指定的事件
-     * @param type - 事件类型
-     * @param [propagate] - 是否判断指定的父类 (用addEventParent设置的)
-     * @returns 是否存在
-     */
-    listens(type: EventType | string, propagate?: BaseClass): boolean;
 }
 
 /**
@@ -35267,13 +35374,13 @@ declare namespace MeasureUtil {
      * @param val - 距离值，米
      * @param [options] - 参数：
      * @param [options.unit = 'auto'] - 计量单位, 可选值：auto、m、km、wm、mile、zhang 等。auto时根据距离值自动选用k或km
-     * @param [options.lang = 0] - 使用的语言
+     * @param [options.getLangText] - 获取文本的对应方法
      * @param [options.decimal = 2] - 保留的小数位
      * @returns 带单位的格式化距离值字符串，如：20.17 米
      */
     function formatDistance(val: number, options?: {
         unit?: string;
-        lang?: LangType;
+        getLangText?: (...params: any[]) => any;
         decimal?: number;
     }): string;
     /**
@@ -35281,13 +35388,13 @@ declare namespace MeasureUtil {
      * @param val - 面积值，平方米
      * @param [options] - 参数：
      * @param [options.unit = 'auto'] - 计量单位，可选值：auto、m、km、mu、ha 。auto时根据面积值自动选用m或km
-     * @param [options.lang = 0] - 使用的语言
+     * @param [options.getLangText] - 获取文本的对应方法
      * @param [options.decimal = 2] - 保留的小数位
      * @returns 带单位的格式化面积值字符串，如：20.21 平方公里
      */
     function formatArea(val: number, options?: {
         unit?: string;
-        lang?: LangType;
+        getLangText?: (...params: any[]) => any;
         decimal?: number;
     }): string;
     /**
@@ -35295,13 +35402,13 @@ declare namespace MeasureUtil {
      * @param val - 体积值，立方米
      * @param [options] - 参数：
      * @param [options.unit = 'auto'] - 计量单位，当前无用，备用参数
-     * @param [options.lang = 0] - 使用的语言
+     * @param [options.getLangText] - 获取文本的对应方法
      * @param [options.decimal = 2] - 保留的小数位
      * @returns 带单位的格式化体积值字符串，如：20.21立方米
      */
     function formatVolume(val: number, options?: {
         unit?: string;
-        lang?: LangType;
+        getLangText?: (...params: any[]) => any;
         decimal?: number;
     }): string;
 }
@@ -36751,21 +36858,6 @@ declare namespace Util {
         headers?: any;
     }): Promise<any>;
     /**
-     * 根据设置的lang参数，获取当前key对应语言的文本内容。
-     * @param key - 文本key
-     * @param [langType = 0] - 使用的语言
-     * @returns lang参数指定的对应文本内容
-     */
-    function getLangText(key: string, langType?: LangType): string;
-    /**
-     * 更新Lang值，设置当前key对应语言的文本内容。
-     * @param key - 文本key
-     * @param text - 文本内容
-     * @param [langType = 0] - 使用的语言
-     * @returns 是否更新成功
-     */
-    function setLangText(key: string, text: string, langType?: LangType): void;
-    /**
      * 进入全屏
      * @param container - 指定DOM元素，如 map.container
      * @returns 是否全屏
@@ -37163,7 +37255,7 @@ declare namespace thing {
 
 export {
   name, update, version, proj4, Tle,
-  BaseClass, BaseThing, LngLatPoint, LngLatArray, GroundSkyBox, MultipleSkyBox, LocalWorldTransform, CRS, ChinaCRS, EventType, State, Token, ColorRamp, MaterialType, GraphicType, LayerType, ControlType, EffectType, Lang, LangType, MoveType, ClipType, Icon,
+  BaseClass, BaseThing, LngLatPoint, LngLatArray, GroundSkyBox, MultipleSkyBox, LocalWorldTransform, CRS, ChinaCRS, EventType, State, Token, ColorRamp, MaterialType, GraphicType, LayerType, ControlType, EffectType, Lang, MoveType, ClipType, Icon,
   DomUtil, MeasureUtil, PointUtil, PolyUtil, PointTrans, Util, Log, MaterialUtil, GraphicUtil, DrawUtil, LayerUtil, ControlUtil, EffectUtil,
   BaseMaterialConver, BaseStyleConver, BillboardStyleConver, CloudStyleConver, BoxStyleConver, CircleStyleConver, CorridorStyleConver, CylinderStyleConver, DivGraphicStyleConver, EllipsoidStyleConver, LabelStyleConver, ModelStyleConver, PathStyleConver, PlaneStyleConver, PointStyleConver, PolygonStyleConver, PolylineStyleConver, PolylineVolumeStyleConver, RectangleStyleConver, RectangularSensorStyleConver, WallStyleConver,
   material, graphic, edit, provider, layer, thing, effect, control, query,

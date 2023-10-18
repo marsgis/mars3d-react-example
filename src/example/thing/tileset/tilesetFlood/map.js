@@ -47,6 +47,9 @@ export function showDytDemo() {
     position: { alt: -27 },
     maximumScreenSpaceError: 1,
     editHeight: 420, // 相对高度 (单位：米)，基于 压平/淹没区域 最低点高度的偏移量
+    flood: {
+      enabled: true
+    },
     flyTo: true
   })
   map.addLayer(tilesetLayer)
@@ -80,6 +83,9 @@ export function showTehDemo() {
     cullWithChildrenBounds: false,
     skipLevelOfDetail: true,
     preferLeaves: true,
+    flood: {
+      enabled: true
+    },
     flyTo: true
   })
   map.addLayer(tilesetLayer)

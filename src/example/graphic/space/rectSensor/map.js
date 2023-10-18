@@ -154,6 +154,29 @@ export function startDrawGraphic() {
   })
 }
 
+// 凝视目标
+export function changeLookAt() {
+  const cone = graphicLayer.graphics[0]
+  if (cone.lookAt) {
+    cone.lookAt = null
+  } else {
+    map.graphicLayer.startDraw({
+      type: "point",
+      style: {
+        pixelSize: 12,
+        color: "#ffff00"
+      },
+      success: function (graphic) {
+        const position = graphic.positionShow
+        map.graphicLayer.clear()
+
+        cone.lookAt = position
+      }
+    })
+  }
+}
+
+
 // 在图层绑定Popup弹窗
 export function bindLayerPopup() {
   graphicLayer.bindPopup(function (event) {

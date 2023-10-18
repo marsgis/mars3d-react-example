@@ -44,8 +44,12 @@ export function onUnmounted() {
 }
 
 export function addDemoGraphic1() {
+  const startTime = new Date().getTime()
+
   const url = "//data.mars3d.cn/file/geojson/buildings-hf.json"
   mars3d.Util.fetchJson({ url: url }).then((data) => {
+    console.log("1.geojson数据请求完成", data)
+
     const arr = mars3d.Util.geoJsonToGraphics(data, {
       symbol: {
         callback: function (attr) {
@@ -60,7 +64,7 @@ export function addDemoGraphic1() {
       }
     })
 
-    globalMsg("共加载" + arr.length + "个面") // 多个面对象的合并渲染。
+    console.log("2.开始渲染PolygonCombine对象", arr)
 
     const graphic = new mars3d.graphic.PolygonCombine({
       instances: arr, // 公共样式
@@ -76,6 +80,14 @@ export function addDemoGraphic1() {
       }
     })
     graphicLayer.addGraphic(graphic)
+
+    graphic.readyPromise.then(() => {
+      console.log("3.PolygonCombine渲染完成")
+
+      const endTime = new Date().getTime()
+      const usedTime = (endTime - startTime) / 1000 // 两个时间戳相差的毫秒数
+      globalMsg(`生成${arr.length}条数据，共耗时${usedTime.toFixed(2)}秒`) // 多个面对象的合并渲染。
+    })
   })
 }
 

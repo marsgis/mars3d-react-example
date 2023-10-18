@@ -10,12 +10,13 @@ export const mapOptions = {
   control: {
     homeButton: true,
     sceneModePicker: true,
-    navigationHelpButton: true,
     infoBox: false,
     vrButton: true,
-    fullscreenButton: true,
-    geocoder: "gaode",
+    geocoder: { service: "gaode", insertIndex: 0 },
     baseLayerPicker: true,
+    fullscreenButton: true,
+    navigationHelpButton: true,
+
     clockAnimate: true, // 时钟动画控制(左下角)
     timeline: true, // 是否显示时间线控件
 
@@ -23,15 +24,13 @@ export const mapOptions = {
     compass: { top: "10px", left: "5px" },
     distanceLegend: { left: "180px", bottom: "30px" },
     locationBar: {
-      fps: true,
       template:
         "<div>lng:{lng}</div> <div>lat:{lat}</div> <div>alt：{alt} m</div> <div>level：{level}</div><div>heading：{heading}°</div> <div>pitch：{pitch}°</div><div>cameraHeight：{cameraHeight}m</div>"
     }
   },
-  lang: mars3d.LangType.EN // 使用英文
+  // eslint-disable-next-line no-undef
+  lang: CustomLang // 使用自定义语言配置，配置信息在 ./CustomLang.js
 }
- // 其他语言，可以引入 CustomLang.js 后修改 英文为其他语言即可
-
 
 export const eventTarget = new mars3d.BaseClass()
 
@@ -43,7 +42,6 @@ export const eventTarget = new mars3d.BaseClass()
  */
 export function onMounted(mapInstance) {
   map = mapInstance
-
   map.toolbar.style.bottom = "55px" // 修改toolbar控件的样式
 
   // 涉及到多语言的模块：标绘提示
@@ -98,6 +96,25 @@ export function onMounted(mapInstance) {
  */
 export function onUnmounted() {
   map = null
+}
+
+export function toCustomLang() {
+  if (map.controls.locationBar) {
+    map.controls.locationBar.options.template =
+      "<div>lng:{lng}</div> <div>lat:{lat}</div> <div>alt：{alt} m</div> <div>level：{level}</div><div>heading：{heading}°</div> <div>pitch：{pitch}°</div><div>cameraHeight：{cameraHeight}m</div><div class='hide700'> {fps} FPS</div>"
+  }
+
+  // eslint-disable-next-line no-undef
+  map.lang = CustomLang // 使用自定义语言配置，配置信息在 ./CustomLang.js
+}
+
+export function toDefaultLange() {
+  if (map.controls.locationBar) {
+    map.controls.locationBar.options.template =
+      "<div>经度:{lng}</div> <div>纬度:{lat}</div> <div class='hide1000'>横{crsx}  纵{crsy}</div> <div>海拔：{alt}米</div> <div class='hide700'>层级：{level}</div><div>方向：{heading}°</div> <div>俯仰角：{pitch}°</div><div class='hide700'>视高：{cameraHeight}米</div><div class='hide700'>帧率：{fps} FPS</div>"
+  }
+
+  map.lang = mars3d.Lang // 使用默认配置
 }
 
 export function distance() {

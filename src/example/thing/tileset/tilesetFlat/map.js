@@ -87,6 +87,9 @@ export function showTehDemo() {
     skipLevelOfDetail: true,
     preferLeaves: true,
     center: { lat: 31.795308, lng: 117.21948, alt: 1820, heading: 0, pitch: -39 },
+    flat: {
+      enabled: true
+    },
     flyTo: true
   })
   map.addLayer(tilesetLayer)
