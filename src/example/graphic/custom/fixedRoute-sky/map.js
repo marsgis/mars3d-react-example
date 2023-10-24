@@ -114,6 +114,7 @@ function throttled(fn, delay) {
     const remaining = delay - (curTime - starttime)
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const context = this
+    // eslint-disable-next-line prefer-rest-params
     const args = arguments
     clearTimeout(timer)
     if (remaining <= 0) {

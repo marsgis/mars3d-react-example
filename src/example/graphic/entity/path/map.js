@@ -151,6 +151,9 @@ function addDemoGraphic2(graphicLayer) {
   const interval = 20
   changePosition(graphic, interval)
   setInterval(() => {
+    if (graphic.isDestroy) {
+      return
+    }
     changePosition(graphic, interval)
   }, interval * 1000)
 }

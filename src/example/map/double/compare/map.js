@@ -1,7 +1,7 @@
 import * as mars3d from "mars3d"
 
 export let map // mars3d.Map三维地图对象
-let mapEx
+let mapSplit
 
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
@@ -35,6 +35,24 @@ export function onMounted(mapInstance) {
 
   // addTestData()
 
+  createControl()
+
+  // 双击销毁
+  map.on(mars3d.EventType.dblClick, () => {})
+}
+
+/**
+ * 释放当前地图业务的生命周期函数
+ * @returns {void} 无
+ */
+export function onUnmounted() {
+  map = null
+}
+
+export function createControl() {
+  if (mapSplit) {
+    return
+  }
   // 修改已有地图为50%
   const mapOld = document.getElementById("centerDiv3D")
   mapOld.style.width = "50%"
@@ -55,7 +73,7 @@ export function onMounted(mapInstance) {
   }
   console.log("分屏地图配置", mars3d.Util.clone(mapOptions2))
 
-  const mapSplit = new mars3d.control.MapCompare({
+  mapSplit = new mars3d.control.MapCompare({
     ...mapOptions2,
     parentContainer: document.body
   })
@@ -65,15 +83,14 @@ export function onMounted(mapInstance) {
   mapSplit.mapEx.basemap = "天地图电子"
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
-export function onUnmounted() {
-  map = null
+export function destroyControl() {
+  if (mapSplit) {
+    map.removeControl(mapSplit)
+    mapSplit = null
+    const mapOld = document.getElementById("centerDiv3D")
+    mapOld.style.width = "100%"
+  }
 }
-
-
 
 function addTestData() {
   const groupLayer = new mars3d.layer.GroupLayer({

@@ -118,7 +118,7 @@ export function drawClear() {
 // 清除效果
 export function clearResult() {
   tableList = []
-  map.graphicLayer.clear()
+  drawClear()
 }
 
 //= ===============卫星过境===================================
@@ -297,7 +297,6 @@ function showResult(newSatelliteArr) {
 
   globalMsg("分析完成，共" + tableList.length + "条过境记录")
 }
-
 
 function showCorridor(data) {
   const graphic = new mars3d.graphic.CorridorPrimitive({

@@ -44,6 +44,7 @@ export function onMounted(mapInstance) {
   // addDemoGraphic9(graphicLayer)
   addDemoGraphic10(graphicLayer)
   addDemoGraphic11(graphicLayer)
+  addDemoGraphic12(graphicLayer)
 }
 
 /**
@@ -376,11 +377,17 @@ function addDemoGraphic10(graphicLayer) {
       radius: 500,
       opacity: 0.4,
       color: "#02D4FD",
-      outline: false,
-      outlineColor: "#8A99B4",
-      outlineWidth: 2,
-      outlineOpacity: 1,
-      clampToGround: true
+      clampToGround: true,
+
+      outline: true,
+      outlineStyle: {
+        width: 12,
+        materialType: mars3d.MaterialType.Image2,
+        materialOptions: {
+          image: "/img/textures/airline.svg",
+          repeat: new mars3d.Cesium.Cartesian2(1000, 1)
+        }
+      }
     },
     attr: { remark: "示例10" }
   })
@@ -423,6 +430,28 @@ function addDemoGraphic11(graphicLayer) {
       )
     },
     attr: { remark: "示例11" }
+  })
+  graphicLayer.addGraphic(graphic)
+}
+
+function addDemoGraphic12(graphicLayer) {
+  const graphic = new mars3d.graphic.CircleEntity({
+    position: new mars3d.LngLatPoint(116.155132, 30.956363, 677.2),
+    style: {
+      radius: 1000,
+      fill: false,
+
+      outline: true,
+      outlineStyle: {
+        width: 12,
+        materialType: mars3d.MaterialType.Image2,
+        materialOptions: {
+          image: "/img/textures/line-air.svg",
+          repeat: new mars3d.Cesium.Cartesian2(500, 1)
+        }
+      }
+    },
+    attr: { remark: "示例12" }
   })
   graphicLayer.addGraphic(graphic)
 }

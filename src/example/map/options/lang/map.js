@@ -28,6 +28,51 @@ export const mapOptions = {
         "<div>lng:{lng}</div> <div>lat:{lat}</div> <div>alt：{alt} m</div> <div>level：{level}</div><div>heading：{heading}°</div> <div>pitch：{pitch}°</div><div>cameraHeight：{cameraHeight}m</div>"
     }
   },
+
+  basemaps: [
+    {
+      name: "Google Images",
+      name_cn: "谷歌影像",
+      name_en: "Google Images",
+      icon: "/img/basemaps/google_img.png",
+      type: "google",
+      layer: "img_d",
+      show: true
+    },
+    {
+      name: "Tianditu Images",
+      name_cn: "天地图影像",
+      name_en: "Tianditu Images",
+      icon: "/img/basemaps/tdt_img.png",
+      type: "group",
+      layers: [
+        { name: "底图", type: "tdt", layer: "img_d" },
+        { name: "注记", type: "tdt", layer: "img_z" }
+      ],
+      show: false
+    },
+    {
+      name: "Tianditu Electronic map",
+      name_cn: "天地图电子",
+      name_en: "Tianditu Electronic map",
+      icon: "/img/basemaps/tdt_vec.png",
+      type: "group",
+      layers: [
+        { name: "底图", type: "tdt", layer: "vec_d" },
+        { name: "注记", type: "tdt", layer: "vec_z" }
+      ]
+    },
+    {
+      name: "not map",
+      name_cn: "无底图",
+      name_en: "not map",
+      icon: "/img/basemaps/null.png",
+      type: "grid",
+      color: "#ffffff",
+      alpha: 0.03,
+      cells: 2
+    }
+  ],
   // eslint-disable-next-line no-undef
   lang: CustomLang // 使用自定义语言配置，配置信息在 ./CustomLang.js
 }
@@ -53,7 +98,9 @@ export function onMounted(mapInstance) {
 
   drawLayer.bindContextMenu([
     {
-      text: map.getLangText("_删除"),
+      text: () => {
+        return map.getLangText("_删除")
+      },
       icon: "fa fa-trash-o",
       show: (event) => {
         const graphic = event.graphic
@@ -99,6 +146,10 @@ export function onUnmounted() {
 }
 
 export function toCustomLang() {
+  map.options.basemaps.forEach((item) => {
+    item.name = item.name_en
+  })
+
   if (map.controls.locationBar) {
     map.controls.locationBar.options.template =
       "<div>lng:{lng}</div> <div>lat:{lat}</div> <div>alt：{alt} m</div> <div>level：{level}</div><div>heading：{heading}°</div> <div>pitch：{pitch}°</div><div>cameraHeight：{cameraHeight}m</div><div class='hide700'> {fps} FPS</div>"
@@ -109,6 +160,10 @@ export function toCustomLang() {
 }
 
 export function toDefaultLange() {
+  map.options.basemaps.forEach((item) => {
+    item.name = item.name_cn
+  })
+
   if (map.controls.locationBar) {
     map.controls.locationBar.options.template =
       "<div>经度:{lng}</div> <div>纬度:{lat}</div> <div class='hide1000'>横{crsx}  纵{crsy}</div> <div>海拔：{alt}米</div> <div class='hide700'>层级：{level}</div><div>方向：{heading}°</div> <div>俯仰角：{pitch}°</div><div class='hide700'>视高：{cameraHeight}米</div><div class='hide700'>帧率：{fps} FPS</div>"

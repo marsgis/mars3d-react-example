@@ -256,11 +256,17 @@ function catmullRom(v, t, alpha = 0.5) {
 
   const type = typeof v
   if (type === "number") {
+    // eslint-disable-next-line prefer-rest-params
     p0 = arguments[0]
+    // eslint-disable-next-line prefer-rest-params
     p1 = arguments[1]
+    // eslint-disable-next-line prefer-rest-params
     p2 = arguments[2]
+    // eslint-disable-next-line prefer-rest-params
     p3 = arguments[3]
+    // eslint-disable-next-line prefer-rest-params
     t = arguments[4]
+    // eslint-disable-next-line prefer-rest-params
     alpha = arguments[5]
   } else if (Object.prototype.toString.call(v) === "[object Array]") {
     p0 = v[0]

@@ -5,7 +5,6 @@ export let map // mars3d.Map三维地图对象
 const creditHtml = `©2023 中科星图- <span>审图号：GS (2023) 1924号</span>
 -  甲测资字11111577 - <a href="https://geovisearth.com/declaration#/user" target="_blank" trace="tos">服务条款</a> `
 
-
 // 星图官方地址：https://datacloud.geovisearth.com/support/map/summary
 
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
@@ -81,7 +80,8 @@ export function addTileLayer() {
   tileLayer = new mars3d.layer.XyzLayer({
     name: "地形晕渲",
     url: "https://tiles{s}.geovisearth.com/base/v1/ter/{z}/{x}/{y}?token=82455ef06c72bb3a35bbb4d7d05fd9eceb96a94dc942a056b8feb0e5928ed96f",
-    subdomains: "123"
+    subdomains: "123",
+    maximumLevel: 9
   })
   map.addLayer(tileLayer)
 }
@@ -92,7 +92,6 @@ export function removeTileLayer() {
     tileLayer = null
   }
 }
-
 
 // 在下侧状态栏增加一个额外div展示图层版权信息
 let creditDOM

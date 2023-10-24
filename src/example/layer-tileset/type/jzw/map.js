@@ -141,6 +141,12 @@ export function setStyle1() {
   tiles3dLayer.customShader = undefined
 
   tiles3dLayer.marsJzwStyle = true // 打开建筑物特效（内置Shader代码）
+
+  // tiles3dLayer.marsJzwStyle = {
+  //   baseHeight: 0.0, // 物体的基础高度，需要修改成一个合适的建筑基础高度
+  //   heightRange: 280.0, // 高亮的范围  (baseHeight ~ baseHeight + heightRange)
+  //   glowRange: 300.0 // 光环的移动范围
+  // }
 }
 
 // customShader参数方式
@@ -218,7 +224,6 @@ export function setStyle3() {
       }
     }`
   })
-
 }
 
 // 颜色改变

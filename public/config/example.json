@@ -87,6 +87,11 @@
             "main": "map/options/control"
           },
           {
+            "name": "chinaCRS 国内偏移坐标系",
+            "thumbnail": "map-options-chinaCRS.jpg",
+            "main": "map/options/chinaCRS"
+          },
+          {
             "name": "多语言支持",
             "thumbnail": "map-options-lang.jpg",
             "main": "map/options/lang",

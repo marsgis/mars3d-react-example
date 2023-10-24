@@ -5,6 +5,13 @@ export let graphicLayer // 矢量图层对象
 
 export const eventTarget = new mars3d.BaseClass()
 
+// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+export const mapOptions = {
+  scene: {
+    resolutionScale: 2.0 // 可以提高文字清晰度
+  }
+}
+
 /**
  * 初始化地图业务，生命周期钩子函数（必须）
  * 框架在地图初始化完成后自动调用该函数
@@ -48,8 +55,8 @@ function addDemoGraphic1(graphicLayer) {
     position: new mars3d.LngLatPoint(116.308659, 30.914005, 429.94),
     style: {
       text: "合肥火星科技有限公司",
-      font_size: 46,
-      scale: 0.5,
+      font_size: 46, // 字号放大一倍
+      scale: 0.5, // scale传0.5
       font_family: "楷体",
       color: "#00ffff",
       outline: true,
@@ -124,12 +131,9 @@ function addDemoGraphic4(graphicLayer) {
     position: new mars3d.LngLatPoint(116.329102, 30.977955, 1548.6),
     style: {
       text: "火星科技Mars3D平台",
-      font_size: 25,
-      font_family: "楷体",
-      color: "#0081c2",
-      outline: true,
-      outlineColor: "#ffffff",
-      outlineWidth: 2,
+      font_size: 20,
+      font_family: "宋体",
+      color: "#ffffff",
       distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0.0, 100000),
 
       // 高亮时的样式（默认为鼠标移入，也可以指定type:'click'单击高亮），构造后也可以openHighlight、closeHighlight方法来手动调用

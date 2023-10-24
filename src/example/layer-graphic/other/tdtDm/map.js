@@ -25,7 +25,11 @@ export function onMounted(mapInstance) {
 
   // 天地图 三维地名服务图层
   const tdtDmLayer = new mars3d.layer.TdtDmLayer({
-    key: mars3d.Token.tianditu
+    key: mars3d.Token.tianditu,
+    label: {
+      pixelOffsetY: -20,
+      visibleDepth: false
+    }
   })
   map.addLayer(tdtDmLayer)
 }

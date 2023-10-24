@@ -166,7 +166,6 @@ function removeLayer() {
   }
 }
 
-
 /**
  * 倾斜摄影 县城社区
  *
@@ -279,43 +278,22 @@ export function showJzwHefeiDemo() {
     url: "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
     maximumScreenSpaceError: 1,
     // marsJzwStyle: true, // 打开建筑物特效（内置Shader代码）
-    marsJzwStyle: `
-    void fragmentMain(FragmentInput fsInput, inout czm_modelMaterial material) {
-      vec4 position = czm_inverseModelView * vec4(fsInput.attributes.positionEC,1); // 位置
-
-      // 注意shader中写浮点数是，一定要带小数点，否则会报错，比如0需要写成0.0，1要写成1.0
-      float _baseHeight = 50.0; // 物体的基础高度，需要修改成一个合适的建筑基础高度
-      float _heightRange = 380.0; // 高亮的范围(_baseHeight ~ _baseHeight + _heightRange)
-      float _glowRange = 400.0; // 光环的移动范围(高度)
-
-      // 建筑基础色
-      vec4 diffuse = vec4(0.2,  0.5, 1.0, 1.0); // 固定颜色
-      //vec4 diffuse = vec4(material.diffuse, material.alpha); // 颜色
-
-      float modelHeight = position.z;
-      if(u_mars3d_jzw_upAxis == 1) {
-        modelHeight = position.y;
-      } else if(u_mars3d_jzw_upAxis == 0){
-        modelHeight = position.x;
+    marsJzwStyle: {
+      baseHeight: 0.0, // 物体的基础高度，需要修改成一个合适的建筑基础高度
+      heightRange: 280.0, // 高亮的范围  (baseHeight ~ baseHeight + heightRange)
+      glowRange: 300.0 // 光环的移动范围
+    },
+    style: {
+      color: {
+        conditions: [["true", "rgba(16, 119, 209, 1)"]]
       }
-
-      float mars_height = modelHeight - _baseHeight;
-      diffuse *= vec4(vec3(mars_height / _heightRange), 1.0);  // 渐变
-
-      // 动态光环
-      float time = fract(czm_frameNumber / 360.0);
-      time = abs(time - 0.5) * 2.0;
-      float diff = step(0.005, abs( clamp(mars_height / _glowRange, 0.0, 1.0) - time));
-
-      material.diffuse = vec3(diffuse.rgb + diffuse.rgb * (1.0 - diff)) ;
-    }
-     `,
+    },
     popup: [
       { field: "objectid", name: "编号" },
       { field: "name", name: "名称" },
       { field: "height", name: "楼高", unit: "米" }
     ],
-    center: { lat: 31.795311, lng: 117.206139, alt: 1833, heading: 29, pitch: -26 },
+    center: { lat: 31.813812, lng: 117.223505, alt: 1047.7, heading: 0, pitch: -39 },
     highlight: {
       type: mars3d.EventType.click, // 单击高亮
       outlineEffect: true, // 采用OutlineEffect方式来高亮

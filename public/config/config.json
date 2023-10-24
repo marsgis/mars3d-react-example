@@ -13,6 +13,9 @@
       "fog": true,
       "fxaa": true,
       "requestRenderMode": false,
+      "contextOptions": {
+        "requestWebgl1": false
+      },
       "globe": {
         "depthTestAgainstTerrain": false,
         "baseColor": "#546a53",
