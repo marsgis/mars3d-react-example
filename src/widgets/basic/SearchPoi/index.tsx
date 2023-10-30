@@ -5,6 +5,9 @@ import * as mapWork from "./map"
 import { useLifecycle } from "@mars/widgets/common/uses/useLifecycle"
 import styles from "./index.module.less"
 
+import { renderToString } from "react-dom/server"
+import QueryPopup from "./QueryPopup"
+
 const storageName = "mars3d_queryGaodePOI"
 const url = "//www.amap.com/detail/"
 
@@ -22,6 +25,22 @@ export default function (props) {
     if (searchTxt === "") {
       setSearchListShow(false)
     }
+
+    // 绑定popup
+    mapWork.graphicLayer.bindPopup(
+      (event) => {
+        const attr = event.graphic.attr || {}
+        if (!attr) {
+          return
+        }
+
+        // 示例比较特殊，使用 renderToString 返回一个html元素；
+        // 也可使用 createPortal ，具体用法参考react文档 或 mars3d基础项目
+        const html = renderToString(<QueryPopup attr={attr} />)
+        return html
+      },
+      { template: false }
+    )
   })
 
   let timer = useRef<any>()

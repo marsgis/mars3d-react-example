@@ -7,7 +7,7 @@ import * as mars3d from "mars3d"
 const Cesium = mars3d.Cesium
 
 let map: mars3d.Map // 地图对象
-let graphicLayer: mars3d.layer.GraphicLayer
+export let graphicLayer: mars3d.layer.GraphicLayer
 let queryPoi: mars3d.query.GaodePOI // GaodePOI查询
 let address: any = null
 
@@ -22,30 +22,6 @@ export function onMounted(mapInstance: mars3d.Map): void {
   graphicLayer = new mars3d.layer.GraphicLayer({
     name: "POI查询",
     pid: 99 // 图层管理 中使用，父节点id
-  })
-
-  graphicLayer.bindPopup(function (event: any) {
-    const item = event.graphic?.attr
-    if (!item) {
-      return
-    }
-    let inHtml = `<div class="mars3d-template-titile"><a href="https://www.amap.com/detail/${item.id}"  target="_black" style="color: #ffffff; ">${item.name}</a></div><div class="mars3d-template-content" >`
-
-    if (item.tel !== "") {
-      inHtml += "<div><label>电话:</label>" + item.tel + "</div>"
-    }
-
-    if (item.address) {
-      inHtml += "<div><label>地址:</label>" + item.address + "</div>"
-    }
-    if (item.type) {
-      const fl = item.type
-      if (fl !== "") {
-        inHtml += "<div><label>类别:</label>" + fl + "</div>"
-      }
-    }
-    inHtml += "</div>"
-    return inHtml
   })
 
   map.addLayer(graphicLayer)
