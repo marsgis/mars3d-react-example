@@ -22,7 +22,9 @@ function initMap() {
         maximumZoomDistance: 50000000,
         enableRotate: true,
         enableZoom: true
-      }
+      },
+      mapProjection: mars3d.CRS.EPSG3857, // 2D下展示墨卡托投影
+      mapMode2D: Cesium.MapMode2D.INFINITE_SCROLL// 2D下左右一直可以滚动重复世界地图
     },
     control: {
       baseLayerPicker: true, // basemaps底图切换按钮

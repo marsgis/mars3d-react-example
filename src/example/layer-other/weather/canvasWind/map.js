@@ -7,10 +7,6 @@ let canvasWindLayer
 export const mapOptions = {
   scene: {
     center: { lat: 24.677182, lng: 107.044123, alt: 20407002, heading: 0, pitch: -90 }
-    // mapMode2D: Cesium.MapMode2D.ROTATE,
-    // cameraController: {
-    //   maximumZoomDistance: 5000000000
-    // }
   }
 }
 

@@ -132,14 +132,17 @@ function initGraphicManager(graphic) {
 function addDemoGraphic2() {
   const graphic = new mars3d.graphic.Water({
     positions: [
-      [117.187572, 31.823074, 45.53],
-      [117.195377, 31.82418, 43.36],
-      [117.204541, 31.818933, 37.06],
-      [117.19775, 31.809539, 36.59],
-      [117.183832, 31.814237, 38.76]
+      [117.144368, 31.803005, 800],
+      [117.165242, 31.800811, 400],
+      [117.180132, 31.80352, 200],
+      [117.185858, 31.812145, 50],
+
+      [117.197283, 31.806191, 50],
+      [117.190464, 31.796236, 200],
+      [117.167184, 31.789867, 400],
+      [117.147186, 31.791731, 800]
     ],
     style: {
-      height: 3, // 水面高度
       normalMap: "img/textures/waterNormals.jpg", // 水正常扰动的法线图
       frequency: 8000.0, // 控制波数的数字。
       animationSpeed: 0.02, // 控制水的动画速度的数字。
@@ -148,11 +151,23 @@ function addDemoGraphic2() {
       baseWaterColor: "#006ab4", // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
       blendColor: "#006ab4", // 从水中混合到非水域时使用的rgba颜色对象。
       opacity: 0.7, // 透明度
-      clampToGround: true // 是否贴地
+
+      offsetAttribute: Cesium.GeometryOffsetAttribute.ALL, // 需要有
+      offsetHeight: 0
     },
     attr: { remark: "示例2" }
   })
   graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
+
+  // 演示：平滑移动高度
+  let height = 0
+  setInterval(() => {
+    if (height > 10000 || graphic.isDestroy) {
+      return
+    }
+    height += 1
+    graphic.offsetHeight = height
+  }, 10)
 }
 
 function addDemoGraphic3() {

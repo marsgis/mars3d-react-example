@@ -35,7 +35,6 @@ export function onMounted(mapInstance) {
   addDemoGraphic1(graphicLayer)
   addDemoGraphic2(graphicLayer)
   addDemoGraphic2_1(graphicLayer)
-  addDemoGraphic2_2(graphicLayer)
   addDemoGraphic3(graphicLayer)
   addDemoGraphic4(graphicLayer)
   addDemoGraphic5(graphicLayer)
@@ -47,6 +46,8 @@ export function onMounted(mapInstance) {
   addDemoGraphic11(graphicLayer)
   addDemoGraphic12(graphicLayer)
   addDemoGraphic13(graphicLayer)
+  addDemoGraphic17(graphicLayer)
+  addDemoGraphic18(graphicLayer)
 }
 
 /**
@@ -190,29 +191,7 @@ function addDemoGraphic2_1(graphicLayer) {
   graphicLayer.addGraphic(graphic)
 }
 
-function addDemoGraphic2_2(graphicLayer) {
-  const graphic = new mars3d.graphic.PolylinePrimitive({
-    positions: [
-      [117.126296, 31.901182, 32.3],
-      [117.19873, 31.896307, 29],
-      [117.245564, 31.894645, 24.1]
-    ],
-    style: {
-      width: 20,
-      materialType: mars3d.MaterialType.LineThreeDash,
-      materialOptions: {
-        color: Cesium.Color.RED, // 中心线颜色
-        dashLength: 64, // 中心长度
-        widthRatio: 0.1, // 中心百分比
-        sidesColor: Cesium.Color.WHITE, // 外侧颜色
-        sidesDashLength: 32, // 外侧长度
-        sidesWidthRatio: 0.1 // 外侧百分比
-      }
-    },
-    attr: { remark: "示例2-2" }
-  })
-  graphicLayer.addGraphic(graphic)
-}
+
 
 function addDemoGraphic3(graphicLayer) {
   const graphic = new mars3d.graphic.PolylinePrimitive({
@@ -470,6 +449,53 @@ function addDemoGraphic13(graphicLayer) {
       }
     },
     attr: { remark: "示例13" }
+  })
+  graphicLayer.addGraphic(graphic)
+}
+
+function addDemoGraphic17(graphicLayer) {
+  const graphic = new mars3d.graphic.PolylinePrimitive({
+    positions: [
+      [117.126296, 31.901182, 32.3],
+      [117.19873, 31.896307, 29],
+      [117.245564, 31.894645, 24.1]
+    ],
+    style: {
+      width: 20,
+      materialType: mars3d.MaterialType.LineThreeDash,
+      materialOptions: {
+        color: Cesium.Color.RED, // 中心线颜色
+        dashLength: 64, // 中心长度
+        widthRatio: 0.1, // 中心百分比
+        sidesColor: Cesium.Color.WHITE, // 外侧颜色
+        sidesDashLength: 32, // 外侧长度
+        sidesWidthRatio: 0.1 // 外侧百分比
+      }
+    },
+    attr: { remark: "示例17" }
+  })
+  graphicLayer.addGraphic(graphic)
+}
+
+function addDemoGraphic18(graphicLayer) {
+  const graphic = new mars3d.graphic.PolylinePrimitive({
+    positions: [
+      [117.336832, 31.871106, 16.6],
+      [117.413649, 31.872435, 10.9],
+      [117.507419, 31.847006, 18.7]
+    ],
+    style: {
+      width: 10,
+      materialType: mars3d.MaterialType.LineCross,
+      materialOptions: {
+        color: Cesium.Color.RED, // 中心线颜色
+        dashLength: 36, // 十字长度
+        maskLength: 10, // 空隙间隔长度
+        centerPower: 0.1, // 中心宽百分比
+        dashPower: 0.2 // 虚线百分比
+      }
+    },
+    attr: { remark: "示例18" }
   })
   graphicLayer.addGraphic(graphic)
 }

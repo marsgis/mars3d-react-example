@@ -92,6 +92,16 @@ export function addRandomGraphicByCount(count) {
   })
   graphicLayer.addGraphic(graphic)
 
+  // 演示：平滑移动高度
+  // let height = 0
+  // setInterval(() => {
+  //   if (height > 10000 || graphic.isDestroy) {
+  //     return
+  //   }
+  //   height += 1
+  //   graphic.offsetHeight = height
+  // }, 10)
+
   graphicLayer.enabledEvent = true // 恢复事件
   return result.points.length
 }

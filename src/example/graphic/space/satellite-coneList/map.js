@@ -150,12 +150,11 @@ function addSatellite() {
   // 动态扫描视锥体
   const saomiaoSensor = new mars3d.graphic.SatelliteSensor({
     position: weixin.property,
+    orientation: weixin.orientation,
     style: {
       sensorType: mars3d.graphic.SatelliteSensor.Type.Rect,
       angle1: 4.5,
       angle2: 0.01,
-      heading: weixin.heading,
-      roll: weixin.roll,
       pitch: 0,
       color: "rgba(255,0,0,0.4)"
     }

@@ -149,7 +149,9 @@ function startRoam() {
       style: {
         angle: 15,
         angle2: 12,
-        heading: fixedRoute.model.heading,
+        heading: fixedRoute.heading,
+        pitch: -180, // 俯视
+
         length: Cesium.Cartographic.fromCartesian(fixedRoute.position).height,
         fill: false,
         outline: true,

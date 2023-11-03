@@ -73,6 +73,11 @@ export function addTileLayer() {
     alpha: 0.7
   })
   map.addLayer(tileLayer)
+
+  // 图片加载完成事件
+  tileLayer.readyPromise.then((layer) => {
+    console.log("图片加载完成", layer.image)
+  })
 }
 
 export function removeTileLayer() {

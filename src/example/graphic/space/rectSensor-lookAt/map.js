@@ -152,7 +152,8 @@ function addGraphicLayer() {
       topShow: true,
       topSteps: 2,
       rayEllipsoid: true // 与地球求交
-    }
+    },
+    reverse: true
   })
   graphicLayer.addGraphic(rectSensor)
 

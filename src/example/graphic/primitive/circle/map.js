@@ -40,6 +40,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic6(graphicLayer)
   addDemoGraphic7(graphicLayer)
   addDemoGraphic8(graphicLayer)
+  addDemoGraphic12(graphicLayer)
 }
 
 /**
@@ -263,6 +264,36 @@ function addDemoGraphic8(graphicLayer) {
     attr: { remark: "示例8" }
   })
   graphicLayer.addGraphic(circlePrimitiveScan)
+}
+
+function addDemoGraphic12(graphicLayer) {
+  const graphic = new mars3d.graphic.CircleEntity({
+    position: new mars3d.LngLatPoint(116.155132, 30.956363, 677.2),
+    style: {
+      radius: 1000,
+      fill: false,
+
+      outline: true,
+      outlineStyle: {
+        width: 12,
+        materialType: mars3d.MaterialType.LineCross,
+        materialOptions: {
+          color: Cesium.Color.RED, // 中心线颜色
+          dashLength: 36, // 十字长度
+          maskLength: 10, // 空隙间隔长度
+          centerPower: 0.1, // 中心宽百分比
+          dashPower: 0.2 // 虚线百分比
+        }
+        // materialType: mars3d.MaterialType.Image2,
+        // materialOptions: {
+        //   image: "/img/textures/line-air.svg",
+        //   repeat: new mars3d.Cesium.Cartesian2(500, 1)
+        // }
+      }
+    },
+    attr: { remark: "示例12" }
+  })
+  graphicLayer.addGraphic(graphic)
 }
 
 // 生成演示数据(测试数据量)

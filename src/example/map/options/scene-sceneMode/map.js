@@ -5,6 +5,7 @@ export let map // mars3d.Map三维地图对象
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
+    center: { lat: 30.692469, lng: 116.341333, alt: 16567, heading: 0, pitch: -30 },
     sceneMode: Cesium.SceneMode.SCENE3D,
     cameraController: {
       minimumZoomDistance: 1,
@@ -22,16 +23,44 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
-  let lastCameraView // 记录视角
+  // 加个标识
+  const graphic = new mars3d.graphic.PointEntity({
+    position: [116.317765, 30.973406, 1508],
+    style: {
+      color: "#ff0000",
+      pixelSize: 10,
+      outlineColor: "#ffffff",
+      outlineWidth: 2
+    },
+    tooltip: "我是视角中心点"
+    // flyTo: true
+  })
+  map.graphicLayer.addGraphic(graphic)
+
+  // // 切换场景前事件
+  // let lastCameraView // 记录视角
+  // map.on(mars3d.EventType.morphStart, function (event) {
+  //   lastCameraView = map.getCameraView()
+  // })
+  // // 切换场景后事件
+  // map.on(mars3d.EventType.morphComplete, function (event) {
+  //   map.setCameraView(lastCameraView, { duration: 0 })
+  // })
 
   // 切换场景前事件
+  let lastCenterPoint // 记录中心点
   map.on(mars3d.EventType.morphStart, function (event) {
-    lastCameraView = map.getCameraView()
+    lastCenterPoint = map.getCenter()
+    if (lastCenterPoint) {
+      graphic.position = lastCenterPoint
+    }
   })
-
   // 切换场景后事件
   map.on(mars3d.EventType.morphComplete, function (event) {
-    map.setCameraView(lastCameraView, { duration: 0 })
+    if (lastCenterPoint) {
+      const radius = map.camera.positionCartographic.height
+      map.flyToPoint(lastCenterPoint, { radius: radius, duration: 0 })
+    }
   })
 }
 

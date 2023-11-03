@@ -7,7 +7,7 @@ let graphicFrustum
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: 30.808451, lng: 116.295952, alt: 15993, heading: 2, pitch: -29 }
+    center: { lat: 30.841529, lng: 116.389494, alt: 28201.5, heading: 357, pitch: -58.6 }
   }
 }
 
@@ -19,6 +19,7 @@ export const mapOptions = {
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
+  map.hasTerrain = false
 
   // 创建矢量数据图层
   graphicLayer = new mars3d.layer.GraphicLayer()
@@ -55,7 +56,7 @@ function addDemoGraphic1(graphicLayer) {
       url: "//data.mars3d.cn/gltf/mars/feiji.glb",
       scale: 1,
       minimumPixelSize: 50,
-      heading: 150
+      heading: 0
     },
     attr: { remark: "示例1" }
   })
@@ -67,7 +68,8 @@ function addDemoGraphic1(graphicLayer) {
     targetPosition: [116.317411, 30.972581, 1439.7], // 可选
     style: {
       angle: 10,
-      // length: 4000, //targetPosition存在时无需传
+      angle2: 20,
+      // length: 4000, // targetPosition存在时无需传
       color: "#02ff00",
       opacity: 0.4,
       outline: true,
@@ -84,6 +86,8 @@ function addDemoGraphic2(graphicLayer) {
     style: {
       angle: 7,
       length: 4000,
+      heading: 270,
+      pitch: -90, // 平视
       color: "#FF0000",
       opacity: 0.4,
       outline: true,
@@ -122,6 +126,7 @@ function addDemoGraphic3(graphicLayer) {
       angle2: 0.01,
       length: 7000,
       heading: 70,
+      pitch: -180, // 俯视
       color: "#00ffff",
       opacity: 0.7
     }
@@ -146,6 +151,29 @@ export function onClickSelPoint() {
   })
 }
 
+export function getRayEarthPositions() {
+  map.graphicLayer.clear()
+
+  if (graphicFrustum.isDestroy) {
+    return
+  }
+
+  // 地面的4个顶点坐标
+  const positions = graphicFrustum.getRayEarthPositions()
+
+  // 添加地面矩形
+  const graphic = new mars3d.graphic.PolygonPrimitive({
+    positions: positions,
+    style: {
+      color: new Cesium.Color(1.0, 0.0, 0.0, 0.3),
+      // image: "img/tietu/gugong.jpg",
+      // stRotationDegree: fixedRoute.model.heading,
+      zIndex: graphicLayer.length
+    }
+  })
+  map.graphicLayer.addGraphic(graphic)
+}
+
 // 生成演示数据(测试数据量)
 export function addRandomGraphicByCount(count) {
   graphicLayer.clear()
@@ -166,7 +194,8 @@ export function addRandomGraphicByCount(count) {
         angle2: 5,
         length: result.radius * 2,
         heading: Math.random() * 100,
-        pitch: 40,
+        pitch: -180, // 俯视
+
         color: Cesium.Color.fromRandom({ alpha: 0.6 })
       },
       attr: { index: index }
@@ -198,6 +227,7 @@ export function startDrawGraphic() {
       angle: 10,
       angle2: 5,
       length: 1000,
+
       color: "#00ffff",
       opacity: 0.7
     }

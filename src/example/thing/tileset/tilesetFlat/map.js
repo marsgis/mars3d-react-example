@@ -47,18 +47,19 @@ export function showDytDemo() {
   tilesetLayer = new mars3d.layer.TilesetLayer({
     name: "大雁塔",
     url: "//data.mars3d.cn/3dtiles/qx-dyt/tileset.json",
-    position: { lng: 108.963363, lat: 34.221298, alt: -27 },
+    position: { alt: -27 },
     maximumScreenSpaceError: 1,
 
     // 可传入TilesetFlat构造参数，下面是演示压平区域
     flat: {
+      // precise: false,
       area: [
         {
           positions: [
-            [108.962938, 34.221141, 402.4],
-            [108.963847, 34.221141, 402.4],
-            [108.963847, 34.221868, 402.4],
-            [108.962938, 34.221868, 402.4]
+            [108.959054, 34.219449, 405],
+            [108.959821, 34.219449, 405],
+            [108.959821, 34.220165, 405],
+            [108.959054, 34.220165, 405]
           ]
         }
       ],
@@ -82,6 +83,8 @@ export function showTehDemo() {
     position: { lng: 117.218434, lat: 31.81807, alt: 163 },
     editHeight: -130.0, // 相对高度 (单位：米)，基于 压平/淹没区域 最低点高度的偏移量
     maximumScreenSpaceError: 16,
+    cacheBytes: 1073741824, // 1024MB = 1024*1024*1024
+    maximumCacheOverflowBytes: 2147483648, // 2048MB = 2048*1024*1024
     dynamicScreenSpaceError: true,
     cullWithChildrenBounds: false,
     skipLevelOfDetail: true,

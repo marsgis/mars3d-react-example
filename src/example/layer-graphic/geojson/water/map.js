@@ -2,7 +2,7 @@ import * as mars3d from "mars3d"
 
 export let map // mars3d.Map三维地图对象
 
-let graphic
+let zmGraphic
 let waterLayer
 
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
@@ -59,6 +59,7 @@ export function onMounted(mapInstance) {
       type: "waterC",
       styleOptions: {
         height: 16, // 水面高度
+        offsetHeight: 0,
         normalMap: "img/textures/waterNormals.jpg", // 水正常扰动的法线图
         frequency: 8000.0, // 控制波数的数字。
         animationSpeed: 0.02, // 控制水的动画速度的数字。
@@ -66,8 +67,7 @@ export function onMounted(mapInstance) {
         specularIntensity: 0.8, // 控制镜面反射强度的数字。
         baseWaterColor: "#006ab4", // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
         blendColor: "#006ab4", // 从水中混合到非水域时使用的rgba颜色对象。
-        opacity: 0.4, // 透明度
-        clampToGround: false // 是否贴地
+        opacity: 0.4 // 透明度
       }
     }
   })
@@ -82,7 +82,7 @@ export function onMounted(mapInstance) {
   })
 
   // 闸门的控制
-  graphic = new mars3d.graphic.ModelEntity({
+  zmGraphic = new mars3d.graphic.ModelEntity({
     name: "闸门",
     position: [121.479813, 29.791278, 16],
     style: {
@@ -90,7 +90,7 @@ export function onMounted(mapInstance) {
       heading: 105
     }
   })
-  map.graphicLayer.addGraphic(graphic)
+  map.graphicLayer.addGraphic(zmGraphic)
 }
 
 /**
@@ -101,13 +101,13 @@ export function onUnmounted() {
   map = null
 }
 
-const minHeight = 16
 let timeInv
 // 高度更新
- function updateHeight(height) {
-  graphic.height = height // 阀门高度
+function updateHeight(height) {
+  zmGraphic.height = 16 + height // 阀门高度
+
   waterLayer.eachGraphic((graphic) => {
-    graphic.updateHeight(height) // 水域高度变化
+    graphic.offsetHeight = height// 水域高度变化
   })
 }
 
@@ -120,8 +120,8 @@ let timeInv
  * @returns {void} 无
  */
 export function openZm(height, time) {
-  let thisHeight = minHeight // 当前高度
-  const endHeight = height + minHeight // 结束高度
+  let thisHeight = 0 // 当前高度
+  const endHeight = height // 结束高度
 
   const step = time / 0.1 // 步长
   const stepHeight = (endHeight - thisHeight) / step // 每次阀门、水面上移高度
@@ -150,8 +150,8 @@ export function openZm(height, time) {
  * @returns {void} 无
  */
 export function closeZm(height, time) {
-  let thisHeight = height + minHeight
-  const endHeight = minHeight
+  let thisHeight = height
+  const endHeight = 0
 
   const step = time / 0.1
   const stepHeight = (endHeight - thisHeight) / step

@@ -123,12 +123,12 @@ function addGraphicLayer(arr) {
   graphicLayer.addGraphic(video2D)
 
   fixedRoute.on(mars3d.EventType.change, function (event) {
-    // video2D.style.heading = fixedRoute.model.heading
-    // video2D.style.pitch = fixedRoute.model.pitch
+    // const hpr = mars3d.PointUtil.getHeadingPitchRollByOrientation(event.position, event.orientation)
+    // video2D.style.heading = Cesium.Math.toDegrees(hpr.heading)
+    // video2D.style.pitch = Cesium.Math.toDegrees(hpr.pitch)
 
-    const hpr = mars3d.PointUtil.getHeadingPitchRollByOrientation(event.position, event.orientation)
-    video2D.style.heading = Cesium.Math.toDegrees(hpr.heading)
-    video2D.style.pitch = Cesium.Math.toDegrees(hpr.pitch)
+    video2D.style.heading = fixedRoute.heading
+    video2D.style.pitch = fixedRoute.pitch
   })
 }
 

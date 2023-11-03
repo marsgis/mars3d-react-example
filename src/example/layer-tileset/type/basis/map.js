@@ -180,6 +180,8 @@ export function showQxShequDemo() {
     url: "//data.mars3d.cn/3dtiles/qx-shequ/tileset.json",
     position: { alt: 148.2 },
     maximumScreenSpaceError: 1,
+    cacheBytes: 1073741824, // 1024MB = 1024*1024*1024
+    maximumCacheOverflowBytes: 2147483648, // 2048MB = 2048*1024*1024
     dynamicScreenSpaceError: true,
     cullWithChildrenBounds: false,
     skipLevelOfDetail: true,
@@ -205,6 +207,16 @@ export function showQxShequDemo() {
 
   tiles3dLayer.readyPromise.then(function (layer) {
     console.log("load完成", layer)
+
+    // tiles3dLayer.tileset 是 Cesium3DTileset，支持绑定所有Cesium原生事件
+    // 参考API http://mars3d.cn/api/cesium/Cesium3DTileset.html
+    tiles3dLayer.tileset.loadProgress.addEventListener(function (numberOfPendingRequests, numberOfTilesProcessing) {
+      if (numberOfPendingRequests === 0 && numberOfTilesProcessing === 0) {
+        console.log("Loading: 停止加载")
+        return
+      }
+      console.log(`Loading: 待处理请求数: ${numberOfPendingRequests}, 处理数: ${numberOfTilesProcessing}`)
+    })
   })
 
   // 加载的事件 只执行一次

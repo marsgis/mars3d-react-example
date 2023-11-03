@@ -5,7 +5,7 @@ export let map // mars3d.Map三维地图对象
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = function (option) {
   option.control = {
-    baseLayerPicker: true // 是否显示图层选择控件
+    baseLayerPicker: false // 是否显示图层选择控件
   }
   return option
 }
@@ -18,6 +18,10 @@ export const mapOptions = function (option) {
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
+
+  // 方式2：在创建地球后按需调用addControl添加(直接new对应type类型的控件)
+  const baseLayerPicker = new mars3d.control.BaseLayerPicker()
+  map.addControl(baseLayerPicker)
 
   map.on(mars3d.EventType.changeBasemap, (event) => {
     console.log("切换了底图，当前底图为", map.basemap)

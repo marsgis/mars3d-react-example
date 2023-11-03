@@ -163,6 +163,16 @@ function addDemoGraphic4(graphicLayer) {
     attr: { remark: "示例4" }
   })
   graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
+
+  // 演示：平滑移动高度
+  let height = 0
+  setInterval(() => {
+    if (height > 10000 || graphic.isDestroy) {
+      return
+    }
+    height += 1
+    graphic.offsetHeight = height
+  }, 10)
 }
 
 // 生成演示数据(测试数据量)

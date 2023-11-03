@@ -137,7 +137,7 @@ export function addRandomGraphicByCount(count) {
         container: videoElement,
         angle: 46.3,
         angle2: 15.5,
-        heading: 178.5,
+        heading: 88.5,
         pitch: 8.2,
         distance: 1178,
         showFrustum: true
@@ -159,7 +159,7 @@ function addDemoGraphic1() {
       container: videoElement,
       angle: 46.3,
       angle2: 15.5,
-      heading: 178.5,
+      heading: 88.5,
       pitch: 8.2,
       distance: 78,
       showFrustum: true
@@ -205,7 +205,7 @@ export function startDrawGraphic2() {
       container: videoElement,
       angle: 46.3,
       angle2: 15.5,
-      heading: 178.5,
+      heading: 88.5,
       pitch: 8.2,
       distance: 78,
       showFrustum: true

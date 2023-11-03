@@ -91,7 +91,16 @@ function showGeoJsonVectorTile(geojson) {
       return style
     },
     // 以下为mars3d参数,API参考http://mars3d.cn/api/BaseTileLayer.html#.ConstructorOptions
-    maxLength: -1,
+    hasToGraphic: true,
+    highlight: {
+      crs: mars3d.CRS.EPSG4326, // 数据坐标系与图层坐标系不一致时，可以这样额外指定
+      clampToGround: true,
+      color: "#2deaf7",
+      opacity: 0.6,
+      outline: true,
+      outlineWidth: 3,
+      outlineColor: "#e000d9"
+    },
     popup: "all"
   })
   map.addLayer(tileLayer)

@@ -5,7 +5,7 @@ import * as mapWork from "./map"
 import { useLifecycle } from "@mars/widgets/common/uses/useLifecycle"
 import styles from "./index.module.less"
 
-import { renderToString } from "react-dom/server"
+import { initReactPopup } from "@mars/utils/file-util"
 import QueryPopup from "./QueryPopup"
 
 const storageName = "mars3d_queryGaodePOI"
@@ -34,10 +34,10 @@ export default function (props) {
           return
         }
 
-        // 示例比较特殊，使用 renderToString 返回一个html元素；
-        // 也可使用 createPortal ，具体用法参考react文档 或 mars3d基础项目
-        const html = renderToString(<QueryPopup attr={attr} />)
-        return html
+        // 示例比较特殊，返回一个html元素；
+        // 个人项目直接返回 dom
+        const dom = initReactPopup(<QueryPopup attr={attr} />)
+        return dom.innerHTML
       },
       { template: false }
     )

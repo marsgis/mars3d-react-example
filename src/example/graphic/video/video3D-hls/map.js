@@ -80,7 +80,7 @@ export function addRandomGraphicByCount(count) {
         maskImage: "img/textures/video-mask.png", // 羽化视频四周，融合更美观
         angle: 46.3,
         angle2: 15.5,
-        heading: 178.5,
+        heading: 88.5,
         pitch: -49.5,
         showFrustum: true
       },
@@ -102,7 +102,7 @@ function addDemoGraphic1() {
       maskImage: "img/textures/video-mask.png", // 羽化视频四周，融合更美观
       angle: 46.3,
       angle2: 15.5,
-      heading: 178.5,
+      heading: 88.5,
       pitch: -49.5,
       showFrustum: true
     },
@@ -147,7 +147,7 @@ export function startDrawGraphic2() {
       maskImage: "img/textures/video-mask.png", // 羽化视频四周，融合更美观
       angle: 46.3,
       angle2: 15.5,
-      heading: 178.5,
+      heading: 88.5,
       pitch: -49.5,
       showFrustum: true
     }

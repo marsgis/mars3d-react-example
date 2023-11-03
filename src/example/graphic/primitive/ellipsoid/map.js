@@ -258,6 +258,16 @@ function addDemoGraphic7(graphicLayer) {
     attr: { remark: "示例7" }
   })
   graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
+
+  // 演示：平滑移动高度
+  let height = 0
+  setInterval(() => {
+    if (height > 10000 || graphic.isDestroy) {
+      return
+    }
+    height += 1
+    graphic.offsetHeight = height
+  }, 10)
 }
 
 // 被切开的含内半径 半圆顶球体

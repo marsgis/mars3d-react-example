@@ -150,7 +150,7 @@ function addGraphicLayer() {
     clockRange: Cesium.ClockRange.CLAMPED, // CLAMPED 到达终止时间后停止
     camera: {
       type: "gs",
-      heading: 30,
+      heading: -84,
       radius: 500
     },
     model: {
@@ -170,6 +170,9 @@ function addGraphicLayer() {
   })
   graphicLayer.addGraphic(fixedRoute)
 
+  // 添加视频对象
+  addVideoDemo()
+
   // 绑定popup
   bindPopup(fixedRoute)
 
@@ -188,7 +191,6 @@ function addGraphicLayer() {
     map.controls.timeline.zoomTo(fixedRoute.startTime, fixedRoute.stopTime)
   }
 }
-
 
 // 改变视角模式
 export function updateCameraSetting(data) {
@@ -281,4 +283,28 @@ function throttled(fn, delay) {
       timer = setTimeout(fn, remaining)
     }
   }
+}
+
+
+function addVideoDemo() {
+  const video2D = new mars3d.graphic.Video2D({
+    position: new Cesium.CallbackProperty((time) => {
+      return fixedRoute.position
+    }, false),
+    style: {
+      url: "//data.mars3d.cn/file/video/lukou.mp4",
+      angle: 40,
+      angle2: 20,
+      heading: -84,
+      distance: 20,
+      showFrustum: true
+    }
+  })
+  map.graphicLayer.addGraphic(video2D)
+
+  fixedRoute.on(mars3d.EventType.change, function (event) {
+    video2D.style.heading = fixedRoute.heading
+    video2D.style.pitch = fixedRoute.pitch
+    video2D.style.roll = fixedRoute.roll
+  })
 }

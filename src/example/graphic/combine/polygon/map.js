@@ -113,8 +113,7 @@ export function addRandomGraphicByCount(count) {
     arrData.push({
       positions: [pt1, pt2, pt3, pt4, pt5],
       style: {
-        color: Cesium.Color.fromRandom({ alpha: 0.6 }),
-        clampToGround: true
+        color: Cesium.Color.fromRandom({ alpha: 0.6 })
       },
       attr: { index: index }
     })
@@ -128,6 +127,16 @@ export function addRandomGraphicByCount(count) {
     }
   })
   graphicLayer.addGraphic(graphic)
+
+  // 演示：平滑移动高度
+  // let height = 0
+  // setInterval(() => {
+  //   if (height > 10000 || graphic.isDestroy) {
+  //     return
+  //   }
+  //   height += 1
+  //   graphic.offsetHeight = height
+  // }, 10)
 
   graphicLayer.enabledEvent = true // 恢复事件
   return result.points.length

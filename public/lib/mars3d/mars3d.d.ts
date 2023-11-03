@@ -2,8 +2,8 @@
 /**
  * Mars3D三维可视化平台  mars3d
  *
- * 版本信息：v3.6.10
- * 编译日期：2023-10-23 17:27:39
+ * 版本信息：v3.6.11
+ * 编译日期：2023-11-04 00:00:59
  * 版权所有：Copyright by 火星科技  http://mars3d.cn
  * 使用单位：免费公开版 ，2023-03-17
  */
@@ -4563,10 +4563,6 @@ declare class BasePolyCombine extends BaseCombine {
      */
     readonly style: any;
     /**
-     * 附加的label文本对象
-     */
-    readonly label: Cesium.Label[] | any;
-    /**
      * 高亮对象。
      * @param [highlightStyle] - 高亮的样式，具体见各{@link GraphicType}矢量数据的style参数。
      * @param [closeLast = true] - 是否清除地图上上一次的高亮对象
@@ -7549,13 +7545,6 @@ declare class DivGraphic extends BaseGraphic {
      * 对应的DOM元素的id
      */
     readonly containerId: string;
-    /**
-     * 公共部分外框部分html内容，需要加2处：
-     * (1)用于填充html的地方写上{content}标识；
-     * (2)关闭按钮加class样式：closeButton。
-     * 传空字符串或false时，不用内置模版。
-     */
-    template: string;
     /**
      * 设置或获取当前对象对应的Html
      */
@@ -15101,7 +15090,7 @@ declare class BasePrimitive extends BaseGraphic {
      */
     readonly uniforms: any | undefined;
     /**
-     * 附加的label文本对象
+     * 附加的label文本对象（仅基础primitive支持，如Combine对象不支持）
      */
     readonly label: Cesium.Label | any;
     /**

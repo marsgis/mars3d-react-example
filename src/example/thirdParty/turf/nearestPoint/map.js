@@ -84,6 +84,10 @@ function clickPoint(position) {
   })
   graphicLayer.addGraphic(queryPoint)
 
+
+  console.log(`分析${pointLayer.length}个数据中的最近点`)
+
+
   // turf分析
   const targetPoint = queryPoint.toGeoJSON()
   const points = pointLayer.toGeoJSON()

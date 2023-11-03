@@ -68,7 +68,9 @@ export function addRandomGraphicByCount(count) {
       position: position,
       style: {
         radius: result.radius,
-        color: Cesium.Color.fromRandom({ alpha: 0.6 })
+        color: Cesium.Color.fromRandom({ alpha: 0.6 }),
+
+        label: { text: index, font_size: 12 } // 文本
       },
       attr: { index: index }
     })

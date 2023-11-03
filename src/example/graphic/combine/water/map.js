@@ -61,11 +61,15 @@ export function addRandomGraphicByCount(count) {
     const position = result.points[j]
     const index = j + 1
 
-    const pt1 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 0, result.radius)
-    const pt2 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 72, result.radius)
-    const pt3 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 144, result.radius)
+    let pt1 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 0, result.radius)
+    let pt2 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 72, result.radius)
+    let pt3 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 144, result.radius)
     const pt4 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 216, result.radius)
     const pt5 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 288, result.radius)
+
+    pt1 = mars3d.PointUtil.setPositionsHeight(pt1, 200)
+    pt2 = mars3d.PointUtil.setPositionsHeight(pt2, 100)
+    pt3 = mars3d.PointUtil.setPositionsHeight(pt3, 100)
 
     arrData.push({
       positions: [pt1, pt2, pt3, pt4, pt5],
@@ -77,7 +81,10 @@ export function addRandomGraphicByCount(count) {
         specularIntensity: 0.8, // 控制镜面反射强度的数字。
         baseWaterColor: "#006ab4", // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
         blendColor: "#006ab4", // 从水中混合到非水域时使用的rgba颜色对象。
-        opacity: 0.6 // 透明度
+        opacity: 0.6, // 透明度
+
+        offsetAttribute: Cesium.GeometryOffsetAttribute.ALL, // 需要有
+        offsetHeight: Math.random() * 1000
       },
       attr: { index: index }
     })
@@ -88,6 +95,38 @@ export function addRandomGraphicByCount(count) {
     instances: arrData
   })
   graphicLayer.addGraphic(graphic)
+
+  // 演示：平滑移动高度
+  // let height = 0
+  // setInterval(() => {
+  //   if (height > 10000 || graphic.isDestroy) {
+  //     return
+  //   }
+  //   height += 1
+  //   graphic.offsetHeight = height // 更新所有
+  //   // graphic.setOffsetHeight(height, 0) // 更新第0个数据
+  // }, 10)
+
+  setInterval(() => {
+    if (graphic.isDestroy) {
+      return
+    }
+    graphic.eachInstances((item, index) => {
+      // 下面只是为了方便演示，生成的区间高度值
+      if (!Cesium.defined(item.isUp)) {
+        item.isUp = Math.random() > 0.5 ? -1 : 1
+      }
+      if (item.style.offsetHeight > 1000) {
+        item.isUp = -1
+      }
+      if (item.style.offsetHeight < 0) {
+        item.isUp = 1
+      }
+
+      item.style.offsetHeight += item.isUp
+    })
+    graphic.setOffsetHeight()
+  }, 10)
 
   graphicLayer.enabledEvent = true // 恢复事件
   return result.points.length

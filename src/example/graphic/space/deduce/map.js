@@ -37,7 +37,6 @@ export function onMounted(mapInstance) {
   // 卫星矢量数据图层
   satelliteLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(satelliteLayer)
-
 }
 
 /**
@@ -174,7 +173,8 @@ export function initScene() {
 
 export function acceptance() {
   satelliteLayer.clear() // 清除卫星数据
-  map.setCameraView({ lat: 39.869944, lng: 115.884115, alt: 17452.2, heading: 65, pitch: -28.3 },
+  map.setCameraView(
+    { lat: 39.869944, lng: 115.884115, alt: 17452.2, heading: 65, pitch: -28.3 },
     {
       complete: () => accepAction()
     }
@@ -202,7 +202,6 @@ function accepAction() {
     })
     lineLayer.addGraphic(graphic)
   }
-
 }
 
 // 任务编排
@@ -220,22 +219,16 @@ export function task() {
 
 // 任务上注
 export function startTask() {
-
-  map.setCameraView(
-    { lat: 23.644034, lng: 66.747739, alt: 4865177.6, heading: 358, pitch: -63 },
-    { complete: () => addTask() }
-  )
+  map.setCameraView({ lat: 23.644034, lng: 66.747739, alt: 4865177.6, heading: 358, pitch: -63 }, { complete: () => addTask() })
 }
 
 function addTask() {
   const weixin = addSatelliteGrahic()
   satelliteLayer.addGraphic(weixin)
-  const propertyQC = getSampledPositionProperty([
-    [75.93105, 39.505111, 0]
+  const propertyQC = getSampledPositionProperty([[75.93105, 39.505111, 0]])
 
-  ])
   // 圆锥追踪体（动态position=>动态targetPosition）
-  const coneTrack = new mars3d.graphic.ConeTrackPrimitive({
+  const coneTrack = new mars3d.graphic.ConeTrack({
     position: propertyQC,
     targetPosition: weixin.property,
     style: {
@@ -245,9 +238,7 @@ function addTask() {
       materialOptions: {
         color: "#ffff00",
         repeat: 30.0
-      },
-      faceForward: false, // 当绘制的三角面片法向不能朝向视点时，自动翻转法向，从而避免法向计算后发黑等问题
-      closed: true // 是否为封闭体，实际上执行的是 是否进行背面裁剪
+      }
     }
   })
   satelliteLayer.addGraphic(coneTrack)
@@ -255,15 +246,11 @@ function addTask() {
   setTimeout(() => {
     satelliteLayer.removeGraphic(coneTrack)
   }, 5000)
-
 }
 
 // 卫星观测
 export function satelliteLook() {
-
-  map.setCameraView({ lat: 30.560391, lng: 58.246962, alt: 4113469.4, heading: 358, pitch: -63 },
-    { complete: () => lookAction() })
-
+  map.setCameraView({ lat: 30.560391, lng: 58.246962, alt: 4113469.4, heading: 358, pitch: -63 }, { complete: () => lookAction() })
 }
 
 function lookAction() {
@@ -277,9 +264,6 @@ function lookAction() {
       sensorType: mars3d.graphic.SatelliteSensor.Type.Rect,
       angle1: 20,
       angle2: 10,
-      heading: 0,
-      pitch: 0,
-      roll: 0,
       color: "rgba(110,245,0,0.5)"
     }
   })
@@ -290,23 +274,17 @@ function lookAction() {
   }, 10000)
 }
 
-
 // 数据接收
 export function sendDataAction() {
-
-  map.setCameraView(
-    { lat: 23.644034, lng: 66.747739, alt: 4865177.6, heading: 358, pitch: -63 },
-    { complete: () => sendData() }
-  )
+  map.setCameraView({ lat: 23.644034, lng: 66.747739, alt: 4865177.6, heading: 358, pitch: -63 }, { complete: () => sendData() })
 }
+
 function sendData() {
   const weixin = addSatelliteGrahic()
-  const propertyQC = getSampledPositionProperty([
-    [75.93105, 39.505111, 0]
+  const propertyQC = getSampledPositionProperty([[75.93105, 39.505111, 0]])
 
-  ])
   // 圆锥追踪体（动态position=>动态targetPosition）
-  const coneTrack = new mars3d.graphic.ConeTrackPrimitive({
+  const coneTrack = new mars3d.graphic.ConeTrack({
     position: weixin.property,
     targetPosition: propertyQC,
     style: {
@@ -323,7 +301,6 @@ function sendData() {
   })
   satelliteLayer.addGraphic(coneTrack)
 
-
   setTimeout(() => {
     satelliteLayer.removeGraphic(coneTrack)
   }, 5000)
@@ -331,16 +308,11 @@ function sendData() {
 
 // 数据传输
 export function transferringData() {
-
   satelliteLayer.clear() // 清除卫星数据
 
   // 场景视角
-  map.setCameraView(
-    { lat: 39.647456, lng: 116.234526, alt: 61145.4, heading: 17.5, pitch: -42.8 },
-    { complete: () => transferringAction() }
-  )
+  map.setCameraView({ lat: 39.647456, lng: 116.234526, alt: 61145.4, heading: 17.5, pitch: -42.8 }, { complete: () => transferringAction() })
 }
-
 
 function transferringAction() {
   const startPoint = Cesium.Cartesian3.fromDegrees(116.858716105082, 40.452385253501)
@@ -362,7 +334,6 @@ function transferringAction() {
   lineLayer.addGraphic(graphic)
 }
 
-
 // 产品生产
 export function production() {
   const cameraView = { lat: 40.070515, lng: 116.23878, alt: 2213.5, heading: 3, pitch: -68.8 }
@@ -373,7 +344,6 @@ export function production() {
   <br><p style="padding:0 10px;line-height:30px;">中国资源卫星应用中心接收到密云站传送过来的信息开始对数据进行处理然后生成产品...</p>
 </div>`
   addDivGraphic(cameraView, html)
-
 }
 
 // 产品分发
@@ -402,38 +372,31 @@ export function distribution() {
   }
 }
 
-
 function addDivGraphic(cameraView, divhtml) {
   clearGraphicLayer()
-  map.setCameraView(
-    cameraView,
-    {
-      complete: () => {
-        const divGraphic = new mars3d.graphic.DivGraphic({
-          position: [116.240032464881, 40.0797910765005],
-          style: {
-            html: divhtml,
-            horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
-            verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-            distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 200000), // 按视距距离显示
-            scaleByDistance: new Cesium.NearFarScalar(1000, 1.0, 200000, 0.2),
-            clampToGround: true
-          }
-
-        })
-        graphicLayer.addGraphic(divGraphic)
-        setTimeout(() => {
-          graphicLayer.removeGraphic(divGraphic)
-        }, 3000)
-      }
+  map.setCameraView(cameraView, {
+    complete: () => {
+      const divGraphic = new mars3d.graphic.DivGraphic({
+        position: [116.240032464881, 40.0797910765005],
+        style: {
+          html: divhtml,
+          horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
+          verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 200000), // 按视距距离显示
+          scaleByDistance: new Cesium.NearFarScalar(1000, 1.0, 200000, 0.2),
+          clampToGround: true
+        }
+      })
+      graphicLayer.addGraphic(divGraphic)
+      setTimeout(() => {
+        graphicLayer.removeGraphic(divGraphic)
+      }, 3000)
     }
-
-  )
+  })
 }
 
 let weixin
 function addSatelliteGrahic() {
-
   if (!weixin) {
     map.clock.currentTime = Cesium.JulianDate.fromIso8601("2019-07-15T18:48:48.36721000009856652Z")
     map.clock.multiplier = 2 // 速度
@@ -457,7 +420,6 @@ function addSatelliteGrahic() {
       }
     })
 
-
     satelliteLayer.addGraphic(weixin)
   }
   // 目标卫星
@@ -479,7 +441,6 @@ function getSampledPositionProperty(points) {
   return property
 }
 
-
 function clearGraphicLayer() {
   if (lineLayer) {
     lineLayer.clear() // 线矢量数据
@@ -487,15 +448,11 @@ function clearGraphicLayer() {
 
   if (satelliteLayer) {
     satelliteLayer.clear() // 清除卫星数据
-
   }
-
 }
 
 export function clearAll() {
   lineLayer.clear() // 线矢量数据
   satelliteLayer.clear() // 清除卫星数据
   graphicLayer.clear()
-
 }
-

@@ -93,7 +93,7 @@ export function addRandomGraphicByCount(count) {
         maskImage: "img/textures/video-mask.png", // 羽化视频四周，融合更美观
         angle: 46.3,
         angle2: 15.5,
-        heading: 178.5,
+        heading: 88.5,
         pitch: -49.5,
         showFrustum: true
       },
@@ -111,8 +111,10 @@ export function startDrawGraphic() {
   graphicLayer.startDraw({
     type: "video3D",
     style: {
-      url: "//data.mars3d.cn/file/video/lukou.mp4"
-      // maskImage: "img/textures/video-mask.png" // 羽化视频四周，融合更美观
+      url: "//data.mars3d.cn/file/video/lukou.mp4",
+      // maskImage: "img/textures/video-mask.png", // 羽化视频四周，融合更美观
+      addHeight: 10,
+      showFrustum: true
     }
   })
 }
@@ -135,8 +137,7 @@ export function startDrawGraphic2() {
       maskImage: "img/textures/video-mask.png", // 羽化视频四周，融合更美观
       angle: 33.3,
       angle2: 23.4,
-      heading: 140.7,
-      pitch: -82.1
+      showFrustum: true
     }
   })
   graphicLayer.addGraphic(video3D)
@@ -151,7 +152,7 @@ function addDemoGraphic1() {
       maskImage: "img/textures/video-mask.png", // 羽化视频四周，融合更美观
       angle: 33.3,
       angle2: 23.4,
-      heading: 140.7,
+      heading: 50.7,
       pitch: -82.1
     },
     attr: { remark: "示例1" }
@@ -167,7 +168,7 @@ function addDemoGraphic2() {
       maskImage: "img/textures/video-mask.png", // 羽化视频四周，融合更美观
       angle: 46.3,
       angle2: 15.5,
-      heading: 178.5,
+      heading: 88.5,
       pitch: -49.5,
       showFrustum: true
     },
@@ -191,7 +192,7 @@ function addDemoGraphic3() {
       // maskImage: "img/textures/video-mask.png", // 羽化视频四周，融合更美观
       angle: 20,
       angle2: 10,
-      heading: 178.5,
+      heading: 88.5,
       pitch: -90,
       showFrustum: true
     },

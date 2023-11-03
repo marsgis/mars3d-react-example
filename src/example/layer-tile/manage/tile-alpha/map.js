@@ -5,7 +5,9 @@ export let map // mars3d.Map三维地图对象
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: 28.118943, lng: 114.834765, alt: 4038547, heading: 351, pitch: -83 }
+    center: { lat: 28.118943, lng: 114.834765, alt: 4038547, heading: 351, pitch: -83 },
+    mapProjection: mars3d.CRS.EPSG3857, // 2D下展示墨卡托投影
+    mapMode2D: Cesium.MapMode2D.INFINITE_SCROLL// 2D下左右一直可以滚动重复世界地图
   },
   control: {
     timeline: true,
@@ -113,7 +115,8 @@ async function showImagesByGraphic() {
       materialType: mars3d.MaterialType.Image2,
       materialOptions: {
         image: property
-      }
+      },
+      hasShadows: false
     }
   })
   graphicLayer.addGraphic(graphic)

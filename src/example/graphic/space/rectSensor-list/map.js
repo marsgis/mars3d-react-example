@@ -144,6 +144,12 @@ function createSatelliteList(arr) {
         color: "#e2e2e2",
         opacity: 0.5,
         width: 1
+      },
+      highlight: {
+        path: {
+          opacity: 1,
+          width: 2
+        }
       }
     })
     graphicLayer.addGraphic(weixin)

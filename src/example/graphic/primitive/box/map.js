@@ -118,11 +118,22 @@ function addDemoGraphic3(graphicLayer) {
     style: {
       dimensions: new Cesium.Cartesian3(800.0, 600.0, 1000.0),
       color: "#99FFFF",
-      opacity: 0.4
+      opacity: 0.4,
+      offsetAttribute: Cesium.GeometryOffsetAttribute.ALL
     },
     attr: { remark: "示例3" }
   })
   graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
+
+  // 演示：平滑移动高度
+  let height = 0
+  setInterval(() => {
+    if (height > 10000 || graphic.isDestroy) {
+      return
+    }
+    height += 1
+    graphic.offsetHeight = height
+  }, 10)
 }
 
 function addDemoGraphic4(graphicLayer) {

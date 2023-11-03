@@ -444,11 +444,19 @@ function addDemoGraphic12(graphicLayer) {
       outline: true,
       outlineStyle: {
         width: 12,
-        materialType: mars3d.MaterialType.Image2,
+        materialType: mars3d.MaterialType.LineCross,
         materialOptions: {
-          image: "/img/textures/line-air.svg",
-          repeat: new mars3d.Cesium.Cartesian2(500, 1)
+          color: Cesium.Color.RED, // 中心线颜色
+          dashLength: 36, // 十字长度
+          maskLength: 10, // 空隙间隔长度
+          centerPower: 0.1, // 中心宽百分比
+          dashPower: 0.2 // 虚线百分比
         }
+        // materialType: mars3d.MaterialType.Image2,
+        // materialOptions: {
+        //   image: "/img/textures/line-air.svg",
+        //   repeat: new mars3d.Cesium.Cartesian2(500, 1)
+        // }
       }
     },
     attr: { remark: "示例12" }
@@ -493,8 +501,17 @@ export function startDrawGraphic() {
       opacity: 0.6,
       clampToGround: false,
       outline: true,
-      outlineWidth: 3,
-      outlineColor: "#ffffff",
+      outlineStyle: {
+        width: 20,
+        materialType: mars3d.MaterialType.LineCross,
+        materialOptions: {
+          color: Cesium.Color.RED, // 中心线颜色
+          dashLength: 36, // 十字长度
+          maskLength: 10, // 空隙间隔长度
+          centerPower: 0.1, // 中心宽百分比
+          dashPower: 0.2 // 虚线百分比
+        }
+      },
       label: {
         text: "我是火星科技",
         font_size: 18,

@@ -49,6 +49,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic15(graphicLayer)
   addDemoGraphic16(graphicLayer)
   addDemoGraphic17(graphicLayer)
+  addDemoGraphic18(graphicLayer)
 }
 
 /**
@@ -252,7 +253,6 @@ function addDemoGraphic5(graphicLayer) {
   })
   graphicLayer.addGraphic(graphic)
 }
-
 
 function addDemoGraphic6(graphicLayer) {
   const graphic = new mars3d.graphic.PolylineEntity({
@@ -528,6 +528,29 @@ function addDemoGraphic17(graphicLayer) {
   graphicLayer.addGraphic(graphic)
 }
 
+function addDemoGraphic18(graphicLayer) {
+  const graphic = new mars3d.graphic.PolylineEntity({
+    positions: [
+      [117.336832, 31.871106, 16.6],
+      [117.413649, 31.872435, 10.9],
+      [117.507419, 31.847006, 18.7]
+    ],
+    style: {
+      width: 10,
+      materialType: mars3d.MaterialType.LineCross,
+      materialOptions: {
+        color: Cesium.Color.RED, // 中心线颜色
+        dashLength: 36, // 十字长度
+        maskLength: 10, // 空隙间隔长度
+        centerPower: 0.1, // 中心宽百分比
+        dashPower: 0.2 // 虚线百分比
+      }
+    },
+    attr: { remark: "示例18" }
+  })
+  graphicLayer.addGraphic(graphic)
+}
+
 // 生成演示数据(测试数据量)
 export function addRandomGraphicByCount(count) {
   graphicLayer.clear()
@@ -558,8 +581,6 @@ export function addRandomGraphicByCount(count) {
   graphicLayer.enabledEvent = true // 恢复事件
   return result.points.length
 }
-
-
 
 // 开始绘制
 export function startDrawGraphic() {

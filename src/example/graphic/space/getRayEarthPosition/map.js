@@ -141,16 +141,16 @@ export function centerPoint(angle1) {
       const pt1 = weixin.position
 
       const hpr = new Cesium.HeadingPitchRoll(
-        Cesium.Math.toRadians(weixin.model.heading),
-        Cesium.Math.toRadians(weixin.model.pitch),
-        Cesium.Math.toRadians(weixin.model.roll + angle1)
+        Cesium.Math.toRadians(weixin.heading),
+        Cesium.Math.toRadians(weixin.pitch),
+        Cesium.Math.toRadians(weixin.roll + angle1)
       )
       const ptLeft = mars3d.PointUtil.getRayEarthPosition(pt1, hpr, true)
 
       const hdr2 = new Cesium.HeadingPitchRoll(
-        Cesium.Math.toRadians(weixin.model.heading),
-        Cesium.Math.toRadians(weixin.model.pitch),
-        Cesium.Math.toRadians(weixin.model.roll - angle1)
+        Cesium.Math.toRadians(weixin.heading),
+        Cesium.Math.toRadians(weixin.pitch),
+        Cesium.Math.toRadians(weixin.roll - angle1)
       )
       const ptRight = mars3d.PointUtil.getRayEarthPosition(pt1, hdr2, true)
 

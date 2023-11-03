@@ -139,12 +139,21 @@ function addDemoGraphic3(graphicLayer) {
         specularIntensity: 0.5, // 控制镜面反射强度的数字。
         baseWaterColor: "#006ab4", // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
         blendColor: "#006ab4" // 从水中混合到非水域时使用的rgba颜色对象。
-      },
-      clampToGround: true
+      }
     },
     attr: { remark: "示例3" }
   })
   graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
+
+  // 演示：平滑移动高度
+  let height = 0
+  setInterval(() => {
+    if (height > 10000 || graphic.isDestroy) {
+      return
+    }
+    height += 1
+    graphic.offsetHeight = height
+  }, 10)
 }
 
 // 面状：草地面效果
