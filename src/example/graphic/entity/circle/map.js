@@ -384,7 +384,7 @@ function addDemoGraphic10(graphicLayer) {
         width: 12,
         materialType: mars3d.MaterialType.Image2,
         materialOptions: {
-          image: "/img/textures/airline.svg",
+          image: "/img/textures/line-air.svg",
           repeat: new mars3d.Cesium.Cartesian2(1000, 1)
         }
       }

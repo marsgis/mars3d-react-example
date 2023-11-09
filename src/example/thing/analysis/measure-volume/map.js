@@ -52,6 +52,24 @@ function addMeasure() {
   measure.on(mars3d.EventType.end, function (event) {
     console.log("分析完成", event)
     hideLoading()
+
+    // const resultInter = event.graphic.interPolygonObj
+    // const cutHeight = event.graphic.height
+
+    // let totalArea = 0
+    // for (let i = 0, len = resultInter.list.length; i < len; i++) {
+    //   const item = resultInter.list[i]
+
+    //   const pt1 = item.point1
+    //   const pt2 = item.point2
+    //   const pt3 = item.point3
+
+    //   const height = (pt1.height + pt2.height + pt3.height) / 3
+    //   if (height < cutHeight) {
+    //     totalArea += item.area
+    //   }
+    // }
+    // console.log(totalArea, mars3d.MeasureUtil.formatArea(totalArea))
   })
 
   // 加一些演示数据

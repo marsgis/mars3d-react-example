@@ -107,26 +107,26 @@ export function addRandomGraphicByCount(count) {
   //   // graphic.setOffsetHeight(height, 0) // 更新第0个数据
   // }, 10)
 
-  setInterval(() => {
-    if (graphic.isDestroy) {
-      return
-    }
-    graphic.eachInstances((item, index) => {
-      // 下面只是为了方便演示，生成的区间高度值
-      if (!Cesium.defined(item.isUp)) {
-        item.isUp = Math.random() > 0.5 ? -1 : 1
-      }
-      if (item.style.offsetHeight > 1000) {
-        item.isUp = -1
-      }
-      if (item.style.offsetHeight < 0) {
-        item.isUp = 1
-      }
+  // setInterval(() => {
+  //   if (graphic.isDestroy) {
+  //     return
+  //   }
+  //   graphic.eachInstances((item, index) => {
+  //     // 下面只是为了方便演示，生成的区间高度值
+  //     if (!Cesium.defined(item.isUp)) {
+  //       item.isUp = Math.random() > 0.5 ? -1 : 1
+  //     }
+  //     if (item.style.offsetHeight > 1000) {
+  //       item.isUp = -1
+  //     }
+  //     if (item.style.offsetHeight < 0) {
+  //       item.isUp = 1
+  //     }
 
-      item.style.offsetHeight += item.isUp
-    })
-    graphic.setOffsetHeight()
-  }, 10)
+  //     item.style.offsetHeight += item.isUp
+  //   })
+  //   graphic.setOffsetHeight()
+  // }, 10)
 
   graphicLayer.enabledEvent = true // 恢复事件
   return result.points.length

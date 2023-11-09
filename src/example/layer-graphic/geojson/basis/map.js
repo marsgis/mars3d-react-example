@@ -255,7 +255,12 @@ export function showRegion() {
         },
         // 高亮时的样式
         highlight: {
-          opacity: 0.9
+          opacity: 0.9,
+          outlineStyle: {
+            width: 6,
+            color: "#ff0000",
+            addHeight: 100
+          }
         },
         label: {
           // 面中心点，显示文字的配置

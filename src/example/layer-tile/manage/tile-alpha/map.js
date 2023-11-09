@@ -7,7 +7,7 @@ export const mapOptions = {
   scene: {
     center: { lat: 28.118943, lng: 114.834765, alt: 4038547, heading: 351, pitch: -83 },
     mapProjection: mars3d.CRS.EPSG3857, // 2D下展示墨卡托投影
-    mapMode2D: Cesium.MapMode2D.INFINITE_SCROLL// 2D下左右一直可以滚动重复世界地图
+    mapMode2D: Cesium.MapMode2D.INFINITE_SCROLL // 2D下左右一直可以滚动重复世界地图
   },
   control: {
     timeline: true,
@@ -115,11 +115,31 @@ async function showImagesByGraphic() {
       materialType: mars3d.MaterialType.Image2,
       materialOptions: {
         image: property
-      },
-      hasShadows: false
+      }
     }
   })
   graphicLayer.addGraphic(graphic)
+
+  // RectanglePrimitive
+  // const graphic = new mars3d.graphic.RectanglePrimitive({
+  //   positions: [
+  //     [63.8148899733, 12.7700338517],
+  //     [143.536486117, 56.3833398551]
+  //   ],
+  //   style: {
+  //     materialType: mars3d.MaterialType.Image2,
+  //     materialOptions: {
+  //       image: property.getValue(map.clock.currentTime)
+  //     },
+  //     flat: true
+  //   }
+  // })
+  // graphicLayer.addGraphic(graphic)
+
+  // // 更新
+  // setInterval(() => {
+  //   graphic.uniforms.image = property.getValue(map.clock.currentTime)
+  // }, 1000)
 }
 
 // ImageLayer的方式，直接替换
@@ -224,16 +244,19 @@ function showImagesByAlpha() {
     layer2.alpha = 0
 
     clearInterval(idxTimer)
-    idxTimer = window.setInterval(function () {
-      layer1.alpha -= alphaStep
-      layer2.alpha += alphaStep
+    idxTimer = window.setInterval(
+      function () {
+        layer1.alpha -= alphaStep
+        layer2.alpha += alphaStep
 
-      if (layer1.alpha < alphaStep) {
-        layer1.alpha = 0
-        step++
-        changeRadarAlpha(time)
-      }
-    }, time * 1000 * alphaStep)
+        if (layer1.alpha < alphaStep) {
+          layer1.alpha = 0
+          step++
+          changeRadarAlpha(time)
+        }
+      },
+      time * 1000 * alphaStep
+    )
   }
 
   changeRadarAlpha(1)

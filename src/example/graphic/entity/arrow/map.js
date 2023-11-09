@@ -224,9 +224,7 @@ function addDemoGraphic9(graphicLayer) {
   const graphic = new mars3d.graphic.BillboardEntity({
     position: [116.699972, 29.004322],
     style: {
-      image: "img/marker/80800.png",
-      width: 100,
-      height: 100,
+      image: "img/marker/qianjin.png",
       horizontalOrigin: Cesium.HorizontalOrigin.LEFT, // 横向的定位点，LEFT左侧
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM // 竖向的定位点，BOTTOM底部
     },

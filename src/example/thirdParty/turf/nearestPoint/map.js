@@ -4,6 +4,13 @@ export let map // mars3d.Map三维地图对象
 let pointLayer
 let graphicLayer
 
+export const mapOptions = {
+  scene: {
+    center: { lat: 31.967015, lng: 117.316406, alt: 9150, heading: 206, pitch: -42 },
+    fxaa: true
+  }
+}
+
 const pointStyle = {
   verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
   scale: 1,
@@ -13,13 +20,6 @@ const pointStyle = {
   scaleByDistance_near: 1000,
   scaleByDistance_nearValue: 1,
   clampToGround: true
-}
-
-export const mapOptions = {
-  scene: {
-    center: { lat: 31.967015, lng: 117.316406, alt: 9150, heading: 206, pitch: -42 },
-    fxaa: true
-  }
 }
 
 /**
@@ -50,11 +50,6 @@ export function onMounted(mapInstance) {
     zIndex: 20
   })
   map.addLayer(graphicLayer)
-
-  // 地球点击事件
-  map.on(mars3d.EventType.click, (e) => {
-    clickPoint(e.cartesian)
-  })
 }
 
 /**
@@ -63,6 +58,23 @@ export function onMounted(mapInstance) {
  */
 export function onUnmounted() {
   map = null
+}
+
+export function drawPoint() {
+  clearAll()
+
+  graphicLayer
+    .startDraw({
+      type: "billboard",
+      style: {
+        ...pointStyle,
+        image: "img/marker/route-start.png"
+      }
+    })
+    .then((graphic) => {
+      clickPoint(graphic.positionShow)
+      graphic.remove()
+    })
 }
 
 function clickPoint(position) {
@@ -84,9 +96,7 @@ function clickPoint(position) {
   })
   graphicLayer.addGraphic(queryPoint)
 
-
   console.log(`分析${pointLayer.length}个数据中的最近点`)
-
 
   // turf分析
   const targetPoint = queryPoint.toGeoJSON()
@@ -97,6 +107,9 @@ function clickPoint(position) {
   }
 
   const nearestPoint = mars3d.Util.geoJsonToGraphics(nearest)[0]
+
+  const graphic = pointLayer.getGraphicById(nearestPoint.attr.id)
+  updateSelect(graphic)
 
   // 连线
   const polyline = new mars3d.graphic.PolylineEntity({
@@ -134,5 +147,29 @@ function clickPoint(position) {
 }
 
 export function clearAll() {
+  removeSelect()
   graphicLayer.clear()
+}
+
+let selectGraphic
+function updateSelect(graphic) {
+  removeSelect()
+
+  if (graphic) {
+    selectGraphic = graphic
+    selectGraphic.setStyle({
+      image: "img/marker/mark-red.png"
+    })
+  }
+}
+
+export function removeSelect() {
+  if (!selectGraphic) {
+    return
+  }
+
+  selectGraphic.setStyle({
+    image: "img/marker/mark-blue.png"
+  })
+  selectGraphic = undefined
 }

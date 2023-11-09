@@ -25,8 +25,9 @@ export function onMounted(mapInstance) {
     //   color: '#ffff00',
     // },
     // labelStyle: {
-    //   color: '#ffff00',
-    // },
+    //   color: "#ffff00",
+    //   pixelOffset: new Cesium.Cartesian2(0, 0)
+    // }
   })
   map.addLayer(tileLayer)
 }

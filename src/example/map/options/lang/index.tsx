@@ -35,6 +35,19 @@ function UIComponent() {
     <MarsPannel visible={true} top={10} right={10} width={355}>
       <div className="f-mb">Tip: The default language is Chinese中文简体, you can switch to English, etc.</div>
 
+      <div className="language_change">
+        <Row>
+          <Col span={8}>语言切换:</Col>
+          <Col span={16}>
+                <MarsButton onClick={() => mapWork.toCustomLang()}>
+                  English
+                </MarsButton>
+                <MarsButton onClick={() => mapWork.toDefaultLange()}>
+                  中文简体
+                </MarsButton>
+          </Col>
+        </Row>
+      </div>
       <div className="lang-button-contain">
         <Row>
           <Col span={8}>Plot:</Col>

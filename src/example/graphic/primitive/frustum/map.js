@@ -68,7 +68,7 @@ function addDemoGraphic1(graphicLayer) {
     targetPosition: [116.317411, 30.972581, 1439.7], // 可选
     style: {
       angle: 10,
-      angle2: 20,
+      angle2: 10,
       // length: 4000, // targetPosition存在时无需传
       color: "#02ff00",
       opacity: 0.4,
@@ -149,6 +149,10 @@ export function onClickSelPoint() {
       graphicFrustum.targetPosition = position
     }
   })
+}
+
+export function clear() {
+  map.graphicLayer.clear()
 }
 
 export function getRayEarthPositions() {

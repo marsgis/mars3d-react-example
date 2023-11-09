@@ -185,3 +185,37 @@ function addDemoGraphic2(graphicLayer) {
   })
   graphicLayer.addGraphic(graphic)
 }
+
+export function openJSON(file) {
+  const fileName = file.name
+  const fileType = fileName?.substring(fileName.lastIndexOf(".") + 1, fileName.length).toLowerCase()
+
+  if (fileType === "json") {
+    const reader = new FileReader()
+    console.log("reader")
+    console.log(reader)
+    reader.readAsText(file, "UTF-8")
+    reader.onloadend = function (e) {
+      const geojson = JSON.parse(this.result)
+      console.log("打开了json文件", geojson)
+
+      if (geojson.type === "graphic" && geojson.data) {
+        measure.graphicLayer.addGraphic(geojson.data)
+        measure.graphicLayer.flyTo()
+      } else {
+        measure.graphicLayer.loadGeoJSON(geojson, { flyTo: true })
+      }
+    }
+  } else {
+    globalMsg("暂不支持 " + fileType + " 文件类型的数据！")
+  }
+}
+
+export function saveJSON() {
+  if (measure.graphicLayer.length === 0) {
+    globalMsg("当前没有标注任何数据，无需保存！")
+    return
+  }
+  const geojson = measure.graphicLayer.toJSON()
+  mars3d.Util.downloadFile("测量结果.json", JSON.stringify(geojson))
+}

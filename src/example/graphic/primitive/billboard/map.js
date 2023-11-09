@@ -41,6 +41,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic12(graphicLayer)
   addDemoGraphic13(graphicLayer)
   addDemoGraphic14(graphicLayer)
+  addDemoGraphic15(graphicLayer)
 }
 
 /**
@@ -345,6 +346,94 @@ function getSampledPositionProperty(points) {
     property.addSample(time, position)
   }
   return property
+}
+
+function addDemoGraphic15(graphicLayer) {
+  const build = buildProgress(87, { color: "#2B3946" })
+
+  const graphic = new mars3d.graphic.BillboardPrimitive({
+    position: new mars3d.LngLatPoint(116.095828, 30.734919, 805),
+    style: {
+      image: "img/marker/street.png",
+      horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+      verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+      ...build
+    },
+    attr: { remark: "示例15" }
+  })
+  graphicLayer.addGraphic(graphic)
+}
+
+function buildProgress(progress, options) {
+  options = {
+    color: "#e3e3e3",
+    unit: "%",
+    fontSize: 24,
+    fontFamily: "Gilroy-Bold",
+    fontWeight: "bold",
+    ...options
+  }
+
+  const width = Math.ceil(Math.max(getTextWidth(progress, options), 82))
+  const halfWidth = width / 2
+  const reduce = width - 82
+
+  const height = 50
+  const base64 = svgTobase64(`<svg width="${width * 2}px" height="${
+    height * 2
+  }px" viewBox="0 0 ${width} 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+      <path d="M8,0 L${74 + reduce},0 C${78.418278 + reduce},-8.11624501e-16 ${82 + reduce},3.581722 ${82 + reduce},8 L${82 + reduce},35 C${
+        82 + reduce
+      },39.418278 ${78.418278 + reduce},43 ${74 + reduce},43 L${49.6878172 + reduce},43 L${49.6878172 + reduce / 2},43 L${41 + reduce / 2},50 L${
+        32.3121828 + reduce / 2
+      },43 L8,43 C3.581722,43 5.41083001e-16,39.418278 0,35 L0,8 C-5.41083001e-16,3.581722 3.581722,8.11624501e-16 8,0 Z" id="path-1"></path>
+      <filter x="-7.9%" y="-13.0%" width="115.9%" height="126.0%" filterUnits="objectBoundingBox" id="filter-3">
+          <feGaussianBlur stdDeviation="0.5" in="SourceAlpha" result="shadowBlurInner1"></feGaussianBlur>
+          <feOffset dx="0" dy="1" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
+          <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+          <feColorMatrix values="0 0 0 0 0.721568627   0 0 0 0 0.823529412   0 0 0 0 0.862745098  0 0 0 1 0" type="matrix" in="shadowInnerInner1" result="shadowMatrixInner1"></feColorMatrix>
+          <feGaussianBlur stdDeviation="4" in="SourceAlpha" result="shadowBlurInner2"></feGaussianBlur>
+          <feOffset dx="0" dy="-5" in="shadowBlurInner2" result="shadowOffsetInner2"></feOffset>
+          <feComposite in="shadowOffsetInner2" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner2"></feComposite>
+          <feColorMatrix values="0 0 0 0 0.639215686   0 0 0 0 0.752941176   0 0 0 0 0.807843137  0 0 0 1 0" type="matrix" in="shadowInnerInner2" result="shadowMatrixInner2"></feColorMatrix>
+          <feMerge>
+              <feMergeNode in="shadowMatrixInner1"></feMergeNode>
+              <feMergeNode in="shadowMatrixInner2"></feMergeNode>
+          </feMerge>
+      </filter>
+  </defs>
+  <use fill="#E5F0F4" fill-rule="evenodd" xlink:href="#path-1"></use>
+  <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-1"></use>
+  <text font-family="Gilroy-Bold, Gilroy,Arial, Helvetica, sans-serif" style="font-weight:bold;dominant-baseline:middle;text-anchor:middle;fill: ${
+    options.color
+  };font-size: ${options.fontSize}px; white-space: pre; text-anchor: middle" x="${halfWidth}" y="24">${progress}D</text>
+</svg>`)
+
+  return {
+    image: base64,
+    width: width,
+    height: height
+  }
+}
+function getTextWidth(text, options) {
+  // 获取 canvas 元素和上下文对象
+  const canvas = document.createElement("canvas")
+  const ctx = canvas.getContext("2d")
+
+  // 设置字体样式
+  const fontSize = `${options.fontSize}px`
+  const fontFamily = options.fontFamily
+  const fontWeight = options.fontWeight
+  ctx.font = `${fontWeight} ${fontSize} ${fontFamily}`
+  // 计算文本的宽度
+  const width = 28 + ctx.measureText(`${text}${options.unit}`).width
+  return width
+}
+
+function svgTobase64(source) {
+  const url = "data:image/svg+xml;base64," + window.btoa(decodeURIComponent(encodeURIComponent(source)))
+  return url
 }
 
 // 生成演示数据(测试数据量)

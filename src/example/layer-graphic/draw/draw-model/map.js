@@ -33,7 +33,6 @@ export function onMounted(mapInstance) {
   graphicLayer.on(mars3d.EventType.click, function (event) {
     console.log("监听layer，单击了矢量对象", event)
   })
-
 }
 
 /**
@@ -58,8 +57,6 @@ export function startDrawModel(url, isProxy) {
     }
   })
 }
-
-
 
 // 地形
 export function chkHasTerrain(isStkTerrain) {
@@ -99,6 +96,25 @@ export function openGeoJSON(file) {
       graphicLayer.loadGeoJSON(json, {
         flyTo: true
       })
+    }
+  } else if (fileType === "glb" || fileType === "gltf") {
+    graphicLayer.clear()
+    const reader = new FileReader()
+    reader.readAsArrayBuffer(file)
+    reader.onloadend = function (e) {
+      const arrayBuffer = this.result
+      const graphic = new mars3d.graphic.ModelPrimitive({
+        position: [117.221674, 31.823752, 34.7],
+        style: {
+          url: new Uint8Array(arrayBuffer),
+          scale: 1,
+          minimumPixelSize: 50
+        },
+        hasEdit: false
+      })
+      graphicLayer.addGraphic(graphic)
+
+      graphic.flyTo({ radius: 1000 })
     }
   } else {
     globalMsg("暂不支持 " + fileType + " 文件类型的数据！")

@@ -1,7 +1,26 @@
 import * as mars3d from "mars3d"
 
+export const mapOptions = {
+  scene: {
+    center: { lat: 31.967015, lng: 117.316406, alt: 9150, heading: 206, pitch: -42 },
+    fxaa: true
+  }
+}
+
 export let map // mars3d.Map三维地图对象
 export let graphicLayer // 矢量图层对象
+let pointLayer
+
+const pointStyle = {
+  verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+  scale: 1,
+  scaleByDistance: true,
+  scaleByDistance_far: 20000,
+  scaleByDistance_farValue: 0.7,
+  scaleByDistance_near: 1000,
+  scaleByDistance_nearValue: 1,
+  clampToGround: true
+}
 
 /**
  * 初始化地图业务，生命周期钩子函数（必须）
@@ -11,6 +30,20 @@ export let graphicLayer // 矢量图层对象
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
+
+  pointLayer = new mars3d.layer.GeoJsonLayer({
+    name: "体育设施点",
+    url: "//data.mars3d.cn/file/geojson/hfty-point.json",
+    symbol: {
+      styleOptions: {
+        ...pointStyle,
+        image: "img/marker/mark-blue.png"
+      }
+    },
+    popup: "{项目名称}",
+    zIndex: 10
+  })
+  map.addLayer(pointLayer)
 
   graphicLayer = new mars3d.layer.GraphicLayer({
     hasEdit: true,
@@ -80,10 +113,11 @@ export function drawPolygon() {
   })
 }
 
-function deleteAll() {
+export function deleteAll() {
   graphicLayer.clear()
   map.graphicLayer.clear()
   lastgeojson = null
+  removeSelect()
 }
 
 let width
@@ -117,8 +151,40 @@ function updateBuffer(graphic) {
       color: "rgba(255,0,0,0.4)",
       clampToGround: true
     }
-  })
+  })[0]
 
   map.graphicLayer.clear()
-  map.graphicLayer.addGraphic(graphicsOptions)
+
+  const drawGraphic = map.graphicLayer.addGraphic(graphicsOptions)
+  updateSelect(drawGraphic)
+}
+
+let selectGraphic = []
+function updateSelect(drawGraphic) {
+  removeSelect()
+  if (!drawGraphic) {
+    return
+  }
+
+  pointLayer.eachGraphic((graphic) => {
+    const position = graphic.positionShow
+
+    const isInArea = drawGraphic.isInPoly(position)
+    if (isInArea) {
+      graphic.setStyle({
+        image: "img/marker/mark-red.png"
+      })
+      selectGraphic.push(graphic)
+    }
+  })
+}
+
+export function removeSelect() {
+  for (let i = 0; i < selectGraphic.length; i++) {
+    const graphic = selectGraphic[i]
+    graphic.setStyle({
+      image: "img/marker/mark-blue.png"
+    })
+  }
+  selectGraphic = []
 }

@@ -371,7 +371,7 @@ export function showMaxShihuaDemo() {
     url: "//data.mars3d.cn/3dtiles/max-shihua/tileset.json",
     position: { lng: 117.077158, lat: 31.659116, alt: -2.0 },
     maximumScreenSpaceError: 1,
-
+    // shadows: Cesium.ShadowMode.DISABLED,
     // 以下参数可以参考用于3dtiles总数据大，清晰度过高情况下进行性能优化。这不是一个通用的解决方案，但可以以此为参考。
     skipLevelOfDetail: true,
     loadSiblings: true,

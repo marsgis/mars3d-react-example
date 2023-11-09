@@ -59,8 +59,11 @@ export function onMounted(mapInstance) {
   })
   map.addLayer(graphicLayer)
 
-  // mars3d.Lang["_双击完成绘制"][0] = "右击完成绘制"
-  // mars3d.Lang["_右击删除点"][0] = "中键单击完成绘制"
+  // 修改文本
+  // map.setLangText({
+  //   _双击完成绘制: "右击完成绘制",
+  //   _右击删除点: "中键单击完成绘制"
+  // })
 
   // map.on(mars3d.EventType.mouseOver, function (event) {
   //   console.log("mouseover")
@@ -120,9 +123,11 @@ export function onMounted(mapInstance) {
   // })
 
   // 自定义提示
-  // mars3d.Lang["_单击开始绘制"][0] = "新的提示内容";
-  // mars3d.Lang["_单击增加点右击删除点"][0] = "新的提示内容";
-  // mars3d.Lang["_双击完成绘制"][0] = "";
+  // map.setLangText({
+  //   _双击完成绘制: "",
+  //   _单击开始绘制: "新的提示内容",
+  //   _单击增加点右击删除点: "新的提示内容"
+  // })
 }
 
 /**

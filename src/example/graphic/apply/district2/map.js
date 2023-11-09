@@ -222,7 +222,8 @@ function addOutCircle(graphicLayer) {
         materialOptions: {
           image: item.image,
           opacity: 0.4
-        }
+        },
+        flat: true
       }
     })
     graphicLayer.addGraphic(graphic)
