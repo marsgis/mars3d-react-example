@@ -34,6 +34,10 @@ export function onUnmounted() {
   map = null
 }
 
+// true:  精确模式, 直接存储范围,但传入的范围顶点数量多时，就会造成一定程度的卡顿；
+// false: 掩膜模式，栅格化范围,效率与范围顶点数量无关,但放大后锯齿化严重
+const precise = false
+
 export function showDytDemo() {
   removeLayer()
 
@@ -42,7 +46,11 @@ export function showDytDemo() {
     name: "大雁塔",
     url: "//data.mars3d.cn/3dtiles/qx-dyt/tileset.json",
     position: { alt: -27 },
-    maximumScreenSpaceError: 1,
+    maximumScreenSpaceError: 1, // 可传入TilesetFlat构造参数，下面是演示压平区域
+    flat: {
+      precise,
+      enabled: true
+    },
     flyTo: true
   })
   map.addLayer(tilesetLayer)
@@ -70,7 +78,7 @@ export function showTehDemo() {
 
     // 可传入TilesetClip构造参数，下面是演示压平区域
     clip: {
-      // precise: false,
+      precise,
       area: [
         {
           positions: [
@@ -80,7 +88,8 @@ export function showTehDemo() {
             [117.21743, 31.816218, 31.7]
           ]
         }
-      ]
+      ],
+      enabled: true
     }
   })
   map.addLayer(tilesetLayer)
@@ -108,6 +117,7 @@ export function showXianDemo() {
     cullWithChildrenBounds: false,
     center: { lat: 28.440675, lng: 119.487735, alt: 639, heading: 269, pitch: -38 },
     clip: {
+      precise,
       enabled: true
     },
     flyTo: true

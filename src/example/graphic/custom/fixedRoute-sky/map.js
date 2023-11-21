@@ -59,7 +59,7 @@ function addDivPoint(position) {
   map.addLayer(graphicLayer)
 
   const graphic = new mars3d.graphic.DivGraphic({
-    position: position,
+    position,
     hasCache: false,
     style: {
       html: `<div class="marsTiltPanel marsTiltPanel-theme-blue">

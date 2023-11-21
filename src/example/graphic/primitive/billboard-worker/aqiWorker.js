@@ -89,7 +89,7 @@ function callback() {
 
       const newItem = {
         ...item,
-        aqi: aqi,
+        aqi,
         level: table[level].level,
         influence: table[level].influence,
         suggestion: table[level].suggestion
@@ -98,10 +98,10 @@ function callback() {
     }
     /// ///////////////////////////////////////////////////
     // self代表子线程自身
-    self.postMessage({ currTime: currTime, entityTable: entityTable })
+    self.postMessage({ currTime, entityTable })
     self.close()
   } else if (xmlHttpRequest.readyState === 4 && xmlHttpRequest.status === 0) {
-    self.postMessage({ currTime: currTime, entityTable: [] })
+    self.postMessage({ currTime, entityTable: [] })
     self.close()
   }
 }

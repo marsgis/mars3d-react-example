@@ -166,7 +166,7 @@ function initCharts_Two(arr: any, ZJLY: any) {
           "#96BFFF"
         ],
         center: ["45%", "55%"],
-        data: data, // 使用for循环添加
+        data, // 使用for循环添加
         emphasis: {
           itemStyle: {
             shadowBlur: 10,

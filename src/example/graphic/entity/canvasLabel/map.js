@@ -160,7 +160,7 @@ export function addRandomGraphicByCount(count) {
     const index = j + 1
 
     const graphic = new mars3d.graphic.CanvasLabelEntity({
-      position: position,
+      position,
       style: {
         text: "第" + index + "个",
         font_size: 50,
@@ -172,7 +172,7 @@ export function addRandomGraphicByCount(count) {
         outlineColor: "#ffffff",
         outlineWidth: 5
       },
-      attr: { index: index }
+      attr: { index }
     })
     graphicLayer.addGraphic(graphic)
   }
@@ -236,7 +236,7 @@ export function bindLayerPopup() {
     attr["来源"] = "我是layer上绑定的Popup"
     attr["备注"] = "我支持鼠标交互"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
+    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
   })
 }
 

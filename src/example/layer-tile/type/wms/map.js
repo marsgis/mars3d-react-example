@@ -173,7 +173,7 @@ export function addTileLayer2() {
           outlineColor: "#ffffff",
           outlineWidth: 2
         },
-        attr: attr
+        attr
       }
     },
     popup: "all",

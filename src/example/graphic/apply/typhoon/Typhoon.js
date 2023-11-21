@@ -202,7 +202,7 @@ class Typhoon {
 
       const graphic = new mars3d.graphic.PolygonEntity({
         positions: points7,
-        availability: availability,
+        availability,
         style: {
           setHeight: 900,
           color: "#eed139",
@@ -225,7 +225,7 @@ class Typhoon {
 
       const tenGraphic = new mars3d.graphic.PolygonEntity({
         positions: points10,
-        availability: availability,
+        availability,
         style: {
           setHeight: 800,
           color: "#fe9c45",
@@ -249,7 +249,7 @@ class Typhoon {
 
       const tenGraphic = new mars3d.graphic.PolygonEntity({
         positions: points12,
-        availability: availability,
+        availability,
         style: {
           setHeight: 700,
           color: "#ffff00",
@@ -273,7 +273,7 @@ class Typhoon {
         // 在图层上绘画出所有的点
         const pointEntity = new mars3d.graphic.PointEntity({
           position: forecastPt,
-          availability: availability,
+          availability,
           style: {
             pixelSize: 6,
             color: element.color, // 不同typlevel显示不同的颜色
@@ -296,7 +296,7 @@ class Typhoon {
         // 预测路线
         const graphicLine = new mars3d.graphic.PolylineEntity({
           positions: linePoint,
-          availability: availability,
+          availability,
           style: {
             materialType: mars3d.MaterialType.PolylineDash,
             materialOptions: {

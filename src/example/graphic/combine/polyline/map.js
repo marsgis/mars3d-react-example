@@ -73,7 +73,7 @@ export function addRandomGraphicByCount(count) {
         // distanceDisplayCondition: new Cesium.DistanceDisplayConditionGeometryInstanceAttribute(1000, 99999),
         color: Cesium.Color.fromRandom({ alpha: 1.0 })
       },
-      attr: { index: index }
+      attr: { index }
     })
   }
 
@@ -102,7 +102,7 @@ export function bindLayerPopup() {
     attr["来源"] = "我是layer上绑定的Popup"
     attr["备注"] = "我支持鼠标交互"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
+    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
   })
 }
 

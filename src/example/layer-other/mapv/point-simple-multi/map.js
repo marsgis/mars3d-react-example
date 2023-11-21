@@ -98,11 +98,11 @@ function addMapvLayer(data, color, size, animation) {
   const options1 = {
     fillStyle: color,
     bigData: "Point",
-    size: size,
+    size,
     draw: "simple",
     depthTest: false,
     ...animation,
-    data: data // 数据
+    data // 数据
   }
   // 创建MapV图层
   const mapVLayer = new mars3d.layer.MapVLayer(options1)

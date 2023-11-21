@@ -91,7 +91,7 @@ export function btnDrawExtent(splitNum) {
 
       contourLine.positions = positions
       slope.add(positions, {
-        splitNum: splitNum, // splitNum插值分割的个数
+        splitNum, // splitNum插值分割的个数
         radius: 1, // 缓冲半径（影响坡度坡向的精度）
         count: 4 // 缓冲的数量（影响坡度坡向的精度）会求周边(count*4)个点
       })
@@ -120,7 +120,7 @@ export function btnDraw(splitNum) {
 
       contourLine.positions = positions
       slope.add(positions, {
-        splitNum: splitNum, // splitNum插值分割的个数
+        splitNum, // splitNum插值分割的个数
         radius: 1, // 缓冲半径（影响坡度坡向的精度）
         count: 4 // 缓冲的数量（影响坡度坡向的精度）会求周边(count*4)个点
       })

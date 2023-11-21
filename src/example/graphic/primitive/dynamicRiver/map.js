@@ -93,7 +93,7 @@ export function addRandomGraphicByCount(count) {
         height: 30,
         speed: 10
       },
-      attr: { index: index }
+      attr: { index }
     })
     graphicLayer.addGraphic(graphic)
   }
@@ -190,7 +190,7 @@ export function bindLayerPopup() {
     attr["来源"] = "我是layer上绑定的Popup"
     attr["备注"] = "我支持鼠标交互"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
+    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
   })
 }
 

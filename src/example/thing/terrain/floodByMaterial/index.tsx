@@ -77,7 +77,7 @@ function UIComponent() {
 
   // 开始分析
   const begin = () => {
-    mapWork.begin({ ...floodParams, speed: speed })
+    mapWork.begin({ ...floodParams, speed })
   }
 
   // 默认自动播放

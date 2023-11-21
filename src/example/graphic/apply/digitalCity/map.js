@@ -103,7 +103,7 @@ function addCityGraphics() {
   // 中心扩散点
   const circleDiffuseWallGlow = new mars3d.graphic.DiffuseWall({
     name: "中心扩散点",
-    position: position,
+    position,
     style: {
       diffHeight: 500, // 高度
       radius: 150, // 半径
@@ -115,7 +115,7 @@ function addCityGraphics() {
 
   // 旋转的图片 -- 中心围墙
   const WallImagePositions = mars3d.PolyUtil.getEllipseOuterPositions({
-    position: position,
+    position,
     radius: 50, // 半径
     count: 50 // 共返回(count*4)个点
   })
@@ -140,7 +140,7 @@ function addCityGraphics() {
     return rotation
   }
   const rotatCicleImage = new mars3d.graphic.CircleEntity({
-    position: position,
+    position,
     style: {
       radius: 500,
       height: 50,
@@ -238,7 +238,7 @@ function addCityGraphics() {
         const positions = mars3d.PolyUtil.getLinkedPointList(center, thisPoint, 40000, 100) // 计算曲线点
 
         const graphic = new mars3d.graphic.PolylinePrimitive({
-          positions: positions,
+          positions,
           style: {
             width: 4,
             material: lineMaterial // 动画线材质
@@ -283,8 +283,8 @@ function addCityGraphics() {
         materialOptions: {
           color: "rgb(255, 255, 2)",
           bgColor: "rgb(255,255,255,0.01)",
-          startTime: startTime,
-          speed: speed
+          startTime,
+          speed
         }
       }
     })

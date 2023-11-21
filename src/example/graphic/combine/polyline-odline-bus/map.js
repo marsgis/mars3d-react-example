@@ -37,7 +37,7 @@ export function onMounted(mapInstance) {
     attr["来源"] = "我是layer上绑定的Popup"
     attr["备注"] = "我支持鼠标交互"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
+    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
   })
 
   mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/bjgj.json" }).then(function (data) {
@@ -90,7 +90,7 @@ function createLines(arr) {
           startTime: Math.random()
         }
       },
-      attr: { index: index }
+      attr: { index }
     })
   })
 

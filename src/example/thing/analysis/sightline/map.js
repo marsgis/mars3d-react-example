@@ -111,7 +111,7 @@ export function clearAll() {
  */
 function createPoint(position, isFirst) {
   const graphic = new mars3d.graphic.PointEntity({
-    position: position,
+    position,
     style: {
       color: Cesium.Color.fromCssColorString("#3388ff"),
       pixelSize: 6,

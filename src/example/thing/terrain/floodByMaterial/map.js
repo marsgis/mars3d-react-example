@@ -131,7 +131,7 @@ export function begin(data) {
   floodByMaterial.setOptions({
     minHeight: minValue,
     maxHeight: maxValue,
-    speed: speed
+    speed
   })
   floodByMaterial.start()
 }

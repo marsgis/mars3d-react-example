@@ -22,7 +22,7 @@ function bindLayerPopup() {
       attr["来源"] = "我是layer上绑定的Popup"
       attr["备注"] = "我支持鼠标交互"
 
-      return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
+      return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
 
       // return new Promise((resolve) => {
       //   //这里可以进行后端接口请求数据，setTimeout测试异步
@@ -220,7 +220,7 @@ export const LayerState = (props) => {
           attr["来源"] = "我是layer上绑定的Toolip"
           attr["备注"] = "我支持鼠标移入交互"
 
-          return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
+          return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
         },
         { pointerEvents: true }
       )

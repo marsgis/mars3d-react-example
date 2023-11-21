@@ -71,7 +71,7 @@ function addSatellite() {
     attr["类型"] = event.graphic.type
     attr["备注"] = "我支持鼠标交互"
 
-    return mars3d.Util.getTemplateHtml({ title: "卫星图层", template: "all", attr: attr })
+    return mars3d.Util.getTemplateHtml({ title: "卫星图层", template: "all", attr })
   })
 
   weixin = new mars3d.graphic.Satellite({

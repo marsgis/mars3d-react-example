@@ -52,7 +52,7 @@ function addDemoGraphics(graphicLayer) {
           positions: item.positions,
           style: {
             width: 3,
-            color: color,
+            color,
             opacity: 0.8,
             setHeight: height
           },

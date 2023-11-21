@@ -482,13 +482,13 @@ export function addRandomGraphicByCount(count) {
     const index = j + 1
 
     const graphic = new mars3d.graphic.DivGraphic({
-      position: position,
+      position,
       style: {
         html: `<div class="marsGreenGradientPnl" >安徽欢迎您</div>`,
         horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
         verticalOrigin: Cesium.VerticalOrigin.BOTTOM
       },
-      attr: { index: index },
+      attr: { index },
       depthTest: false,
       hasZIndex: false,
       frameRate: 1
@@ -523,7 +523,7 @@ export function bindLayerPopup() {
     attr["来源"] = "我是layer上绑定的Popup"
     attr["备注"] = "我支持鼠标交互"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
+    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
   })
 }
 

@@ -80,8 +80,8 @@ function addDemoGraphic1(data) {
       zmin: data.zmin, // 最小高度
       zmax: data.zmax // 最大高度
     },
-    steps: steps,
-    colors: colors
+    steps,
+    colors
     // flyTo: true
   })
   graphicLayer.addGraphic(volumeCloud)

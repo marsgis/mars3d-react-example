@@ -58,7 +58,7 @@ export function startDrawModel(style) {
   graphicLayer.startDraw({
     type: "model",
     drawShow: true, // 绘制时，是否显示模型，可避免在3dtiles上拾取坐标存在问题。
-    style: style
+    style
   })
 }
 

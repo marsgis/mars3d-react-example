@@ -547,7 +547,7 @@ function secondChart(data, dom) {
     ],
     series: [
       {
-        name: name,
+        name,
         type: "bar",
         data: weiXinData,
         barWidth: "50%",

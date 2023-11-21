@@ -6,7 +6,6 @@ import examplePlugin from "./build/vite-example-plugin"
 import path from "path"
 import monacoEditorPlugin from "vite-plugin-monaco-editor"
 import eslintPlugin from "vite-plugin-eslint"
-import { createStyleImportPlugin, AntdResolve } from "vite-plugin-style-import"
 
 export default ({ mode }: ConfigEnv) => {
   const root = process.cwd()
@@ -24,7 +23,7 @@ export default ({ mode }: ConfigEnv) => {
     },
     define: {
       "process.env": {
-        mode: mode,
+        mode,
         BASE_URL: ENV.VITE_BASE_URL,
         EXAMPLE_SOURCE_PATH: ENV.VITE_EXAMPLE_SOURCE_PATH,
         EDITOR_MODE: ENV.VITE_EDITOR_MODE !== "0"
@@ -92,18 +91,6 @@ export default ({ mode }: ConfigEnv) => {
     plugins: [
       react(),
       eslintPlugin(),
-      createStyleImportPlugin({
-        resolves: [AntdResolve()],
-        libs: [
-          {
-            libraryName: "antd",
-            esModule: true,
-            resolveStyle: (name) => {
-              return `antd/es/${name}/style/index`
-            }
-          }
-        ]
-      }),
       examplePlugin(mode),
       monacoEditorPlugin({ publicPath: "example/assets-monaco" }),
       {

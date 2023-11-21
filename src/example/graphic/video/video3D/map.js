@@ -87,7 +87,7 @@ export function addRandomGraphicByCount(count) {
     const index = j + 1
 
     const graphic = new mars3d.graphic.Video3D({
-      position: position,
+      position,
       style: {
         url: "//data.mars3d.cn/file/video/menqian.mp4",
         maskImage: "img/textures/video-mask.png", // 羽化视频四周，融合更美观
@@ -97,7 +97,7 @@ export function addRandomGraphicByCount(count) {
         pitch: -49.5,
         showFrustum: true
       },
-      attr: { index: index }
+      attr: { index }
     })
     graphicLayer.addGraphic(graphic)
   }
@@ -131,7 +131,7 @@ export function startDrawGraphic2() {
   // 构造投射体
   const video3D = new mars3d.graphic.Video3D({
     position: cameraPosition,
-    targetPosition: targetPosition,
+    targetPosition,
     style: {
       url: "//data.mars3d.cn/file/video/lukou.mp4",
       maskImage: "img/textures/video-mask.png", // 羽化视频四周，融合更美观

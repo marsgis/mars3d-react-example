@@ -165,7 +165,7 @@ let table = []
 // 区域表格添加一行记录
 function addTableItem(item) {
   table.push({ key: item.id, name: "区域" + item.id })
-  const tableItem = { key: item.id, table: table }
+  const tableItem = { key: item.id, table }
   eventTabel.fire("tableObject", { tableItem })
 }
 export function changeTable(data) {

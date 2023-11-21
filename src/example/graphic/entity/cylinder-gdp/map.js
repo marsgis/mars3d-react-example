@@ -143,12 +143,12 @@ function showYearZT(data) {
 //  创建柱体
 function createZT(position, len, color, html) {
   const graphic = new mars3d.graphic.CylinderEntity({
-    position: position,
+    position,
     style: {
       length: len,
       topRadius: 6000.0,
       bottomRadius: 6000.0,
-      color: color
+      color
     }
   })
   graphicLayer.addGraphic(graphic)

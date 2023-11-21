@@ -23,11 +23,11 @@ function UIComponent() {
   // 计算成像区域
   const computerRegion = () => {
     mapWork.btnAdd({
-      startTime: startTime,
-      endTime: endTime,
-      areaColor: areaColor,
-      slideOpacity: slideOpacity,
-      slideAngle: slideAngle
+      startTime,
+      endTime,
+      areaColor,
+      slideOpacity,
+      slideAngle
     })
   }
 
@@ -43,8 +43,8 @@ function UIComponent() {
   const onChangeColor = (areaColor) => {
     setAreaColor(areaColor)
     mapWork.changeColorOpacity({
-      areaColor: areaColor,
-      slideOpacity: slideOpacity
+      areaColor,
+      slideOpacity
     })
   }
 
@@ -52,8 +52,8 @@ function UIComponent() {
   const onChangeOpacity = (opacity: number) => {
     slideOpacity = opacity
     mapWork.changeColorOpacity({
-      areaColor: areaColor,
-      slideOpacity: slideOpacity
+      areaColor,
+      slideOpacity
     })
   }
 

@@ -137,7 +137,7 @@ export function addRandomGraphicByCount(count) {
     const index = j + 1
 
     const graphic = new mars3d.graphic.Video2D({
-      position: position,
+      position,
       style: {
         container: videoElement,
         angle: 46.3,
@@ -147,7 +147,7 @@ export function addRandomGraphicByCount(count) {
         distance: 1178,
         showFrustum: true
       },
-      attr: { index: index }
+      attr: { index }
     })
     graphicLayer.addGraphic(graphic)
   }
@@ -203,7 +203,7 @@ export function startDrawGraphic2() {
   // 构造投射体
   const video2D = new mars3d.graphic.Video2D({
     position: cameraPosition,
-    targetPosition: targetPosition,
+    targetPosition,
     style: {
       container: videoElement,
       angle: 46.3,

@@ -10,7 +10,7 @@ class EditCurve extends mars3d.edit.EditBase {
 
       // 各顶点
       const dragger = this.createDragger({
-        position: position,
+        position,
         onDrag: (dragger, position) => {
           position = this.updatePositionsHeightByAttr(position)
           dragger.position = position

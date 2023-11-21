@@ -116,7 +116,7 @@ export function addRandomGraphicByCount(num) {
     const cloudHeight = getRandomNumberInRange(5, 20)
 
     const graphic = new mars3d.graphic.CloudPrimitive({
-      position: position,
+      position,
       style: {
         scale: new Cesium.Cartesian2(scaleX, scaleY),
         maximumSize: new Cesium.Cartesian3(aspectRatio * cloudHeight, cloudHeight, depth),

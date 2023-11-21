@@ -36,7 +36,7 @@ function creatDemo() {
   const modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(center)
 
   const meshVisualizer = new Cesium.MeshVisualizer({
-    modelMatrix: modelMatrix,
+    modelMatrix,
     up: { y: 1 },
     referenceAxisParameter: {
       length: 100,

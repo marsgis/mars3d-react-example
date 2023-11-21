@@ -121,7 +121,7 @@ function createMapvLayer() {
     data.push({
       geometry: {
         type: "LineString",
-        coordinates: coordinates
+        coordinates
       }
     })
   }
@@ -133,7 +133,7 @@ function createMapvLayer() {
     shadowBlur: 10,
     lineWidth: 1.0,
     draw: "simple",
-    data: data // 数据
+    data // 数据
   }
 
   // 创建MapV图层

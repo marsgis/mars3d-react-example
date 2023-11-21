@@ -90,7 +90,7 @@ function createMapvLayer() {
     shadowBlur: 20,
     lineWidth: 0.7,
     draw: "simple",
-    data: data // 数据
+    data // 数据
   }
 
   // 创建MapV图层

@@ -49,7 +49,7 @@ function showWeiVectorTileLayer() {
       source: files,
       removeDuplicate: false,
       zIndex: 2,
-      encoding: "gbk",
+      encoding: "utf-8",
       defaultStyle: {
         // 参考api文档的Cesium.VectorStyle类
         tileCacheSize: 200,
@@ -66,13 +66,13 @@ function showWeiVectorTileLayer() {
         // markerImage: "img/marker/lace-red.png",
 
         showCenterLabel: false
-        // showCenterLabel: true, //是否显示文本，仅对线和面数据有效
-        // centerLabelPropertyName: 'NAME',
-        // fontColor: 'rgba(255,255,255,1)',
-        // fontSize: 23,
-        // fontFamily: '楷体',
+        // showCenterLabel: true, // 是否显示文本，仅对线和面数据有效
+        // centerLabelPropertyName: "name",
+        // fontColor: "rgba(255,255,255,0.8)",
+        // fontSize: 16,
+        // fontFamily: "楷体",
         // labelOffsetX: -10,
-        // labelOffsetY: -5,
+        // labelOffsetY: -5
       },
       maximumLevel: 20,
       minimumLevel: 1,
@@ -80,7 +80,7 @@ function showWeiVectorTileLayer() {
       allowPick: true, // 允许单击
       // 以下为mars3d参数,API参考http://mars3d.cn/api/BaseTileLayer.html#.ConstructorOptions
       maxLength: -1,
-      popup: "名称：{name} <br /> 日期：{address}",
+      popup: "all",
       flyTo: true
     })
     map.addLayer(tileLayer)

@@ -396,7 +396,7 @@ export function showBuilding() {
       },
       callback: function (attr, styleOpt) {
         const diffHeight = Number(attr.floors || 1) * Number(attr.flo_height)
-        return { height: 0, diffHeight: diffHeight }
+        return { height: 0, diffHeight }
       }
     },
     center: { lat: 31.928659, lng: 120.420654, alt: 838, heading: 344, pitch: -42 },

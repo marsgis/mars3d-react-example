@@ -47,7 +47,7 @@ export function onMounted(mapInstance) {
 
     tilesetLayer.style = new Cesium.Cesium3DTileStyle({
       color: {
-        conditions: conditions
+        conditions
       }
     })
   }, 1000)

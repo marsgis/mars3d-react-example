@@ -54,6 +54,7 @@ export function onMounted(mapInstance) {
     // isRestorePositions: true,
     hasEdit: true,
     isAutoEditing: true // 绘制完成后是否自动激活编辑
+    // drawAddEventType: false,
     // drawEndEventType: mars3d.EventType.rightClick,
     // drawDelEventType: mars3d.EventType.middleClick
   })
@@ -211,7 +212,7 @@ export function drawPolyline(clampToGround) {
     style: {
       color: clampToGround ? "#ffff00" : "#3388ff",
       width: 3,
-      clampToGround: clampToGround
+      clampToGround
     }
     // 外部自定义校验坐标，return false 时坐标无效，不参与绘制
     // validDrawPosition: function (position, graphic) {
@@ -232,7 +233,7 @@ export function drawBrushLine(clampToGround) {
     style: {
       color: clampToGround ? "#ffff00" : "#3388ff",
       width: 3,
-      clampToGround: clampToGround
+      clampToGround
     }
   })
 }
@@ -246,7 +247,7 @@ export function drawPolygon(clampToGround) {
       outline: true,
       outlineColor: "#ffffff",
       outlineWidth: 2.0,
-      clampToGround: clampToGround
+      clampToGround
     }
   })
 }
@@ -257,7 +258,7 @@ export function drawCurve(clampToGround) {
     style: {
       color: clampToGround ? "#ffff00" : "#3388ff",
       width: 3,
-      clampToGround: clampToGround
+      clampToGround
     }
   })
 }
@@ -269,7 +270,7 @@ export function drawCorridor(clampToGround) {
       color: clampToGround ? "#ffff00" : "#3388ff",
       opacity: 0.6,
       width: 500,
-      clampToGround: clampToGround
+      clampToGround
     }
   })
 }
@@ -283,7 +284,7 @@ export function drawEllipse(clampToGround) {
       outline: true,
       outlineColor: "#ffffff",
       outlineWidth: 2.0,
-      clampToGround: clampToGround
+      clampToGround
     }
   })
 }
@@ -297,7 +298,7 @@ export function drawRectangle(clampToGround) {
       outline: true,
       outlineColor: "#ffffff",
       outlineWidth: 2.0,
-      clampToGround: clampToGround
+      clampToGround
     }
   })
 }
@@ -322,7 +323,7 @@ export function draWall(closure) {
       color: "#00ff00",
       opacity: 0.8,
       diffHeight: 400,
-      closure: closure // 是否闭合
+      closure // 是否闭合
     }
   })
 }
@@ -404,7 +405,7 @@ export function bindLayerPopup() {
     attr["来源"] = "我是layer上绑定的Popup"
     attr["备注"] = "我支持鼠标交互"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
+    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
   })
 }
 
@@ -676,8 +677,8 @@ export function saveWKT() {
       id: ++index,
       name: attr.name || "",
       remark: attr.remark || "",
-      style: style,
-      wkt: wkt
+      style,
+      wkt
     })
   })
   mars3d.Util.downloadFile("我的标注wkt.txt", JSON.stringify(arrWKT))

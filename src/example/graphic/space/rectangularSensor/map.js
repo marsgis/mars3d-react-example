@@ -103,7 +103,7 @@ export function addRandomGraphicByCount(count) {
     const index = j + 1
 
     const graphic = new mars3d.graphic.RectangularSensor({
-      position: position,
+      position,
       style: {
         radius: result.radius, // 传感器的半径
         xHalfAngleDegree: 50, // 传感器水平半角
@@ -114,7 +114,7 @@ export function addRandomGraphicByCount(count) {
         showScanPlane: false, // 是否显示扫描面
         depthTest: true
       },
-      attr: { index: index }
+      attr: { index }
     })
     graphicLayer.addGraphic(graphic)
   }

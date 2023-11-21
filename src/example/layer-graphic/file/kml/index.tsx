@@ -56,7 +56,7 @@ function UIComponent() {
         const key = "01-" + Math.random()
         children.push({
           title: layer.name || "未命名",
-          key: key,
+          key,
           id: layer._entity._id
         })
 
@@ -67,7 +67,7 @@ function UIComponent() {
       }
     }
 
-    setTree([{ ...treeData[0], children: children }])
+    setTree([{ ...treeData[0], children }])
     setCheckedKeys(dataKeys)
   }
 

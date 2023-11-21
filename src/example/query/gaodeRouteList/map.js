@@ -159,7 +159,7 @@ function queryRoute(type) {
 
   gaodeRoute.queryArr({
     type: Number(type), // GaodeRouteType枚举类型
-    points: points,
+    points,
     success: function (data) {
       hideLoading()
 

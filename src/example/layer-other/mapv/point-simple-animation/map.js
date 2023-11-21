@@ -72,7 +72,7 @@ function createMapvLayer(rs) {
       duration: 6
     },
 
-    data: data // 数据
+    data // 数据
   }
 
   // 创建MapV图层

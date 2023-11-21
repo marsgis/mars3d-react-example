@@ -131,7 +131,7 @@ function updateEcharts(event: any) {
     series: [
       {
         name: "设计高程",
-        markPoint: markPoint
+        markPoint
       }
     ]
   })

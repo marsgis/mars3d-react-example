@@ -234,7 +234,7 @@ function addPolygon() {
   lastPositions = thisPositions
 
   const graphic = new mars3d.graphic.PolygonPrimitive({
-    positions: positions,
+    positions,
     style: {
       color: "#ff0000",
       opacity: 0.3

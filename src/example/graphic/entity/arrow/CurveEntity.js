@@ -77,7 +77,7 @@ function getBezierCurvePoints(positions, options) {
       type: "Feature",
       geometry: {
         type: "LineString",
-        coordinates: coordinates
+        coordinates
       }
     },
     {

@@ -283,7 +283,7 @@ function addDemoGraphic7(graphicLayer) {
   const positions = mars3d.PolyUtil.getLinkedPointList(startPoint, endPoint, 20000, 50) // 计算曲线点
 
   const graphic = new mars3d.graphic.PolylinePrimitive({
-    positions: positions,
+    positions,
     style: {
       width: 5,
       materialType: mars3d.MaterialType.LineFlow,
@@ -360,7 +360,7 @@ function addDemoGraphic10(graphicLayer) {
     ],
     style: {
       width: 5,
-      colors: colors // 每一段都不同颜色,
+      colors // 每一段都不同颜色,
       // colorsPerVertex: true,
     },
     attr: { remark: "示例10" }
@@ -522,7 +522,7 @@ export function addRandomGraphicByCount(count) {
         width: 3.0,
         color: Cesium.Color.fromRandom({ alpha: 1.0 })
       },
-      attr: { index: index }
+      attr: { index }
     })
     graphicLayer.addGraphic(graphic)
   }
@@ -563,7 +563,7 @@ export function bindLayerPopup() {
     attr["来源"] = "我是layer上绑定的Popup"
     attr["备注"] = "我支持鼠标交互"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
+    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
   })
 }
 

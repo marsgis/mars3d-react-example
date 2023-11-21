@@ -385,7 +385,7 @@ function addDemoGraphic14(graphicLayer) {
   const position = new mars3d.LngLatPoint(116.5, 30.8, 1000)
   const graphic = new mars3d.graphic.EllipsoidPrimitive({
     name: "土星",
-    position: position,
+    position,
     style: {
       radii: new Cesium.Cartesian3(2000.0, 2000.0, 2000.0),
       color: new Cesium.Color(0.95, 0.82, 0.49)
@@ -396,7 +396,7 @@ function addDemoGraphic14(graphicLayer) {
 
   const graphicNei = new mars3d.graphic.EllipsoidPrimitive({
     name: "土星的内圈",
-    position: position,
+    position,
     style: {
       radii: new Cesium.Cartesian3(4000.0, 4000.0, 4000.0),
       innerRadii: new Cesium.Cartesian3(3000.0, 3000.0, 3000.0),
@@ -411,7 +411,7 @@ function addDemoGraphic14(graphicLayer) {
 
   const graphicWai = new mars3d.graphic.EllipsoidPrimitive({
     name: "土星外圈",
-    position: position,
+    position,
     style: {
       radii: new Cesium.Cartesian3(4600.0, 4600.0, 4600.0),
       innerRadii: new Cesium.Cartesian3(4150.0, 4150.0, 4150.0),
@@ -441,12 +441,12 @@ export function addRandomGraphicByCount(count) {
     const index = j + 1
 
     const graphic = new mars3d.graphic.EllipsoidPrimitive({
-      position: position,
+      position,
       style: {
         radii: new Cesium.Cartesian3(radius, radius, radius),
         color: Cesium.Color.fromRandom({ alpha: 0.6 })
       },
-      attr: { index: index }
+      attr: { index }
     })
     graphicLayer.addGraphic(graphic)
   }
@@ -473,7 +473,7 @@ export function bindLayerPopup() {
     attr["来源"] = "我是layer上绑定的Popup"
     attr["备注"] = "我支持鼠标交互"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
+    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
   })
 }
 

@@ -226,7 +226,7 @@ export function showGuangfu() {
       style: {
         url: "//data.mars3d.cn/gltf/mars/taiyang/taiyang.gltf",
         scale: 1,
-        heading: heading,
+        heading,
         minimumPixelSize: 30,
         clampToGround: true
       }

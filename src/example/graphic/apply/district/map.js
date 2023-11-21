@@ -66,7 +66,7 @@ function addAnhui(graphicLayer) {
     symbol: {
       type: "wallP",
       styleOptions: {
-        diffHeight: diffHeight, // 墙高
+        diffHeight, // 墙高
         materialType: mars3d.MaterialType.Image2,
         materialOptions: {
           image: "./img/icon/wall.png"

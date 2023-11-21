@@ -206,7 +206,7 @@ export function angle() {
 export function startDraw(type) {
   measure.stopDraw()
   drawLayer.startDraw({
-    type: type,
+    type,
     style: {
       color: "#00ffff",
       opacity: 0.6

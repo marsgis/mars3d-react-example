@@ -91,7 +91,7 @@ export function updateMarker(hasCenter, jd, wd, alt) {
 
   if (pointEntity == null) {
     pointEntity = new mars3d.graphic.PointEntity({
-      position: position,
+      position,
       style: {
         color: "#3388ff",
         pixelSize: 10,

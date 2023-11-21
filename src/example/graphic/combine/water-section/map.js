@@ -79,7 +79,7 @@ function addDemoGraphic1() {
         offsetAttribute: Cesium.GeometryOffsetAttribute.ALL, // 需要有
         offsetHeight: 0
       },
-      attr: { index: index, height1: height1, height2: height2 }
+      attr: { index, height1, height2 }
     })
   }
 
@@ -106,6 +106,6 @@ function addDemoGraphic1() {
 export function bindLayerPopup() {
   graphicLayer.bindPopup(function (event) {
     const attr = event.graphic.attr || {}
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
+    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
   })
 }

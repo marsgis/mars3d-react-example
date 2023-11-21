@@ -89,7 +89,7 @@ export default function (props) {
           hasZIndex: item.hasZIndex,
           hasOpacity: item.hasOpacity,
           opacity: 100 * (item.opacity || 0),
-          parent: parent,
+          parent,
           group: item.type === "group"
         }
 

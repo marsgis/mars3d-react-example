@@ -97,7 +97,7 @@ function addDemoGraphics(geojson) {
       const thisPoint = Cesium.Cartesian3.fromDegrees(item.center[0], item.center[1])
       const positions = mars3d.PolyUtil.getLinkedPointList(center, thisPoint, 40000, 100) // 计算曲线点
       const graphic = new mars3d.graphic.PolylinePrimitive({
-        positions: positions,
+        positions,
         style: {
           width: 2,
           material: lineMaterial // 动画线材质

@@ -55,6 +55,10 @@ export function onMounted(mapInstance) {
     popup: "房号：{name}<br/>楼层：第{thisFloor}层 (共{allFloor}层)<br/>班级：{remark}<br/>说明：教学楼"
   })
   map.addLayer(tiles3dLayerDTH)
+
+  tiles3dLayerDTH.on(mars3d.EventType.click, function (event) {
+    console.log("单击了模型单体", event.graphic?.attr)
+  })
 }
 
 /**

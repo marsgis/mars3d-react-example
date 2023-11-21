@@ -109,7 +109,7 @@ export function addRandomGraphicByCount(count) {
     const index = j + 1
 
     const graphic = new mars3d.graphic.CamberRadar({
-      position: position,
+      position,
       style: {
         color: "#ff0000",
         opacity: 0.5,
@@ -123,7 +123,7 @@ export function addRandomGraphicByCount(count) {
         startFovV: 0,
         endFovV: 90
       },
-      attr: { index: index }
+      attr: { index }
     })
     graphicLayer.addGraphic(graphic)
   }

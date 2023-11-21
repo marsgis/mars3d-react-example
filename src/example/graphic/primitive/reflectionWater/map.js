@@ -101,7 +101,7 @@ export function addRandomGraphicByCount(count) {
         reflectivity: 0.8
       },
       frameRate: 2,
-      attr: { index: index }
+      attr: { index }
     })
     graphicLayer.addGraphic(graphic)
   }

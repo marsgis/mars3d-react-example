@@ -89,7 +89,7 @@ function nearPoint() {
 
   // 最近点（图标点）
   const graphic = new mars3d.graphic.BillboardPrimitive({
-    position: position,
+    position,
     style: {
       image: "img/marker/mark-blue.png",
       scale: 1,

@@ -49,13 +49,13 @@ export function onUnmounted() {
 
 function addRandomGraphicByCount(position, attr) {
   const graphic = new mars3d.graphic.DivGraphic({
-    position: position,
+    position,
     style: {
       html: `<div style="width: 80px;height:80px;"></div>`,
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM
     },
-    attr: attr
+    attr
   })
   graphic.on(mars3d.EventType.add, function (e) {
     const dom = e.target.container.firstChild

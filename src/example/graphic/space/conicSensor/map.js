@@ -120,7 +120,7 @@ export function addRandomGraphicByCount(count) {
     const index = j + 1
 
     const graphic = new mars3d.graphic.ConicSensor({
-      position: position,
+      position,
       style: {
         angle: 5,
         length: result.radius * 2,
@@ -130,7 +130,7 @@ export function addRandomGraphicByCount(count) {
         color: "rgba(255,0,0,0.4)",
         outlineColor: "rgba(255,255,255,0.9)"
       },
-      attr: { index: index }
+      attr: { index }
     })
     graphicLayer.addGraphic(graphic)
   }
@@ -163,7 +163,7 @@ export function bindLayerPopup() {
     attr["来源"] = "我是layer上绑定的Popup"
     attr["备注"] = "我支持鼠标交互"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
+    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
   })
 }
 

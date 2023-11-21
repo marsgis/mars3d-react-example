@@ -66,7 +66,7 @@ function showRoad(arr, options) {
     if (item.icon) {
       const billboardPrimitive = new mars3d.graphic.BillboardPrimitive({
         name: item.name,
-        position: position,
+        position,
         style: {
           image: "img/country/" + item.icon,
           scale: 0.7,
@@ -100,7 +100,7 @@ function showRoad(arr, options) {
   positions.push(arrPosition[arrPosition.length - 1])
 
   const graphic = new mars3d.graphic.PolylinePrimitive({
-    positions: positions,
+    positions,
     style: {
       width: 4,
       materialType: mars3d.MaterialType.LineFlow,

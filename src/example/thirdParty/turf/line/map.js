@@ -65,7 +65,7 @@ export function calculationCurve() {
   const positions = curved.geometry.coordinates
 
   const graphic = new mars3d.graphic.PolylineEntity({
-    positions: positions,
+    positions,
     style: {
       width: 4,
       color: "#00ffff"
@@ -90,7 +90,7 @@ export function parallelLines(distance) {
   const positions = offsetLine.geometry.coordinates
 
   const graphic = new mars3d.graphic.PolylineEntity({
-    positions: positions,
+    positions,
     style: {
       width: 4,
       color: "#ff0000"

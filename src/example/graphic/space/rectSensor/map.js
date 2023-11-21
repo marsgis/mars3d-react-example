@@ -120,7 +120,7 @@ export function addRandomGraphicByCount(count) {
     const index = j + 1
 
     const graphic = new mars3d.graphic.RectSensor({
-      position: position,
+      position,
       style: {
         angle1: 30,
         angle2: 30,
@@ -128,7 +128,7 @@ export function addRandomGraphicByCount(count) {
         pitch: 40,
         color: "rgba(0,255,255,0.4)"
       },
-      attr: { index: index }
+      attr: { index }
     })
     graphicLayer.addGraphic(graphic)
   }
@@ -185,7 +185,7 @@ export function bindLayerPopup() {
     attr["来源"] = "我是layer上绑定的Popup"
     attr["备注"] = "我支持鼠标交互"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
+    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
   })
 }
 

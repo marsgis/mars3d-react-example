@@ -146,7 +146,7 @@ function updateMarker(position) {
     markerStreet.position = position
   } else {
     markerStreet = new mars3d.graphic.BillboardEntity({
-      position: position,
+      position,
       style: {
         image: "img/marker/street.png",
         scale: 1,

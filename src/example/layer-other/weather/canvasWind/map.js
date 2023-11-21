@@ -167,12 +167,12 @@ function convertWindData(arr) {
   const cols = getKeyNumCount(arr, "x") // 计算 列数
 
   return {
-    xmin: xmin,
-    xmax: xmax,
-    ymax: ymax,
-    ymin: ymin,
-    rows: rows,
-    cols: cols,
+    xmin,
+    xmax,
+    ymax,
+    ymin,
+    rows,
+    cols,
     udata: arrU, // 横向风速
     vdata: arrV // 纵向风速
   }

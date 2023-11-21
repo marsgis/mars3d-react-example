@@ -25,6 +25,8 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
 
+  globalNotify("已知问题提示", `(1) flv在线链接已失效，自行替换自己的服务地址。`)
+
   // 添加参考三维模型
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     name: "合肥国家大学科技园",
@@ -132,7 +134,7 @@ export function addRandomGraphicByCount(count) {
     const index = j + 1
 
     const graphic = new mars3d.graphic.Video2D({
-      position: position,
+      position,
       style: {
         container: videoElement,
         angle: 46.3,
@@ -142,7 +144,7 @@ export function addRandomGraphicByCount(count) {
         distance: 1178,
         showFrustum: true
       },
-      attr: { index: index }
+      attr: { index }
     })
     graphicLayer.addGraphic(graphic)
   }
@@ -200,7 +202,7 @@ export function startDrawGraphic2() {
   // 构造投射体
   video2D = new mars3d.graphic.Video2D({
     position: cameraPosition,
-    targetPosition: targetPosition,
+    targetPosition,
     style: {
       container: videoElement,
       angle: 46.3,

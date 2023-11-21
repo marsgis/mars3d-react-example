@@ -87,11 +87,11 @@ export function addRandomGraphicByCount(count) {
     const index = j + 1
 
     const graphic = new mars3d.graphic.ViewDome({
-      position: position,
+      position,
       style: {
         radius: 30
       },
-      attr: { index: index }
+      attr: { index }
     })
     graphicLayer.addGraphic(graphic)
   }

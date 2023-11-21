@@ -47,7 +47,7 @@ export function addDemoGraphic1() {
   const startTime = new Date().getTime()
 
   const url = "//data.mars3d.cn/file/geojson/buildings-hf.json"
-  mars3d.Util.fetchJson({ url: url }).then((data) => {
+  mars3d.Util.fetchJson({ url }).then((data) => {
     console.log("1.geojson数据请求完成", data)
 
     const arr = mars3d.Util.geoJsonToGraphics(data, {
@@ -57,7 +57,7 @@ export function addDemoGraphic1() {
 
           return {
             height: 0,
-            diffHeight: diffHeight,
+            diffHeight,
             color: Cesium.Color.fromRandom({ alpha: 0.4 }) // 随机色
           }
         }
@@ -115,7 +115,7 @@ export function addRandomGraphicByCount(count) {
       style: {
         color: Cesium.Color.fromRandom({ alpha: 0.6 })
       },
-      attr: { index: index }
+      attr: { index }
     })
   } // 多个面对象的合并渲染。
 
@@ -150,7 +150,7 @@ export function bindLayerPopup() {
     attr["来源"] = "我是layer上绑定的Popup"
     attr["备注"] = "我支持鼠标交互"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
+    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
   })
 }
 

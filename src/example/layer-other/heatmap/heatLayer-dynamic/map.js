@@ -40,7 +40,7 @@ function showHeatMap() {
   // 热力图 图层
   heatLayer = new mars3d.layer.HeatLayer({
     positions: heatMapData0,
-    rectangle: rectangle,
+    rectangle,
     // 以下为热力图本身的样式参数，可参阅api：https://www.patrick-wied.at/static/heatmapjs/docs.html
     heatStyle: {
       radius: 40,

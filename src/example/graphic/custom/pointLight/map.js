@@ -127,12 +127,12 @@ export function addRandomGraphicByCount(count) {
     const index = j + 1
 
     const graphic = new mars3d.graphic.PointLight({
-      position: position,
+      position,
       style: {
         intensity: 3000,
         radius: 500
       },
-      attr: { index: index },
+      attr: { index },
       testPoint: true
     })
     graphicLayer.addGraphic(graphic)

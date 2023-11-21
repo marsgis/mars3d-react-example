@@ -49,10 +49,10 @@ export function onMounted(mapInstance) {
         const diffHeight = floor * 5
         for (const key in colorHash) {
           if (floor <= parseInt(key)) {
-            return { height: 0, diffHeight: diffHeight, color: colorHash[key] }
+            return { height: 0, diffHeight, color: colorHash[key] }
           }
         }
-        return { height: 0, diffHeight: diffHeight }
+        return { height: 0, diffHeight }
       }
     },
     popup: "all"

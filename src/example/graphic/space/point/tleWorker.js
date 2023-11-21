@@ -25,6 +25,6 @@ self.onmessage = function (e) {
   }
 
   // self代表子线程自身
-  self.postMessage({ time: time, positionObj: positionObj })
+  self.postMessage({ time, positionObj })
   // self.close()
 }

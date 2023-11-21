@@ -29,7 +29,7 @@ const materialConfig = {
       type: "number",
       step: 1,
       defval: 1,
-      show (style, allStyle, graphicType) {
+      show(style, allStyle, graphicType) {
         return !style.axisY
       }
     },
@@ -39,7 +39,7 @@ const materialConfig = {
       type: "number",
       step: 1,
       defval: 1,
-      show (style, allStyle, graphicType) {
+      show(style, allStyle, graphicType) {
         return style.axisY
       }
     },
@@ -105,7 +105,7 @@ const materialConfig = {
       max: 1,
       step: 0.1,
       defval: 1,
-      show (style, allStyle, graphicType) {
+      show(style, allStyle, graphicType) {
         return style.transparent === true
       }
     },
@@ -161,7 +161,7 @@ const materialConfig = {
       label: "描边颜色",
       type: "color",
       defval: "#ffffff",
-      show (style, allStyle, graphicType) {
+      show(style, allStyle, graphicType) {
         return style.stroke
       }
     },
@@ -173,7 +173,7 @@ const materialConfig = {
       max: 5,
       step: 1,
       defval: 1,
-      show (style, allStyle, graphicType) {
+      show(style, allStyle, graphicType) {
         return style.stroke
       }
     },
@@ -189,7 +189,7 @@ const materialConfig = {
       label: "背景颜色",
       type: "color",
       defval: "#000000",
-      show (style, allStyle, graphicType) {
+      show(style, allStyle, graphicType) {
         return style.background
       }
     },
@@ -199,7 +199,7 @@ const materialConfig = {
       type: "number",
       step: 1,
       defval: 5,
-      show (style, allStyle, graphicType) {
+      show(style, allStyle, graphicType) {
         return style.background
       }
     }
@@ -299,6 +299,13 @@ const materialConfig = {
   EllipsoidElectric: [
     { name: "color", label: "颜色", type: "color", defval: "#3388ff" },
     { name: "speed", label: "速度", type: "number", step: 1, defval: 10 }
+  ],
+  LineCross: [
+    { name: "color", label: "颜色", type: "color", defval: "#3388ff" },
+    { name: "dashLength", label: "长度", type: "number", step: 1, defval: 64 },
+    { name: "maskLength", label: "间隔", type: "number", step: 1, defval: 9 },
+    { name: "centerPower", label: "中心百分比", type: "number", step: 1,step: 0.1, defval: 0.1 },
+    { name: "dashPower", label: "虚线百分比", type: "number", step: 1,step: 0.1, defval: 0.1 }
   ]
 }
 

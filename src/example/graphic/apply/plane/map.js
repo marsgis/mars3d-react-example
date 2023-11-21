@@ -168,7 +168,7 @@ function startRoam() {
 
     // 添加地面矩形
     const graphic = new mars3d.graphic.PolygonPrimitive({
-      positions: positions,
+      positions,
       style: {
         color: arrColor[graphicLayer.length % arrColor.length],
         // image: "img/tietu/gugong.jpg",

@@ -51,24 +51,33 @@ export function shoXZM() {
 
   graphicLayer = new mars3d.layer.Shp2JsonLayer({
     url: "http://data.mars3d.cn/file/shp/hefei_xz.zip",
+    encoding: "utf-8",
+    simplify: { tolerance: 0.0001 },
     symbol: {
+      type: "polygon",
       styleOptions: {
         fill: true,
         randomColor: true, // 随机色
         opacity: 0.3,
+        clampToGround: false,
         outline: true,
         outlineStyle: {
-          color: "#FED976",
           width: 3,
-          opacity: 1
+          color: "#FED976"
         },
         // 高亮时的样式
         highlight: {
-          opacity: 0.9
+          opacity: 0.6,
+          outline: true,
+          outlineStyle: {
+            width: 10,
+            color: "#08F3FE",
+            addHeight: 10
+          }
         }
       }
     },
-    popup: "名称：{name} <br /> 日期：{address}",
+    popup: "all",
     flyTo: true
   })
   map.addLayer(graphicLayer)

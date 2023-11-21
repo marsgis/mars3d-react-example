@@ -98,7 +98,7 @@ export function downLoadDiv() {
   map.expImage({ download: false }).then((result) => {
     // eslint-disable-next-line no-undef
     domtoimage
-      .toPng(mapDom, { filter: filter })
+      .toPng(mapDom, { filter })
       .then(function (baseUrl) {
         mergeImage(result.image, baseUrl, result.width, result.height).then((base64) => {
           mars3d.Util.downloadBase64Image("场景出图_含DIV.png", base64) // 下载图片

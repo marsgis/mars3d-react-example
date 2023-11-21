@@ -37,7 +37,7 @@ function UIComponent() {
           const key = "01-" + Math.random()
           children.push({
             title: layer.airportName,
-            key: key,
+            key,
             id: layer.graphic.id
           })
 
@@ -48,7 +48,7 @@ function UIComponent() {
         }
       }
 
-      setTree([{ ...treeData[0], children: children }])
+      setTree([{ ...treeData[0], children }])
 
       setCheckedKeys(selects)
     },

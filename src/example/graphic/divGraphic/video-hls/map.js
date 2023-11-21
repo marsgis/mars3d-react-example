@@ -73,7 +73,7 @@ const hlsUrl = "http://1252093142.vod2.myqcloud.com/4704461fvodcq1252093142/f865
 
 function addRandomGraphicByCount(graphicLayer, position) {
   const graphicImg = new mars3d.graphic.DivGraphic({
-    position: position,
+    position,
     style: {
       html: ` <div class="mars3d-camera-content">
                   <img class="mars3d-camera-img" src="img/icon/camera.svg" >

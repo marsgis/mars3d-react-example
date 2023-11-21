@@ -260,7 +260,7 @@ export function addRandomGraphicByCount(count) {
         blendColor: "#006ab4", // 从水中混合到非水域时使用的rgba颜色对象。
         opacity: 0.6 // 透明度
       },
-      attr: { index: index }
+      attr: { index }
     })
     graphicLayer.addGraphic(graphic)
   }
@@ -313,7 +313,7 @@ export function bindLayerPopup() {
     attr["来源"] = "我是layer上绑定的Popup"
     attr["备注"] = "我支持鼠标交互"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
+    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
   })
 }
 

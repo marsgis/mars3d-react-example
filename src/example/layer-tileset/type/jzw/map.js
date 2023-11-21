@@ -112,7 +112,7 @@ export function onUnmounted() {
 export function addbrightnessEffect(brightness) {
   brightnessEffect = new mars3d.effect.BrightnessEffect({
     enabled: false,
-    brightness: brightness
+    brightness
   })
   map.addEffect(brightnessEffect)
 }

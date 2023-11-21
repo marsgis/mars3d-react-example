@@ -107,7 +107,7 @@ function initPath(data) {
     }
 
     const graphic = new mars3d.graphic.PointPrimitive({
-      position: position,
+      position,
       style: {
         pixelSize: 4,
         color: "#cccccc"

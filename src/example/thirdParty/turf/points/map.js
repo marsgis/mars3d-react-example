@@ -41,12 +41,12 @@ const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
 export function randomPoints() {
   clearlayer()
 
-  const points = turf.randomPoint(50, { bbox: bbox }) // 50个随机点
+  const points = turf.randomPoint(50, { bbox }) // 50个随机点
 
   points.features.forEach((e, index) => {
     const position = e.geometry.coordinates
     const graphic = new mars3d.graphic.BillboardPrimitive({
-      position: position,
+      position,
       style: {
         image: "img/marker/mark-blue.png",
         scale: 1,
@@ -99,7 +99,7 @@ export function voronoiPolygon() {
   }
 
   const options = {
-    bbox: bbox
+    bbox
   }
   const voronoiPolygons = turf.voronoi(points, options)
 

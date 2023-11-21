@@ -99,7 +99,7 @@ function createDthGraphic(options) {
         opacity: 0.6
       }
     },
-    attr: attr
+    attr
   })
   geoJsonLayerDTH.addGraphic(graphic)
 }

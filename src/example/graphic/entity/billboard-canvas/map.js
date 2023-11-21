@@ -98,7 +98,7 @@ export function addRandomGraphicByCount(count) {
     const index = j + 1
 
     const graphic = new mars3d.graphic.CanvasBillboard({
-      position: position,
+      position,
       style: {
         text: 18,
         scale: 0.4,
@@ -106,7 +106,7 @@ export function addRandomGraphicByCount(count) {
         verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
         distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 900000)
       },
-      attr: { index: index }
+      attr: { index }
     })
     graphicLayer.addGraphic(graphic)
   }

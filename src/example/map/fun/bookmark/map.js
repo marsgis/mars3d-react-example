@@ -36,7 +36,7 @@ export function onUnmounted() {
 export function butAddTxtName(name) {
   // 动态的获取index
   const item = {
-    name: name,
+    name,
     center: map.getCameraView()
   }
 

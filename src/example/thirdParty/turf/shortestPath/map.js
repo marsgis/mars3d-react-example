@@ -139,7 +139,7 @@ export function shortestPath() {
 
   const positions = path.geometry.coordinates
   const polyonLine = new mars3d.graphic.PolylineEntity({
-    positions: positions,
+    positions,
     style: {
       color: " #55ff33"
     }

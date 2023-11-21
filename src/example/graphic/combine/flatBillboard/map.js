@@ -126,14 +126,14 @@ export function addRandomGraphicByCount(count) {
     const speed = random(0, 60) // 随机数值
 
     arrData.push({
-      position: position,
+      position,
       style: {
-        angle: angle,
+        angle,
         image: getImageBySpeed(speed),
         width: 30, // 单位：像素
         height: 60
       },
-      attr: { index: index }
+      attr: { index }
     })
   }
 
@@ -158,7 +158,7 @@ export function bindLayerPopup() {
     attr["来源"] = "我是layer上绑定的Popup"
     attr["备注"] = "我支持鼠标交互"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
+    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
   })
 }
 

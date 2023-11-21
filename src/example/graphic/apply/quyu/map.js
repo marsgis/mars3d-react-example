@@ -116,7 +116,7 @@ export function onMounted(mapInstance) {
           depthFail: true,
           width: 2
         },
-        attr: attr
+        attr
       })
       graphicLayer.addGraphic(graphic)
 

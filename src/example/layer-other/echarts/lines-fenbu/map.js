@@ -420,7 +420,7 @@ function getEchartsOption() {
       trigger: "item"
     },
 
-    series: series
+    series
   }
   return option
 }

@@ -236,14 +236,14 @@ export function addRandomGraphicByCount(count) {
     const index = j + 1
 
     const graphic = new mars3d.graphic.PlaneEntity({
-      position: position,
+      position,
       style: {
         plane: new Cesium.Plane(Cesium.Cartesian3.UNIT_X, 0.0),
         dimensions: new Cesium.Cartesian2(result.radius, result.radius),
         heading: Math.random() * 100,
         color: Cesium.Color.fromRandom({ alpha: 0.6 })
       },
-      attr: { index: index }
+      attr: { index }
     })
     graphicLayer.addGraphic(graphic)
   }
@@ -274,7 +274,7 @@ export function bindLayerPopup() {
     attr["来源"] = "我是layer上绑定的Popup"
     attr["备注"] = "我支持鼠标交互"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
+    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
   })
 }
 

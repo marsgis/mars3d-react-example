@@ -144,8 +144,8 @@ export function btnAdd(data) {
   const slideAngle = data.slideAngle
 
   addTimeShading(weixin, {
-    startTime: startTime,
-    endTime: endTime,
+    startTime,
+    endTime,
     color: areaColor,
     opacity: slideOpacity,
     angle: slideAngle
@@ -205,7 +205,7 @@ function addTimeShading(weixin, options) {
     const time = Cesium.JulianDate.fromDate(new Date(temp_t))
     points.push({
       position: ground_pos,
-      time: time,
+      time,
       height: point.alt
     })
 

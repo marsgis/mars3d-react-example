@@ -53,7 +53,7 @@ function addGraphicLayer() {
   // 绘制轨道
   const graphic = new mars3d.graphic.PathEntity({
     position: property,
-    orientation: orientation,
+    orientation,
     style: {
       leadTime: 0,
       resolution: 1,
@@ -75,7 +75,7 @@ function addGraphicLayer() {
   // 视锥体 展示
   const satelliteSensor = new mars3d.graphic.SatelliteSensor({
     position: property,
-    orientation: orientation,
+    orientation,
     style: {
       sensorType: mars3d.graphic.SatelliteSensor.Type.Rect,
       angle1: 20,

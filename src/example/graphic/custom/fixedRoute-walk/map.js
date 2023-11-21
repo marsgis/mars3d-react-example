@@ -28,6 +28,15 @@ export function onMounted(mapInstance) {
 
   map.clock.multiplier = 1
 
+  // 修改文本
+  map.setLangText({
+    _米: "m",
+    _公里: "km",
+    _秒: "s ",
+    _分钟: "m ",
+    _小时: "h "
+  })
+
   addGraphicLayer()
 }
 
@@ -148,12 +157,12 @@ function bindPopup(fixedRoute) {
 
     const lblAllLen = container.querySelector("#lblAllLen")
     if (lblAllLen) {
-      lblAllLen.innerHTML = mars3d.MeasureUtil.formatDistance(params.distance_all)
+      lblAllLen.innerHTML = formatDistance(params.distance_all)
     }
 
     const lblAllTime = container.querySelector("#lblAllTime")
     if (lblAllTime) {
-      lblAllTime.innerHTML = mars3d.Util.formatTime(params.second_all / map.clock.multiplier)
+      lblAllTime.innerHTML = formatTime(params.second_all / map.clock.multiplier)
     }
 
     const lblStartTime = container.querySelector("#lblStartTime")
@@ -163,19 +172,27 @@ function bindPopup(fixedRoute) {
 
     const lblRemainTime = container.querySelector("#lblRemainTime")
     if (lblRemainTime) {
-      lblRemainTime.innerHTML = mars3d.Util.formatTime((params.second_all - params.second) / map.clock.multiplier)
+      lblRemainTime.innerHTML = formatTime((params.second_all - params.second) / map.clock.multiplier)
     }
 
     const lblRemainLen = container.querySelector("#lblRemainLen")
     if (lblRemainLen) {
-      lblRemainLen.innerHTML = mars3d.MeasureUtil.formatDistance(params.distance_all - params.distance)
+      lblRemainLen.innerHTML = formatDistance(params.distance_all - params.distance)
     }
   })
 }
 
 // ui层使用
-export const formatDistance = mars3d.MeasureUtil.formatDistance
-export const formatTime = mars3d.Util.formatTime
+export function formatDistance(val) {
+  return mars3d.MeasureUtil.formatDistance(val, { getLangText })
+}
+export function formatTime(val) {
+  return mars3d.Util.formatTime(val, { getLangText })
+}
+
+function getLangText(text) {
+  return map.getLangText(text)
+}
 
 // 节流
 function throttled(fn, delay) {

@@ -95,7 +95,7 @@ class HuxingLayer extends mars3d.layer.GraphicLayer {
     const lyrH = attr.layerh || 0 // 楼层高度
 
     const primitiveBian = new mars3d.graphic.CorridorPrimitive({
-      positions: positions,
+      positions,
       style: {
         height: flrH,
         diffHeight: lyrH,
@@ -103,12 +103,12 @@ class HuxingLayer extends mars3d.layer.GraphicLayer {
         cornerType: Cesium.CornerType.MITERED,
         color: "rgb(245,255,250)"
       },
-      attr: attr
+      attr
     })
     this.addGraphic(primitiveBian)
 
     const primitiveDi = new mars3d.graphic.PolygonEntity({
-      positions: positions,
+      positions,
       style: {
         height: flrH,
         diffHeight: 0.1,
@@ -117,7 +117,7 @@ class HuxingLayer extends mars3d.layer.GraphicLayer {
         outlineWidth: 1,
         outlineColor: "#778899"
       },
-      attr: attr
+      attr
     })
     this.addGraphic(primitiveDi)
 

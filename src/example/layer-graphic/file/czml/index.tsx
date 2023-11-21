@@ -48,7 +48,7 @@ function UIComponent() {
         layersObj[nodeList.key] = node
       }
     }
-    setTree([{ ...treeData[0], children: children }])
+    setTree([{ ...treeData[0], children }])
     setCheckedKeys(dataKeys)
   }
 

@@ -57,7 +57,7 @@ function createEchartsImageLayer(dataLD) {
   // 单张图片图层
   const imageLayer = new mars3d.layer.ImageLayer({
     crs: mars3d.CRS.EPSG3857,
-    rectangle: rectangle
+    rectangle
   })
   map.addLayer(imageLayer)
 
@@ -145,7 +145,7 @@ function getEchartsInstance(dataLD) {
             color: "#d14a61"
           }
         },
-        renderItem: renderItem,
+        renderItem,
         data: dataLD
       }
     ]

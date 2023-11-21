@@ -56,7 +56,7 @@ export function interPolygon(val) {
 
       mars3d.PolyUtil.interPolygon({
         scene: map.scene,
-        positions: positions,
+        positions,
         splitNum: val // splitNum插值分割的个数
       }).then((resultInter) => {
         showInterPolygonResult(resultInter.list)
@@ -188,7 +188,7 @@ export function interPolygonByDepth(val) {
       updateAllGraphicShow(map, false)
       mars3d.PolyUtil.interPolygonByDepth({
         scene: map.scene,
-        positions: positions,
+        positions,
         splitNum: val // splitNum插值分割的个数
       }).then((resultInter) => {
         updateAllGraphicShow(map, true)
@@ -257,7 +257,7 @@ export function interPolyline(val) {
 
       const arrLine = mars3d.PolyUtil.interPolyline({
         scene: map.scene,
-        positions: positions,
+        positions,
         splitNum: val // 插值分割的个数
       })
 
@@ -301,7 +301,7 @@ export function interLineByDepth(val) {
       updateAllGraphicShow(map, false)
       mars3d.PolyUtil.interPolylineByDepth({
         scene: map.scene,
-        positions: positions,
+        positions,
         splitNum: val // 插值分割的个数
       }).then((resultInter) => {
         updateAllGraphicShow(map, true)
@@ -349,7 +349,7 @@ function showInterLineResult(list) {
       positions: [pt1, pt2],
       style: {
         width: 3,
-        color: color,
+        color,
         depthFailColor: color
       },
       attr: {

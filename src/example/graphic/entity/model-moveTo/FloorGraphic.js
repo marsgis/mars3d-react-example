@@ -88,7 +88,7 @@ class FloorGraphic extends mars3d.graphic.BasePointEntity {
       const alt = i * height + model.attr.origAlt
       model.moveTo({
         position: [point.lng, point.lat, alt],
-        time: time // 移动的时长(单位 秒)
+        time // 移动的时长(单位 秒)
       })
     }
   }
@@ -109,7 +109,7 @@ class FloorGraphic extends mars3d.graphic.BasePointEntity {
       model.show = true
       model.moveTo({
         position: [point.lng, point.lat, model.attr.origAlt],
-        time: time // 移动的时长(单位 秒)
+        time // 移动的时长(单位 秒)
       })
     }
   }
@@ -154,7 +154,7 @@ class FloorGraphic extends mars3d.graphic.BasePointEntity {
       model.show = true
       model.moveTo({
         position: [point.lng, point.lat, model.attr.origAlt],
-        time: time // 移动的时长(单位 秒)
+        time // 移动的时长(单位 秒)
       })
     }
   }

@@ -80,7 +80,7 @@ function addDemoGraphic2(graphicLayer) {
   const position = [116.28782, 30.971557, 5000]
   // 加个飞机
   const graphic = new mars3d.graphic.ModelPrimitive({
-    position: position,
+    position,
     style: {
       url: "//data.mars3d.cn/gltf/mars/feiji.glb",
       scale: 1,
@@ -92,7 +92,7 @@ function addDemoGraphic2(graphicLayer) {
 
   // 圆锥追踪体
   coneTrack = new mars3d.graphic.ConeTrackPrimitive({
-    position: position,
+    position,
     // targetPosition: [116.317411, 30.972581, 1439.7], //可选
     style: {
       length: 4000,
@@ -235,14 +235,14 @@ export function addRandomGraphicByCount(count) {
     const index = j + 1
 
     const graphic = new mars3d.graphic.ConeTrackPrimitive({
-      position: position,
+      position,
       style: {
         length: result.radius * 2,
         topRadius: 0.0,
         bottomRadius: result.radius,
         color: Cesium.Color.fromRandom({ alpha: 0.6 })
       },
-      attr: { index: index }
+      attr: { index }
     })
     graphicLayer.addGraphic(graphic)
   }
@@ -259,7 +259,7 @@ export function bindLayerPopup() {
     attr["来源"] = "我是layer上绑定的Popup"
     attr["备注"] = "我支持鼠标交互"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
+    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
   })
 }
 

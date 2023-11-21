@@ -138,7 +138,7 @@ class UIComponent extends Component<any, any> {
       this.setState({
         expandedKeys: this.expandedKeys,
         checkedKeys: this.checkedKeys,
-        treeData: treeData
+        treeData
       })
     })
   }

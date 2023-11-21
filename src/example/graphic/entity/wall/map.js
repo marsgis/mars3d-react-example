@@ -173,7 +173,7 @@ function addDemoGraphic3(graphicLayer) {
   })
 
   const graphic = new mars3d.graphic.WallEntity({
-    positions: positions,
+    positions,
     style: {
       diffHeight: 800,
       closure: true,
@@ -363,7 +363,7 @@ function getColorRampCanvas(elevationRamp) {
 // 边界墙绘制
 function addDemoGraphic9(graphicLayer) {
   const url = "//data.mars3d.cn/file/geojson/areas/340100.json"
-  mars3d.Util.fetchJson({ url: url }).then(function (data) {
+  mars3d.Util.fetchJson({ url }).then(function (data) {
     const arr = mars3d.Util.geoJsonToGraphics(data) // 解析geojson
     for (let i = 0; i < arr.length; i++) {
       const item = arr[i]
@@ -436,7 +436,7 @@ export function addRandomGraphicByCount(count) {
         diffHeight: result.radius,
         color: Cesium.Color.fromRandom({ alpha: 0.6 })
       },
-      attr: { index: index }
+      attr: { index }
     })
     graphicLayer.addGraphic(graphic)
   }
@@ -478,7 +478,7 @@ export function bindLayerPopup() {
     attr["来源"] = "我是layer上绑定的Popup"
     attr["备注"] = "我支持鼠标交互"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
+    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
   })
 }
 

@@ -118,7 +118,7 @@ function addWallPrimitive(positions, color) {
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
         image: "img/textures/fence.png",
-        color: color,
+        color,
         speed: 10, // 速度，建议取值范围1-100
         axisY: true
       }

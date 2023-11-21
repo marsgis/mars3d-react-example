@@ -141,8 +141,8 @@ function addDemoGraphic3(graphicLayer) {
     const life = normalSize * (maxLife - minLife) + minLife
 
     const particleSystem = new mars3d.graphic.ParticleSystem({
-      modelMatrix: modelMatrix,
-      emitterModelMatrix: emitterModelMatrix,
+      modelMatrix,
+      emitterModelMatrix,
       updateCallback: force,
       style: {
         image: getImage(),
@@ -153,8 +153,8 @@ function addDemoGraphic3(graphicLayer) {
         imageSize: particlePixelSize,
         emissionRate: 0,
         emitter: new Cesium.SphereEmitter(0.1),
-        bursts: bursts,
-        lifetime: lifetime
+        bursts,
+        lifetime
       },
       attr: { remark: "烟花粒子效果" }
     })
@@ -272,7 +272,7 @@ export function addRandomGraphicByCount(count) {
     const index = j + 1
 
     const graphic = new mars3d.graphic.ParticleSystem({
-      position: position,
+      position,
       style: {
         image: "./img/particle/fire2.png",
         particleSize: 5, // 粒子大小（单位：像素）
@@ -285,7 +285,7 @@ export function addRandomGraphicByCount(count) {
         minimumSpeed: 7.0, // 最小速度（单位：米/秒）
         maximumSpeed: 9.0 // 最大速度（单位：米/秒）
       },
-      attr: { index: index }
+      attr: { index }
     })
     graphicLayer.addGraphic(graphic)
   }

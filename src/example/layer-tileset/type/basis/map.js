@@ -399,7 +399,7 @@ export function showMaxShihuaDemo() {
   tiles3dLayer.bindPopup(function (event) {
     const attr = event.graphic.attr
     // attr["视频"] = `<video src='http://data.mars3d.cn/file/video/lukou.mp4' controls autoplay style="width: 300px;" ></video>`;
-    return mars3d.Util.getTemplateHtml({ title: "石化工厂", template: "all", attr: attr })
+    return mars3d.Util.getTemplateHtml({ title: "石化工厂", template: "all", attr })
   })
 
   // 单击事件
@@ -451,13 +451,21 @@ export function showBimQiaoliangDemo() {
   // 可以绑定Popup弹窗，回调方法中任意处理
   tiles3dLayer.bindPopup(function (event) {
     const attr = event.graphic.attr
-    return mars3d.Util.getTemplateHtml({ title: "桥梁", template: "all", attr: attr })
+    return mars3d.Util.getTemplateHtml({ title: "桥梁", template: "all", attr })
   })
 
   // 单击事件
   tiles3dLayer.on(mars3d.EventType.click, function (event) {
     console.log("单击了3dtiles图层", event)
   })
+
+  // 在指定时间范围显示对象 0-10，20-30,40-max
+  const now = map.clock.currentTime
+  tiles3dLayer.availability = [
+    { start: now, stop: Cesium.JulianDate.addSeconds(now, 10, new Cesium.JulianDate()) },
+    { start: Cesium.JulianDate.addSeconds(now, 20, new Cesium.JulianDate()), stop: Cesium.JulianDate.addSeconds(now, 30, new Cesium.JulianDate()) },
+    { start: Cesium.JulianDate.addSeconds(now, 40, new Cesium.JulianDate()), stop: "2999-01-01 00:00:00" }
+  ]
 }
 
 /**

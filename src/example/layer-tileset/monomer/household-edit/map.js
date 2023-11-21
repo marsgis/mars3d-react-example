@@ -116,13 +116,13 @@ export function produceData(drawGraphicId, dthPara, lastGraphicArrId) {
       positions: dthPara.positions,
       minHeight: dthPara.minHeight,
       maxHeight: dthPara.maxHeight,
-      houseTypeCount: houseTypeCount
+      houseTypeCount
     }
     const graphic = new mars3d.graphic.PolygonPrimitive({
       positions: dthPara.positions,
       style: {
-        height: height,
-        extrudedHeight: extrudedHeight,
+        height,
+        extrudedHeight,
         // 单体化默认显示样式
         color: getColor(),
         opacity: 0.3,
@@ -130,7 +130,7 @@ export function produceData(drawGraphicId, dthPara, lastGraphicArrId) {
         // 单体化鼠标移入或单击后高亮的样式
         highlight: {
           type: mars3d.EventType.click,
-          color: color,
+          color,
           opacity: 0.6
         }
       },

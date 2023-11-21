@@ -40,6 +40,10 @@ export function onUnmounted() {
   map = null
 }
 
+// true:  精确模式, 直接存储范围,但传入的范围顶点数量多时，就会造成一定程度的卡顿；
+// false: 掩膜模式，栅格化范围,效率与范围顶点数量无关,但放大后锯齿化严重
+const precise = false
+
 export function showDytDemo() {
   removeLayer()
 
@@ -52,7 +56,7 @@ export function showDytDemo() {
 
     // 可传入TilesetFlat构造参数，下面是演示压平区域
     flat: {
-      // precise: false,
+      precise,
       area: [
         {
           positions: [
@@ -63,7 +67,8 @@ export function showDytDemo() {
           ]
         }
       ],
-      editHeight: 420 // 相对高度 (单位：米)，基于 压平/淹没区域 最低点高度的偏移量
+      editHeight: -24, // 相对高度 (单位：米)，基于 压平/淹没区域 最低点高度的偏移量
+      enabled: true
     },
     flyTo: true
   })
@@ -81,7 +86,6 @@ export function showTehDemo() {
     name: "合肥天鹅湖",
     url: "//data.mars3d.cn/3dtiles/qx-teh/tileset.json",
     position: { lng: 117.218434, lat: 31.81807, alt: 163 },
-    editHeight: -130.0, // 相对高度 (单位：米)，基于 压平/淹没区域 最低点高度的偏移量
     maximumScreenSpaceError: 16,
     cacheBytes: 1073741824, // 1024MB = 1024*1024*1024
     maximumCacheOverflowBytes: 2147483648, // 2048MB = 2048*1024*1024
@@ -90,7 +94,37 @@ export function showTehDemo() {
     skipLevelOfDetail: true,
     preferLeaves: true,
     center: { lat: 31.795308, lng: 117.21948, alt: 1820, heading: 0, pitch: -39 },
+
+    editHeight: -140.0, // 相对高度 (单位：米)，基于 压平/淹没区域 最低点高度的偏移量
     flat: {
+      precise,
+      enabled: true
+    },
+
+    flyTo: true
+  })
+  map.addLayer(tilesetLayer)
+
+  // tilesetLayer.flat是TilesetFlat对象，因为与模型是1对1关系，已经内置进去
+  tilesetLayer.flat.on(mars3d.EventType.addItem, onAddFlatArea)
+}
+export function showXianDemo() {
+  removeLayer()
+
+  tilesetLayer = new mars3d.layer.TilesetLayer({
+    name: "县城社区",
+    url: "//data.mars3d.cn/3dtiles/qx-shequ/tileset.json",
+    position: { alt: 148.2 },
+    maximumScreenSpaceError: 1,
+    skipLevelOfDetail: true,
+    preferLeaves: true,
+    dynamicScreenSpaceError: true,
+    cullWithChildrenBounds: false,
+    center: { lat: 28.440675, lng: 119.487735, alt: 639, heading: 269, pitch: -38 },
+
+    editHeight: -18.0, // 相对高度 (单位：米)，基于 压平/淹没区域 最低点高度的偏移量
+    flat: {
+      precise,
       enabled: true
     },
     flyTo: true
@@ -134,7 +168,7 @@ export function btnDrawExtent(height) {
 
       console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
 
-      tilesetLayer.flat.addArea(positions, { height: height })
+      tilesetLayer.flat.addArea(positions, { height })
     }
   })
 }
@@ -154,7 +188,7 @@ export function btnDraw(height) {
 
       console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
 
-      tilesetLayer.flat.addArea(positions, { height: height })
+      tilesetLayer.flat.addArea(positions, { height })
     }
   })
 }
@@ -200,7 +234,7 @@ export function deletedGraphic(areaId, lineId) {
 
 function addTestLine(positions) {
   const graphic = new mars3d.graphic.PolylineEntity({
-    positions: positions,
+    positions,
     style: {
       closure: true,
       color: "#ffffff",

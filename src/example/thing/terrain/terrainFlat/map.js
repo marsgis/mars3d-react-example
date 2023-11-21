@@ -88,7 +88,7 @@ export function btnDrawExtent(height) {
       console.log(JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 打印下边界
 
       // 挖地区域
-      const areaItem = terrainFlat.addArea(positions, { height: height })
+      const areaItem = terrainFlat.addArea(positions, { height })
       addTableItem(areaItem)
     }
   })
@@ -109,7 +109,7 @@ export function btnDraw(height) {
 
       console.log(JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 打印下边界
 
-      const areaItem = terrainFlat.addArea(positions, { height: height })
+      const areaItem = terrainFlat.addArea(positions, { height })
       addTableItem(areaItem)
     }
   })
@@ -176,7 +176,7 @@ export function chkShowLine(val) {
 
 function addTestLine(positions) {
   const graphic = new mars3d.graphic.PolylineEntity({
-    positions: positions,
+    positions,
     style: {
       closure: true,
       color: "#ffffff",

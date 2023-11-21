@@ -87,7 +87,7 @@ function clickPoint(position) {
 
   // 生成查询点
   const queryPoint = new mars3d.graphic.BillboardEntity({
-    position: position,
+    position,
     style: {
       ...pointStyle,
       image: "img/marker/route-start.png"

@@ -20,11 +20,7 @@ export function onMounted(mapInstance) {
   map = mapInstance // 记录map
   map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
 
-  globalNotify(
-    "已知问题提示",
-    `(1) 目前不支持所有类型3dtile数据，请替换url进行自测
-     (2) 部分模型不同LOD的内部高度不同，造成不同LOD的淹没高度不同`
-  )
+  globalNotify("已知问题提示", `(1) 目前不支持所有类型3dtile数据，请替换url进行自测 `)
 
   showDytDemo()
 }
@@ -37,6 +33,10 @@ export function onUnmounted() {
   map = null
 }
 
+// true:  精确模式, 直接存储范围,但传入的范围顶点数量多时，就会造成一定程度的卡顿；
+// false: 掩膜模式，栅格化范围,效率与范围顶点数量无关,但放大后锯齿化严重
+const precise = false
+
 export function showDytDemo() {
   removeLayer()
 
@@ -47,8 +47,9 @@ export function showDytDemo() {
     position: { alt: -27 },
     maximumScreenSpaceError: 1,
     flood: {
-      enabled: true,
-      editHeight: 420 // 相对高度 (单位：米)，基于 压平/淹没区域 最低点高度的偏移量
+      precise,
+      editHeight: -24, // 相对高度 (单位：米)，基于 压平/淹没区域 最低点高度的偏移量
+      enabled: true
     },
     flyTo: true
   })
@@ -77,7 +78,6 @@ export function showTehDemo() {
     type: "3dtiles",
     url: "//data.mars3d.cn/3dtiles/qx-teh/tileset.json",
     position: { lng: 117.218434, lat: 31.81807, alt: 163 },
-    editHeight: -130.0, // 相对高度 (单位：米)，基于 压平/淹没区域 最低点高度的偏移量
     maximumScreenSpaceError: 16,
     cacheBytes: 1073741824, // 1024MB = 1024*1024*1024
     maximumCacheOverflowBytes: 2147483648, // 2048MB = 2048*1024*1024
@@ -85,9 +85,13 @@ export function showTehDemo() {
     cullWithChildrenBounds: false,
     skipLevelOfDetail: true,
     preferLeaves: true,
+
+    editHeight: -140.0, // 相对高度 (单位：米)，基于 压平/淹没区域 最低点高度的偏移量
     flood: {
+      precise,
       enabled: true
     },
+
     flyTo: true
   })
   map.addLayer(tilesetLayer)
@@ -100,6 +104,43 @@ export function showTehDemo() {
   // 模型淹没处理类
   const tilesetFlood = tilesetLayer.flood
 
+  tilesetFlood.on(mars3d.EventType.start, function (e) {
+    console.log("开始分析", e)
+  })
+  tilesetFlood.on(mars3d.EventType.change, function (e) {
+    const height = e.height
+    eventTarget.fire("heightChange", { height })
+  })
+  tilesetFlood.on(mars3d.EventType.end, function (e) {
+    console.log("结束分析", e)
+  })
+}
+
+export function showXianDemo() {
+  removeLayer()
+
+  tilesetLayer = new mars3d.layer.TilesetLayer({
+    name: "县城社区",
+    url: "//data.mars3d.cn/3dtiles/qx-shequ/tileset.json",
+    position: { alt: 148.2 },
+    maximumScreenSpaceError: 1,
+    skipLevelOfDetail: true,
+    preferLeaves: true,
+    dynamicScreenSpaceError: true,
+    cullWithChildrenBounds: false,
+    center: { lat: 28.440675, lng: 119.487735, alt: 639, heading: 269, pitch: -38 },
+
+    editHeight: -18.0, // 相对高度 (单位：米)，基于 压平/淹没区域 最低点高度的偏移量
+    flood: {
+      precise,
+      enabled: true
+    },
+    flyTo: true
+  })
+  map.addLayer(tilesetLayer)
+
+  // 模型淹没处理类
+  const tilesetFlood = tilesetLayer.flood
   tilesetFlood.on(mars3d.EventType.start, function (e) {
     console.log("开始分析", e)
   })
@@ -198,7 +239,7 @@ export function begin(data) {
   tilesetLayer.flood.setOptions({
     minHeight: minValue,
     maxHeight: maxValue,
-    speed: speed
+    speed
   })
 
   tilesetLayer.flood.start()

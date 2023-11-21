@@ -93,7 +93,7 @@ function createMapvLayer() {
     lineWidth: 0.5,
     max: 30,
     draw: "intensity",
-    data: data // 数据
+    data // 数据
   }
 
   // 创建MapV图层

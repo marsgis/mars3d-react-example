@@ -35,7 +35,7 @@ export function onMounted(mapInstance) {
   graphicLayer.addGraphic(graphic)
 
   modelPlanClip = new mars3d.thing.ModelPlanClip({
-    graphic: graphic,
+    graphic,
     height: 1, // 开挖的深度
     clipOutSide: false,
     edgeColor: Cesium.Color.GREY,

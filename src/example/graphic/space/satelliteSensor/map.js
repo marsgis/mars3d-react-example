@@ -48,7 +48,7 @@ export function addDemoGraphic1(sensorParams) {
   // 加个模型
   modelGraphic = new mars3d.graphic.ModelEntity({
     name: "卫星模型",
-    position: position,
+    position,
     style: {
       url: "//data.mars3d.cn/gltf/mars/weixin.gltf",
       scale: 1,
@@ -65,7 +65,7 @@ export function addDemoGraphic1(sensorParams) {
 
   // 视锥体
   const satelliteSensor = new mars3d.graphic.SatelliteSensor({
-    position: position,
+    position,
     style: {
       sensorType: mars3d.graphic.SatelliteSensor.Type.Rect,
       angle1: sensorParams.angleValue1,
@@ -95,14 +95,14 @@ export function addRandomGraphicByCount(count) {
     const index = j + 1
 
     const graphic = new mars3d.graphic.SatelliteSensor({
-      position: position,
+      position,
       style: {
         sensorType: mars3d.graphic.SatelliteSensor.Type.Rect,
         angle1: 10,
         angle2: 20,
         color: "rgba(0,255,255,0.7)"
       },
-      attr: { index: index }
+      attr: { index }
     })
     graphicLayer.addGraphic(graphic)
   }
@@ -251,7 +251,7 @@ export function getRegion() {
 
   coords.forEach((position) => {
     const graphic = new mars3d.graphic.PointPrimitive({
-      position: position,
+      position,
       style: {
         color: "#ff0000",
         pixelSize: 8,

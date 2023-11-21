@@ -45,52 +45,52 @@ function createMapvLayer(geojson) {
     {
       from: "河北",
       count: 354551,
-      to: to
+      to
     },
     {
       from: "天津",
       count: 97323,
-      to: to
+      to
     },
     {
       from: "山东",
       count: 28664,
-      to: to
+      to
     },
     {
       from: "山西",
       count: 16650,
-      to: to
+      to
     },
     {
       from: "辽宁",
       count: 14379,
-      to: to
+      to
     },
     {
       from: "河南",
       count: 10980,
-      to: to
+      to
     },
     {
       from: "内蒙古自治区",
       count: 9603,
-      to: to
+      to
     },
     {
       from: "江苏",
       count: 4536,
-      to: to
+      to
     },
     {
       from: "上海",
       count: 3556,
-      to: to
+      to
     },
     {
       from: "广东",
       count: 2600,
-      to: to
+      to
     }
   ])
 
@@ -179,7 +179,7 @@ function createMapvLayer(geojson) {
     max: 354551,
     draw: "intensity",
     depthTest: false,
-    data: data // 数据
+    data // 数据
   }
   const mapVLayer = new mars3d.layer.MapVLayer(geojsonOptions) // 创建MapV图层
   map.addLayer(mapVLayer)

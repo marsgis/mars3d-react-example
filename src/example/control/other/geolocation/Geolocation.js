@@ -58,7 +58,7 @@ class Geolocation extends mars3d.control.ToolButton {
 
     this.clearLocationPoint()
     const graphic = new mars3d.graphic.DivLightPoint({
-      position: position,
+      position,
       style: {
         color: "#ffff00",
         clampToGround: true

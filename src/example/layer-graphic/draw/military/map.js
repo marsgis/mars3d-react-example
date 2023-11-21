@@ -48,7 +48,7 @@ export function onUnmounted() {
 // 绘制
 export function drawPolygon(type) {
   graphicLayer.startDraw({
-    type: type,
+    type,
     styleType: "polygon",
     style: {
       color: "#ff0000",
@@ -64,7 +64,7 @@ export function drawPolygon(type) {
 // 绘制(带高度)
 export function drawExtrudedPolygon(type) {
   graphicLayer.startDraw({
-    type: type,
+    type,
     styleType: "polygon",
     style: {
       color: "#ffd500",
@@ -82,7 +82,7 @@ export function bindLayerPopup() {
     attr["来源"] = "我是layer上绑定的Popup"
     attr["备注"] = "我支持鼠标交互"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
+    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
   })
 }
 

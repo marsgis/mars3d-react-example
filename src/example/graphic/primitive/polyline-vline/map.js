@@ -58,7 +58,7 @@ function showData(data) {
     attr["来源"] = "我是layer上绑定的Popup"
     attr["备注"] = "我支持鼠标交互"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
+    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
   })
 
   for (let x = 0; x < 1; x++) {
@@ -84,7 +84,7 @@ function showData(data) {
         positions: [surfacePosition, heightPosition],
         style: {
           width: 4,
-          color: color
+          color
         },
         attr: { gdp: height }
       })

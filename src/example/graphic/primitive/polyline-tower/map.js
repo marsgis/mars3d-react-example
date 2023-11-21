@@ -63,9 +63,9 @@ function showData(arrdata) {
     const height = Number(item.height)
 
     const originPoint = {
-      longitude: longitude,
-      latitude: latitude,
-      height: height
+      longitude,
+      latitude,
+      height
     }
     const position = Cesium.Cartesian3.fromDegrees(originPoint.longitude, originPoint.latitude, originPoint.height)
 
@@ -137,7 +137,7 @@ function showData(arrdata) {
 // 绘制电线塔模型
 function drawWireTowerModel(position, degree, inthtml) {
   const graphic = new mars3d.graphic.ModelPrimitive({
-    position: position,
+    position,
     style: {
       url: "//data.mars3d.cn/gltf/mars/tower/tower.glb",
       heading: degree,
@@ -152,10 +152,10 @@ function drawWireTowerModel(position, degree, inthtml) {
 
 function drawGuideLine(positions, color) {
   const graphic = new mars3d.graphic.PolylinePrimitive({
-    positions: positions,
+    positions,
     style: {
       width: 4,
-      color: color
+      color
     }
   })
   graphicLayer.addGraphic(graphic)

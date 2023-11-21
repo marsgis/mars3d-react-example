@@ -140,8 +140,8 @@ export function startFX(startTimes, endTimes) {
 
   // 范围相关信息
   const options = {
-    startTimes: startTimes,
-    endTimes: endTimes,
+    startTimes,
+    endTimes,
     graphic: drawGraphic
   }
 
@@ -183,7 +183,7 @@ function fxOneSatellite(item, options) {
     // 显示点[参考比较结果是否正确]
     // let timeStr = new Date(nowTime).format("yyyy-MM-dd HH:mm:ss")
     const pointPrimitive = new mars3d.graphic.PointPrimitive({
-      position: position,
+      position,
       style: {
         color: pointClr,
         pixelSize: 3
@@ -204,7 +204,7 @@ function fxOneSatellite(item, options) {
         lastPosition: lastObj.position,
         lastTime: lastObj.time,
         time: nowTime,
-        position: position,
+        position,
         inOrOut: "in"
       })
     }
@@ -212,7 +212,7 @@ function fxOneSatellite(item, options) {
     if (lastObj && lastObj.isInPoly && !isInPoly) {
       // 表示出范围
       inAreaPath.push({
-        position: position,
+        position,
         lastPosition: lastObj.position,
         lastTime: lastObj.time,
         time: nowTime,
@@ -222,8 +222,8 @@ function fxOneSatellite(item, options) {
     }
 
     lastObj = {
-      position: position,
-      isInPoly: isInPoly,
+      position,
+      isInPoly,
       time: nowTime
     }
     nowTime += step
@@ -232,7 +232,7 @@ function fxOneSatellite(item, options) {
   if (lastObj && lastObj.isInPoly) {
     // 表示出范围
     inAreaPath.push({
-      position: position,
+      position,
       lastPosition: lastObj.position,
       lastTime: lastObj.time,
       time: nowTime,
@@ -278,10 +278,10 @@ function showResult(newSatelliteArr) {
         }
         if (positions.length > 1) {
           const data = {
-            positions: positions,
+            positions,
             name: item.name,
-            inTime: inTime,
-            outTime: outTime,
+            inTime,
+            outTime,
             often: mars3d.Util.formatTime((outAttr.time - inAttr.lastTime) / 1000),
             distance: mars3d.MeasureUtil.formatDistance(Cesium.Cartesian3.distance(positions[1], positions[0]))
           }

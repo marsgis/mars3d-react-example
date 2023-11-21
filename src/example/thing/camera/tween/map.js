@@ -100,7 +100,7 @@ function showCameraRoute(viewPoints) {
 
     // 文本
     const graphic = new mars3d.graphic.LabelPrimitive({
-      position: position,
+      position,
       style: {
         text: i,
         font_size: 14
@@ -121,8 +121,8 @@ function showCameraRoute(viewPoints) {
     })
 
     const frustumPrimitive = new mars3d.graphic.FrustumPrimitive({
-      position: position,
-      camera: camera,
+      position,
+      camera,
       style: {
         angle: 40,
         distance: 0.5,

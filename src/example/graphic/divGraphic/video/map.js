@@ -72,7 +72,7 @@ export function onUnmounted() {
 
 function addRandomGraphicByCount(graphicLayer, position) {
   const graphicImg = new mars3d.graphic.DivGraphic({
-    position: position,
+    position,
     style: {
       html: ` <div class="mars3d-camera-content">
                       <img class="mars3d-camera-img" src="img/icon/camera.svg" >

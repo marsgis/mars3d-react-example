@@ -83,7 +83,7 @@ export function onUnmounted() {
 
 function addRandomGraphicByCount(graphicLayer, position) {
   const graphic = new mars3d.graphic.BillboardEntity({
-    position: position,
+    position,
     style: {
       image: "img/marker/lace-blue.png",
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,

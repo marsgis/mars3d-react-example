@@ -114,7 +114,7 @@ function UIComponent() {
     activate({
       name: "GraphicEditor",
       data: {
-        graphic: graphic
+        graphic
       }
     })
   }

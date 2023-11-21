@@ -86,7 +86,7 @@ function initPath(routePaths) {
     if (!attr) {
       return false
     }
-    return mars3d.Util.getTemplateHtml({ title: "航线", template: "{startName} - {endName}", attr: attr })
+    return mars3d.Util.getTemplateHtml({ title: "航线", template: "{startName} - {endName}", attr })
   })
 
   const arrData = []
@@ -94,7 +94,7 @@ function initPath(routePaths) {
     const positions = mars3d.PolyUtil.getLinkedPointList(item.startPoint, item.endPoint, 5000, 30)
 
     arrData.push({
-      positions: positions,
+      positions,
       style: {
         width: 2.0,
         materialType: mars3d.MaterialType.ODLine,

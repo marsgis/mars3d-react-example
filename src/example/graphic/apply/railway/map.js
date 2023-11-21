@@ -186,7 +186,7 @@ function inintRoad(positionsSJ, positionsTD) {
 
   const availability = new Cesium.TimeIntervalCollection([
     new Cesium.TimeInterval({
-      start: start,
+      start,
       stop: Cesium.JulianDate.addSeconds(start, counts, new Cesium.JulianDate())
     })
   ])
@@ -235,9 +235,9 @@ function inintRoad(positionsSJ, positionsTD) {
 function addTrainHead(position, availability, rotatePI) {
   const graphicModel = new mars3d.graphic.ModelEntity({
     name: "和谐号车头",
-    position: position,
+    position,
     orientation: new Cesium.VelocityOrientationProperty(position),
-    availability: availability,
+    availability,
     style: {
       url: "//data.mars3d.cn/gltf/mars/train/heada.glb",
       scale: 0.001,
@@ -254,9 +254,9 @@ function addTrainHead(position, availability, rotatePI) {
 function addTrainBody(position, availability) {
   const graphicModel = new mars3d.graphic.ModelEntity({
     name: "和谐号车身",
-    position: position,
+    position,
     orientation: new Cesium.VelocityOrientationProperty(position),
-    availability: availability,
+    availability,
     style: {
       url: "//data.mars3d.cn/gltf/mars/train/body.glb",
       scale: 0.001,
@@ -312,10 +312,10 @@ function addRailway(graphicHead, mpoints) {
         const graphic = graphicLayer.getGraphicById(id)
         if (!graphic) {
           const graphicModel = new mars3d.graphic.ModelEntity({
-            id: id,
+            id,
             position: positions[i],
             orientation: orientations[i],
-            availability: availability,
+            availability,
             style: {
               url: "//data.mars3d.cn/gltf/mars/railway/suidao.glb",
               scale: 0.001
@@ -332,10 +332,10 @@ function addRailway(graphicHead, mpoints) {
       const graphic = graphicLayer.getGraphicById(id)
       if (!graphic) {
         const graphicModel = new mars3d.graphic.ModelEntity({
-          id: id,
+          id,
           position: positions[i],
           orientation: orientations[i],
-          availability: availability,
+          availability,
           style: {
             url: "//data.mars3d.cn/gltf/mars/railway/railway.glb",
             scale: 0.001
@@ -352,10 +352,10 @@ function addRailway(graphicHead, mpoints) {
         const graphic = graphicLayer.getGraphicById(id)
         if (!graphic) {
           const graphicModel = new mars3d.graphic.ModelEntity({
-            id: id,
+            id,
             position: positions[i],
             orientation: orientations[i],
-            availability: availability,
+            availability,
             style: {
               url: "//data.mars3d.cn/gltf/mars/railway/bridge.glb",
               scale: 0.001
@@ -373,10 +373,10 @@ function addRailway(graphicHead, mpoints) {
         const graphic = graphicLayer.getGraphicById(id)
         if (!graphic) {
           const graphicModel = new mars3d.graphic.ModelEntity({
-            id: id,
+            id,
             position: positions[i],
             orientation: orientations[i],
-            availability: availability,
+            availability,
             style: {
               url: "//data.mars3d.cn/gltf/mars/railway/jiazi.glb",
               scale: 0.001

@@ -145,7 +145,7 @@ function addGraphicLayer() {
     name: "飞机航线",
     speed: 100,
     startTime: "2017-08-25 09:00:00",
-    positions: positions,
+    positions,
     // "clockLoop": true,      //是否循环播放
     clockRange: Cesium.ClockRange.CLAMPED, // CLAMPED 到达终止时间后停止
     camera: {
@@ -204,11 +204,11 @@ export function updateCameraSetting(data) {
   fixedRoute.setCameraOptions({
     type: cameraType,
     radius: cameraType === "gs" ? followedX : 0,
-    followedX: followedX,
-    followedZ: followedZ,
-    offsetZ: offsetZ,
-    offsetY: offsetY,
-    offsetX: offsetX
+    followedX,
+    followedZ,
+    offsetZ,
+    offsetY,
+    offsetX
   })
 }
 

@@ -59,7 +59,7 @@ export function onMounted(mapInstance) {
   map.on(mars3d.EventType.morphComplete, function (event) {
     if (lastCenterPoint) {
       const radius = map.camera.positionCartographic.height
-      map.flyToPoint(lastCenterPoint, { radius: radius, duration: 0 })
+      map.flyToPoint(lastCenterPoint, { radius, duration: 0 })
     }
   })
 }

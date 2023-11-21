@@ -77,7 +77,7 @@ function addAnhui() {
       console.log("边界墙原始坐标", points)
 
       mars3d.PolyUtil.computeSurfaceLine({
-        map: map,
+        map,
         positions: points,
         has3dtiles: false,
         splitNum: 300
@@ -107,7 +107,7 @@ function addAnhui() {
             //   depthMask: true
             // })
           },
-          attr: attr
+          attr
         })
         anhuiWall.addGraphic(graphic)
       })

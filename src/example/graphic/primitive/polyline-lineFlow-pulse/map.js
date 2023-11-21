@@ -71,7 +71,7 @@ export function onMounted(mapInstance) {
 
     // 城市名字
     const graphic = new mars3d.graphic.DivGraphic({
-      position: position,
+      position,
       style: {
         html: `<div class ="textName">${item.name}</div>`,
         horizontalOrigin: Cesium.HorizontalOrigin.CENTER,

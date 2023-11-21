@@ -69,8 +69,10 @@ export function showModel(url) {
 
   tiles3dLayer = new mars3d.layer.TilesetLayer({
     name: "模型名称",
-    url: url,
+    url,
     maximumScreenSpaceError: 16,
+    cacheBytes: 1073741824, // 1024MB = 1024*1024*1024
+    maximumCacheOverflowBytes: 2147483648, // 2048MB = 2048*1024*1024
     popup: "all",
     flyTo: true
   })

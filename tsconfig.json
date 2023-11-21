@@ -16,21 +16,14 @@
     "noImplicitAny": false,
     "experimentalDecorators": true,
     "resolveJsonModule": true,
-    "esModuleInterop": false,
+    "esModuleInterop": true,
     "outDir": "dist",
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable",
-      "scripthost"
-    ],
-    "isolatedModules": true,
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
+    "isolatedModules": false,
     "types": ["vite/client", "node"],
     "baseUrl": ".",
     "paths": {
-      "@mars/*": [
-        "src/*"
-      ]
+      "@mars/*": ["src/*"]
     }
   },
   "include": [

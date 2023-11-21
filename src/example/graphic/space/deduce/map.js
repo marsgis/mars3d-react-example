@@ -188,7 +188,7 @@ function accepAction() {
     const endPoint = Cesium.Cartesian3.fromDegrees(116.240032464881, 40.0797910765005)
     const positions = mars3d.PolyUtil.getLinkedPointList(startPoint, endPoint, 2000, 50) // 计算曲线点
     const graphic = new mars3d.graphic.PolylineEntity({
-      positions: positions,
+      positions,
       style: {
         width: 4,
         materialType: mars3d.MaterialType.LineFlowColor,
@@ -319,7 +319,7 @@ function transferringAction() {
   const endPoint = Cesium.Cartesian3.fromDegrees(116.240032464881, 40.0797910765005)
   const positions = mars3d.PolyUtil.getLinkedPointList(startPoint, endPoint, 2000, 50) // 计算曲线点
   const graphic = new mars3d.graphic.PolylineEntity({
-    positions: positions,
+    positions,
     style: {
       width: 4,
       materialType: mars3d.MaterialType.LineFlowColor,
@@ -356,7 +356,7 @@ export function distribution() {
     const endPoint = Cesium.Cartesian3.fromDegrees(posArr[i].pos[0], posArr[i].pos[1])
     const positions = mars3d.PolyUtil.getLinkedPointList(startPoint, endPoint, 2000, 50) // 计算曲线点
     const graphic = new mars3d.graphic.PolylineEntity({
-      positions: positions,
+      positions,
       style: {
         width: 4,
         materialType: mars3d.MaterialType.LineFlowColor,

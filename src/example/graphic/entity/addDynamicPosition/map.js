@@ -153,7 +153,7 @@ export function bindLayerPopup() {
     attr["来源"] = "我是layer上绑定的Popup"
     attr["备注"] = "我支持鼠标交互"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
+    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
   })
 }
 
@@ -201,7 +201,18 @@ export function bindLayerContextMenu() {
         return false
       },
       callback: function (e) {
-        map.trackedEntity = e.graphic
+        const graphic = e.graphic
+        map.trackedEntity = graphic
+
+        if (map.scene.mode === Cesium.SceneMode.SCENE2D) {
+          setTimeout(() => {
+            map.flyToPoint(graphic.positionShow, {
+              radius: 1000,
+              lock: true,
+              duration: 0
+            })
+          }, 10)
+        }
       }
     },
     {

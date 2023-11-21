@@ -406,7 +406,7 @@ function getEchartsOption() {
         itemStyle: {
           color: "#ddb926"
         },
-        data: data
+        data
       }
     ]
   }

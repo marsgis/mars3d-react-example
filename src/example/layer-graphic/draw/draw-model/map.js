@@ -52,7 +52,7 @@ export function startDrawModel(url, isProxy) {
     type: "model",
     drawShow: true, // 绘制时，是否显示模型，可避免在3dtiles上拾取坐标存在问题。
     style: {
-      url: url,
+      url,
       scale: 1
     }
   })

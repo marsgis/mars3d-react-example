@@ -156,7 +156,7 @@ let isinNanjing = false
 function addEllipsoidGraphics({ position, name, ellipsoidStyle, title, desc }) {
   const model = new mars3d.graphic.ModelPrimitive({
     name: name + "地面站模型",
-    position: position,
+    position,
     style: {
       url: "//data.mars3d.cn/gltf/mars/leida.glb",
       scale: 1,
@@ -168,7 +168,7 @@ function addEllipsoidGraphics({ position, name, ellipsoidStyle, title, desc }) {
 
   const ellipsoid = new mars3d.graphic.EllipsoidEntity({
     name: name + "雷达区域",
-    position: position,
+    position,
     style: {
       radii: ellipsoidStyle.radius || 100000,
       minimumClockDegree: ellipsoidStyle.minimumClockDegree || -180.0,
@@ -395,7 +395,7 @@ function addDivgraphic(position, attr) {
 
   const descGraphic = new mars3d.graphic.DivGraphic({
     id: attr?.id || "descPannel",
-    position: position,
+    position,
     pointerEvents: true,
     style: {
       html: `<div class="mars-city">

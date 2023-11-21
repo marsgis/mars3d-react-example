@@ -103,7 +103,7 @@ function createMapvLayer(rs) {
     },
     lineWidth: 0.2,
     draw: "intensity",
-    data: data // 数据
+    data // 数据
   }
   // 线图层
   const mapVLayer = new mars3d.layer.MapVLayer(options1)

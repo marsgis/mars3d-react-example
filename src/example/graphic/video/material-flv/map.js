@@ -22,6 +22,8 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
 
+  globalNotify("已知问题提示", `(1) flv在线链接已失效，自行替换自己的服务地址。`)
+
   // 添加参考三维模型
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     name: "县城社区",
@@ -163,7 +165,7 @@ export function addRandomGraphicByCount(count) {
         stRotationDegree: 130, // 视频旋转角度
         clampToGround: true
       },
-      attr: { index: index }
+      attr: { index }
     })
     graphicLayer.addGraphic(graphic)
   }
@@ -214,7 +216,7 @@ export function bindLayerPopup() {
     attr["来源"] = "我是layer上绑定的Popup"
     attr["备注"] = "我支持鼠标交互"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
+    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
   })
 }
 

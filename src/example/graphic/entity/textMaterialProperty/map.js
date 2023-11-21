@@ -99,7 +99,7 @@ function addDemoGraphic2(graphicLayer) {
         // strokeWidth: 3,
         outline: true,
         outlineWidth: 4,
-        onCustomCanvas: onCustomCanvas // 对Canvas做自定义处理
+        onCustomCanvas // 对Canvas做自定义处理
       }
     },
     attr: { remark: "示例2" }
@@ -206,7 +206,7 @@ export function addRandomGraphicByCount(count) {
     const graphic = new mars3d.graphic.WallEntity({
       positions: [pt1, pt2],
       style: {
-        diffHeight: diffHeight,
+        diffHeight,
         materialType: mars3d.MaterialType.Text,
         materialOptions: {
           text: "Mars3D三维可视化平台",
@@ -214,7 +214,7 @@ export function addRandomGraphicByCount(count) {
           color: "#00ffff"
         }
       },
-      attr: { index: index }
+      attr: { index }
     })
     graphicLayer.addGraphic(graphic)
   }
@@ -273,7 +273,7 @@ export function onClickDrawPoint() {
       graphic.remove(true)
 
       const rectangleEntity = new mars3d.graphic.RectangleEntity({
-        positions: positions,
+        positions,
         style: {
           materialType: mars3d.MaterialType.Text,
           materialOptions: {
@@ -287,6 +287,7 @@ export function onClickDrawPoint() {
       if (graphicLayer.hasEdit) {
         rectangleEntity.startEditing()
       }
+
       eventTarget.fire("addTableData", { graphicLayer })
     }
   })
@@ -300,7 +301,7 @@ export function bindLayerPopup() {
     attr["来源"] = "我是layer上绑定的Popup"
     attr["备注"] = "我支持鼠标交互"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
+    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
   })
 }
 

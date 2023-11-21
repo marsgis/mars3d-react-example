@@ -369,7 +369,7 @@ export function demoReferenceProperty() {
   // 演示属性机制
   const collection = graphicLayer.dataSource.entities
   const dimensions = new Cesium.ReferenceProperty(collection, marsBox.id, ["box", "dimensions"])
-  redBox.setStyle({ dimensions: dimensions })
+  redBox.setStyle({ dimensions })
 }
 
 //
@@ -400,7 +400,7 @@ export function demoPropertyBag() {
     y: 300.0,
     z: zp
   })
-  marsBox.setStyle({ dimensions: dimensions })
+  marsBox.setStyle({ dimensions })
 }
 
 //

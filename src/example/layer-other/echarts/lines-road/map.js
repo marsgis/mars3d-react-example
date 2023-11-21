@@ -96,7 +96,7 @@ function getEchartsOption(data) {
         type: "lines",
         coordinateSystem: "mars3dMap",
         polyline: true,
-        data: data,
+        data,
         lineStyle: {
           normal: {
             opacity: 1,

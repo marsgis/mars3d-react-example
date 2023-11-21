@@ -65,7 +65,7 @@ export function addRandomGraphicByCount(count) {
     const index = j + 1
 
     arrData.push({
-      position: position,
+      position,
       style: {
         angle: 10,
         angle2: 5,
@@ -74,7 +74,7 @@ export function addRandomGraphicByCount(count) {
         pitch: 40,
         color: Cesium.Color.fromRandom({ alpha: 0.6 })
       },
-      attr: { index: index }
+      attr: { index }
     })
   }
 
@@ -106,6 +106,6 @@ export function bindLayerPopup() {
     attr["来源"] = "我是layer上绑定的Popup"
     attr["备注"] = "我支持鼠标交互"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
+    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
   })
 }

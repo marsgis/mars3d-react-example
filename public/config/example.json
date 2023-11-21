@@ -490,7 +490,7 @@
           },
           {
             "name": "SceneModePicker 二三维切换按钮",
-            "thumbnail": "map-cesium-sceneModePicker.jpg",
+            "thumbnail": "map-cesium-sceneModePicker.gif",
             "main": "control/cesium/sceneModePicker"
           },
           {
@@ -607,13 +607,13 @@
           },
           {
             "name": "双屏对比",
-            "thumbnail": "map-double-compare.jpg",
+            "thumbnail": "map-double-compare.gif",
             "main": "map/double/compare",
             "hasPannel": true
           },
           {
             "name": "卷帘对比",
-            "thumbnail": "control-basis-mapSplit.jpg",
+            "thumbnail": "control-basis-mapSplit.gif",
             "main": "control/basis/mapSplit",
             "hasPannel": true
           },
@@ -721,7 +721,7 @@
           },
           {
             "name": "立体户型图(自定义扩展)",
-            "thumbnail": "layerg-geojson-huxing.jpg",
+            "thumbnail": "layerg-geojson-huxing.gif",
             "main": "layer-graphic/geojson/huxing",
             "hasPannel": true,
             "resources": ["HuxingLayer.js"]
@@ -827,7 +827,7 @@
           },
           {
             "name": "CZML图层",
-            "thumbnail": "layerg-file-czml.jpg",
+            "thumbnail": "layerg-file-czml.gif",
             "main": "layer-graphic/file/czml",
             "hasPannel": true,
             "params": "data=CZML",
@@ -953,7 +953,7 @@
           },
           {
             "name": "全景点展示",
-            "thumbnail": "graphic-entity-billboard-panorama.jpg",
+            "thumbnail": "graphic-entity-billboard-panorama.gif",
             "main": "graphic/entity/billboard-panorama"
           },
           {
@@ -996,7 +996,7 @@
           },
           {
             "name": "圆锥追踪体",
-            "thumbnail": "graphic-entity-coneTrack.jpg",
+            "thumbnail": "graphic-entity-coneTrack.gif",
             "main": "graphic/entity/coneTrack",
             "hasPannel": true,
             "libs": ["mars3d", "mars3d-space"]
@@ -1055,7 +1055,7 @@
           },
           {
             "name": "Polyline 线",
-            "thumbnail": "graphic-entity-polyline.jpg",
+            "thumbnail": "graphic-entity-polyline.gif",
             "main": "graphic/entity/polyline",
             "hasPannel": true
           },
@@ -1079,7 +1079,7 @@
           },
           {
             "name": "Wall 墙",
-            "thumbnail": "graphic-entity-wall.jpg",
+            "thumbnail": "graphic-entity-wall.gif",
             "main": "graphic/entity/wall",
             "hasPannel": true
           },
@@ -1103,7 +1103,7 @@
           },
           {
             "name": "扇形",
-            "thumbnail": "graphic-entity-polygon-sector.jpg",
+            "thumbnail": "graphic-entity-polygon-sector.gif",
             "main": "graphic/entity/polygon-sector",
             "hasPannel": true,
             "resources": ["Circle3WaveMaterialProperty.js"]
@@ -1117,7 +1117,7 @@
           },
           {
             "name": "Property属性机制演示",
-            "thumbnail": "graphic-entity-property.jpg",
+            "thumbnail": "graphic-entity-property.gif",
             "main": "graphic/entity/property",
             "hasPannel": true,
             "download": false
@@ -1196,7 +1196,7 @@
           },
           {
             "name": "CylinderP 圆锥、圆柱",
-            "thumbnail": "graphic-primitive-cylinder.jpg",
+            "thumbnail": "graphic-primitive-cylinder.gif",
             "main": "graphic/primitive/cylinder",
             "hasPannel": true
           },
@@ -1263,7 +1263,7 @@
           },
           {
             "name": "一带一路",
-            "thumbnail": "graphic-primitive-polyline-lineFlow-oneBeltOneRoad.jpg",
+            "thumbnail": "graphic-primitive-polyline-lineFlow-oneBeltOneRoad.gif",
             "main": "graphic/primitive/polyline-lineFlow-oneBeltOneRoad",
             "hasPannel": true
           },
@@ -1359,7 +1359,7 @@
           },
           {
             "name": "反射水面",
-            "thumbnail": "graphic-primitive-reflectionWater.jpg",
+            "thumbnail": "graphic-primitive-reflectionWater.gif",
             "main": "graphic/primitive/reflectionWater",
             "hasPannel": true
           },
@@ -1371,7 +1371,7 @@
           },
           {
             "name": "四面体",
-            "thumbnail": "graphic-primitive-tetrahedron.jpg",
+            "thumbnail": "graphic-primitive-tetrahedron.gif",
             "main": "graphic/primitive/tetrahedron",
             "hasPannel": true
           },
@@ -1494,9 +1494,10 @@
           },
           {
             "name": "河流断面水面动态升降",
-            "thumbnail": "graphic-combine-water-section.jpg",
+            "thumbnail": "graphic-combine-water-section.gif",
             "main": "graphic/combine/water-section",
-            "resources": ["water-data.js"]
+            "resources": ["water-data.js"],
+            "new": true
           }
         ]
       },
@@ -1537,7 +1538,7 @@
           },
           {
             "name": "动态水球点",
-            "thumbnail": "graphic-divGraphic-echarts-liqiudfill.jpg",
+            "thumbnail": "graphic-divGraphic-echarts-liqiudfill.gif",
             "main": "graphic/divGraphic/echarts-liqiudfill",
             "libs": ["echarts-liquidfill", "mars3d"]
           },
@@ -1565,7 +1566,7 @@
         "children": [
           {
             "name": "点光源",
-            "thumbnail": "graphic-custom-pointLight.jpg",
+            "thumbnail": "graphic-custom-pointLight.gif",
             "main": "graphic/custom/pointLight",
             "hasPannel": true
           },
@@ -1583,7 +1584,7 @@
           },
           {
             "name": "粒子效果",
-            "thumbnail": "graphic-particleSystem-basis.jpg",
+            "thumbnail": "graphic-particleSystem-basis.gif",
             "main": "graphic/particleSystem/basis",
             "hasPannel": true
           },
@@ -1616,7 +1617,7 @@
           },
           {
             "name": "FixedRoute 历史轨迹路线",
-            "thumbnail": "graphic-custom-fixedRoute.jpg",
+            "thumbnail": "graphic-custom-fixedRoute.gif",
             "main": "graphic/custom/fixedRoute",
             "hasPannel": true
           },
@@ -1801,7 +1802,7 @@
           },
           {
             "name": "四棱椎体追踪目标(RectSensor应用案例)",
-            "thumbnail": "graphic-space-rectSensor-lookAt.jpg",
+            "thumbnail": "graphic-space-rectSensor-lookAt.gif",
             "main": "graphic/space/rectSensor-lookAt",
             "libs": ["mars3d", "mars3d-space"]
           },
@@ -1869,7 +1870,7 @@
           },
           {
             "name": "TLE外太空物实时展示",
-            "thumbnail": "graphic-space-point.jpg",
+            "thumbnail": "graphic-space-point.gif",
             "main": "graphic/space/point",
             "hasPannel": true,
             "libs": ["mars3d", "mars3d-space"]
@@ -1897,7 +1898,7 @@
           },
           {
             "name": "卫星推演",
-            "thumbnail": "graphic-space-deduce.jpg",
+            "thumbnail": "graphic-space-deduce.gif",
             "main": "graphic/space/deduce",
             "hasPannel": true,
             "libs": ["mars3d", "mars3d-space"],
@@ -1956,18 +1957,18 @@
           },
           {
             "name": "数字城市",
-            "thumbnail": "graphic-apply-digitalCity.jpg",
+            "thumbnail": "graphic-apply-digitalCity.gif",
             "main": "graphic/apply/digitalCity",
             "resources": ["city.css"]
           },
           {
             "name": "红蓝对抗演习",
-            "thumbnail": "graphic-apply-exercise.jpg",
+            "thumbnail": "graphic-apply-exercise.gif",
             "main": "graphic/apply/exercise"
           },
           {
             "name": "飞机巡航",
-            "thumbnail": "graphic-apply-cruise.jpg",
+            "thumbnail": "graphic-apply-cruise.gif",
             "main": "graphic/apply/cruise",
             "hasPannel": true,
             "resources": ["map.css"]
@@ -2304,7 +2305,7 @@
           },
           {
             "name": "模型淹没分析",
-            "thumbnail": "thing-tileset-tilesetFlood.jpg",
+            "thumbnail": "thing-tileset-tilesetFlood.gif",
             "main": "thing/tileset/tilesetFlood",
             "hasPannel": true
           },
@@ -2323,7 +2324,7 @@
           },
           {
             "name": "地震模拟",
-            "thumbnail": "thing-tileset-shake.jpg",
+            "thumbnail": "thing-tileset-shake.gif",
             "main": "thing/tileset/shake",
             "hasPannel": true
           }
@@ -2409,14 +2410,14 @@
           },
           {
             "name": "自定义空间背景图",
-            "thumbnail": "map-other-backgroundImg.jpg",
+            "thumbnail": "map-other-backgroundImg.gif",
             "main": "map/other/backgroundImg",
             "hasPannel": true,
             "resources": ["background.css"]
           },
           {
             "name": "自定义天空盒",
-            "thumbnail": "map-property-skybox.jpg",
+            "thumbnail": "map-property-skybox.gif",
             "main": "map/property/skybox",
             "hasPannel": true
           },
@@ -2486,7 +2487,7 @@
           },
           {
             "name": "角色控制",
-            "thumbnail": "thing-camera-roleController.jpg",
+            "thumbnail": "thing-camera-roleController.gif",
             "main": "thing/camera/roleController",
             "hasPannel": true,
             "resources": ["CesiumRoleController.js"]
@@ -2605,7 +2606,8 @@
             "name": "颜色校正",
             "thumbnail": "effect-colorCorrection.jpg",
             "main": "effect/colorCorrection",
-            "hasPannel": true
+            "hasPannel": true,
+            "new": true
           },
           {
             "name": "泛光特效",

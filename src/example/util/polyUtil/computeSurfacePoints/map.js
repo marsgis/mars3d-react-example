@@ -91,8 +91,8 @@ export const formatDistance = mars3d.MeasureUtil.formatDistance
 
 async function computeStepSurfaceLine(positions) {
   const newPositions = mars3d.PolyUtil.interPolyline({
-    map: map,
-    positions: positions,
+    map,
+    positions,
     splitNum: 50,
     exact: true,
     surfaceHeight: false // 不用重复计算高度

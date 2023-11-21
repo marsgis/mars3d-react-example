@@ -184,6 +184,9 @@ const CustomLang = {
   _公顷: "ha",
   _立方米: "m³",
   _万立方米: "wm³",
+  _秒: "S",
+  _分钟: "M",
+  _小时: "H",
 
   // 标绘 tooltip
   _单击开始绘制: "Click to start drawing",

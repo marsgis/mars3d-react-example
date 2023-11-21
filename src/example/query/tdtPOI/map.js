@@ -154,7 +154,7 @@ function loadData(queryOptions, text) {
   lastQueryOptions = {
     ...queryOptions,
     count: 25, // count 每页数量
-    text: text,
+    text,
     success: function (res) {
       const data = res.list
       if (data.length <= 1) {

@@ -186,7 +186,7 @@ export function addRandomGraphicByCount(count) {
     const graphic = new mars3d.graphic.WallPrimitive({
       positions: [pt1, pt2],
       style: {
-        diffHeight: diffHeight,
+        diffHeight,
         materialType: mars3d.MaterialType.Text,
         materialOptions: {
           text: "第" + index + "个",
@@ -194,7 +194,7 @@ export function addRandomGraphicByCount(count) {
           color: "#00ffff"
         }
       },
-      attr: { index: index }
+      attr: { index }
     })
     graphicLayer.addGraphic(graphic)
   }
@@ -256,7 +256,7 @@ export function onClickDrawPoint() {
       })
 
       const rectangle = new mars3d.graphic.RectanglePrimitive({
-        positions: positions,
+        positions,
         style: {
           materialType: mars3d.MaterialType.Text,
           materialOptions: {
@@ -279,7 +279,7 @@ export function bindLayerPopup() {
     attr["来源"] = "我是layer上绑定的Popup"
     attr["备注"] = "我支持鼠标交互"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
+    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
   })
 }
 

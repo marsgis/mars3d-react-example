@@ -132,7 +132,7 @@ function initData(arr) {
 
     const graphic = new mars3d.graphic.PointPrimitive({
       id: item.id,
-      style: style,
+      style,
       attr: item
     })
     graphicLayer.addGraphic(graphic)
