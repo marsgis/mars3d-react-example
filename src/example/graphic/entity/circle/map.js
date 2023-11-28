@@ -41,7 +41,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic6(graphicLayer)
   addDemoGraphic7(graphicLayer)
   addDemoGraphic8(graphicLayer)
-  // addDemoGraphic9(graphicLayer)
+  addDemoGraphic9(graphicLayer)
   addDemoGraphic10(graphicLayer)
   addDemoGraphic11(graphicLayer)
   addDemoGraphic12(graphicLayer)
@@ -345,29 +345,138 @@ function addDemoGraphic8(graphicLayer) {
 
 function addDemoGraphic9(graphicLayer) {
   let lastPosition
-  let lastHeight = 0
-
   const circleEntity = new mars3d.graphic.CircleEntity({
     position: new Cesium.CallbackProperty(function (time) {
-      const center = map.getCenter()
-      if (center) {
-        lastHeight = center.alt + 10
-        lastPosition = center.toCartesian()
-      }
       return lastPosition
     }, false),
     style: {
-      material: "img/tietu/bagua.png",
+      material: getMarsCanves(),
       radius: 500,
-      // height: new Cesium.CallbackProperty(function (time) {
-      //   return lastHeight
-      // }, false)
       clampToGround: true
     },
     attr: { remark: "示例9" },
     hasEdit: false
   })
   graphicLayer.addGraphic(circleEntity)
+
+  map.on(mars3d.EventType.mouseMove, function (event) {
+    lastPosition = event.cartesian
+  })
+}
+
+function getMarsCanves() {
+  // 获取画布元素
+  const canvas = document.createElement("canvas")
+  canvas.width = 400
+  canvas.height = 400
+  canvas.style = "border: 1px solid red;background:orange"
+
+  const ctx = canvas.getContext("2d")
+
+  // 设置圆的半径和中心点坐标
+  const centerX = canvas.width / 2
+  const centerY = canvas.height / 2
+  const radius = Math.min(centerX, centerY) - 20
+
+  // 绘制空心圆
+  ctx.translate(centerX, centerY) // 平移到圆心
+  ctx.rotate(Math.PI) // 旋转180度
+  ctx.beginPath()
+  ctx.arc(0, 0, radius, 0, 2 * Math.PI)
+  ctx.strokeStyle = "transparent"
+  ctx.lineWidth = 2
+  ctx.stroke()
+  // 绘制刻度
+  const numTicks = 360 // 总刻度数
+  let tickLength = 10 // 刻度长度
+
+  for (let i = 0; i < numTicks; i++) {
+    ctx.save()
+    const angle = ((i - numTicks / 2) * (Math.PI * 2)) / numTicks - Math.PI / 2
+    // let angle = ((2 * Math.PI) / numTicks) * i - Math.PI / 2; // 计算刻度线的角度
+    // 计算文本的角度
+    let textAngle = angle + Math.PI * 1.75
+    ctx.rotate(angle) // 计算旋转角度
+    // ctx.rotate((Math.PI * 2 * i) / numTicks); // 计算旋转角度
+    ctx.beginPath()
+    // 绘制刻度线、标注刻度文本
+    if (i % 5 === 0 && (i / 5) % 2 !== 0) {
+      tickLength = 15 // 修改刻度长度
+    } else if (i % 5 === 0 && (i / 5) % 2 === 0) {
+      tickLength = 20
+    } else {
+      tickLength = 10
+    }
+    ctx.moveTo(radius, 0) // 刻度线起点
+    ctx.lineTo(radius - tickLength, 0) // 刻度线终点
+    ctx.translate(radius - tickLength - 10, 0)
+    let magnification = 2
+    // 判断各个刻度的角度
+    switch (i) {
+      case 0:
+        textAngle = angle + Math.PI * magnification
+        break
+      case 45:
+        magnification = 1.75
+        textAngle = angle + Math.PI * magnification
+        break
+      case 90:
+        magnification = 1.5
+        textAngle = angle + Math.PI * magnification
+        break
+      case 135:
+        magnification = 1.25
+        textAngle = angle + Math.PI * magnification
+        break
+      case 180:
+        magnification = 1
+        textAngle = angle + Math.PI * magnification
+        break
+      case 225:
+        magnification = 0.75
+        textAngle = angle + Math.PI * magnification
+        break
+      case 270:
+        magnification = 0.5
+        textAngle = angle + Math.PI * magnification
+        break
+      case 315:
+        magnification = 0.25
+        textAngle = angle + Math.PI * magnification
+        break
+      case 360:
+        magnification = 0
+        textAngle = angle + Math.PI * magnification
+        break
+
+      default:
+        break
+    }
+    ctx.rotate(textAngle)
+    ctx.textAlign = "center"
+    ctx.font = "14px Arial"
+    ctx.fillStyle = "#ffffff"
+    if (i > -1 && i <= 180) {
+      ctx.strokeStyle = "red"
+    } else {
+      ctx.strokeStyle = "blue"
+    }
+    ctx.stroke()
+    // // 修改刻度文本的位置
+    if (i % 45 === 0 && i <= 180) {
+      ctx.fillText(i, 0, 5) // 顺时针角度刻度数
+    } else if (i % 45 === 0 && i > 180) {
+      if (i < 270) {
+        ctx.fillText(i - 90, 0, 5)
+      } else if (i === 270) {
+        ctx.fillText(i - 180, 0, 5)
+      } else if (i > 270) {
+        ctx.fillText(360 - i, 0, 5)
+      }
+    }
+    ctx.restore()
+  }
+  return canvas
 }
 
 function addDemoGraphic10(graphicLayer) {

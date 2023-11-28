@@ -7,6 +7,10 @@ let tiles3dLayer
 export const mapOptions = {
   scene: {
     center: { lat: 31.2322, lng: 121.44363, alt: 1989, heading: 87, pitch: -25 }
+  },
+  control: {
+    baseLayerPicker: true,
+    terrainProviderViewModels: mars3d.LayerUtil.getTerrainProviderViewModels()
   }
 }
 

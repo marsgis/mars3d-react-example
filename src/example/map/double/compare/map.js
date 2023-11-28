@@ -33,12 +33,20 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
-  // addTestData()
-
   createControl()
 
-  // 双击销毁
-  map.on(mars3d.EventType.dblClick, () => {})
+  map.on(mars3d.EventType.addLayer, function (event) {
+    const mapEx = mapSplit.mapEx
+    if (mapEx) {
+      const layerOptions = event.layer.toJSON() // 转为参数
+      const newLayer = mars3d.LayerUtil.create(layerOptions) // 创建图层
+      mapEx.addLayer(newLayer)
+    }
+  })
+
+  setTimeout(() => {
+    addTestData()
+  }, 10000)
 }
 
 /**
@@ -53,6 +61,7 @@ export function createControl() {
   if (mapSplit) {
     return
   }
+
   // 修改已有地图为50%
   const mapOld = document.getElementById("centerDiv3D")
   mapOld.style.width = "50%"
@@ -93,9 +102,6 @@ export function destroyControl() {
 }
 
 function addTestData() {
-  const groupLayer = new mars3d.layer.GroupLayer({
-    name: "组图层"
-  })
   const layer = new mars3d.layer.TilesetLayer({
     name: "测试模型2",
     url: "//data.mars3d.cn/3dtiles/bim-daxue/tileset.json",
@@ -105,7 +111,5 @@ function addTestData() {
     dynamicScreenSpaceError: true,
     cullWithChildrenBounds: false
   })
-  groupLayer.addLayer(layer)
-
-  map.addLayer(groupLayer)
+  map.addLayer(layer)
 }

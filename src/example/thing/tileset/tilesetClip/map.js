@@ -47,7 +47,7 @@ export function showDytDemo() {
     url: "//data.mars3d.cn/3dtiles/qx-dyt/tileset.json",
     position: { alt: -27 },
     maximumScreenSpaceError: 1, // 可传入TilesetFlat构造参数，下面是演示压平区域
-    flat: {
+    clip: {
       precise,
       enabled: true
     },

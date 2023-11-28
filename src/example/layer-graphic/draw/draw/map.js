@@ -50,6 +50,14 @@ export const eventTarget = new mars3d.BaseClass()
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
+  // 设置编辑点样式
+  // mars3d.DrawUtil.setEditPointStyle(mars3d.EditPointType.Control, {
+  //   type: mars3d.GraphicType.billboardP, // 支持设置type指定编辑点类型
+  //   image: "img/icon/move.png",
+  //   horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+  //   verticalOrigin: Cesium.VerticalOrigin.CENTER
+  // })
+
   graphicLayer = new mars3d.layer.GraphicLayer({
     // isRestorePositions: true,
     hasEdit: true,
@@ -395,6 +403,29 @@ export function drawExtrudedCircle() {
       diffHeight: 300
     }
   })
+}
+
+export function drawSatellite() {
+  graphicLayer
+    .startDraw({
+      type: "satellite",
+      style: {
+        tle1: "1 39150U 13018A   21180.50843864  .00000088  00000-0  19781-4 0  9997",
+        tle2: "2 39150  97.8300 252.9072 0018449 344.7422  15.3253 14.76581022440650",
+        path_show: true,
+        path_color: "#00ff00",
+        path_width: 1,
+        model_show: true,
+        model_url: "//data.mars3d.cn/gltf/mars/weixin.gltf",
+        model_scale: 1,
+        model_minimumPixelSize: 90
+      }
+    })
+    .then((graphic) => {
+      setTimeout(() => {
+        graphic.flyToPoint()
+      }, 100)
+    })
 }
 
 // 在图层绑定Popup弹窗

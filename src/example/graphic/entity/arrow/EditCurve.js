@@ -40,7 +40,7 @@ class EditCurve extends mars3d.edit.EditBase {
 
         const draggerMid = this.createDragger({
           position: midpoint,
-          type: mars3d.DrawUtil.PointType.AddMidPoint,
+          type: mars3d.EditPointType.AddMidPoint,
           tooltip: this._map.getLangText("_增加点"),
           onDragStart: (dragger, position) => {
             this.positions.splice(dragger.index, 0, position) // 插入点
@@ -62,7 +62,7 @@ class EditCurve extends mars3d.edit.EditBase {
 
         const draggerMid2 = this.createDragger({
           position: midpoint2,
-          type: mars3d.DrawUtil.PointType.AddMidPoint,
+          type: mars3d.EditPointType.AddMidPoint,
           tooltip: this._map.getLangText("_增加点"),
           onDragStart: (dragger, position) => {
             this.positions.splice(dragger.index, 0, position) // 插入点
@@ -99,7 +99,7 @@ class EditCurve extends mars3d.edit.EditBase {
 
     const draggerMove = this.createDragger({
       position: positionMove,
-      type: mars3d.DrawUtil.PointType.MoveAll,
+      type: mars3d.EditPointType.MoveAll,
       tooltip: this._map.getLangText("_整体平移"),
       onDragStart: (dragger, position) => {
         positionMove = position

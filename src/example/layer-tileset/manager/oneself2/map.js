@@ -22,11 +22,14 @@ export const mapOptions = function (option) {
         showGroundAtmosphere: false,
         enableLighting: false
       },
+      clock: {
+        currentTime: "2023-11-01 12:00:00" // 固定光照时间
+      },
       cameraController: {
         zoomFactor: 1.5,
         minimumZoomDistance: 0.1,
         maximumZoomDistance: 200000,
-        enableCollisionDetection: false
+        enableCollisionDetection: false // 允许进入地下
       }
     },
     control: {
@@ -45,6 +48,8 @@ export const mapOptions = function (option) {
   return option
 }
 
+const storageName = "layer-tileset-manager-oneself"
+
 /**
  * 初始化地图业务，生命周期钩子函数（必须）
  * 框架在地图初始化完成后自动调用该函数
@@ -53,10 +58,25 @@ export const mapOptions = function (option) {
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
+  map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
 
   map.container.style.backgroundImage = "url(/img/tietu/backGroundImg.jpg)"
   map.container.style.backgroundRepeat = "no-repeat"
   map.container.style.backgroundSize = "100% 100%"
+
+  // 如果模型地址内有“+”符号，可以加下面方法进行自定义处理
+  Cesium.Resource.ReplaceUrl = function (url) {
+    if (url.endsWith(".json") || url.endsWith(".b3dm")) {
+      return url.replace(/\+/gm, "%2B") // 将3dtiles中的“+”符号转义下
+    } else {
+      return url
+    }
+  }
+
+  // 读取localStorage值
+  localforage.getItem(storageName).then(function (lastUrl) {
+    eventTarget.fire("historyUrl", { url: lastUrl })
+  })
 }
 
 /**
@@ -75,14 +95,14 @@ function removeLayer() {
 }
 
 // 当前页面业务相关
-export function showModel(_url) {
+export function showModel(url) {
   removeLayer()
-  if (!_url) {
+  if (!url) {
     return
   }
 
   tiles3dLayer = new mars3d.layer.TilesetLayer({
-    url: _url,
+    url,
     maximumScreenSpaceError: 1,
     flyTo: true
   })
@@ -91,6 +111,7 @@ export function showModel(_url) {
   // 单击事件
   tiles3dLayer.on(mars3d.EventType.load, function (event) {
     console.log("模型加载完成", event)
+    localforage.setItem(storageName, url) // 记录历史值
 
     // 限定缩放级别
     map.scene.screenSpaceCameraController.maximumZoomDistance = tiles3dLayer.boundingSphere.radius * 5

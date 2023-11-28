@@ -3,6 +3,32 @@ import * as mars3d from "mars3d"
 export let map // mars3d.Map三维地图对象
 export let tiles3dLayer
 
+// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+export const mapOptions = {
+  scene: {
+    showSun: false,
+    showMoon: false,
+    showSkyBox: false,
+    showSkyAtmosphere: false,
+    fog: false,
+    backgroundColor: "#363635", // 天空背景色
+    globe: {
+      baseColor: "#363635", // 地球地面背景色
+      showGroundAtmosphere: false,
+      enableLighting: false
+    },
+    clock: {
+      currentTime: "2023-11-01 12:00:00" // 固定光照时间
+    },
+    cameraController: {
+      zoomFactor: 1.5,
+      minimumZoomDistance: 0.1,
+      maximumZoomDistance: 200000,
+      enableCollisionDetection: false // 允许进入地下
+    }
+  }
+}
+
 // 自定义事件
 export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
 
@@ -15,10 +41,6 @@ export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
   map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
-
-  // 固定光照时间
-  map.clock.currentTime = Cesium.JulianDate.fromDate(new Date("2022-11-01 12:00:00"))
-  // map.clock.shouldAnimate = false
 
   // 固定光照方向
   map.scene.light = new Cesium.DirectionalLight({

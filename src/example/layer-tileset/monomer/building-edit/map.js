@@ -62,7 +62,7 @@ export function onMounted(mapInstance) {
   })
   map.addLayer(geoJsonLayerDTH)
 
-  mars3d.DrawUtil.setPointStyle({ has3dtiles: true })// 编辑点贴模型
+  mars3d.DrawUtil.setEditPointStyle(mars3d.EditPointType.Control, { has3dtiles: true })// 编辑点贴模型
 
   graphicLayer = new mars3d.layer.GraphicLayer({
     hasEdit: true,
