@@ -124,7 +124,7 @@ export function showModel(url) {
   }
 
   tiles3dLayer = new mars3d.layer.TilesetLayer({
-    url,
+    url: url,
     maximumScreenSpaceError: 1,
     flyTo: true
   })

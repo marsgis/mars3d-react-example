@@ -83,6 +83,10 @@ function addDemoGraphic1() {
       heading: 88.5,
       pitch: 8.2,
       distance: 78,
+      // vertexFormat: Cesium.MaterialAppearance.MaterialSupport.TEXTURED.vertexFormat,
+      // textureCoordinates: {
+      //   positions: [new Cesium.Cartesian2(0, 1), new Cesium.Cartesian2(1, 1), new Cesium.Cartesian2(1, 0), new Cesium.Cartesian2(0, 0)]
+      // },
       showFrustum: true
     }
   })

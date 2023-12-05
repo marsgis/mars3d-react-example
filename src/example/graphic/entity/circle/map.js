@@ -361,6 +361,7 @@ function addDemoGraphic9(graphicLayer) {
 
   map.on(mars3d.EventType.mouseMove, function (event) {
     lastPosition = event.cartesian
+    // circleEntity._updatePositionsHook()
   })
 }
 

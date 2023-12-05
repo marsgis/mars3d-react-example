@@ -1992,7 +1992,7 @@
             "thumbnail": "layerg-draw-draw.jpg",
             "main": "layer-graphic/draw/draw",
             "hasPannel": true,
-            "libs": ["mars3d", "kmlGeojson", "terraformer"]
+            "libs": ["mars3d", "mars3d-space", "kmlGeojson", "terraformer"]
           },
           {
             "name": "标绘数据展示(马拉松)",
@@ -2350,12 +2350,14 @@
             "name": "单模型场景(无地球)",
             "thumbnail": "layer3d-manager-oneself.jpg",
             "main": "layer-tileset/manager/oneself",
+            "libs": ["mars3d", "localforage"],
             "hasPannel": true
           },
           {
             "name": "单模型场景(无地球+背景图片)",
             "thumbnail": "layer3d-manager-oneself2.jpg",
             "main": "layer-tileset/manager/oneself2",
+            "libs": ["mars3d", "localforage"],
             "hasPannel": true
           }
         ]

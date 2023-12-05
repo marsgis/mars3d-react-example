@@ -48,7 +48,7 @@ export function showDytDemo() {
     position: { alt: -27 },
     maximumScreenSpaceError: 1, // 可传入TilesetFlat构造参数，下面是演示压平区域
     clip: {
-      precise,
+      precise: precise,
       enabled: true
     },
     flyTo: true
@@ -78,7 +78,7 @@ export function showTehDemo() {
 
     // 可传入TilesetClip构造参数，下面是演示压平区域
     clip: {
-      precise,
+      precise: precise,
       area: [
         {
           positions: [
@@ -117,7 +117,7 @@ export function showXianDemo() {
     cullWithChildrenBounds: false,
     center: { lat: 28.440675, lng: 119.487735, alt: 639, heading: 269, pitch: -38 },
     clip: {
-      precise,
+      precise: precise,
       enabled: true
     },
     flyTo: true
