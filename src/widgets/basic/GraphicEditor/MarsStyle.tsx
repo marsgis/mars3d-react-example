@@ -40,7 +40,7 @@ interface MarsAttrProps {
   onChange?: (value?: any) => void
 }
 let newViewMaterials: any[] = []
-export default function MarsStyle({ style, layerName, customType, graphicType, onChange = () => { } }: MarsAttrProps) {
+export default function MarsStyle({ style, layerName, customType, graphicType, onChange = () => {} }: MarsAttrProps) {
   const originStyles = useRef([]) // 完整的属性数据
   const [styleValue, setStyleValue] = useState<any>(null) // 矢量数据样式属性对象
   const [viewStyles, setViewStyles] = useState<any[]>([]) // 当前状态下显示的属性数组
@@ -311,6 +311,7 @@ export default function MarsStyle({ style, layerName, customType, graphicType, o
                           onChange={(e) => {
                             unionChange(item, e instanceof Object ? e.target.value : e, item.data)
                           }}
+                          tofixed={item.toFixed}
                         ></StyleItem>
                       }
                     </td>
@@ -364,6 +365,7 @@ export default function MarsStyle({ style, layerName, customType, graphicType, o
                           labelChange(item, e instanceof Object ? e.target.value : e)
                           // }
                         }}
+                        tofixed={item.toFixed}
                       ></StyleItem>
                     }
                   </td>

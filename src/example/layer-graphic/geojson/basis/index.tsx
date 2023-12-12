@@ -100,6 +100,15 @@ const list = [
 
       changeGraphicData()
     }
+  },
+  {
+    name: "GCJ纠偏",
+    callback: () => {
+      setDefuatData()
+      mapWork.showGCJ02Data()
+
+      changeGraphicData()
+    }
   }
 ]
 

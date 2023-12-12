@@ -1,5 +1,6 @@
 import { MarsPannel, $alert, MarsCheckboxGroup, MarsCheckbox } from "@mars/components/MarsUI"
 import { useEffect, useMemo, useState } from "react"
+import { activate, disable, updateWidget, isActive } from "@mars/widgets/common/store/widget"
 import { Space } from "antd"
 const mapWork = window.mapWork
 const mars3d = mapWork.mars3d
@@ -178,7 +179,44 @@ export const LayerState = (props) => {
       setToolTip(layer.hasTooltip())
       setMenu(layer.hasContextMenu())
     }
+
+    // 矢量数据创建完成
+    mapWork.graphicLayer.on(mars3d.EventType.drawCreated, (e) => {
+      showEditor(e.graphic)
+    })
+    // 修改了矢量数据
+    mapWork.graphicLayer.on(
+      [mars3d.EventType.editStart, mars3d.EventType.editMovePoint, mars3d.EventType.editStyle, mars3d.EventType.editRemovePoint],
+      (e) => {
+        showEditor(e.graphic)
+      }
+    )
+    // 停止编辑
+    mapWork.graphicLayer.on([mars3d.EventType.editStop, mars3d.EventType.removeGraphic], (e) => {
+      setTimeout(() => {
+        if (!mapWork.graphicLayer.isEditing) {
+          disable("graphic-editor")
+        }
+      }, 100)
+    })
   }, [])
+
+  // 展示属性面板
+  const showEditor = (graphic: any) => {
+    if (!graphic._conventStyleJson) {
+      graphic.options.style = graphic.toJSON().style // 因为示例中的样式可能有复杂对象，需要转为单个json简单对象
+      graphic._conventStyleJson = true // 只处理一次
+    }
+
+    if (!isActive("GraphicEditor")) {
+      activate({
+        name: "GraphicEditor",
+        data: { graphic }
+      })
+    } else {
+      updateWidget("GraphicEditor", { graphic })
+    }
+  }
 
   // 控制显示隐藏
   const onChangeShow = (e) => {

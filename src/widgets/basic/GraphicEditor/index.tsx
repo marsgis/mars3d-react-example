@@ -21,7 +21,6 @@ function GraphicEditor({ currentWidget, ...props }) {
   const [customType, setCustomType] = useState("")
   const [graphicType, setGraphicType] = useState("")
 
-
   const [acTab, setAcTab] = useState("style")
 
   const tabChange = useCallback((key: string) => {
@@ -61,12 +60,7 @@ function GraphicEditor({ currentWidget, ...props }) {
       footer={
         <MarsTabs tabPosition="bottom" activeKey={acTab} type="card" onTabClick={tabChange}>
           <MarsTabPane key="style" tab="样式"></MarsTabPane>
-          {
-            showAvailability ? <MarsTabPane key="availability" tab="时序"></MarsTabPane> : ""
-
-          }
-
-
+          {showAvailability ? <MarsTabPane key="availability" tab="时序"></MarsTabPane> : ""}
         </MarsTabs>
       }
     >

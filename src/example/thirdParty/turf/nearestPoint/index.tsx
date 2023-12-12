@@ -6,7 +6,8 @@ function UIComponent() {
   return (
     <MarsPannel visible={true} top={10} right={10}>
       <Space>
-        <span>提示：请单击地图，分析拾取点最近的体育场所。</span>
+        <span>绘制:</span>
+        <MarsButton onClick={() => mapWork.drawPoint()}>选择点</MarsButton>
         <MarsButton onClick={() => mapWork.clearAll()}>清除</MarsButton>
       </Space>
     </MarsPannel>

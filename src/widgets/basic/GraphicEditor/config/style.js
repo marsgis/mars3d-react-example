@@ -2693,7 +2693,6 @@ const styleConfig = {
         defval: "#ffffff",
         show(style, allStyle, graphicType) {
           return style.outline && (style.diffHeight || !style.outlineStyle)
-
         }
       },
 
@@ -2929,6 +2928,7 @@ const styleConfig = {
         name: "radius",
         label: "半径",
         type: "number",
+        toFixed: 2,
         step: 0.1,
         defval: 0.0
       },

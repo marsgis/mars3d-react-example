@@ -123,6 +123,57 @@ function addDemoGraphic3(graphicLayer) {
     attr: { remark: "示例3" }
   })
   graphicLayer.addGraphic(graphic)
+
+  // 演示个性化处理graphic
+  initGraphicManager(graphic)
+}
+
+// 也可以在单个Graphic上做个性化管理及绑定操作
+function initGraphicManager(graphic) {
+  // 3.在graphic上绑定监听事件
+  // graphic.on(mars3d.EventType.click, function (event) {
+  //   console.log("监听graphic，单击了矢量对象", event)
+  // })
+
+  // 绑定Tooltip
+  // graphic.bindTooltip('我是graphic上绑定的Tooltip') //.openTooltip()
+
+  // 绑定Popup
+  const inthtml = `<table style="width: auto;">
+            <tr>
+              <th scope="col" colspan="2" style="text-align:center;font-size:15px;">我是graphic上绑定的Popup </th>
+            </tr>
+            <tr>
+              <td>提示：</td>
+              <td>这只是测试信息，可以任意html</td>
+            </tr>
+          </table>`
+  graphic.bindPopup(inthtml).openPopup()
+
+  // 绑定右键菜单
+  graphic.bindContextMenu([
+    {
+      text: "删除对象[graphic绑定的]",
+      icon: "fa fa-trash-o",
+      callback: (e) => {
+        const graphic = e.graphic
+        if (graphic) {
+          graphic.remove()
+        }
+      }
+    }
+  ])
+
+  // 测试 颜色闪烁
+  if (graphic.startFlicker) {
+    graphic.startFlicker({
+      time: 20, // 闪烁时长（秒）
+      maxAlpha: 0.5,
+      onEnd: function () {
+        // 结束后回调
+      }
+    })
+  }
 }
 
 function addDemoGraphic4(graphicLayer) {
@@ -144,6 +195,7 @@ function addDemoGraphic4(graphicLayer) {
     attr: { remark: "示例4" }
   })
   graphicLayer.addGraphic(graphic)
+
 }
 
 // 生成演示数据(测试数据量)

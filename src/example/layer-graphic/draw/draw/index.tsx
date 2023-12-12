@@ -85,7 +85,7 @@ function UIComponent() {
                   value: "iseditable"
                 },
                 {
-                  label: "仅在Tiles上拾取",
+                  label: "仅在模型或矢量上拾取",
                   value: "only3dtiles"
                 }
               ],

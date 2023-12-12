@@ -10,12 +10,15 @@ function UIComponent(props) {
   const [hue, setHue] = useState(0.0)
   const [saturation, setSaturation] = useState(1.0)
   return (
-    <MarsPannel visible={true} right="10" top="10" width={205}>
-      <MarsForm {...{ labelCol: { span: 6 } }}>
+    <MarsPannel visible={true} right="10" top="10" width={260}>
+      <MarsForm {...{ labelCol: { span: 7 }, labelAlign: "right" }}>
         <MarsFormItem label="启用">
-          <MarsSwitch defaultChecked onChange={(v) => {
-            mapWork.setDepthOfField(v)
-          }}></MarsSwitch>
+          <MarsSwitch
+            defaultChecked
+            onChange={(v) => {
+              mapWork.setDepthOfField(v)
+            }}
+          ></MarsSwitch>
         </MarsFormItem>
 
         <MarsFormItem label="亮度">

@@ -125,7 +125,7 @@ function UIComponent() {
         </MarsFormItem>
         <MarsFormItem>
           <MarsCheckbox onChange={(e) => mapWork.chkTestTerrain(e.target.checked)}>深度检测</MarsCheckbox>
-          <MarsCheckbox onChange={(e) => mapWork.onlyPickModelPosition(e.target.checked)}>仅在Tiles上拾取</MarsCheckbox>
+          <MarsCheckbox onChange={(e) => mapWork.onlyPickModelPosition(e.target.checked)}>仅在模型或矢量上拾取</MarsCheckbox>
         </MarsFormItem>
         <MarsFormItem>
           <MarsSelect onChange={(e) => handleChange(e)} defaultValue={"车辆"}>

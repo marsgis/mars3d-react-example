@@ -133,7 +133,16 @@ export function measureAngle() {
 
 // 坐标测量
 export function measurePoint() {
-  measure.point()
+  measure.point({
+    // popup: function (point, graphic) {
+    //   return `<div class="mars3d-template-title">位置信息</div>
+    //   <div class="mars3d-template-content">
+    //       <div><label>经度</label>${point.lng}</div>
+    //       <div><label>纬度</label>${point.lat}</div>
+    //       <div><label>海拔</label>${point.alt}米</div>
+    //   </div>`
+    // }
+  })
 }
 
 function addDemoGraphic1(graphicLayer) {

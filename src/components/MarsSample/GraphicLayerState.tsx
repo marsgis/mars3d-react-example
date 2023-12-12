@@ -220,21 +220,21 @@ function bindLayerContextMenu() {
 }
 
 // 表格中的矢量数据命名
-let graphicIndex = 0
 function getGraphicName(graphic) {
-  if (graphic?.style?.label?.text) {
-    return `${graphic.type} - ${graphic.style.label.text}`
-  }
-
   if (graphic.name) {
     return `${graphic.type} - ${graphic.name}`
+  }
+  if (graphic.attr.index) {
+    return `${graphic.type} - ${graphic.attr.index}`
   }
   if (graphic.attr.remark) {
     return `${graphic.type} - ${graphic.attr.remark}`
   }
+  if (graphic?.style?.label?.text) {
+    return `${graphic.type} - ${graphic.style.label.text}`
+  }
 
-  graphic.name = `未命名${++graphicIndex}`
-  return `${graphic.type} - ${graphic.name}`
+  return `${graphic.type} - ${graphic.name || "未命名"}`
 }
 
 export class GraphicLayerState extends Component<any, any> {
@@ -254,6 +254,7 @@ export class GraphicLayerState extends Component<any, any> {
       enabledRightMenu: false,
       enabledShowHide: true,
       enabledOpacity: true,
+      isDrawing: false,
       opacity: 1,
       currentPage: 5, // 分页查询每页条数
       graphicDataList: [], // 表格数据
@@ -337,6 +338,11 @@ export class GraphicLayerState extends Component<any, any> {
         }
         this.setState({
           hasTable: graphics.length > 0
+        })
+
+        const that = this
+        layer.on([mars3d.EventType.drawCreated, mars3d.EventType.addGraphic, mars3d.EventType.removeGraphic], function (e) {
+          that.setState({ isDrawing: layer.isDrawing })
         })
       }
 
@@ -446,15 +452,11 @@ export class GraphicLayerState extends Component<any, any> {
     if (!isActive("GraphicEditor") || lastGraphic !== graphic) {
       activate({
         name: "GraphicEditor",
-        data: {
-          graphic
-        }
+        data: { graphic }
       })
       lastGraphic = graphic
     } else {
-      updateWidget("GraphicEditor", {
-        graphic
-      })
+      updateWidget("GraphicEditor", { graphic })
     }
   }
 
@@ -545,11 +547,23 @@ export class GraphicLayerState extends Component<any, any> {
   // drawLabel1
   onClickStartDraw() {
     mapWork.startDrawGraphic()
+
+    const layer = getManagerLayer()
+    this.setState({ isDrawing: layer.isDrawing })
   }
 
   // drawLabel2
   onClickStartDraw2() {
     mapWork.startDrawGraphic2()
+
+    const layer = getManagerLayer()
+    this.setState({ isDrawing: layer.isDrawing })
+  }
+
+  onClickClearDrawing() {
+    const layer = getManagerLayer()
+    layer.clearDrawing()
+    this.setState({ isDrawing: layer.isDrawing })
   }
 
   // 是否编辑
@@ -591,10 +605,7 @@ export class GraphicLayerState extends Component<any, any> {
     graphicDataList.length = 0
     rowKeys.length = 0
 
-    this.setState({
-      graphicDataList: [],
-      rowKeys: []
-    })
+    this.setState({ graphicDataList: [], rowKeys: [], isDrawing: false })
 
     if (this.props.customEditor) {
       this.props.onStopEditor()
@@ -746,10 +757,19 @@ export class GraphicLayerState extends Component<any, any> {
         >
           <Space>
             <span className="mars-pannel-item-label">数据维护:</span>
-            <MarsButton onClick={() => this.onClickStartDraw()}>{this.state.drawLabel1}</MarsButton>
-            <MarsButton onClick={() => this.onClickStartDraw2()} style={{ display: this.state.drawLabel2 ? "block" : "none" }}>
+            <MarsButton onClick={() => this.onClickStartDraw()} style={{ display: !this.state.isDrawing ? "block" : "none" }}>
+              {this.state.drawLabel1}
+            </MarsButton>
+            <MarsButton
+              onClick={() => this.onClickStartDraw2()}
+              style={{ display: this.state.drawLabel2 && !this.state.isDrawing ? "block" : "none" }}
+            >
               {this.state.drawLabel2}
             </MarsButton>
+            <MarsButton onClick={() => this.onClickClearDrawing()} style={{ display: this.state.isDrawing ? "block" : "none" }}>
+              取消绘制
+            </MarsButton>
+
             <span
               className={classNames({
                 "f-dn": !this.state.interaction && this.state.enabledEdit
@@ -824,7 +844,7 @@ export class GraphicLayerState extends Component<any, any> {
           </Space>
         </div>
 
-        <div className="f-mb t-tac" style={{ width: "400px" }}>
+        <div className="f-mb t-tac" style={{ width: "450px" }}>
           {this.state.hasTable ? (
             <MarsTable
               bordered
