@@ -16,6 +16,8 @@ export const mapOptions = {
       username: "marsgis",
       styleId: "cki0adkar2b0e19mv9tpiewld",
       token: mars3d.Token.mapbox,
+      tilesize: 256,
+      scaleFactor: false,
       show: true
     },
     {

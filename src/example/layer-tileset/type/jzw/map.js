@@ -10,6 +10,7 @@ let bloomEffect
 export const mapOptions = {
   scene: {
     center: { lat: 31.795446, lng: 117.219725, alt: 1816, heading: 15, pitch: -34 }
+    // sceneMode: 2
   },
   layers: [
     {
@@ -91,6 +92,7 @@ export function onMounted(mapInstance) {
     name: "合肥市建筑物",
     url: "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
     maximumScreenSpaceError: 1,
+    // projectTo2D: true,
     popup: [
       { field: "objectid", name: "编号" },
       { field: "name", name: "名称" },

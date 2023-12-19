@@ -350,8 +350,11 @@ function addDemoGraphic9(graphicLayer) {
       return lastPosition
     }, false),
     style: {
-      material: getMarsCanves(),
       radius: 500,
+      materialType: mars3d.MaterialType.Image2,
+      materialOptions: {
+        image: getMarsCanves()
+      },
       clampToGround: true
     },
     attr: { remark: "示例9" },
@@ -370,7 +373,6 @@ function getMarsCanves() {
   const canvas = document.createElement("canvas")
   canvas.width = 400
   canvas.height = 400
-  canvas.style = "border: 1px solid red;background:orange"
 
   const ctx = canvas.getContext("2d")
 
@@ -387,6 +389,7 @@ function getMarsCanves() {
   ctx.strokeStyle = "transparent"
   ctx.lineWidth = 2
   ctx.stroke()
+
   // 绘制刻度
   const numTicks = 360 // 总刻度数
   let tickLength = 10 // 刻度长度
@@ -463,7 +466,7 @@ function getMarsCanves() {
       ctx.strokeStyle = "blue"
     }
     ctx.stroke()
-    // // 修改刻度文本的位置
+    // 修改刻度文本的位置
     if (i % 45 === 0 && i <= 180) {
       ctx.fillText(i, 0, 5) // 顺时针角度刻度数
     } else if (i % 45 === 0 && i > 180) {
@@ -477,7 +480,7 @@ function getMarsCanves() {
     }
     ctx.restore()
   }
-  return canvas
+  return canvas.toDataURL("image/png")
 }
 
 function addDemoGraphic10(graphicLayer) {

@@ -20,10 +20,11 @@ export function onMounted(mapInstance) {
 
   // 经纬网
   const tileLayer = new mars3d.layer.GraticuleLayer({
-    steps: [0.05, 0.1, 0.2, 0.5, 1.0, 2.0, 5.0, 10.0]
-    // lineStyle: {
-    //   color: '#ffff00',
-    // },
+    steps: [0.05, 0.1, 0.2, 0.5, 1.0, 2.0, 5.0, 10.0],
+    lineStyle: {
+      color: "#fff",
+      height: 1000
+    }
     // labelStyle: {
     //   color: "#ffff00",
     //   pixelOffset: new Cesium.Cartesian2(0, 0)

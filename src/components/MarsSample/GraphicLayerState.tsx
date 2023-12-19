@@ -230,7 +230,7 @@ function getGraphicName(graphic) {
   if (graphic.attr.remark) {
     return `${graphic.type} - ${graphic.attr.remark}`
   }
-  if (graphic?.style?.label?.text) {
+  if (graphic?.style?.label?.text && graphic.style.label.text !== "0") {
     return `${graphic.type} - ${graphic.style.label.text}`
   }
 

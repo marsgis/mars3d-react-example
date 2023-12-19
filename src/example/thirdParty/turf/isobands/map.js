@@ -86,17 +86,20 @@ function showWindLine(arr) {
     data: geojsonPoly,
     popup: "{speed}",
     symbol: {
+      type: "polygonC",
       styleOptions: {
         fill: true, // 是否填充
         color: "#ffff00", // 颜色
-        opacity: 0.7 // 透明度
+        opacity: 1 // 透明度
       },
       callback: function (attr, styleOpt) {
         // 得到点的权重，计算落在那个色度带
         const val = Number(attr.speed.split("-")[0] || 0)
         const color = getColor(val)
         return {
-          color
+          color: color,
+          height: 0,
+          diffHeight: val * 10000
         }
       }
     }

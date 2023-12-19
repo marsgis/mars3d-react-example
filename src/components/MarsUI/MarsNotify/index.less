@@ -1,13 +1,14 @@
 // 功能提示和已知问题提示框
 .mars-notify-message.ant-notification-notice {
   right: 30px !important;
-  padding: 0;
+  padding: 0 !important;
   background: none;
   .mars-msg-bg();
   .ant-notification-notice-message {
     font-size: 16px;
     margin: 0;
     .mars-msg-title();
+    margin-inline-start: 0px !important;
   }
   .ant-notification-notice-description {
     color: @mars-base-color;
@@ -20,4 +21,8 @@
     top: 10px;
     right: 10px;
   }
+}
+
+.ant-notification-notice-wrapper {
+  background: transparent !important;
 }

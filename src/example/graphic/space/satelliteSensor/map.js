@@ -46,9 +46,11 @@ let modelGraphic
 export function addDemoGraphic1(sensorParams) {
   const position = Cesium.Cartesian3.fromDegrees(sensorParams.model_x, sensorParams.model_y, sensorParams.model_z)
   // 加个模型
-  modelGraphic = new mars3d.graphic.ModelEntity({
+  modelGraphic = new mars3d.graphic.ModelPrimitive({
     name: "卫星模型",
-    position,
+    position: position,
+    forwardExtrapolationType: Cesium.ExtrapolationType.HOLD,
+    backwardExtrapolationType: Cesium.ExtrapolationType.HOLD,
     style: {
       url: "//data.mars3d.cn/gltf/mars/weixin.gltf",
       scale: 1,
@@ -65,7 +67,9 @@ export function addDemoGraphic1(sensorParams) {
 
   // 视锥体
   const satelliteSensor = new mars3d.graphic.SatelliteSensor({
-    position,
+    position: position,
+    forwardExtrapolationType: Cesium.ExtrapolationType.HOLD,
+    backwardExtrapolationType: Cesium.ExtrapolationType.HOLD,
     style: {
       sensorType: mars3d.graphic.SatelliteSensor.Type.Rect,
       angle1: sensorParams.angleValue1,
@@ -78,6 +82,7 @@ export function addDemoGraphic1(sensorParams) {
     }
   })
   graphicLayer.addGraphic(satelliteSensor)
+
   eventTarget.fire("addTableData", { graphicLayer })
 }
 
