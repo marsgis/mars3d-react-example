@@ -2,8 +2,8 @@
 /**
  * Mars3D三维可视化平台  mars3d
  *
- * 版本信息：v3.6.17
- * 编译日期：2023-12-17 23:57:16
+ * 版本信息：v3.6.18
+ * 编译日期：2023-12-28 21:28:23
  * 版权所有：Copyright by 火星科技  http://mars3d.cn
  * 使用单位：免费公开版 ，2023-03-17
  */
@@ -5390,9 +5390,9 @@ declare class PlaneCombine extends BasePointCombine {
  * @param options - 参数对象，包括以下：
  * @param [options.instances] - 面信息数组，单个对象包括：
  * @param options.instances.positions - 坐标位置
- * @param [options.instances.style] - 样式信息
+ * @param [options.instances.style] - 样式信息,【仅支持同属性同材质，纯色支持多颜色】
  * @param [options.instances.attr] - 矢量数据的 属性信息，可以任意附加属性。
- * @param [options.style] - 所有面的公共样式信息
+ * @param [options.style] - 所有面的公共样式信息, 【仅支持同属性同材质，纯色支持多颜色】
  * @param [options.highlight] - 鼠标移入或单击后的对应高亮的部分样式(仅支持Color纯色材质)
  * //  * @param {string} [options.highlight.type] 触发高亮的方式，默认鼠标移入，可以指定为type:'click'为单击后高亮
  * @param [options.appearance] - [cesium原生]用于渲染图元的外观。
@@ -7159,6 +7159,7 @@ declare namespace Video3D {
  * @param [options.targetPosition] - 目标视点位置,可以替代style中的相机heading\pitch\roll方向和distance距离参数
  * @param options.style - 样式信息
  * @param [options.attr] - 附件的属性信息，可以任意附加属性，导出geojson或json时会自动处理导出。
+ * @param [options.play = true] - 初始化后默认是播放还是停止状态
  * @param [options.id = createGuid()] - 矢量数据id标识
  * @param [options.name = ''] - 矢量数据名称
  * @param [options.show = true] - 矢量数据是否显示
@@ -7172,6 +7173,7 @@ declare class Video3D extends ViewShed {
         targetPosition?: LngLatPoint | Cesium.Cartesian3 | number[];
         style: Video3D.StyleOptions | any;
         attr?: any;
+        play?: boolean;
         id?: string | number;
         name?: string;
         show?: boolean;
@@ -8394,6 +8396,10 @@ declare class BaseEntity extends BaseGraphic {
      */
     readonly isEditing: boolean;
     /**
+     * 正在绘制的最后一个正式点
+     */
+    readonly lastDrawPoint: boolean;
+    /**
      * 重新渲染对象
      * @returns 无
      */
@@ -8706,6 +8712,7 @@ declare class BasePointEntity extends BaseEntity {
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.minPointNum = 2] - 绘制时，至少需要点的个数
  * @param [options.maxPointNum = 9999] - 绘制时，最多允许点的个数
+ * @param [options.updateDrawPosition] - 绘制时，外部自定义更新坐标,可以自定义处理特殊业务返回修改后的新坐标。
  * @param [options.validDrawPosition] - 绘制时，外部自定义校验坐标,比如判断限定在指定区域内绘制。
  * @param [options.hasDrawDelPoint = true] - 绘制时，是否可以右键删除点
  * @param [options.hasEdit = true] - 是否允许编辑
@@ -8737,6 +8744,7 @@ declare class BasePolyEntity extends BaseEntity {
         onBeforeCreate?: (...params: any[]) => any;
         minPointNum?: number;
         maxPointNum?: number;
+        updateDrawPosition?: (...params: any[]) => any;
         validDrawPosition?: (...params: any[]) => any;
         hasDrawDelPoint?: boolean;
         hasEdit?: boolean;
@@ -9185,6 +9193,7 @@ declare class BoxEntity {
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.minPointNum = 2] - 绘制时，至少需要点的个数
  * @param [options.maxPointNum = 9999] - 绘制时，最多允许点的个数
+ * @param [options.updateDrawPosition] - 绘制时，外部自定义更新坐标,可以自定义处理特殊业务返回修改后的新坐标。
  * @param [options.validDrawPosition] - 绘制时，外部自定义校验坐标,比如判断限定在指定区域内绘制。
  * @param [options.hasEdit = true] - 是否允许编辑
  * @param [options.hasEditContextMenu = true] - 编辑时，是否绑定右键编辑菜单
@@ -9215,6 +9224,7 @@ declare class BrushLineEntity extends PolylineEntity {
         onBeforeCreate?: (...params: any[]) => any;
         minPointNum?: number;
         maxPointNum?: number;
+        updateDrawPosition?: (...params: any[]) => any;
         validDrawPosition?: (...params: any[]) => any;
         hasEdit?: boolean;
         hasEditContextMenu?: boolean;
@@ -9876,6 +9886,7 @@ declare namespace CorridorEntity {
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.minPointNum = 2] - 绘制时，至少需要点的个数
  * @param [options.maxPointNum = 9999] - 绘制时，最多允许点的个数
+ * @param [options.updateDrawPosition] - 绘制时，外部自定义更新坐标,可以自定义处理特殊业务返回修改后的新坐标。
  * @param [options.validDrawPosition] - 绘制时，外部自定义校验坐标,比如判断限定在指定区域内绘制。
  * @param [options.hasEdit = true] - 是否允许编辑
  * @param [options.hasEditContextMenu = true] - 编辑时，是否绑定右键编辑菜单
@@ -9906,6 +9917,7 @@ declare class CorridorEntity extends BasePolyEntity {
         onBeforeCreate?: (...params: any[]) => any;
         minPointNum?: number;
         maxPointNum?: number;
+        updateDrawPosition?: (...params: any[]) => any;
         validDrawPosition?: (...params: any[]) => any;
         hasEdit?: boolean;
         hasEditContextMenu?: boolean;
@@ -9949,6 +9961,7 @@ declare class CorridorEntity extends BasePolyEntity {
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.minPointNum = 2] - 绘制时，至少需要点的个数
  * @param [options.maxPointNum = 9999] - 绘制时，最多允许点的个数
+ * @param [options.updateDrawPosition] - 绘制时，外部自定义更新坐标,可以自定义处理特殊业务返回修改后的新坐标。
  * @param [options.validDrawPosition] - 绘制时，外部自定义校验坐标,比如判断限定在指定区域内绘制。
  * @param [options.hasEdit = true] - 是否允许编辑
  * @param [options.hasEditContextMenu = true] - 编辑时，是否绑定右键编辑菜单
@@ -9980,6 +9993,7 @@ declare class CurveEntity extends PolylineEntity {
         onBeforeCreate?: (...params: any[]) => any;
         minPointNum?: number;
         maxPointNum?: number;
+        updateDrawPosition?: (...params: any[]) => any;
         validDrawPosition?: (...params: any[]) => any;
         hasEdit?: boolean;
         hasEditContextMenu?: boolean;
@@ -12081,6 +12095,7 @@ declare namespace PolygonEntity {
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.minPointNum = 2] - 绘制时，至少需要点的个数
  * @param [options.maxPointNum = 9999] - 绘制时，最多允许点的个数
+ * @param [options.updateDrawPosition] - 绘制时，外部自定义更新坐标,可以自定义处理特殊业务返回修改后的新坐标。
  * @param [options.validDrawPosition] - 绘制时，外部自定义校验坐标,比如判断限定在指定区域内绘制。
  * @param [options.hasDrawDelPoint = true] - 绘制时，是否可以右键删除点
  * @param [options.hasEdit = true] - 是否允许编辑
@@ -12113,6 +12128,7 @@ declare class PolygonEntity extends BasePolyEntity {
         onBeforeCreate?: (...params: any[]) => any;
         minPointNum?: number;
         maxPointNum?: number;
+        updateDrawPosition?: (...params: any[]) => any;
         validDrawPosition?: (...params: any[]) => any;
         hasDrawDelPoint?: boolean;
         hasEdit?: boolean;
@@ -12280,6 +12296,7 @@ declare namespace PolylineEntity {
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.minPointNum = 2] - 绘制时，至少需要点的个数
  * @param [options.maxPointNum = 9999] - 绘制时，最多允许点的个数
+ * @param [options.updateDrawPosition] - 绘制时，外部自定义更新坐标,可以自定义处理特殊业务返回修改后的新坐标。
  * @param [options.validDrawPosition] - 绘制时，外部自定义校验坐标,比如判断限定在指定区域内绘制。
  * @param [options.hasDrawDelPoint = true] - 绘制时，是否可以右键删除点
  * @param [options.hasEdit = true] - 是否允许编辑
@@ -12312,6 +12329,7 @@ declare class PolylineEntity extends BasePolyEntity {
         onBeforeCreate?: (...params: any[]) => any;
         minPointNum?: number;
         maxPointNum?: number;
+        updateDrawPosition?: (...params: any[]) => any;
         validDrawPosition?: (...params: any[]) => any;
         hasDrawDelPoint?: boolean;
         hasEdit?: boolean;
@@ -12417,6 +12435,7 @@ declare namespace PolylineVolumeEntity {
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.minPointNum = 2] - 绘制时，至少需要点的个数
  * @param [options.maxPointNum = 9999] - 绘制时，最多允许点的个数
+ * @param [options.updateDrawPosition] - 绘制时，外部自定义更新坐标,可以自定义处理特殊业务返回修改后的新坐标。
  * @param [options.validDrawPosition] - 绘制时，外部自定义校验坐标,比如判断限定在指定区域内绘制。
  * @param [options.hasEdit = true] - 是否允许编辑
  * @param [options.hasEditContextMenu = true] - 编辑时，是否绑定右键编辑菜单
@@ -12447,6 +12466,7 @@ declare class PolylineVolumeEntity extends BasePolyEntity {
         onBeforeCreate?: (...params: any[]) => any;
         minPointNum?: number;
         maxPointNum?: number;
+        updateDrawPosition?: (...params: any[]) => any;
         validDrawPosition?: (...params: any[]) => any;
         hasEdit?: boolean;
         hasEditContextMenu?: boolean;
@@ -12565,6 +12585,7 @@ declare namespace RectangleEntity {
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.minPointNum = 2] - 绘制时，至少需要点的个数
  * @param [options.maxPointNum = 9999] - 绘制时，最多允许点的个数
+ * @param [options.updateDrawPosition] - 绘制时，外部自定义更新坐标,可以自定义处理特殊业务返回修改后的新坐标。
  * @param [options.validDrawPosition] - 绘制时，外部自定义校验坐标,比如判断限定在指定区域内绘制。
  * @param [options.hasEdit = true] - 是否允许编辑
  * @param [options.hasEditContextMenu = true] - 编辑时，是否绑定右键编辑菜单
@@ -12596,6 +12617,7 @@ declare class RectangleEntity extends BasePolyEntity {
         onBeforeCreate?: (...params: any[]) => any;
         minPointNum?: number;
         maxPointNum?: number;
+        updateDrawPosition?: (...params: any[]) => any;
         validDrawPosition?: (...params: any[]) => any;
         hasEdit?: boolean;
         hasEditContextMenu?: boolean;
@@ -13131,6 +13153,7 @@ declare namespace WallEntity {
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.minPointNum = 2] - 绘制时，至少需要点的个数
  * @param [options.maxPointNum = 9999] - 绘制时，最多允许点的个数
+ * @param [options.updateDrawPosition] - 绘制时，外部自定义更新坐标,可以自定义处理特殊业务返回修改后的新坐标。
  * @param [options.validDrawPosition] - 绘制时，外部自定义校验坐标,比如判断限定在指定区域内绘制。
  * @param [options.hasEdit = true] - 是否允许编辑
  * @param [options.hasEditContextMenu = true] - 编辑时，是否绑定右键编辑菜单
@@ -13161,6 +13184,7 @@ declare class WallEntity extends BasePolyEntity {
         onBeforeCreate?: (...params: any[]) => any;
         minPointNum?: number;
         maxPointNum?: number;
+        updateDrawPosition?: (...params: any[]) => any;
         validDrawPosition?: (...params: any[]) => any;
         hasEdit?: boolean;
         hasEditContextMenu?: boolean;
@@ -14032,6 +14056,7 @@ declare class StraightArrow extends PolygonEntity {
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.minPointNum = 2] - 绘制时，至少需要点的个数
  * @param [options.maxPointNum = 9999] - 绘制时，最多允许点的个数
+ * @param [options.updateDrawPosition] - 绘制时，外部自定义更新坐标,可以自定义处理特殊业务返回修改后的新坐标。
  * @param [options.validDrawPosition] - 绘制时，外部自定义校验坐标,比如判断限定在指定区域内绘制。
  * @param [options.hasEdit = true] - 是否允许编辑
  * @param [options.hasEditContextMenu = true] - 编辑时，是否绑定右键编辑菜单
@@ -14065,6 +14090,7 @@ declare class AngleMeasure extends PolylineEntity {
         onBeforeCreate?: (...params: any[]) => any;
         minPointNum?: number;
         maxPointNum?: number;
+        updateDrawPosition?: (...params: any[]) => any;
         validDrawPosition?: (...params: any[]) => any;
         hasEdit?: boolean;
         hasEditContextMenu?: boolean;
@@ -14111,6 +14137,7 @@ declare class AngleMeasure extends PolylineEntity {
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.minPointNum = 2] - 绘制时，至少需要点的个数
  * @param [options.maxPointNum = 9999] - 绘制时，最多允许点的个数
+ * @param [options.updateDrawPosition] - 绘制时，外部自定义更新坐标,可以自定义处理特殊业务返回修改后的新坐标。
  * @param [options.validDrawPosition] - 绘制时，外部自定义校验坐标,比如判断限定在指定区域内绘制。
  * @param [options.hasEdit = true] - 是否允许编辑
  * @param [options.hasEditContextMenu = true] - 编辑时，是否绑定右键编辑菜单
@@ -14143,6 +14170,7 @@ declare class AreaMeasure extends PolygonEntity {
         onBeforeCreate?: (...params: any[]) => any;
         minPointNum?: number;
         maxPointNum?: number;
+        updateDrawPosition?: (...params: any[]) => any;
         validDrawPosition?: (...params: any[]) => any;
         hasEdit?: boolean;
         hasEditContextMenu?: boolean;
@@ -14195,6 +14223,7 @@ declare class AreaMeasure extends PolygonEntity {
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.minPointNum = 2] - 绘制时，至少需要点的个数
  * @param [options.maxPointNum = 9999] - 绘制时，最多允许点的个数
+ * @param [options.updateDrawPosition] - 绘制时，外部自定义更新坐标,可以自定义处理特殊业务返回修改后的新坐标。
  * @param [options.validDrawPosition] - 绘制时，外部自定义校验坐标,比如判断限定在指定区域内绘制。
  * @param [options.hasEdit = true] - 是否允许编辑
  * @param [options.hasEditContextMenu = true] - 编辑时，是否绑定右键编辑菜单
@@ -14228,6 +14257,7 @@ declare class AreaSurfaceMeasure extends AreaMeasure {
         onBeforeCreate?: (...params: any[]) => any;
         minPointNum?: number;
         maxPointNum?: number;
+        updateDrawPosition?: (...params: any[]) => any;
         validDrawPosition?: (...params: any[]) => any;
         hasEdit?: boolean;
         hasEditContextMenu?: boolean;
@@ -14265,6 +14295,7 @@ declare class AreaSurfaceMeasure extends AreaMeasure {
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.minPointNum = 2] - 绘制时，至少需要点的个数
  * @param [options.maxPointNum = 9999] - 绘制时，最多允许点的个数
+ * @param [options.updateDrawPosition] - 绘制时，外部自定义更新坐标,可以自定义处理特殊业务返回修改后的新坐标。
  * @param [options.validDrawPosition] - 绘制时，外部自定义校验坐标,比如判断限定在指定区域内绘制。
  * @param [options.hasEdit = true] - 是否允许编辑
  * @param [options.hasEditContextMenu = true] - 编辑时，是否绑定右键编辑菜单
@@ -14297,6 +14328,7 @@ declare class DistanceMeasure extends PolylineEntity {
         onBeforeCreate?: (...params: any[]) => any;
         minPointNum?: number;
         maxPointNum?: number;
+        updateDrawPosition?: (...params: any[]) => any;
         validDrawPosition?: (...params: any[]) => any;
         hasEdit?: boolean;
         hasEditContextMenu?: boolean;
@@ -14343,6 +14375,7 @@ declare class DistanceMeasure extends PolylineEntity {
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.minPointNum = 2] - 绘制时，至少需要点的个数
  * @param [options.maxPointNum = 9999] - 绘制时，最多允许点的个数
+ * @param [options.updateDrawPosition] - 绘制时，外部自定义更新坐标,可以自定义处理特殊业务返回修改后的新坐标。
  * @param [options.validDrawPosition] - 绘制时，外部自定义校验坐标,比如判断限定在指定区域内绘制。
  * @param [options.hasEdit = true] - 是否允许编辑
  * @param [options.hasEditContextMenu = true] - 编辑时，是否绑定右键编辑菜单
@@ -14376,6 +14409,7 @@ declare class DistanceSurfaceMeasure extends DistanceMeasure {
         onBeforeCreate?: (...params: any[]) => any;
         minPointNum?: number;
         maxPointNum?: number;
+        updateDrawPosition?: (...params: any[]) => any;
         validDrawPosition?: (...params: any[]) => any;
         hasEdit?: boolean;
         hasEditContextMenu?: boolean;
@@ -14413,6 +14447,7 @@ declare class DistanceSurfaceMeasure extends DistanceMeasure {
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.minPointNum = 2] - 绘制时，至少需要点的个数
  * @param [options.maxPointNum = 9999] - 绘制时，最多允许点的个数
+ * @param [options.updateDrawPosition] - 绘制时，外部自定义更新坐标,可以自定义处理特殊业务返回修改后的新坐标。
  * @param [options.validDrawPosition] - 绘制时，外部自定义校验坐标,比如判断限定在指定区域内绘制。
  * @param [options.hasEdit = true] - 是否允许编辑
  * @param [options.hasEditContextMenu = true] - 编辑时，是否绑定右键编辑菜单
@@ -14445,6 +14480,7 @@ declare class HeightMeasure extends PolylineEntity {
         onBeforeCreate?: (...params: any[]) => any;
         minPointNum?: number;
         maxPointNum?: number;
+        updateDrawPosition?: (...params: any[]) => any;
         validDrawPosition?: (...params: any[]) => any;
         hasEdit?: boolean;
         hasEditContextMenu?: boolean;
@@ -14491,6 +14527,7 @@ declare class HeightMeasure extends PolylineEntity {
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.minPointNum = 2] - 绘制时，至少需要点的个数
  * @param [options.maxPointNum = 9999] - 绘制时，最多允许点的个数
+ * @param [options.updateDrawPosition] - 绘制时，外部自定义更新坐标,可以自定义处理特殊业务返回修改后的新坐标。
  * @param [options.validDrawPosition] - 绘制时，外部自定义校验坐标,比如判断限定在指定区域内绘制。
  * @param [options.hasEdit = true] - 是否允许编辑
  * @param [options.hasEditContextMenu = true] - 编辑时，是否绑定右键编辑菜单
@@ -14523,6 +14560,7 @@ declare class HeightTriangleMeasure extends HeightMeasure {
         onBeforeCreate?: (...params: any[]) => any;
         minPointNum?: number;
         maxPointNum?: number;
+        updateDrawPosition?: (...params: any[]) => any;
         validDrawPosition?: (...params: any[]) => any;
         hasEdit?: boolean;
         hasEditContextMenu?: boolean;
@@ -14623,6 +14661,7 @@ declare class PointMeasure extends PointEntity {
  * @param [options.onBeforeCreate] - 在 new Cesium.Entity(addattr) 前的回调方法，可以对addattr做额外个性化处理。
  * @param [options.minPointNum = 2] - 绘制时，至少需要点的个数
  * @param [options.maxPointNum = 9999] - 绘制时，最多允许点的个数
+ * @param [options.updateDrawPosition] - 绘制时，外部自定义更新坐标,可以自定义处理特殊业务返回修改后的新坐标。
  * @param [options.validDrawPosition] - 绘制时，外部自定义校验坐标,比如判断限定在指定区域内绘制。
  * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
  * @param [options.hasEdit = true] - 是否允许编辑
@@ -14657,6 +14696,7 @@ declare class SectionMeasure extends DistanceMeasure {
         onBeforeCreate?: (...params: any[]) => any;
         minPointNum?: number;
         maxPointNum?: number;
+        updateDrawPosition?: (...params: any[]) => any;
         validDrawPosition?: (...params: any[]) => any;
         addHeight?: number;
         hasEdit?: boolean;
@@ -26949,7 +26989,7 @@ declare class Map extends BaseClass {
      * @param [options.width = canvas.width] - 图片的高度像素值
      * @param [options.height = canvas.height] - 图片的高度像素值
      * @param [options.type = 'image/jpeg'] - 图片格式
-     * @param [options.encoderOptions = 0.92] - 在指定图片格式为 image/jpeg 或 image/webp的情况下，可以从 0 到 1 的区间内选择图片的质量。如果超出取值范围，将会使用默认值 0.92。其他参数会被忽略。
+     * @param [options.encoderOptions = 1] - 在指定图片格式为 image/jpeg 或 image/webp的情况下，可以从 0 到 1 的区间内选择图片的质量。如果超出取值范围，将会使用默认值 0.92。其他参数会被忽略。
      * @returns 截图完成后的回调方法的Promise
      */
     expImage(options?: {
@@ -30520,7 +30560,7 @@ declare class Tle {
      */
     readonly checksum2: number;
     /**
-     * 获取卫星指定时间所在的 ECEF坐标
+     * 获取卫星指定时间所在的 ECI地固系坐标
      * @param datetime - 指定的时间
      * @returns ECEF(地心地固坐标系) 坐标
      */
@@ -30559,7 +30599,7 @@ declare class Tle {
      */
     static getPoint(tle1: string, tle2: string, datetime: Date | Cesium.JulianDate | number): LngLatPoint | undefined;
     /**
-     * 获取卫星指定时间所在的 ECEF坐标
+     * 获取卫星指定时间所在的 ECI地固系坐标
      * @param tle1 - 卫星TLE的第一行
      * @param tle2 - 卫星TLE的第二行
      * @param datetime - 指定的时间
@@ -30580,14 +30620,15 @@ declare class Tle {
      */
     static eciToGeodetic(positionEci: Cesium.Cartesian3, datetime: Date | Cesium.JulianDate | number): LngLatPoint;
     /**
-     * ECI坐标 转换为 ECEF坐标
+     * ECI惯性系坐标 转换为 ECI地固系坐标
      * @param positionEci - ECI(地心惯性坐标系)坐标
      * @param datetime - 指定时间, number时请传入格林尼治恒星时(GMST)时间
+     * @param [positionEcf] - ECI(地心惯性坐标系)坐标
      * @returns ECEF(地心地固坐标系) 坐标
      */
-    static eciToEcf(positionEci: Cesium.Cartesian3, datetime: Date | Cesium.JulianDate | number): Cesium.Cartesian3;
+    static eciToEcf(positionEci: Cesium.Cartesian3, datetime: Date | Cesium.JulianDate | number, positionEcf?: Cesium.Cartesian3): Cesium.Cartesian3;
     /**
-     * ECEF坐标 转换为 ECI坐标
+     * ECI地固系坐标 转换为 ECI惯性系坐标
      * @param positionEcf - ECEF(地心地固坐标系) 坐标
      * @param datetime - 指定时间, number时请传入格林尼治恒星时(GMST)时间
      * @returns ECI(地心惯性坐标系)坐标
@@ -31099,6 +31140,8 @@ declare namespace Satellite {
  * @param [options.tle2] - 卫星两行轨道数（TLE） 的tle2, 示例：'2 39150  97.9189  29.2064 0018076 220.9170 139.0692 14.76532215297913'
  * @param [options.period] - 卫星运行周期（单位：分钟）, 未传值时自动在tle2中解析
  * @param [options.pointsNum = 60] - 卫星轨道计算的点数量，值越大轨道越平滑度但占用资源越多(可能卡)
+ * @param [options.referenceFrame = Cesium.ReferenceFrame.INERTIAL] - 使用地固系（ECEF坐标），还是地惯系（ECI惯性坐标）
+ * @param [options.numberOfDerivatives = 0] - 每个位置的导数的数量;即速度、加速度等。
  * @param [options.position] - 当没有tle时，自定义传入动态坐标位置（含时序的点集合）
  * @param [options.orientation] - 当没有tle时，自定义传入实体方向
  * @param [options.attr] - 矢量数据的 属性信息，可以任意附加属性。
@@ -31127,6 +31170,8 @@ declare class Satellite extends Route {
         tle2?: string;
         period?: number;
         pointsNum?: number;
+        referenceFrame?: Cesium.ReferenceFrame;
+        numberOfDerivatives?: number;
         position?: Cesium.SampledPositionProperty;
         orientation?: Cesium.Property;
         attr?: any;

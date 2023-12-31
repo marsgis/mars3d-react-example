@@ -28,7 +28,8 @@ export const FixedRouteInfo = () => {
   const showInfo = (item: any) => {
     let val = Math.ceil((item.second * 100) / item.second_all)
     if (val < 1) {
-      val = 1
+      // 原本是1 ，但是这个示例graphic/custom/fixedRoute-walk需要为0 
+      val = 0
     }
     if (val > 100) {
       val = 100

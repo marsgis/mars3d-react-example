@@ -53,7 +53,7 @@ function UIComponent() {
             onClick={() => {
               mapWork.pointGrid(step)
             }}
-          ></MarsButton>
+          >确定</MarsButton>
         </Space>
       </div>
 

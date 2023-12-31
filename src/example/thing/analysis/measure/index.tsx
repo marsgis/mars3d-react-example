@@ -1,9 +1,21 @@
 import { MarsPannel, MarsButton, MarsCheckbox } from "@mars/components/MarsUI"
 import { LocationTo } from "@mars/components/MarsSample/LocationTo.jsx"
-import { Space } from "antd"
+import { Space, Upload } from "antd"
 import { useCallback, useState } from "react"
 import * as mapWork from "./map.js"
 
+interface FileItem {
+  uid: string
+  name?: string
+  status?: string
+  response?: string
+  url?: string
+}
+
+interface FileInfo {
+  file: FileItem
+  fileList: FileItem[]
+}
 function UIComponent() {
   const [pickModel, setValue] = useState(false)
 
@@ -18,6 +30,17 @@ function UIComponent() {
         <div className="f-mb">
           <Space>
             <MarsButton onClick={clear}>清除</MarsButton>
+            <MarsButton onClick={saveGeoJSON}>保存Json</MarsButton>
+            <Upload
+                    multiple={false}
+                    name="file"
+                    accept="json,geojson"
+                    showUploadList={false}
+                    onChange={onClickOpenJson}
+                    beforeUpload={() => false}
+                  >
+                    <MarsButton>打开Json</MarsButton>
+                  </Upload>
             <MarsCheckbox checked={pickModel} onChange={isChecked}>
               仅测量模型(不拾取地形)
             </MarsCheckbox>
@@ -88,5 +111,15 @@ const measureAngle = () => {
 
 const clear = () => {
   mapWork.removeAll()
+}
+
+// 点击保存GeoJSON
+const saveGeoJSON = () => {
+  mapWork.saveJSON()
+}
+
+// 打开GeoJSON
+function onClickOpenJson(info: FileInfo) {
+  mapWork.openJSON(info.file)
 }
 export default UIComponent

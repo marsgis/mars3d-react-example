@@ -21,6 +21,8 @@ function UIComponent() {
 
   const [color, setColor] = useState("rgba(0, 123, 230, 0.5)")
 
+  const [show, setShow] = useState(false)
+
   useMemo(() => {
     mapWork.eventTarget.on("heightChange", (e: any) => {
       setVlaue({ ...floodParams, minHeight: minH, maxHeight: maxH, height: Math.ceil(e.height) })
@@ -36,7 +38,7 @@ function UIComponent() {
       }
       minH = min
       maxH = max
-      setVlaue({ ...floodParams, minHeight: min, maxHeight: max })
+      setVlaue({ ...floodParams, minHeight: min, maxHeight: max, height: Math.ceil(min) })
     })
   }
 
@@ -45,7 +47,7 @@ function UIComponent() {
     mapWork.btnDraw((min: number, max: number) => {
       maxH = Math.ceil(max)
       minH = Math.ceil(min)
-      setVlaue({ ...floodParams, minHeight: Math.ceil(min), maxHeight: Math.ceil(max) })
+      setVlaue({ ...floodParams, minHeight: Math.ceil(min), maxHeight: Math.ceil(max), height: Math.ceil(min) })
     })
   }
 
@@ -77,6 +79,7 @@ function UIComponent() {
 
   // 开始分析
   const begin = () => {
+    setShow(true)
     mapWork.begin({ ...floodParams, speed })
   }
 
@@ -101,6 +104,7 @@ function UIComponent() {
     })
     setSpeed(80)
     setIsStart(true)
+    setShow(false)
   }
 
   const options: GuiItem[] = [
@@ -119,7 +123,7 @@ function UIComponent() {
 
   return (
     <MarsPannel visible={true} top={10} right={10}>
-      {floodParams.height === 0 ? (
+      {!show ? (
         <>
           <div className="f-mb">
             <Space>
@@ -162,7 +166,7 @@ function UIComponent() {
         ""
       )}
 
-      {floodParams.height !== 0 ? (
+      {show ? (
         <>
           <div>
             <Space>
