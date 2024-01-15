@@ -134,7 +134,7 @@ export function drawPoly2() {
 
 // 更改切换方向
 export function clippingType(type) {
-  tilesetLayer.planClip.type = mars3d.ClipType[type]
+  tilesetLayer.planClip.clipType = mars3d.ClipType[type]
 }
 
 // 距离

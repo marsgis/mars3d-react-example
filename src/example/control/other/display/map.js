@@ -15,6 +15,7 @@ export const mapOptions = {
     baseLayerPicker: true,
     clockAnimate: true, // 时钟动画控制(左下角)
     timeline: true, // 是否显示时间线控件
+    distanceLegend: { left: "100px", bottom: "25px" },
     compass: { top: "10px", left: "5px" }
   }
 }

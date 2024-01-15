@@ -41,8 +41,11 @@ export function onMounted(mapInstance) {
 
   shadows = new mars3d.thing.Shadows({
     multiplier: 1600
+    // terrain: false,
+    // lighting: false
   })
   map.addThing(shadows)
+
 
   shadows.on(mars3d.EventType.change, function () {
     const shadowTime = shadows.time

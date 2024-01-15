@@ -116,6 +116,7 @@ function initGraphicManager(graphic) {
     graphic.startFlicker({
       time: 20, // 闪烁时长（秒）
       maxAlpha: 0.5,
+      setp: 5,
       color: Cesium.Color.YELLOW,
       onEnd: function () {
         // 结束后回调

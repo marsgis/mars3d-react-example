@@ -97,9 +97,9 @@ function showWindLine(arr) {
         const val = Number(attr.speed.split("-")[0] || 0)
         const color = getColor(val)
         return {
-          color: color,
-          height: 0,
-          diffHeight: val * 10000
+          color: color
+          // height: 0,
+          // diffHeight: val * 10000
         }
       }
     }

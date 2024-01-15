@@ -92,7 +92,7 @@ function addPlaneClipThing(layerWorkBIM) {
   // 模型裁剪
   tilesetPlanClip = new mars3d.thing.TilesetPlanClip({
     layer: layerWorkBIM,
-    type: mars3d.ClipType.ZR,
+    clipType: mars3d.ClipType.ZR,
     distance: 100,
     clipOutSide: false,
     edgeColor: Cesium.Color.GREY,

@@ -6,9 +6,9 @@ function initMap() {
     animation: false,
     timeline: false,
     baseLayerPicker: false, // 是否显示图层选择控件
-    imageryProvider: new Cesium.TileMapServiceImageryProvider({
-      url: Cesium.buildModuleUrl("Assets/Textures/NaturalEarthII")
-    })
+    baseLayer: Cesium.ImageryLayer.fromProviderAsync(
+      Cesium.TileMapServiceImageryProvider.fromUrl(Cesium.buildModuleUrl("Assets/Textures/NaturalEarthII"))
+    )
   })
   console.log("Cesium原生Cesium构造完成", viewer) // 打印测试信息
 

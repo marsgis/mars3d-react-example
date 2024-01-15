@@ -36,7 +36,7 @@ function UIComponent() {
         if (layer) {
           const key = "01-" + Math.random()
           children.push({
-            title: layer.airportName,
+            title: layer["类型"],
             key,
             id: layer.graphic.id
           })
@@ -49,7 +49,6 @@ function UIComponent() {
       }
 
       setTree([{ ...treeData[0], children }])
-
       setCheckedKeys(selects)
     },
     [treeData]
@@ -83,7 +82,7 @@ function UIComponent() {
         <LayerState direction="horizontal"/>
       </MarsPannel>
 
-      <MarsPannel visible={true} right={10} top={60} height={600} width={230}>
+      <MarsPannel visible={true} right={10} top={60} width={230}>
         <MarsTree
           treeData={treeData}
           onExpand={(expandedKeysValue) => setExpandedKeys(expandedKeysValue)}

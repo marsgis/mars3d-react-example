@@ -69,7 +69,7 @@ let tileLayer
 // 改wms请求的大小写
 // Cesium.Resource.ReplaceUrl = function (url) {
 //   if (this._url.startsWith("//server.mars3d.cn/geoserver/mars/wms")) {
-//     return url.replaceAll("bbox", "BBOX") // 将3dtiles中的“+”符号转义下
+//     return url.replaceAll("bbox", "BBOX")
 //   } else {
 //     return url
 //   }

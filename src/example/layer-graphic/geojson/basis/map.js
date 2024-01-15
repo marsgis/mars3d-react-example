@@ -260,9 +260,11 @@ export function showRegion() {
             width: 6,
             color: "#ff0000",
             addHeight: 100
-          }
+          },
+          label: { show: true }
         },
         label: {
+          show: false,
           // 面中心点，显示文字的配置
           text: "{name}", // 对应的属性名称
           opacity: 1,

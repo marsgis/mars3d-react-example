@@ -1,6 +1,5 @@
 import {
   MarsCollapse,
-  MarsCollapsePanel,
   MarsInput,
   MarsInputNumber,
   MarsSwitch,
@@ -37,11 +36,12 @@ interface MarsAttrProps {
   layerName: string
   customType: string
   graphicType: string
+  showMarsStyle: boolean
   onChange?: (value?: any) => void
 }
 let newViewMaterials: any[] = []
 let newNextViewMaterials: any[] = []
-export default function MarsStyle({ style, layerName, customType, graphicType, onChange = () => {} }: MarsAttrProps) {
+export default function MarsStyle({ style, layerName, customType, showMarsStyle, graphicType, onChange = () => {} }: MarsAttrProps) {
   const originStyles = useRef([]) // 完整的属性数据
   const [styleValue, setStyleValue] = useState<any>(null) // 矢量数据样式属性对象
   const [viewStyles, setViewStyles] = useState<any[]>([]) // 当前状态下显示的属性数组
@@ -399,145 +399,161 @@ export default function MarsStyle({ style, layerName, customType, graphicType, o
       label
     })
   }
-
-  return (
-    <MarsCollapse defaultActiveKey={["1", "2"]}>
-      <MarsCollapsePanel key="1" showArrow={false} header="样式信息">
-        <table className="mars-primary-table">
-          <tbody>
-            <tr>
-              <td>所在图层</td>
-              <td>{layerName || "默认分组"}</td>
-            </tr>
-            <tr>
-              <td>标号类型</td>
-              <td>{graphicType}</td>
-            </tr>
-            <tr>
-              <td>样式类型</td>
-              <td>{styleType}</td>
-            </tr>
-            {styleValue &&
-              viewStyles.map((item, i) => (
-                <Fragment key={i}>
-                  <tr>
-                    <td>{item.label}</td>
-                    <td>
-                      {item?.next ? (
-                        <StyleItem
-                          size="small"
-                          type={item.type}
-                          value={styleValue[item.name][item.next]}
-                          min={item.min || item.min === 0 ? item.min : -Infinity}
-                          max={item.max || item.max === 0 ? item.max : Infinity}
-                          step={item.step || 0.1}
-                          options={item.data || []}
-                          onChange={(e) => {
-                            unionChange(item, e instanceof Object ? e.target.value : e, item.data)
-                          }}
-                          tofixed={item.toFixed}
-                        ></StyleItem>
-                      ) : (
-                        <StyleItem
-                          size="small"
-                          type={item.type}
-                          value={styleValue[item.name]}
-                          min={item.min || item.min === 0 ? item.min : -Infinity}
-                          max={item.max || item.max === 0 ? item.max : Infinity}
-                          step={item.step || 0.1}
-                          options={item.data || []}
-                          onChange={(e) => {
-                            unionChange(item, e instanceof Object ? e.target.value : e, item.data)
-                          }}
-                          tofixed={item.toFixed}
-                        ></StyleItem>
-                      )}
-                    </td>
-                  </tr>
-                  {item.name === "materialType" &&
-                    viewMaterials &&
-                    styleValue.materialOptions &&
-                    viewMaterials.map((material, mi) => (
-                      <tr key={mi}>
-                        <td>{material.label}</td>
-                        <td>
-                          <StyleItem
-                            size="small"
-                            type={material.type}
-                            value={styleValue.materialOptions[material.name]}
-                            min={material.min || material.min === 0 ? material.min : -Infinity}
-                            max={material.max || material.max === 0 ? material.max : Infinity}
-                            step={material.step || 0.1}
-                            options={material.data || []}
-                            onChange={(e) => {
-                              materialChange(material, e instanceof Object ? e.target.value : e)
-                            }}
-                          ></StyleItem>
-                        </td>
-                      </tr>
-                    ))}
-
-                  {/* 下一级中有材质参数的 */}
-                  {item.next === "materialType" &&
-                    nextViewMaterials &&
-                    styleValue[item.name].materialOptions &&
-                    nextViewMaterials.map((material, mi) => (
-                      <tr key={mi}>
-                        <td>{material.label}</td>
-                        <td>
-                          <StyleItem
-                            size="small"
-                            type={material.type}
-                            value={styleValue[item.name].materialOptions[material.name]}
-                            min={material.min || material.min === 0 ? material.min : -Infinity}
-                            max={material.max || material.max === 0 ? material.max : Infinity}
-                            step={material.step || 0.1}
-                            options={material.data || []}
-                            onChange={(e) => {
-                              nextMaterialChange(material, e instanceof Object ? e.target.value : e, item)
-                              // materialChange(material, e instanceof Object ? e.target.value : e)
-                            }}
-                          ></StyleItem>
-                        </td>
-                      </tr>
-                    ))}
-                </Fragment>
-              ))}
-          </tbody>
-        </table>
-      </MarsCollapsePanel>
-      {styleValue && styleValue.label && (
-        <MarsCollapsePanel key="2" showArrow={false} header="+ 注记信息">
-          <table className="mars-primary-table">
-            <tbody>
-              {viewLabels.map((item, i) => (
-                <tr key={i}>
+  const items = [
+    { 
+      key: "1",
+      label: "样式信息",
+      showArrow: false,
+      children: 
+      <table className="mars-primary-table">
+        <tbody>
+          <tr>
+            <td>所在图层</td>
+            <td>{layerName || "默认分组"}</td>
+          </tr>
+          <tr>
+            <td>标号类型</td>
+            <td>{graphicType}</td>
+          </tr>
+          <tr>
+            <td>样式类型</td>
+            <td>{styleType}</td>
+          </tr>
+          {styleValue &&
+            viewStyles.map((item, i) => (
+              <Fragment key={i}>
+                <tr>
                   <td>{item.label}</td>
                   <td>
-                    {
+                    {item?.next ? (
                       <StyleItem
                         size="small"
                         type={item.type}
-                        value={styleValue.label[item.name]}
+                        value={styleValue[item.name][item.next]}
                         min={item.min || item.min === 0 ? item.min : -Infinity}
                         max={item.max || item.max === 0 ? item.max : Infinity}
                         step={item.step || 0.1}
                         options={item.data || []}
                         onChange={(e) => {
-                          // if (e) {
-                          labelChange(item, e instanceof Object ? e.target.value : e)
-                          // }
+                          unionChange(item, e instanceof Object ? e.target.value : e, item.data)
                         }}
                         tofixed={item.toFixed}
                       ></StyleItem>
-                    }
+                    ) : (
+                      <StyleItem
+                        size="small"
+                        type={item.type}
+                        value={styleValue[item.name]}
+                        min={item.min || item.min === 0 ? item.min : -Infinity}
+                        max={item.max || item.max === 0 ? item.max : Infinity}
+                        step={item.step || 0.1}
+                        options={item.data || []}
+                        onChange={(e) => {
+                          unionChange(item, e instanceof Object ? e.target.value : e, item.data)
+                        }}
+                        tofixed={item.toFixed}
+                      ></StyleItem>
+                    )}
                   </td>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </MarsCollapsePanel>
-      )}
-    </MarsCollapse>
+                {item.name === "materialType" &&
+                  viewMaterials &&
+                  styleValue.materialOptions &&
+                  viewMaterials.map((material, mi) => (
+                    <tr key={mi}>
+                      <td>{material.label}</td>
+                      <td>
+                        <StyleItem
+                          size="small"
+                          type={material.type}
+                          value={styleValue.materialOptions[material.name]}
+                          min={material.min || material.min === 0 ? material.min : -Infinity}
+                          max={material.max || material.max === 0 ? material.max : Infinity}
+                          step={material.step || 0.1}
+                          options={material.data || []}
+                          onChange={(e) => {
+                            materialChange(material, e instanceof Object ? e.target.value : e)
+                          }}
+                        ></StyleItem>
+                      </td>
+                    </tr>
+                  ))}
+
+                {/* 下一级中有材质参数的 */}
+                {item.next === "materialType" &&
+                  nextViewMaterials &&
+                  styleValue[item.name].materialOptions &&
+                  nextViewMaterials.map((material, mi) => (
+                    <tr key={mi}>
+                      <td>{material.label}</td>
+                      <td>
+                        <StyleItem
+                          size="small"
+                          type={material.type}
+                          value={styleValue[item.name].materialOptions[material.name]}
+                          min={material.min || material.min === 0 ? material.min : -Infinity}
+                          max={material.max || material.max === 0 ? material.max : Infinity}
+                          step={material.step || 0.1}
+                          options={material.data || []}
+                          onChange={(e) => {
+                            nextMaterialChange(material, e instanceof Object ? e.target.value : e, item)
+                            // materialChange(material, e instanceof Object ? e.target.value : e)
+                          }}
+                        ></StyleItem>
+                      </td>
+                    </tr>
+                  ))}
+              </Fragment>
+            ))}
+        </tbody>
+      </table>
+    }
+  ]
+
+  function getItems(items) {
+    if (styleValue && styleValue.label) {
+      items.push({
+        key: "2",
+        label: "+ 注记信息",
+        showArrow: false,
+        children:
+        <table className="mars-primary-table">
+          <tbody>
+            {viewLabels.map((item, i) => (
+              <tr key={i}>
+                <td>{item.label}</td>
+                <td>
+                  {
+                    <StyleItem
+                      size="small"
+                      type={item.type}
+                      value={styleValue.label[item.name]}
+                      min={item.min || item.min === 0 ? item.min : -Infinity}
+                      max={item.max || item.max === 0 ? item.max : Infinity}
+                      step={item.step || 0.1}
+                      options={item.data || []}
+                      onChange={(e) => {
+                        // if (e) {
+                        labelChange(item, e instanceof Object ? e.target.value : e)
+                        // }
+                      }}
+                      tofixed={item.toFixed}
+                    ></StyleItem>
+                  }
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      })
+    }
+    return items
+  }
+
+  return (
+    <div style={{ display: showMarsStyle ? "block" : "none" }}>
+      <MarsCollapse defaultActiveKey={["1", "2"]} items = { getItems(items) }>
+      </MarsCollapse>
+    </div>
   )
 }

@@ -41,6 +41,8 @@ export const mapOptions = {
 
 export const eventTarget = new mars3d.BaseClass()
 
+let keyDownCode // 一直按着的键对应的code
+
 /**
  * 初始化地图业务，生命周期钩子函数（必须）
  * 框架在地图初始化完成后自动调用该函数
@@ -130,6 +132,16 @@ export function onMounted(mapInstance) {
   //     graphicLayer._graphic_drawing._positions_draw.pop() // 删除最后一个点
   //   }
   // })
+
+  // 按键按下
+  map.on(mars3d.EventType.keydown, function (e) {
+    keyDownCode = e.keyCode // 一直按着的键对应的code
+  })
+
+  // 按键按下后释放
+  map.on(mars3d.EventType.keyup, function (e) {
+    keyDownCode = undefined
+  })
 
   // 自定义提示
   // map.setLangText({
@@ -221,6 +233,17 @@ export function drawPolyline(clampToGround) {
       color: clampToGround ? "#ffff00" : "#3388ff",
       width: 3,
       clampToGround
+    },
+    // 绘制时，外部自定义更新坐标,可以自定义处理特殊业务返回修改后的新坐标。
+    updateDrawPosition: function (position, graphic) {
+      if (keyDownCode === 67) {
+        // 按下C键 ,限定在纬度线上
+        position = updateDrawPosition(position, graphic.lastDrawPoint, 1)
+      } else if (keyDownCode === 86) {
+        // 按下V键 ,限定在经度线上
+        position = updateDrawPosition(position, graphic.lastDrawPoint, 2)
+      }
+      return position
     }
     // 外部自定义校验坐标，return false 时坐标无效，不参与绘制
     // validDrawPosition: function (position, graphic) {
@@ -233,6 +256,21 @@ export function drawPolyline(clampToGround) {
   //   map.highlightEnabled = true
   //   map.popup.enabled = true
   // })
+}
+
+function updateDrawPosition(thisPoint, lastPoint, type) {
+  if (!lastPoint || !thisPoint) {
+    return thisPoint
+  }
+  thisPoint = mars3d.LngLatPoint.fromCartesian(thisPoint)
+  lastPoint = mars3d.LngLatPoint.fromCartesian(lastPoint)
+
+  if (type === 1) {
+    thisPoint.lat = lastPoint.lat
+  } else {
+    thisPoint.lng = lastPoint.lng
+  }
+  return thisPoint.toCartesian()
 }
 
 export function drawBrushLine(clampToGround) {

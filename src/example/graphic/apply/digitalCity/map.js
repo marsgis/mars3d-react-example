@@ -17,11 +17,7 @@ export const mapOptions = {
         color: "rgb(0, 99, 255)"
       },
       marsJzwStyle: true,
-      popup: [
-        { field: "objectid", name: "编号" },
-        { field: "name", name: "名称" },
-        { field: "height", name: "楼高", unit: "米" }
-      ],
+      popup: "all",
       // 裁剪区域
       planClip: {
         positions: [

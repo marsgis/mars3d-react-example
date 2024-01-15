@@ -64,8 +64,8 @@ function drawPolyon(geojson) {
 
   for (let i = 0; i < polygons.length; i++) {
     const item = polygons[i]
-
-    const graphic = new mars3d.graphic.PolygonEntity({
+    const text = "第" + i + "个"
+    const graphic = new mars3d.graphic.PolygonPrimitive({
       positions: item.positions,
       style: {
         color: "#ffff00",
@@ -74,10 +74,13 @@ function drawPolyon(geojson) {
         outlineWidth: 2,
         outlineColor: "#ffff00",
         outlineOpacity: 0.5,
-        clampToGround: true
+        clampToGround: true,
+        label: {
+          text: text
+        }
       },
       attr: item.attr,
-      popup: "第" + i + "个"
+      popup: text
     })
     graphicLayer.addGraphic(graphic)
   }

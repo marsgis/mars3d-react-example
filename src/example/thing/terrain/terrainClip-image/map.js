@@ -31,6 +31,7 @@ export function onMounted(mapInstance) {
       [116.946754, 31.424056],
       [116.908152, 31.44481]
     ],
+    exact: true,
     diffHeight: 1200, // 矿区深度
     image: "./img/textures/mining.jpg", // 井墙面贴图url
     imageBottom: "./img/textures/poly-soil.jpg", // 井底贴图url

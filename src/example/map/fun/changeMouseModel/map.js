@@ -20,6 +20,8 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
+  map.scene.screenSpaceCameraController.minimumCollisionTerrainHeight = 150000
+
   // 限定pitch角度： max ，min(默认-90)
   map.setPitchRange(-10)
 

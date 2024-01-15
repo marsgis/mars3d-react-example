@@ -1,4 +1,4 @@
-import { MarsDialog, MarsIcon, MarsTabs, MarsTabPane } from "@mars/components/MarsUI"
+import { MarsDialog, MarsIcon, MarsTabs, MarsTabPane, MarsButton } from "@mars/components/MarsUI"
 import { useLifecycle } from "@mars/widgets/common/uses/useLifecycle"
 import { Space } from "antd"
 import * as mars3d from "mars3d"
@@ -8,6 +8,8 @@ import MarsAvailability from "./MarsAvailability"
 import * as mapWork from "./map"
 import _ from "lodash"
 import "./index.less"
+
+
 
 function GraphicEditor({ currentWidget, ...props }) {
   useLifecycle(mapWork)
@@ -48,6 +50,19 @@ function GraphicEditor({ currentWidget, ...props }) {
     setGraphic(gp)
   }, [currentWidget])
 
+  const items = [
+    { key: "style", label: "样式" }
+  ]
+
+  function getItems(items) {
+    if (showAvailability) {
+      items.push({
+        key: "availability", label: "时序"
+      })
+    }
+    return items
+  } 
+
   return (
     <MarsDialog
       title="属性编辑"
@@ -58,10 +73,7 @@ function GraphicEditor({ currentWidget, ...props }) {
       minWidth={200}
       {...props}
       footer={
-        <MarsTabs tabPosition="bottom" activeKey={acTab} type="card" onTabClick={tabChange}>
-          <MarsTabPane key="style" tab="样式"></MarsTabPane>
-          {showAvailability ? <MarsTabPane key="availability" tab="时序"></MarsTabPane> : ""}
-        </MarsTabs>
+        <MarsTabs tabPosition="bottom" activeKey={acTab} type="card" onTabClick={tabChange} items={ getItems(items) }></MarsTabs>
       }
     >
       {graphic && (
@@ -85,9 +97,10 @@ function GraphicEditor({ currentWidget, ...props }) {
             </Space>
           </div>
           <div className="attr-editor-main">
-            {acTab === "style" && (
+            {(
               <MarsStyle
                 style={style}
+                showMarsStyle={ acTab === "style" }
                 graphic={graphic}
                 layerName={layerName}
                 customType={customType}
@@ -99,9 +112,10 @@ function GraphicEditor({ currentWidget, ...props }) {
                 }}
               ></MarsStyle>
             )}
-            {acTab === "availability" && (
+            {(
               <MarsAvailability
                 availability={availability}
+                showMarsStyle={ acTab === "availability" }
                 onChange={(data) => {
                   if (data && data.length) {
                     graphic.availability = data

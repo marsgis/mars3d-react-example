@@ -50,6 +50,12 @@ export function onMounted(mapInstance) {
   })
   map.addLayer(tilesetLayer)
 
+  globalNotify(
+    "已知问题提示",
+    `(1)含DIV部分下载 功能，因当前示例特殊机制使用了iframe，且浏览器安全性要求无法下载，可以本地运行或无ifarme项目中正常使用；
+    `
+  )
+
   // 创建DIV数据图层
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
@@ -88,26 +94,36 @@ export function downLoad2() {
   })
 }
 
-export function downLoadDiv() {
-  const mapDom = map.container
-  const filterNode = document.getElementsByClassName("cesium-viewer-cesiumWidgetContainer")
-  function filter(node) {
-    return node !== filterNode[0]
-  }
+export async function downLoadDiv() {
+  // 地图DIV的webgl
+  const mapImg = await map.expImage({ download: false })
+  console.log("downLoadDiv：1. 地图部分截图成功")
 
-  map.expImage({ download: false }).then((result) => {
-    // eslint-disable-next-line no-undef
-    domtoimage
-      .toPng(mapDom, { filter })
-      .then(function (baseUrl) {
-        mergeImage(result.image, baseUrl, result.width, result.height).then((base64) => {
-          mars3d.Util.downloadBase64Image("场景出图_含DIV.png", base64) // 下载图片
-        })
-      })
-      .catch(function (error) {
-        console.error(error)
-      })
+  const filterNode = map.container.getElementsByClassName("cesium-viewer-cesiumWidgetContainer")
+
+  // 其他部分DIV，使用 lib/dom2img/dom-to-image.js
+  const divImg = await window.domtoimage.toPng(map.container, {
+    filter: function (node) {
+      return node !== filterNode[0]
+    }
   })
+  console.log("downLoadDiv：2.DIV部分截图成功")
+
+  // 其他部分DIV，使用 lib/dom2img/html2canvas.js
+  // const divImg = await window.html2canvas(map.container, {
+  //   ignoreElements: function (node) {
+  //     return node !== filterNode[0]
+  //   },
+  //   backgroundColor: null,
+  //   allowTaint: true
+  // })
+  // console.log("downLoadDiv：2.DIV部分截图成功")
+
+  // 合并
+  const newImg = await mergeImage(mapImg.image, divImg, mapImg.width, mapImg.height)
+  console.log("downLoadDiv：3.合并2个图片完成")
+
+  mars3d.Util.downloadBase64Image("场景出图_含DIV.png", newImg) // 下载图片
 }
 
 // 合并2张图片

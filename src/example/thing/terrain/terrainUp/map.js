@@ -47,7 +47,7 @@ export function addTerrainUplift(height) {
       [116.370874, 30.944509, 645.46],
       [116.334222, 30.944509, 645.46]
     ],
-    { diffHeight: height }
+    { diffHeight: height, exact: true }
   )
   addTableItem(areaItem)
 
@@ -64,7 +64,7 @@ export function addTerrainUplift(height) {
       [116.414309, 30.918806, 588.78],
       [116.387022, 30.933539, 700.65]
     ],
-    { diffHeight: height }
+    { diffHeight: height, exact: true }
   )
   addTableItem(areaItem2)
 }

@@ -5,6 +5,7 @@ import * as mapWork from "./map.js"
 
 function UIComponent() {
   const [enabledWadi, setEnabledWadi] = useState(true) // 是否挖地
+  const [enabledShowLine, setEnabledShowLine] = useState(true) // 是否显示测试边界线
   const [height, setHeight] = useState(30) // 压平深度
 
   const [rowKeys, setSelectRow] = useState([]) // 默认选中的项
@@ -69,6 +70,11 @@ function UIComponent() {
     mapWork.chkClippingPlanes(val.target.checked)
   }
 
+  const chkShowLine = (val: any) => {
+    setEnabledShowLine(val.target.checked)
+    mapWork.chkShowLine(val.target.checked)
+  }
+
   // 改变压平深度
   const changeClipHeight = useCallback((height: number) => {
     setHeight(height)
@@ -85,7 +91,7 @@ function UIComponent() {
 
   // 删除按钮
   const deleted = (record: any) => {
-    mapWork.deletedGraphic(record.key)
+    mapWork.deletedGraphic(record.key, record.lineId)
     const data = tableData.filter((item: any) => item.key !== record.key)
     setTableData(data)
     mapWork.changeTable(data)
@@ -116,6 +122,9 @@ function UIComponent() {
         <Space>
           <MarsCheckbox checked={enabledWadi} onChange={chkClippingPlanes}>
             是否压平
+          </MarsCheckbox>
+          <MarsCheckbox checked={enabledShowLine} onChange={chkShowLine}>
+            是否显示测试边界线
           </MarsCheckbox>
         </Space>
       </div>

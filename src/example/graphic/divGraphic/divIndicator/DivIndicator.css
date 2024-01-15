@@ -1,0 +1,34 @@
+.divIndicator-fixed {
+  width: 10px;
+  height: 10px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: blue;
+}
+
+.divIndicator-drag {
+  width: 100px;
+  position: absolute;
+  /* left: 50px;
+    top: -100px; */
+  cursor: pointer;
+  user-select: none;
+  text-align: center;
+  padding: 5px 30px;
+  margin: 0;
+  color: #fff;
+  background: linear-gradient(rgb(7 10 203 / 75%), rgb(16 238 220));
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  max-height: 130px;
+}
+
+.divIndicator-line {
+  position: absolute;
+  border-left: 2px dashed rgb(255, 255, 255);
+  width: 0;
+  top: 6px;
+  left: 6px;
+  z-index: 99;
+}

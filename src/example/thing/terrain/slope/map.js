@@ -72,6 +72,17 @@ function addSlope() {
   map.addThing(contourLine)
 }
 
+// async function getSlope(positions) {
+//   const result = await mars3d.thing.Slope.getSlope({
+//     map,
+//     positions,
+//     splitNum: 1, // splitNum插值分割的个数
+//     radius: 1, // 缓冲半径（影响坡度坡向的精度）
+//     count: 4 // 缓冲的数量（影响坡度坡向的精度）会求周边(count*4)个点
+//   })
+//   console.log("分析完成", result)
+// }
+
 // 添加矩形
 export function btnDrawExtent(splitNum) {
   clearAll()

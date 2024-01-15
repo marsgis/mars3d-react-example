@@ -1,7 +1,7 @@
 import { MarsPannel, MarsButton, MarsCheckbox, MarsInputNumber, MarsSlider, MarsGui } from "@mars/components/MarsUI"
 import type { GuiItem } from "@mars/components/MarsUI"
 import { Space } from "antd"
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import * as mapWork from "./map.js"
 import "./index.less"
 
@@ -28,6 +28,10 @@ function UIComponent() {
       setVlaue({ ...floodParams, minHeight: minH, maxHeight: maxH, height: Math.ceil(e.height) })
     })
   }, [])
+
+  useEffect(() => {
+    mapWork.onChangeHeight(floodParams.height)
+  }, [floodParams.height])
 
   // 绘制矩形
   const drawExtent = () => {
@@ -56,7 +60,6 @@ function UIComponent() {
     setSpeed(val)
   }
 
-  // 
   const onChangeMinHeight = (val: number) => {
     setVlaue({ ...floodParams, minHeight: val })
   }
@@ -68,7 +71,6 @@ function UIComponent() {
   // 高度发生改变
   const onChangeHeight = (val: number) => {
     setVlaue({ ...floodParams, minHeight: minH, maxHeight: maxH, height: val })
-    mapWork.onChangeHeight(val)
   }
 
   // 清除
@@ -115,7 +117,6 @@ function UIComponent() {
       change(color) {
         console.log("颜色", color)
         setColor(color)
-        
         mapWork.onChangeColor(color)
       }
     }
@@ -155,7 +156,7 @@ function UIComponent() {
           <div className="f-mb">
             <Space>
               <span>淹没颜色</span>
-              <MarsGui options={options} ></MarsGui>
+              <MarsGui options={options}></MarsGui>
             </Space>
           </div>
           <div className="f-tac">

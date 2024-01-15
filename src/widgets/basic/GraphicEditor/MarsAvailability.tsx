@@ -7,6 +7,7 @@ import * as mapWork from "./map"
 
 interface MarsAttrProps {
   availability: any
+  showMarsStyle: boolean
   onChange?: (value?: any) => void
 }
 
@@ -14,7 +15,7 @@ function PointPosition({ julianObj = { start: null, stop: null }, reqRange, onCh
   const values = useRef(julianObj)
 
   useEffect(() => {
-    values.current = julianObj
+    values.current = julianObj 
   }, [julianObj])
 
   const disabledDate = (current: Moment, avaList: any, index: number, key: string) => {
@@ -105,19 +106,18 @@ function PointPosition({ julianObj = { start: null, stop: null }, reqRange, onCh
 
 let timeList = []
 
-export default function MarsAvailability({ availability, onChange = () => {} }: MarsAttrProps) {
+export default function MarsAvailability({ availability, onChange = () => {}, showMarsStyle }: MarsAttrProps) {
   const [avaiData, setAvaiData] = useState([])
 
   useEffect(() => {
-    if (!availability) {
-      return
-    }
+    // if (!availability) {
+    //   return
+    // }
 
-    if (availability._intervals && !Array.isArray(availability)) {
+    if (availability && availability._intervals && !Array.isArray(availability)) {
       availability = availability._intervals
-    }
 
-    const data = Array.isArray(availability)
+      const data = Array.isArray(availability)
       ? availability?.map((julianObj) => {
           const timeObj = { start: null, stop: null }
 
@@ -137,8 +137,14 @@ export default function MarsAvailability({ availability, onChange = () => {} }: 
         }) || []
       : []
 
-    setAvaiData([...data])
-    timeList = data
+      setAvaiData([...data])
+      timeList = data
+    }
+
+    return () => {
+      setAvaiData([])
+      timeList = []
+    }
   }, [availability])
 
   const availabilityChange = (noData: boolean = false) => {
@@ -195,9 +201,12 @@ export default function MarsAvailability({ availability, onChange = () => {} }: 
     availabilityChange()
   }
 
-  return (
-    <MarsCollapse activeKey={["1"]}>
-      <MarsCollapsePanel key="1" showArrow={false} header="时序列表">
+  const items = [
+    { 
+      key: "1",
+      label: "时序列表",
+      showArrow: false,
+      children: <>
         <Space className="f-mb">
           <MarsButton title="添加显示矢量对象的时间段" onClick={() => addAvailability()}>
             添加
@@ -218,7 +227,15 @@ export default function MarsAvailability({ availability, onChange = () => {} }: 
             <PointPosition julianObj={item} reqRange={{ list: avaiData, index: i }} onChange={(value) => availabilityChange()}></PointPosition>
           </Fragment>
         ))}
-      </MarsCollapsePanel>
-    </MarsCollapse>
+      </>
+    }
+  ]
+
+
+  return (
+    <div style={{ display: showMarsStyle ? "block" : "none" }}>
+      <MarsCollapse activeKey={["1"]} items = { items }>
+      </MarsCollapse>
+    </div>
   )
 }

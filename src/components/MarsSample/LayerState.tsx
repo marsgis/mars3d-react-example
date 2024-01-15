@@ -179,26 +179,28 @@ export const LayerState = (props) => {
       setToolTip(layer.hasTooltip())
       setMenu(layer.hasContextMenu())
     }
-
-    // 矢量数据创建完成
-    mapWork.graphicLayer.on(mars3d.EventType.drawCreated, (e) => {
-      showEditor(e.graphic)
-    })
-    // 修改了矢量数据
-    mapWork.graphicLayer.on(
-      [mars3d.EventType.editStart, mars3d.EventType.editMovePoint, mars3d.EventType.editStyle, mars3d.EventType.editRemovePoint],
-      (e) => {
+    
+    if (mapWork.graphicLayer) {
+      // 矢量数据创建完成
+      mapWork.graphicLayer.on(mars3d.EventType.drawCreated, (e) => {
         showEditor(e.graphic)
-      }
-    )
-    // 停止编辑
-    mapWork.graphicLayer.on([mars3d.EventType.editStop, mars3d.EventType.removeGraphic], (e) => {
-      setTimeout(() => {
-        if (!mapWork.graphicLayer.isEditing) {
-          disable("graphic-editor")
+      })
+      // 修改了矢量数据
+      mapWork.graphicLayer.on(
+        [mars3d.EventType.editStart, mars3d.EventType.editMovePoint, mars3d.EventType.editStyle, mars3d.EventType.editRemovePoint],
+        (e) => {
+          showEditor(e.graphic)
         }
-      }, 100)
-    })
+      )
+      // 停止编辑
+      mapWork.graphicLayer.on([mars3d.EventType.editStop, mars3d.EventType.removeGraphic], (e) => {
+        setTimeout(() => {
+          if (!mapWork.graphicLayer.isEditing) {
+            disable("graphic-editor")
+          }
+        }, 100)
+      })
+    }
   }, [])
 
   // 展示属性面板
