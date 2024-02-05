@@ -70,12 +70,11 @@ export function onMounted(mapInstance) {
         scale: 0.1,
         roll: 0,
         pitch: 0
+        // clampToGround: true // 支持贴模型+地形
       },
       // 实时贴模型的处理参数
       clampToTileset: true // 贴模型，但效率不高，车多就卡
       // frameRate: 3, // 控制贴模型的效率，多少帧计算一次
-      // minHeight: 20,
-      // maxHeight: 40
     })
     graphicLayer.addGraphic(graphic)
   }

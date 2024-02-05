@@ -2043,6 +2043,7 @@
             "name": "点对象聚合",
             "thumbnail": "layerg-fun-clustering.jpg",
             "main": "layer-graphic/fun/clustering",
+            "libs": ["mars3d", "localforage"],
             "hasPannel": true
           },
           {
@@ -2358,6 +2359,13 @@
             "name": "地震模拟",
             "thumbnail": "thing-tileset-shake.gif",
             "main": "thing/tileset/shake",
+            "hasPannel": true
+          },
+          {
+            "name": "模型颜色校正",
+            "thumbnail": "thing-tileset-colorCorrection.jpg",
+            "main": "thing/tileset/colorCorrection",
+            "new": true,
             "hasPannel": true
           }
         ]

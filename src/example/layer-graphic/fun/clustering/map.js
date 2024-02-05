@@ -72,6 +72,8 @@ function addGraphicLayer() {
 }
 
 function addBusinessLayer() {
+  const singleDigitPins = {}
+
   // 创建矢量数据图层（业务数据图层）
   graphicLayer = new mars3d.layer.BusineDataLayer({
     url: "//data.mars3d.cn/file/apidemo/mudi.json",
@@ -84,48 +86,29 @@ function addBusinessLayer() {
       enabled: true,
       pixelRange: 20,
       clampToGround: false,
-      addHeight: 1000
-      // opacity: 1
-      // getImage: function (count) { // getImage是完全自定义方式
-      //   let colorIn
-      //   if (count < 10) {
-      //     colorIn = "rgba(110, 204, 57, 0.6)"
-      //   } else if (count < 100) {
-      //     colorIn = "rgba(240, 194, 12,  0.6)"
-      //   } else {
-      //     colorIn = "rgba(241, 128, 23,  0.6)"
-      //   }
+      addHeight: 1000,
+      opacity: 1,
+      // getImage是完全自定义方式
+      getImage: async function (count, result) {
+        const key = "type1-" + count// 唯一标识，不同图层需要设置不一样
 
-      //   const radius = 40
-      //   const thisSize = radius * 2
+        let image = singleDigitPins[key]
+        if (image) {
+          return image // 当前页面变量有记录
+        }
 
-      //   const circleCanvas = document.createElement("canvas")
-      //   circleCanvas.width = thisSize
-      //   circleCanvas.height = thisSize
-      //   const circleCtx = circleCanvas.getContext("2d", { willReadFrequently: true })
+        image = await localforage.getItem(key)
+        if (image) {
+          singleDigitPins[key] = image
+          return image // 浏览器客户端缓存有记录
+        }
 
-      //   circleCtx.fillStyle = "#ffffff00"
-      //   circleCtx.globalAlpha = 0.0
-      //   circleCtx.fillRect(0, 0, thisSize, thisSize)
+        image = await getClusterImage(count) // 生成图片
+        singleDigitPins[key] = image // 记录到当前页面变量，未刷新页面时可直接使用
+        localforage.setItem(key, image) // 记录到浏览器客户端缓存，刷新页面后也可以继续复用
 
-      //   // 圆形底色
-      //   circleCtx.globalAlpha = 1.0
-      //   circleCtx.beginPath()
-      //   circleCtx.arc(radius, radius, radius, 0, Math.PI * 2, true)
-      //   circleCtx.closePath()
-      //   circleCtx.fillStyle = colorIn
-      //   circleCtx.fill()
-
-      //   // 数字文字
-      //   const text = "故障" + count
-      //   circleCtx.font = radius * 0.6 + "px bold normal" // 设置字体
-      //   circleCtx.fillStyle = "#ffffff" // 设置颜色
-      //   circleCtx.textAlign = "center" // 设置水平对齐方式
-      //   circleCtx.textBaseline = "middle" // 设置垂直对齐方式
-      //   circleCtx.fillText(text, radius, radius) // 绘制文字（参数：要写的字，x坐标，y坐标）
-
-      //   return circleCanvas.toDataURL("image/png") // getImage方法返回任意canvas的图片即可
-      // }
+        return image
+      }
     },
     symbol: {
       type: "billboardP",
@@ -232,6 +215,48 @@ function addBusinessLayer() {
                 </table>`
     return inthtml
   })
+}
+
+// 生成聚合图标，支持异步
+async function getClusterImage(count) {
+  let colorIn
+  if (count < 10) {
+    colorIn = "rgba(110, 204, 57, 0.6)"
+  } else if (count < 100) {
+    colorIn = "rgba(240, 194, 12,  0.6)"
+  } else {
+    colorIn = "rgba(241, 128, 23,  0.6)"
+  }
+
+  const radius = 40
+  const thisSize = radius * 2
+
+  const circleCanvas = document.createElement("canvas")
+  circleCanvas.width = thisSize
+  circleCanvas.height = thisSize
+  const circleCtx = circleCanvas.getContext("2d", { willReadFrequently: true })
+
+  circleCtx.fillStyle = "#ffffff00"
+  circleCtx.globalAlpha = 0.0
+  circleCtx.fillRect(0, 0, thisSize, thisSize)
+
+  // 圆形底色
+  circleCtx.globalAlpha = 1.0
+  circleCtx.beginPath()
+  circleCtx.arc(radius, radius, radius, 0, Math.PI * 2, true)
+  circleCtx.closePath()
+  circleCtx.fillStyle = colorIn
+  circleCtx.fill()
+
+  // 数字文字
+  const text = count + "个"
+  circleCtx.font = radius * 0.6 + "px bold normal" // 设置字体
+  circleCtx.fillStyle = "#ffffff" // 设置颜色
+  circleCtx.textAlign = "center" // 设置水平对齐方式
+  circleCtx.textBaseline = "middle" // 设置垂直对齐方式
+  circleCtx.fillText(text, radius, radius) // 绘制文字（参数：要写的字，x坐标，y坐标）
+
+  return circleCanvas.toDataURL("image/png") // getImage方法返回任意canvas的图片即可
 }
 
 /**

@@ -26,6 +26,10 @@ export function onMounted(mapInstance) {
   map.on(mars3d.EventType.changeBasemap, (event) => {
     console.log("切换了底图，当前底图为", map.basemap)
   })
+
+  // setTimeout(() => {
+  //   map.basemap = 2017
+  // }, 5000)
 }
 
 /**

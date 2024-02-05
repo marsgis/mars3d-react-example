@@ -19,7 +19,8 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
-  globalNotify("已知问题提示", "(1) 依赖cesium底层接口，少数情况下不够准确")
+  globalNotify("已知问题提示", `(1) 依赖cesium底层接口，少数情况下不够准确
+(2)需要分析的点均在视域内才可以分析`)
 
   sightline = new mars3d.thing.Sightline({
     visibleColor: new Cesium.Color(0, 1, 0, 0.4),

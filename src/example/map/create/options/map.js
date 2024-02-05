@@ -53,5 +53,8 @@ function initMap() {
   console.log("mars3d的Map主对象构造完成", map)
   console.log("其中Cesium原生的Cesium.Viewer为", map.viewer)
 
+
+  console.log("当前电脑是否支持webgl2", Cesium.FeatureDetection.supportsWebgl2(map.scene))
+
   return map
 }

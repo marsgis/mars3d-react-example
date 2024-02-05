@@ -177,6 +177,16 @@ function addDemoGraphic6(graphicLayer) {
     },
     attr: { remark: "示例6" }
   })
+
+  // 测试修改className
+  graphic.on(mars3d.EventType.load, function (e) {
+    graphic.addClass("className1")
+    graphic.addClass("className2")
+
+    setTimeout(() => {
+      graphic.removeClass("className1")
+    }, 9000)
+  })
   graphicLayer.addGraphic(graphic)
 }
 

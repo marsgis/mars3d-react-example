@@ -27,17 +27,10 @@ class CanvasBillboard extends mars3d.graphic.BillboardPrimitive {
     if (this._pngImage) {
       this._updateCanvas()
     } else {
-      this.style.imageUrl = "img/icon/textPnl.png" // 图片对象
-      this.style.width = 300
-      this.style.height = 140
-
-      const img = new Image(this.style.width, this.style.height)
-      img.crossOrigin = "Anonymous"
-      img.src = this.style.imageUrl
-      img.onload = () => {
+      Cesium.Resource.fetchImage({ url: "img/icon/textPnl.png" }).then((img) => {
         this._pngImage = img
         this._updateCanvas()
-      }
+      })
     }
   }
 
@@ -49,8 +42,8 @@ class CanvasBillboard extends mars3d.graphic.BillboardPrimitive {
 
     const canvas = document.createElement("canvas")
     canvas.id = this.id
-    canvas.width = this.style.width
-    canvas.height = this.style.height
+    canvas.width = this._pngImage.width
+    canvas.height = this._pngImage.height
 
     const ctx = canvas.getContext("2d")
     ctx.clearRect(0, 0, canvas.width, canvas.height)

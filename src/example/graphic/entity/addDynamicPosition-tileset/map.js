@@ -25,7 +25,7 @@ export function onMounted(mapInstance) {
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     name: "文庙",
     url: "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
-    position: { alt: 38.8 },
+    position: { alt: 138.8 },
     maximumScreenSpaceError: 1
   })
   map.addLayer(tiles3dLayer)
@@ -49,6 +49,7 @@ export function onMounted(mapInstance) {
         url: "//data.mars3d.cn/gltf/mars/qiche.gltf",
         scale: 0.1,
         minimumPixelSize: 10,
+        // clampToGround: true, // 支持贴模型+地形
         label: {
           // 不需要文字时，去掉label配置即可
           text: "皖A000" + i,
@@ -86,7 +87,7 @@ function changePosition(time) {
     if (graphic.isPrivate) {
       return
     }
-    graphic.addDynamicPosition(randomPoint(), time)// 按time秒运动至指定位置
+    graphic.addDynamicPosition(randomPoint(), time) // 按time秒运动至指定位置
   })
 }
 

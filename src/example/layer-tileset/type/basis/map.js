@@ -182,7 +182,6 @@ export function showQxShequDemo() {
     maximumScreenSpaceError: 1,
     cacheBytes: 1073741824, // 1024MB = 1024*1024*1024
     maximumCacheOverflowBytes: 2147483648, // 2048MB = 2048*1024*1024
-    dynamicScreenSpaceError: true,
     cullWithChildrenBounds: false,
     skipLevelOfDetail: true,
     preferLeaves: true,
@@ -378,7 +377,6 @@ export function showMaxShihuaDemo() {
     cullRequestsWhileMoving: true,
     cullRequestsWhileMovingMultiplier: 10,
     preferLeaves: true,
-    dynamicScreenSpaceError: true,
     preloadWhenHidden: true,
     enableDebugWireframe: true, // 是否可以进行三角网的切换显示
     // 以上为优化的参数

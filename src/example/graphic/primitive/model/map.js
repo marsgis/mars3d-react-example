@@ -36,10 +36,10 @@ export function onMounted(mapInstance) {
 
   // 加一些演示数据
   addDemoGraphic1(graphicLayer)
-  addDemoGraphic2(graphicLayer)
-  addDemoGraphic3(graphicLayer)
-  addDemoGraphic4(graphicLayer)
-  addDemoGraphic5(graphicLayer)
+  // addDemoGraphic2(graphicLayer)
+  // addDemoGraphic3(graphicLayer)
+  // addDemoGraphic4(graphicLayer)
+  // addDemoGraphic5(graphicLayer)
 }
 
 /**
@@ -129,6 +129,18 @@ function initGraphicManager(graphic) {
       }
     }
   ])
+
+  // 测试 颜色闪烁
+  if (graphic.startFlicker) {
+    graphic.startFlicker({
+      time: 20, // 闪烁时长（秒）
+      maxAlpha: 0.5,
+      color: Cesium.Color.YELLOW,
+      onEnd: function () {
+        // 结束后回调
+      }
+    })
+  }
 }
 
 // 添加单个geojson为graphic，多个直接用graphicLayer.loadGeoJSON
@@ -352,7 +364,6 @@ function addDemoGraphic5(graphicLayer) {
     attr: { remark: "示例5" }
   })
   graphicLayer.addGraphic(graphicModel)
-
 }
 
 // 生成演示数据(测试数据量)

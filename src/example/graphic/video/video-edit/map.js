@@ -135,14 +135,29 @@ export function startDrawGraphic() {
       style: {
         url: "//data.mars3d.cn/file/video/lukou.mp4",
         opacity: 0.8
-      },
-      success: function (graphic) {
-        videoPolygon = graphic
       }
     })
     .then((graphic) => {
       videoPolygon = graphic
     })
+}
+
+// 按当前相机投射视频
+export function startDrawGraphic2() {
+  const positions = mars3d.PolyUtil.getMapExtentPositions(map.scene)
+  if (positions.length < 3) {
+    return
+  }
+
+  const graphic = new mars3d.graphic.VideoPrimitive({
+    positions: positions,
+    style: {
+      url: "//data.mars3d.cn/file/video/lukou.mp4"
+    }
+  })
+  graphicLayer.addGraphic(graphic)
+
+  videoPolygon = graphic
 }
 
 // 在图层绑定Popup弹窗

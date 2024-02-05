@@ -70,7 +70,6 @@ export function showTehDemo() {
     maximumScreenSpaceError: 16,
     cacheBytes: 1073741824, // 1024MB = 1024*1024*1024
     maximumCacheOverflowBytes: 2147483648, // 2048MB = 2048*1024*1024
-    dynamicScreenSpaceError: true,
     cullWithChildrenBounds: false,
     skipLevelOfDetail: true,
     preferLeaves: true,
@@ -113,7 +112,6 @@ export function showXianDemo() {
     maximumScreenSpaceError: 1,
     skipLevelOfDetail: true,
     preferLeaves: true,
-    dynamicScreenSpaceError: true,
     cullWithChildrenBounds: false,
     center: { lat: 28.440675, lng: 119.487735, alt: 639, heading: 269, pitch: -38 },
     clip: {

@@ -19,6 +19,8 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
 
+  globalNotify("已知问题提示", `(1)视角很近时视角变动时会存在DIV抖动问题。`)
+
   map.on(mars3d.EventType.click, function (event) {
     console.log("监听map，单击了矢量对象", event)
   })

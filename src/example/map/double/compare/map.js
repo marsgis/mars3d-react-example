@@ -108,7 +108,6 @@ function addTestData() {
     position: { lng: 116.267315, lat: 31.457617, alt: 103 },
     scale: 100,
     maximumScreenSpaceError: 2,
-    dynamicScreenSpaceError: true,
     cullWithChildrenBounds: false
   })
   map.addLayer(layer)

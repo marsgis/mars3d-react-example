@@ -52,7 +52,7 @@ function LodGraphicLayer() {
     },
     // 根据 attr属性 创建 矢量对象[必须返回Graphic对象]
     createGraphic(grid, attr) {
-      const height = mars3d.PointUtil.getHeight(map.scene, Cesium.Cartesian3.fromDegrees(attr.x, attr.y))
+      const height = map.getHeight(Cesium.Cartesian3.fromDegrees(attr.x, attr.y))
 
       const graphic = new mars3d.graphic.ModelPrimitive({
         position: [attr.x, attr.y, height],

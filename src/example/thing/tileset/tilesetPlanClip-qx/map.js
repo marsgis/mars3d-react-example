@@ -22,7 +22,6 @@ export function onMounted(mapInstance) {
     maximumScreenSpaceError: 1,
     skipLevelOfDetail: true,
     preferLeaves: true,
-    dynamicScreenSpaceError: true,
     cullWithChildrenBounds: false,
 
     center: { lat: 28.440675, lng: 119.487735, alt: 639, heading: 269, pitch: -38 },

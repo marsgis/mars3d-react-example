@@ -202,9 +202,9 @@
   width: 100px;
   text-align: center;
   background-image: linear-gradient(to right, #565d39, #00ffc3);
-  position: absolute;
-  left: -56px;
-  bottom: 28px;
+  position: relative;
+  left: -1px;
+  bottom: 29px;
   cursor: default;
   padding: 5px;
   border: 1px solid #9c9944e8;

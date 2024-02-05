@@ -25,7 +25,7 @@ export function onMounted(mapInstance) {
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     name: "文庙",
     url: "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
-    position: { alt: 38.8 },
+    position: { alt: 138.8 },
     maximumScreenSpaceError: 1
   })
   map.addLayer(tiles3dLayer)
@@ -49,6 +49,7 @@ export function onMounted(mapInstance) {
         url: "//data.mars3d.cn/gltf/mars/qiche.gltf",
         scale: 0.1,
         minimumPixelSize: 10,
+        // clampToGround: true, // 支持贴模型+地形
 
         // 高亮时的样式（默认为鼠标移入，也可以指定type:'click'单击高亮），构造后也可以openHighlight、closeHighlight方法来手动调用
         highlight: {
@@ -72,10 +73,9 @@ export function onMounted(mapInstance) {
           visibleDepth: false
         }
       },
-      attr: { index: i, name: "ModelPrimitive" },
-
       clampToTileset: true, // 贴模型，但效率不高，车多就卡
-      frameRateHeight: 30 // 控制贴模型的效率，多少帧计算一次
+      frameRateHeight: 30, // 控制贴模型的效率，多少帧计算一次
+      attr: { index: i, name: "ModelPrimitive" }
     })
     graphicLayer.addGraphic(graphic)
   }

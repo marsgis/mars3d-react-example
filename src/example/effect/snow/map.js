@@ -32,7 +32,6 @@ export function onMounted(mapInstance) {
     url: "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
     position: { alt: 38.8 },
     maximumScreenSpaceError: 1,
-    dynamicScreenSpaceError: true,
     cullWithChildrenBounds: false
   })
   map.addLayer(tiles3dLayer)
