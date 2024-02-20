@@ -52,16 +52,14 @@ export function onMounted(mapInstance) {
     { offsetY: -170 }
   )
 
-  graphicLayer.bindPopup(
-    (event) => {
-      const attr = event.graphic.attr || {}
-      if (!attr) {
-        return
-      }
-
-      return `<iframe style="width: 600px; height: 300px; border: none; "src="${attr.url}"></iframe> `
+  graphicLayer.bindPopup((event) => {
+    const attr = event.graphic.attr || {}
+    if (!attr) {
+      return
     }
-  )
+
+    return `<iframe style="width: 600px; height: 300px; border: none; "src="${attr.url}"></iframe> `
+  })
 
   // 添加数据
   addRandomGraphicByCount(graphicLayer, [117.080397, 31.656139, 33.3])

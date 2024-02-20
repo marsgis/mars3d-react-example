@@ -177,6 +177,23 @@ const styleConfig = {
           return !style.diffHeight || style.diffHeight !== 0
         }
       },
+      // {
+      //   name: "heightReference",
+      //   label: "贴地方式",
+      //   type: "combobox",
+      //   valType: "number",
+      //   defval: 0,
+      //   data: [
+      //     { label: "不贴地", value: 0 },
+      //     { label: "同时贴地形和模型", value: 1 },
+      //     { label: "仅贴地形", value: 3 },
+      //     { label: "仅贴模型", value: 5 }
+      //   ],
+      //   show(style, allStyle, graphicType) {
+      //     return !style.diffHeight || style.diffHeight !== 0
+      //   }
+      // },
+
       { name: "visibleDepth", label: "是否被遮挡", type: "radio", defval: true },
       {
         name: "addHeight",
@@ -535,9 +552,9 @@ const styleConfig = {
         valType: "number",
         defval: 1,
         data: [
-          { label: "顶部", value: 1 },
+          { label: "顶部", value: -1 },
           { label: "居中", value: 0 },
-          { label: "底部", value: -1 }
+          { label: "底部", value: 1 }
         ]
       },
 

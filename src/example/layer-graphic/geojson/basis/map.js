@@ -99,6 +99,11 @@ export function showDraw(isFlyTo) {
  */
 export function showPoint() {
   removeLayer()
+
+  window._test_button_click = function (attr) {
+    globalAlert(JSON.stringify(attr), "测试查看详情")
+  }
+
   graphicLayer = new mars3d.layer.GeoJsonLayer({
     name: "体育设施点",
     url: "//data.mars3d.cn/file/geojson/hfty-point.json",
@@ -155,7 +160,8 @@ export function showPoint() {
       { field: "项目推进主", name: "项目推进主体" },
       { field: "项目进度", name: "项目进度" },
       { field: "项目来源", name: "项目来源" },
-      { field: "备注", name: "备注" }
+      { field: "备注", name: "备注" },
+      { name: "详情", type: "button", className: "mars-button", callback: "_test_button_click" }
     ],
     flyTo: true
   })

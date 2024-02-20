@@ -21,7 +21,7 @@ function UIComponent() {
 
   const isChecked = useCallback((e: any) => {
     setValue(e.target.checked)
-    mapWork.onlyPickModelPosition(e.target.checked)
+    mapWork.onlyVertexPosition(e.target.checked)
   }, [])
 
   return (
@@ -31,18 +31,11 @@ function UIComponent() {
           <Space>
             <MarsButton onClick={clear}>清除</MarsButton>
             <MarsButton onClick={saveGeoJSON}>保存Json</MarsButton>
-            <Upload
-                    multiple={false}
-                    name="file"
-                    accept="json,geojson"
-                    showUploadList={false}
-                    onChange={onClickOpenJson}
-                    beforeUpload={() => false}
-                  >
-                    <MarsButton>打开Json</MarsButton>
-                  </Upload>
+            <Upload multiple={false} name="file" accept="json,geojson" showUploadList={false} onChange={onClickOpenJson} beforeUpload={() => false}>
+              <MarsButton>打开Json</MarsButton>
+            </Upload>
             <MarsCheckbox checked={pickModel} onChange={isChecked}>
-              仅测量模型(不拾取地形)
+              开启顶点吸附
             </MarsCheckbox>
           </Space>
         </div>

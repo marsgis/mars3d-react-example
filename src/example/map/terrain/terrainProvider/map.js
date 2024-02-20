@@ -38,6 +38,12 @@ export function onMounted(mapInstance) {
   map.terrainProvider = mars3d.LayerUtil.createTerrainProvider({
     url: "http://data.mars3d.cn/terrain"
   })
+
+  // 方式3：图层的方式（一般用于图层管理中，多个地形的切换）
+  // const terrainLayer = new mars3d.layer.TerrainLayer({
+  //   url: "http://data.mars3d.cn/terrain"
+  // })
+  // map.addLayer(terrainLayer)
 }
 
 /**

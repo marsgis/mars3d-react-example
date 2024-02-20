@@ -85,8 +85,8 @@ function UIComponent() {
                   value: "iseditable"
                 },
                 {
-                  label: "仅在模型或矢量上拾取",
-                  value: "only3dtiles"
+                  label: "开启顶点吸附",
+                  value: "onlyVertexPosition"
                 }
               ],
               change(data) {
@@ -95,7 +95,7 @@ function UIComponent() {
                 onChangeTooltip(data.includes("bindtooltip"))
                 onChangeContextMenu(data.includes("bindmenu"))
                 onChangeHasEdit(data.includes("iseditable"))
-                onChangeOnlyPickModel(data.includes("only3dtiles"))
+                onChangeOnlyPickModel(data.includes("onlyVertexPosition"))
               }
             },
             {
@@ -228,8 +228,8 @@ function onChangeHasEdit(enabledEdit: boolean) {
 }
 
 // 是否仅在Tiles上拾取
-function onChangeOnlyPickModel(onlyPickModelPosition: boolean) {
-  mapWork.updateOnlyPickModelPosition(onlyPickModelPosition)
+function onChangeOnlyPickModel(onlyVertexPosition: boolean) {
+  mapWork.updateonlyVertexPosition(onlyVertexPosition)
 }
 
 export default UIComponent

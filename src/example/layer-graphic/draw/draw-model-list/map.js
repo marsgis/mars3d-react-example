@@ -67,9 +67,8 @@ export function chkTestTerrain(val) {
   map.scene.globe.depthTestAgainstTerrain = val
 }
 
-// 仅在模型上编辑
-export function onlyPickModelPosition(val) {
-  map.onlyPickModelPosition = val
+export function onlyVertexPosition(val) {
+  map.onlyVertexPosition = val
 }
 
 export function deleteAll() {

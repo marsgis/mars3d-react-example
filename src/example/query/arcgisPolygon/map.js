@@ -29,7 +29,15 @@ export function onMounted(mapInstance) {
   // 用于参考
   const arcGisLayer = new mars3d.layer.ArcGisLayer({
     url: "//server.mars3d.cn/arcgis/rest/services/mars/guihua/MapServer",
-    opacity: 0.2
+    highlight: {
+      clampToGround: true,
+      fill: false,
+      outline: true,
+      outlineWidth: 3,
+      outlineColor: "#e000d9"
+    },
+    // popup: "all",
+    opacity: 0.1
   })
   map.addLayer(arcGisLayer)
 

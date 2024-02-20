@@ -52,11 +52,7 @@ export function onUnmounted() {
 function showWindLine(arr) {
   const arrData = []
   const radius = 12000
-  const lineMaterial = mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
-    image: "img/textures/line-arrow-right.png",
-    color: "#00ff00",
-    speed: 30
-  })
+
   for (let i = 0, len = arr.length; i < len; i++) {
     const item = arr[i]
 
@@ -70,7 +66,12 @@ function showWindLine(arr) {
       positions: [position, pt1],
       style: {
         width: 8,
-        material: lineMaterial // 动画线材质
+        materialType: mars3d.MaterialType.LineFlow,
+        materialOptions: {
+          image: "img/textures/line-arrow-right.png",
+          color: "#00ff00",
+          speed: 30
+        }
       },
       attr: item
     })

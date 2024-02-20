@@ -63,14 +63,20 @@ function UIComponent() {
             <MarsButton onClick={() => mapWork.startDrawModel(modelUrl, isProxy)}>标绘</MarsButton>
             <MarsButton onClick={() => mapWork.graphicLayer.clear()}>清除</MarsButton>
             <MarsButton onClick={() => mapWork.saveGeoJSON()}>保存</MarsButton>
-            <Upload onChange={(e) => mapWork.openGeoJSON(e.file.originFileObj)} multiple={false} name={"file"} accept={"json,geojson"} showUploadList={false}>
+            <Upload
+              onChange={(e) => mapWork.openGeoJSON(e.file.originFileObj)}
+              multiple={false}
+              name={"file"}
+              accept={"json,geojson"}
+              showUploadList={false}
+            >
               <MarsButton>打开...</MarsButton>
             </Upload>
           </Space>
         </MarsFormItem>
         <MarsFormItem>
           <MarsCheckbox onChange={(e) => mapWork.chkTestTerrain(e.target.checked)}>深度检测</MarsCheckbox>
-          <MarsCheckbox onChange={(e) => mapWork.onlyPickModelPosition(e.target.checked)}>仅在模型或矢量上拾取</MarsCheckbox>
+          <MarsCheckbox onChange={(e) => mapWork.onlyVertexPosition(e.target.checked)}>开启顶点吸附</MarsCheckbox>
           <MarsCheckbox onChange={(e) => mapWork.chkHasTerrain(e.target.checked)} defaultChecked={true}>
             地形
           </MarsCheckbox>

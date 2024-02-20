@@ -276,16 +276,17 @@
       },
 
       { "id": 60, "name": "地形", "type": "group" },
-      { "pid": 60, "type": "terrain", "name": "Cesium地形", "terrain": { "type": "ion" }, "radio": true },
-      { "pid": 60, "type": "terrain", "name": "Mars3D地形", "terrain": { "type": "xyz", "url": "{dataServer}/terrain" }, "radio": true },
+      { "pid": 60, "type": "terrain", "name": "Cesium地形", "terrainType": "ion", "radio": true },
+      { "pid": 60, "type": "terrain", "name": "Mars3D地形", "terrainType": "xyz", "url": "{dataServer}/terrain", "radio": true },
       {
         "pid": 60,
         "type": "terrain",
         "name": "ArcGIS地形",
-        "terrain": { "type": "arcgis", "url": "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer" },
+        "terrainType": "arcgis",
+        "url": "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer",
         "radio": true
       },
-      { "pid": 60, "type": "terrain", "name": "无地形", "terrain": { "type": "none" }, "radio": true },
+      { "pid": 60, "type": "terrain", "name": "无地形", "terrainType": "none", "radio": true },
 
       { "id": 40, "name": "栅格数据", "type": "group" },
       { "id": 4020, "pid": 40, "name": "OGC WMS服务", "type": "group" },
@@ -1075,7 +1076,7 @@
         "center": { "lat": 34.215516, "lng": 108.960251, "alt": 834, "heading": 4, "pitch": -48 },
         "flat": {
           "enabled": true,
-          "editHeight": 420
+          "editHeight": -24
         },
         "flyTo": false,
         "show": false

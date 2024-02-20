@@ -621,13 +621,9 @@ export function bindLayerContextMenu() {
   ])
 }
 
-/**
- * 设置是否仅在模型上标绘
- * @param {Boolean} value 是否仅在模型上标绘
- * @returns {void}
- */
-export function updateOnlyPickModelPosition(value) {
-  map.onlyPickModelPosition = value
+
+export function updateOnlyVertexPosition(value) {
+  map.onlyVertexPosition = value
 }
 
 /**

@@ -221,8 +221,7 @@ const CustomLang = {
   _修改宽度: "Change the width(Y direction)",
   _修改方向: "Change direction",
   _修改缩放比例: "Modify the Scale",
-  _无法删除不能少于最小点数:
-    "Cannot delete, the number of dots cannot be less than",
+  _无法删除不能少于最小点数: "Cannot delete, the number of dots cannot be less than",
   _删除: "Delete",
   _半径: "Radius",
 

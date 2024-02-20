@@ -7,8 +7,13 @@ export const mapOptions = {
   scene: {
     center: { lat: 23.816631, lng: 111.688366, alt: 4605984, heading: 355, pitch: -80 }
   },
+  // 方式1：在创建地球前的传参中配置 terrain 参数[目前1个球只支持1个地形服务]
   terrain: {
-    show: false
+    type: "tdt",
+    url: "https://t{s}.tianditu.gov.cn/mapservice/swdx",
+    key: mars3d.Token.tianditu,
+    subdomains: "01234567",
+    show: true
   }
 }
 

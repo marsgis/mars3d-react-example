@@ -47,9 +47,8 @@ export function onUnmounted() {
   map = null
 }
 
-export function onlyPickModelPosition(val) {
-  // 控制鼠标只取模型上的点，忽略地形上的点的拾取
-  map.onlyPickModelPosition = val
+export function onlyVertexPosition(val) {
+  map.onlyVertexPosition = val
 }
 
 export function removeAll() {

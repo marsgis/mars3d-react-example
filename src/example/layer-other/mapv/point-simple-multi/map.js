@@ -44,7 +44,9 @@ function createMapvLayer(rs) {
   for (let i = 0; i < rs[0].length; i++) {
     const geoCoord = rs[0][i].geoCoord
 
-    if (i % 10 !== 0) { continue }// 减少数据
+    if (i % 10 !== 0) {
+      continue
+    } // 减少数据
 
     data1.push({
       geometry: {
@@ -57,7 +59,9 @@ function createMapvLayer(rs) {
   for (let i = 0; i < rs[1].length; i++) {
     const geoCoord = rs[1][i].geoCoord
 
-    if (i % 10 !== 0) { continue }// 减少数据
+    if (i % 10 !== 0) {
+      continue
+    } // 减少数据
 
     data2.push({
       geometry: {

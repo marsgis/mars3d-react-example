@@ -71,8 +71,8 @@ export function chkTestTerrain(val) {
   }
 }
 
-export function onlyPickModelPosition(val) {
-  map.onlyPickModelPosition = val // 控制鼠标只取模型上的点，忽略地形上的点的拾取
+export function onlyVertexPosition(val) {
+  map.onlyVertexPosition = val
 }
 
 /**

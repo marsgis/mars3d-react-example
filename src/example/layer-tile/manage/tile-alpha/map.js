@@ -244,19 +244,16 @@ function showImagesByAlpha() {
     layer2.alpha = 0
 
     clearInterval(idxTimer)
-    idxTimer = window.setInterval(
-      function () {
-        layer1.alpha -= alphaStep
-        layer2.alpha += alphaStep
+    idxTimer = window.setInterval(function () {
+      layer1.alpha -= alphaStep
+      layer2.alpha += alphaStep
 
-        if (layer1.alpha < alphaStep) {
-          layer1.alpha = 0
-          step++
-          changeRadarAlpha(time)
-        }
-      },
-      time * 1000 * alphaStep
-    )
+      if (layer1.alpha < alphaStep) {
+        layer1.alpha = 0
+        step++
+        changeRadarAlpha(time)
+      }
+    }, time * 1000 * alphaStep)
   }
 
   changeRadarAlpha(1)

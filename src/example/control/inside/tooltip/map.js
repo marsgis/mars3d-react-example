@@ -28,7 +28,7 @@ export function onMounted(mapInstance) {
     console.log("关闭了tooltip(全局监听)", event)
   })
 
-  bindLayerDemo()
+  bindLayerDemo2()
 }
 
 /**
@@ -116,9 +116,15 @@ export function bindLayerDemo2() {
     tooltip: [
       { field: "id", name: "编码" },
       { field: "name", name: "名称" },
-      { field: "type", name: "类型" }
+      { field: "type", name: "类型" },
+      {
+        type: "html",
+        html: "<label>视频</label><video src='http://data.mars3d.cn/file/video/lukou.mp4' controls autoplay style=\"width: 300px;\" ></video>"
+      }
     ],
-    tooltipOptions: { direction: "right", offsetX: 10 }
+    tooltipOptions: {
+      // direction: "top"
+    }
   })
   map.addLayer(geoJsonLayer)
 }

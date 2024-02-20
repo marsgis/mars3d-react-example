@@ -34,10 +34,7 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
-  globalNotify(
-    "已知问题提示",
-    `(1) mapbox的token已失效，请您自行申请替换mars3d.Token.updateMapbox("key value")。`
-  )
+  globalNotify("已知问题提示", `(1) mapbox的token已失效，请您自行申请替换mars3d.Token.updateMapbox("key value")。`)
 
   globalNotify("已知问题提示", `(1) 不支持所有PBF的style类型。(2) 如果部分PBF数据未显示，需要扩展开发对应解析style代码。`)
 

@@ -30,12 +30,13 @@ export default ({ mode }: ConfigEnv) => {
     },
     resolve: {
       alias: {
+        "@": path.resolve(__dirname, "src"),
         "@mars": path.join(__dirname, "src")
       },
       extensions: [".js", ".ts", ".jsx", ".tsx", ".json"]
     },
     optimizeDeps: {
-      include: ["mars3d"]
+      exclude: ["mars3d-cesium"]
     },
     json: {
       // 支持从 .json 文件中进行按名导入
@@ -56,8 +57,6 @@ export default ({ mode }: ConfigEnv) => {
     build: {
       // 输出路径
       outDir: path.join("./dist", ENV.VITE_BASE_URL),
-      // 默认情况下 若 outDir 在 root 目录下， 则 Vite 会在构建时清空该目录。
-      emptyOutDir: true,
       // 小于此阈值的导入或引用资源将内联为 base64 编码， 以避免额外的http请求， 设置为 0, 可以完全禁用此项，
       assetsInlineLimit: 4096,
       // 启动 / 禁用 CSS 代码拆分
@@ -90,7 +89,9 @@ export default ({ mode }: ConfigEnv) => {
       // 传递给 Terser 的更多 minify 选项
       terserOptions: {},
       // 设置为false 来禁用将构建好的文件写入磁盘
-      write: true
+      write: true,
+      // 默认情况下 若 outDir 在 root 目录下， 则 Vite 会在构建时清空该目录。
+      emptyOutDir: true
     },
     plugins: [
       react(),

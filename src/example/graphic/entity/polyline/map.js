@@ -590,6 +590,7 @@ export function startDrawGraphic() {
   graphicLayer.startDraw({
     type: "polyline",
     // maxPointNum: 2, //可以限定最大点数，2个点绘制后自动结束
+    // hasMidPoint: false,
     style: {
       color: "#55ff33",
       width: 3,

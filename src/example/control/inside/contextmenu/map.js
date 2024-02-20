@@ -101,19 +101,22 @@ export function bindMapDefault() {
 
 // 在map地图上绑定右键菜单
 export function bindMapDemo() {
+  window._test_show = function (e) {
+    return Cesium.defined(e.cartesian)
+  }
+  window._test_callback = function (e) {
+    const mpt = mars3d.LngLatPoint.fromCartesian(e.cartesian)
+    globalAlert(mpt.toString(), "位置信息")
+  }
+
   const mapContextmenuItems = [
     {
       text: "显示此处经纬度",
       icon: `<svg class="iconsvg" aria-hidden="true">
               <use xlink:href="#marsgis-qjsjdb"></use>
             </svg>`, // 支持iconfont的symbol方式图标（svg）
-      show: function (e) {
-        return Cesium.defined(e.cartesian)
-      },
-      callback: (e) => {
-        const mpt = mars3d.LngLatPoint.fromCartesian(e.cartesian)
-        globalAlert(mpt.toString(), "位置信息")
-      }
+      show: "_test_show",
+      callback: "_test_callback" // 也支持window方法的名称配置
     },
     {
       text: "查看当前视角",
@@ -163,17 +166,16 @@ export function bindMapDemo() {
 }
 
 // 演示右键菜单“方法名称”方式(如config.json中配置时)
-window.flyToForContextmenuShow = function(event) {
+window.flyToForContextmenuShow = function (event) {
   return Cesium.defined(event.cartesian)
 }
-window.flyToForContextmenuClick = function(event) {
+window.flyToForContextmenuClick = function (event) {
   const cameraDistance = Cesium.Cartesian3.distance(event.cartesian, map.camera.positionWC) * 0.1
   map.flyToPoint(event.cartesian, {
     radius: cameraDistance, // 距离目标点的距离
     maximumHeight: map.camera.positionCartographic.height
   })
 }
-
 
 // 解除Map已绑定的右键菜单
 export function unBindMapDemo() {

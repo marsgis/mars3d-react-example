@@ -112,48 +112,48 @@ function UIComponent() {
 
   return (
     <>
-    <MarsPannel visible={true} right={10} top={10} bottom={120} width="272">
-      <MarsForm>
-        <MarsFormItem label="模型列表">
-          <Space style={{ cursor: "pointer" }}>
-            <Upload {...props}>
-              <MarsIcon icon="folder-upload" width="19" color="#fff"></MarsIcon>
-            </Upload>
-            <MarsIcon onClick={() => mapWork.saveGeoJSON()} icon="disk" width="17" color="#f2f2f2"></MarsIcon>
-            <MarsIcon onClick={() => mapWork.deleteAll()} icon="delete" width="17" color="#f2f2f2"></MarsIcon>
-          </Space>
-        </MarsFormItem>
-        <MarsFormItem>
-          <MarsCheckbox onChange={(e) => mapWork.chkTestTerrain(e.target.checked)}>深度检测</MarsCheckbox>
-          <MarsCheckbox onChange={(e) => mapWork.onlyPickModelPosition(e.target.checked)}>仅在模型或矢量上拾取</MarsCheckbox>
-        </MarsFormItem>
-        <MarsFormItem>
-          <MarsSelect onChange={(e) => handleChange(e)} defaultValue={"车辆"}>
-            {selectOptions.map((item, index) => (
-              <MarsOption value={item.value} key={index}>
-                {item.value}
-              </MarsOption>
-            ))}
-          </MarsSelect>
-        </MarsFormItem>
-        <MarsFormItem>
-          <div className="gltfImg">
-            {dataList.map((item, index) => (
-              <li key={index}>
-                <img
-                  onClick={() => {
-                    mapWork.startDrawModel(item.style)
-                  }}
-                  src={item.image}
-                  alt=""
-                ></img>
-              </li>
-            ))}
-          </div>
-        </MarsFormItem>
-      </MarsForm>
-    </MarsPannel>
-    <LocationTo />
+      <MarsPannel visible={true} right={10} top={10} bottom={120} width="272">
+        <MarsForm>
+          <MarsFormItem label="模型列表">
+            <Space style={{ cursor: "pointer" }}>
+              <Upload {...props}>
+                <MarsIcon icon="folder-upload" width="19" color="#fff"></MarsIcon>
+              </Upload>
+              <MarsIcon onClick={() => mapWork.saveGeoJSON()} icon="disk" width="17" color="#f2f2f2"></MarsIcon>
+              <MarsIcon onClick={() => mapWork.deleteAll()} icon="delete" width="17" color="#f2f2f2"></MarsIcon>
+            </Space>
+          </MarsFormItem>
+          <MarsFormItem>
+            <MarsCheckbox onChange={(e) => mapWork.chkTestTerrain(e.target.checked)}>深度检测</MarsCheckbox>
+            <MarsCheckbox onChange={(e) => mapWork.onlyVertexPosition(e.target.checked)}>开启顶点吸附</MarsCheckbox>
+          </MarsFormItem>
+          <MarsFormItem>
+            <MarsSelect onChange={(e) => handleChange(e)} defaultValue={"车辆"}>
+              {selectOptions.map((item, index) => (
+                <MarsOption value={item.value} key={index}>
+                  {item.value}
+                </MarsOption>
+              ))}
+            </MarsSelect>
+          </MarsFormItem>
+          <MarsFormItem>
+            <div className="gltfImg">
+              {dataList.map((item, index) => (
+                <li key={index}>
+                  <img
+                    onClick={() => {
+                      mapWork.startDrawModel(item.style)
+                    }}
+                    src={item.image}
+                    alt=""
+                  ></img>
+                </li>
+              ))}
+            </div>
+          </MarsFormItem>
+        </MarsForm>
+      </MarsPannel>
+      <LocationTo />
     </>
   )
 }
