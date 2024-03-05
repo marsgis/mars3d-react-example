@@ -61,7 +61,8 @@ function addData(arr) {
         image: "img/marker/mark-blue.png",
         horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
         verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-        scaleByDistance: new Cesium.NearFarScalar(10000, 1.0, 500000, 0.1)
+        scaleByDistance: new Cesium.NearFarScalar(10000, 1.0, 500000, 0.1),
+        clampToGround: true
       },
       attr: item
     })

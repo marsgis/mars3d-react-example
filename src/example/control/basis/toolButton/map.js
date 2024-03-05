@@ -5,7 +5,9 @@ export let map // mars3d.Map三维地图对象
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   control: {
-    homeButton: true, // 回到默认视域按钮
+    homeButton: {
+      icon: "img/svg/homeButton.svg"
+    }, // 回到默认视域按钮
     navigationHelpButton: false, // 是否显示帮助信息控件
     fullscreenButton: false, // 右下角全屏按钮
     geocoder: false,
@@ -26,7 +28,8 @@ export function onMounted(mapInstance) {
   let hasSelected = false
   const toolButton = new mars3d.control.ToolButton({
     title: "示例按钮bookmark",
-    icon: "img/icon/bookmark-one.svg",
+    icon: "img/svg/bookmarkOne.svg",
+    className: ".tool_bookmark_btn",
     insertIndex: 1, // 插入的位置顺序, 1是home按钮后面
     click: () => {
       hasSelected = !hasSelected
@@ -45,7 +48,8 @@ export function onMounted(mapInstance) {
 
   const toolButton2 = new mars3d.control.ToolButton({
     title: "示例按钮good",
-    icon: "img/icon/good.svg",
+    icon: "img/svg/good.svg",
+    className: "tool_good_btn",
     insertIndex: 0, // 插入的位置顺序
     click: () => {
       globalMsg("单击了 示例按钮good，回调中想干啥就干啥~")
@@ -55,18 +59,16 @@ export function onMounted(mapInstance) {
 
   const toolButton3 = new mars3d.control.ToolButton({
     title: "示例按钮chinese",
-    icon: "img/icon/chinese.svg",
+    icon: "img/svg/chinese.svg",
     click: () => {
       globalMsg("单击了 示例按钮chinese，回调中想干啥就干啥~")
     }
   })
   map.addControl(toolButton3)
 
-
-  map.controls.homeButton.on(mars3d.EventType.click, function(event) {
+  map.controls.homeButton.on(mars3d.EventType.click, function (event) {
     globalMsg("单击了 homeButton 按钮")
   })
-
 }
 
 /**

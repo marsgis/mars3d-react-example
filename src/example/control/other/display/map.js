@@ -5,12 +5,18 @@ export let map // mars3d.Map三维地图对象
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   control: {
-    homeButton: true,
+    homeButton: {
+      icon: "/img/svg/homeButton.svg"
+    },
+    fullscreenButton: {
+      icon: "/img/svg/fullscreen.svg"
+    },
+    navigationHelpButton: {
+      icon: "/img/svg/navigationHelp.svg"
+    },
     sceneModePicker: true,
-    navigationHelpButton: true,
     infoBox: false,
     vrButton: true,
-    fullscreenButton: true,
     geocoder: "gaode",
     baseLayerPicker: true,
     clockAnimate: true, // 时钟动画控制(左下角)

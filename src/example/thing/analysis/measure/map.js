@@ -94,16 +94,22 @@ export function measureSurfaceLength() {
 }
 // 水平面积
 export function measureArea() {
-  measure.area({
-    // style: {
-    //   color: '#00fff2',
-    //   opacity: 0.4,
-    //   outline: true,
-    //   outlineColor: '#fafa5a',
-    //   outlineWidth: 1,
-    //   clampToGround: false //贴地
-    // }
-  })
+  measure
+    .area({
+      // style: {
+      //   color: '#00fff2',
+      //   opacity: 0.4,
+      //   outline: true,
+      //   outlineColor: '#fafa5a',
+      //   outlineWidth: 1,
+      //   clampToGround: false //贴地
+      // }
+    })
+    .then(async (graphic) => {
+      const oldPositions = graphic.positionsShow
+      const rang = await mars3d.PolyUtil.getHeightRangeByDepth(oldPositions, map.scene)
+      graphic.positions = mars3d.PointUtil.setPositionsHeight(oldPositions, rang.maxHeight)
+    })
 }
 // 贴地面积
 export function measureSurfaceeArea() {

@@ -23,20 +23,17 @@ export function onMounted(mapInstance) {
   globalNotify(
     "已知问题提示",
     `(1)cesium本身机制，用iframe嵌入后无法全屏里面的div；
-     (2)示例框架原因，使用iframe嵌入，全屏后不显示其他面板； 
+     (2)示例框架原因，使用iframe嵌入，全屏后不显示其他面板；
     `
   )
 
   // 方式2：在创建地球后按需调用addControl添加(直接new对应type类型的控件)
-  const fullscreenButton = new mars3d.control.FullscreenButton()
-  map.addControl(fullscreenButton)
-
-  map.on(mars3d.EventType.click, () => {
-    // 全屏整个页面
-    Cesium.Fullscreen.requestFullscreen(document.body)
-    // 仅全屏画布
-    // Cesium.Fullscreen.requestFullscreen(map.viewer.scene.canvas)
+  const fullscreenButton = new mars3d.control.FullscreenButton({
+    // fullscreenElement: document.body, // 全屏整个页面
+    fullscreenElement: map.container, // 仅全屏画布
+    icon: "img/svg/fullscreen.svg"
   })
+  map.addControl(fullscreenButton)
 }
 
 /**

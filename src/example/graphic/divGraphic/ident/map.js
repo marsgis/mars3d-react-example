@@ -87,7 +87,7 @@ export function divGraphicYellow() {
     graphicLayer.addGraphic(divGraphic)
 
     // 刷新局部DOM,不影响popup面板的其他控件操作
-    divGraphic.on(mars3d.EventType.postRender, function (event) {
+    divGraphic.on(mars3d.EventType.popupRender, function (event) {
       const container = event.container // popup对应的DOM
       const graphic = event.target
 

@@ -7,11 +7,12 @@ export const mapOptions = {
   scene: {
     center: { lat: 36.873519, lng: 106.863496, alt: 19999205, heading: 354, pitch: -89 },
     orderIndependentTranslucency: false,
-    contextOptions: { webgl: { alpha: true } }, // 允许透明，只能Map初始化传入 [关键代码]
-    showMoon: false,
-    showSkyBox: false,
-    showSkyAtmosphere: false,
-    fog: false,
+    // showMoon: false,
+    // showSkyBox: false,
+    // showSkyAtmosphere: false,
+    // fog: false,
+    // contextOptions: { webgl: { alpha: true } }, // 允许透明，只能Map初始化传入 [关键代码]
+    backgroundImage: "url(/img/tietu/backGroundImg.jpg)",
     globe: {
       baseColor: "rgba(0,0,0,0)",
       showGroundAtmosphere: false,
@@ -39,17 +40,37 @@ export function onUnmounted() {
 }
 
 export function show() {
-  map.container.style.backgroundImage = "none"
+  // map.container.style.backgroundImage = "none"
+  map.setOptions({
+    scene: {
+      backgroundImage: "none"
+    }
+  })
 }
 
 export function show1() {
-  map.container.style.backgroundImage = "url(/img/tietu/backGroundImg.jpg)"
+  // map.container.style.backgroundImage = "url(/img/tietu/backGroundImg.jpg)"
+  map.setOptions({
+    scene: {
+      backgroundImage: "url(/img/tietu/backGroundImg.jpg)"
+    }
+  })
 }
 
 export function show2() {
-  map.container.style.backgroundImage = "url(//data.mars3d.cn/file/img/world/world.jpg)"
+  // map.container.style.backgroundImage = "url(//data.mars3d.cn/file/img/world/world.jpg)"
+  map.setOptions({
+    scene: {
+      backgroundImage: "url(//data.mars3d.cn/file/img/world/world.jpg)"
+    }
+  })
 }
 
 export function show3() {
-  map.container.style.backgroundImage = "url(/img/tietu/bg4.jpg)"
+  // map.container.style.backgroundImage = "url(/img/tietu/bg4.jpg)"
+  map.setOptions({
+    scene: {
+      backgroundImage: "url(/img/tietu/bg4.jpg)"
+    }
+  })
 }

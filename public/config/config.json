@@ -35,12 +35,18 @@
       }
     },
     "control": {
-      "homeButton": true,
+      "homeButton": {
+        "icon": "/img/svg/homeButton.svg"
+      },
+      "fullscreenButton": {
+        "icon": "/img/svg/fullscreen.svg"
+      },
+      "navigationHelpButton": {
+        "icon": "/img/svg/navigationHelp.svg"
+      },
       "baseLayerPicker": true,
       "sceneModePicker": true,
       "vrButton": false,
-      "fullscreenButton": true,
-      "navigationHelpButton": true,
       "animation": false,
       "timeline": false,
       "infoBox": false,
@@ -49,7 +55,7 @@
       "showRenderLoopErrors": true,
       "contextmenu": { "hasDefault": true },
       "mouseDownView": true,
-      "zoom": { "insertBefore": "sceneModePicker" },
+      "zoom": { "insertBefore": "sceneModePicker", "zoomOutIcon": "/img/svg/sub.svg", "zoomInIcon": "/img/svg/plus.svg"},
       "compass": { "bottom": "toolbar", "left": "5px" },
       "distanceLegend": { "left": "100px", "bottom": "2px" },
       "locationBar": {

@@ -20,7 +20,9 @@ export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
   // 方式2：在创建地球后按需调用addControl添加(直接new对应type类型的控件)
-  const baseLayerPicker = new mars3d.control.BaseLayerPicker()
+  const baseLayerPicker = new mars3d.control.BaseLayerPicker({
+    icon: "img/svg/baseLayerPicker.svg"
+  })
   map.addControl(baseLayerPicker)
 
   map.on(mars3d.EventType.changeBasemap, (event) => {

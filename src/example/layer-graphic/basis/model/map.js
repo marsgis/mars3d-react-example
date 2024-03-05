@@ -62,7 +62,7 @@ export function showShanghaiDemo() {
         type: "modelP",
         position: [121.507762, 31.233975, 200],
         style: {
-          url: "//data.mars3d.cn/gltf/mars/shanghai/scene.gltf",
+          url: "//data.mars3d.cn/gltf/mars/shanghai/pudong/scene.gltf",
           scale: 520,
           heading: 215
         }

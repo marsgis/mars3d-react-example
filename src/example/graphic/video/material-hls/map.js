@@ -21,7 +21,8 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
 
-  globalNotify("已知问题提示", `(1) hls在线链接可能已失效，自行替换自己的服务地址。`)
+  globalNotify("已知问题提示", `如视频未播放或服务URL访问超时，可能是在线演示URL链接已失效，您可以替换代码中URL为本地服务后使用。`)
+
 
   // 添加参考三维模型
   const tiles3dLayer = new mars3d.layer.TilesetLayer({

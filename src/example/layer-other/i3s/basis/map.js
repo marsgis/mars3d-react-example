@@ -20,7 +20,13 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
   map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
-  map.basemap = "ArcGIS影像"
+  // map.basemap = "ArcGIS影像"
+
+  globalNotify(
+    "已知问题提示",
+    `如图层未显示或服务URL访问超时，是因为目前国家测绘主管部门对未经审核批准的国外地图服务做了屏蔽封锁。
+     您可以需翻墙使用 或 参考示例代码替换本地服务地址使用。`
+  )
 
   showNewYorkDemo()
 }

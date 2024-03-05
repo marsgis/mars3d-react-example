@@ -154,7 +154,7 @@ function queryRoute(type) {
   const points = []
 
   endPointArr.forEach((item) => {
-    points.push([startPoint, [item.x, item.y]])
+    points.push([startPoint, [item.lng, item.lat]])
   })
 
   gaodeRoute.queryArr({
@@ -221,7 +221,7 @@ function addEndPointEntity(arr) {
     const item = arr[i]
 
     const graphic = new mars3d.graphic.BillboardEntity({
-      position: Cesium.Cartesian3.fromDegrees(item.x, item.y),
+      position: Cesium.Cartesian3.fromDegrees(item.lng, item.lat),
       style: {
         image: "img/marker/route-end.png",
         scale: 1,

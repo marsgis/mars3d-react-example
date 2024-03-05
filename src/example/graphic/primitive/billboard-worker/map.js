@@ -29,6 +29,8 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
+  globalNotify("已知问题提示", `(1) AQI来源于第三方服务，目前已无法访问`)
+
   // 创建矢量数据图层
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)

@@ -287,13 +287,13 @@ function showResult(newSatelliteArr) {
           }
           tableList.push(data)
 
-          eventTarget.fire("dataList", { tableList })
 
           showCorridor(data)
         }
       }
     }
   }
+  eventTarget.fire("dataList", { tableList })
 
   globalMsg("分析完成，共" + tableList.length + "条过境记录")
 }

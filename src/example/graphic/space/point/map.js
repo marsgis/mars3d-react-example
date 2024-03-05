@@ -235,8 +235,8 @@ function initWorker(arr) {
 }
 
 function postWorkerMessage(arr) {
-  // 取数据的时间范围，开始时间
-  const date = Cesium.JulianDate.toDate(map.clock.currentTime)
+  const stime = Cesium.JulianDate.addSeconds(map.clock.currentTime, 1, new Cesium.JulianDate())
+  const date = Cesium.JulianDate.toDate(stime)
 
   // 主线程调用worker.postMessage()方法，向 Worker 发消息。
   worker.postMessage({
@@ -250,6 +250,7 @@ function weixingStyle(item) {
   const weixin = new mars3d.graphic.Satellite({
     tle1: item.tle1,
     tle2: item.tle2,
+    referenceFrame: Cesium.ReferenceFrame.FIXED, // Cesium.ReferenceFrame.INERTIAL,
     model: {
       url: "//data.mars3d.cn/gltf/mars/weixin.gltf",
       scale: 1,

@@ -260,7 +260,7 @@ function bindPopup(fixedRoute) {
   )
 
   // 刷新局部DOM,不影响popup面板的其他控件操作
-  fixedRoute.on(mars3d.EventType.postRender, function (event) {
+  fixedRoute.on(mars3d.EventType.popupRender, function (event) {
     const container = event.container // popup对应的DOM
 
     const params = fixedRoute?.info

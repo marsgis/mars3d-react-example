@@ -22,6 +22,8 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
 
+  globalNotify("已知问题提示", `如视频未播放或服务URL访问超时，是因为目前在线演示URL地址已失效，您可以替换代码中url为本地服务后使用。`)
+
   // 添加参考三维模型
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     name: "县城社区",
@@ -60,13 +62,6 @@ export function onUnmounted() {
 }
 
 function createVideoDom() {
-  //   <video id="trailer" muted="" autoplay="" loop="" crossorigin="" controls="">
-  //   <source src="https://cesium.com/public/SandcastleSampleData/big-buck-bunny_trailer.webm" type="video/webm">
-  //   <source src="https://cesium.com/public/SandcastleSampleData/big-buck-bunny_trailer.mp4" type="video/mp4">
-  //   <source src="https://cesium.com/public/SandcastleSampleData/big-buck-bunny_trailer.mov" type="video/quicktime">
-  //   Your browser does not support the <code>video</code> element.
-  // </video>
-
   videoElement = mars3d.DomUtil.create("video", "", document.body)
   videoElement.setAttribute("muted", "muted")
   videoElement.setAttribute("autoplay", "autoplay")
@@ -75,21 +70,21 @@ function createVideoDom() {
   videoElement.setAttribute("controls", "")
   videoElement.style.display = "none"
 
-  // const mp4Source = mars3d.DomUtil.create("source", "", videoElement)
-  // mp4Source.setAttribute("src", "//data.mars3d.cn/file/video/lukou.mp4")
-  // mp4Source.setAttribute("type", "video/mp4")
-
-  const webmSource = mars3d.DomUtil.create("source", "", videoElement)
-  webmSource.setAttribute("src", "https://cesium.com/public/SandcastleSampleData/big-buck-bunny_trailer.webm")
-  webmSource.setAttribute("type", "video/webm")
-
   const mp4Source = mars3d.DomUtil.create("source", "", videoElement)
-  mp4Source.setAttribute("src", "https://cesium.com/public/SandcastleSampleData/big-buck-bunny_trailer.mp4")
+  mp4Source.setAttribute("src", "//data.mars3d.cn/file/video/lukou.mp4")
   mp4Source.setAttribute("type", "video/mp4")
 
-  const quicktimeSource = mars3d.DomUtil.create("source", "", videoElement)
-  quicktimeSource.setAttribute("src", "https://cesium.com/public/SandcastleSampleData/big-buck-bunny_trailer.mov")
-  quicktimeSource.setAttribute("type", "video/quicktime")
+  // const webmSource = mars3d.DomUtil.create("source", "", videoElement)
+  // webmSource.setAttribute("src", "https://cesium.com/public/SandcastleSampleData/big-buck-bunny_trailer.webm")
+  // webmSource.setAttribute("type", "video/webm")
+
+  // const mp4Source = mars3d.DomUtil.create("source", "", videoElement)
+  // mp4Source.setAttribute("src", "https://cesium.com/public/SandcastleSampleData/big-buck-bunny_trailer.mp4")
+  // mp4Source.setAttribute("type", "video/mp4")
+
+  // const quicktimeSource = mars3d.DomUtil.create("source", "", videoElement)
+  // quicktimeSource.setAttribute("src", "https://cesium.com/public/SandcastleSampleData/big-buck-bunny_trailer.mov")
+  // quicktimeSource.setAttribute("type", "video/quicktime")
 
   // 可以使视频元素与Cesium的模拟时钟同步
   const synchronizer = new Cesium.VideoSynchronizer({

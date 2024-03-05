@@ -252,7 +252,7 @@ function addGraphic_09(graphicLayer) {
 
   // 刷新局部DOM,不影响面板的其他控件操作
   // [建议读取到后端接口数据后主动去修改DOM，比下面演示的实时刷新效率高些]
-  graphic.on(mars3d.EventType.postRender, function (event) {
+  graphic.on(mars3d.EventType.popupRender, function (event) {
     const container = event.container // popup对应的DOM
 
     const lablLiuliang = container.querySelector("#lablLiuliang")

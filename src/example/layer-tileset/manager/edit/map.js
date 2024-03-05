@@ -204,56 +204,15 @@ export function locate() {
 }
 
 // 保存GeoJSON
-export function saveBookmark(params) {
-  // 清理参数中无需保存的部分
-  if (params.position.lat === tiles3dLayer.orginCenterPoint.lat) {
-    delete params.position.lat
-  }
-  if (params.position.lng === tiles3dLayer.orginCenterPoint.lng) {
-    delete params.position.lng
-  }
-  if (params.position.alt === tiles3dLayer.orginCenterPoint.alt) {
-    delete params.position.alt
-  }
-  if (Object.keys(params.position).length === 0) {
-    delete params.position
-  }
+export function saveBookmark() {
+  const params = tiles3dLayer.toJSON()
 
-  if (params.rotation.x === 0) {
-    delete params.rotation.x
-  }
-  if (params.rotation.y === 0) {
-    delete params.rotation.y
-  }
-  if (params.rotation.z === 0) {
-    delete params.rotation.z
-  }
-  if (Object.keys(params.rotation).length === 0) {
-    delete params.rotation
-  }
-  if (params.maximumScreenSpaceError === 16) {
-    delete params.maximumScreenSpaceError
-  }
-  if (params.scale === 1) {
-    delete params.scale
-  }
-  if (params.axis === "" || !params.axis) {
-    delete params.axis
-  }
-  if (!params.proxy) {
-    delete params.proxy
-  }
-  if (params.opacity === 1) {
-    delete params.opacity
-  }
+  // 清理参数中无需保存的部分（只是当前示例内部控制使用的）
+  delete params.highlightEnable
+  delete params.popupEnable
 
-  if (params.highlightEnable === false) {
-    delete params.highlightEnable
-  }
+  console.log("图层参数为：", params)
 
-  if (params.popupEnable === true) {
-    delete params.popupEnable
-  }
   mars3d.Util.downloadFile("3dtiles图层配置.json", JSON.stringify(params))
 }
 

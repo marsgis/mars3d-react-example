@@ -104,7 +104,7 @@ function addDemoGraphic2(graphicLayer) {
     style: {
       plane_normal: Cesium.Cartesian3.UNIT_Z,
       dimensions: new Cesium.Cartesian2(1000.0, 1000.0),
-      materialType: mars3d.MaterialType.Image,
+      materialType: mars3d.MaterialType.Image2,
       materialOptions: {
         image: "img/textures/poly-rivers.png",
         transparent: true

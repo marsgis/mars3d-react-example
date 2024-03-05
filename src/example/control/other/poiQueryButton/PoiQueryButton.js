@@ -117,14 +117,14 @@ class PoiQueryButton extends mars3d.control.BaseControl {
     this.parentContainer.appendChild(this._queryInputContainer)
 
     // 搜索框移除
-    this._queryInputContainer.addEventListener("mouseover", (e) => { 
+    this._queryInputContainer.addEventListener("mouseover", (e) => {
       if (numTime) {
         clearTimeout(numTime)
         numTime = null
       }
     })
 
-    this._queryInputContainer.addEventListener("input", (e) => { 
+    this._queryInputContainer.addEventListener("input", (e) => {
       if (numTime) {
         clearTimeout(numTime)
         numTime = null
@@ -137,13 +137,13 @@ class PoiQueryButton extends mars3d.control.BaseControl {
       this.toolSearchNoShow("block")
     })
     this._queryInputContainer.addEventListener("mouseout", (e) => {
-      numTime = setTimeout(() => { 
+      numTime = setTimeout(() => {
         cacheTarget = null
 
         const queryVal = this._queryInputContainer.querySelector(".searchInput").value
         if (queryVal.length === 0) {
           this.clear()
-          this.toolSearchNoShow("none") 
+          this.toolSearchNoShow("none")
         }
       }, 500)
     })
@@ -235,13 +235,20 @@ class PoiQueryButton extends mars3d.control.BaseControl {
         const pois = result.list
         if (pois.length > 0) {
           result.list.forEach((item, index) => {
-            if (!item.x || !item.y) {
+            let point = null
+            if (item.lng && item.lat) {
+              point = [item.lng, item.lat]
+            }
+            if (item.x && item.y) {
+              point = [item.x, item.y]
+            }
+            if (!point) {
               return
             }
             // 在地图上将搜寻的结果展现为矢量数据
             const graphic = new mars3d.graphic.PointEntity({
               id: item.id,
-              position: [item.x, item.y],
+              position: point,
               style: {
                 name: item.name,
                 pixelSize: 10,
@@ -318,7 +325,15 @@ class PoiQueryButton extends mars3d.control.BaseControl {
 
     result.list.forEach((item, index) => {
       const name = item.name
-      if (!item.x || !item.y) {
+
+      let point = null
+      if (item.lng && item.lat) {
+        point = [item.lng, item.lat]
+      }
+      if (item.x && item.y) {
+        point = [item.x, item.y]
+      }
+      if (!point) {
         return
       }
 

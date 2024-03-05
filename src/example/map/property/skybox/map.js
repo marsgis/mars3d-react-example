@@ -8,6 +8,16 @@ export const mapOptions = {
     center: { lat: 36.873519, lng: 106.863496, alt: 19999205, heading: 354, pitch: -89 },
     cameraController: {
       maximumZoomDistance: 50000000
+    },
+    skyBox: {
+      sources: {
+        negativeX: "img/skybox/6/tycho2t3_80_mx.jpg",
+        negativeY: "img/skybox/6/tycho2t3_80_my.jpg",
+        negativeZ: "img/skybox/6/tycho2t3_80_mz.jpg",
+        positiveX: "img/skybox/6/tycho2t3_80_px.jpg",
+        positiveY: "img/skybox/6/tycho2t3_80_py.jpg",
+        positiveZ: "img/skybox/6/tycho2t3_80_pz.jpg"
+      }
     }
   }
 }
@@ -20,8 +30,6 @@ export const mapOptions = {
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
-
-  show6()
 }
 
 /**
@@ -48,14 +56,30 @@ export function show1() {
 
 export function show2() {
   // 修改天空盒
-  map.scene.skyBox = new Cesium.SkyBox({
-    sources: {
-      negativeX: "img/skybox/2/tycho2t3_80_mx.jpg",
-      negativeY: "img/skybox/2/tycho2t3_80_my.jpg",
-      negativeZ: "img/skybox/2/tycho2t3_80_mz.jpg",
-      positiveX: "img/skybox/2/tycho2t3_80_px.jpg",
-      positiveY: "img/skybox/2/tycho2t3_80_py.jpg",
-      positiveZ: "img/skybox/2/tycho2t3_80_pz.jpg"
+  // map.scene.skyBox = new Cesium.SkyBox({
+  //   sources: {
+  //     negativeX: "img/skybox/2/tycho2t3_80_mx.jpg",
+  //     negativeY: "img/skybox/2/tycho2t3_80_my.jpg",
+  //     negativeZ: "img/skybox/2/tycho2t3_80_mz.jpg",
+  //     positiveX: "img/skybox/2/tycho2t3_80_px.jpg",
+  //     positiveY: "img/skybox/2/tycho2t3_80_py.jpg",
+  //     positiveZ: "img/skybox/2/tycho2t3_80_pz.jpg"
+  //   }
+  // })
+
+  // 修改方式二，map.setOptions方法
+  map.setOptions({
+    scene: {
+      skyBox: {
+        sources: {
+          negativeX: "img/skybox/2/tycho2t3_80_mx.jpg",
+          negativeY: "img/skybox/2/tycho2t3_80_my.jpg",
+          negativeZ: "img/skybox/2/tycho2t3_80_mz.jpg",
+          positiveX: "img/skybox/2/tycho2t3_80_px.jpg",
+          positiveY: "img/skybox/2/tycho2t3_80_py.jpg",
+          positiveZ: "img/skybox/2/tycho2t3_80_pz.jpg"
+        }
+      }
     }
   })
 }

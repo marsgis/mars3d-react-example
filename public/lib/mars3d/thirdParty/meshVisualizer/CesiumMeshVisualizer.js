@@ -7411,6 +7411,7 @@ define('Core/MeshVisualizer',[
     var scratchRay = new Cesium.Ray();
 
     MeshVisualizer.prototype = {
+
         /**
         *@param {Cesium.Mesh}mesh
         */
@@ -8653,6 +8654,11 @@ define('Core/MeshVisualizer',[
             }
         }
     }
+
+    MeshVisualizer.prototype.isDestroyed = function (){
+      return false
+    }
+
 
     /**
     *

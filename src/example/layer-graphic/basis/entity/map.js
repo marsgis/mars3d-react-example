@@ -326,7 +326,8 @@ function addDemoGraphic15(graphicLayer) {
         blendColor: "#006ab4" // 从水中混合到非水域时使用的rgba颜色对象。
       }
     },
-    attr: { remark: "示例15" }
+    attr: { remark: "示例15" },
+    popup: "示例15-PolygonEntity"
   })
   groupGraphic.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
 
@@ -337,7 +338,8 @@ function addDemoGraphic15(graphicLayer) {
       font_size: 20,
       visibleDepth: false
     },
-    attr: { remark: "示例15-label" }
+    attr: { remark: "示例15-label" },
+    popup: "示例15-LabelEntity"
   })
   groupGraphic.addGraphic(graphicLabel)
 

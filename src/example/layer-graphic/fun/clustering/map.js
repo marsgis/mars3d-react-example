@@ -23,53 +23,53 @@ export function onMounted(mapInstance) {
   addBusinessLayer()
 }
 
-function addGraphicLayer() {
-  graphicLayer = new mars3d.layer.GraphicLayer({
-    clustering: {
-      enabled: true,
-      pixelRange: 20,
-      clampToGround: false,
-      addHeight: 1000
-    },
-    popup: "all",
-    center: { lat: 31.639275, lng: 117.388877, alt: 52574.8, heading: 339.3, pitch: -65 },
-    flyTo: true
-  })
-  map.addLayer(graphicLayer)
+// function addGraphicLayer() {
+//   graphicLayer = new mars3d.layer.GraphicLayer({
+//     clustering: {
+//       enabled: true,
+//       pixelRange: 20,
+//       clampToGround: false,
+//       addHeight: 1000
+//     },
+//     popup: "all",
+//     center: { lat: 31.639275, lng: 117.388877, alt: 52574.8, heading: 339.3, pitch: -65 },
+//     flyTo: true
+//   })
+//   map.addLayer(graphicLayer)
 
-  // 单击事件
-  graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("你单击了", event)
-  })
+//   // 单击事件
+//   graphicLayer.on(mars3d.EventType.click, function (event) {
+//     console.log("你单击了", event)
+//   })
 
-  mars3d.Util.fetchJson({
-    url: "//data.mars3d.cn/file/geojson/hfty-point.json"
-  }).then((res) => {
-    for (let i = 0; i < res.features.length; i++) {
-      const item = res.features[i]
+//   mars3d.Util.fetchJson({
+//     url: "//data.mars3d.cn/file/geojson/hfty-point.json"
+//   }).then((res) => {
+//     for (let i = 0; i < res.features.length; i++) {
+//       const item = res.features[i]
 
-      const label = new mars3d.graphic.LabelPrimitive({
-        position: item.geometry.coordinates,
-        style: {
-          show: true,
-          text: "测试",
-          font_size: 14,
-          fill: true,
-          color: "#fcfa36",
-          font_family: "楷体",
-          font_weight: "bold",
-          outline: true,
-          outlineColor: "rgba(0,0,0,0.8)",
-          outlineWidth: 3,
-          background: true,
-          backgroundColor: "#009476",
-          visibleDepth: false
-        }
-      })
-      graphicLayer.addGraphic(label)
-    }
-  })
-}
+//       const label = new mars3d.graphic.LabelPrimitive({
+//         position: item.geometry.coordinates,
+//         style: {
+//           show: true,
+//           text: "测试",
+//           font_size: 14,
+//           fill: true,
+//           color: "#fcfa36",
+//           font_family: "楷体",
+//           font_weight: "bold",
+//           outline: true,
+//           outlineColor: "rgba(0,0,0,0.8)",
+//           outlineWidth: 3,
+//           background: true,
+//           backgroundColor: "#009476",
+//           visibleDepth: false
+//         }
+//       })
+//       graphicLayer.addGraphic(label)
+//     }
+//   })
+// }
 
 function addBusinessLayer() {
   const singleDigitPins = {}

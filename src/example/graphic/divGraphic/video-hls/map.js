@@ -18,6 +18,8 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
+  globalNotify("已知问题提示", `如视频未播放或服务URL访问超时，是因为目前在线演示URL地址已失效，您可以替换代码中url为本地服务后使用。`)
+
   // 加载石化工厂模型
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     name: "石化工厂",

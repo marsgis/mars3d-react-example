@@ -22,8 +22,13 @@ export const mapOptions = {
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
-
   map.basemap = 2017 // 切换到蓝色底图
+
+  globalNotify(
+    "已知问题提示",
+    `如图层未显示或服务URL访问超时，是因为目前国家测绘主管部门对未经审核批准的国外地图服务做了屏蔽封锁。
+     您可以需翻墙使用 或 参考示例代码替换本地服务地址使用。`
+  )
 
   tiles3dLayer = new mars3d.layer.OsmBuildingsLayer({
     highlight: {
@@ -51,7 +56,6 @@ export function setStyle1() {
 }
 
 export function setStyle2() {
-
   tiles3dLayer.customShader = new Cesium.CustomShader({
     lightingModel: Cesium.LightingModel.UNLIT,
     fragmentShaderText: `
@@ -130,5 +134,69 @@ export function selectColor(col) {
     color: {
       conditions: [["true", `color("${col}")`]]
     }
+  })
+}
+
+export function setStyle4() {
+  tiles3dLayer.customShader = new Cesium.CustomShader({
+    uniforms: {
+      u_envTexture: {
+        value: new Cesium.TextureUniform({
+          url: "/img/textures/sky.jpg"
+        }),
+        type: Cesium.UniformType.SAMPLER_2D
+      },
+      u_envTexture2: {
+        value: new Cesium.TextureUniform({
+          url: "/img/textures/buildings-kj.jpg"
+        }),
+        type: Cesium.UniformType.SAMPLER_2D
+      },
+      u_isDark: {
+        value: true,
+        type: Cesium.UniformType.BOOL
+      }
+    },
+    mode: Cesium.CustomShaderMode.REPLACE_MATERIAL,
+    lightingModel: Cesium.LightingModel.UNLIT,
+    fragmentShaderText: `
+        void fragmentMain(FragmentInput fsInput,inout czm_modelMaterial material) {
+            vec3 positionMC = fsInput.attributes.positionMC;
+            vec3 positionEC = fsInput.attributes.positionEC;
+            vec3 normalEC = fsInput.attributes.normalEC;
+            vec3 posToCamera = normalize(-positionEC);
+            vec3 coord = normalize(vec3(czm_inverseViewRotation * reflect(posToCamera, normalEC)));
+            float ambientCoefficient = 0.3;
+            float diffuseCoefficient = max(0.0, dot(normalEC, czm_sunDirectionEC) * 1.0);
+            if(u_isDark){
+                // dark
+                vec4 darkRefColor = texture(u_envTexture2, vec2(coord.x, (coord.z - coord.y) / 2.0));
+                material.diffuse = mix(mix(vec3(0.3), vec3(0.1,0.2,0.4),clamp(positionMC.z / 200., 0.0, 1.0)) , darkRefColor.rgb ,0.3);
+                material.diffuse *= 0.2;
+                // 注意shader中写浮点数是 一定要带小数点 否则会报错 比如0需要写成0.0 1要写成1.0
+                float _baseHeight = 0.0; // 物体的基础高度，需要修改成一个合适的建筑基础高度
+                float _heightRange = 20.0; // 高亮的范围(_baseHeight ~ _baseHeight + _heightRange)
+                float _glowRange = 300.0; // 光环的移动范围(高度)
+                // 建筑基础色
+                float czm_height = positionMC.z - _baseHeight;
+                float czm_a11 = fract(czm_frameNumber / 120.0) * 3.14159265 * 2.0;
+                float czm_a12 = czm_height / _heightRange + sin(czm_a11) * 0.1;
+
+                float times = czm_frameNumber / 60.0;
+                material.diffuse *= vec3(czm_a12);// 渐变
+                // 动态光环
+                float time = fract(czm_frameNumber / 360.0);
+                time = abs(time - 0.5) * 2.0;
+                float czm_h = clamp(czm_height / _glowRange, 0.0, 1.0);
+                float czm_diff = step(0.005, abs(czm_h - time));
+                material.diffuse += material.diffuse * (1.0 - czm_diff);
+            } else {
+                // day
+                vec4 dayRefColor = texture(u_envTexture, vec2(coord.x, (coord.z - coord.y) / 3.0));
+                material.diffuse = mix(mix(vec3(0.000), vec3(0.5),clamp(positionMC.z / 300., 0.0, 1.0)) , dayRefColor.rgb ,0.3);
+                material.diffuse *= min(diffuseCoefficient + ambientCoefficient, 1.0);
+            }
+            material.alpha = 1.0;
+        } `
   })
 }

@@ -15,8 +15,8 @@ export const mapOptions = function (option) {
       showSkyAtmosphere: false,
       fog: false,
       backgroundColor: "rgba(0,0,0,0)",
+      backgroundImage: "url(/img/tietu/backGroundImg.jpg)",
       orderIndependentTranslucency: false,
-      contextOptions: { webgl: { alpha: true } }, // 允许透明
       globe: {
         show: false, // 不显示地球
         showGroundAtmosphere: false,
@@ -59,10 +59,6 @@ const storageName = "layer-tileset-manager-oneself"
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
   map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
-
-  map.container.style.backgroundImage = "url(/img/tietu/backGroundImg.jpg)"
-  map.container.style.backgroundRepeat = "no-repeat"
-  map.container.style.backgroundSize = "100% 100%"
 
   // 如果模型地址内有“+”符号，可以加下面方法进行自定义处理
   Cesium.Resource.ReplaceUrl = function (url) {

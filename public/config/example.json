@@ -289,6 +289,12 @@
             "hasPannel": true
           },
           {
+            "name": "OSM",
+            "thumbnail": "layert-online-osm.jpg",
+            "main": "layer-tile/online/osm",
+            "hasPannel": true
+          },
+          {
             "name": "实时交通态势图",
             "thumbnail": "layert-online-traffic-time.jpg",
             "main": "layer-tile/online/traffic-time",
@@ -572,6 +578,12 @@
             "thumbnail": "control-basis-compass-custom.jpg",
             "main": "control/basis/compass-custom",
             "resources": ["compassCustom.css"]
+          },
+          {
+            "name": "立方体视图",
+            "thumbnail": "control-basis-cubeView.jpg",
+            "main": "control/basis/cubeView",
+            "new": true
           },
           {
             "name": "比例尺",
@@ -1487,6 +1499,12 @@
             "hasPannel": true
           },
           {
+            "name": "洪水演进",
+            "thumbnail": "graphic-combine-polygon-floods.jpg",
+            "main": "graphic/combine/polygon-floods",
+            "new": true
+          },
+          {
             "name": "WaterCombine 大量水面",
             "thumbnail": "graphic-combine-water.jpg",
             "main": "graphic/combine/water",
@@ -2111,9 +2129,9 @@
             "hasPannel": true
           },
           {
-            "name": "gltf模型剖切",
-            "thumbnail": "thing-gltf-modelPlanClip.jpg",
-            "main": "thing/gltf/modelPlanClip",
+            "name": "gltf自定义材质",
+            "thumbnail": "graphic-primitive-model-customShader.jpg",
+            "main": "graphic/primitive/model-customShader",
             "hasPannel": true
           },
           {
@@ -2126,6 +2144,12 @@
             "name": "模型自旋转",
             "thumbnail": "graphic-entity-model-rotate.gif",
             "main": "graphic/entity/model-rotate"
+          },
+          {
+            "name": "gltf模型剖切",
+            "thumbnail": "thing-gltf-modelPlanClip.jpg",
+            "main": "thing/gltf/modelPlanClip",
+            "hasPannel": true
           },
           {
             "name": "模型管理(楼栋分层控制)",
@@ -3173,12 +3197,6 @@
         "name": "第三方原因的",
         "details": "第三方服务、国家政策等原因造成的暂时不能用的功能",
         "children": [
-          {
-            "name": "OSM【已被封】",
-            "thumbnail": "layert-online-osm.jpg",
-            "main": "layer-tile/online/osm",
-            "hasPannel": true
-          },
           {
             "name": "街景联动【需要Token】",
             "thumbnail": "map-double-streetview.jpg",

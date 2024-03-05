@@ -9,7 +9,7 @@ export const mapOptions = {
   scene: {
     center: { lat: 30.773023, lng: 116.473055, alt: 133111.3, heading: 40.4, pitch: -47.9 },
     orderIndependentTranslucency: false,
-    contextOptions: { webgl: { alpha: true } }, // 允许透明，只能Map初始化传入 [关键代码]
+    backgroundImage: "url(/img/tietu/backGroundImg.jpg)",
     showMoon: false,
     showSkyBox: false,
     showSkyAtmosphere: false,
@@ -35,10 +35,6 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
   map.basemap = 2017
-
-  map.container.style.backgroundImage = "url(/img/tietu/backGroundImg.jpg)"
-  map.container.style.backgroundRepeat = "no-repeat"
-  map.container.style.backgroundSize = "100% 100%"
 
   // 添加矢量图层
   graphicLayer = new mars3d.layer.GraphicLayer()
