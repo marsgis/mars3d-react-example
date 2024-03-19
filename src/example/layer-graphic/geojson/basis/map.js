@@ -161,7 +161,7 @@ export function showPoint() {
       { field: "项目进度", name: "项目进度" },
       { field: "项目来源", name: "项目来源" },
       { field: "备注", name: "备注" },
-      { name: "详情", type: "button", className: "mars-button", callback: "_test_button_click" }
+      { name: "详情", type: "button", className: "mars3d-popup-btn-custom", callback: "_test_button_click" }
     ],
     flyTo: true
   })

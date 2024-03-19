@@ -36,10 +36,10 @@ export function onMounted(mapInstance) {
 
   // 加一些演示数据
   addDemoGraphic1(graphicLayer)
-  // addDemoGraphic2(graphicLayer)
-  // addDemoGraphic3(graphicLayer)
-  // addDemoGraphic4(graphicLayer)
-  // addDemoGraphic5(graphicLayer)
+  addDemoGraphic2(graphicLayer)
+  addDemoGraphic3(graphicLayer)
+  addDemoGraphic4(graphicLayer)
+  addDemoGraphic5(graphicLayer)
 }
 
 /**

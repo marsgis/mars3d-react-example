@@ -2320,7 +2320,7 @@
             "main": "layer-tileset/style/custom-style"
           },
           {
-            "name": "自定义Shader",
+            "name": "customShader自定义材质",
             "thumbnail": "layer3d-style-customShader.jpg",
             "main": "layer-tileset/style/customShader",
             "hasPannel": true
@@ -2443,7 +2443,7 @@
           },
           {
             "name": "双屏对比",
-            "thumbnail": "map-double-compare.jpg",
+            "thumbnail": "map-double-compare.gif",
             "main": "map/double/compare",
             "hasPannel": true
           },

@@ -31,6 +31,10 @@ export function onMounted(mapInstance) {
     // depthFailColor: Cesium.Color.fromCssColorString("#db2c8f"),
   })
   map.addThing(sightline)
+
+  sightline.on(mars3d.EventType.end, function (e) {
+    console.log("分析完成", e)
+  })
 }
 
 /**

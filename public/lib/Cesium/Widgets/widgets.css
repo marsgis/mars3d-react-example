@@ -72,8 +72,8 @@
 }
 .cesium-toolbar-button {
   box-sizing: border-box;
-  width: 38px;
-  height: 38px;
+  width: 32px;
+  height: 32px;
   border-radius: 14%;
   padding: 0;
   vertical-align: middle;
@@ -701,7 +701,6 @@ input.cesium-cesiumInspector-url {
   height: 100%;
   margin: 0;
   border-radius: 0;
-  border:none
 }
 
 /* packages/widgets/Source/VRButton/VRButton.css */
@@ -711,7 +710,6 @@ input.cesium-cesiumInspector-url {
   height: 100%;
   margin: 0;
   border-radius: 0;
-  border:none
 }
 
 /* packages/widgets/Source/Geocoder/Geocoder.css */

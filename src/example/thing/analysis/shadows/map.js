@@ -40,6 +40,7 @@ export function onMounted(mapInstance) {
   map.addLayer(tilesetLayer)
 
   shadows = new mars3d.thing.Shadows({
+    darkness: 0.4, // 阴影透明度, 0-1，值越大越透明
     multiplier: 1600
     // terrain: false,
     // lighting: false

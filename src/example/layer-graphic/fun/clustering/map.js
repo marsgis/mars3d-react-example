@@ -23,7 +23,7 @@ export function onMounted(mapInstance) {
   addBusinessLayer()
 }
 
-// function addGraphicLayer() {
+// async function addGraphicLayer() {
 //   graphicLayer = new mars3d.layer.GraphicLayer({
 //     clustering: {
 //       enabled: true,
@@ -42,33 +42,29 @@ export function onMounted(mapInstance) {
 //     console.log("你单击了", event)
 //   })
 
-//   mars3d.Util.fetchJson({
-//     url: "//data.mars3d.cn/file/geojson/hfty-point.json"
-//   }).then((res) => {
-//     for (let i = 0; i < res.features.length; i++) {
-//       const item = res.features[i]
-
-//       const label = new mars3d.graphic.LabelPrimitive({
-//         position: item.geometry.coordinates,
-//         style: {
-//           show: true,
-//           text: "测试",
-//           font_size: 14,
-//           fill: true,
-//           color: "#fcfa36",
-//           font_family: "楷体",
-//           font_weight: "bold",
-//           outline: true,
-//           outlineColor: "rgba(0,0,0,0.8)",
-//           outlineWidth: 3,
-//           background: true,
-//           backgroundColor: "#009476",
-//           visibleDepth: false
-//         }
-//       })
-//       graphicLayer.addGraphic(label)
-//     }
-//   })
+//   const res = await mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/geojson/hfty-point.json" })
+//   for (let i = 0; i < res.features.length; i++) {
+//     const item = res.features[i]
+//     const label = new mars3d.graphic.LabelPrimitive({
+//       position: item.geometry.coordinates,
+//       style: {
+//         show: true,
+//         text: "测试",
+//         font_size: 14,
+//         fill: true,
+//         color: "#fcfa36",
+//         font_family: "楷体",
+//         font_weight: "bold",
+//         outline: true,
+//         outlineColor: "rgba(0,0,0,0.8)",
+//         outlineWidth: 3,
+//         background: true,
+//         backgroundColor: "#009476",
+//         visibleDepth: false
+//       }
+//     })
+//     graphicLayer.addGraphic(label)
+//   }
 // }
 
 function addBusinessLayer() {
@@ -90,7 +86,7 @@ function addBusinessLayer() {
       opacity: 1,
       // getImage是完全自定义方式
       getImage: async function (count, result) {
-        const key = "type1-" + count// 唯一标识，不同图层需要设置不一样
+        const key = "type1-" + count // 唯一标识，不同图层需要设置不一样
 
         let image = singleDigitPins[key]
         if (image) {

@@ -48,6 +48,7 @@ function createMapvLayer() {
 
   // mapv图层参数
   const options = {
+    draw: "grid",
     fillStyle: "rgba(55, 50, 250, 0.8)",
     shadowColor: "rgba(255, 250, 50, 1)",
     shadowBlur: 20,
@@ -66,7 +67,6 @@ function createMapvLayer() {
       0.85: "yellow",
       1.0: "rgb(255,0,0)"
     },
-    draw: "grid",
     data: geojson // 数据
   }
 

@@ -4,6 +4,13 @@ export let map // mars3d.Map三维地图对象
 export let graphicLayer // 矢量图层对象
 export const eventTarget = new mars3d.BaseClass()
 
+// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+export const mapOptions = {
+  scene: {
+    center: { lat: 31.008547, lng: 116.09231, alt: 14042.7, heading: 129.7, pitch: -30.9 }
+  }
+}
+
 /**
  * 初始化地图业务，生命周期钩子函数（必须）
  * 框架在地图初始化完成后自动调用该函数
@@ -136,7 +143,7 @@ function addDemoGraphic4(graphicLayer) {
       dimensions_x: 1500,
       dimensions_y: 1000,
       heading: 90,
-      label: { text: "我是label文本", pixelOffsetY: -30 }
+      label: { text: "我是label文本", color: "#00ffff", pixelOffsetY: -30 }
     },
     attr: { remark: "示例4" }
   })

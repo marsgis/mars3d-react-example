@@ -172,3 +172,20 @@ export function removeTileLayer() {
     arcGisLayer = null
   }
 }
+
+
+// 特别的自定义参数的加载方式。
+// export function addTileLayer2() {
+//   arcGisLayer = new mars3d.layer.XyzLayer({
+//     url: "http://218.94.6.92:6080/arcgis/rest/services/jssl_vector_map_2023/MapServer/tile/{custom_z}/{y}/{x}",
+//     // minimumLevel: 4,
+//     // maximumLevel: 18,
+//     customTags: {
+//       custom_z: function (imageryProvider, x, y, level) {
+//         return level - 3
+//       }
+//     },
+//     flyTo: true
+//   })
+//   map.addLayer(arcGisLayer)
+// }

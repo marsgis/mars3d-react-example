@@ -26,7 +26,7 @@ function initMap() {
       mouseDownView: true,
       zoom: { insertIndex: 1 },
       compass: { top: "10px", left: "5px" },
-      distanceLegend: { left: "100px", bottom: "2px" }
+      distanceLegend: { left: "180px", bottom: "27px" }
     },
     basemaps: [
       {

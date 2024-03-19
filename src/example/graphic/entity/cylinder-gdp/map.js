@@ -20,7 +20,8 @@ export const mapOptions = {
           materialOptions: {
             color: "#3388cc",
             opacity: 0.7,
-            alphaPower: 1.3
+            alphaPower: 1.3,
+            isInner: false
           },
           height: 0,
           diffHeight: "{gdp}"
