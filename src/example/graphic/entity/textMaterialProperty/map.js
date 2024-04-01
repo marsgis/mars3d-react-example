@@ -256,41 +256,40 @@ export function startDrawGraphic2() {
 }
 
 // 根据中心点来计算矩形
-export function onClickDrawPoint() {
-  graphicLayer.startDraw({
+export async function onClickDrawPoint() {
+  const graphic = await graphicLayer.startDraw({
     type: "point",
     style: {
       color: "#ffff00",
       clampToGround: true
-    },
-    success: function (graphic) {
-      const position = graphic.positionShow
-      const positions = mars3d.PolyUtil.getRectPositionsByCenter({
-        center: position,
-        width: 60,
-        height: 10
-      })
-      graphic.remove(true)
-
-      const rectangleEntity = new mars3d.graphic.RectangleEntity({
-        positions,
-        style: {
-          materialType: mars3d.MaterialType.Text,
-          materialOptions: {
-            text: "Mars3D三维可视化平台"
-          },
-          clampToGround: true
-        }
-      })
-      graphicLayer.addGraphic(rectangleEntity)
-
-      if (graphicLayer.hasEdit) {
-        rectangleEntity.startEditing()
-      }
-
-      eventTarget.fire("addTableData", { graphicLayer })
     }
   })
+  const position = graphic.positionShow
+  graphic.remove(true)
+
+  const positions = mars3d.PolyUtil.getRectPositionsByCenter({
+    center: position,
+    width: 60,
+    height: 10
+  })
+
+  const rectangleEntity = new mars3d.graphic.RectangleEntity({
+    positions,
+    style: {
+      materialType: mars3d.MaterialType.Text,
+      materialOptions: {
+        text: "Mars3D三维可视化平台"
+      },
+      clampToGround: true
+    }
+  })
+  graphicLayer.addGraphic(rectangleEntity)
+
+  if (graphicLayer.hasEdit) {
+    rectangleEntity.startEditing()
+  }
+
+  eventTarget.fire("addTableData", { graphicLayer })
 }
 
 // 在图层绑定Popup弹窗

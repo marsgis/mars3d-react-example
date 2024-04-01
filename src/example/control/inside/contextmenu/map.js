@@ -162,7 +162,9 @@ export function bindMapDemo() {
   ]
   map.bindContextMenu(mapContextmenuItems)
 
-  map.openContextMenu(new mars3d.LngLatPoint(116.266845, 30.967094, 1000.4).toCartesian())
+  setTimeout(() => {
+    map.openContextMenu(new mars3d.LngLatPoint(116.318747, 31.044486, 651.9))
+  }, 5000)
 }
 
 // 演示右键菜单“方法名称”方式(如config.json中配置时)

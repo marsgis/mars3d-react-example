@@ -226,9 +226,9 @@ function addDemoGraphics(arr) {
 }
 
 // 框选查询 矩形
-export function drawRectangle() {
+export async function drawRectangle() {
   clearAll()
-  map.graphicLayer.startDraw({
+  drawGraphic = await map.graphicLayer.startDraw({
     type: "rectangle",
     style: {
       color: "#00FF00",
@@ -236,19 +236,15 @@ export function drawRectangle() {
       outline: true,
       outlineColor: "#ffffff",
       clampToGround: true
-    },
-    success: function (graphic) {
-      drawGraphic = graphic
-
-      console.log("矩形：", drawGraphic.toGeoJSON({ outline: true }))
     }
   })
+  console.log("矩形：", drawGraphic.toGeoJSON({ outline: true }))
 }
 
 // 框选查询   圆
-export function drawCircle() {
+export async function drawCircle() {
   clearAll()
-  map.graphicLayer.startDraw({
+  drawGraphic = await map.graphicLayer.startDraw({
     type: "circle",
     style: {
       color: "#00FF00",
@@ -256,18 +252,15 @@ export function drawCircle() {
       outline: true,
       outlineColor: "#ffffff",
       clampToGround: true
-    },
-    success: function (graphic) {
-      drawGraphic = graphic
-      console.log("圆：", drawGraphic.toGeoJSON({ outline: true }))
     }
   })
+  console.log("圆：", drawGraphic.toGeoJSON({ outline: true }))
 }
 
 // 框选查询   多边行
-export function drawPolygon() {
+export async function drawPolygon() {
   clearAll()
-  map.graphicLayer.startDraw({
+  drawGraphic = await map.graphicLayer.startDraw({
     type: "polygon",
     style: {
       color: "#00FF00",
@@ -275,12 +268,9 @@ export function drawPolygon() {
       outline: true,
       outlineColor: "#ffffff",
       clampToGround: true
-    },
-    success: function (graphic) {
-      drawGraphic = graphic
-      console.log("多边行：", drawGraphic.toGeoJSON())
     }
   })
+  console.log("多边行：", drawGraphic.toGeoJSON())
 }
 
 export function flyToGraphic(graphic) {

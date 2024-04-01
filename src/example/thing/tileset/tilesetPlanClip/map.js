@@ -45,91 +45,79 @@ export function onUnmounted() {
 }
 
 // 绘制线
-export function drawLine() {
+export async function drawLine() {
   tilesetLayer.planClip.clear()
 
-  map.graphicLayer.startDraw({
+  const graphic = await map.graphicLayer.startDraw({
     type: "polyline",
     maxPointNum: 2,
     style: {
       color: "#007be6",
       opacity: 0.8,
       outline: false
-    },
-    success: function (graphic) {
-      // 绘制成功后回调
-      const positions = graphic.positionsShow
-      map.graphicLayer.clear()
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
-
-      tilesetLayer.planClip.positions = positions
     }
   })
+  const positions = graphic.positionsShow
+  map.graphicLayer.clear()
+  console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+
+  tilesetLayer.planClip.positions = positions
 }
 
 // 绘制矩形
-export function drawExtent() {
+export async function drawExtent() {
   tilesetLayer.planClip.clear()
 
-  map.graphicLayer.startDraw({
+  const graphic = await map.graphicLayer.startDraw({
     type: "rectangle",
     style: {
       color: "#007be6",
       opacity: 0.8,
       outline: false
-    },
-    success: function (graphic) {
-      // 绘制成功后回调
-      const positions = graphic.getOutlinePositions(false)
-      map.graphicLayer.clear()
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
-
-      tilesetLayer.planClip.positions = positions
     }
   })
+  const positions = graphic.getOutlinePositions(false)
+  map.graphicLayer.clear()
+  console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+
+  tilesetLayer.planClip.positions = positions
 }
 
 // 绘制面
-export function drawPoly() {
+export async function drawPoly() {
   tilesetLayer.planClip.clear()
 
-  map.graphicLayer.startDraw({
+  const graphic = await map.graphicLayer.startDraw({
     type: "polygon",
     style: {
       color: "#007be6",
       opacity: 0.5,
       clampToGround: true
-    },
-    success: function (graphic) {
-      // 绘制成功后回调
-      const positions = graphic.positionsShow
-      map.graphicLayer.clear()
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
-
-      tilesetLayer.planClip.positions = positions
     }
   })
+  const positions = graphic.positionsShow
+  map.graphicLayer.clear()
+  console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+
+  tilesetLayer.planClip.positions = positions
 }
 // 绘制面(外切)
-export function drawPoly2() {
+export async function drawPoly2() {
   tilesetLayer.planClip.clear()
-  map.graphicLayer.startDraw({
+  const graphic = await map.graphicLayer.startDraw({
     type: "polygon",
     style: {
       color: "#007be6",
       opacity: 0.5,
       clampToGround: true
-    },
-    success: function (graphic) {
-      // 绘制成功后回调
-      const positions = graphic.positionsShow
-      map.graphicLayer.clear()
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
-
-      tilesetLayer.planClip.clipOutSide = true
-      tilesetLayer.planClip.positions = positions
     }
   })
+  const positions = graphic.positionsShow
+  map.graphicLayer.clear()
+  console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+
+  tilesetLayer.planClip.clipOutSide = true
+  tilesetLayer.planClip.positions = positions
 }
 
 // 更改切换方向

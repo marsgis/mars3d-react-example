@@ -144,56 +144,50 @@ export function heightChange(num) {
 }
 
 // 绘制矩形
-export function drawExtent() {
+export async function drawExtent() {
   terrainClip.clear() // 清除挖地区域
   terrainPlanClip.clear()
 
-  map.graphicLayer.startDraw({
+  const graphic = await map.graphicLayer.startDraw({
     type: "rectangle",
     style: {
       color: "#007be6",
       opacity: 0.8,
       outline: false
-    },
-    success: function (graphic) {
-      // 绘制成功后回调
-      const positions = graphic.getOutlinePositions(false)
-      map.graphicLayer.clear()
-
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
-
-      // 挖地区域
-      terrainClip.positions = positions
-
-      terrainPlanClip.positions = positions
     }
   })
+  const positions = graphic.getOutlinePositions(false)
+  map.graphicLayer.clear()
+
+  console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+
+  // 挖地区域
+  terrainClip.positions = positions
+
+  terrainPlanClip.positions = positions
 }
 
 // 绘制多边形
-export function drawPolygon() {
+export async function drawPolygon() {
   terrainClip.clear() // 清除挖地区域
   terrainPlanClip.clear()
 
-  map.graphicLayer.startDraw({
+  const graphic = await map.graphicLayer.startDraw({
     type: "polygon",
     style: {
       color: "#007be6",
       opacity: 0.5,
       clampToGround: true
-    },
-    success: function (graphic) {
-      // 绘制成功后回调
-      const positions = graphic.positionsShow
-      map.graphicLayer.clear()
-
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
-
-      // 挖地区域
-      terrainClip.positions = positions
-      terrainPlanClip.positions = positions
     }
   })
+  const positions = graphic.positionsShow
+  map.graphicLayer.clear()
+
+  console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+
+  // 挖地区域
+  terrainClip.positions = positions
+  terrainPlanClip.positions = positions
 }
 
 export function clearWJ() {
@@ -215,102 +209,59 @@ export function clipBottom() {
   tilesetPlanClip.clipType = mars3d.ClipType.Z
 }
 // 切线
-export function clipLine() {
+export async function clipLine() {
   tilesetPlanClip.clear()
 
-  map.graphicLayer.startDraw({
+  const graphic = await map.graphicLayer.startDraw({
     type: "polyline",
     maxPointNum: 2,
     style: {
       color: "#007be6",
       opacity: 0.8,
       outline: false
-    },
-    success: function (graphic) {
-      // 绘制成功后回调
-      const positions = graphic.positionsShow
-      map.graphicLayer.clear()
-
-      tilesetPlanClip.positions = positions
     }
   })
+  const positions = graphic.positionsShow
+  map.graphicLayer.clear()
+
+  tilesetPlanClip.positions = positions
 }
 
 // 内切
-export function clipPoly() {
+export async function clipPoly() {
   tilesetPlanClip.clear()
 
-  // map.graphicLayer.startDraw({
-  //   type: "polygon",
-  //   style: {
-  //     color: "#007be6",
-  //     opacity: 0.5
-  //   },
-  //   success: function (graphic) {
-  //     // 绘制成功后回调
-  //     const positions = graphic.positionsShow
-  //     map.graphicLayer.clear()
-
-  //     console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
-
-  //     tilesetPlanClip.positions = positions
-  //   }
-  // })
-
-  map.graphicLayer.startDraw({
+  const graphic = await map.graphicLayer.startDraw({
     type: "rectangle",
     style: {
       color: "#007be6",
       opacity: 0.8,
       outline: false
-    },
-    success: function (graphic) {
-      // 绘制成功后回调
-      const positions = graphic.getOutlinePositions(false)
-      map.graphicLayer.clear()
-
-      tilesetPlanClip.positions = positions
     }
   })
+  const positions = graphic.getOutlinePositions(false)
+  map.graphicLayer.clear()
+
+  tilesetPlanClip.positions = positions
 }
 
 // 外切
-export function clipPoly2() {
+export async function clipPoly2() {
   tilesetPlanClip.clear()
 
-  // map.graphicLayer.startDraw({
-  //   type: "polygon",
-  //   style: {
-  //     color: "#007be6",
-  //     opacity: 0.5,
-  //     clampToGround: true
-  //   },
-  //   success: function (graphic) {
-  //     // 绘制成功后回调
-  //     const positions = graphic.positionsShow
-  //     map.graphicLayer.clear()
-
-  //     tilesetPlanClip.clipOutSide = true
-  //     tilesetPlanClip.positions = positions
-  //   }
-  // })
-
-  map.graphicLayer.startDraw({
+  const graphic = await map.graphicLayer.startDraw({
     type: "rectangle",
     style: {
       color: "#007be6",
       opacity: 0.8,
       outline: false
-    },
-    success: function (graphic) {
-      // 绘制成功后回调
-      const positions = graphic.getOutlinePositions(false)
-      map.graphicLayer.clear()
-
-      tilesetPlanClip.clipOutSide = true
-      tilesetPlanClip.positions = positions
     }
   })
+  const positions = graphic.getOutlinePositions(false)
+  map.graphicLayer.clear()
+
+  tilesetPlanClip.clipOutSide = true
+  tilesetPlanClip.positions = positions
 }
 
 export function clearClip() {

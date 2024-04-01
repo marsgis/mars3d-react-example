@@ -107,6 +107,10 @@ export function bindLayerDemo() {
 export function bindLayerDemo2() {
   removeDemoLayer()
 
+  window.test_formatFun = function (value) {
+    return value + "（测试转换）"
+  }
+
   geoJsonLayer = new mars3d.layer.GeoJsonLayer({
     name: "标绘示例数据",
     url: "//data.mars3d.cn/file/geojson/mars3d-draw.json",
@@ -116,7 +120,7 @@ export function bindLayerDemo2() {
     popup: [
       { field: "id", name: "编码" },
       { field: "name", name: "名称" },
-      { field: "type", name: "类型" },
+      { field: "type", name: "类型", format: "test_formatFun" },
       {
         type: "html",
         html: "<label>视频</label><video src='http://data.mars3d.cn/file/video/lukou.mp4' controls autoplay style=\"width: 300px;\" ></video>"

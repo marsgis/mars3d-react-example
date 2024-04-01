@@ -54,10 +54,10 @@ export function onUnmounted() {
 }
 
 // 绘制矩形（演示map.js与index.vue的交互）
-export function drawExtent() {
+export async function drawExtent() {
   map.graphicLayer.clear()
   // 绘制矩形
-  map.graphicLayer.startDraw({
+  const graphic = await map.graphicLayer.startDraw({
     type: "rectangle",
     style: {
       fill: true,
@@ -65,12 +65,10 @@ export function drawExtent() {
       outline: true,
       outlineWidth: 2,
       outlineColor: "rgba(255,255,0,1)"
-    },
-    success: function (graphic) {
-      const rectangle = mars3d.PolyUtil.formatRectangle(graphic._rectangle_draw)
-      eventTarget.fire("drawExtent", { extent: JSON.stringify(rectangle) }) // 抛出事件，可以组件中去监听事件
     }
   })
+  const rectangle = mars3d.PolyUtil.formatRectangle(graphic._rectangle_draw)
+  eventTarget.fire("drawExtent", { extent: JSON.stringify(rectangle) }) // 抛出事件，可以组件中去监听事件
 }
 
 // 是否运行地图鼠标交互

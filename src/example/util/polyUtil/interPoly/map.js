@@ -40,8 +40,8 @@ export function removeAll() {
  * @param {number} val 步长
  * @returns {void}
  */
-export function interPolygon(val) {
-  map.graphicLayer.startDraw({
+export async function interPolygon(val) {
+  const graphic = await map.graphicLayer.startDraw({
     type: "polygon",
     style: {
       color: "#29cf34",
@@ -49,20 +49,17 @@ export function interPolygon(val) {
       outline: true,
       outlineColor: "#ffffff",
       clampToGround: true
-    },
-    success: function (graphic) {
-      const positions = graphic.positionsShow
-      map.graphicLayer.clear()
-
-      mars3d.PolyUtil.interPolygon({
-        scene: map.scene,
-        positions,
-        splitNum: val // splitNum插值分割的个数
-      }).then((resultInter) => {
-        showInterPolygonResult(resultInter.list)
-      })
     }
   })
+  const positions = graphic.positionsShow
+  map.graphicLayer.clear()
+
+  const resultInter = await mars3d.PolyUtil.interPolygon({
+    scene: map.scene,
+    positions,
+    splitNum: val // splitNum插值分割的个数
+  })
+  showInterPolygonResult(resultInter.list)
 }
 function showInterPolygonResult(list) {
   clearInterResult() // 分析结果用于测试分析的，不做太多处理，直接清除之前的，只保留一个
@@ -134,33 +131,31 @@ function showInterPolygonResult(list) {
   interGraphicLayer.addGraphic(primitiveLine)
 }
 
-export function interPolygonGrid(val) {
+export async function interPolygonGrid(val) {
   clearInterResult()
 
-  map.graphicLayer.startDraw({
+  const graphic = await map.graphicLayer.startDraw({
     type: "polygon",
     style: {
       color: "#29cf34",
       opacity: 0.3,
       outline: true,
       outlineColor: "#ffffff"
-    },
-    success: function (graphic) {
-      const positions = graphic.positionsShow
-      map.graphicLayer.clear()
-
-      const result = mars3d.PolyUtil.getGridPointsByPoly(positions, val)
-      result.forEach((p, i) => {
-        const graphic = new mars3d.graphic.PointPrimitive({
-          position: p,
-          style: {
-            color: "#ff0000",
-            pixelSize: 6
-          }
-        })
-        interGraphicLayer.addGraphic(graphic)
-      })
     }
+  })
+  const positions = graphic.positionsShow
+  map.graphicLayer.clear()
+
+  const result = mars3d.PolyUtil.getGridPointsByPoly(positions, val)
+  result.forEach((p, i) => {
+    const graphic = new mars3d.graphic.PointPrimitive({
+      position: p,
+      style: {
+        color: "#ff0000",
+        pixelSize: 6
+      }
+    })
+    interGraphicLayer.addGraphic(graphic)
   })
 }
 
@@ -171,8 +166,8 @@ export function interPolygonGrid(val) {
  * @param {number} val 步长
  * @returns {void}
  */
-export function interPolygonByDepth(val) {
-  map.graphicLayer.startDraw({
+export async function interPolygonByDepth(val) {
+  const graphic = await map.graphicLayer.startDraw({
     type: "polygon",
     style: {
       color: "#29cf34",
@@ -180,22 +175,19 @@ export function interPolygonByDepth(val) {
       outline: true,
       outlineColor: "#ffffff",
       clampToGround: true
-    },
-    success: function (graphic) {
-      const positions = graphic.positionsShow
-      map.graphicLayer.clear()
-
-      updateAllGraphicShow(map, false)
-      mars3d.PolyUtil.interPolygonByDepth({
-        scene: map.scene,
-        positions,
-        splitNum: val // splitNum插值分割的个数
-      }).then((resultInter) => {
-        updateAllGraphicShow(map, true)
-        showInterPolygonByDepthResult(resultInter)
-      })
     }
   })
+  const positions = graphic.positionsShow
+  map.graphicLayer.clear()
+
+  updateAllGraphicShow(map, false)
+  const resultInter = await mars3d.PolyUtil.interPolygonByDepth({
+    scene: map.scene,
+    positions,
+    splitNum: val // splitNum插值分割的个数
+  })
+  updateAllGraphicShow(map, true)
+  showInterPolygonByDepthResult(resultInter)
 }
 function showInterPolygonByDepthResult(resultInter) {
   clearInterResult() // 分析结果用于测试分析的，不做太多处理，直接清除之前的，只保留一个
@@ -243,72 +235,66 @@ function showInterPolygonByDepthResult(resultInter) {
 }
 
 // 线插值
-export function interPolyline(val) {
-  map.graphicLayer.startDraw({
+export async function interPolyline(val) {
+  const graphic = await map.graphicLayer.startDraw({
     type: "polyline",
     style: {
       color: "#55ff33",
       width: 3,
       clampToGround: true
-    },
-    success: function (graphic) {
-      const positions = graphic.positionsShow
-      map.graphicLayer.clear()
-
-      const arrLine = mars3d.PolyUtil.interPolyline({
-        scene: map.scene,
-        positions,
-        splitNum: val // 插值分割的个数
-      })
-
-      showInterLineResult(arrLine)
     }
   })
+  const positions = graphic.positionsShow
+  map.graphicLayer.clear()
+
+  const arrLine = mars3d.PolyUtil.interPolyline({
+    scene: map.scene,
+    positions,
+    splitNum: val // 插值分割的个数
+  })
+
+  showInterLineResult(arrLine)
 }
 
 // 高度等分
-export function interLine(val) {
-  map.graphicLayer.startDraw({
+export async function interLine(val) {
+  const graphic = await map.graphicLayer.startDraw({
     type: "polyline",
     style: {
       color: "#55ff33",
       width: 3
-    },
-    success: function (graphic) {
-      const positions = graphic.positionsShow
-      map.graphicLayer.clear()
-
-      const arrLine = mars3d.PolyUtil.interLine(positions, {
-        splitNum: val // 插值分割的个数
-      })
-
-      showInterLineResult(arrLine)
     }
   })
+  const positions = graphic.positionsShow
+  map.graphicLayer.clear()
+
+  const arrLine = mars3d.PolyUtil.interLine(positions, {
+    splitNum: val // 插值分割的个数
+  })
+
+  showInterLineResult(arrLine)
 }
 
-export function interLineByDepth(val) {
-  map.graphicLayer.startDraw({
+export async function interLineByDepth(val) {
+  const graphic = await map.graphicLayer.startDraw({
     type: "polyline",
     style: {
       color: "#55ff33",
       width: 3
-    },
-    success: function (graphic) {
-      const positions = graphic.positionsShow
-      map.graphicLayer.clear()
-
-      updateAllGraphicShow(map, false)
-      mars3d.PolyUtil.interPolylineByDepth({
-        scene: map.scene,
-        positions,
-        splitNum: val // 插值分割的个数
-      }).then((resultInter) => {
-        updateAllGraphicShow(map, true)
-        showInterLineResult(resultInter.positions)
-      })
     }
   })
+  const positions = graphic.positionsShow
+  map.graphicLayer.clear()
+
+  updateAllGraphicShow(map, false)
+
+  const resultInter = await mars3d.PolyUtil.interPolylineByDepth({
+    scene: map.scene,
+    positions,
+    splitNum: val // 插值分割的个数
+  })
+  updateAllGraphicShow(map, true)
+  showInterLineResult(resultInter.positions)
 }
 
 // 显示影藏矢量数据

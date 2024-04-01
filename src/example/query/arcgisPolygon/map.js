@@ -73,9 +73,9 @@ export function onUnmounted() {
 }
 
 // 框选查询 矩形
-export function drawRectangle() {
+export async function drawRectangle() {
   clearAll()
-  map.graphicLayer.startDraw({
+  drawGraphic = await map.graphicLayer.startDraw({
     type: "rectangle",
     style: {
       color: "#00ffff",
@@ -84,16 +84,13 @@ export function drawRectangle() {
       outlineWidth: 2,
       outlineColor: "#ffffff",
       clampToGround: true
-    },
-    success: function (graphic) {
-      drawGraphic = graphic
     }
   })
 }
 // 框选查询   圆
-export function drawCircle() {
+export async function drawCircle() {
   clearAll()
-  map.graphicLayer.startDraw({
+  drawGraphic = await map.graphicLayer.startDraw({
     type: "circle",
     style: {
       color: "#00ffff",
@@ -102,16 +99,13 @@ export function drawCircle() {
       outlineWidth: 2,
       outlineColor: "#ffffff",
       clampToGround: true
-    },
-    success: function (graphic) {
-      drawGraphic = graphic
     }
   })
 }
 // 框选查询   多边行
-export function drawPolygon() {
+export async function drawPolygon() {
   clearAll()
-  map.graphicLayer.startDraw({
+  drawGraphic = await map.graphicLayer.startDraw({
     type: "polygon",
     style: {
       color: "#00ffff",
@@ -120,9 +114,6 @@ export function drawPolygon() {
       outlineWidth: 2,
       outlineColor: "#ffffff",
       clampToGround: true
-    },
-    success: function (graphic) {
-      drawGraphic = graphic
     }
   })
 }

@@ -20,7 +20,6 @@ export function onMounted(mapInstance) {
   map = mapInstance // 记录map
   map.basemap = 2017 // 蓝色底图
 
-
   tiles3dLayer = new mars3d.layer.TilesetLayer({
     name: "合肥市建筑物",
     url: "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
@@ -105,11 +104,10 @@ export function setStyle3() {
         type: Cesium.UniformType.SAMPLER_2D
       }
     },
-    vertexShaderText: /* glsl */ `
-    void vertexMain(VertexInput vsInput, inout czm_modelVertexOutput vsOutput){
+    vertexShaderText: `void vertexMain(VertexInput vsInput, inout czm_modelVertexOutput vsOutput){
         v_mars3d_normalMC = vsInput.attributes.normalMC;
       }`,
-    fragmentShaderText: /* glsl 如果贴图方向不对，用下面这个 */ `
+    fragmentShaderText: `
     void fragmentMain(FragmentInput fsInput, inout czm_modelMaterial material) {
       vec3 positionMC = fsInput.attributes.positionMC;
       if (dot(vec3(0.0, 0.0, 1.0), v_mars3d_normalMC) > 0.95) {

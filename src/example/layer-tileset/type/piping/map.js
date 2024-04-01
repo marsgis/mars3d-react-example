@@ -121,51 +121,45 @@ export function heightChange(num) {
 }
 
 // 绘制矩形
-export function drawExtent() {
+export async function drawExtent() {
   terrainPlanClip.clear()
 
-  map.graphicLayer.startDraw({
+  const graphic = await map.graphicLayer.startDraw({
     type: "rectangle",
     style: {
       color: "#007be6",
       opacity: 0.8,
       outline: false
-    },
-    success: function (graphic) {
-      // 绘制成功后回调
-      const positions = graphic.getOutlinePositions(false)
-      map.graphicLayer.clear()
-
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
-
-      // 挖地区域
-      terrainPlanClip.addArea(positions)
     }
   })
+  const positions = graphic.getOutlinePositions(false)
+  map.graphicLayer.clear()
+
+  console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+
+  // 挖地区域
+  terrainPlanClip.addArea(positions)
 }
 
 // 绘制多边形
-export function drawPolygon() {
+export async function drawPolygon() {
   terrainPlanClip.clear()
 
-  map.graphicLayer.startDraw({
+  const graphic = await map.graphicLayer.startDraw({
     type: "polygon",
     style: {
       color: "#007be6",
       opacity: 0.5,
       clampToGround: true
-    },
-    success: function (graphic) {
-      // 绘制成功后回调
-      const positions = graphic.positionsShow
-      map.graphicLayer.clear()
-
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
-
-      // 挖地区域
-      terrainPlanClip.addArea(positions)
     }
   })
+  const positions = graphic.positionsShow
+  map.graphicLayer.clear()
+
+  console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+
+  // 挖地区域
+  terrainPlanClip.addArea(positions)
 }
 
 export function clearWJ() {

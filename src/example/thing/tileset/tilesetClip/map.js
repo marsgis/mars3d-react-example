@@ -144,46 +144,40 @@ function onAddClipArea(event) {
 }
 
 // 绘制矩形
-export function btnDrawExtent() {
+export async function btnDrawExtent() {
   map.graphicLayer.clear()
-  map.graphicLayer.startDraw({
+  const graphic = await map.graphicLayer.startDraw({
     type: "rectangle",
     style: {
       color: "#007be6",
       opacity: 0.2,
       outline: false
-    },
-    success: function (graphic) {
-      // 绘制成功后回调
-      const positions = graphic.getOutlinePositions(false)
-      map.graphicLayer.clear()
-
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
-
-      tilesetLayer.clip.addArea(positions)
     }
   })
+  const positions = graphic.getOutlinePositions(false)
+  map.graphicLayer.clear()
+
+  console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+
+  tilesetLayer.clip.addArea(positions)
 }
 // 绘制裁剪区
-export function btnDraw() {
+export async function btnDraw() {
   map.graphicLayer.clear()
-  map.graphicLayer.startDraw({
+  const graphic = await map.graphicLayer.startDraw({
     type: "polygon",
     style: {
       color: "#007be6",
       opacity: 0.2,
       outline: false
-    },
-    success: function (graphic) {
-      // 绘制成功后回调
-      const positions = graphic.positionsShow
-      map.graphicLayer.clear()
-
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
-
-      tilesetLayer.clip.addArea(positions)
     }
   })
+  const positions = graphic.positionsShow
+  map.graphicLayer.clear()
+
+  console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+
+  tilesetLayer.clip.addArea(positions)
 }
 // 清除
 export function removeAll() {

@@ -2,8 +2,8 @@
 /**
  * Mars3D三维可视化平台  mars3d
  *
- * 版本信息：v3.7.7
- * 编译日期：2024-03-19 15:39:17
+ * 版本信息：v3.7.9
+ * 编译日期：2024-03-28 22:19:38
  * 版权所有：Copyright by 火星科技  http://mars3d.cn
  * 使用单位：免费公开版 ，2024-01-15
  */
@@ -158,7 +158,6 @@ declare enum EffectType {
     brightness,
     depthOfField,
     fog,
-    inverted,
     mosaic,
     nightVision,
     outline,
@@ -4012,17 +4011,6 @@ declare class FogEffect extends BaseEffect {
      * 最高限定高度，超出该高度不显示雾场景效果
      */
     maxHeight: number;
-}
-
-/**
- * 倒影效果
- * @param [options] - 参数对象，包括以下：
- * @param [options.enabled = true] - 对象的启用状态
- */
-declare class InvertedEffect extends BaseEffect {
-    constructor(options?: {
-        enabled?: boolean;
-    });
 }
 
 /**
@@ -15079,7 +15067,7 @@ declare class HeightTriangleMeasure extends HeightMeasure {
  * 坐标量算对象，
  * 非直接调用，由 Measure 类统一创建及管理
  * @param options - 参数对象，包括以下：
- * @param [options.crs = CRS.CGCS2000_GK_Zone_3] - 按指定坐标系显示坐标值,false不显示
+ * @param [options.crs = mars3d.CRS.CGCS2000_GK_Zone_3] - 按指定坐标系显示坐标值,false不显示
  * @param [options.position] - 坐标位置
  * @param options.style - 样式信息
  * @param [options.attr] - 附件的属性信息，可以任意附加属性，导出geojson或json时会自动处理导出。
@@ -17784,6 +17772,10 @@ declare class Mask extends PolygonPrimitive {
         flyTo?: boolean;
         flyToOptions?: any;
     });
+    /**
+     * 位置坐标数组 （笛卡尔坐标）, 赋值时可以传入LatLngPoint数组对象
+     */
+    positions: Cesium.Cartesian3[];
 }
 
 declare namespace ModelPrimitive {
@@ -19807,7 +19799,7 @@ declare namespace BaseGraphicLayer {
  * @param [options.tooltipOptions.titleField] - 标题对应的属性字段名称
  * @param [options.tooltipOptions.noTitle] - 不显示标题
  * @param [options.contextmenuItems] - 绑定的右键菜单值，也可以bindContextMenu方法绑定
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -20046,7 +20038,7 @@ declare class BaseGraphicLayer extends BaseLayer {
 /**
  * 图层对象 的基类
  * @param [options] - 参数对象，包括以下：
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid] - 图层父级的id，一般图层管理中使用
  * @param [options.name] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -20104,6 +20096,10 @@ declare class BaseLayer extends BaseClass {
      * 对象的pid标识
      */
     pid: string | number;
+    /**
+     * 图层中统一的url模版，比如可以将服务url前缀统一使用模板，方便修改或动态配置。
+     */
+    templateValues: any;
     /**
      * 图层类型
      */
@@ -20345,7 +20341,7 @@ declare namespace CzmGeoJsonLayer {
  * @param [options.tooltipOptions.titleField] - 标题对应的属性字段名称
  * @param [options.tooltipOptions.noTitle] - 不显示标题
  * @param [options.contextmenuItems] - 绑定的右键菜单值，也可以bindContextMenu方法绑定
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -20526,7 +20522,7 @@ declare class CzmGeoJsonLayer extends BaseGraphicLayer {
  * @param [options.tooltipOptions.titleField] - 标题对应的属性字段名称
  * @param [options.tooltipOptions.noTitle] - 不显示标题
  * @param [options.contextmenuItems] - 绑定的右键菜单值，也可以bindContextMenu方法绑定
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -20647,7 +20643,7 @@ declare class CzmlLayer extends CzmGeoJsonLayer {
  * @param [options.tooltipOptions.titleField] - 标题对应的属性字段名称
  * @param [options.tooltipOptions.noTitle] - 不显示标题
  * @param [options.contextmenuItems] - 绑定的右键菜单值，也可以bindContextMenu方法绑定
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -20804,7 +20800,7 @@ declare class KmlLayer extends CzmGeoJsonLayer {
  * @param [options.tooltipOptions.titleField] - 标题对应的属性字段名称
  * @param [options.tooltipOptions.noTitle] - 不显示标题
  * @param [options.contextmenuItems] - 绑定的右键菜单值，也可以bindContextMenu方法绑定
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -20949,7 +20945,7 @@ declare class ArcGisWfsLayer extends LodGraphicLayer {
  * @param [options.tooltipOptions.titleField] - 标题对应的属性字段名称
  * @param [options.tooltipOptions.noTitle] - 不显示标题
  * @param [options.contextmenuItems] - 绑定的右键菜单值，也可以bindContextMenu方法绑定
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -21065,10 +21061,10 @@ declare class ArcGisWfsSingleLayer extends GeoJsonLayer {
  * @param [options.data] - geojson格式规范数据对象，与url二选一即可。
  * @param [options.dataColumn] - 接口返回数据中，对应的业务数据数组所在的读取字段名称，支持多级(用.分割)；如果数据直接返回数组时可以不配置。
  * @param [options.formatData] - 可以对加载的数据进行格式化或转换操作
- * @param [options.lngColumn = "lng"] - 点坐标时，经度值对应的字段名称
+ * @param [options.formatPosition] - 可以对加载的坐标进行格式化或转换操作，优先级高于lngColumn、latColumn、altColumn
+ * @param [options.lngColumn = "lng"] - 点坐标时，经度值对应的字段名称, 如果数据内有position字段，position的优先级高于lngColumn
  * @param [options.latColumn = "lat"] - 点坐标时，纬度值对应的字段名称
  * @param [options.altColumn = "alt"] - 点坐标时，高度值对应的字段名称
- * @param [options.formatPosition] - 可以对加载的坐标进行格式化或转换操作
  * @param [options.onCreateGraphic] - 解析geojson后，外部自定义方法来创建Graphic对象
  * @param [options.allowDrillPick] - 是否允许鼠标穿透拾取
  * @param [options.opacity = 1.0] - 透明度（部分图层），取值范围：0.0-1.0
@@ -21110,7 +21106,7 @@ declare class ArcGisWfsSingleLayer extends GeoJsonLayer {
  * @param [options.tooltipOptions.titleField] - 标题对应的属性字段名称
  * @param [options.tooltipOptions.noTitle] - 不显示标题
  * @param [options.contextmenuItems] - 绑定的右键菜单值，也可以bindContextMenu方法绑定
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -21137,10 +21133,10 @@ declare class BusineDataLayer extends GraphicLayer {
         data?: any;
         dataColumn?: string;
         formatData?: (...params: any[]) => any;
+        formatPosition?: (...params: any[]) => any;
         lngColumn?: string;
         latColumn?: string;
         altColumn?: string;
-        formatPosition?: (...params: any[]) => any;
         onCreateGraphic?: (...params: any[]) => any;
         allowDrillPick?: boolean | ((...params: any[]) => any);
         opacity?: number;
@@ -21254,7 +21250,7 @@ declare class BusineDataLayer extends GraphicLayer {
  * @param [options.clustering.fontColor = '#ffffff'] - 数字的颜色
  * @param [options.clustering.color = 'rgba(181, 226, 140, 0.6)'] - 圆形图标的背景颜色，默认自动处理
  * @param [options.clustering.colorIn = 'rgba(110, 204, 57, 0.5)'] - 圆形图标的内圆背景颜色，默认自动处理
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -21463,7 +21459,7 @@ declare namespace GeoJsonLayer {
  * @param [options.tooltipOptions.titleField] - 标题对应的属性字段名称
  * @param [options.tooltipOptions.noTitle] - 不显示标题
  * @param [options.contextmenuItems] - 绑定的右键菜单值，也可以bindContextMenu方法绑定
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -21594,7 +21590,7 @@ declare class GeoJsonLayer extends GraphicLayer {
  * @param [options.isAutoEditing = true] - 完成标绘时是否自动启动编辑(需要hasEdit:true时)
  * @param [options.isContinued = false] - 是否连续标绘
  * @param [options.isRestorePositions = false] - 在标绘和编辑结束时，是否将坐标还原为普通值，true: 停止编辑时会有闪烁，但效率要好些。
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -21894,7 +21890,7 @@ declare namespace GraphicLayer {
  * @param [options.tooltipOptions.titleField] - 标题对应的属性字段名称
  * @param [options.tooltipOptions.noTitle] - 不显示标题
  * @param [options.contextmenuItems] - 绑定的右键菜单值，也可以bindContextMenu方法绑定
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -22320,7 +22316,7 @@ declare class GraphicLayer extends BaseGraphicLayer {
  * @param [options.steps = [0.05, 0.1, 0.2, 0.5, 1.0, 2.0, 5.0, 10.0]] - 网格数步长(度数)数组
  * @param [options.lineStyle] - 线的样式
  * @param [options.labelStyle] - 文本的样式
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -22497,7 +22493,7 @@ declare namespace I3SLayer {
  * @param [options.tooltipOptions.titleField] - 标题对应的属性字段名称
  * @param [options.tooltipOptions.noTitle] - 不显示标题
  * @param [options.contextmenuItems] - 绑定的右键菜单值，也可以bindContextMenu方法绑定
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -22755,7 +22751,7 @@ declare namespace LodGraphicLayer {
  * @param [options.tooltipOptions.titleField] - 标题对应的属性字段名称
  * @param [options.tooltipOptions.noTitle] - 不显示标题
  * @param [options.contextmenuItems] - 绑定的右键菜单值，也可以bindContextMenu方法绑定
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -22910,7 +22906,7 @@ declare class LodGraphicLayer extends GraphicLayer {
  * @param [options.tooltipOptions.titleField] - 标题对应的属性字段名称
  * @param [options.tooltipOptions.noTitle] - 不显示标题
  * @param [options.contextmenuItems] - 绑定的右键菜单值，也可以bindContextMenu方法绑定
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -23155,7 +23151,7 @@ declare namespace TilesetLayer {
  * @param [options.templateValues] - 一个对象，用于替换Url中的模板值的键/值对
  * @param [options.queryParameters] - 一个对象，其中包含在检索资源时将发送的查询参数。比如：queryParameters: {'access_token': '123-435-456-000'},
  * @param [options.headers] - 一个对象，将发送的其他HTTP标头。比如：headers: { 'X-My-Header': 'valueOfHeader' },
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -23655,7 +23651,7 @@ declare class TilesetLayer extends BaseGraphicLayer {
  * @param [options.tooltipOptions.titleField] - 标题对应的属性字段名称
  * @param [options.tooltipOptions.noTitle] - 不显示标题
  * @param [options.contextmenuItems] - 绑定的右键菜单值，也可以bindContextMenu方法绑定
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -23781,7 +23777,7 @@ declare class WfsLayer extends LodGraphicLayer {
  * 图层组，可以用于将多个图层组合起来方便控制（比如将 卫星底图 和 文字注记层 放在一起控制管理），或用于 图层管理 的图层分组节点（虚拟节点）。
  * @param [options] - 参数对象，包括以下：
  * @param [options.layers] - 子图层数组，每个子图层的配置见按各类型图层配置即可。
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -23931,7 +23927,7 @@ declare class GroupLayer extends BaseGraphicLayer {
  * @param [options.requestVertexNormals = true] - 是否应该从服务器请求额外的光照信息，如果可用，以每个顶点法线的形式。
  * @param [options.requestWaterMask = false] - 是否应该向服务器请求每个瓦的水掩膜(如果有的话)。
  * @param [options.requestMetadata = true] - 是否应该从服务器请求每个块元数据(如果可用)。
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示（多个地形服务时，请只设置一个TerrainLayer图层的show为tue）
@@ -23987,7 +23983,7 @@ declare class TerrainLayer extends BaseLayer {
  * @param options.rectangle.ymax - 最大纬度值, -90 至 90
  * @param [options.bbox] - bbox规范的瓦片数据的矩形区域范围,与rectangle二选一即可。
  * @param [options.zIndex] - 控制图层的叠加层次，默认按加载的顺序进行叠加，但也可以自定义叠加顺序，数字大的在上面(只对同类型图层间有效)。
- * @param [options.crs = CRS.EPSG3857] - 瓦片数据的坐标系信息，默认为墨卡托投影
+ * @param [options.crs = mars3d.CRS.EPSG3857] - 瓦片数据的坐标系信息，默认为墨卡托投影
  * @param [options.chinaCRS] - 标识瓦片的国内坐标系（用于自动纠偏或加偏），自动将瓦片转为map对应的chinaCRS类型坐标系。
  * @param [options.proxy] - 加载资源时要使用的代理服务url。
  * @param [options.templateValues] - 一个对象，用于替换Url中的模板值的键/值对
@@ -24016,7 +24012,7 @@ declare class TerrainLayer extends BaseLayer {
  * @param [options.tileHeight = 256] - 图像图块的像素高度。
  * @param [options.customTags] - 允许替换网址模板中的自定义关键字。该对象必须具有字符串作为键，并且必须具有值。
  * @param [options.clampToTileset] - 是否进行贴模型，tip:目前不支持亮度等参数设置，不支持EPSG:3857坐标系。
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -24150,7 +24146,7 @@ declare namespace ArcGisLayer {
  * @param options.rectangle.ymax - 最大纬度值, -90 至 90
  * @param [options.bbox] - bbox规范的瓦片数据的矩形区域范围,与rectangle二选一即可。
  * @param [options.zIndex] - 控制图层的叠加层次，默认按加载的顺序进行叠加，但也可以自定义叠加顺序，数字大的在上面(只对同类型图层间有效)。
- * @param [options.crs = CRS.EPSG4326] - 瓦片数据的坐标系信息，默认为墨卡托投影
+ * @param [options.crs = mars3d.CRS.EPSG4326] - 瓦片数据的坐标系信息，默认为墨卡托投影
  * @param [options.chinaCRS] - 标识瓦片的国内坐标系（用于自动纠偏或加偏），自动将瓦片转为map对应的chinaCRS类型坐标系。
  * @param [options.enablePickFeatures = true] - 如果为true，则请求 单击坐标处服务中对应的矢量数据 并尝试解释响应中包含的功能。为false时不去服务请求。
  * @param [options.featureIndex = 0] - 如果单击有多个feature返回时，默认用第0条数据，取其他数据时可以自定义，可传index顺序，回调方法、和字符串"end"代表取最后一条
@@ -24184,7 +24180,7 @@ declare namespace ArcGisLayer {
  * @param [options.tileHeight = 256] - 图像图块的像素高度。
  * @param [options.customTags] - 允许替换网址模板中的自定义关键字。该对象必须具有字符串作为键，并且必须具有值。
  * @param [options.clampToTileset] - 是否进行贴模型，tip:目前不支持亮度等参数设置，不支持EPSG:3857坐标系。
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -24345,7 +24341,7 @@ declare class ArcGisLayer extends BaseTileLayer {
  * @param options.rectangle.ymax - 最大纬度值, -90 至 90
  * @param [options.bbox] - bbox规范的瓦片数据的矩形区域范围,与rectangle二选一即可。
  * @param [options.zIndex] - 控制图层的叠加层次，默认按加载的顺序进行叠加，但也可以自定义叠加顺序，数字大的在上面(只对同类型图层间有效)。
- * @param [options.crs = CRS.EPSG3857] - 瓦片数据的坐标系信息，默认为墨卡托投影
+ * @param [options.crs = mars3d.CRS.EPSG3857] - 瓦片数据的坐标系信息，默认为墨卡托投影
  * @param [options.chinaCRS] - 标识瓦片的国内坐标系（用于自动纠偏或加偏），自动将瓦片转为map对应的chinaCRS类型坐标系。
  * @param [options.proxy] - 加载资源时要使用的代理服务url。
  * @param [options.templateValues] - 一个对象，用于替换Url中的模板值的键/值对
@@ -24374,7 +24370,7 @@ declare class ArcGisLayer extends BaseTileLayer {
  * @param [options.tileHeight = 256] - 图像图块的像素高度。
  * @param [options.customTags] - 允许替换网址模板中的自定义关键字。该对象必须具有字符串作为键，并且必须具有值。
  * @param [options.clampToTileset] - 是否进行贴模型，tip:目前不支持亮度等参数设置，不支持EPSG:3857坐标系。
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -24491,7 +24487,7 @@ declare class ArcGisTileLayer extends BaseTileLayer {
  * @param options.rectangle.ymax - 最大纬度值, -90 至 90
  * @param [options.bbox] - bbox规范的瓦片数据的矩形区域范围,与rectangle二选一即可。
  * @param [options.zIndex] - 控制图层的叠加层次，默认按加载的顺序进行叠加，但也可以自定义叠加顺序，数字大的在上面(只对同类型图层间有效)。
- * @param [options.chinaCRS = ChinaCRS.BAIDU] - 标识瓦片的国内坐标系（用于自动纠偏或加偏），自动将瓦片转为map对应的chinaCRS类型坐标系。
+ * @param [options.chinaCRS = mars3d.ChinaCRS.BAIDU] - 标识瓦片的国内坐标系（用于自动纠偏或加偏），自动将瓦片转为map对应的chinaCRS类型坐标系。
  * @param [options.proxy] - 加载资源时要使用的代理服务url。
  * @param [options.templateValues] - 一个对象，用于替换Url中的模板值的键/值对
  * @param [options.queryParameters] - 一个对象，其中包含在检索资源时将发送的查询参数。比如：queryParameters: {'access_token': '123-435-456-000'},
@@ -24507,7 +24503,7 @@ declare class ArcGisTileLayer extends BaseTileLayer {
  * @param [options.gamma = 1.0] - 伽马校正值。 1.0使用未修改的图像颜色。
  * @param [options.invertColor] - 是否反向颜色，内部计算规则: color.r = 1.0 - color.r
  * @param [options.filterColor] - 滤镜颜色，内部计算规则: color.r = color.r * filterColor.r
- * @param [options.maximumAnisotropy = maximum supported] - 使用的最大各向异性水平 用于纹理过滤。如果未指定此参数，则支持最大各向异性 将使用WebGL堆栈。较大的值可使影像在水平方向上看起来更好 视图。
+ * @param [options.maximumAnisotropy] - 使用的最大各向异性水平 用于纹理过滤。如果未指定此参数，则支持最大各向异性 将使用WebGL堆栈。较大的值可使影像在水平方向上看起来更好 视图。
  * @param [options.cutoutRectangle] - 制图矩形，用于裁剪此ImageryLayer的一部分。
  * @param [options.colorToAlpha] - 用作Alpha的颜色。
  * @param [options.colorToAlphaThreshold = 0.004] - 颜色到Alpha的阈值。
@@ -24515,7 +24511,7 @@ declare class ArcGisTileLayer extends BaseTileLayer {
  * @param [options.tileWidth = 256] - 图像图块的像素宽度。
  * @param [options.tileHeight = 256] - 图像图块的像素高度。
  * @param [options.customTags] - 允许替换网址模板中的自定义关键字。该对象必须具有字符串作为键，并且必须具有值。
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -24656,7 +24652,7 @@ declare namespace BaseTileLayer {
  * @param options.rectangle.ymax - 最大纬度值, -90 至 90
  * @param [options.bbox] - bbox规范的瓦片数据的矩形区域范围,与rectangle二选一即可。
  * @param [options.zIndex] - 控制图层的叠加层次，默认按加载的顺序进行叠加，但也可以自定义叠加顺序，数字大的在上面(只对同类型图层间有效)。
- * @param [options.crs = CRS.EPSG3857] - 瓦片数据的坐标系信息，默认为墨卡托投影
+ * @param [options.crs = mars3d.CRS.EPSG3857] - 瓦片数据的坐标系信息，默认为墨卡托投影
  * @param [options.chinaCRS] - 标识瓦片的国内坐标系（用于自动纠偏或加偏），自动将瓦片转为map对应的chinaCRS类型坐标系。
  * @param [options.proxy] - 加载资源时要使用的代理服务url。
  * @param [options.templateValues] - 一个对象，用于替换Url中的模板值的键/值对
@@ -24689,7 +24685,7 @@ declare namespace BaseTileLayer {
  * @param [options.tileHeight = 256] - 图像图块的像素高度。
  * @param [options.customTags] - 允许替换网址模板中的自定义关键字。该对象必须具有字符串作为键，并且必须具有值。
  * @param [options.clampToTileset] - 是否进行贴模型，tip:目前不支持亮度等参数设置，不支持EPSG:3857坐标系。
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -24948,7 +24944,7 @@ declare class BaseTileLayer extends BaseLayer {
  * @param options.rectangle.ymax - 最大纬度值, -90 至 90
  * @param [options.bbox] - bbox规范的瓦片数据的矩形区域范围,与rectangle二选一即可。
  * @param [options.zIndex] - 控制图层的叠加层次，默认按加载的顺序进行叠加，但也可以自定义叠加顺序，数字大的在上面(只对同类型图层间有效)。
- * @param [options.crs = CRS.EPSG3857] - 瓦片数据的坐标系信息，默认为墨卡托投影
+ * @param [options.crs = mars3d.CRS.EPSG3857] - 瓦片数据的坐标系信息，默认为墨卡托投影
  * @param [options.chinaCRS] - 标识瓦片的国内坐标系（用于自动纠偏或加偏），自动将瓦片转为map对应的chinaCRS类型坐标系。
  * @param [options.proxy] - 加载资源时要使用的代理服务url。
  * @param [options.templateValues] - 一个对象，用于替换Url中的模板值的键/值对
@@ -24977,7 +24973,7 @@ declare class BaseTileLayer extends BaseLayer {
  * @param [options.tileWidth = 256] - 图像图块的像素宽度。
  * @param [options.tileHeight = 256] - 图像图块的像素高度。
  * @param [options.customTags] - 允许替换网址模板中的自定义关键字。该对象必须具有字符串作为键，并且必须具有值。
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -25091,7 +25087,7 @@ declare class BingLayer extends BaseTileLayer {
  * @param options.rectangle.ymin - 最小纬度值, -90 至 90
  * @param options.rectangle.ymax - 最大纬度值, -90 至 90
  * @param [options.bbox] - bbox规范的瓦片数据的矩形区域范围,与rectangle二选一即可。
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -25179,7 +25175,7 @@ declare class EmptyTileLayer extends BaseTileLayer {
  * @param options.rectangle.ymax - 最大纬度值, -90 至 90
  * @param [options.bbox] - bbox规范的瓦片数据的矩形区域范围,与rectangle二选一即可。
  * @param [options.zIndex] - 控制图层的叠加层次，默认按加载的顺序进行叠加，但也可以自定义叠加顺序，数字大的在上面(只对同类型图层间有效)。
- * @param [options.chinaCRS = ChinaCRS.GCJ02] - 标识瓦片的国内坐标系（用于自动纠偏或加偏），自动将瓦片转为map对应的chinaCRS类型坐标系。
+ * @param [options.chinaCRS = mars3d.ChinaCRS.GCJ02] - 标识瓦片的国内坐标系（用于自动纠偏或加偏），自动将瓦片转为map对应的chinaCRS类型坐标系。
  * @param [options.proxy] - 加载资源时要使用的代理服务url。
  * @param [options.templateValues] - 一个对象，用于替换Url中的模板值的键/值对
  * @param [options.queryParameters] - 一个对象，其中包含在检索资源时将发送的查询参数。比如：queryParameters: {'access_token': '123-435-456-000'},
@@ -25206,7 +25202,7 @@ declare class EmptyTileLayer extends BaseTileLayer {
  * @param [options.tileWidth = 256] - 图像图块的像素宽度。
  * @param [options.tileHeight = 256] - 图像图块的像素高度。
  * @param [options.customTags] - 允许替换网址模板中的自定义关键字。该对象必须具有字符串作为键，并且必须具有值。
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -25311,7 +25307,7 @@ declare class GaodeLayer extends BaseTileLayer {
  * @param options.rectangle.ymax - 最大纬度值, -90 至 90
  * @param [options.bbox] - bbox规范的瓦片数据的矩形区域范围,与rectangle二选一即可。
  * @param [options.zIndex] - 控制图层的叠加层次，默认按加载的顺序进行叠加，但也可以自定义叠加顺序，数字大的在上面(只对同类型图层间有效)。
- * @param [options.crs = CRS.EPSG3857] - 瓦片数据的坐标系信息，默认为墨卡托投影
+ * @param [options.crs = mars3d.CRS.EPSG3857] - 瓦片数据的坐标系信息，默认为墨卡托投影
  * @param [options.chinaCRS] - 标识瓦片的国内坐标系（用于自动纠偏或加偏），自动将瓦片转为map对应的chinaCRS类型坐标系。
  * @param [options.proxy] - 加载资源时要使用的代理服务url。
  * @param [options.templateValues] - 一个对象，用于替换Url中的模板值的键/值对
@@ -25339,7 +25335,7 @@ declare class GaodeLayer extends BaseTileLayer {
  * @param [options.tileWidth = 256] - 图像图块的像素宽度。
  * @param [options.tileHeight = 256] - 图像图块的像素高度。
  * @param [options.customTags] - 允许替换网址模板中的自定义关键字。该对象必须具有字符串作为键，并且必须具有值。
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -25450,7 +25446,7 @@ declare class GeeLayer extends BaseTileLayer {
  * @param options.rectangle.ymax - 最大纬度值, -90 至 90
  * @param [options.bbox] - bbox规范的瓦片数据的矩形区域范围,与rectangle二选一即可。
  * @param [options.zIndex] - 控制图层的叠加层次，默认按加载的顺序进行叠加，但也可以自定义叠加顺序，数字大的在上面(只对同类型图层间有效)。
- * @param [options.crs = CRS.EPSG3857] - 瓦片数据的坐标系信息，默认为墨卡托投影
+ * @param [options.crs = mars3d.CRS.EPSG3857] - 瓦片数据的坐标系信息，默认为墨卡托投影
  * @param [options.chinaCRS = 'GCJ02'] - 标识瓦片的国内坐标系（用于自动纠偏或加偏），自动将瓦片转为map对应的chinaCRS类型坐标系。
  * @param [options.proxy] - 加载资源时要使用的代理服务url。
  * @param [options.templateValues] - 一个对象，用于替换Url中的模板值的键/值对
@@ -25478,7 +25474,7 @@ declare class GeeLayer extends BaseTileLayer {
  * @param [options.tileWidth = 256] - 图像图块的像素宽度。
  * @param [options.tileHeight = 256] - 图像图块的像素高度。
  * @param [options.customTags] - 允许替换网址模板中的自定义关键字。该对象必须具有字符串作为键，并且必须具有值。
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -25587,7 +25583,7 @@ declare class GoogleLayer extends BaseTileLayer {
  * @param options.rectangle.ymax - 最大纬度值, -90 至 90
  * @param [options.bbox] - bbox规范的瓦片数据的矩形区域范围,与rectangle二选一即可。
  * @param [options.zIndex] - 控制图层的叠加层次，默认按加载的顺序进行叠加，但也可以自定义叠加顺序，数字大的在上面(只对同类型图层间有效)。
- * @param [options.crs = CRS.EPSG3857] - 瓦片数据的坐标系信息，默认为墨卡托投影
+ * @param [options.crs = mars3d.CRS.EPSG3857] - 瓦片数据的坐标系信息，默认为墨卡托投影
  * @param [options.chinaCRS] - 标识瓦片的国内坐标系（用于自动纠偏或加偏），自动将瓦片转为map对应的chinaCRS类型坐标系。
  * @param [options.opacity = 1.0] - 透明度，取值范围：0.0-1.0。
  * @param [options.alpha = 1.0] - 同opacity。
@@ -25607,7 +25603,7 @@ declare class GoogleLayer extends BaseTileLayer {
  * @param [options.hasAlphaChannel = true] - 如果此图像提供者提供的图像为真 包括一个Alpha通道；否则为假。如果此属性为false，则为Alpha通道，如果 目前，将被忽略。如果此属性为true，则任何没有Alpha通道的图像都将 它们的alpha随处可见。当此属性为false时，内存使用情况 和纹理上传时间可能会减少。
  * @param [options.tileWidth = 256] - 图像图块的像素宽度。
  * @param [options.tileHeight = 256] - 图像图块的像素高度。
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -25702,7 +25698,7 @@ declare class GridLayer extends BaseTileLayer {
  * @param options.rectangle.ymax - 最大纬度值, -90 至 90
  * @param [options.bbox] - bbox规范的瓦片数据的矩形区域范围,与rectangle二选一即可。
  * @param [options.zIndex] - 控制图层的叠加层次，默认按加载的顺序进行叠加，但也可以自定义叠加顺序，数字大的在上面(只对同类型图层间有效)。
- * @param [options.crs = CRS.EPSG4326] - 瓦片数据的坐标系信息
+ * @param [options.crs = mars3d.CRS.EPSG4326] - 瓦片数据的坐标系信息
  * @param [options.proxy] - 加载资源时要使用的代理服务url。
  * @param [options.templateValues] - 一个对象，用于替换Url中的模板值的键/值对
  * @param [options.queryParameters] - 一个对象，其中包含在检索资源时将发送的查询参数。比如：queryParameters: {'access_token': '123-435-456-000'},
@@ -25726,7 +25722,7 @@ declare class GridLayer extends BaseTileLayer {
  * @param [options.tileWidth = 256] - 图像图块的像素宽度。
  * @param [options.tileHeight = 256] - 图像图块的像素高度。
  * @param [options.customTags] - 允许替换网址模板中的自定义关键字。该对象必须具有字符串作为键，并且必须具有值。
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -25836,7 +25832,7 @@ declare class ImageLayer extends BaseTileLayer {
  * @param options.rectangle.ymax - 最大纬度值, -90 至 90
  * @param [options.bbox] - bbox规范的瓦片数据的矩形区域范围,与rectangle二选一即可。
  * @param [options.zIndex] - 控制图层的叠加层次，默认按加载的顺序进行叠加，但也可以自定义叠加顺序，数字大的在上面(只对同类型图层间有效)。
- * @param [options.crs = CRS.EPSG3857] - 瓦片数据的坐标系信息，默认为墨卡托投影
+ * @param [options.crs = mars3d.CRS.EPSG3857] - 瓦片数据的坐标系信息，默认为墨卡托投影
  * @param [options.chinaCRS] - 标识瓦片的国内坐标系（用于自动纠偏或加偏），自动将瓦片转为map对应的chinaCRS类型坐标系。
  * @param [options.proxy] - 加载资源时要使用的代理服务url。
  * @param [options.templateValues] - 一个对象，用于替换Url中的模板值的键/值对
@@ -25865,7 +25861,7 @@ declare class ImageLayer extends BaseTileLayer {
  * @param [options.tileWidth = 256] - 图像图块的像素宽度。
  * @param [options.tileHeight = 256] - 图像图块的像素高度。
  * @param [options.customTags] - 允许替换网址模板中的自定义关键字。该对象必须具有字符串作为键，并且必须具有值。
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -25976,7 +25972,7 @@ declare class IonLayer extends BaseTileLayer {
  * @param options.rectangle.ymax - 最大纬度值, -90 至 90
  * @param [options.bbox] - bbox规范的瓦片数据的矩形区域范围,与rectangle二选一即可。
  * @param [options.zIndex] - 控制图层的叠加层次，默认按加载的顺序进行叠加，但也可以自定义叠加顺序，数字大的在上面(只对同类型图层间有效)。
- * @param [options.crs = CRS.EPSG3857] - 瓦片数据的坐标系信息，默认为墨卡托投影
+ * @param [options.crs = mars3d.CRS.EPSG3857] - 瓦片数据的坐标系信息，默认为墨卡托投影
  * @param [options.chinaCRS] - 标识瓦片的国内坐标系（用于自动纠偏或加偏），自动将瓦片转为map对应的chinaCRS类型坐标系。
  * @param [options.proxy] - 加载资源时要使用的代理服务url。
  * @param [options.templateValues] - 一个对象，用于替换Url中的模板值的键/值对
@@ -26005,7 +26001,7 @@ declare class IonLayer extends BaseTileLayer {
  * @param [options.tileWidth = 256] - 图像图块的像素宽度。
  * @param [options.tileHeight = 256] - 图像图块的像素高度。
  * @param [options.customTags] - 允许替换网址模板中的自定义关键字。该对象必须具有字符串作为键，并且必须具有值。
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -26138,7 +26134,7 @@ declare class MapboxLayer extends BaseTileLayer {
  * @param [options.tileWidth = 256] - 图像图块的像素宽度。
  * @param [options.tileHeight = 256] - 图像图块的像素高度。
  * @param [options.customTags] - 允许替换网址模板中的自定义关键字。该对象必须具有字符串作为键，并且必须具有值。
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -26250,8 +26246,8 @@ declare class OsmLayer extends BaseTileLayer {
  * @param options.rectangle.ymax - 最大纬度值, -90 至 90
  * @param [options.bbox] - bbox规范的瓦片数据的矩形区域范围,与rectangle二选一即可。
  * @param [options.zIndex] - 控制图层的叠加层次，默认按加载的顺序进行叠加，但也可以自定义叠加顺序，数字大的在上面(只对同类型图层间有效)。
- * @param [options.crs = CRS.EPSG4490] - 瓦片数据的坐标系信息，默认为4490投影,也支持传入EPSG3857坐标系
- * @param [options.chinaCRS = ChinaCRS.WGS84] - 标识瓦片的国内坐标系（用于自动纠偏或加偏），自动将瓦片转为map对应的chinaCRS类型坐标系。
+ * @param [options.crs = mars3d.CRS.EPSG4490] - 瓦片数据的坐标系信息，默认为4490投影,也支持传入EPSG3857坐标系
+ * @param [options.chinaCRS = mars3d.ChinaCRS.WGS84] - 标识瓦片的国内坐标系（用于自动纠偏或加偏），自动将瓦片转为map对应的chinaCRS类型坐标系。
  * @param [options.proxy] - 加载资源时要使用的代理服务url。
  * @param [options.templateValues] - 一个对象，用于替换Url中的模板值的键/值对
  * @param [options.queryParameters] - 一个对象，其中包含在检索资源时将发送的查询参数。比如：queryParameters: {'access_token': '123-435-456-000'},
@@ -26276,7 +26272,7 @@ declare class OsmLayer extends BaseTileLayer {
  * @param [options.tileWidth = 256] - 图像图块的像素宽度。
  * @param [options.tileHeight = 256] - 图像图块的像素高度。
  * @param [options.customTags] - 允许替换网址模板中的自定义关键字。该对象必须具有字符串作为键，并且必须具有值。
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -26388,7 +26384,7 @@ declare class TdtLayer extends BaseTileLayer {
  * @param options.rectangle.ymax - 最大纬度值, -90 至 90
  * @param [options.bbox] - bbox规范的瓦片数据的矩形区域范围,与rectangle二选一即可。
  * @param [options.zIndex] - 控制图层的叠加层次，默认按加载的顺序进行叠加，但也可以自定义叠加顺序，数字大的在上面(只对同类型图层间有效)。
- * @param [options.chinaCRS = ChinaCRS.GCJ02] - 标识瓦片的国内坐标系（用于自动纠偏或加偏），自动将瓦片转为map对应的chinaCRS类型坐标系。
+ * @param [options.chinaCRS = mars3d.ChinaCRS.GCJ02] - 标识瓦片的国内坐标系（用于自动纠偏或加偏），自动将瓦片转为map对应的chinaCRS类型坐标系。
  * @param [options.proxy] - 加载资源时要使用的代理服务url。
  * @param [options.templateValues] - 一个对象，用于替换Url中的模板值的键/值对
  * @param [options.queryParameters] - 一个对象，其中包含在检索资源时将发送的查询参数。比如：queryParameters: {'access_token': '123-435-456-000'},
@@ -26412,7 +26408,7 @@ declare class TdtLayer extends BaseTileLayer {
  * @param [options.tileWidth = 256] - 图像图块的像素宽度。
  * @param [options.tileHeight = 256] - 图像图块的像素高度。
  * @param [options.customTags] - 允许替换网址模板中的自定义关键字。该对象必须具有字符串作为键，并且必须具有值。
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -26532,7 +26528,7 @@ declare class TencentLayer extends BaseTileLayer {
  * @param [options.hasAlphaChannel = true] - 如果此图像提供者提供的图像为真 包括一个Alpha通道；否则为假。如果此属性为false，则为Alpha通道，如果 目前，将被忽略。如果此属性为true，则任何没有Alpha通道的图像都将 它们的alpha随处可见。当此属性为false时，内存使用情况 和纹理上传时间可能会减少。
  * @param [options.tileWidth = 256] - 图像图块的像素宽度。
  * @param [options.tileHeight = 256] - 图像图块的像素高度。
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -26622,7 +26618,7 @@ declare class TileInfoLayer extends BaseTileLayer {
  * @param options.rectangle.ymax - 最大纬度值, -90 至 90
  * @param [options.bbox] - bbox规范的瓦片数据的矩形区域范围,与rectangle二选一即可。
  * @param [options.zIndex] - 控制图层的叠加层次，默认按加载的顺序进行叠加，但也可以自定义叠加顺序，数字大的在上面(只对同类型图层间有效)。
- * @param [options.crs = CRS.EPSG3857] - 瓦片数据的坐标系信息，默认为墨卡托投影
+ * @param [options.crs = mars3d.CRS.EPSG3857] - 瓦片数据的坐标系信息，默认为墨卡托投影
  * @param [options.chinaCRS] - 标识瓦片的国内坐标系（用于自动纠偏或加偏），自动将瓦片转为map对应的chinaCRS类型坐标系。
  * @param [options.proxy] - 加载资源时要使用的代理服务url。
  * @param [options.templateValues] - 一个对象，用于替换Url中的模板值的键/值对
@@ -26650,7 +26646,7 @@ declare class TileInfoLayer extends BaseTileLayer {
  * @param [options.tileWidth = 256] - 图像图块的像素宽度。
  * @param [options.tileHeight = 256] - 图像图块的像素高度。
  * @param [options.customTags] - 允许替换网址模板中的自定义关键字。该对象必须具有字符串作为键，并且必须具有值。
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -26807,7 +26803,7 @@ declare class TmsLayer extends BaseTileLayer {
  * @param [options.queryParameters] - 一个对象，其中包含在检索资源时将发送的查询参数。比如：queryParameters: {'access_token': '123-435-456-000'},
  * @param [options.headers] - 一个对象，将发送的其他HTTP标头。比如：headers: { 'X-My-Header': 'valueOfHeader' },
  * @param [options.clampToTileset] - 是否进行贴模型，tip:目前不支持亮度等参数设置，不支持EPSG:3857坐标系。
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -26973,7 +26969,7 @@ declare class WmsLayer extends BaseTileLayer {
  * @param options.rectangle.ymax - 最大纬度值, -90 至 90
  * @param [options.bbox] - bbox规范的瓦片数据的矩形区域范围,与rectangle二选一即可。
  * @param [options.zIndex] - 控制图层的叠加层次，默认按加载的顺序进行叠加，但也可以自定义叠加顺序，数字大的在上面(只对同类型图层间有效)。
- * @param [options.crs = CRS.EPSG3857] - 瓦片数据的坐标系信息，默认为墨卡托投影
+ * @param [options.crs = mars3d.CRS.EPSG3857] - 瓦片数据的坐标系信息，默认为墨卡托投影
  * @param [options.chinaCRS] - 标识瓦片的国内坐标系（用于自动纠偏或加偏），自动将瓦片转为map对应的chinaCRS类型坐标系。
  * @param [options.proxy] - 加载资源时要使用的代理服务url。
  * @param [options.templateValues] - 一个对象，用于替换Url中的模板值的键/值对
@@ -26998,7 +26994,7 @@ declare class WmsLayer extends BaseTileLayer {
  * @param [options.tileWidth = 256] - 图像图块的像素宽度。
  * @param [options.tileHeight = 256] - 图像图块的像素高度。
  * @param [options.clampToTileset] - 是否进行贴模型，tip:目前不支持亮度等参数设置，不支持EPSG:3857坐标系。
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -27148,7 +27144,7 @@ declare class WmtsLayer extends BaseTileLayer {
  * @param options.rectangle.ymax - 最大纬度值, -90 至 90
  * @param [options.bbox] - bbox规范的瓦片数据的矩形区域范围,与rectangle二选一即可。
  * @param [options.zIndex] - 控制图层的叠加层次，默认按加载的顺序进行叠加，但也可以自定义叠加顺序，数字大的在上面(只对同类型图层间有效)。
- * @param [options.crs = CRS.EPSG3857] - 瓦片数据的坐标系信息，默认为墨卡托投影
+ * @param [options.crs = mars3d.CRS.EPSG3857] - 瓦片数据的坐标系信息，默认为墨卡托投影
  * @param [options.chinaCRS] - 标识瓦片的国内坐标系（用于自动纠偏或加偏），自动将瓦片转为map对应的chinaCRS类型坐标系。
  * @param [options.proxy] - 加载资源时要使用的代理服务url。
  * @param [options.templateValues] - 一个对象，用于替换Url中的模板值的键/值对
@@ -27191,7 +27187,7 @@ declare class WmtsLayer extends BaseTileLayer {
  * @param [options.tileHeight = 256] - 图像图块的像素高度。
  * @param [options.customTags] - 允许替换网址模板中的自定义关键字。该对象必须具有字符串作为键，并且必须具有值。
  * @param [options.clampToTileset] - 是否进行贴模型，tip:目前不支持亮度等参数，不支持EPSG:3857坐标系。
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -27483,14 +27479,14 @@ declare class MouseEvent {
  * @param id - 地图div容器的id 或 已构造好的Viewer对象
  * @param [options = {}] - 参数对象:
  * @param [options.scene] - 场景参数
- * @param [options.mouse] - 鼠标操作相关配置参数
  * @param [options.terrain] - 地形服务配置
  * @param [options.basemaps] - 底图图层配置
  * @param [options.layers] - 可以叠加显示的图层配置
  * @param [options.control] - 添加的控件
  * @param [options.effect] - 添加的特效
- * @param [options.thing] - 添加的特效
- * @param [options.chinaCRS = ChinaCRS.WGS84] - 标识当前三维场景的国内坐标系（用于部分图层内对比判断来自动纠偏或加偏），只能初始化传入
+ * @param [options.thing] - 添加的Thing对象(如分析、管理类等)
+ * @param [options.mouse] - 鼠标操作相关配置参数
+ * @param [options.chinaCRS = mars3d.ChinaCRS.WGS84] - 标识当前三维场景的国内坐标系（用于部分图层内对比判断来自动纠偏或加偏），只能初始化传入
  * @param [options.lang] - 使用的语言文本键值对对象，可传入外部自定义的任意语言文本。
  * @param [options.templateValues] - 图层中统一的url模版，比如可以将服务url前缀统一使用模板，方便修改或动态配置。
  * @param [options.token] - 覆盖SDK内的{@link Token}所有第3方Token默认值
@@ -27498,13 +27494,13 @@ declare class MouseEvent {
 declare class Map extends BaseClass {
     constructor(id: string | Cesium.Viewer, options?: {
         scene?: Map.sceneOptions;
-        mouse?: Map.mouseOptions;
         terrain?: Map.terrainOptions;
         basemaps?: Map.basemapOptions[];
         layers?: Map.layerOptions[];
         control?: Map.controlOptions;
         effect?: Map.effectOptions;
         thing?: Map.thingOptions;
+        mouse?: Map.mouseOptions;
         chinaCRS?: ChinaCRS;
         lang?: any | Lang;
         templateValues?: any;
@@ -27579,6 +27575,10 @@ declare class Map extends BaseClass {
      * 获取或设置当前显示的底图，设置时可以传入图层id或name
      */
     basemap: string | number | BaseTileLayer;
+    /**
+     * 图层中统一的url模版，比如可以将服务url前缀统一使用模板，方便修改或动态配置。
+     */
+    templateValues: any;
     /**
      * 是否只拾取模型上的点
      */
@@ -28466,7 +28466,7 @@ declare class Map extends BaseClass {
      * @param [position] - 显示的位置
      * @returns 当前对象本身，可以链式调用
      */
-    openContextMenu(position?: Cesium.Cartesian3): Map;
+    openContextMenu(position?: Cesium.Cartesian3 | LngLatPoint): Map;
     /**
      * 关闭右键菜单
      * @returns 当前对象本身，可以链式调用
@@ -28567,7 +28567,7 @@ declare namespace Map {
      * 以下是Cesium.Viewer所支持的options【控件相关的写在另外的control属性中】
      * @property [sceneMode = Cesium.SceneMode.SCENE3D] - 初始场景模式。可以设置进入场景后初始是2D、2.5D、3D 模式。
      * @property [scene3DOnly = false] - 为 true 时，每个几何实例将仅以3D渲染以节省GPU内存。
-     * @property [mapProjection = CRS.EPSG4326] - 在二维模式下时，地图的呈现坐标系，默认为EPSG4326坐标系，如果需要EPSG3857墨卡托坐标系展示，传 new Cesium.WebMercatorProjection() 即可
+     * @property [mapProjection = mars3d.CRS.EPSG4326] - 在二维模式下时，地图的呈现坐标系，默认为EPSG4326坐标系，如果需要EPSG3857墨卡托坐标系展示，传 new Cesium.WebMercatorProjection() 即可
      * @property [mapMode2D = Cesium.MapMode2D.INFINITE_SCROLL] - 在二维模式下时，地图是可旋转的还是可以在水平方向无限滚动。
      * @property [shouldAnimate = true] - 是否开启时钟动画
      * @property [shadows = false] - 是否启用日照阴影
@@ -30820,7 +30820,7 @@ declare class TextMaterial extends Cesium.Material {
  * @param [options.fixedHeight = 0] - 点的固定的海拔高度
  * @param [options.clampToGround = false] - 点是否贴地
  * @param [options.pointerEvents = false] - 图层是否可以进行鼠标交互，为false时可以穿透操作及缩放地图
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -30950,7 +30950,7 @@ declare class EchartsLayer extends BaseLayer {
  * @param [options.maxCanvasSize = 5000] - Canvas最大尺寸（单位：像素），调大精度更高，但过大容易内存溢出
  * @param [options.minCanvasSize = 700] - Canvas最小尺寸（单位：像素）
  * @param [options.delayTime = 2] - 显示数据时的过渡动画时长（单位：秒）
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -31084,7 +31084,7 @@ declare class HeatLayer extends BaseLayer {
  * @param [options.fixedHeight = 0] - 点的固定的海拔高度
  * @param [options.clampToGround = false] - 点是否贴地
  * @param [options.多个参数] - 支持mapv本身所有drawOptions图层样式参数，具体查阅 [mapv库drawOptions文档]{@link https://github.com/huiyan-fe/mapv/wiki/%E7%B1%BB%E5%8F%82%E8%80%83} ，也可以 [在线编辑图层样式]{@link https://mapv.baidu.com/editor/}
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -32397,7 +32397,7 @@ declare class SatelliteSensor extends BasePointPrimitive {
  * @param [options.collisionPadding = [5, 10, 8, 5]] - 开启避让时，标注碰撞增加内边距，上、右、下、左
  * @param [options.serverFirstStyle = true] - 服务端样式优先
  * @param [options.boundBoxList] - GeoWTFS.initTDT方法参数
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -32504,7 +32504,7 @@ declare namespace CanvasWindLayer {
  * @param [options.worker] - 处理计算粒子点的多线程JS文件地址
  * @param [options.reverseY = false] - 是否翻转纬度数组顺序，正常数据是从北往南的（纬度从大到小），如果反向时请传reverseY为true
  * @param [options.pointerEvents = false] - 图层是否可以进行鼠标交互，为false时可以穿透操作及缩放地图
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -32699,7 +32699,7 @@ declare namespace WindLayer {
  * @param [options.speedFactor = 0.5] - 速度系数
  * @param [options.lineWidth = 2.0] - 线宽度
  * @param [options.colors = ["rgb(206,255,255)"]] - 颜色色带数组
- * @param [options.id = createGuid()] - 图层id标识
+ * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
  * @param [options.show = true] - 图层是否显示
@@ -33685,10 +33685,16 @@ declare namespace Measure {
 /**
  * 图上量算
  * @param [options] - 参数对象，包括以下：
- * @param [options.hasEdit = true] - 是否可编辑
- * @param [options.isAutoEditing = true] - 完成测量时是否自动启动编辑(需要hasEdit:true时)
- * @param [options.isContinued = false] - 是否连续测量
  * @param [options.label] - 测量结果文本的样式
+ *
+ * //以下是内置GraphicLayer的参数
+ * @param [options.hasEdit = false] - 是否自动激活编辑（true时，单击后自动激活编辑）
+ * @param [options.isAutoEditing = true] - 完成标绘时是否自动启动编辑(需要hasEdit:true时)
+ * @param [options.isContinued = false] - 是否连续标绘,连续标绘状态下无法编辑已有对象。
+ * @param [options.isRestorePositions = false] - 在标绘和编辑结束时，是否将坐标还原为普通值，true: 停止编辑时会有闪烁，但效率要好些。
+ * @param [options.drawAddEventType = EventType.click] - 绘制时增加点的事件，默认单击
+ * @param [options.drawEndEventType = EventType.dblClick] - 绘制时结束的事件，默认双击
+ * @param [options.drawDelEventType = EventType.rightClick] - 绘制时删除点的事件，默认右键
  * @param [options.id = createGuid()] - 对象的id标识
  * @param [options.enabled = true] - 对象的启用状态
  * @param [options.eventParent] - 指定的事件冒泡对象，默认为所加入的map对象，false时不冒泡事件
@@ -33697,10 +33703,14 @@ declare namespace Measure {
  */
 declare class Measure extends BaseThing {
     constructor(options?: {
+        label?: LabelEntity.StyleOptions | any;
         hasEdit?: boolean;
         isAutoEditing?: boolean;
         isContinued?: boolean;
-        label?: LabelEntity.StyleOptions | any;
+        isRestorePositions?: boolean;
+        drawAddEventType?: boolean;
+        drawEndEventType?: boolean;
+        drawDelEventType?: boolean;
         id?: string | number;
         enabled?: boolean;
         eventParent?: BaseClass | boolean;
@@ -38390,6 +38400,7 @@ declare namespace Util {
      * @param [config.templateValues] - 一个对象，用于替换Url中的模板值的键/值对
      * @param [config.queryParameters] - 一个对象，其中包含在检索资源时将发送的查询参数。比如：queryParameters: {'access_token': '123-435-456-000'}
      * @param [config.headers] - 一个对象，将发送的其他HTTP标头。比如：headers: { 'X-My-Header': 'valueOfHeader' }
+     * @param [templateValues] - ，同config.templateValues，便于合并. PS: config.templateValues优先级高于templateValues
      * @returns Resource对象
      */
     function getUrlResource(config: {
@@ -38398,7 +38409,7 @@ declare namespace Util {
         templateValues?: any;
         queryParameters?: any;
         headers?: any;
-    }): Cesium.Resource;
+    }, templateValues?: any): Cesium.Resource;
     /**
      * 文字转base64图片
      * @param text - 文字内容 (提示：暂不支持换行)
@@ -38627,7 +38638,6 @@ declare namespace effect {
   export { RainEffect }
   export { SnowEffect }
   export { SnowCoverEffect }
-  export { InvertedEffect }
 
   export { NightVisionEffect }
   export { BloomEffect }

@@ -300,35 +300,27 @@ export function printParameters() {
   }
 }
 // 视频位置
-export function selCamera() {
+export async function selCamera() {
   if (video2D == null) {
     return
   }
 
-  map.graphicLayer.startDraw({
-    type: "point",
-    success: (graphic) => {
-      const point = graphic.point
-      graphic.remove() // 删除绘制的点
+  const graphic = await map.graphicLayer.startDraw({ type: "point" })
+  const point = graphic.point
+  graphic.remove() // 删除绘制的点
 
-      video2D.position = point
-    }
-  })
+  video2D.position = point
 }
 
 // 四周视角选点
-export function onClickSelView() {
+export async function onClickSelView() {
   if (!video2D) {
     return
   }
 
-  map.graphicLayer.startDraw({
-    type: "point",
-    success: (graphic) => {
-      const point = graphic.point
-      graphic.remove() // 删除绘制的点
+  const graphic = await map.graphicLayer.startDraw({ type: "point" })
+  const point = graphic.point
+  graphic.remove() // 删除绘制的点
 
-      video2D.targetPosition = point
-    }
-  })
+  video2D.targetPosition = point
 }

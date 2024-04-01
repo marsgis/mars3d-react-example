@@ -188,31 +188,29 @@ export function txtMaxHeight(num) {
   measureVolume.maxHeight = num
 }
 
-export function selHeight() {
+export async function selHeight() {
   if (!measureVolume || !measure) {
     globalMsg("请先开始方量分析")
     return
   }
 
   // 拾取高度
-  map.graphicLayer.startDraw({
+  const graphic = await map.graphicLayer.startDraw({
     type: "point",
     style: {
       color: "#00fff2"
-    },
-    success: (graphic) => {
-      const height = graphic.point?.alt
-      map.graphicLayer.removeGraphic(graphic)
-
-      if (!height) {
-        return
-      }
-
-      measureVolume.height = height
-
-      showHeightVal(height)
     }
   })
+  const height = graphic.point?.alt
+  map.graphicLayer.removeGraphic(graphic)
+
+  if (!height) {
+    return
+  }
+
+  measureVolume.height = height
+
+  showHeightVal(height)
 }
 
 // 显示mars3d.polygon.interPolygon处理后的面内插值分析结果，主要用于测试对比

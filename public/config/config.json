@@ -81,7 +81,7 @@
         "icon": "/img/basemaps/google_img.png",
         "type": "google",
         "layer": "img_d",
-        "show": true
+        "show": false
       },
       {
         "pid": 10,
@@ -92,7 +92,7 @@
           { "name": "底图", "type": "tdt", "layer": "img_d" },
           { "name": "注记", "type": "tdt", "layer": "img_z" }
         ],
-        "show": false
+        "show": true
       },
       {
         "pid": 10,
@@ -204,36 +204,12 @@
       },
       {
         "pid": 10,
-        "name": "离线地图 (供参考)",
-        "type": "group",
+        "name": "离线影像地图 (供参考)",
         "icon": "/img/basemaps/google_img.png",
-        "layers": [
-          {
-            "name": "全球",
-            "type": "xyz",
-            "url": "{dataServer}/tile/googleImg/{z}/{x}/{y}.jpg",
-            "minimumLevel": 0,
-            "maximumLevel": 9
-          },
-          {
-            "name": "中国",
-            "type": "xyz",
-            "url": "{dataServer}/tile/googleImg/{z}/{x}/{y}.jpg",
-            "minimumTerrainLevel": 10,
-            "minimumLevel": 10,
-            "maximumLevel": 12,
-            "rectangle": { "xmin": 69.706929, "xmax": 136.560941, "ymin": 15.831038, "ymax": 52.558005 }
-          },
-          {
-            "name": "具体项目(如合肥)",
-            "type": "xyz",
-            "url": "{dataServer}/tile/googleImg/{z}/{x}/{y}.jpg",
-            "minimumTerrainLevel": 12,
-            "minimumLevel": 12,
-            "maximumLevel": 18,
-            "rectangle": { "xmin": 116.33236, "xmax": 118.183557, "ymin": 31.143784, "ymax": 32.565035 }
-          }
-        ]
+        "type": "xyz",
+        "url": "{dataServer}/tile/img/{z}/{x}/{y}.jpg",
+        "minimumLevel": 0,
+        "maximumLevel": 13
       },
       {
         "pid": 10,
@@ -383,7 +359,6 @@
         "highlight": { "type": "polyline", "color": "#2deaf7", "width": 4, "clampToGround": true },
         "center": { "lat": 31.814176, "lng": 117.225362, "alt": 5105.3, "heading": 359.2, "pitch": -83.1 },
         "popup": "all",
-        "onWidget": "layer-picture-heatmap",
         "mapSplit": false
       },
       {
@@ -404,8 +379,7 @@
           "clampToGround": true
         },
         "center": { "lat": 31.816951, "lng": 117.22898, "alt": 2916.7, "heading": 0.3, "pitch": -78.8 },
-        "popup": "名称：{NAME}<br />层数：{floor}",
-        "onWidget": "layer-picture-heatmap"
+        "popup": "名称：{NAME}<br />层数：{floor}"
       },
       {
         "id": 401087,
@@ -431,8 +405,7 @@
           { "field": "规划用地", "name": "规划" },
           { "type": "html", "html": "<div style='text-align: right;color: #ff0000;padding-right: 10px;'>数据仅供参考</div>" }
         ],
-        "popupNoTitle": true,
-        "onWidget": "layer-picture-guihua"
+        "popupNoTitle": true
       },
       { "id": 30, "name": "矢量数据", "type": "group" },
       { "id": 3030, "pid": 30, "name": "GeoJSON数据", "type": "group" },
@@ -804,7 +777,6 @@
         "name": "汽车",
         "url": "{dataServer}/file/czml/car.czml",
         "center": { "lat": 40.894745, "lng": 121.920252, "alt": 904, "heading": 64, "pitch": -67 },
-        "onWidget": "control-clock",
         "radio": true,
         "flyTo": true
       },
@@ -815,7 +787,6 @@
         "name": "卫星轨道",
         "url": "{dataServer}/file/czml/satellite-simple.czml",
         "popup": "all",
-        "onWidget": "control-clock",
         "radio": true,
         "flyTo": true
       },

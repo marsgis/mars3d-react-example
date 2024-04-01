@@ -70,46 +70,40 @@ export function addTerrainClip(height) {
 }
 
 // 添加矩形
-export function btnDrawExtent(isShow) {
-  map.graphicLayer.startDraw({
+export async function btnDrawExtent(isShow) {
+  const graphic = await map.graphicLayer.startDraw({
     type: "rectangle",
     style: {
       color: "#007be6",
       opacity: 0.8
-    },
-    success: function (graphic) {
-      // 绘制成功后回调
-      const positions = graphic.getOutlinePositions(false)
-      map.graphicLayer.clear()
-
-      console.log(JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 打印下边界
-
-      // 挖地区域
-      const areaItem = terrainClip.addArea(positions)
-      addTableItem(areaItem, isShow)
     }
   })
+  const positions = graphic.getOutlinePositions(false)
+  map.graphicLayer.clear()
+
+  console.log(JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 打印下边界
+
+  // 挖地区域
+  const areaItem = terrainClip.addArea(positions)
+  addTableItem(areaItem, isShow)
 }
 // 添加多边形
-export function btnDraw(isShow) {
-  map.graphicLayer.startDraw({
+export async function btnDraw(isShow) {
+  const graphic = await map.graphicLayer.startDraw({
     type: "polygon",
     style: {
       color: "#007be6",
       opacity: 0.5,
       outline: false
-    },
-    success: function (graphic) {
-      // 绘制成功后回调
-      const positions = graphic.positionsShow
-      map.graphicLayer.clear()
-
-      console.log(JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 打印下边界
-
-      const areaItem = terrainClip.addArea(positions)
-      addTableItem(areaItem, isShow)
     }
   })
+  const positions = graphic.positionsShow
+  map.graphicLayer.clear()
+
+  console.log(JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 打印下边界
+
+  const areaItem = terrainClip.addArea(positions)
+  addTableItem(areaItem, isShow)
 }
 
 // 清除

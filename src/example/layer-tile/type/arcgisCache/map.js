@@ -52,9 +52,11 @@ export function addTileLayer() {
     url: "//data.mars3d.cn/arcgis_cache/hfgh/_alllayers/{z}/{y}/{x}.png",
     upperCase: false,
     minimumLevel: 1,
-    maximumLevel: 17,
     minimumTerrainLevel: 1,
+    maximumLevel: 17,
     // "maximumTerrainLevel": 17,
+    // colorToAlpha: Cesium.Color.BLACK, // 去黑边
+    // colorToAlphaThreshold: 0.1,
     rectangle: { xmin: 116.846, xmax: 117.642, ymin: 31.533, ymax: 32.185 } // 控制切片如果在矩形坐标内才显示，如果不在矩形坐标内不显示
   })
   map.addLayer(tileLayer)

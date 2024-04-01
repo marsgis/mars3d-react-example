@@ -350,16 +350,13 @@ export function setStylyToGraphic(style) {
 
 // 修改位置
 let particlePosition
-export function btnSelectPosition() {
-  map.graphicLayer.startDraw({
-    type: "point",
-    success: function (graphic) {
-      // 绘制成功后回调
-      const positions = graphic.positionsShow
-      particlePosition = positions[0]
-      map.graphicLayer.clear()
-
-      particleGraphic.position = particlePosition
-    }
+export async function btnSelectPosition() {
+  const graphic = await map.graphicLayer.startDraw({
+    type: "point"
   })
+  const positions = graphic.positionsShow
+  particlePosition = positions[0]
+  map.graphicLayer.clear()
+
+  particleGraphic.position = particlePosition
 }

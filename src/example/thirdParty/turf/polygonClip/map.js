@@ -38,23 +38,21 @@ export function clearGraphicLayer() {
 }
 
 // 绘制线
-export function drawLine() {
+export async function drawLine() {
   clearGraphicLayer()
 
-  graphicLayer.startDraw({
+  const graphic = await graphicLayer.startDraw({
     type: "polyline",
     maxPointNum: 2,
     style: {
       color: "#55ff33",
       width: 3
-    },
-    success: (graphic) => {
-      const clipLine = graphic.toGeoJSON()
-      clipAllPolygon(clipLine)
-
-      graphic.remove()
     }
   })
+  const clipLine = graphic.toGeoJSON()
+  graphic.remove()
+
+  clipAllPolygon(clipLine)
 }
 
 // 加载面数据

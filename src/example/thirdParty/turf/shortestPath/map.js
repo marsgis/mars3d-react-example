@@ -40,12 +40,12 @@ export function onUnmounted() {
 }
 
 // 绘制障碍面
-export function drawPolygon() {
+export async function drawPolygon() {
   if (polygonZAM) {
     polygonZAM.remove()
     polygonZAM = null
   }
-  graphicLayer.startDraw({
+  polygonZAM = await graphicLayer.startDraw({
     type: "polygon",
     style: {
       color: "#00ffff",
@@ -53,19 +53,16 @@ export function drawPolygon() {
       outline: true,
       outlineWidth: 1,
       outlineColor: "#ffffff"
-    },
-    success: (graphic) => {
-      polygonZAM = graphic
     }
   })
 }
 // 绘制起点
-export function startPoint() {
+export async function startPoint() {
   if (pointQD) {
     pointQD.remove()
     pointQD = null
   }
-  graphicLayer.startDraw({
+  pointQD = await graphicLayer.startDraw({
     type: "point",
     style: {
       pixelSize: 10,
@@ -78,20 +75,17 @@ export function startPoint() {
         outlineColor: "#000000",
         pixelOffsetY: -20
       }
-    },
-    success: (graphic) => {
-      pointQD = graphic
     }
   })
 }
 
 // 绘制终点
-export function endPoint() {
+export async function endPoint() {
   if (pointZD) {
     pointZD.remove()
     pointZD = null
   }
-  graphicLayer.startDraw({
+  pointZD = await graphicLayer.startDraw({
     type: "point",
     style: {
       pixelSize: 10,
@@ -104,9 +98,6 @@ export function endPoint() {
         outlineColor: "#000000",
         pixelOffsetY: -20
       }
-    },
-    success: (graphic) => {
-      pointZD = graphic
     }
   })
 }

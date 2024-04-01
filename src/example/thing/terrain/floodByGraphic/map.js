@@ -51,70 +51,63 @@ export function onUnmounted() {
 }
 
 // 绘制矩形
-export function btnDrawExtent(callback) {
+export async function btnDrawExtent(callback) {
   clearDraw()
 
-  map.graphicLayer.startDraw({
+  const graphic = await map.graphicLayer.startDraw({
     type: "rectangle",
     style: {
       color: "#007be6",
       opacity: 0.8,
       outline: false
-    },
-    success: function (graphic) {
-      // 绘制成功后回调
-      const positions = graphic.getOutlinePositions(false)
-
-      // 区域
-      drawPotions = positions
-
-      if (floodByGraphic.options.perPositionHeight) {
-        // eslint-disable-next-line
-        callback(-100, 100)
-      } else {
-        showLoading()
-        // 求最大、最小高度值
-        graphic.show = false // 会遮挡深度图，所以需要隐藏
-        mars3d.PolyUtil.interPolygonByDepth({ scene: map.scene, positions }).then((result) => {
-          graphic.show = true // 恢复显示
-          hideLoading()
-          callback(result.minHeight, result.maxHeight)
-        })
-      }
     }
   })
+  const positions = graphic.getOutlinePositions(false)
+  // 区域
+  drawPotions = positions
+
+  if (floodByGraphic.options.perPositionHeight) {
+    // eslint-disable-next-line
+    callback(-100, 100)
+  } else {
+    showLoading()
+    // 求最大、最小高度值
+    graphic.show = false // 会遮挡深度图，所以需要隐藏
+    const result = await mars3d.PolyUtil.interPolygonByDepth({ scene: map.scene, positions })
+    graphic.show = true // 恢复显示
+    hideLoading()
+
+    callback(result.minHeight, result.maxHeight)
+  }
 }
 // 绘制多边形
-export function btnDraw(callback) {
+export async function btnDraw(callback) {
   clearDraw()
 
-  map.graphicLayer.startDraw({
+  const graphic = await map.graphicLayer.startDraw({
     type: "polygon",
     style: {
       color: "#007be6",
       opacity: 0.5,
       outline: false
-    },
-    success: function (graphic) {
-      const positions = graphic.positionsShow
-
-      drawPotions = positions
-
-      if (floodByGraphic.options.perPositionHeight) {
-        // eslint-disable-next-line
-        callback(-100, 100)
-      } else {
-        showLoading()
-        // 求最大、最小高度值
-        graphic.show = false // 会遮挡深度图，所以需要隐藏
-        mars3d.PolyUtil.interPolygonByDepth({ scene: map.scene, positions }).then((result) => {
-          graphic.show = true // 恢复显示
-          hideLoading()
-          callback(result.minHeight, result.maxHeight)
-        })
-      }
     }
   })
+  const positions = graphic.positionsShow
+  drawPotions = positions
+
+  if (floodByGraphic.options.perPositionHeight) {
+    // eslint-disable-next-line
+    callback(-100, 100)
+  } else {
+    showLoading()
+    // 求最大、最小高度值
+    graphic.show = false // 会遮挡深度图，所以需要隐藏
+    const result = await mars3d.PolyUtil.interPolygonByDepth({ scene: map.scene, positions })
+    graphic.show = true // 恢复显示
+    hideLoading()
+
+    callback(result.minHeight, result.maxHeight)
+  }
 }
 
 export function clearDraw() {

@@ -52,8 +52,8 @@ export function onUnmounted() {
 }
 
 // 添加单体化数据
-export function addData() {
-  return map.graphicLayer.startDraw({
+export async function addData() {
+  const graphic = await map.graphicLayer.startDraw({
     type: "polygonP",
     style: {
       color: "#00FF00",
@@ -61,11 +61,10 @@ export function addData() {
       outline: true,
       outlineColor: "#ffffff",
       clampToGround: true
-    },
-    success: function (graphic) {
-      geoJsonLayerDTH.addGraphic(graphic)
     }
   })
+  geoJsonLayerDTH.addGraphic(graphic)
+  return graphic
 }
 
 let houseTypeCount = 0
@@ -148,22 +147,17 @@ export function produceData(drawGraphicId, dthPara, lastGraphicArrId) {
   }
 }
 
-export function getBuildingHeight() {
-  return map.graphicLayer.startDraw({
+export async function getBuildingHeight() {
+  const graphic = await map.graphicLayer.startDraw({
     type: "point",
     style: {
       color: "#00fff2"
-    },
-    success: (graphic) => {
-      const height = graphic.point?.alt
-      map.graphicLayer.removeGraphic(graphic)
-
-      if (!height) {
-        return
-      }
-      return height
     }
   })
+  const height = graphic.point?.alt
+  map.graphicLayer.removeGraphic(graphic)
+
+  return height
 }
 
 // 取消绘制

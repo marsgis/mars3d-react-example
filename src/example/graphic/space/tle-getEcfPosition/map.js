@@ -57,9 +57,9 @@ function queryTleChinaApiData() {
 
 // 框选查询 矩形
 
-export function drawRectangle() {
+export async function drawRectangle() {
   map.graphicLayer.clear()
-  map.graphicLayer.startDraw({
+  drawGraphic = await map.graphicLayer.startDraw({
     type: "rectangle",
     allowDrillPick: true,
     style: {
@@ -67,17 +67,14 @@ export function drawRectangle() {
       opacity: 0.2,
       outline: true,
       outlineColor: "#ffffff"
-    },
-    success: function (graphic) {
-      drawGraphic = graphic
     }
   })
 }
 
 // 框选查询   多边
-export function drawPolygon() {
+export async function drawPolygon() {
   map.graphicLayer.clear()
-  map.graphicLayer.startDraw({
+  drawGraphic = await map.graphicLayer.startDraw({
     type: "polygon",
     allowDrillPick: true,
     style: {
@@ -85,17 +82,14 @@ export function drawPolygon() {
       opacity: 0.2,
       outline: true,
       outlineColor: "#ffffff"
-    },
-    success: function (graphic) {
-      drawGraphic = graphic
     }
   })
 }
 
 // 框选查询   圆
-export function drawCircle() {
+export async function drawCircle() {
   map.graphicLayer.clear()
-  map.graphicLayer.startDraw({
+  drawGraphic = await map.graphicLayer.startDraw({
     type: "circle",
     allowDrillPick: true,
     style: {
@@ -103,9 +97,6 @@ export function drawCircle() {
       opacity: 0.2,
       outline: true,
       outlineColor: "#ffffff"
-    },
-    success: function (graphic) {
-      drawGraphic = graphic
     }
   })
 }

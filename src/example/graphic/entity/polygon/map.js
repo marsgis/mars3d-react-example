@@ -319,8 +319,8 @@ export function addRandomGraphicByCount(count) {
 }
 
 // 开始绘制
-export function startDrawGraphic() {
-  graphicLayer.startDraw({
+export async function startDrawGraphic() {
+  const graphic = await graphicLayer.startDraw({
     type: "polygon",
     style: {
       color: "#29cf34",
@@ -338,7 +338,9 @@ export function startDrawGraphic() {
       }
     }
   })
+  // graphic.positions = mars3d.PointUtil.setPositionsHeight(graphic.positionsShow, 2000)
 }
+
 // 开始绘制 立体面
 export function startDrawGraphic2() {
   graphicLayer.startDraw({

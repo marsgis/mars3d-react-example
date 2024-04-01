@@ -58,47 +58,42 @@ export function onUnmounted() {
 }
 
 // 绘制矩形
-export function btnDrawExtent(callback, floodColor) {
+export async function btnDrawExtent(callback, floodColor) {
   clearDraw()
 
-  map.graphicLayer.startDraw({
+  const graphic = await map.graphicLayer.startDraw({
     type: "rectangle",
     style: {
       color: floodColor || "rgba(0, 123, 230, 0.5)"
       // clampToGround: true
-    },
-    success: function (graphic) {
-      // 绘制成功后回调
-      const positions = graphic.getOutlinePositions(false)
-
-      // 更新最大、最小高度值
-      updateHeightRange(graphic, positions, callback)
-
-      // 区域
-      floodByMaterial.addArea(positions)
     }
   })
+  const positions = graphic.getOutlinePositions(false)
+
+  // 更新最大、最小高度值
+  updateHeightRange(graphic, positions, callback)
+
+  // 区域
+  floodByMaterial.addArea(positions)
 }
 
 // 绘制多边形
-export function btnDraw(callback, floodColor) {
+export async function btnDraw(callback, floodColor) {
   clearDraw()
 
-  map.graphicLayer.startDraw({
+  const graphic = await map.graphicLayer.startDraw({
     type: "polygon",
     style: {
       color: floodColor || "rgba(0, 123, 230, 0.5)",
       outline: false
       // clampToGround: true
-    },
-    success: function (graphic) {
-      const positions = graphic.positionsShow
-
-      // 更新最大、最小高度值
-      updateHeightRange(graphic, positions, callback)
-      floodByMaterial.addArea(positions)
     }
   })
+  const positions = graphic.positionsShow
+
+  // 更新最大、最小高度值
+  updateHeightRange(graphic, positions, callback)
+  floodByMaterial.addArea(positions)
 }
 
 // 求最大、最小高度值

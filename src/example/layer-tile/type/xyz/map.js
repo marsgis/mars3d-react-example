@@ -19,11 +19,12 @@ export const mapOptions = {
       show: true
     },
     {
-      name: "影像地图",
+      name: "离线影像地图",
       icon: "img/basemaps/gaode_img.png",
       type: "xyz",
-      url: "//data.mars3d.cn/tile/googleImg/{z}/{x}/{y}.jpg",
-      maximumLevel: 12
+      url: "//data.mars3d.cn/tile/img/{z}/{x}/{y}.jpg",
+      minimumLevel: 0,
+      maximumLevel: 13
     },
     {
       name: "EPSG4490影像",

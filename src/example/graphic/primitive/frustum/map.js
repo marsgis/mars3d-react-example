@@ -135,20 +135,18 @@ function addDemoGraphic3(graphicLayer) {
 }
 
 // 追踪目标点
-export function onClickSelPoint() {
-  map.graphicLayer.startDraw({
+export async function onClickSelPoint() {
+  const graphic = await map.graphicLayer.startDraw({
     type: "point",
     style: {
       pixelSize: 8,
       color: "#ffff00"
-    },
-    success: function (graphic) {
-      const position = graphic.positionShow
-      map.graphicLayer.clear()
-
-      graphicFrustum.targetPosition = position
     }
   })
+  const position = graphic.positionShow
+  map.graphicLayer.clear()
+
+  graphicFrustum.targetPosition = position
 }
 
 export function clear() {

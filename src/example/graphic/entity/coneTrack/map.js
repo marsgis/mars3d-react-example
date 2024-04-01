@@ -107,20 +107,18 @@ function addDemoGraphic2(graphicLayer) {
 }
 
 // 修改飞机追踪的目标点
-export function onClickSelPoint() {
-  map.graphicLayer.startDraw({
+export async function onClickSelPoint() {
+  const graphic = await map.graphicLayer.startDraw({
     type: "point",
     style: {
       pixelSize: 8,
       color: "#ffff00"
-    },
-    success: function (graphic) {
-      const position = graphic.positionShow
-      map.graphicLayer.clear()
-
-      coneTrack.targetPosition = position
     }
   })
+  const position = graphic.positionShow
+  map.graphicLayer.clear()
+
+  coneTrack.targetPosition = position
 }
 
 // 动态的位置

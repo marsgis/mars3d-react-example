@@ -41,25 +41,23 @@ export function onUnmounted() {
   map = null
 }
 
-export function drawExtent() {
+export async function drawExtent() {
   tilesetBoxClip.clear()
   map.graphicLayer.clear()
 
-  map.graphicLayer.startDraw({
+  const graphic = await map.graphicLayer.startDraw({
     type: "box",
     style: {
       color: "#ffffff",
       opacity: 0.2,
       dimensions: new Cesium.Cartesian3(10, 10, 10)
-    },
-    success: function (graphic) {
-      const point = graphic.point
-      map.graphicLayer.clear()
-
-      tilesetBoxClip.position = point
-      eventTarget.fire("hasDraw", { point })
     }
   })
+  const point = graphic.point
+  map.graphicLayer.clear()
+
+  tilesetBoxClip.position = point
+  eventTarget.fire("hasDraw", { point })
 }
 
 // 演示数据

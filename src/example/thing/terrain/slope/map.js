@@ -84,36 +84,33 @@ function addSlope() {
 // }
 
 // 添加矩形
-export function btnDrawExtent(splitNum) {
+export async function btnDrawExtent(splitNum) {
   clearAll()
-  graphicLayer.startDraw({
+  const graphic = await graphicLayer.startDraw({
     type: "rectangle",
     style: {
       color: "#007be6",
       opacity: 0.8,
       outline: false
-    },
-    success: function (graphic) {
-      // 绘制成功后回调
-      const positions = graphic.getOutlinePositions(false)
-      graphicLayer.clear()
-
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
-
-      contourLine.positions = positions
-      slope.add(positions, {
-        splitNum, // splitNum插值分割的个数
-        radius: 1, // 缓冲半径（影响坡度坡向的精度）
-        count: 4 // 缓冲的数量（影响坡度坡向的精度）会求周边(count*4)个点
-      })
     }
+  })
+  const positions = graphic.getOutlinePositions(false)
+  graphicLayer.clear()
+
+  console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+
+  contourLine.positions = positions
+  slope.add(positions, {
+    splitNum, // splitNum插值分割的个数
+    radius: 1, // 缓冲半径（影响坡度坡向的精度）
+    count: 4 // 缓冲的数量（影响坡度坡向的精度）会求周边(count*4)个点
   })
 }
 
 // 绘制多边形
-export function btnDraw(splitNum) {
+export async function btnDraw(splitNum) {
   clearAll()
-  graphicLayer.startDraw({
+  const graphic = await graphicLayer.startDraw({
     type: "polygon",
     style: {
       color: "#29cf34",
@@ -121,40 +118,35 @@ export function btnDraw(splitNum) {
       outline: true,
       outlineColor: "#ffffff",
       clampToGround: true
-    },
-    success: function (graphic) {
-      // 绘制成功后回调
-      const positions = graphic.positionsShow
-      graphicLayer.clear()
-
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
-
-      contourLine.positions = positions
-      slope.add(positions, {
-        splitNum, // splitNum插值分割的个数
-        radius: 1, // 缓冲半径（影响坡度坡向的精度）
-        count: 4 // 缓冲的数量（影响坡度坡向的精度）会求周边(count*4)个点
-      })
     }
+  })
+  const positions = graphic.positionsShow
+  graphicLayer.clear()
+
+  console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+
+  contourLine.positions = positions
+  slope.add(positions, {
+    splitNum, // splitNum插值分割的个数
+    radius: 1, // 缓冲半径（影响坡度坡向的精度）
+    count: 4 // 缓冲的数量（影响坡度坡向的精度）会求周边(count*4)个点
   })
 }
 
 // 添加点
-export function btnDrawPoint() {
+export async function btnDrawPoint() {
   clearAll()
 
-  graphicLayer.startDraw({
+  const graphic = await graphicLayer.startDraw({
     type: "point",
     style: {
       color: "#ffff00"
-    },
-    success: function (graphic) {
-      const positions = graphic.positionsShow
-      graphicLayer.clear()
-
-      slope.add(positions)
     }
   })
+  const positions = graphic.positionsShow
+  graphicLayer.clear()
+
+  slope.add(positions)
 }
 // 改变阴影
 export function changeShadingType(val) {

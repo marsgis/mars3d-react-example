@@ -45,64 +45,58 @@ export function onUnmounted() {
   map = null
 }
 
-export function drawCircle() {
+export async function drawCircle() {
   map.graphicLayer.clear()
-  map.graphicLayer.startDraw({
+  const graphic = await map.graphicLayer.startDraw({
     type: "circle",
     style: {
       color: "#ffff00",
       opacity: 0.2,
       clampToGround: true
-    },
-    success: function (graphic) {
-      // 绘制成功后回调
-
-      let center = graphic.positionShow
-      center = mars3d.PointUtil.addPositionsHeight(center, 1.5) // 加人的身高等因素，略微抬高一些
-
-      const targetPoints = graphic.getOutlinePositions(false, 45)
-
-      map.graphicLayer.clear()
-      map.scene.globe.depthTestAgainstTerrain = true
-
-      for (let i = 0; i < targetPoints.length; i++) {
-        let targetPoint = targetPoints[i]
-        targetPoint = mars3d.PointUtil.getSurfacePosition(map.scene, targetPoint)
-        sightline.add(center, targetPoint)
-      }
-
-      createPoint(center, true)
-
-      map.scene.globe.depthTestAgainstTerrain = false
     }
   })
+
+  let center = graphic.positionShow
+  center = mars3d.PointUtil.addPositionsHeight(center, 1.5) // 加人的身高等因素，略微抬高一些
+
+  const targetPoints = graphic.getOutlinePositions(false, 45)
+
+  map.graphicLayer.clear()
+  map.scene.globe.depthTestAgainstTerrain = true
+
+  for (let i = 0; i < targetPoints.length; i++) {
+    let targetPoint = targetPoints[i]
+    targetPoint = mars3d.PointUtil.getSurfacePosition(map.scene, targetPoint)
+    sightline.add(center, targetPoint)
+  }
+
+  createPoint(center, true)
+
+  map.scene.globe.depthTestAgainstTerrain = false
 }
 
-export function drawLine() {
+export async function drawLine() {
   map.graphicLayer.clear()
-  map.graphicLayer.startDraw({
+  const graphic = await map.graphicLayer.startDraw({
     type: "polyline",
     maxPointNum: 2,
     style: {
       color: "#55ff33",
       width: 3
-    },
-    success: function (graphic) {
-      // 绘制成功后回调
-      const positions = graphic.positionsShow
-      map.graphicLayer.clear()
-      map.scene.globe.depthTestAgainstTerrain = true
-
-      const center = positions[0]
-      const targetPoint = positions[1]
-      sightline.add(center, targetPoint, { offsetHeight: 1.5 }) // 1.5是加人的身高等因素，略微抬高一些
-
-      createPoint(center, true)
-      createPoint(targetPoint, false)
-
-      map.scene.globe.depthTestAgainstTerrain = false
     }
   })
+  const positions = graphic.positionsShow
+  map.graphicLayer.clear()
+  map.scene.globe.depthTestAgainstTerrain = true
+
+  const center = positions[0]
+  const targetPoint = positions[1]
+  sightline.add(center, targetPoint, { offsetHeight: 1.5 }) // 1.5是加人的身高等因素，略微抬高一些
+
+  createPoint(center, true)
+  createPoint(targetPoint, false)
+
+  map.scene.globe.depthTestAgainstTerrain = false
 }
 
 export function clearAll() {

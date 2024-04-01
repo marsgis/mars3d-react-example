@@ -77,49 +77,43 @@ function addContourLine() {
 }
 
 // 添加矩形
-export function btnDrawExtent() {
-  map.graphicLayer.startDraw({
+export async function btnDrawExtent() {
+  const graphic = await map.graphicLayer.startDraw({
     type: "rectangle",
     style: {
       color: "#007be6",
       opacity: 0.8,
       outline: false
-    },
-    success: function (graphic) {
-      // 绘制成功后回调
-      let positions = graphic.getOutlinePositions(false)
-      map.graphicLayer.clear()
-
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
-
-      positions = mars3d.PointUtil.setPositionsHeight(positions, 0)
-      const areaItem = contourLine.addArea(positions)
-      addTableItem(areaItem)
     }
   })
+  let positions = graphic.getOutlinePositions(false)
+  map.graphicLayer.clear()
+
+  console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+
+  positions = mars3d.PointUtil.setPositionsHeight(positions, 0)
+  const areaItem = contourLine.addArea(positions)
+  addTableItem(areaItem)
 }
 
 // 添加多边形
-export function btnDraw() {
-  map.graphicLayer.startDraw({
+export async function btnDraw() {
+  const graphic = await map.graphicLayer.startDraw({
     type: "polygon",
     style: {
       color: "#007be6",
       opacity: 0.5,
       outline: false
-    },
-    success: function (graphic) {
-      // 绘制成功后回调
-      let positions = graphic.positionsShow
-      map.graphicLayer.clear()
-
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
-
-      positions = mars3d.PointUtil.setPositionsHeight(positions, 0)
-      const areaItem = contourLine.addArea(positions)
-      addTableItem(areaItem)
     }
   })
+  let positions = graphic.positionsShow
+  map.graphicLayer.clear()
+
+  console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+
+  positions = mars3d.PointUtil.setPositionsHeight(positions, 0)
+  const areaItem = contourLine.addArea(positions)
+  addTableItem(areaItem)
 }
 
 // 清除

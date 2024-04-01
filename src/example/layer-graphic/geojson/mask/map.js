@@ -7,9 +7,9 @@ export const mapOptions = {
   scene: {
     center: { lat: 30.307787, lng: 117.559842, alt: 312871, heading: 0, pitch: -64 },
     cameraController: {
-      zoomFactor: 3.0,
-      minimumZoomDistance: 1,
-      maximumZoomDistance: 1000000
+      zoomFactor: 3.0
+      // minimumZoomDistance: 1,
+      // maximumZoomDistance: 1000000
     }
   }
 }
@@ -22,6 +22,19 @@ export const mapOptions = {
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
+
+  addDemoGeoJsonLayer1()
+}
+
+/**
+ * 释放当前地图业务的生命周期函数
+ * @returns {void} 无
+ */
+export function onUnmounted() {
+  map = null
+}
+
+function addDemoGeoJsonLayer1() {
   // geojson 合肥边界线
   const geoJsonLayer = new mars3d.layer.GeoJsonLayer({
     url: "//data.mars3d.cn/file/geojson/areas/340100.json",
@@ -42,14 +55,37 @@ export function onMounted(mapInstance) {
     // flyTo: true
   })
   map.addLayer(geoJsonLayer)
-
-  window.geoJsonLayer = geoJsonLayer
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
-export function onUnmounted() {
-  map = null
+function addDemoGraphic1() {
+  // 创建矢量数据图层
+  const graphicLayer = new mars3d.layer.GraphicLayer()
+  map.addLayer(graphicLayer)
+
+  const graphic = new mars3d.graphic.Mask({
+    positions: [
+      [117.110342, 32.535753],
+      [117.488096, 32.230414],
+      [117.881477, 32.229449],
+      [117.982377, 31.490802],
+      [117.492253, 30.937991],
+      [117.025486, 31.238623],
+      [117.154036, 31.536974],
+      [116.764612, 31.521848],
+      [116.687682, 31.914268],
+      [116.965552, 32.115349]
+    ],
+    style: {
+      fill: true,
+      color: "rgb(2,26,79)",
+      opacity: 0.9,
+      outline: true,
+      outlineColor: "#39E09B",
+      outlineWidth: 8,
+      outlineOpacity: 0.8,
+      arcType: Cesium.ArcType.GEODESIC,
+      clampToGround: true
+    }
+  })
+  graphicLayer.addGraphic(graphic)
 }

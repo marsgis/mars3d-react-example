@@ -85,44 +85,38 @@ export function currHeight(value) {
 }
 
 // 绘制矩形
-export function drawExtent() {
+export async function drawExtent() {
   map.graphicLayer.clear()
-  map.graphicLayer.startDraw({
+  const graphic = await map.graphicLayer.startDraw({
     type: "rectangle",
     style: {
       color: "#ffff00",
       opacity: 0.3,
       clampToGround: true
-    },
-    success: function (graphic) {
-      // 绘制成功后回调
-      const positions = graphic.getOutlinePositions(false)
-      limitHeight.positions = positions
-
-      map.graphicLayer.clear()
     }
   })
+  const positions = graphic.getOutlinePositions(false)
+  limitHeight.positions = positions
+
+  map.graphicLayer.clear()
 }
 
 // 绘制面
-export function drawPolygon() {
+export async function drawPolygon() {
   map.graphicLayer.clear()
-  map.graphicLayer.startDraw({
+  const graphic = await map.graphicLayer.startDraw({
     type: "polygon",
     style: {
       color: "#ffff00",
       opacity: 0.3,
       clampToGround: true
-    },
-    success: function (graphic) {
-      // 绘制成功后回调
-      const positions = graphic.positionsShow
-      limitHeight.positions = positions
-
-      map.graphicLayer.clear()
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
     }
   })
+  const positions = graphic.positionsShow
+  limitHeight.positions = positions
+
+  map.graphicLayer.clear()
+  console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
 }
 
 export function clear() {

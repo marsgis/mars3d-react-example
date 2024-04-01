@@ -438,8 +438,8 @@ function svgTobase64(source) {
 
 // 生成演示数据(测试数据量)
 export function addRandomGraphicByCount(count) {
-  graphicLayer.clear()
   graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
+  graphicLayer.clear()
 
   const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
   const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)

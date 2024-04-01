@@ -66,30 +66,27 @@ export function clippingType(clipType) {
 }
 
 // 绘制线
-export function drawLine() {
+export async function drawLine() {
   modelPlanClip.clear()
 
-  map.graphicLayer.startDraw({
+  const graphic = await map.graphicLayer.startDraw({
     type: "polyline",
     maxPointNum: 2,
     style: {
       color: "#007be6",
       opacity: 0.8,
       outline: false
-    },
-    success: function (graphic) {
-      // 绘制成功后回调
-      const positions = graphic.positionsShow
-      map.graphicLayer.clear()
-
-      modelPlanClip.positions = positions
     }
   })
+  const positions = graphic.positionsShow
+  map.graphicLayer.clear()
+
+  modelPlanClip.positions = positions
 }
 // 绘制矩形
-export function drawExtent() {
+export async function drawExtent() {
   modelPlanClip.clear()
-  map.graphicLayer.startDraw({
+  const graphic = await map.graphicLayer.startDraw({
     type: "rectangle",
     style: {
       color: "#007be6",
@@ -97,22 +94,19 @@ export function drawExtent() {
       outline: true,
       outlineWidth: 2,
       addHeight: 0.5
-    },
-    success: function (graphic) {
-      // 绘制成功后回调
-      const positions = graphic.getOutlinePositions(false)
-      map.graphicLayer.clear()
-
-      modelPlanClip.positions = positions
     }
   })
+  const positions = graphic.getOutlinePositions(false)
+  map.graphicLayer.clear()
+
+  modelPlanClip.positions = positions
 }
 
 // 绘制面
-export function drawPoly() {
+export async function drawPoly() {
   modelPlanClip.clear()
 
-  map.graphicLayer.startDraw({
+  const graphic = await map.graphicLayer.startDraw({
     type: "polygon",
     style: {
       color: "#007be6",
@@ -120,20 +114,17 @@ export function drawPoly() {
       outline: true,
       outlineWidth: 2,
       addHeight: 0.5
-    },
-    success: function (graphic) {
-      // 绘制成功后回调
-      const positions = graphic.positionsShow
-      map.graphicLayer.clear()
-
-      modelPlanClip.positions = positions
     }
   })
+  const positions = graphic.positionsShow
+  map.graphicLayer.clear()
+
+  modelPlanClip.positions = positions
 }
 // 绘制面(外切)
-export function drawPoly2() {
+export async function drawPoly2() {
   modelPlanClip.clear()
-  map.graphicLayer.startDraw({
+  const graphic = await map.graphicLayer.startDraw({
     type: "polygon",
     style: {
       color: "#007be6",
@@ -141,16 +132,13 @@ export function drawPoly2() {
       outline: true,
       outlineWidth: 2,
       addHeight: 0.5
-    },
-    success: function (graphic) {
-      // 绘制成功后回调
-      const positions = graphic.positionsShow
-      map.graphicLayer.clear()
-
-      modelPlanClip.clipOutSide = true
-      modelPlanClip.positions = positions
     }
   })
+  const positions = graphic.positionsShow
+  map.graphicLayer.clear()
+
+  modelPlanClip.clipOutSide = true
+  modelPlanClip.positions = positions
 }
 
 export function clear() {

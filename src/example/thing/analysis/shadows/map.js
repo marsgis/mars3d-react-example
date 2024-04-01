@@ -47,7 +47,6 @@ export function onMounted(mapInstance) {
   })
   map.addThing(shadows)
 
-
   shadows.on(mars3d.EventType.change, function () {
     const shadowTime = shadows.time
     eventTarget.fire("changeShadows", { shadowTime })
@@ -105,39 +104,32 @@ export function clearArea() {
   shadows.clear()
 }
 
-export function drawArea(date) {
+export async function drawArea(date) {
   map.graphicLayer.clear()
-  map.graphicLayer.startDraw({
+  const graphic = await map.graphicLayer.startDraw({
     type: "polygon",
     style: {
       color: "#007be6",
       opacity: 0.5,
       clampToGround: true
-    },
-    success: function (graphic) {
-      // 绘制成功后回调
-      const positions = graphic.positionsShow
-      map.graphicLayer.clear()
-
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
-
-      // 求最大、最小高度值
-      shadows.multiplier = 14400
-      shadows
-        .startRate({
-          startDate: new Date(date + " 08:00:00"),
-          endDate: new Date(date + " 18:00:00"),
-
-          positions,
-          step: 3,
-          minHeight: 20
-          // maxHeight: 30 //可以多层
-        })
-        .then((result) => {
-          showRateResult(result)
-        })
     }
   })
+  const positions = graphic.positionsShow
+  map.graphicLayer.clear()
+
+  console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+
+  // 求最大、最小高度值
+  shadows.multiplier = 14400
+  const result = await shadows.startRate({
+    startDate: new Date(date + " 08:00:00"),
+    endDate: new Date(date + " 18:00:00"),
+    positions,
+    step: 3,
+    minHeight: 20
+    // maxHeight: 30 //可以多层
+  })
+  showRateResult(result)
 }
 
 const colorRamp = new mars3d.ColorRamp({

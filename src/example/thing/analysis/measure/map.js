@@ -21,7 +21,10 @@ export function onMounted(mapInstance) {
       font_family: "楷体",
       font_size: 20,
       background: false
-    }
+    },
+    isAutoEditing: false // 绘制完成后是否自动激活编辑
+    // drawEndEventType: mars3d.EventType.rightClick,
+    // drawDelEventType: mars3d.EventType.middleClick
   })
   map.addThing(measure)
 
