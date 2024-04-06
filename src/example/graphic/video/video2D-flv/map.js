@@ -75,6 +75,9 @@ export function onUnmounted() {
   map = null
 }
 
+// 视频播放器播放 flv 报错 Flv: Unsupported codec in video frame: 12
+// 原因:主要是因为我们的播放器不支持 H.265 视频编码；
+// 解决办法:将设备端的视频编码改为 H.264
 const flvUrl = "https://sample-videos.com/video123/flv/720/big_buck_bunny_720p_1mb.flv"
 
 function createVideoDom() {

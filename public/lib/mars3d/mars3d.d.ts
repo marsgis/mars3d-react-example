@@ -3,7 +3,7 @@
  * Mars3D三维可视化平台  mars3d
  *
  * 版本信息：v3.7.9
- * 编译日期：2024-03-28 22:19:38
+ * 编译日期：2024-04-06 21:26:21
  * 版权所有：Copyright by 火星科技  http://mars3d.cn
  * 使用单位：免费公开版 ，2024-01-15
  */
@@ -21869,6 +21869,7 @@ declare namespace GraphicLayer {
  * @param [options.clustering.enabled = false] - 是否开启聚合
  * @param [options.clustering.pixelRange = 20] - 多少像素矩形范围内聚合
  * @param [options.clustering.minimumClusterSize = 2] - 可以聚集的屏幕空间对象的最小数量
+ * @param [options.clustering.minChanged = 0.05] - 相机变化事件，事件间变化百分比小于该值时不更新聚合
  * @param [options.clustering.clampToGround = true] - 是否贴地
  * @param [options.clustering.style] - 聚合点的样式参数
  * @param [options.clustering.radius = 26] - 内置样式时，圆形图标的半径大小（单位：像素）
@@ -21934,6 +21935,7 @@ declare class GraphicLayer extends BaseGraphicLayer {
             enabled?: boolean;
             pixelRange?: number;
             minimumClusterSize?: number;
+            minChanged?: number;
             clampToGround?: boolean;
             style?: BillboardEntity.StyleOptions | any | PointEntity.StyleOptions | any | any;
             radius?: number;
@@ -28563,6 +28565,9 @@ declare namespace Map {
      * @property [atmosphere.dynamicLighting] - When not DynamicAtmosphereLightingType.NONE, the selected light source will
      * @property [fxaa] - 是否开启快速抗锯齿
      * @property [highDynamicRange] - 是否关闭高动态范围渲染(不关闭时地图会变暗)
+     * @property [logarithmicDepthBuffer = true] - 是否使用对数深度缓冲区。启用此选项将允许在多截锥体中减少截锥体，提高性能。此属性依赖于所支持的fragmentDepth。
+     *
+     *
      *
      * 以下是Cesium.Viewer所支持的options【控件相关的写在另外的control属性中】
      * @property [sceneMode = Cesium.SceneMode.SCENE3D] - 初始场景模式。可以设置进入场景后初始是2D、2.5D、3D 模式。
@@ -28601,9 +28606,9 @@ declare namespace Map {
      * @property [globe.showGroundAtmosphere = true] - 是否在地球上绘制的地面大气
      * @property [globe.enableLighting = false] - 是否显示晨昏线，可以看到地球的昼夜区域
      * @property [globe.tileCacheSize = 100] - 地形图块缓存的大小，表示为图块数。任何其他只要不需要渲染，就会释放超出此数目的图块这个框架。较大的数字将消耗更多的内存，但显示细节更快例如，当缩小然后再放大时。
-     * @property [globe.terrainExaggeration = 1.0] - 地形夸张倍率，用于放大地形的标量。请注意，地形夸张不会修改其他相对于椭球的图元。
+     * @property [globe.verticalExaggeration = 1.0] - 地形夸张倍率，用于放大地形的标量。请注意，地形夸张不会修改其他相对于椭球的图元。
      * @property [globe.realAlt = false] - 在测量高度和下侧提示的高度信息中是否将地形夸张倍率后的值转换为实际真实高度值(=拾取值/地形夸张倍率)。
-     * @property [globe.terrainExaggerationRelativeHeight = 0.0] - 地形被夸大的高度。默认为0.0（相对于椭球表面缩放）。高于此高度的地形将向上缩放，低于此高度的地形将向下缩放。请注意，地形夸大不会修改任何其他图元，因为它们是相对于椭球体定位的。
+     * @property [globe.verticalExaggerationRelativeHeight = 0.0] - 地形被夸大的高度。默认为0.0（相对于椭球表面缩放）。高于此高度的地形将向上缩放，低于此高度的地形将向下缩放。请注意，地形夸大不会修改任何其他图元，因为它们是相对于椭球体定位的。
      *
      * 以下是Cesium.ScreenSpaceCameraController对象相关参数
      * @property [cameraController] - 相机操作相关参数
@@ -28665,6 +28670,7 @@ declare namespace Map {
         };
         fxaa?: boolean;
         highDynamicRange?: boolean;
+        logarithmicDepthBuffer?: boolean;
         sceneMode?: Cesium.SceneMode;
         scene3DOnly?: boolean;
         mapProjection?: Cesium.MapProjection | CRS;
@@ -28702,9 +28708,9 @@ declare namespace Map {
             showGroundAtmosphere?: boolean;
             enableLighting?: boolean;
             tileCacheSize?: number;
-            terrainExaggeration?: number;
+            verticalExaggeration?: number;
             realAlt?: boolean;
-            terrainExaggerationRelativeHeight?: number;
+            verticalExaggerationRelativeHeight?: number;
         };
         cameraController?: {
             minimumZoomDistance?: number;
@@ -33602,7 +33608,7 @@ declare class TdtPOI {
     queryExtent(queryOptions: {
         text: string;
         types?: string;
-        extent: any[][];
+        extent: any[][] | any;
         count?: number;
         page?: number;
         success?: (...params: any[]) => any;

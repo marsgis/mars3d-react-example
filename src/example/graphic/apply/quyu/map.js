@@ -7,7 +7,7 @@ let terrainClip
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并)
 export const mapOptions = {
   scene: {
-    center: { lat: 30.773023, lng: 116.473055, alt: 133111.3, heading: 40.4, pitch: -47.9 },
+    center: { lat: 31.603629, lng: 117.301441, alt: 180951.6, heading: 94.8, pitch: -90 },
     orderIndependentTranslucency: false,
     backgroundImage: "url(/img/tietu/backGroundImg.jpg)",
     showMoon: false,
@@ -55,6 +55,7 @@ export function onMounted(mapInstance) {
     splitNum: 80 // 井边界插值数
   })
   map.addThing(terrainClip)
+  // map.scene.globe.depthTestAgainstTerrain = false //关闭深度
 
   mars3d.Util.fetchJson({ url: "http://data.mars3d.cn/file/geojson/areas/340100.json" })
     .then(function (geojson) {
@@ -130,35 +131,17 @@ export function onUnmounted() {
 }
 
 function addCenterGraphi(attr) {
-  const circleGraphic = new mars3d.graphic.CircleEntity({
-    position: new mars3d.LngLatPoint(attr.centroid[0], attr.centroid[1], 100),
-    style: {
-      radius: 5000,
-      materialType: mars3d.MaterialType.CircleWave,
-      materialOptions: {
-        color: "#0b88e3",
-        count: 2,
-        speed: 10
-      }
-    },
-    attr
-  })
-  graphicLayer.addGraphic(circleGraphic)
-
-  const divGraphic = new mars3d.graphic.DivGraphic({
+  const graphic = new mars3d.graphic.BillboardEntity({
     position: attr.centroid,
     style: {
-      html: `<div class="mars-four-color mars3d-animation">
-                <img src="${getImage()}"  class="four-color_bg"></img>
-                <div class="four-color_name">${attr.name}</div>
-            </div>`,
-      horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
-      verticalOrigin: Cesium.VerticalOrigin.CENTER,
-      clampToGround: true
+      image: "img/marker/lace-blue.png",
+      horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+      verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+      visibleDepth: true
     },
     attr
   })
-  graphicLayer.addGraphic(divGraphic)
+  graphicLayer.addGraphic(graphic)
 }
 
 // 简化geojson的坐标

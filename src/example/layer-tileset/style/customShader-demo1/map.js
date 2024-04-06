@@ -219,7 +219,7 @@ export function onMounted(mapInstance) {
     `
     })
   })
-  map.addLayer(tiles3dLayer)
+  map.addLayer(tiles3dLayerOutline)
 
   bindEvent()
 }

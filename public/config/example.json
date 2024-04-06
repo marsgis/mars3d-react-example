@@ -782,7 +782,7 @@
           },
           {
             "name": "SceneModePicker 二三维切换按钮",
-            "thumbnail": "map-cesium-sceneModePicker.gif",
+            "thumbnail": "map-cesium-sceneModePicker.jpg",
             "main": "control/cesium/sceneModePicker"
           },
           {
@@ -2113,48 +2113,7 @@
           }
         ]
       },
-      {
-        "name": "粒子及体渲染对象",
-        "download": false,
-        "children": [
-          {
-            "name": "点光源",
-            "thumbnail": "graphic-custom-pointLight.gif",
-            "main": "graphic/custom/pointLight",
-            "hasPannel": true
-          },
-          {
-            "name": "聚光灯",
-            "thumbnail": "graphic-custom-spotLight.jpg",
-            "main": "graphic/custom/spotLight",
-            "hasPannel": true
-          },
-          {
-            "name": "粒子效果",
-            "thumbnail": "graphic-particleSystem-basis.gif",
-            "main": "graphic/particleSystem/basis",
-            "hasPannel": true
-          },
-          {
-            "name": "水闸放水效果",
-            "thumbnail": "graphic-particleSystem-water.gif",
-            "main": "graphic/particleSystem/water",
-            "hasPannel": true
-          },
-          {
-            "name": "积云",
-            "thumbnail": "graphic-primitive-cloud.jpg",
-            "main": "graphic/primitive/cloud",
-            "hasPannel": true
-          },
-          {
-            "name": "气象云三维体",
-            "thumbnail": "graphic-custom-volumeCloud.jpg",
-            "main": "graphic/custom/volumeCloud",
-            "hasPannel": true
-          }
-        ]
-      },
+
       {
         "name": "水域相关对象",
         "children": [
@@ -2201,6 +2160,48 @@
             "name": "动态河流",
             "thumbnail": "graphic-primitive-dynamicRiver.gif",
             "main": "graphic/primitive/dynamicRiver",
+            "hasPannel": true
+          }
+        ]
+      },
+      {
+        "name": "粒子及体渲染对象",
+        "download": false,
+        "children": [
+          {
+            "name": "点光源",
+            "thumbnail": "graphic-custom-pointLight.gif",
+            "main": "graphic/custom/pointLight",
+            "hasPannel": true
+          },
+          {
+            "name": "聚光灯",
+            "thumbnail": "graphic-custom-spotLight.jpg",
+            "main": "graphic/custom/spotLight",
+            "hasPannel": true
+          },
+          {
+            "name": "粒子效果",
+            "thumbnail": "graphic-particleSystem-basis.gif",
+            "main": "graphic/particleSystem/basis",
+            "hasPannel": true
+          },
+          {
+            "name": "水闸放水效果",
+            "thumbnail": "graphic-particleSystem-water.gif",
+            "main": "graphic/particleSystem/water",
+            "hasPannel": true
+          },
+          {
+            "name": "积云",
+            "thumbnail": "graphic-primitive-cloud.jpg",
+            "main": "graphic/primitive/cloud",
+            "hasPannel": true
+          },
+          {
+            "name": "气象云三维体",
+            "thumbnail": "graphic-custom-volumeCloud.jpg",
+            "main": "graphic/custom/volumeCloud",
             "hasPannel": true
           }
         ]

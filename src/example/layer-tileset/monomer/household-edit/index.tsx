@@ -94,8 +94,8 @@ function openGeoJSONEnd(graphics: any) {
 
   // 拾取底部高度
   const getMinHeight = () => {
-    mapWork.getBuildingHeight().then((data) => {
-      setDthPara({ ...dthPara, minHeight: data.height })
+    mapWork.getBuildingHeight().then((height) => {
+      setDthPara({ ...dthPara, minHeight: height })
     })
   }
 
@@ -109,8 +109,8 @@ function openGeoJSONEnd(graphics: any) {
 
   // 拾取顶部高度
   const getMaxHeight = () => {
-    mapWork.getBuildingHeight().then((data) => {
-      setDthPara({ ...dthPara, maxHeight: data.height })
+    mapWork.getBuildingHeight().then((height) => {
+      setDthPara({ ...dthPara, maxHeight: height })
     })
   }
 

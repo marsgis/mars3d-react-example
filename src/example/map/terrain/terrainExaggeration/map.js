@@ -18,7 +18,9 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
-  map.scene.globe.terrainExaggeration = 10 // 修改地形夸张程度
+  // map.scene.globe.terrainExaggeration = 10 // 修改地形夸张程度,v1.115及之前版本
+
+  map.scene.verticalExaggeration = 10 // 修改地形夸张程度, v1.116+版本
 }
 
 /**
@@ -35,5 +37,5 @@ export function onUnmounted() {
  * @returns {void}
  */
 export function changeTerrain(val) {
-  map.scene.globe.terrainExaggeration = val
+  map.scene.verticalExaggeration = val
 }

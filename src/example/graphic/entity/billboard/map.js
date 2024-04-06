@@ -135,7 +135,13 @@ function addDemoGraphic2(graphicLayer) {
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
       clampToGround: true,
-
+      // heightReference: new Cesium.CallbackProperty(function (time) {
+      //   if (map.scene.mode !== Cesium.SceneMode.SCENE3D) {
+      //     return Cesium.HeightReference.NONE //解决2D贴地对象不显示问题
+      //   } else {
+      //     return Cesium.HeightReference.CLAMP_TO_GROUND
+      //   }
+      // }, false),
       label: { text: "鼠标移入会放大", pixelOffsetY: -50 },
       // 高亮时的样式（默认为鼠标移入，也可以指定type:'click'单击高亮），构造后也可以openHighlight、closeHighlight方法来手动调用
       highlight: {

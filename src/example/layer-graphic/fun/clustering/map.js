@@ -81,6 +81,7 @@ function addBusinessLayer() {
     clustering: {
       enabled: true,
       pixelRange: 20,
+      minChanged: 0.01,
       clampToGround: false,
       addHeight: 1000,
       opacity: 1,
