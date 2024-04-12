@@ -17,7 +17,7 @@ export const mapOptions = {
     sceneModePicker: true,
     infoBox: false,
     vrButton: true,
-    geocoder: "gaode",
+    geocoder: { service: "gaode" },
     baseLayerPicker: true,
     clockAnimate: true, // 时钟动画控制(左下角)
     timeline: true, // 是否显示时间线控件
@@ -52,67 +52,67 @@ export function onUnmounted() {
 
 // 按钮
 export function bindPOI(val) {
-  map.controls.geocoder.show = val
+  map.control.geocoder.show = val
 }
 
 // 视角复位
 export function bindView(val) {
-  map.controls.homeButton.show = val
+  map.control.homeButton.show = val
 }
 
 // 基础的地图切换
 export function bindBaseLayerPicker(val) {
-  map.controls.baseLayerPicker.show = val
+  map.control.baseLayerPicker.show = val
 }
 
 // 全屏切换
 export function bindFullScreen(val) {
-  map.controls.fullscreenButton.show = val
+  map.control.fullscreenButton.show = val
 }
 
 // VR
 export function bindVR(val) {
-  map.controls.vrButton.show = val
+  map.control.vrButton.show = val
 }
 
 // 帮助按钮
 export function bindHelpButton(val) {
-  map.controls.navigationHelpButton.show = val
+  map.control.navigationHelpButton.show = val
 }
 
 // 二三维切换
 export function bindSceneModePicker(val) {
-  map.controls.sceneModePicker.show = val
+  map.control.sceneModePicker.show = val
 }
 
 export function bindZoom(val) {
-  map.controls.zoom.show = val
+  map.control.zoom.show = val
 }
 
 // 面板：
 // 信息状态栏
 export function bindLocation(val) {
-  map.controls.locationBar.show = val
+  map.control.locationBar.show = val
 }
 
 // 时钟
 export function bindClock(val) {
-  map.controls.clockAnimate.show = val
+  map.control.clockAnimate.show = val
 }
 
 // 时间刻度线
 export function bindTimeLine(val) {
-  map.controls.timeline.show = val
+  map.control.timeline.show = val
 }
 
 // 导航球
 export function bindNav(val) {
-  map.controls.compass.show = val
+  map.control.compass.show = val
 }
 
 // 比例尺
 export function bindLegend(val) {
-  map.controls.distanceLegend.show = val
+  map.control.distanceLegend.show = val
 }
 
 // 图层

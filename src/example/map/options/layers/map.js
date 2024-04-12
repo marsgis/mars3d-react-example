@@ -1,9 +1,11 @@
 import * as mars3d from "mars3d"
 
+let map
+
 function initMap() {
   // 添加可叠加图层有3种方式（参数除指定的type类型外无需type参数，其他参数都相同）:
 
-  const map = new mars3d.Map("mars3dContainer", {
+  map = new mars3d.Map("mars3dContainer", {
     scene: {
       center: { lat: 26.035977, lng: 115.209641, alt: 2703280, heading: 7, pitch: -78 }
     },
@@ -46,11 +48,19 @@ function initMap() {
   map.addLayer(tileLayer)
 
   // 方式3：在创建地球后调用addLayer添加图层(用 mars3d.layer.create工厂方法创建)
-  const layerImg = mars3d.LayerUtil.create({
-    type: "image",
-    url: "//data.mars3d.cn//file/img/radar/201906211112.PNG",
-    rectangle: { xmin: 73.16895, xmax: 134.86816, ymin: 12.2023, ymax: 54.11485 },
-    alpha: 0.7
-  })
+  // const layerImg = mars3d.LayerUtil.create({
+  //   type: "image",
+  //   url: "//data.mars3d.cn//file/img/radar/201906211112.PNG",
+  //   rectangle: { xmin: 73.16895, xmax: 134.86816, ymin: 12.2023, ymax: 54.11485 },
+  //   alpha: 0.7
+  // })
+  // map.addLayer(layerImg)
+
+  createLayer()
+}
+
+async function createLayer() {
+  const layerOptions = await mars3d.Util.fetchJson({ url: "/config/layer.json" })
+  const layerImg = mars3d.LayerUtil.create(layerOptions)
   map.addLayer(layerImg)
 }

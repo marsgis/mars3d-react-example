@@ -13,17 +13,17 @@ export const mapOptions = {
     {
       name: "Ion影像地图",
       icon: "img/basemaps/bingAerial.png",
-      type: "ion",
+      type: "xyz",
       assetId: 2,
-      accessToken: mars3d.Token.ion,
+      ionToken: mars3d.Token.ion,
       show: true
     },
     {
       name: "Ion电子地图",
       icon: "img/basemaps/bingmap.png",
-      type: "ion",
+      type: "xyz",
       assetId: 4,
-      accessToken: mars3d.Token.ion
+      ionToken: mars3d.Token.ion
     }
   ]
 }
@@ -60,12 +60,12 @@ export function addTileLayer() {
   removeTileLayer()
 
   // 方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
-  tileLayer = new mars3d.layer.IonLayer({
+  tileLayer = new mars3d.layer.XyzLayer({
     layer: "Ion电子地图",
-    minimumTerrainLevel: 4,
-    minimumLevel: 4,
     assetId: 4,
-    accessToken: mars3d.Token.ion
+    ionToken: mars3d.Token.ion,
+    minimumTerrainLevel: 4,
+    minimumLevel: 4
   })
   map.addLayer(tileLayer)
 }

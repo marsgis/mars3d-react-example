@@ -102,8 +102,8 @@ function addGraphicLayer(arr) {
   fixedRoute.start()
 
   // 修改控件对应的时间
-  if (map.controls.timeline) {
-    map.controls.timeline.zoomTo(fixedRoute.startTime, fixedRoute.stopTime)
+  if (map.control.timeline) {
+    map.control.timeline.zoomTo(fixedRoute.startTime, fixedRoute.stopTime)
   }
 
   const video2D = new mars3d.graphic.Video2D({

@@ -102,8 +102,8 @@ function addGraphicLayer() {
 
   testShading()
 
-  if (map.controls.timeline) {
-    map.controls.timeline.zoomTo(fixedRoute.startTime, fixedRoute.stopTime)
+  if (map.control.timeline) {
+    map.control.timeline.zoomTo(fixedRoute.startTime, fixedRoute.stopTime)
   }
 }
 

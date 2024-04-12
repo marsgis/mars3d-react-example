@@ -124,8 +124,8 @@ function initPath(data) {
   map.clock.clockRange = Cesium.ClockRange.LOOP_STOP
   map.clock.multiplier = 5
 
-  if (map.controls.timeline) {
-    map.controls.timeline.zoomTo(start, stop)
+  if (map.control.timeline) {
+    map.control.timeline.zoomTo(start, stop)
   }
 
   // 创建path对象

@@ -66,6 +66,6 @@ function initMap() {
   // map.addThing(rotatePoint)
 
   setTimeout(() => {
-    console.log("地图上已有thing对象", map.things)
+    console.log("地图上已有thing对象", map.thing)
   }, 1000)
 }

@@ -5,8 +5,8 @@ export let map // mars3d.Map三维地图对象
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = function (option) {
   option.control = {
-    // geocoder: true // 用cesium原生
-    geocoder: "gaode" // 使用高德POI服务
+    // geocoder: { service: "ion" }  // 用cesium原生
+    geocoder: { service: "gaode" } // 使用高德POI服务
   }
   return option
 }
@@ -21,8 +21,8 @@ export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
   // 查询结果回调方法
-  map.controls.geocoder._czmContrl.viewModel.complete.addEventListener(function () {
-    const arrdata = map.controls.geocoder._czmContrl.viewModel.suggestions
+  map.control.geocoder._czmContrl.viewModel.complete.addEventListener(function () {
+    const arrdata = map.control.geocoder._czmContrl.viewModel.suggestions
     console.log("查询结果", arrdata)
   })
 }

@@ -152,6 +152,9 @@ export function addTileLayer() {
       outlineOpacity: 1.0
     },
     popup: "all",
+    popupOptions: {
+      showNull: true
+    },
     flyTo: true
   })
   map.addLayer(arcGisLayer)

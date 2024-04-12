@@ -29,8 +29,8 @@ export const eventTarget = new mars3d.BaseClass()
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
-  if (map.controls.timeline) {
-    map.controls.timeline.zoomTo(map.clock.startTime, map.clock.stopTime)
+  if (map.control.timeline) {
+    map.control.timeline.zoomTo(map.clock.startTime, map.clock.stopTime)
   }
 
   // 创建矢量数据图层

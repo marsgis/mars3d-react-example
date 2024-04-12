@@ -3,11 +3,10 @@ export let map
 
 function initMap() {
   // 读取 config.json 配置文件
-  return mars3d.Util.fetchJson({ url: "config/config.json" }).then(function (json) {
-    console.log("读取 config.json 配置文件完成", json) // 打印测试信息
+  return mars3d.Util.fetchJson({ url: "config/config.json" }).then(function (mapOptions) {
+    console.log("读取 config.json 配置文件完成", mapOptions) // 打印测试信息
 
     // 创建三维地球场景
-    const mapOptions = json.map3d
     map = new mars3d.Map("mars3dContainer", mapOptions)
 
     // 打印测试信息

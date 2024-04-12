@@ -187,8 +187,8 @@ function addGraphicLayer() {
 
   // 修改控件对应的时间
   map.clock.currentTime = fixedRoute.startTime
-  if (map.controls.timeline) {
-    map.controls.timeline.zoomTo(fixedRoute.startTime, fixedRoute.stopTime)
+  if (map.control.timeline) {
+    map.control.timeline.zoomTo(fixedRoute.startTime, fixedRoute.stopTime)
   }
 }
 

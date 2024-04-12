@@ -48,5 +48,5 @@ function initMap() {
   })
   map.addControl(locationBar)
 
-  console.log("地图上已有控件", map.controls)
+  console.log("地图上已有控件", map.control)
 }

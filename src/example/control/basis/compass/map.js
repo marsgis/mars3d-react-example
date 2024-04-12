@@ -23,7 +23,7 @@ export function onMounted(mapInstance) {
   // let compass = new mars3d.control.Compass({ top: "10px", right: "5px" })
   // map.addControl(compass)
 
-  map.controls.compass.on(mars3d.EventType.click, function(event) {
+  map.control.compass.on(mars3d.EventType.click, function(event) {
     globalMsg("单击了 compass 控件")
   })
 }

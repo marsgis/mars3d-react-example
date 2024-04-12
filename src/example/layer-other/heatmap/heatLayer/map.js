@@ -5,7 +5,25 @@ export let map // mars3d.Map三维地图对象
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: 25.873121, lng: 119.290515, alt: 51231, heading: 2, pitch: -71 }
+    center: { lat: 25.873121, lng: 119.290515, alt: 51231, heading: 2, pitch: -71 },
+    showSun: false,
+    showMoon: false,
+    showSkyBox: false,
+    showSkyAtmosphere: false,
+    fog: false,
+    backgroundColor: "#363635", // 天空背景色
+    contextOptions: { webgl: { antialias: mars3d.Util.isPCBroswer() } },
+    globe: {
+      baseColor: "#363635", // 地球地面背景色
+      showGroundAtmosphere: false,
+      enableLighting: false
+    },
+    cameraController: {
+      zoomFactor: 1.5,
+      minimumZoomDistance: 0.1,
+      maximumZoomDistance: 200000,
+      enableCollisionDetection: false // 允许进入地下
+    }
   }
 }
 
@@ -21,6 +39,8 @@ export function onMounted(mapInstance) {
 
   // 问题解决思路：https://zhuanlan.zhihu.com/p/361468247
   globalNotify("已知问题提示", `纬度跨度超过一个城市时，会出现偏移情况(墨卡托投影造成的，暂未找到合适解决方式)。`)
+
+  addTerrainClip()
 
   mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/heat-fuzhou.json" })
     .then(function (result) {
@@ -42,6 +62,22 @@ export function onMounted(mapInstance) {
  */
 export function onUnmounted() {
   map = null
+}
+
+// 添加地形外裁剪
+async function addTerrainClip() {
+  const geojson = await mars3d.Util.fetchJson({ url: "http://data.mars3d.cn/file/geojson/areas/350100.json" })
+  const arr = mars3d.Util.geoJsonToGraphics(geojson) // 解析geojson
+  const options = arr[0]
+
+  const terrainClip = new mars3d.thing.TerrainClip({
+    image: false,
+    splitNum: 80 // 井边界插值数
+  })
+  map.addThing(terrainClip)
+  map.scene.globe.depthTestAgainstTerrain = false // 关闭深度
+  terrainClip.addArea(options.positions, { simplify: { tolerance: 0.002 } })
+  terrainClip.clipOutSide = true
 }
 
 function showHeatMap(arrPoints) {

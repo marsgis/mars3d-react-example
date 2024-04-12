@@ -54,9 +54,10 @@ export function addTileLayer() {
   removeTileLayer()
 
   // 方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
+  const baseUrl = "http://www.supermapol.com/realspace/services/map-World/rest/maps/World_Google"
   tileLayer = new mars3d.layer.XyzLayer({
-    url: "http://www.supermapol.com/realspace/services/map-World/rest/maps/World_Google/tileImage.png?transparent=true&cacheEnabled=true&_cache=true&width=256&height=256&redirect=false&overlapDisplayed=false&origin={origin}&x={x}&y={y}&scale={scale}",
-    crs: "EPSG:4326"
+    url: baseUrl + "/tileImage.png?transparent=true&cacheEnabled=true&_cache=true&width=256&height=256&redirect=false&overlapDisplayed=false&origin={origin}&x={x}&y={y}&scale={scale}",
+    crs: "EPSG:4326" // 坐标系，支持 "EPSG:4326" 、 "EPSG:4490"、 "EPSG:3857"
   })
   map.addLayer(tileLayer)
 }

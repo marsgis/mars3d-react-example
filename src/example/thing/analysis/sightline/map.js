@@ -28,7 +28,10 @@ export function onMounted(mapInstance) {
   sightline = new mars3d.thing.Sightline({
     visibleColor: new Cesium.Color(0, 1, 0, 0.4),
     hiddenColor: new Cesium.Color(1, 0, 0, 0.4)
-    // depthFailColor: Cesium.Color.fromCssColorString("#db2c8f"),
+    // depthFailColor: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.PolylineDash, {
+    //   dashLength: 20.0,
+    //   color: "#ff0000"
+    // })
   })
   map.addThing(sightline)
 

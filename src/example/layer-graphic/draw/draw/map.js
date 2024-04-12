@@ -100,7 +100,11 @@ export function onMounted(mapInstance) {
   })
   graphicLayer.on(mars3d.EventType.drawCreated, function (e) {
     console.log("创建完成", e)
+
+    // graphicLayer.stopDraw()
+    // graphicLayer.startDraw(mars3d.Util.clone(e.graphic.options)) // 连续标绘时，可以代替isContinued
   })
+
   graphicLayer.on(mars3d.EventType.editStart, function (e) {
     console.log("开始编辑", e)
   })
@@ -159,9 +163,8 @@ export function onUnmounted() {
   map = null
 }
 
-export function drawPoint() {
-  // graphicLayer.isContinued = true
-  graphicLayer.startDraw({
+export async function drawPoint() {
+  const graphic = await graphicLayer.startDraw({
     type: "point",
     style: {
       pixelSize: 12,
@@ -177,10 +180,11 @@ export function drawPoint() {
       }
     }
   })
+  console.log("完成了draw标绘", graphic)
 }
 
-export function drawMarker() {
-  graphicLayer.startDraw({
+export async function drawMarker() {
+  const graphic = await graphicLayer.startDraw({
     type: "billboard",
     style: {
       image: "img/marker/mark-red.png",
@@ -197,10 +201,11 @@ export function drawMarker() {
       }
     }
   })
+  console.log("完成了draw标绘", graphic)
 }
 
-export function drawLabel() {
-  graphicLayer.startDraw({
+export async function drawLabel() {
+  const graphic = await graphicLayer.startDraw({
     type: "label",
     style: {
       text: "火星科技三维地球",
@@ -211,23 +216,25 @@ export function drawLabel() {
       outlineWidth: 2
     }
   })
+  console.log("完成了draw标绘", graphic)
 }
 
-export function startDrawModel() {
-  graphicLayer.startDraw({
+export async function startDrawModel() {
+  const graphic = await graphicLayer.startDraw({
     type: "model",
     style: {
       scale: 10,
       url: "//data.mars3d.cn/gltf/mars/firedrill/xiaofangche.gltf"
     }
   })
+  console.log("完成了draw标绘", graphic)
 }
 
-export function drawPolyline(clampToGround) {
+export async function drawPolyline(clampToGround) {
   // map.highlightEnabled = false
   // map.popup.enabled = false
 
-  graphicLayer.startDraw({
+  const graphic = await graphicLayer.startDraw({
     type: "polyline",
     style: {
       color: clampToGround ? "#ffff00" : "#3388ff",
@@ -251,11 +258,10 @@ export function drawPolyline(clampToGround) {
     //   return (point.lng > 115 && point.lng < 117)
     // }
   })
+  console.log("完成了draw标绘", graphic)
 
-  // .then(() => {
-  //   map.highlightEnabled = true
-  //   map.popup.enabled = true
-  // })
+  // map.highlightEnabled = true
+  // map.popup.enabled = true
 }
 
 function updateDrawPosition(thisPoint, lastPoint, type) {
@@ -273,8 +279,8 @@ function updateDrawPosition(thisPoint, lastPoint, type) {
   return thisPoint.toCartesian()
 }
 
-export function drawBrushLine(clampToGround) {
-  graphicLayer.startDraw({
+export async function drawBrushLine(clampToGround) {
+  const graphic = await graphicLayer.startDraw({
     type: "brushLine",
     style: {
       color: clampToGround ? "#ffff00" : "#3388ff",
@@ -282,10 +288,11 @@ export function drawBrushLine(clampToGround) {
       clampToGround
     }
   })
+  console.log("完成了draw标绘", graphic)
 }
 
-export function drawPolygon(clampToGround) {
-  graphicLayer.startDraw({
+export async function drawPolygon(clampToGround) {
+  const graphic = await graphicLayer.startDraw({
     type: "polygon",
     style: {
       color: clampToGround ? "#ffff00" : "#3388ff",
@@ -296,10 +303,11 @@ export function drawPolygon(clampToGround) {
       clampToGround
     }
   })
+  console.log("完成了draw标绘", graphic)
 }
 
-export function drawCurve(clampToGround) {
-  graphicLayer.startDraw({
+export async function drawCurve(clampToGround) {
+  const graphic = await graphicLayer.startDraw({
     type: "curve",
     style: {
       color: clampToGround ? "#ffff00" : "#3388ff",
@@ -307,10 +315,11 @@ export function drawCurve(clampToGround) {
       clampToGround
     }
   })
+  console.log("完成了draw标绘", graphic)
 }
 
-export function drawCorridor(clampToGround) {
-  graphicLayer.startDraw({
+export async function drawCorridor(clampToGround) {
+  const graphic = await graphicLayer.startDraw({
     type: "corridor",
     style: {
       color: clampToGround ? "#ffff00" : "#3388ff",
@@ -319,10 +328,11 @@ export function drawCorridor(clampToGround) {
       clampToGround
     }
   })
+  console.log("完成了draw标绘", graphic)
 }
 
-export function drawEllipse(clampToGround) {
-  graphicLayer.startDraw({
+export async function drawEllipse(clampToGround) {
+  const graphic = await graphicLayer.startDraw({
     type: "circle",
     style: {
       color: clampToGround ? "#ffff00" : "#3388ff",
@@ -333,10 +343,11 @@ export function drawEllipse(clampToGround) {
       clampToGround
     }
   })
+  console.log("完成了draw标绘", graphic)
 }
 
-export function drawRectangle(clampToGround) {
-  graphicLayer.startDraw({
+export async function drawRectangle(clampToGround) {
+  const graphic = await graphicLayer.startDraw({
     type: "rectangle",
     style: {
       color: clampToGround ? "#ffff00" : "#3388ff",
@@ -347,10 +358,11 @@ export function drawRectangle(clampToGround) {
       clampToGround
     }
   })
+  console.log("完成了draw标绘", graphic)
 }
 
-export function draPlane() {
-  graphicLayer.startDraw({
+export async function draPlane() {
+  const graphic = await graphicLayer.startDraw({
     type: "plane",
     style: {
       color: "#00ff00",
@@ -360,10 +372,11 @@ export function draPlane() {
       dimensions_y: 1000.0
     }
   })
+  console.log("完成了draw标绘", graphic)
 }
 
-export function draWall(closure) {
-  graphicLayer.startDraw({
+export async function drawall(closure) {
+  const graphic = await graphicLayer.startDraw({
     type: "wall",
     style: {
       color: "#00ff00",
@@ -372,10 +385,11 @@ export function draWall(closure) {
       closure // 是否闭合
     }
   })
+  console.log("完成了draw标绘", graphic)
 }
 
-export function drawBox() {
-  graphicLayer.startDraw({
+export async function drawBox() {
+  const graphic = await graphicLayer.startDraw({
     type: "box",
     style: {
       color: "#00ff00",
@@ -385,10 +399,11 @@ export function drawBox() {
       dimensions_z: 1000.0
     }
   })
+  console.log("完成了draw标绘", graphic)
 }
 
-export function drawCylinder() {
-  graphicLayer.startDraw({
+export async function drawCylinder() {
+  const graphic = await graphicLayer.startDraw({
     type: "cylinder",
     style: {
       fill: true,
@@ -397,10 +412,11 @@ export function drawCylinder() {
       length: 1000
     }
   })
+  console.log("完成了draw标绘", graphic)
 }
 
-export function drawEllipsoid() {
-  graphicLayer.startDraw({
+export async function drawEllipsoid() {
+  const graphic = await graphicLayer.startDraw({
     type: "ellipsoid",
     style: {
       fill: true,
@@ -408,10 +424,11 @@ export function drawEllipsoid() {
       opacity: 0.6
     }
   })
+  console.log("完成了draw标绘", graphic)
 }
 
-export function drawExtrudedPolygon() {
-  graphicLayer.startDraw({
+export async function drawExtrudedPolygon() {
+  const graphic = await graphicLayer.startDraw({
     type: "polygon",
     style: {
       color: "#00ff00",
@@ -419,10 +436,11 @@ export function drawExtrudedPolygon() {
       diffHeight: 300
     }
   })
+  console.log("完成了draw标绘", graphic)
 }
 
-export function drawExtrudedRectangle() {
-  graphicLayer.startDraw({
+export async function drawExtrudedRectangle() {
+  const graphic = await graphicLayer.startDraw({
     type: "rectangle",
     style: {
       color: "#00ff00",
@@ -430,10 +448,11 @@ export function drawExtrudedRectangle() {
       diffHeight: 300
     }
   })
+  console.log("完成了draw标绘", graphic)
 }
 
-export function drawExtrudedCircle() {
-  graphicLayer.startDraw({
+export async function drawExtrudedCircle() {
+  const graphic = await graphicLayer.startDraw({
     type: "circle",
     style: {
       color: "#00ff00",
@@ -441,29 +460,29 @@ export function drawExtrudedCircle() {
       diffHeight: 300
     }
   })
+  console.log("完成了draw标绘", graphic)
 }
 
-export function drawSatellite() {
-  graphicLayer
-    .startDraw({
-      type: "satellite",
-      style: {
-        tle1: "1 39150U 13018A   21180.50843864  .00000088  00000-0  19781-4 0  9997",
-        tle2: "2 39150  97.8300 252.9072 0018449 344.7422  15.3253 14.76581022440650",
-        path_show: true,
-        path_color: "#00ff00",
-        path_width: 1,
-        model_show: true,
-        model_url: "//data.mars3d.cn/gltf/mars/weixin.gltf",
-        model_scale: 1,
-        model_minimumPixelSize: 90
-      }
-    })
-    .then((graphic) => {
-      setTimeout(() => {
-        graphic.flyToPoint()
-      }, 100)
-    })
+export async function drawSatellite() {
+  const graphic = await graphicLayer.startDraw({
+    type: "satellite",
+    style: {
+      tle1: "1 39150U 13018A   21180.50843864  .00000088  00000-0  19781-4 0  9997",
+      tle2: "2 39150  97.8300 252.9072 0018449 344.7422  15.3253 14.76581022440650",
+      path_show: true,
+      path_color: "#00ff00",
+      path_width: 1,
+      model_show: true,
+      model_url: "//data.mars3d.cn/gltf/mars/weixin.gltf",
+      model_scale: 1,
+      model_minimumPixelSize: 90
+    }
+  })
+  console.log("完成了draw标绘", graphic)
+
+  setTimeout(() => {
+    graphic.flyToPoint()
+  }, 100)
 }
 
 // 在图层绑定Popup弹窗
@@ -620,7 +639,6 @@ export function bindLayerContextMenu() {
     }
   ])
 }
-
 
 export function updateOnlyVertexPosition(value) {
   map.onlyVertexPosition = value

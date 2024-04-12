@@ -409,6 +409,9 @@ export function showBuilding() {
     },
     center: { lat: 31.928659, lng: 120.420654, alt: 838, heading: 344, pitch: -42 },
     popup: "all",
+    popupOptions: {
+      showNull: true
+    },
     flyTo: true
   })
   map.addLayer(graphicLayer)

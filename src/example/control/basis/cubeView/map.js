@@ -24,7 +24,7 @@ export function onMounted(mapInstance) {
   // const cubeView = new mars3d.control.CubeView({ top: "10px", right: "5px" })
   // map.addControl(cubeView)
 
-  map.controls.cubeView.on(mars3d.EventType.click, function (event) {
+  map.control.cubeView.on(mars3d.EventType.click, function(event) {
     globalMsg("单击了 cubeView 控件")
   })
 }

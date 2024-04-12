@@ -48,6 +48,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic13(graphicLayer)
   addDemoGraphic17(graphicLayer)
   addDemoGraphic18(graphicLayer)
+  // addDemoGraphic19(graphicLayer)
 }
 
 /**
@@ -190,8 +191,6 @@ function addDemoGraphic2_1(graphicLayer) {
   })
   graphicLayer.addGraphic(graphic)
 }
-
-
 
 function addDemoGraphic3(graphicLayer) {
   const graphic = new mars3d.graphic.PolylinePrimitive({
@@ -496,6 +495,29 @@ function addDemoGraphic18(graphicLayer) {
       }
     },
     attr: { remark: "示例18" }
+  })
+  graphicLayer.addGraphic(graphic)
+}
+
+function addDemoGraphic19(graphicLayer) {
+  const graphic = new mars3d.graphic.PolylinePrimitive({
+    positions: [
+      [116.297402, 30.975045, 1000],
+      [116.305843, 30.950567, 776.3],
+      [116.33202, 30.951973, 728.4],
+      [116.326067, 30.970536, 1059.1],
+      [116.31299, 30.959927, 1080.4]
+    ],
+    style: {
+      color: Cesium.Color.YELLOW,
+      // 需要开启深度检测后可见
+      depthFail: true,
+      depthFailMaterial: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.PolylineDash, {
+        color: Cesium.Color.RED,
+        dashLength: 20
+      })
+    },
+    attr: { remark: "示例19" }
   })
   graphicLayer.addGraphic(graphic)
 }

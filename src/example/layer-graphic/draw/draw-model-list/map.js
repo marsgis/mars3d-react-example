@@ -76,11 +76,11 @@ export function deleteAll() {
 }
 
 export function changeItemImage(item) {
-  return mars3d.Util.template(item.image, map.options.templateValues)
+  return mars3d.Util.template(item.image, map.templateValues)
 }
 
 export function changeItemUrl(item) {
-  return mars3d.Util.template(item.style.url, map.options.templateValues)
+  return mars3d.Util.template(item.style.url, map.templateValues)
 }
 
 /**

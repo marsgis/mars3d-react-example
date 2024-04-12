@@ -17,7 +17,7 @@ function init() {
       // 构建地图
       const initMapFun = window.initMap ? window.initMap : globalInitMap
       new Promise(function (resolve) {
-        const mapObj = initMapFun(json.map3d)
+        const mapObj = initMapFun(json.map3d || json)
         if (mapObj instanceof Promise) {
           mapObj.then(function (m) {
             resolve(m)

@@ -58,7 +58,7 @@ export function setClockAnimateTime(startTimes, stopTimes) {
   const startTime = Cesium.JulianDate.fromDate(new Date(startTimes))
   const stopTime = Cesium.JulianDate.fromDate(new Date(stopTimes))
 
-  if (map.controls.timeline) {
-    map.controls.timeline.zoomTo(startTime, stopTime)
+  if (map.control.timeline) {
+    map.control.timeline.zoomTo(startTime, stopTime)
   }
 }

@@ -34,5 +34,5 @@ function initMap() {
   //   })
   //   map.addEffect(rainEffect)
 
-  console.log("地图上已有场景效果", map.effects)
+  console.log("地图上已有场景效果", map.effect)
 }

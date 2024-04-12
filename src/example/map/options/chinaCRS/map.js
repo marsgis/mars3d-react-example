@@ -6,7 +6,9 @@ export let map // mars3d.Map三维地图对象
 
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
-  chinaCRS: mars3d.ChinaCRS.GCJ02, // 标识坐标系
+  method: {
+    chinaCRS: mars3d.ChinaCRS.GCJ02 // 标识坐标系
+  },
   scene: {
     center: { lat: 31.833439, lng: 117.212587, alt: 1237, heading: 0, pitch: -60 }
   },

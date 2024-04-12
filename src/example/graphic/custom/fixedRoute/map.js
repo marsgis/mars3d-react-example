@@ -337,7 +337,7 @@ function addRoamLines() {
     }
   }
 
-  map.controls.timeline.zoomTo(startTime, stopTime)
+  map.control.timeline.zoomTo(startTime, stopTime)
 }
 
 // 在图层绑定Popup弹窗

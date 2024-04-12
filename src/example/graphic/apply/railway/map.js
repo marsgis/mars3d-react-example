@@ -180,8 +180,8 @@ function inintRoad(positionsSJ, positionsTD) {
   map.clock.shouldAnimate = true // 是否开启时钟动画，默认true
   //  map.clock.clockRange = Cesium.ClockRange.LOOP_STOP; // 到达终止时间后循环
 
-  if (map.controls.timeline) {
-    map.controls.timeline.zoomTo(start, stop)
+  if (map.control.timeline) {
+    map.control.timeline.zoomTo(start, stop)
   }
 
   const availability = new Cesium.TimeIntervalCollection([

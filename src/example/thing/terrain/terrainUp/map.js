@@ -154,3 +154,13 @@ export function showHideArea(id, selected) {
     terrainUplift.hideArea(id)
   }
 }
+
+export function btnMovingAnimation() {
+  terrainUplift.movingAnimation(0, 2000)
+  // terrainUplift.movingAnimation()
+}
+
+export function btnMovingAnimation2() {
+  terrainUplift.movingAnimation(2000, 0)
+}
+

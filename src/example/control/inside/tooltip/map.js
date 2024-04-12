@@ -274,3 +274,46 @@ function showXQ() {
   const showHistoryLayer = true
   eventTarget.fire("showWebsite", { showHistoryLayer })
 }
+
+export function bindGraphicDynamicAttrDemo() {
+  removeDemoLayer()
+  map.setCameraView({ lat: 31.743008, lng: 117.007592, alt: 7773.8, heading: 355.1, pitch: -31.8 })
+
+  const graphic = new mars3d.graphic.BillboardEntity({
+    // position: new mars3d.LngLatPoint(116.328539, 30.978731, 1521),
+    position: {
+      // 【从后端读取的动态坐标】API: http://mars3d.cn/api/BaseGraphic.html#.AjaxPosition
+      type: "ajax",
+      url: "http://studio.mars3d.cn/api/gap/open/random/point",
+      dataColumn: "data", // 接口返回数据中，对应的属性数据所在的读取字段名称，支持多级(用.分割)；如果数据直接返回时可以不配置。
+      latColumn: "lat",
+      lngColumn: "lng",
+      altColumn: "alt",
+      time: 5 // 无配置时仅取值一次，有值时间隔time秒后不断取
+    },
+    style: {
+      image: "img/marker/point-red.png",
+      horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+      verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+      label: {
+        text: "ajax后端动态获取属性及坐标演示",
+        font_size: 18,
+        font_family: "楷体",
+        pixelOffsetY: -45,
+        horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+        verticalOrigin: Cesium.VerticalOrigin.BOTTOM
+      }
+    },
+    tooltip: "all",
+    tooltipOptions: {
+      showNull: true
+    },
+    attr: {
+      // 【从后端读取的动态属性】API: http://mars3d.cn/api/BaseGraphic.html#.AjaxAttr
+      type: "ajax",
+      url: "http://studio.mars3d.cn/api/gap/open/appInfo",
+      dataColumn: "data" // 接口返回数据中，对应的属性数据所在的读取字段名称，支持多级(用.分割)；如果数据直接返回时可以不配置。
+    }
+  })
+  graphicLayer.addGraphic(graphic)
+}

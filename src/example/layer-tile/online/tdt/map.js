@@ -195,7 +195,7 @@ export function removeTileLayer() {
 // 在下侧状态栏增加一个额外div展示图层版权信息
 let creditDOM
 function addCreditDOM() {
-  const locationBar = map.controls.locationBar?.container
+  const locationBar = map.control.locationBar?.container
   if (locationBar) {
     creditDOM = mars3d.DomUtil.create("div", "mars3d-locationbar-content mars3d-locationbar-autohide", locationBar)
     creditDOM.style["pointer-events"] = "all"

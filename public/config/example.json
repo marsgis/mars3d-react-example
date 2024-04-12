@@ -889,8 +889,7 @@
           {
             "name": "立方体视图",
             "thumbnail": "control-basis-cubeView.jpg",
-            "main": "control/basis/cubeView",
-            "new": true
+            "main": "control/basis/cubeView"
           },
           {
             "name": "鼠标滚轮特效",
@@ -980,8 +979,7 @@
             "name": "颜色校正",
             "thumbnail": "effect-colorCorrection.jpg",
             "main": "effect/colorCorrection",
-            "hasPannel": true,
-            "new": true
+            "hasPannel": true
           },
           {
             "name": "泛光特效",
@@ -1454,7 +1452,6 @@
             "thumbnail": "graphic-divGraphic-divPlane.jpg",
             "main": "graphic/divGraphic/divPlane",
             "hasPannel": true,
-            "new": true,
             "resources": [
               "/temp/css/divGraphic.css"
             ]
@@ -1464,7 +1461,6 @@
             "thumbnail": "graphic-divGraphic-divIndicator.jpg",
             "main": "graphic/divGraphic/divIndicator",
             "hasPannel": true,
-            "new": true,
             "resources": [
               "DivIndicator.js",
               "DivIndicator.css"
@@ -2144,8 +2140,7 @@
           {
             "name": "洪水演进",
             "thumbnail": "graphic-combine-polygon-floods.jpg",
-            "main": "graphic/combine/polygon-floods",
-            "new": true
+            "main": "graphic/combine/polygon-floods"
           },
           {
             "name": "河流断面水面动态升降",
@@ -2153,8 +2148,7 @@
             "main": "graphic/combine/water-section",
             "resources": [
               "water-data.js"
-            ],
-            "new": true
+            ]
           },
           {
             "name": "动态河流",
@@ -2325,8 +2319,7 @@
             "libs": [
               "mars3d",
               "mars3d-space"
-            ],
-            "new": true
+            ]
           },
           {
             "name": "固定算法的干扰雷达",
@@ -2336,8 +2329,7 @@
             "libs": [
               "mars3d",
               "mars3d-space"
-            ],
-            "new": true
+            ]
           },
           {
             "name": "CamberRadar 双曲面雷达范围",
@@ -3017,7 +3009,6 @@
             "name": "模型颜色校正",
             "thumbnail": "thing-tileset-colorCorrection.jpg",
             "main": "thing/tileset/colorCorrection",
-            "new": true,
             "hasPannel": true
           }
         ]

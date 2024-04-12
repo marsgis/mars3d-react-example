@@ -6,7 +6,7 @@ export const eventTarget = new mars3d.BaseClass()
 
 export const mapOptions = {
   scene: {
-    center: { lat: 30.990185, lng: 116.341991, alt: 2465.9, heading: 224.8, pitch: -23.5 }
+    center: { lat: 30.991457, lng: 116.336944, alt: 2610.8, heading: 223.8, pitch: -29.4 }
   }
 }
 
@@ -31,6 +31,7 @@ export function onMounted(mapInstance) {
   // 加一些演示数据
   addDemoGraphic1(graphicLayer)
   addDemoGraphic2(graphicLayer)
+  addDemoGraphic3(graphicLayer)
 }
 
 /**
@@ -53,7 +54,7 @@ function addDemoGraphic1(graphicLayer) {
       outlineColor: "#ffffff",
       outlineWidth: 2
     },
-    attr: { remark: "示例4" }
+    attr: { remark: "示例1" }
   })
   graphicLayer.addGraphic(graphic)
 
@@ -67,6 +68,7 @@ function addDemoGraphic1(graphicLayer) {
   })
 }
 
+
 function addDemoGraphic2(graphicLayer) {
   const graphic = new mars3d.graphic.PointEntity({
     position: new mars3d.LngLatPoint(116.317108, 30.974377, 1528.3),
@@ -76,7 +78,7 @@ function addDemoGraphic2(graphicLayer) {
       outlineColor: "#ffffff",
       outlineWidth: 2
     },
-    attr: { remark: "示例4" }
+    attr: { remark: "示例2" }
   })
   graphicLayer.addGraphic(graphic)
 
@@ -89,3 +91,40 @@ function addDemoGraphic2(graphicLayer) {
     graphic.position = event.position
   })
 }
+
+
+
+function addDemoGraphic3(graphicLayer) {
+  const graphic = new mars3d.graphic.ModelEntity({
+    name: "警车",
+    position: new mars3d.LngLatPoint(116.312961, 30.986354, 1260),
+    style: {
+      url: "//data.mars3d.cn/gltf/mars/jingche/jingche.gltf",
+      scale: 20,
+      minimumPixelSize: 50,
+      heading: 0
+    },
+    attr: { remark: "示例3" }
+  })
+  graphicLayer.addGraphic(graphic)
+
+  // 三维场景内调整方向不是很好用，建议直接UI面板弄3个角度的滑动条更方便。
+  const pointEdit = new mars3d.thing.MatrixRotate({
+    position: graphic.position,
+    roll: graphic.style.heading,
+    pitch: graphic.style.pitch,
+    heading: graphic.style.heading
+  })
+  map.addThing(pointEdit)
+
+  pointEdit.on(mars3d.EventType.change, (event) => {
+    graphic.style.heading = event.heading
+    graphic.style.pitch = event.pitch
+    graphic.style.roll = event.roll
+    graphic.updateOrientation()
+
+    graphic.fire(mars3d.EventType.editStyle)
+  })
+}
+
+

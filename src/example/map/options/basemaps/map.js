@@ -64,4 +64,3 @@ function initMap() {
 // "type": "google"
 // "type": "bing"
 // "type": "mapbox"
-// "type": "ion"

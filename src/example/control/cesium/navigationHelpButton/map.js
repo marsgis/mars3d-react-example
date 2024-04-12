@@ -26,7 +26,7 @@ export function onMounted(mapInstance) {
   map.addControl(navigationHelpButton)
 
   // 按钮触发自定义方法
-  // map.controls.navigationHelpButton._container.addEventListener("click", (event) => {
+  // map.control.navigationHelpButton._container.addEventListener("click", (event) => {
   //   console.log("自定义方法")
   // })
   // navigationHelpButton._container.onclick = function (event) {

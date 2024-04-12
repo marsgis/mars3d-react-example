@@ -100,8 +100,8 @@ async function showImagesByGraphic() {
   map.clock.multiplier = 1 // 当前速度，默认为1
   map.clock.clockRange = Cesium.ClockRange.LOOP_STOP // 到达终止时间后循环
 
-  if (map.controls.timeline) {
-    map.controls.timeline.zoomTo(startTime, stopTime)
+  if (map.control.timeline) {
+    map.control.timeline.zoomTo(startTime, stopTime)
   }
   console.log("图片列表预加载完成", arrImage) // 打印图片数组
 

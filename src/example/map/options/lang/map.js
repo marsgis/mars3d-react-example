@@ -7,6 +7,10 @@ let measure
 
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
+  method: {
+    // eslint-disable-next-line no-undef
+    lang: CustomLang // 使用自定义语言配置，配置信息在 ./CustomLang.js
+  },
   control: {
     homeButton: true,
     sceneModePicker: true,
@@ -72,9 +76,7 @@ export const mapOptions = {
       alpha: 0.03,
       cells: 2
     }
-  ],
-  // eslint-disable-next-line no-undef
-  lang: CustomLang // 使用自定义语言配置，配置信息在 ./CustomLang.js
+  ]
 }
 
 export const eventTarget = new mars3d.BaseClass()
@@ -150,8 +152,8 @@ export function toCustomLang() {
     item.name = item.name_en
   })
 
-  if (map.controls.locationBar) {
-    map.controls.locationBar.options.template =
+  if (map.control.locationBar) {
+    map.control.locationBar.options.template =
       "<div>lng:{lng}</div> <div>lat:{lat}</div> <div>alt：{alt} m</div> <div>level：{level}</div><div>heading：{heading}°</div> <div>pitch：{pitch}°</div><div>cameraHeight：{cameraHeight}m</div><div class='hide700'> {fps} FPS</div>"
   }
 
@@ -164,8 +166,8 @@ export function toDefaultLange() {
     item.name = item.name_cn
   })
 
-  if (map.controls.locationBar) {
-    map.controls.locationBar.options.template =
+  if (map.control.locationBar) {
+    map.control.locationBar.options.template =
       "<div>经度:{lng}</div> <div>纬度:{lat}</div> <div class='hide1000'>横{crsx}  纵{crsy}</div> <div>海拔：{alt}米</div> <div class='hide700'>层级：{level}</div><div>方向：{heading}°</div> <div>俯仰角：{pitch}°</div><div class='hide700'>视高：{cameraHeight}米</div><div class='hide700'>帧率：{fps} FPS</div>"
   }
 
