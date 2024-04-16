@@ -100,6 +100,10 @@ function createSatelliteList(arr) {
   graphicLayer.on(mars3d.EventType.click, function (event) {
     console.log("单击了卫星", event)
   })
+  map.on(mars3d.EventType.clickMap, function (event) {
+    console.log("单击地图空白处", event)
+  })
+
   graphicLayer.bindPopup(function (event) {
     const attr = event.graphic.attr || {}
     attr["类型"] = event.graphic.type

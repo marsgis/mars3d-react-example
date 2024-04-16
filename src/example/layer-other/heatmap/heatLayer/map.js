@@ -13,6 +13,7 @@ export const mapOptions = {
     fog: false,
     backgroundColor: "#363635", // 天空背景色
     contextOptions: { webgl: { antialias: mars3d.Util.isPCBroswer() } },
+    logarithmicDepthBuffer: false, // 对数深度缓冲区[当热力图出现阴影体或遮挡时设置下]
     globe: {
       baseColor: "#363635", // 地球地面背景色
       showGroundAtmosphere: false,

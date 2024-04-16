@@ -88,6 +88,12 @@ class DivIndicator extends mars3d.graphic.DivGraphic {
     }
   }
 
+  _updateDivPosition_Ex() {
+    if (!this._line_distance && this._container_drag) {
+      this._updateLineStyle()
+    }
+  }
+
   // 更新 两个 div 连线
   _updateLineStyle() {
     this._container_drag.style.left = this.style.moveDomLeft + "px"
@@ -124,6 +130,8 @@ class DivIndicator extends mars3d.graphic.DivGraphic {
     const topValue = (left2 - left1) / 2 - 1 // 线的坐标
     const letValue = (top2 - top1) / 2 - distance / 2
     const angle = -Math.atan2(left1 - left2, top1 - top2) * (180 / Math.PI) // 线的角度
+
+    this._line_distance = distance
 
     Object.assign(this._container_line.style, {
       height: `${distance}px`,

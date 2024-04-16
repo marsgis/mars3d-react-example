@@ -57,7 +57,7 @@ function addRandomGraphicByCount(position, attr) {
     },
     attr
   })
-  graphic.on(mars3d.EventType.add, function (e) {
+  graphic.on(mars3d.EventType.load, function (e) {
     const dom = e.target.container.firstChild
     const attr = e.target.attr
 
