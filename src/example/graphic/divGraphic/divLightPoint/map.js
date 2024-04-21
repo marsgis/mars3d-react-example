@@ -103,6 +103,11 @@ function addDemoGraphic1(graphicLayer) {
             color: pointColor,
             size: item["主管部门"] === "教育部" ? 15 : 10,
             distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 200000) // 按视距距离显示
+            // billboard: {
+            //   image: "img/marker/lace-blue.png",
+            //   horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+            //   verticalOrigin: Cesium.VerticalOrigin.BOTTOM
+            // }
             // label: {
             //   text: item["高校名称"], // 内容
             //   color: "#ffffff"

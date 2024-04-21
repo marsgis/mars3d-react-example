@@ -216,7 +216,7 @@ const styleConfig = {
         name: "font_family",
         label: "字体",
         type: "combobox",
-        defval: "楷体",
+        defval: "微软雅黑",
         data: [
           { label: "微软雅黑", value: "微软雅黑" },
           { label: "宋体", value: "宋体" },
@@ -2389,7 +2389,11 @@ const styleConfig = {
           { label: "流动arrow", value: "LineFlow-3", defval: { image: "img/textures/line-arrow-right.png", repeat_x: 10 } },
           { label: "流动aqua", value: "LineFlow-4", defval: { image: "img/textures/line-color-aqua.png", repeat_x: 10 } },
           { label: "流动azure", value: "LineFlow-5", defval: { image: "img/textures/line-color-azure.png", repeat_x: 10 } },
-          { label: "流动red", value: "LineFlow-6", defval: { image: "img/textures/line-color-red.png", color: "#ff0000", repeat_x: 10 } },
+          {
+            label: "流动red",
+            value: "LineFlow-6",
+            defval: { image: "img/textures/line-color-red.png", color: "#ff0000", repeat_x: 10 }
+          },
           { label: "流动yellow", value: "LineFlow-7", defval: { image: "img/textures/line-color-yellow.png", color: "#ffff00", repeat_x: 10 } },
           { label: "流动colour", value: "LineFlow-8", defval: { image: "img/textures/line-colour.png", repeat_x: 10 } },
           { label: "流动gradual", value: "LineFlow-9", defval: { image: "img/textures/line-gradual.png", repeat_x: 10 } },
@@ -2399,7 +2403,9 @@ const styleConfig = {
           { label: "流动vertebral", value: "LineFlow-14", defval: { image: "img/textures/line-vertebral.png", repeat_x: 10 } },
           { label: "流动vertebral-blue", value: "LineFlow-15", defval: { image: "img/textures/line-vertebral-blue.png", repeat_x: 10 } },
           { label: "流动fence-line", value: "LineFlow-16", defval: { image: "img/textures/fence-line.png", repeat_x: 10 } },
-          { label: "流动transarrow", value: "LineFlow-17", defval: { image: "img/textures/line-arrow-trans.png", repeat_x: 10 } }
+          { label: "流动transarrow", value: "LineFlow-17", defval: { image: "img/textures/line-arrow-trans.png", repeat_x: 10 } },
+          { label: "流动天青", value: "LineFlow-18", defval: { image: "img/textures/line-color-yellow.png", color: "#33e8df", repeat_x: 1 } },
+          { label: "天青pulse", value: "LineFlow-19", defval: { image: "img/textures/line-color-yellow.png", color: "#33e8df", width: 8 } }
         ],
         show(style, allStyle, graphicType) {
           return this.data.some((item) => item.value === style.materialType)
@@ -2615,7 +2621,21 @@ const styleConfig = {
           { label: "流动arrow", value: "LineFlow", defval: { image: "img/textures/arrow.png", repeat_x: 10 } },
           { label: "流动arrowh", value: "LineFlow-1", defval: { image: "img/textures/arrow-h.png", repeat_x: 10 } },
           { label: "流动fence", value: "LineFlow-2", defval: { image: "img/textures/fence.png", axisY: true } },
-          { label: "流动line", value: "LineFlow-3", defval: { image: "img/textures/fence-line.png", axisY: true } }
+          { label: "流动line", value: "LineFlow-3", defval: { image: "img/textures/fence-line.png", axisY: true } },
+          {
+            label: "图片fence",
+            value: "LineFlow-4",
+            defval: {
+              image: "img/textures/fence.png",
+              axisY: true,
+              color: "#ff0000",
+              image2: "img/textures/tanhao.png",
+              color2: "#FFFF00",
+              outline: false,
+              diffHeight: 1000,
+              lastMaterialType: "Image"
+            }
+          }
         ],
         show(style, allStyle, graphicType) {
           return style.fill !== false && this.data.some((item) => item.value === style.materialType)
@@ -3083,6 +3103,7 @@ const styleConfig = {
         type: "number",
         step: 1,
         defval: 0.0,
+        max: 10000000,
         show(style, allStyle, graphicType) {
           return !style.clampToGround
         }

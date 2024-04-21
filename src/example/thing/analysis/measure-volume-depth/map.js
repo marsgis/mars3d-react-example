@@ -78,13 +78,13 @@ function addDemoGraphic1() {
     ],
     height: 450,
     depth: true, // 使用离屏渲染深度图的方式
-    offsetHeight: 500, // 偏移高度来展示
-    measured: {
-      // 固化测量结果,可以测量后graphic.toJSON()获取对应值
-      fillVolume: 152230843.6381974,
-      digVolume: 64063629.525086574,
-      totalArea: 3040811.5379096316
-    }
+    offsetHeight: 500 // 偏移高度来展示
+    // measured: {
+    //   // 固化测量结果,可以测量后graphic.toJSON()获取对应值
+    //   fillVolume: 152230843.6381974,
+    //   digVolume: 64063629.525086574,
+    //   totalArea: 3040811.5379096316
+    // }
   })
   measure.graphicLayer.addGraphic(graphic)
 

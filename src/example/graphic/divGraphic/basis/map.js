@@ -420,7 +420,7 @@ function addDemoGraphic11(graphicLayer) {
     },
     attr: { remark: "示例11" }
   })
-  graphic.on(mars3d.EventType.add, function (event) {
+  graphic.on(mars3d.EventType.load, function (event) {
     const container = event.graphic.container // popup对应的DOM
 
     const btnStatus1 = container.querySelector("#btn-status1")

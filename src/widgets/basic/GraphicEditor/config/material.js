@@ -29,6 +29,7 @@ const materialConfig = {
       type: "number",
       step: 1,
       defval: 1,
+      max: 1000000, // 数据过大会导致流动线看不见
       show(style, allStyle, graphicType) {
         return !style.axisY
       }

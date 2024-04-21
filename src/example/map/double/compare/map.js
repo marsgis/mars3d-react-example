@@ -67,7 +67,7 @@ export function createControl() {
   mapOld.style.width = "50%"
 
   // 获取原来地图的参数
-  const mapOptions2 = map.getCurrentOptions() // map.getOptions()
+  const mapOptions2 = map.toJSON()
   mapOptions2.control.baseLayerPicker = true // basemaps底图切换按钮
   mapOptions2.control.sceneModePicker = false
 

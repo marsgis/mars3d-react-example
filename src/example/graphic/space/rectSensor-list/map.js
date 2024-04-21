@@ -99,9 +99,23 @@ function createSatelliteList(arr) {
 
   graphicLayer.on(mars3d.EventType.click, function (event) {
     console.log("单击了卫星", event)
+    // 监听鼠标单击事件,并尝试隐藏其他矢量数据
+    // const gs = graphicLayer.getGraphicsByAttr("satellite", "type")
+    // for (let i = 0; i < gs.length; i++) {
+    //   if (gs[i] === event.graphic) {
+    //     continue
+    //   } else {
+    //     gs[i].show = false
+    //   }
+    // }
   })
   map.on(mars3d.EventType.clickMap, function (event) {
     console.log("单击地图空白处", event)
+    // 单击地图时，显示所有矢量数据
+    // const gs = graphicLayer.getGraphicsByAttr("satellite", "type")
+    // for (let i = 0; i < gs.length; i++) {
+    //   gs[i].show = true
+    // }
   })
 
   graphicLayer.bindPopup(function (event) {
@@ -159,25 +173,25 @@ function createSatelliteList(arr) {
     graphicLayer.addGraphic(weixin)
 
     // RectSensor锥体（比Satellite内置的cone效率略高）
-    const rectSensor = new mars3d.graphic.RectSensor({
-      position: new Cesium.CallbackProperty(function (time) {
-        return weixin.position
-      }, false),
-      style: {
-        angle1: 30,
-        angle2: 15,
-        length: 90000,
-        color: "rgba(0,255,0,0.4)",
-        outline: true,
-        topShow: true,
-        topSteps: 2,
-        rayEllipsoid: true,
-        heading: new Cesium.CallbackProperty(function (time) {
-          return weixin.heading
-        }, false)
-      },
-      reverse: true
-    })
-    graphicLayer.addGraphic(rectSensor)
+    // const rectSensor = new mars3d.graphic.RectSensor({
+    //   position: new Cesium.CallbackProperty(function (time) {
+    //     return weixin.position
+    //   }, false),
+    //   style: {
+    //     angle1: 30,
+    //     angle2: 15,
+    //     length: 90000,
+    //     color: "rgba(0,255,0,0.4)",
+    //     outline: true,
+    //     topShow: true,
+    //     topSteps: 2,
+    //     rayEllipsoid: true,
+    //     heading: new Cesium.CallbackProperty(function (time) {
+    //       return weixin.heading
+    //     }, false)
+    //   },
+    //   reverse: true
+    // })
+    // graphicLayer.addGraphic(rectSensor)
   }
 }

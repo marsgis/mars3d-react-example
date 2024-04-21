@@ -28,6 +28,7 @@ class Geolocation extends mars3d.control.ToolButton {
 
   startTracking() {
     AMap.plugin("AMap.Geolocation", () => {
+      console.log("ddd", AMap)
       mars3d.DomUtil.removeClass(this._container, "tracking-deactivated")
       mars3d.DomUtil.addClass(this._container, "tracking-activated")
 
@@ -39,15 +40,16 @@ class Geolocation extends mars3d.control.ToolButton {
         })
       }
 
-      this.geolocation.getCurrentPosition()
-      AMap.event.addListener(this.geolocation, "complete", (data) => {
-        // data是具体的定位信息
-        const wgsPoint = mars3d.PointTrans.gcj2wgs([data.position.lng, data.position.lat])
-        this.flyToLocation({ lng: wgsPoint[0], lat: wgsPoint[1] })
-      })
-      AMap.event.addListener(this.geolocation, "error", (data) => {
-        // 定位出错,参考：https://lbs.amap.com/faq/js-api/map-js-api/position-related
-        globalMsg("定位失败")
+      this.geolocation.getCurrentPosition(function (status, result) {
+        if (status === "complete") {
+          // data是具体的定位信息
+          const wgsPoint = mars3d.PointTrans.gcj2wgs([result.position.lng, result.position.lat])
+          this.flyToLocation({ lng: wgsPoint[0], lat: wgsPoint[1] })
+        } else {
+          // 定位出错,参考：https://lbs.amap.com/faq/js-api/map-js-api/position-related
+          console.log("data", result)
+          globalMsg("定位失败")
+        }
       })
     })
   }

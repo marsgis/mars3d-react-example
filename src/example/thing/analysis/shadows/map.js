@@ -105,6 +105,8 @@ export function clearArea() {
 }
 
 export async function drawArea(date) {
+  globalNotify("已知问题提示", `(1) 不同视角下ShadowMap精度存在差异，分析结果会存在误差，尽量俯视整个区域进行分析。`)
+
   map.graphicLayer.clear()
   const graphic = await map.graphicLayer.startDraw({
     type: "polygon",
