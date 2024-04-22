@@ -26,7 +26,8 @@ export function onMounted(mapInstance) {
     name: "文庙",
     url: "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
     position: { alt: 138.8 },
-    maximumScreenSpaceError: 1
+    maximumScreenSpaceError: 1,
+    enableCollision: true // 贴模型时该属性需要开启
   })
   map.addLayer(tiles3dLayer)
 

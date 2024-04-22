@@ -3,7 +3,7 @@
  * Mars3D三维可视化平台  mars3d
  *
  * 版本信息：v3.7.11
- * 编译日期：2024-04-21 20:32:00
+ * 编译日期：2024-04-22 22:18:20
  * 版权所有：Copyright by 火星科技  http://mars3d.cn
  * 使用单位：免费公开版 ，2024-01-15
  */
@@ -12414,7 +12414,7 @@ declare namespace PolygonEntity {
      * @property [outlineStyle] - 边框的完整自定义样式，会覆盖outlineWidth、outlineColor等参数。
      * //  * @property {boolean} [outlineStyle.closure = true] 边线是否闭合
      * @property [textureCoordinates] - 纹理坐标，是Cartesian2的UV坐标数组的多边形层次结构。对贴地对象无效。
-     * @property [distanceDisplayCondition = false] - 是否按视距显示 或 指定此框将显示在与摄像机的多大距离。
+     * @property [distanceDisplayCondition = false] - 是否按视距显示 或 指定此框将显示在与摄像机的多大距离。【编辑状态下开启了会无法拾取】
      * @property [distanceDisplayCondition_far = number.MAX_VALUE] - 最大距离
      * @property [distanceDisplayCondition_near = 0] - 最小距离
      * @property [height = 0] - 高程，圆相对于椭球面的高度。
@@ -38887,6 +38887,7 @@ declare namespace graphic {
   //扩展的普通primitive
   export { LightCone }
   export { Water }
+  export { Mask }
   export { DiffuseWall }
   export { ScrollWall }
   export { DynamicRiver }
@@ -38894,9 +38895,12 @@ declare namespace graphic {
   export { Pit }
   export { DoubleSidedPlane }
   export { ReflectionWater }
+  export { VideoPrimitive }
 
   //批量大数据primitive
   export { BaseCombine }
+  export { BasePointCombine }
+  export { BasePolyCombine }
   export { FlatBillboard }
   export { PlaneCombine }
   export { BoxCombine }
@@ -38930,6 +38934,7 @@ declare namespace graphic {
   export { Video3D }
   export { Route }
   export { FixedRoute }
+
   export { PointLight }
   export { SpotLight }
   export { VolumeCloud }

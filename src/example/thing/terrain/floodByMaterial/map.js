@@ -71,7 +71,7 @@ export async function btnDrawExtent(callback, floodColor) {
   const positions = graphic.getOutlinePositions(false)
 
   // 更新最大、最小高度值
-  updateHeightRange(graphic, positions, callback)
+  await updateHeightRange(graphic, positions, callback)
 
   // 区域
   floodByMaterial.addArea(positions)
@@ -92,24 +92,25 @@ export async function btnDraw(callback, floodColor) {
   const positions = graphic.positionsShow
 
   // 更新最大、最小高度值
-  updateHeightRange(graphic, positions, callback)
+  await updateHeightRange(graphic, positions, callback)
   floodByMaterial.addArea(positions)
 }
 
 // 求最大、最小高度值
-function updateHeightRange(graphic, positions, callback) {
+async function updateHeightRange(graphic, positions, callback) {
   showLoading()
 
   // 求最大、最小高度值
   graphic.show = false // 会遮挡深度图，所以需要隐藏
-  mars3d.PolyUtil.interPolygonByDepth({ scene: map.scene, positions }).then((result) => {
-    graphic.show = true // 恢复显示
-    const minHeight = Math.ceil(result.minHeight)
-    const maxHeight = Math.floor(result.maxHeight)
+  const result = await mars3d.PolyUtil.interPolygonByDepth({ scene: map.scene, positions })
 
-    callback(minHeight, maxHeight)
-    hideLoading()
-  })
+  graphic.show = true // 恢复显示
+  const minHeight = Math.ceil(result.minHeight)
+  const maxHeight = Math.floor(result.maxHeight)
+
+  callback(minHeight, maxHeight)
+
+  hideLoading()
 }
 
 // 开始分析

@@ -59,8 +59,8 @@ export function removeAll() {
 }
 
 // 空间距离
-export function measureLength() {
-  measure.distance({
+export async function measureLength() {
+  const graphic = await measure.distance({
     showAddText: true,
     label: {
       // 自定义显示label的graphic类型
@@ -82,9 +82,10 @@ export function measureLength() {
     // }
   })
 }
+
 // 贴地距离
-export function measureSurfaceLength() {
-  measure.distanceSurface({
+export async function measureSurfaceLength() {
+  const graphic = await measure.distanceSurface({
     showAddText: true,
     exact: false // 是否进行精确计算， 传false时是否快速概略计算方式，该方式计算精度较低，但计算速度快，仅能计算在当前视域内坐标的高度
     // unit: 'm', //支持传入指定计量单位
@@ -95,28 +96,30 @@ export function measureSurfaceLength() {
     // }
   })
 }
+
 // 水平面积
-export function measureArea() {
-  measure
-    .area({
-      // style: {
-      //   color: '#00fff2',
-      //   opacity: 0.4,
-      //   outline: true,
-      //   outlineColor: '#fafa5a',
-      //   outlineWidth: 1,
-      //   clampToGround: false //贴地
-      // }
-    })
-    .then(async (graphic) => {
-      const oldPositions = graphic.positionsShow
-      const rang = await mars3d.PolyUtil.getHeightRangeByDepth(oldPositions, map.scene)
-      graphic.positions = mars3d.PointUtil.setPositionsHeight(oldPositions, rang.maxHeight)
-    })
+export async function measureArea() {
+  const graphic = await measure.area({
+    // style: {
+    //   color: '#00fff2',
+    //   opacity: 0.4,
+    //   outline: true,
+    //   outlineColor: '#fafa5a',
+    //   outlineWidth: 1,
+    //   clampToGround: false //贴地
+    // }
+  })
+
+  if (map.scene.mode === Cesium.SceneMode.SCENE3D) {
+    const oldPositions = graphic.positionsShow
+    const rang = await mars3d.PolyUtil.getHeightRangeByDepth(oldPositions, map.scene)
+    graphic.positions = mars3d.PointUtil.setPositionsHeight(oldPositions, rang.maxHeight)
+  }
 }
+
 // 贴地面积
-export function measureSurfaceeArea() {
-  measure.areaSurface({
+export async function measureSurfaceeArea() {
+  const graphic = await measure.areaSurface({
     style: {
       color: "#ffff00"
     },
@@ -125,23 +128,23 @@ export function measureSurfaceeArea() {
   })
 }
 // 高度差
-export function measureHeight() {
-  measure.height()
+export async function measureHeight() {
+  const graphic = await measure.height()
 }
 
 // 三角测量
-export function measureTriangleHeight() {
-  measure.heightTriangle()
+export async function measureTriangleHeight() {
+  const graphic = await measure.heightTriangle()
 }
 
 // 方位角
-export function measureAngle() {
-  measure.angle()
+export async function measureAngle() {
+  const graphic = await measure.angle()
 }
 
 // 坐标测量
-export function measurePoint() {
-  measure.point({
+export async function measurePoint() {
+  const graphic = await measure.point({
     // popup: function (point, graphic) {
     //   return `<div class="mars3d-template-title">位置信息</div>
     //   <div class="mars3d-template-content">

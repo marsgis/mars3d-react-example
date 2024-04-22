@@ -344,8 +344,11 @@ function addDemoGraphic12(graphicLayer) {
 }
 
 function addDemoGraphic13(graphicLayer) {
+  const startPoint = Cesium.Cartesian3.fromDegrees(116.4, 30.8, 1000)
+  const stopPoint = Cesium.Cartesian3.fromDegrees(116.416914, 30.789235, 877.6)
+
   const graphic = new mars3d.graphic.BillboardEntity({
-    position: new mars3d.LngLatPoint(116.4, 30.8, 1000),
+    position: startPoint,
     style: {
       image: "img/marker/street.png",
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
@@ -354,6 +357,36 @@ function addDemoGraphic13(graphicLayer) {
     attr: { remark: "示例13" }
   })
   graphicLayer.addGraphic(graphic)
+
+  // 计算点对点的方向
+  const direction = mars3d.MeasureUtil.getAngle(startPoint, stopPoint)
+
+  const sector = new mars3d.graphic.Sector({
+    position: startPoint,
+    style: {
+      radius: 5000,
+      startAngle: direction - 45,
+      endAngle: direction + 45,
+
+      color: "#3388ff",
+      opacity: 0.5,
+      outline: true,
+      outlineWidth: 3,
+      outlineColor: "#ffffff"
+    }
+  })
+  graphicLayer.addGraphic(sector)
+
+  const endPoint = new mars3d.graphic.PointEntity({
+    position: stopPoint,
+    style: {
+      color: "#ff0000",
+      pixelSize: 10,
+      outlineColor: "#ffffff",
+      outlineWidth: 2
+    }
+  })
+  graphicLayer.addGraphic(endPoint)
 }
 
 function addDemoGraphic14(graphicLayer) {
