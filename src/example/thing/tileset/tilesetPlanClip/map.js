@@ -1,6 +1,8 @@
 import * as mars3d from "mars3d"
 
 export let map // mars3d.Map三维地图对象
+
+let terrainPlanClip
 let tilesetLayer
 
 /**
@@ -11,6 +13,17 @@ let tilesetLayer
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
+
+
+  // 地形开挖
+  terrainPlanClip = new mars3d.thing.TerrainPlanClip({
+    diffHeight: 1000, // 井的深度
+    image: "img/textures/poly-stone.jpg", // 边界墙材质
+    imageBottom: "img/textures/poly-soil.jpg", // 底部区域材质
+    splitNum: 50 // 井边界插值数
+  })
+  map.addThing(terrainPlanClip)
+
 
   // 模型
   tilesetLayer = new mars3d.layer.TilesetLayer({
@@ -41,12 +54,13 @@ export function onMounted(mapInstance) {
  * @returns {void} 无
  */
 export function onUnmounted() {
+  clear()
   map = null
 }
 
 // 绘制线
 export async function drawLine() {
-  tilesetLayer.planClip.clear()
+  clear()
 
   const graphic = await map.graphicLayer.startDraw({
     type: "polyline",
@@ -62,11 +76,12 @@ export async function drawLine() {
   console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
 
   tilesetLayer.planClip.positions = positions
+  terrainPlanClip.positions = positions // 同时切地形
 }
 
 // 绘制矩形
 export async function drawExtent() {
-  tilesetLayer.planClip.clear()
+  clear()
 
   const graphic = await map.graphicLayer.startDraw({
     type: "rectangle",
@@ -81,11 +96,12 @@ export async function drawExtent() {
   console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
 
   tilesetLayer.planClip.positions = positions
+  // terrainPlanClip.positions = positions // 同时切地形
 }
 
 // 绘制面
 export async function drawPoly() {
-  tilesetLayer.planClip.clear()
+  clear()
 
   const graphic = await map.graphicLayer.startDraw({
     type: "polygon",
@@ -101,9 +117,11 @@ export async function drawPoly() {
 
   tilesetLayer.planClip.positions = positions
 }
+
 // 绘制面(外切)
 export async function drawPoly2() {
-  tilesetLayer.planClip.clear()
+  clear()
+
   const graphic = await map.graphicLayer.startDraw({
     type: "polygon",
     style: {
@@ -140,4 +158,5 @@ export function rangeAngle2(value) {
 
 export function clear() {
   tilesetLayer.planClip.clear()
+  terrainPlanClip.clear()
 }

@@ -19,8 +19,6 @@ export const eventTabel = new mars3d.BaseClass()
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
-
-  globalNotify("已知问题提示", `(1) 开挖区域内矢量对象无法穿透进行拾取。 (2) 多个开挖区域距离太远时会存在误差。`)
 }
 
 /**

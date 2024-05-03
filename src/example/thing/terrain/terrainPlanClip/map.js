@@ -22,8 +22,6 @@ export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
-
-  globalNotify("已知问题提示", `因为使用clippingPlanes接口，绘制多边形时，部分围合角度时会存在效果不对`)
 }
 
 /**
@@ -85,8 +83,6 @@ export function changeClipHeight(val) {
 
 // 添加矩形
 export async function btnDrawExtent() {
-  terrainPlanClip.clear() // 清除挖地区域
-
   const graphic = await map.graphicLayer.startDraw({
     type: "rectangle",
     style: {
@@ -106,8 +102,6 @@ export async function btnDrawExtent() {
 
 // 添加多边形
 export async function btnDraw() {
-  terrainPlanClip.clear() // 清除挖地区域
-
   const graphic = await map.graphicLayer.startDraw({
     type: "polygon",
     style: {
@@ -126,4 +120,24 @@ export async function btnDraw() {
 // 清除
 export function removeAll() {
   terrainPlanClip.clear() // 清除挖地区域
+}
+
+// 绘制线
+export async function drawLine() {
+  terrainPlanClip.clear()
+
+  const graphic = await map.graphicLayer.startDraw({
+    type: "polyline",
+    maxPointNum: 2,
+    style: {
+      color: "#007be6",
+      opacity: 0.8,
+      outline: false
+    }
+  })
+  const positions = graphic.positionsShow
+  map.graphicLayer.clear()
+  console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+
+  terrainPlanClip.positions = positions
 }

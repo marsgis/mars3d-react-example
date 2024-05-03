@@ -95,7 +95,7 @@ function addDemoGraphic1(graphicLayer) {
   graphicLayer.addGraphic(graphic)
 
   // 演示个性化处理graphic
-  // initGraphicManager(graphic)
+  initGraphicManager(graphic)
 }
 
 // 也可以在单个Graphic上做个性化管理及绑定操作
@@ -255,7 +255,76 @@ function addDemoGraphic5(graphicLayer) {
     attr: { remark: "示例5" }
   })
   graphicLayer.addGraphic(graphic)
+
+
+  addSplitLabel({
+    positions: graphic.positionsShow,
+    text: "合肥火星科技有限公司",
+    step: 200
+  })
 }
+
+function addSplitLabel(options) {
+  const positions = options.positions
+  const len = positions.length
+  const text = options.text.split("") // 文本
+  const step = options.step ?? 100 // 间隔 米
+
+  let allDistance = 0
+  for (let i = 1; i < len; i++) {
+    const distance = Cesium.Cartesian3.distance(positions[i - 1], positions[i])
+    positions[i]._distance = distance
+    allDistance += distance
+  }
+  let startDistance = (allDistance - (text.length - 1) * step) / 2
+  let thisDistance = 0
+
+  function getTextPoint(pt1, pt2) {
+    const temp = startDistance - thisDistance
+    if (temp > 0) {
+      const newpt = mars3d.PointUtil.getOnLinePointByLen(pt1, pt2, temp)
+      textPoints.push(newpt)
+      startDistance += step
+    } else if (temp === 0) {
+      textPoints.push(pt2)
+      startDistance += step
+    }
+  }
+
+  const textPoints = []
+  for (let i = 1; i < len; i++) {
+    const pt1 = positions[i - 1]
+    const pt2 = positions[i]
+    const distance = pt2._distance
+    while (thisDistance + distance >= startDistance && textPoints.length < text.length) {
+      getTextPoint(pt1, pt2)
+    }
+    if (textPoints.length >= text.length) {
+      break
+    }
+    thisDistance += distance
+  }
+
+  textPoints.forEach((position, index) => {
+    const graphic = new mars3d.graphic.LabelEntity({
+      position: position,
+      style: {
+        text: text[index],
+        font_size: 46, // 字号放大一倍
+        scale: 0.5, // scale传0.5
+        font_family: "楷体",
+        color: "#00ffff",
+        outline: true,
+        outlineColor: "#000000",
+        outlineWidth: 2,
+        horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+        verticalOrigin: Cesium.VerticalOrigin.BOTTOM
+      }
+    })
+    graphicLayer.addGraphic(graphic)
+  })
+}
+
 
 function addDemoGraphic6(graphicLayer) {
   const graphic = new mars3d.graphic.PolylineEntity({

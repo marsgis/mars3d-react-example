@@ -10,21 +10,12 @@ export const mapOptions = {
   // 方式1：在创建地球前的参数中配置
   basemaps: [
     {
-      name: "谷歌影像(WGS84)",
+      name: "谷歌影像",
       icon: "img/basemaps/google_img.png",
       type: "google",
       layer: "img_d",
-      chinaCRS: mars3d.ChinaCRS.WGS84,
+      chinaCRS: mars3d.ChinaCRS.GCJ02,
       show: true
-    },
-    {
-      name: "谷歌影像",
-      icon: "img/basemaps/esriWorldImagery.png",
-      type: "group",
-      layers: [
-        { name: "底图", type: "google", layer: "img_d", chinaCRS: mars3d.ChinaCRS.GCJ02 },
-        { name: "注记", type: "google", layer: "img_z", chinaCRS: mars3d.ChinaCRS.GCJ02 }
-      ]
     },
     {
       name: "谷歌电子",

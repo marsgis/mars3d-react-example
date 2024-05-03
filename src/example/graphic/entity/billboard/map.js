@@ -352,7 +352,16 @@ function addDemoGraphic13(graphicLayer) {
     style: {
       image: "img/marker/street.png",
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
-      verticalOrigin: Cesium.VerticalOrigin.BOTTOM
+      verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+      label: {
+        text: "根据点位自动计算方向",
+        font_size: 18,
+        color: "#ffffff",
+        pixelOffsetY: -50,
+        distanceDisplayCondition: true,
+        distanceDisplayCondition_far: 500000,
+        distanceDisplayCondition_near: 0
+      }
     },
     attr: { remark: "示例13" }
   })

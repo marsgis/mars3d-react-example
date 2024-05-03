@@ -15,6 +15,7 @@ export const mapOptions = {
       type: "arcgis",
       url: "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer",
       enablePickFeatures: false,
+      czm: true,
       show: true
     },
     {

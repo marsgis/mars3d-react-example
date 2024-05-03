@@ -64,4 +64,4 @@ class Kml2JsonLayer extends mars3d.layer.GeoJsonLayer {
 mars3d.layer.Kml2JsonLayer = Kml2JsonLayer
 
 // 注册下
-mars3d.LayerUtil.register("kml2json", Kml2JsonLayer)
+mars3d.LayerUtil.register("geojson_kml", Kml2JsonLayer)

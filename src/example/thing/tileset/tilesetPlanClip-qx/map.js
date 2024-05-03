@@ -12,8 +12,6 @@ let tilesetLayer
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
-  globalNotify("已知问题提示", `因为使用clippingPlanes接口，绘制面时，有些绘制的角度存在效果不对`)
-
   // 加模型
   tilesetLayer = new mars3d.layer.TilesetLayer({
     name: "县城社区",
@@ -23,7 +21,6 @@ export function onMounted(mapInstance) {
     skipLevelOfDetail: true,
     preferLeaves: true,
     cullWithChildrenBounds: false,
-
     center: { lat: 28.440675, lng: 119.487735, alt: 639, heading: 269, pitch: -38 },
 
     // 可传入TilesetPlanClip构造参数，下面是演示裁剪区域

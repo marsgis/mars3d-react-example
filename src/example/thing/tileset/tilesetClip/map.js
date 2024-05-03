@@ -10,6 +10,7 @@ export const mapOptions = {
 }
 
 let tilesetLayer
+let terrainClip
 
 /**
  * 初始化地图业务，生命周期钩子函数（必须）
@@ -20,6 +21,16 @@ let tilesetLayer
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
   map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
+
+  terrainClip = new mars3d.thing.TerrainClip({
+    diffHeight: 50, // 井的深度
+    image: "img/textures/poly-stone.jpg",
+    imageBottom: "img/textures/poly-soil.jpg",
+    splitNum: 80 // 井边界插值数
+  })
+  map.addThing(terrainClip)
+
+
 
   globalNotify("已知问题提示", `(1) 目前不支持所有类型3dtile数据，请替换url进行自测`)
 
@@ -36,7 +47,7 @@ export function onUnmounted() {
 
 // true:  精确模式, 直接存储范围,但传入的范围顶点数量多时，就会造成一定程度的卡顿；
 // false: 掩膜模式，栅格化范围,效率与范围顶点数量无关,但放大后锯齿化严重
-const precise = false
+const precise = true
 
 export function showDytDemo() {
   removeLayer()
@@ -136,6 +147,7 @@ function removeLayer() {
     map.removeLayer(tilesetLayer, true)
     tilesetLayer = null
   }
+  terrainClip.clear() // 清除地形挖地区域
 }
 
 // 添加了压平区域后的回调事件
@@ -160,6 +172,8 @@ export async function btnDrawExtent() {
   console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
 
   tilesetLayer.clip.addArea(positions)
+
+  terrainClip.addArea(positions) // 同时开挖地形
 }
 // 绘制裁剪区
 export async function btnDraw() {
@@ -178,11 +192,15 @@ export async function btnDraw() {
   console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
 
   tilesetLayer.clip.addArea(positions)
+
+  terrainClip.addArea(positions) // 同时开挖地形
 }
 // 清除
 export function removeAll() {
   map.graphicLayer.clear()
   tilesetLayer.clip.clear()
+
+  terrainClip.clear() // 清除地形挖地区域
 }
 
 // 定位至模型

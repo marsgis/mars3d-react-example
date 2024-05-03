@@ -188,7 +188,7 @@
             "main": "map/other/mask-div"
           },
           {
-            "name": "绘制反选遮罩层",
+            "name": "反选遮罩层",
             "thumbnail": "layerg-geojson-mask.jpg",
             "main": "layer-graphic/geojson/mask"
           }
@@ -587,40 +587,6 @@
         "details": "支持加载在离线或私有环境发布的各种标准服务",
         "children": [
           {
-            "name": "本地单张图片",
-            "thumbnail": "layert-type-image.jpg",
-            "main": "layer-tile/type/image",
-            "hasPannel": true
-          },
-          {
-            "name": "本地单张图片(区域影像)",
-            "thumbnail": "layert-type-image-rectangle.jpg",
-            "main": "layer-tile/type/image-rectangle",
-            "hasPannel": true
-          },
-          {
-            "name": "全国温度图(image应用案例)",
-            "thumbnail": "layert-type-image-kriging.jpg",
-            "main": "layer-tile/type/image-kriging",
-            "libs": [
-              "mars3d",
-              "kriging"
-            ],
-            "resources": [
-              "krigingConfig.js"
-            ],
-            "hasPannel": true
-          },
-          {
-            "name": "极坐标图(image应用案例)",
-            "thumbnail": "layert-type-image-echarts.jpg",
-            "main": "layer-tile/type/image-echarts",
-            "libs": [
-              "mars3d",
-              "echarts"
-            ]
-          },
-          {
             "name": "标准XYZ金字塔瓦片",
             "thumbnail": "layert-type-xyz.jpg",
             "main": "layer-tile/type/xyz",
@@ -630,6 +596,12 @@
             "name": "标准XYZ金字塔瓦片(区域影像)",
             "thumbnail": "layert-type-xyz-rectangle.jpg",
             "main": "layer-tile/type/xyz-rectangle",
+            "hasPannel": true
+          },
+          {
+            "name": "标准TMS瓦片",
+            "thumbnail": "layert-type-tms.jpg",
+            "main": "layer-tile/type/tms",
             "hasPannel": true
           },
           {
@@ -660,6 +632,56 @@
             "name": "谷歌地球企业版(需部署私服)",
             "thumbnail": "layert-type-gee.jpg",
             "main": "layer-tile/type/gee"
+          }
+        ]
+      },
+      {
+        "name": "本地地图数据源",
+        "details": "支持加载本地文件或私有环境发布的各种标准数据源",
+        "children": [
+          {
+            "name": "全球单张图片",
+            "thumbnail": "layert-type-image.jpg",
+            "main": "layer-tile/type/image",
+            "hasPannel": true
+          },
+          {
+            "name": "局部影像图片",
+            "thumbnail": "layert-type-image-rectangle.jpg",
+            "main": "layer-tile/type/image-rectangle",
+            "hasPannel": true
+          },
+          {
+            "name": "TIF影像文件加载",
+            "thumbnail": "layert-type-image-tif.jpg",
+            "main": "layer-tile/type/image-tif",
+            "hasPannel": true,
+            "libs": [
+              "mars3d",
+              "geotiff"
+            ]
+          },
+          {
+            "name": "全国温度图(image应用案例)",
+            "thumbnail": "layert-type-image-kriging.jpg",
+            "main": "layer-tile/type/image-kriging",
+            "libs": [
+              "mars3d",
+              "kriging"
+            ],
+            "resources": [
+              "krigingConfig.js"
+            ],
+            "hasPannel": true
+          },
+          {
+            "name": "极坐标图(image应用案例)",
+            "thumbnail": "layert-type-image-echarts.jpg",
+            "main": "layer-tile/type/image-echarts",
+            "libs": [
+              "mars3d",
+              "echarts"
+            ]
           }
         ]
       },
@@ -1035,6 +1057,11 @@
             "hasPannel": true
           },
           {
+            "name": "业务后端数据图层",
+            "thumbnail": "layerg-basis-busineData.jpg",
+            "main": "layer-graphic/basis/busineData"
+          },
+          {
             "name": "DIV 数据图层",
             "thumbnail": "graphic-divGraphic-basis.jpg",
             "main": "graphic/divGraphic/basis",
@@ -1101,9 +1128,24 @@
             "resources": [
               "HuxingLayer.js"
             ]
+          }
+        ]
+      },
+      {
+        "name": "本地数据文件",
+        "children": [
+          {
+            "name": "Excel、CSV格式加载",
+            "thumbnail": "layerg-excel.jpg",
+            "main": "layer-graphic/file/excel",
+            "hasPannel": true,
+            "libs": [
+              "mars3d",
+              "xlsx"
+            ]
           },
           {
-            "name": "SHP文件的加载(转GeoJson)",
+            "name": "Shapefile(SHP)文件加载",
             "thumbnail": "layerg-geojson-shp2json.jpg",
             "main": "layer-graphic/geojson/shp2json",
             "hasPannel": true,
@@ -1116,7 +1158,7 @@
             ]
           },
           {
-            "name": "KML/KMZ文件的加载(转GeoJson)",
+            "name": "KML/KMZ文件加载",
             "thumbnail": "layerg-geojson-kml2json.jpg",
             "main": "layer-graphic/geojson/kml2json",
             "hasPannel": true,
@@ -1129,7 +1171,7 @@
             ]
           },
           {
-            "name": "WKT格式的加载(转GeoJson)",
+            "name": "WKT格式加载",
             "thumbnail": "layerg-geojson-wkt.jpg",
             "main": "layer-graphic/geojson/wkt",
             "hasPannel": true,
@@ -1286,55 +1328,55 @@
         "details": "主要是Label、Point、Billboard、Model 单个点的对象",
         "children": [
           {
-            "name": "Label 文字",
-            "thumbnail": "graphic-entity-label.jpg",
-            "main": "graphic/entity/label",
-            "hasPannel": true
-          },
-          {
-            "name": "CanvasLabel 文字",
-            "thumbnail": "graphic-entity-canvasLabel.jpg",
-            "main": "graphic/entity/canvasLabel",
-            "hasPannel": true
-          },
-          {
-            "name": "LabelP 文字(支持大数据)",
-            "thumbnail": "graphic-primitive-label.jpg",
-            "main": "graphic/primitive/label",
-            "hasPannel": true
-          },
-          {
-            "name": "entity文字贴图",
-            "thumbnail": "graphic-entity-textMaterialProperty.jpg",
-            "main": "graphic/entity/textMaterialProperty",
-            "hasPannel": true
-          },
-          {
-            "name": "primitive文字贴图",
-            "thumbnail": "graphic-primitive-textMaterial.jpg",
-            "main": "graphic/primitive/textMaterial",
-            "hasPannel": true
-          },
-          {
-            "name": "Point 点 ",
+            "name": "像素点",
             "thumbnail": "graphic-entity-point.jpg",
             "main": "graphic/entity/point",
             "hasPannel": true
           },
           {
-            "name": "PointP 点(支持大数据)",
+            "name": "大量像素点(Primitive)",
             "thumbnail": "graphic-primitive-point.jpg",
             "main": "graphic/primitive/point",
             "hasPannel": true
           },
           {
-            "name": "危化品扩散效果(大量Point)",
+            "name": "危化品扩散效果(大量像素点)",
             "thumbnail": "graphic-primitive-point-lot.jpg",
             "main": "graphic/primitive/point-lot",
             "hasPannel": true
           },
           {
-            "name": "Billboard 图标点",
+            "name": "文字",
+            "thumbnail": "graphic-entity-label.jpg",
+            "main": "graphic/entity/label",
+            "hasPannel": true
+          },
+          {
+            "name": "大量文字(Primitive)",
+            "thumbnail": "graphic-primitive-label.jpg",
+            "main": "graphic/primitive/label",
+            "hasPannel": true
+          },
+          {
+            "name": "Canvas文字",
+            "thumbnail": "graphic-entity-canvasLabel.jpg",
+            "main": "graphic/entity/canvasLabel",
+            "hasPannel": true
+          },
+          {
+            "name": "文字贴图",
+            "thumbnail": "graphic-entity-textMaterialProperty.jpg",
+            "main": "graphic/entity/textMaterialProperty",
+            "hasPannel": true
+          },
+          {
+            "name": "文字贴图(Primitive)",
+            "thumbnail": "graphic-primitive-textMaterial.jpg",
+            "main": "graphic/primitive/textMaterial",
+            "hasPannel": true
+          },
+          {
+            "name": "图标点",
             "thumbnail": "graphic-entity-billboard.jpg",
             "main": "graphic/entity/billboard",
             "hasPannel": true,
@@ -1343,7 +1385,7 @@
             ]
           },
           {
-            "name": "Canvas图片点",
+            "name": "Canvas图标点",
             "thumbnail": "graphic-entity-billboard-canvas.jpg",
             "main": "graphic/entity/billboard-canvas",
             "resources": [
@@ -1352,7 +1394,7 @@
             "hasPannel": true
           },
           {
-            "name": "字体图片点",
+            "name": "字体图标点",
             "thumbnail": "graphic-entity-billboard-font.jpg",
             "main": "graphic/entity/billboard-font",
             "hasPannel": true,
@@ -1362,7 +1404,7 @@
             ]
           },
           {
-            "name": "Div图片点",
+            "name": "DIV图标点",
             "thumbnail": "graphic-entity-billboard-div.jpg",
             "main": "graphic/entity/billboard-div",
             "hasPannel": true,
@@ -1377,7 +1419,7 @@
             "main": "graphic/entity/billboard-panorama"
           },
           {
-            "name": "BillboardP 图标点(支持大数据)",
+            "name": "大量图标点(Primitive)",
             "thumbnail": "graphic-primitive-billboard.jpg",
             "main": "graphic/primitive/billboard",
             "hasPannel": true
@@ -1395,7 +1437,7 @@
             "download": false
           },
           {
-            "name": "FlatBillboard 平面图标",
+            "name": "平面图标(FlatBillboard)",
             "thumbnail": "graphic-combine-flatBillboard.jpg",
             "main": "graphic/combine/flatBillboard",
             "hasPannel": true
@@ -1407,26 +1449,26 @@
             "hasPannel": true
           },
           {
-            "name": "entity点对象动态位置",
+            "name": "点对象动态位置",
             "thumbnail": "graphic-entity-addDynamicPosition.gif",
             "main": "graphic/entity/addDynamicPosition",
             "hasPannel": true
           },
           {
-            "name": "entity点对象动态位置贴模型",
+            "name": "点对象动态位置贴模型",
             "thumbnail": "graphic-entity-addDynamicPosition-tileset.gif",
             "main": "graphic/entity/addDynamicPosition-tileset",
             "hasPannel": true,
             "hidden": true
           },
           {
-            "name": "primitive点对象动态位置",
+            "name": "点对象动态位置(Primitive)",
             "thumbnail": "graphic-primitive-addDynamicPosition.gif",
             "main": "graphic/primitive/addDynamicPosition",
             "hasPannel": true
           },
           {
-            "name": "primitive点对象动态位置贴模型",
+            "name": "点对象动态位置贴模型(Primitive)",
             "thumbnail": "graphic-primitive-addDynamicPosition.gif",
             "main": "graphic/primitive/addDynamicPosition-tileset",
             "hasPannel": true,
@@ -1439,7 +1481,7 @@
         "details": "由DIV",
         "children": [
           {
-            "name": "DivGraphic 基础对象",
+            "name": "DIV点对象",
             "thumbnail": "graphic-divGraphic-basis.jpg",
             "main": "graphic/divGraphic/basis",
             "resources": [
@@ -1448,16 +1490,7 @@
             "hasPannel": true
           },
           {
-            "name": "DivPlane 三维DIV面板",
-            "thumbnail": "graphic-divGraphic-divPlane.jpg",
-            "main": "graphic/divGraphic/divPlane",
-            "hasPannel": true,
-            "resources": [
-              "/temp/css/divGraphic.css"
-            ]
-          },
-          {
-            "name": "可拖拽的DIV",
+            "name": "可拖拽DIV点对象",
             "thumbnail": "graphic-divGraphic-divIndicator.jpg",
             "main": "graphic/divGraphic/divIndicator",
             "hasPannel": true,
@@ -1467,13 +1500,22 @@
             ]
           },
           {
+            "name": "三维DIV面板",
+            "thumbnail": "graphic-divGraphic-divPlane.jpg",
+            "main": "graphic/divGraphic/divPlane",
+            "hasPannel": true,
+            "resources": [
+              "/temp/css/divGraphic.css"
+            ]
+          },
+          {
             "name": "动态效果点(南京高校)",
             "thumbnail": "graphic-divGraphic-divLightPoint.gif",
             "main": "graphic/divGraphic/divLightPoint",
             "hasPannel": true
           },
           {
-            "name": "时序位置坐标",
+            "name": "DIV时序位置坐标",
             "thumbnail": "graphic-divGraphic-dynamic.jpg",
             "main": "graphic/divGraphic/dynamic",
             "resources": [
@@ -1490,7 +1532,7 @@
             ]
           },
           {
-            "name": "饼形图点",
+            "name": "echarts饼形图点",
             "thumbnail": "graphic-divGraphic-echarts-pie.jpg",
             "main": "graphic/divGraphic/echarts-pie",
             "libs": [
@@ -1499,7 +1541,7 @@
             ]
           },
           {
-            "name": "动态水球点",
+            "name": "echarts动态水球点",
             "thumbnail": "graphic-divGraphic-echarts-liqiudfill.gif",
             "main": "graphic/divGraphic/echarts-liqiudfill",
             "libs": [
@@ -1508,7 +1550,7 @@
             ]
           },
           {
-            "name": "浮动监控点",
+            "name": "浮动视频监控点",
             "thumbnail": "graphic-divGraphic-video.jpg",
             "main": "graphic/divGraphic/video",
             "hasPannel": true,
@@ -1518,7 +1560,7 @@
             ]
           },
           {
-            "name": "浮动监控点HLS",
+            "name": "浮动视频监控点HLS",
             "thumbnail": "graphic-divGraphic-video-hls.jpg",
             "main": "graphic/divGraphic/video-hls",
             "libs": [
@@ -1539,39 +1581,39 @@
         "download": false,
         "children": [
           {
-            "name": "Model 小模型",
+            "name": "gLTF模型",
             "thumbnail": "graphic-entity-model.jpg",
             "main": "graphic/entity/model",
             "params": "data=gltf",
             "hasPannel": true
           },
           {
-            "name": "ModelP 小模型",
+            "name": "大量gLTF模型(Primitive)",
             "thumbnail": "graphic-primitive-model.jpg",
             "main": "graphic/primitive/model",
             "params": "data=gltf",
             "hasPannel": true
           },
           {
-            "name": "gltf模型标绘(含参数编辑)",
+            "name": "gLTF模型标绘及编辑",
             "thumbnail": "layerg-draw-draw-model.jpg",
             "main": "layer-graphic/draw/draw-model",
             "hasPannel": true
           },
           {
-            "name": "gltf模型库",
+            "name": "gLTF模型库",
             "thumbnail": "layerg-draw-draw-model-list.jpg",
             "main": "layer-graphic/draw/draw-model-list",
             "hasPannel": true
           },
           {
-            "name": "gltf自定义材质",
+            "name": "gLTF自定义材质",
             "thumbnail": "graphic-primitive-model-customShader.jpg",
             "main": "graphic/primitive/model-customShader",
             "hasPannel": true
           },
           {
-            "name": "gltf零部件控制(运载火箭)",
+            "name": "gLTF零部件控制(运载火箭)",
             "thumbnail": "graphic-primitive-model-articulations.jpg",
             "main": "graphic/primitive/model-articulations",
             "hasPannel": true
@@ -1582,7 +1624,7 @@
             "main": "graphic/entity/model-rotate"
           },
           {
-            "name": "gltf模型剖切",
+            "name": "gLTF模型剖切",
             "thumbnail": "thing-gltf-modelPlanClip.jpg",
             "main": "thing/gltf/modelPlanClip",
             "hasPannel": true
@@ -1602,43 +1644,43 @@
         "name": "立体单点对象",
         "children": [
           {
-            "name": "Box 盒子",
+            "name": "盒子",
             "thumbnail": "graphic-entity-box.jpg",
             "main": "graphic/entity/box",
             "hasPannel": true
           },
           {
-            "name": "BoxP 盒子",
+            "name": "盒子(Primitive)",
             "thumbnail": "graphic-primitive-box.jpg",
             "main": "graphic/primitive/box",
             "hasPannel": true
           },
           {
-            "name": "BoxCombine 盒子",
+            "name": "大量盒子(合并渲染Primitive)",
             "thumbnail": "graphic-combine-box.jpg",
             "main": "graphic/combine/box",
             "hasPannel": true
           },
           {
-            "name": "Cylinder 圆锥",
+            "name": "圆锥",
             "thumbnail": "graphic-entity-cylinder.jpg",
             "main": "graphic/entity/cylinder",
             "hasPannel": true
           },
           {
-            "name": "CylinderP 圆锥、圆柱",
+            "name": "圆锥(Primitive)",
             "thumbnail": "graphic-primitive-cylinder.gif",
             "main": "graphic/primitive/cylinder",
             "hasPannel": true
           },
           {
-            "name": "CylinderCombine 圆锥、圆柱",
+            "name": "大量圆锥(合并渲染Primitive)",
             "thumbnail": "graphic-combine-cylinder.jpg",
             "main": "graphic/combine/cylinder",
             "hasPannel": true
           },
           {
-            "name": "统计柱状图(Cylinder案例)",
+            "name": "统计柱状图(圆锥案例)",
             "thumbnail": "graphic-entity-cylinder-gdp.jpg",
             "main": "graphic/entity/cylinder-gdp",
             "libs": [
@@ -1651,7 +1693,7 @@
             "download": false
           },
           {
-            "name": "entity圆锥追踪体",
+            "name": "圆锥追踪体",
             "thumbnail": "graphic-entity-coneTrack.gif",
             "main": "graphic/entity/coneTrack",
             "hasPannel": true,
@@ -1661,19 +1703,19 @@
             ]
           },
           {
-            "name": "primitive圆锥追踪体",
+            "name": "圆锥追踪体(Primitive)",
             "thumbnail": "graphic-primitive-coneTrack.jpg",
             "main": "graphic/primitive/coneTrack",
             "hasPannel": true
           },
           {
-            "name": "Frustum 四棱锥体",
+            "name": "四棱锥体",
             "thumbnail": "graphic-primitive-frustum.jpg",
             "main": "graphic/primitive/frustum",
             "hasPannel": true
           },
           {
-            "name": "FrustumCombine  四棱锥体",
+            "name": "大量四棱锥体(合并渲染Primitive)",
             "thumbnail": "graphic-combine-frustum.jpg",
             "main": "graphic/combine/frustum",
             "hasPannel": true
@@ -1685,7 +1727,7 @@
             "hasPannel": true
           },
           {
-            "name": "Ellipsoid 球、半球、椭球",
+            "name": "球、半球、椭球",
             "thumbnail": "graphic-entity-ellipsoid.jpg",
             "main": "graphic/entity/ellipsoid",
             "hasPannel": true
@@ -1697,13 +1739,13 @@
             "hasPannel": true
           },
           {
-            "name": "EllipsoidP 球、半球、椭球",
+            "name": "球、半球、椭球(Primitive)",
             "thumbnail": "graphic-primitive-ellipsoid.jpg",
             "main": "graphic/primitive/ellipsoid",
             "hasPannel": true
           },
           {
-            "name": "EllipsoidCombine  球、半球、椭球",
+            "name": "大量球、半球、椭球(合并渲染Primitive)",
             "thumbnail": "graphic-combine-ellipsoid.jpg",
             "main": "graphic/combine/ellipsoid",
             "hasPannel": true
@@ -1714,19 +1756,19 @@
         "name": "线状对象",
         "children": [
           {
-            "name": "Polyline 线",
+            "name": "线",
             "thumbnail": "graphic-entity-polyline.gif",
             "main": "graphic/entity/polyline",
             "hasPannel": true
           },
           {
-            "name": "PolylineP 线",
+            "name": "线(Primitive)",
             "thumbnail": "graphic-primitive-polyline.jpg",
             "main": "graphic/primitive/polyline",
             "hasPannel": true
           },
           {
-            "name": "PolylineCombine 大量线",
+            "name": "大量线(合并渲染Primitive)",
             "thumbnail": "graphic-combine-polyline.jpg",
             "main": "graphic/combine/polyline",
             "hasPannel": true
@@ -1797,7 +1839,7 @@
             "main": "graphic/combine/polyline-vline-lineFlow"
           },
           {
-            "name": "Path 运行轨迹",
+            "name": "Path轨迹",
             "thumbnail": "graphic-entity-path.jpg",
             "main": "graphic/entity/path",
             "hasPannel": true
@@ -1817,37 +1859,37 @@
             "download": false
           },
           {
-            "name": "PolylineVolume 管道线",
+            "name": "管道线",
             "thumbnail": "graphic-entity-polylineVolume.jpg",
             "main": "graphic/entity/polylineVolume",
             "hasPannel": true
           },
           {
-            "name": "PolylineVolumeP 管道线",
+            "name": "管道线(Primitive)",
             "thumbnail": "graphic-primitive-polylineVolume.jpg",
             "main": "graphic/primitive/polylineVolume",
             "hasPannel": true
           },
           {
-            "name": "PolylineVolumeCombine 管道线",
+            "name": "大量管道线(合并渲染Primitive)",
             "thumbnail": "graphic-combine-polylineVolume.jpg",
             "main": "graphic/combine/polylineVolume",
             "hasPannel": true
           },
           {
-            "name": "Corridor 走廊",
+            "name": "走廊",
             "thumbnail": "graphic-entity-corridor.jpg",
             "main": "graphic/entity/corridor",
             "hasPannel": true
           },
           {
-            "name": "CorridorP 走廊",
+            "name": "走廊(Primitive)",
             "thumbnail": "graphic-primitive-corridor.jpg",
             "main": "graphic/primitive/corridor",
             "hasPannel": true
           },
           {
-            "name": "CorridorCombine 走廊",
+            "name": "大量走廊(合并渲染Primitive)",
             "thumbnail": "graphic-combine-corridor.jpg",
             "main": "graphic/combine/corridor",
             "hasPannel": true
@@ -1864,23 +1906,23 @@
         "name": "漫游路线对象",
         "children": [
           {
-            "name": "Route 实时轨迹路线",
+            "name": "Route实时轨迹路线",
             "thumbnail": "graphic-custom-route.jpg",
             "main": "graphic/custom/route",
             "hasPannel": true
           },
           {
-            "name": "Route 模型上实时轨迹路线",
+            "name": "模型上实时轨迹路线",
             "thumbnail": "graphic-custom-route-tileset.jpg",
             "main": "graphic/custom/route-tileset"
           },
           {
-            "name": "AIS动态目标",
+            "name": "AIS实时动态目标",
             "thumbnail": "graphic-custom-route-ais.jpg",
             "main": "graphic/custom/route-ais"
           },
           {
-            "name": "FixedRoute 历史轨迹路线",
+            "name": "FixedRoute历史轨迹路线",
             "thumbnail": "graphic-custom-fixedRoute.gif",
             "main": "graphic/custom/fixedRoute",
             "hasPannel": true
@@ -1944,19 +1986,19 @@
         "name": "平面对象",
         "children": [
           {
-            "name": "Plane 平面",
+            "name": "平面",
             "thumbnail": "graphic-entity-plane.jpg",
             "main": "graphic/entity/plane",
             "hasPannel": true
           },
           {
-            "name": "PlaneP 平面",
+            "name": "平面(Primitive)",
             "thumbnail": "graphic-primitive-plane.jpg",
             "main": "graphic/primitive/plane",
             "hasPannel": true
           },
           {
-            "name": "PlaneCombine 平面",
+            "name": "大量平面(合并渲染Primitive)",
             "thumbnail": "graphic-combine-plane.jpg",
             "main": "graphic/combine/plane",
             "hasPannel": true
@@ -1968,31 +2010,31 @@
             "hasPannel": true
           },
           {
-            "name": "Wall 墙",
+            "name": "墙",
             "thumbnail": "graphic-entity-wall.gif",
             "main": "graphic/entity/wall",
             "hasPannel": true
           },
           {
-            "name": "WallP 墙",
+            "name": "墙(Primitive)",
             "thumbnail": "graphic-primitive-wall.jpg",
             "main": "graphic/primitive/wall",
             "hasPannel": true
           },
           {
-            "name": "WallCombine 墙",
+            "name": "大量墙(合并渲染Primitive)",
             "thumbnail": "graphic-combine-wall.jpg",
             "main": "graphic/combine/wall",
             "hasPannel": true
           },
           {
-            "name": "扩散围墙",
+            "name": "扩散墙",
             "thumbnail": "graphic-primitive-diffuseWall.gif",
             "main": "graphic/primitive/diffuseWall",
             "hasPannel": true
           },
           {
-            "name": "走马灯围墙",
+            "name": "走马灯墙",
             "thumbnail": "graphic-primitive-scrollWall.gif",
             "main": "graphic/primitive/scrollWall",
             "hasPannel": true
@@ -2010,61 +2052,61 @@
         "details": "适用于需要属性机制控制，并且小于一千条数据的加载场景。Entity 支持各种属性、自定义控制及操作，功能强大但渲染效率要弱些。",
         "children": [
           {
-            "name": "Polygon 面",
+            "name": "多边形面",
             "thumbnail": "graphic-entity-polygon.jpg",
             "main": "graphic/entity/polygon",
             "hasPannel": true
           },
           {
-            "name": "PolygonP 面",
+            "name": "多边形面(Primitive)",
             "thumbnail": "graphic-primitive-polygon.jpg",
             "main": "graphic/primitive/polygon",
             "hasPannel": true
           },
           {
-            "name": "PolygonCombine 大量面",
+            "name": "大量多边形面(合并渲染Primitive)",
             "thumbnail": "graphic-combine-polygon.jpg",
             "main": "graphic/combine/polygon",
             "hasPannel": true
           },
           {
-            "name": "Rectangle 矩形",
+            "name": "矩形",
             "thumbnail": "graphic-entity-rectangle.jpg",
             "main": "graphic/entity/rectangle",
             "hasPannel": true
           },
           {
-            "name": "RectangleP 矩形",
+            "name": "矩形(Primitive)",
             "thumbnail": "graphic-primitive-rectangle.jpg",
             "main": "graphic/primitive/rectangle",
             "hasPannel": true
           },
           {
-            "name": "RectangleCombine 矩形",
+            "name": "大量矩形(合并渲染Primitive)",
             "thumbnail": "graphic-combine-rectangle.jpg",
             "main": "graphic/combine/rectangle",
             "hasPannel": true
           },
           {
-            "name": "Circle 圆、圆柱",
+            "name": "圆、圆柱",
             "thumbnail": "graphic-entity-circle.jpg",
             "main": "graphic/entity/circle",
             "hasPannel": true
           },
           {
-            "name": "Ellipse 椭圆、椭圆柱",
+            "name": "椭圆、椭圆柱",
             "thumbnail": "graphic-entity-ellipse.jpg",
             "main": "graphic/entity/ellipse",
             "hasPannel": true
           },
           {
-            "name": "CircleP 圆、圆柱",
+            "name": "圆、圆柱(Primitive)",
             "thumbnail": "graphic-primitive-circle.jpg",
             "main": "graphic/primitive/circle",
             "hasPannel": true
           },
           {
-            "name": "CircleCombine 圆、椭圆、圆柱",
+            "name": "大量圆、圆柱(合并渲染Primitive)",
             "thumbnail": "graphic-combine-circle.jpg",
             "main": "graphic/combine/circle",
             "hasPannel": true
@@ -2109,18 +2151,17 @@
           }
         ]
       },
-
       {
         "name": "水域相关对象",
         "children": [
           {
-            "name": "Water 水域面",
+            "name": "水面",
             "thumbnail": "graphic-primitive-water.jpg",
             "main": "graphic/primitive/water",
             "hasPannel": true
           },
           {
-            "name": "WaterCombine 大量水面",
+            "name": "大量水面(合并渲染Primitive)",
             "thumbnail": "graphic-combine-water.jpg",
             "main": "graphic/combine/water",
             "hasPannel": true
