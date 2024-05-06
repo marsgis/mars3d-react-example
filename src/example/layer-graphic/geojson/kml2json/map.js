@@ -11,7 +11,7 @@ export const mapOptions = {
   layers: [
     {
       name: "国境线",
-      type: "kml2json",
+      type: "geojson_kml",
       url: "//data.mars3d.cn/file/kml/countryboundary.kml",
       symbol: {
         styleOptions: {
@@ -24,7 +24,7 @@ export const mapOptions = {
     },
     {
       name: "省界线",
-      type: "kml2json",
+      type: "geojson_kml",
       url: "//data.mars3d.cn/file/kml/province.kml",
       symbol: {
         styleOptions: {

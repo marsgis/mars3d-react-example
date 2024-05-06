@@ -30,34 +30,30 @@ class Kml2JsonLayer extends mars3d.layer.GeoJsonLayer {
     }
 
     if (this.options.url) {
-      kgUtil
-        .toGeoJSON(this.options.url)
-        .then((data) => {
-          if (this._state === mars3d.State.REMOVED) {
-            return
-          }
-          this._load_data(data)
-        })
-        .catch(function (error) {
-          console.error("服务出错", error)
-        })
+      Cesium.Resource.fetchXML({ url: this.options.url }).then((data) => {
+        this._toGeoJSON(data)
+      })
     } else if (this.options.data) {
-      kgUtil
-        .toGeoJSON(this.options.data)
-        .then((data) => {
-          if (this._state === mars3d.State.REMOVED) {
-            return
-          }
-          this._load_data(data)
-        })
-        .catch(function (error) {
-          console.error("服务出错", error)
-        })
+      this._toGeoJSON(this.options.data)
     } else {
       if (newOptions) {
         console.warn("Kml2JsonLayer：没有传入 url 或 data 参数,请确认是否有误。")
       }
     }
+  }
+
+  _toGeoJSON(doc) {
+    kgUtil
+      .toGeoJSON(doc)
+      .then((data) => {
+        if (this._state === mars3d.State.REMOVED) {
+          return
+        }
+        this._load_data(data)
+      })
+      .catch(function (error) {
+        console.error("服务出错", error)
+      })
   }
 }
 

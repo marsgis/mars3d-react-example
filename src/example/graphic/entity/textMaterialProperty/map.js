@@ -242,8 +242,8 @@ export function startDrawGraphic() {
 }
 
 // 绘制贴地矩形
-export function startDrawGraphic2() {
-  graphicLayer.startDraw({
+export async function startDrawGraphic2() {
+  const graphic = await graphicLayer.startDraw({
     type: "rectangle",
     style: {
       materialType: mars3d.MaterialType.Text,

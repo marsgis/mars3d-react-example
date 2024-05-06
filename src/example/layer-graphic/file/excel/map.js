@@ -66,7 +66,7 @@ export function openFile(file) {
     }
   } else if (fileType === "csv") {
     const reader = new FileReader()
-    reader.readAsText(file, "GB2312")
+    reader.readAsText(file, "utf-8")
     reader.onloadend = function (e) {
       importCsvData(this.result)
     }
@@ -78,7 +78,7 @@ export function openFile(file) {
 async function importCsvData(result) {
   console.log("导入csv数据", result)
 
-  const rows = result.split("\r\n")
+  const rows = result.split("\n")
   const heads = rows[0].trim().split(",") // 列头
 
   const arrData = []
@@ -130,7 +130,7 @@ export function downloadCsvData() {
   }
   console.log("导出csv数据", result)
 
-  mars3d.Util.downloadFile("标注点.csv", result.join("\n"))
+  mars3d.Util.downloadFile("标注点.csv", result.join("\n"), "text/csv")
 }
 
 function importExcelData(result) {

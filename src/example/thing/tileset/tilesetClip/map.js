@@ -153,6 +153,9 @@ function removeLayer() {
 // 添加了压平区域后的回调事件
 function onAddClipArea(event) {
   eventTarget.fire("addItem", event)
+
+  const area = event.area
+  terrainClip.addArea(area.positions, area) // 同时开挖地形
 }
 
 // 绘制矩形
@@ -172,8 +175,6 @@ export async function btnDrawExtent() {
   console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
 
   tilesetLayer.clip.addArea(positions)
-
-  terrainClip.addArea(positions) // 同时开挖地形
 }
 // 绘制裁剪区
 export async function btnDraw() {
@@ -192,8 +193,6 @@ export async function btnDraw() {
   console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
 
   tilesetLayer.clip.addArea(positions)
-
-  terrainClip.addArea(positions) // 同时开挖地形
 }
 // 清除
 export function removeAll() {
@@ -212,12 +211,15 @@ export function flyToGraphic(item) {
 // 删除模型
 export function deletedGraphic(item) {
   tilesetLayer.clip.removeArea(item)
+  terrainClip.removeArea(item)
 }
 
 export function showHideArea(id, selected) {
   if (selected) {
     tilesetLayer.clip.showArea(id)
+    terrainClip.showArea(id)
   } else {
     tilesetLayer.clip.hideArea(id)
+    terrainClip.hideArea(id)
   }
 }

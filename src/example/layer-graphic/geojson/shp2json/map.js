@@ -8,6 +8,23 @@ export const mapOptions = {
   scene: {
     center: { lat: 31.614035, lng: 117.292184, alt: 25686, heading: 0, pitch: -44 }
   }
+  // layers: [
+  //   {
+  //     name: "高程点",
+  //     type: "geojson_shp",
+  //     url: "http://data.mars3d.cn/file/shp/yuexi_point.zip",
+  //     symbol: {
+  //       type: "pointP",
+  //       merge: true,
+  //       styleOptions: {
+  //         color: "#ff0000",
+  //         pixelSize: 6,
+  //         addHeight: 500
+  //       }
+  //     },
+  //     popup: "all"
+  //   }
+  // ]
 }
 
 export const treeEvent = new mars3d.BaseClass()
