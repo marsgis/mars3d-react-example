@@ -16,8 +16,11 @@ export const mapOptions = {
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
-  map.on(mars3d.EventType.load, () => {
-    LodGraphicLayer()
+
+  map.readyPromise.then(() => {
+    console.log("map初始化完成", map)
+
+    initLodGraphicLayer()
   })
 }
 
@@ -29,7 +32,7 @@ export function onUnmounted() {
   map = null
 }
 
-function LodGraphicLayer() {
+function initLodGraphicLayer() {
   const lodGraphicLayer = new mars3d.layer.LodGraphicLayer({
     IdField: "id", // 数据的唯一主键 字段名称
     minimumLevel: 11, // 限定层级，只加载该层级下的数据。[与效率相关的重要参数]

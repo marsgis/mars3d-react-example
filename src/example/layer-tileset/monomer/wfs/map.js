@@ -29,7 +29,8 @@ export function onMounted(mapInstance) {
   })
   map.addLayer(tilesetLayer)
 
-  map.on(mars3d.EventType.load, () => {
+  map.readyPromise.then(() => {
+    console.log("map初始化完成", map)
     addWfsLayer()
   })
 }

@@ -1,5 +1,6 @@
+/* eslint-disable no-undef */
 import * as mars3d from "mars3d"
-import * as XLSX from "xlsx"
+// import * as XLSX from "xlsx"
 
 export let map // mars3d.Map三维地图对象
 export let graphicLayer // 矢量图层对象
@@ -211,7 +212,7 @@ export function startDrawGraphic() {
   graphicLayer.startDraw({
     type: "billboardP",
     style: {
-      image: "img/marker/mark-blue.png",
+      image: "img/marker/point-red.png",
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
       label: {

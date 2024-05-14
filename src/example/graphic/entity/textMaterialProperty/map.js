@@ -79,7 +79,7 @@ function addDemoGraphic1(graphicLayer) {
   graphicLayer.addGraphic(graphic)
 }
 
-//  wall文字  primitive方式添加
+//  wall文字  entity方式
 function addDemoGraphic2(graphicLayer) {
   const graphic = new mars3d.graphic.WallEntity({
     positions: [
@@ -273,8 +273,9 @@ export async function onClickDrawPoint() {
     height: 10
   })
 
+
   const rectangleEntity = new mars3d.graphic.RectangleEntity({
-    positions,
+    positions: [positions[0], positions[2]],
     style: {
       materialType: mars3d.MaterialType.Text,
       materialOptions: {

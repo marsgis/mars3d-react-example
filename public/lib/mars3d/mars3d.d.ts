@@ -2,8 +2,8 @@
 /**
  * Mars3D三维可视化平台  mars3d
  *
- * 版本信息：v3.7.12
- * 编译日期：2024-05-06 21:30:23
+ * 版本信息：v3.7.13
+ * 编译日期：2024-05-14 21:03:38
  * 版权所有：Copyright by 火星科技  http://mars3d.cn
  * 使用单位：免费公开版 ，2024-01-15
  */
@@ -2372,6 +2372,8 @@ declare class HomeButton extends BaseCzmControl {
  * 帮助按钮 控件 (Cesium原生)
  * @param [options] - 参数对象，包括以下：
  * @param [options.icon] - 按钮图标,可以是：图片url路径、base64字符串、svg字符串、字体图标class名
+ * @param [options.firstOpen = true] - 是否首次自动弹出帮助信息面板
+ * @param [options.localStorageName = "cesium-hasSeenNavHelp"] - 首次加载页面后执行：window.localStorage.setItem(localStorageName, "true")
  * @param [options.id = createGuid()] - 对象的id标识
  * @param [options.enabled = true] - 对象的启用状态
  * @param [options.parentContainer] - 控件加入的父容器，默认为map所在的DOM map.toolbar
@@ -2381,6 +2383,8 @@ declare class HomeButton extends BaseCzmControl {
 declare class NavigationHelpButton extends BaseCzmControl {
     constructor(options?: {
         icon?: string;
+        firstOpen?: string;
+        localStorageName?: string;
         id?: string | number;
         enabled?: boolean;
         parentContainer?: HTMLElement;
@@ -3178,10 +3182,17 @@ declare class ColorRamp {
     /**
      * 获取对应值的色带上的颜色值
      * @param val - 数值
-     * @param [alpha = 0.8] - 颜色的透明度
+     * @param [alphaDef = 0.8] - 颜色的透明度
      * @returns 该值在色带上对应的颜色值，比如 "rgba(256, 0, 0, 0.8)"
      */
-    getColor(val: number, alpha?: number): string;
+    getColor(val: number, alphaDef?: number): string;
+    /**
+     * 获取对应值的色带上的颜色值
+     * @param val - 数值
+     * @param [alphaDef = 0.8] - 颜色的透明度
+     * @returns 该值在色带上对应的颜色值
+     */
+    getCesiumColor(val: number, alphaDef?: number): Cesium.Color;
 }
 
 /**
@@ -4002,11 +4013,11 @@ declare class DepthOfFieldEffect extends BaseEffect {
  * 雾场景效果
  * @param [options] - 参数对象，包括以下：
  * @param [options.enabled = true] - 对象的启用状态
- * @param [options.fogByDistance = new Cesium.Cartesian4(10, 0.0, 1000, 0.9)] - 雾强度
+ * @param [options.fogByDistance = new Cesium.Cartesian4(10, 0.0, 1000, 0.9)] - 雾强度,4个数字代表：最近距离，强度值，最远距离，强度值(0.0-1.0)
  * @param [options.fogByDistance_near] - 最近距离，可以与fogByDistance二选一
- * @param [options.fogByDistance_nearValue] - 最近强度，可以与fogByDistance二选一
+ * @param [options.fogByDistance_nearValue] - 最近强度(0.0-1.0)，可以与fogByDistance二选一
  * @param [options.fogByDistance_far] - 最远距离，可以与fogByDistance二选一
- * @param [options.fogByDistance_farValue] - 最远强度，可以与fogByDistance二选一
+ * @param [options.fogByDistance_farValue] - 最远强度(0.0-1.0)，可以与fogByDistance二选一
  * @param [options.color = Cesium.Color.WHITE] - 雾颜色
  * @param [options.maxHeight = 9000] - 最大高度，限定超出该高度不显示雾场景效果
  */
@@ -4022,7 +4033,7 @@ declare class FogEffect extends BaseEffect {
         maxHeight?: number;
     });
     /**
-     * 雾强度
+     * 雾强度,4个数字代表：最近距离，强度值，最远距离，强度值(0.0-1.0)
      */
     fogByDistance: Cesium.Cartesian4;
     /**
@@ -4539,7 +4550,7 @@ declare class BaseGraphic extends BaseClass {
     addTo(layer: GraphicLayer): BaseGraphic | any;
     /**
      * 从图层上移除，同 layer.removeGraphic
-     * @param [hasDestroy] - 是否调用destroy释放
+     * @param [hasDestroy = true] - 是否调用destroy释放
      * @returns 无
      */
     remove(hasDestroy?: boolean): void;
@@ -21812,7 +21823,7 @@ declare class GraphicGroupLayer extends GroupLayer {
     eachGraphic(method: (...params: any[]) => any, context?: any): GraphicGroupLayer;
     /**
      * 清除图层内所有矢量数据
-     * @param [hasDestroy = false] - 是否释放矢量对象
+     * @param [hasDestroy = true] - 是否释放矢量对象
      * @returns 无
      */
     clear(hasDestroy?: boolean): void;
@@ -22271,7 +22282,7 @@ declare class GraphicLayer extends BaseGraphicLayer {
     /**
      * 移除Graphic矢量数据
      * @param graphic - 矢量数据
-     * @param [hasDestroy = false] - 是否释放矢量对象
+     * @param [hasDestroy = true] - 是否释放矢量对象
      * @returns 当前对象本身，可以链式调用
      */
     removeGraphic(graphic: BaseGraphic | any, hasDestroy?: boolean): GraphicLayer;
@@ -23007,7 +23018,7 @@ declare class LodGraphicLayer extends GraphicLayer {
     updateGraphic(graphic: BaseGraphic | any, attr: any): void;
     /**
      * 清除图层内所有矢量数据
-     * @param [hasDestroy = false] - 是否释放矢量对象
+     * @param [hasDestroy = true] - 是否释放矢量对象
      * @returns 无
      */
     clear(hasDestroy?: boolean): void;
@@ -25581,7 +25592,7 @@ declare class GeeLayer extends BaseTileLayer {
 
 /**
  * 谷歌地图，
- * 【如果谷歌地址被封时，img_d图层时会改用高德等国内地图进行显示】
+ * 【如果谷歌地址被封时，img_d图层时会自动改用高德等其他地图进行显示】
  * @param [options] - 参数对象，包括以下：
  * @param [options.layer] - 图层类型，以及以下内容:<br />
  * <ul>
@@ -27583,6 +27594,14 @@ declare class Map extends BaseClass {
      */
     readonly cesiumWidget: Cesium.CesiumWidget;
     /**
+     * 获取地图完成解析加载完成的Promise承诺, 等价于load事件(区别在于load事件必须在load完成前绑定才能监听)。
+     * @example
+     * map.readyPromise.then(function(map) {
+     *       console.log("load完成", map)
+     *     })
+     */
+    readonly readyPromise: Promise<BaseLayer | any>;
+    /**
      * 获取或设置相机当前正在跟踪的Entity实例。
      */
     trackedEntity: Cesium.Entity | BaseEntity | undefined | any;
@@ -27830,7 +27849,7 @@ declare class Map extends BaseClass {
     /**
      * 移除图层
      * @param layer - 需要移除的图层
-     * @param [hasDestroy] - 是否释放 destroy
+     * @param [hasDestroy = false] - 是否释放 destroy
      * @returns 当前对象本身，可以链式调用
      */
     removeLayer(layer: BaseLayer, hasDestroy?: boolean): Map;
@@ -27909,7 +27928,7 @@ declare class Map extends BaseClass {
     /**
      * 移除控件
      * @param control - 需要移除的控件
-     * @param [hasDestroy] - 是否释放
+     * @param [hasDestroy = false] - 是否释放
      * @returns 当前对象本身，可以链式调用
      */
     removeControl(control: BaseControl, hasDestroy?: boolean): Map;
@@ -27943,7 +27962,7 @@ declare class Map extends BaseClass {
     /**
      * 移除特效对象
      * @param effect - 需要移除的特效对象
-     * @param [hasDestroy] - 是否释放
+     * @param [hasDestroy = false] - 是否释放
      * @returns 当前对象本身，可以链式调用
      */
     removeEffect(effect: BaseEffect, hasDestroy?: boolean): Map;
@@ -27963,7 +27982,7 @@ declare class Map extends BaseClass {
     /**
      * 移除Thing对象
      * @param item - 需要移除的Thing对象
-     * @param [hasDestroy] - 是否释放
+     * @param [hasDestroy = false] - 是否释放
      * @returns 当前对象本身，可以链式调用
      */
     removeThing(item: BaseThing, hasDestroy?: boolean): Map;
@@ -35179,6 +35198,7 @@ declare type getSlope_endItem = (event: {
  * @param [options.imageBottom] - 当显示开挖区域的井时，井底面贴图URL
  * @param [options.diffHeight] - 当显示开挖区域的井时，设置所有区域的挖掘深度（单位：米）
  * @param [options.splitNum = 30] - 当显示开挖区域的井时，井墙面每两点之间插值个数(概略值，有经纬网网格来插值)
+ * @param [options.czm = true] - true:使用cesium原生clippingPolygons接口来操作，false：使用mars3d自定义方式操作
  * @param [options.id = createGuid()] - 对象的id标识
  * @param [options.enabled = true] - 对象的启用状态
  * @param [options.eventParent] - 指定的事件冒泡对象，默认为所加入的map对象，false时不冒泡事件
@@ -35191,6 +35211,7 @@ declare class TerrainClip extends TerrainEditBase {
         imageBottom?: string;
         diffHeight?: number;
         splitNum?: number;
+        czm?: boolean;
         id?: string | number;
         enabled?: boolean;
         eventParent?: BaseClass | boolean;

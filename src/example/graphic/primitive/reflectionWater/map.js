@@ -52,7 +52,7 @@ export function onUnmounted() {
 }
 
 function addDemoGraphic1() {
-  const volumeCloud = new mars3d.graphic.ReflectionWater({
+  const reflectionWater = new mars3d.graphic.ReflectionWater({
     positions: [
       [117.216386, 31.815376, 35.16],
       [117.222533, 31.81729, 29.21],
@@ -69,7 +69,7 @@ function addDemoGraphic1() {
     },
     attr: { remark: "示例1" }
   })
-  graphicLayer.addGraphic(volumeCloud)
+  graphicLayer.addGraphic(reflectionWater)
 }
 
 

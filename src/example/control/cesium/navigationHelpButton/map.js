@@ -10,6 +10,8 @@ export const mapOptions = function (option) {
   return option
 }
 
+const localStorageName = "mars3d-hasSeenNavHelp-" + mars3d.Util.formatDate(new Date(), "yyyy-MM-dd")
+
 /**
  * 初始化地图业务，生命周期钩子函数（必须）
  * 框架在地图初始化完成后自动调用该函数
@@ -21,9 +23,12 @@ export function onMounted(mapInstance) {
 
   // 方式2：在创建地球后按需调用addControl添加(直接new对应type类型的控件)
   const navigationHelpButton = new mars3d.control.NavigationHelpButton({
-    icon: "/img/svg/navigationHelp.svg"
+    icon: "/img/svg/navigationHelp.svg",
+    firstOpen: true,
+    localStorageName: localStorageName // 仅为了方便演示,实际项目中不需要
   })
   map.addControl(navigationHelpButton)
+
 
   // 按钮触发自定义方法
   // map.control.navigationHelpButton._container.addEventListener("click", (event) => {
