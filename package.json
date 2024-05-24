@@ -65,7 +65,7 @@
     "typescript": "~5.2.2",
     "vite": "^4.5.2",
     "vite-plugin-eslint": "^1.8.1",
-    "vite-plugin-mars3d": "^4.0.0",
+    "vite-plugin-mars3d": "^4.1.0",
     "vite-plugin-monaco-editor": "^1.1.0"
   },
   "engines": {
