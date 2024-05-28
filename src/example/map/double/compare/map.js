@@ -36,7 +36,7 @@ export function onMounted(mapInstance) {
   createControl()
 
   map.on(mars3d.EventType.addLayer, function (event) {
-    const mapEx = mapSplit.mapEx
+    const mapEx = mapSplit?.mapEx
     if (mapEx) {
       const layerOptions = event.layer.toJSON() // 转为参数
       const newLayer = mars3d.LayerUtil.create(layerOptions) // 创建图层
@@ -59,6 +59,7 @@ export function onUnmounted() {
 
 export function createControl() {
   if (mapSplit) {
+    globalMsg("控件已存在,请勿重复创建!")
     return
   }
 
@@ -93,12 +94,15 @@ export function createControl() {
 }
 
 export function destroyControl() {
-  if (mapSplit) {
-    map.removeControl(mapSplit)
-    mapSplit = null
-    const mapOld = document.getElementById("centerDiv3D")
-    mapOld.style.width = "100%"
+  if (!mapSplit) {
+    globalMsg("控件已销毁,无需重复销毁!")
+    return
   }
+
+  map.removeControl(mapSplit)
+  mapSplit = null
+  const mapOld = document.getElementById("centerDiv3D")
+  mapOld.style.width = "100%"
 }
 
 function addTestData() {

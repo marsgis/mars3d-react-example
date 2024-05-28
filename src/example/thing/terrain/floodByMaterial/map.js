@@ -146,9 +146,13 @@ export function onChangeColor(color) {
 // 自动播放
 export function startPlay() {
   if (floodByMaterial.isStart) {
-    floodByMaterial.stop()
+    floodByMaterial.stop() // 暂停
   } else {
-    floodByMaterial.start()
+    if (floodByMaterial.height >= floodByMaterial._maxHeight - 1) {
+      floodByMaterial.restart() // 重新开始
+    } else {
+      floodByMaterial.start() // 开始或继续
+    }
   }
 }
 

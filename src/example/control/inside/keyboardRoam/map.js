@@ -12,6 +12,9 @@ export const mapOptions = {
   },
   control: {
     infoBox: false
+    // keyboardRoam: {
+    //   enabled: true
+    // }
   },
   layers: [
     {

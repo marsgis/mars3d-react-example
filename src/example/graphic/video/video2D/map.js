@@ -297,3 +297,30 @@ export async function onClickSelView() {
 
   selectedView.targetPosition = point
 }
+
+// 历史参数转为当前最新版本的参数
+// function oldStyle2New(oldStyle) {
+//   const camera = new Cesium.Camera(map.scene)
+//   camera.position = oldStyle.camera.position
+//   camera.direction = oldStyle.camera.direction
+//   camera.up = oldStyle.camera.up
+//   camera.right = oldStyle.camera.right
+
+//   let angle
+//   if (oldStyle.fov) {
+//     angle = Cesium.Math.toDegrees(oldStyle.fov / 2)
+//   } else if (oldStyle.fovDegree) {
+//     angle = oldStyle.fovDegree / 2
+//   }
+
+//   return {
+//     distance: oldStyle.dis,
+
+//     angle: angle,
+//     angle2: angle / oldStyle.aspectRatio,
+
+//     heading: Cesium.Math.toDegrees(camera.heading) - 90,
+//     pitch: Cesium.Math.toRadians(camera.pitch),
+//     roll: Cesium.Math.toRadians(camera.roll)
+//   }
+// }

@@ -190,18 +190,20 @@ function addDemoGraphic2(graphicLayer) {
 function addDemoGraphic3(graphicLayer) {
   const graphic = new mars3d.graphic.ModelEntity({
     name: "汽车",
-    position: [116.349194, 30.864603, 376.58],
+    position: [116.349194, 30.864603, 376],
     style: {
       url: "//data.mars3d.cn/gltf/mars/qiche.gltf",
       scale: 0.5,
-      minimumPixelSize: 50,
+      // minimumPixelSize: 50,
       silhouette: false,
 
       label: {
         text: "皖A12345",
         font_size: 18,
         color: "#ffffff",
-        pixelOffsetY: -50,
+        addHeight: 25,
+        // pixelOffsetY: -50,
+        scaleByDistance: new Cesium.NearFarScalar(100, 1.0, 10000, 0.2),
         distanceDisplayCondition: true,
         distanceDisplayCondition_far: 10000,
         distanceDisplayCondition_near: 0

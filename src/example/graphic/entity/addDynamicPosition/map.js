@@ -159,6 +159,7 @@ export function bindLayerPopup() {
 
 // 绑定右键菜单
 export function bindLayerContextMenu() {
+  let trackedGraphic
   graphicLayer.bindContextMenu([
     {
       text: "删除对象",
@@ -203,7 +204,7 @@ export function bindLayerContextMenu() {
       callback: function (e) {
         const graphic = e.graphic
         map.trackedEntity = graphic
-
+        trackedGraphic = graphic
         if (map.scene.mode === Cesium.SceneMode.SCENE2D) {
           setTimeout(() => {
             map.flyToPoint(graphic.positionShow, {
@@ -219,10 +220,11 @@ export function bindLayerContextMenu() {
       text: "取消锁定",
       icon: "fa fa-unlock-alt",
       show: function (e) {
-        return map.trackedEntity !== undefined
+        return e.graphic === trackedGraphic && map.trackedEntity !== undefined
       },
       callback: function (e) {
         map.trackedEntity = undefined
+        trackedGraphic = undefined
       }
     }
   ])

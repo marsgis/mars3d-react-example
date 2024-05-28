@@ -78,7 +78,7 @@ function createMapvLayer() {
   const mapVLayer = new mars3d.layer.MapVLayer(options)
   map.addLayer(mapVLayer)
 
-  mapVLayer.on("click", function (event) {
+  mapVLayer.on(mars3d.EventType.click, (event) => {
     console.log("单击了图层", event)
   })
 }

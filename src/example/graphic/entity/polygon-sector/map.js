@@ -99,8 +99,20 @@ function addDemoGraphic2(graphicLayer) {
 }
 
 function addDemoGraphic3(graphicLayer) {
+  const property = new Cesium.SampledPositionProperty()
+  property.forwardExtrapolationType = Cesium.ExtrapolationType.HOLD
+
+  let tempTime
+
+  // 起点
+  tempTime = map.clock.currentTime // 飞行开始时间
+  property.addSample(tempTime, Cesium.Cartesian3.fromDegrees(117.152749, 31.77278, 24.1))
+  // 移动到的第1个目标点
+  tempTime = Cesium.JulianDate.addSeconds(tempTime, 40, new Cesium.JulianDate())
+  property.addSample(tempTime, Cesium.Cartesian3.fromDegrees(117.377432, 31.641834, 24.1))
+
   const graphic = new mars3d.graphic.Sector({
-    position: [117.152749, 31.77278, 24.1],
+    position: property,
     style: {
       radius: 3000,
       startAngle: 90, // 开始角度(正东方向为0,顺时针到360度)
@@ -146,7 +158,6 @@ function addDemoGraphic4(graphicLayer) {
   graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
 }
 
-
 function addDemoGraphic5(graphicLayer) {
   const graphic = new mars3d.graphic.Sector({
     position: [117.237446, 31.753303, 23.1],
@@ -169,7 +180,6 @@ function addDemoGraphic5(graphicLayer) {
   graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
 }
 
-
 function addDemoGraphic6(graphicLayer) {
   const graphic = new mars3d.graphic.Sector({
     position: [117.172735, 31.660464, 17],
@@ -190,7 +200,6 @@ function addDemoGraphic6(graphicLayer) {
   })
   graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
 }
-
 
 // 生成演示数据(测试数据量)
 export function addRandomGraphicByCount(count) {

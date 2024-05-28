@@ -2807,6 +2807,11 @@
             "thumbnail": "layerg-fun-clampToGround.jpg",
             "main": "layer-graphic/fun/clampToGround",
             "hasPannel": true
+          },
+          {
+            "name": "渐变色带工具类",
+            "thumbnail": "layerg-fun-colorRamp.jpg",
+            "main": "layer-graphic/fun/colorRamp"
           }
         ]
       }

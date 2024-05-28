@@ -196,6 +196,7 @@ function getDefaultContextMenu(map) {
           },
           callback: function (e) {
             map.trackedEntity = e.graphic
+            that.trackedGraphic = e.graphic
           }
         },
         {
@@ -204,10 +205,11 @@ function getDefaultContextMenu(map) {
           },
           icon: Icon.TrackedEntityNo,
           show: function (e) {
-            return map.trackedEntity !== undefined
+            return that.trackedGraphic === e.graphic && map.trackedEntity !== undefined
           },
           callback: function (e) {
             map.trackedEntity = undefined
+            that.trackedGraphic = undefined
           }
         }
       ]

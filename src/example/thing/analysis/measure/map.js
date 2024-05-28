@@ -110,6 +110,7 @@ export async function measureArea() {
     // }
   })
 
+  // 下面代码抬升面的高度到一个平面，来示意“水平”
   if (map.scene.mode === Cesium.SceneMode.SCENE3D) {
     const oldPositions = graphic.positionsShow
     const rang = await mars3d.PolyUtil.getHeightRangeByDepth(oldPositions, map.scene)

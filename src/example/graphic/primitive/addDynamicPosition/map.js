@@ -155,6 +155,7 @@ export function bindLayerPopup() {
 
 // 绑定右键菜单
 export function bindLayerContextMenu() {
+  let trackedGraphic
   graphicLayer.bindContextMenu([
     {
       text: "删除对象",
@@ -177,6 +178,49 @@ export function bindLayerContextMenu() {
         if (parent) {
           graphicLayer.removeGraphic(parent)
         }
+      }
+    },
+    {
+      text: "跟踪锁定",
+      icon: "fa fa-lock",
+      show: function (e) {
+        const graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
+
+        if (graphic.entity instanceof Cesium.Entity) {
+          return true
+        } else if (graphic.trackedEntity instanceof Cesium.Entity) {
+          return true
+        }
+
+        return false
+      },
+      callback: function (e) {
+        const graphic = e.graphic
+        map.trackedEntity = graphic
+        trackedGraphic = graphic
+        if (map.scene.mode === Cesium.SceneMode.SCENE2D) {
+          setTimeout(() => {
+            map.flyToPoint(graphic.positionShow, {
+              radius: 1000,
+              lock: true,
+              duration: 0
+            })
+          }, 10)
+        }
+      }
+    },
+    {
+      text: "取消锁定",
+      icon: "fa fa-unlock-alt",
+      show: function (e) {
+        return e.graphic === trackedGraphic && map.trackedEntity !== undefined
+      },
+      callback: function (e) {
+        map.trackedEntity = undefined
+        trackedGraphic = undefined
       }
     }
   ])
