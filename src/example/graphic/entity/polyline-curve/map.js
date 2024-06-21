@@ -39,6 +39,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic3(graphicLayer)
   addDemoGraphic4(graphicLayer)
   addDemoGraphic5(graphicLayer)
+  addDemoGraphic6(graphicLayer)
 }
 
 /**
@@ -235,6 +236,126 @@ function addDemoGraphic5(graphicLayer) {
   })
   graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
 }
+
+// 自定义材质：箭头材质(从cesium代码拷贝出来的，方便自定义修改)
+function addDemoGraphic6(graphicLayer) {
+  // ==================== 自定义材质 开始 ====================
+  // 自定义材质的命名
+  const PolylineArrow2Type = "PolylineArrow2"
+
+  // 注册至材质，用于Primitive
+  mars3d.MaterialUtil.register(PolylineArrow2Type, {
+    fabric: {
+      uniforms: {
+        color: new Cesium.Color(1.0, 1.0, 1.0, 1.0)
+      },
+      source: `
+        uniform vec4 color;
+
+        float getPointOnLine(vec2 p0, vec2 p1, float x)
+        {
+            float slope = (p0.y - p1.y) / (p0.x - p1.x);
+            return slope * (x - p0.x) + p0.y;
+        }
+
+        czm_material czm_getMaterial(czm_materialInput materialInput)
+        {
+            czm_material material = czm_getDefaultMaterial(materialInput);
+
+            vec2 st = materialInput.st;
+
+        #if (__VERSION__ == 300 || defined(GL_OES_standard_derivatives))
+            float base = 1.0 - abs(fwidth(st.s)) * 10.0 * czm_pixelRatio;
+        #else
+            // If no derivatives available (IE 10?), 2.5% of the line will be the arrow head
+            float base = 0.975;
+        #endif
+
+            vec2 center = vec2(1.0, 0.5);
+            float ptOnUpperLine = getPointOnLine(vec2(base, 1.0), center, st.s);
+            float ptOnLowerLine = getPointOnLine(vec2(base, 0.0), center, st.s);
+
+            float halfWidth = 0.15;
+            float s = step(0.5 - halfWidth, st.t);
+            s *= 1.0 - step(0.5 + halfWidth, st.t);
+            s *= 1.0 - step(base, st.s);
+
+            float t = step(base, materialInput.st.s);
+            t *= 1.0 - step(ptOnUpperLine, st.t);
+            t *= step(ptOnLowerLine, st.t);
+
+            // Find the distance from the closest separator (region between two colors)
+            float dist;
+            if (st.s < base)
+            {
+                float d1 = abs(st.t - (0.5 - halfWidth));
+                float d2 = abs(st.t - (0.5 + halfWidth));
+                dist = min(d1, d2);
+            }
+            else
+            {
+                float d1 = czm_infinity;
+                if (st.t < 0.5 - halfWidth && st.t > 0.5 + halfWidth)
+                {
+                    d1 = abs(st.s - base);
+                }
+                float d2 = abs(st.t - ptOnUpperLine);
+                float d3 = abs(st.t - ptOnLowerLine);
+                dist = min(min(d1, d2), d3);
+            }
+
+            vec4 outsideColor = vec4(0.0);
+            vec4 currentColor = mix(outsideColor, color, clamp(s + t, 0.0, 1.0));
+            vec4 outColor = czm_antialias(outsideColor, color, currentColor, dist);
+
+            outColor = czm_gammaCorrect(outColor);
+            material.diffuse = outColor.rgb;
+            material.alpha = outColor.a;
+            return material;
+        }`
+    },
+    translucent: true
+  })
+
+  // 自定义属性材质，用于Entity对象
+  class PolylineArrow2MaterialProperty extends mars3d.material.BaseMaterialProperty {
+    // 材质名称
+    getType(time) {
+      return PolylineArrow2Type
+    }
+
+    // 更新属性
+    getValue(time, result) {
+      if (!Cesium.defined(result)) {
+        result = {}
+      }
+
+      result.color = this.options.color ?? Cesium.Color.WHITE
+      return result
+    }
+  }
+  mars3d.MaterialUtil.registerPropertyClass(PolylineArrow2Type, PolylineArrow2MaterialProperty)
+  // ==================== 自定义材质 结束====================
+
+  const graphic = new mars3d.graphic.CurveEntity({
+    positions: [
+      [117.187515, 31.717175, 11],
+      [117.199151, 31.746157, 19.4],
+      [117.217799, 31.770198, 23.8],
+      [117.257876, 31.748218, 19]
+    ],
+    style: {
+      width: 10,
+      materialType: PolylineArrow2Type,
+      materialOptions: {
+        color: Cesium.Color.BLUE
+      }
+    },
+    attr: { remark: "示例6" }
+  })
+  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
+}
+
 // 生成演示数据(测试数据量)
 export function addRandomGraphicByCount(count) {
   graphicLayer.clear()

@@ -63,7 +63,8 @@ function addDemoGraphic1() {
       heading: 44,
       pitch: -12,
       addHeight: 0.5
-    }
+    },
+    depthBiasStep: 0.01
   })
   graphicLayer.addGraphic(viewShed)
 }

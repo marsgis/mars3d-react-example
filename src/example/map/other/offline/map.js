@@ -23,6 +23,7 @@ export const mapOptions = {
       icon: "img/basemaps/tdt_img.png",
       type: "xyz",
       url: "//data.mars3d.cn/tile/img/{z}/{x}/{y}.jpg",
+      chinaCRS: mars3d.ChinaCRS.GCJ02,
       minimumLevel: 0,
       maximumLevel: 13,
       show: true
@@ -33,6 +34,7 @@ export const mapOptions = {
       icon: "img/basemaps/tdt_vec.png",
       type: "xyz",
       url: "//data.mars3d.cn/tile/vec/{z}/{x}/{y}.png",
+      chinaCRS: "GCJ02",
       minimumLevel: 0,
       maximumLevel: 13
     },

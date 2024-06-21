@@ -241,3 +241,10 @@ export function showFireDrill() {
     console.log("单击了图层", event)
   })
 }
+
+export function flytoModel(id) {
+  const graphic = graphicLayer.getGraphicById(id)
+  if (graphic) {
+    graphic.flyTo()
+  }
+}

@@ -44,7 +44,7 @@ export function onUnmounted() {
 }
 
 export function startAnimation() {
-  // map.flyHome({ duration: 0 })
+  map.flyHome({ duration: 0 })
 
   // 开场动画
   map.openFlyAnimation({

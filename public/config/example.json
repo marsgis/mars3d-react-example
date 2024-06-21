@@ -605,13 +605,13 @@
             "hasPannel": true
           },
           {
-            "name": "OGC WMS服务",
+            "name": "WMS服务",
             "thumbnail": "layert-type-wms.jpg",
             "main": "layer-tile/type/wms",
             "hasPannel": true
           },
           {
-            "name": "OGC WMTS服务",
+            "name": "WMTS服务",
             "thumbnail": "layert-type-wmts.jpg",
             "main": "layer-tile/type/wmts",
             "hasPannel": true
@@ -1280,7 +1280,7 @@
             ]
           },
           {
-            "name": "GeoServer矢量服务查询(OGC WFS)",
+            "name": "GeoServer矢量服务查询(WFS)",
             "thumbnail": "query-geoserver.jpg",
             "main": "query/geoserver",
             "hasPannel": true
@@ -1385,6 +1385,12 @@
             ]
           },
           {
+            "name": "大量图标点(Primitive)",
+            "thumbnail": "graphic-primitive-billboard.jpg",
+            "main": "graphic/primitive/billboard",
+            "hasPannel": true
+          },
+          {
             "name": "Canvas图标点",
             "thumbnail": "graphic-entity-billboard-canvas.jpg",
             "main": "graphic/entity/billboard-canvas",
@@ -1406,7 +1412,7 @@
           {
             "name": "DIV图标点",
             "thumbnail": "graphic-entity-billboard-div.jpg",
-            "main": "graphic/entity/billboard-div",
+            "main": "graphic/primitive/billboard-div",
             "hasPannel": true,
             "resources": [
               "/temp/css/divGraphic.css",
@@ -1417,12 +1423,6 @@
             "name": "全景点展示",
             "thumbnail": "graphic-entity-billboard-panorama.gif",
             "main": "graphic/entity/billboard-panorama"
-          },
-          {
-            "name": "大量图标点(Primitive)",
-            "thumbnail": "graphic-primitive-billboard.jpg",
-            "main": "graphic/primitive/billboard",
-            "hasPannel": true
           },
           {
             "name": "AQI空气质量指数(Billboard案例)",
