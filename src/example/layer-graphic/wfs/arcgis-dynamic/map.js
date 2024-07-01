@@ -35,17 +35,31 @@ export const mapOptions = {
       name: "蓝色底图",
       icon: "img/basemaps/bd-c-midnight.png",
       type: "arcgis",
-      url: "http://map.geoq.cn/arcgis/rest/services/ChinaOnlineStreetPurplishBlue/MapServer",
+      url: "https://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer",
       enablePickFeatures: false,
-      chinaCRS: mars3d.ChinaCRS.GCJ02
+      chinaCRS: mars3d.ChinaCRS.GCJ02,
+      invertColor: true,
+      filterColor: "#4e70a6",
+      brightness: 0.6,
+      contrast: 1.8,
+      gamma: 0.3,
+      hue: 1,
+      saturation: 0
     },
     {
       name: "灰色底图",
       icon: "img/basemaps/bd-c-grayscale.png",
       type: "arcgis",
-      url: "http://map.geoq.cn/arcgis/rest/services/ChinaOnlineStreetGray/MapServer",
+      url: "https://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer",
       enablePickFeatures: false,
-      chinaCRS: mars3d.ChinaCRS.GCJ02
+      chinaCRS: mars3d.ChinaCRS.GCJ02,
+      invertColor: true,
+      filterColor: "#909090",
+      brightness: 0.6,
+      contrast: 1.8,
+      gamma: 0.3,
+      hue: 1,
+      saturation: 0
     }
   ]
 }

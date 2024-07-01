@@ -63,7 +63,7 @@
         "crsDecimal": 0,
         "template": "<div>经度:{lng}</div> <div>纬度:{lat}</div> <div class='hide1000'>横{crsx}  纵{crsy}</div> <div>海拔：{alt}米</div> <div class='hide700'>层级：{level}</div><div>方向：{heading}°</div> <div>俯仰角：{pitch}°</div><div class='hide700'>视高：{cameraHeight}米</div><div class='hide700'>帧率：{fps} FPS</div>"
       }
-    }, 
+    },
     "method": {
       "templateValues": {
         "dataServer": "//data.mars3d.cn",
@@ -77,15 +77,6 @@
     "basemaps": [
       { "id": 10, "name": "地图底图", "type": "group" },
       {
-        "id": 2021,
-        "pid": 10,
-        "name": "谷歌影像",
-        "icon": "/img/basemaps/google_img.png",
-        "type": "google",
-        "layer": "img_d",
-        "show": true
-      },
-      {
         "pid": 10,
         "name": "天地图影像",
         "icon": "/img/basemaps/tdt_img.png",
@@ -94,7 +85,7 @@
           { "name": "底图", "type": "tdt", "layer": "img_d" },
           { "name": "注记", "type": "tdt", "layer": "img_z" }
         ],
-        "show": false
+        "show": true
       },
       {
         "pid": 10,
@@ -175,10 +166,11 @@
       {
         "id": 2017,
         "pid": 10,
-        "name": "暗色底图",
+        "name": "蓝色底图",
+        "icon": "/img/basemaps/bd-c-midnight.png",
         "type": "gaode",
-        "icon": "/img/basemaps/blackMarble.png",
         "layer": "vec",
+        "chinaCRS": "GCJ02",
         "invertColor": true,
         "filterColor": "#4e70a6",
         "brightness": 0.6,
@@ -189,20 +181,18 @@
       },
       {
         "pid": 10,
-        "name": "蓝色底图",
-        "icon": "/img/basemaps/bd-c-midnight.png",
-        "type": "xyz",
-        "url": "http://map.geoq.cn/arcgis/rest/services/ChinaOnlineStreetPurplishBlue/MapServer/tile/{z}/{y}/{x}",
-        "chinaCRS": "GCJ02",
-        "enablePickFeatures": false
-      },
-      {
-        "pid": 10,
         "name": "黑色底图",
         "icon": "/img/basemaps/bd-c-dark.png",
-        "type": "tencent",
-        "layer": "custom",
-        "style": "4"
+        "type": "gaode",
+        "layer": "vec",
+        "chinaCRS": "GCJ02",
+        "invertColor": true,
+        "filterColor": "#909090",
+        "brightness": 0.6,
+        "contrast": 1.8,
+        "gamma": 0.3,
+        "hue": 1,
+        "saturation": 0
       },
       {
         "pid": 10,
@@ -210,6 +200,7 @@
         "icon": "/img/basemaps/google_img.png",
         "type": "xyz",
         "url": "{dataServer}/tile/img/{z}/{x}/{y}.jpg",
+        "chinaCRS": "GCJ02",
         "minimumLevel": 0,
         "maximumLevel": 13
       },

@@ -15,7 +15,9 @@ class PoiQueryButton extends mars3d.control.BaseControl {
     this._initQueryUI()
 
     // 查询控制器
-    this._gaodePOI = new mars3d.query.GaodePOI()
+    this._gaodePOI = new mars3d.query.GaodePOI({
+      chinaCRS: this._map.chinaCRS
+    })
 
     // 创建矢量数据图层
     this.graphicLayer = new mars3d.layer.GraphicLayer()

@@ -49,6 +49,7 @@ function addDemoGeoJsonLayer1() {
         outlineWidth: 8,
         outlineOpacity: 0.8,
         arcType: Cesium.ArcType.GEODESIC,
+        // global: false, // 是否全球遮罩，false时为中国区域
         clampToGround: true
       }
     }

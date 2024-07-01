@@ -50,6 +50,22 @@ export function onMounted(mapInstance) {
     console.log("单击了3dtiles图层", event)
   })
 
+  // layerWorkBIM.readyPromise.then((tilesetLayer) => {
+  //   const debugAxisPrimitive = map.graphicLayer.primitiveCollection.add(
+  //     new Cesium.DebugModelMatrixPrimitive({
+  //       modelMatrix: tilesetLayer.modelMatrix,
+  //       length: 100,
+  //       width: 4.0
+  //     })
+  //   )
+  //   debugAxisPrimitive._tooltipConfig = {
+  //     content: `<span style="color: red;">红色</span> 是 X轴<br/>
+  //               <span style="color: green;">绿色</span> 是 Y轴<br/>
+  //               <span style="color: blue;">蓝色</span> 是 Z轴`,
+  //     options: {}
+  //   }
+  //   // map.graphicLayer.primitiveCollection.remove(debugAxisPrimitive)
+  // })
 
   // 遍历取出所有的feature，并查询其属性
   // layerWorkBIM.readyPromise.then(function (e) {

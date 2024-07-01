@@ -18,7 +18,7 @@ export const mapOptions = {
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
-  map.basemap = 2017 // 蓝色底图
+  map.basemap = 2017 // 暗色底图
 
   // 图层1
   const arrPoints = getRandomPoints(1000) // 测试点数据，实际开发时换掉

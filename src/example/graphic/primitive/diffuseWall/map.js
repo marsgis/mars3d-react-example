@@ -19,7 +19,7 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
-  map.basemap = 2017 // 蓝色底图
+  map.basemap = 2017 // 暗色底图
 
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     name: "上海市建筑物",
@@ -83,7 +83,6 @@ function addDemoGraphic1() {
     attr: { remark: "示例1" }
   })
   graphicLayer.addGraphic(diffuseWallGlow)
-
 }
 
 // 立体围墙扩散效果,圆状
@@ -134,7 +133,6 @@ export function addRandomGraphicByCount(count) {
     })
     graphicLayer.addGraphic(graphic)
   }
-
 
   graphicLayer.enabledEvent = true // 恢复事件
   return result.points.length

@@ -107,7 +107,6 @@ export async function btnDraw(isShow) {
 // 清除
 export function removeAll() {
   terrainClip.clear() // 清除挖地区域
-  table = []
 }
 
 // 改变切割的深度
@@ -130,15 +129,9 @@ export function chkTestTerrain(val) {
   map.scene.globe.depthTestAgainstTerrain = val
 }
 
-let table = []
 // 区域表格添加一行记录
 function addTableItem(item) {
-  table.push({ key: item.id, name: "开挖区域" + item.id })
-
-  eventTabel.fire("tableObject", { table })
-}
-export function changeTable(data) {
-  table = data
+  eventTabel.fire("tableObject", { tableItem: { key: item.id, name: "开挖区域" + item.id, show: item.show } })
 }
 
 // 表格操作

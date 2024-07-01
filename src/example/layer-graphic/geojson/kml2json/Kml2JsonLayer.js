@@ -30,9 +30,16 @@ class Kml2JsonLayer extends mars3d.layer.GeoJsonLayer {
     }
 
     if (this.options.url) {
-      Cesium.Resource.fetchXML({ url: this.options.url }).then((data) => {
-        this._toGeoJSON(data)
-      })
+      if (this.options.url.endsWith("kmz")) {
+        // Cesium.Resource.fetchBlob({ url: this.options.url }).then((data) => {
+        //   this._toGeoJSON(data)
+        // })
+        this._toGeoJSON(this.options.url)
+      } else {
+        Cesium.Resource.fetchXML({ url: this.options.url }).then((data) => {
+          this._toGeoJSON(data)
+        })
+      }
     } else if (this.options.data) {
       this._toGeoJSON(this.options.data)
     } else {
@@ -49,6 +56,8 @@ class Kml2JsonLayer extends mars3d.layer.GeoJsonLayer {
         if (this._state === mars3d.State.REMOVED) {
           return
         }
+        console.log("geojson数据转换完成", data)
+
         this._load_data(data)
       })
       .catch(function (error) {

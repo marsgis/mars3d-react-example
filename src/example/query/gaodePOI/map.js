@@ -56,6 +56,7 @@ export function onMounted(mapInstance) {
   })
 
   queryGaodePOI = new mars3d.query.GaodePOI({
+    chinaCRS: map.chinaCRS
     // proxy: new Cesium.DefaultProxy("//server.mars3d.cn/proxy/")
   })
 

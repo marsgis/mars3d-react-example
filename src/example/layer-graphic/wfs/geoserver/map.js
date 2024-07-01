@@ -60,7 +60,7 @@ export const mapOptions = {
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
-  map.basemap = 2017 // 蓝色底图
+  map.basemap = 2017 // 暗色底图
 
   addWmsLayer()
 }

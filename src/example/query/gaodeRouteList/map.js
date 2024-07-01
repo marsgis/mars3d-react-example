@@ -33,9 +33,9 @@ export function onMounted(mapInstance) {
   routeLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(routeLayer)
 
-  gaodeRoute = new mars3d.query.GaodeRoute({})
+  gaodeRoute = new mars3d.query.GaodeRoute({ chinaCRS: map.chinaCRS })
 
-  queryGaodePOI = new mars3d.query.GaodePOI({})
+  queryGaodePOI = new mars3d.query.GaodePOI({ chinaCRS: map.chinaCRS })
 
   // 创建矢量数据图层
   poiLayer = new mars3d.layer.GraphicLayer()

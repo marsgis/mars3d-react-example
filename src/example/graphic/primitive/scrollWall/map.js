@@ -19,7 +19,7 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
-  map.basemap = 2017 // 蓝色底图
+  map.basemap = 2017 // 暗色底图
 
   // 创建矢量数据图层
   graphicLayer = new mars3d.layer.GraphicLayer()
@@ -218,7 +218,7 @@ export function bindLayerContextMenu() {
         globalAlert("该对象的长度为:" + strDis)
       }
     },
-   {
+    {
       text: "计算围合面积",
       icon: "fa fa-reorder",
       show: (event) => {

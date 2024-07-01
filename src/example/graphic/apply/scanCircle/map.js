@@ -18,7 +18,7 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
-  map.basemap = 2017 // 蓝色底图
+  map.basemap = 2017 // 暗色底图
 
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     name: "上海市建筑物",

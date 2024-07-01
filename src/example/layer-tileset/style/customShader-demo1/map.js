@@ -20,7 +20,7 @@ export const mapOptions = {
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
-  map.basemap = 2017 // 蓝色底图
+  map.basemap = 2017 // 暗色底图
 
   // 泛光效果
   const bloomEffect = new mars3d.effect.BloomEffect({})

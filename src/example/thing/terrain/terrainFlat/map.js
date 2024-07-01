@@ -22,11 +22,9 @@ export const eventTabel = new mars3d.BaseClass()
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
-
   // 创建矢量数据图层
   lineLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(lineLayer)
-
 }
 
 /**
@@ -112,7 +110,6 @@ export async function btnDraw(height) {
 // 清除
 export function removeAll() {
   terrainFlat.clear() // 清除挖地区域
-  table = []
   lineLayer.clear()
 }
 
@@ -126,19 +123,12 @@ export function chkClippingPlanes(val) {
   terrainFlat.enabled = val
 }
 
-let table = []
 // 区域表格添加一行记录
 function addTableItem(item) {
   item.lineId = addTestLine(item.positions)
 
-  table.push({ key: item.id, name: "压平区域" + item.id, lineId: item.lineId })
-
-  eventTabel.fire("tableObject", { table })
+  eventTabel.fire("tableObject", { tableItem: { key: item.id, name: "压平区域" + item.id, lineId: item.lineId, show: item.show } })
 }
-export function changeTable(data) {
-  table = data
-}
-
 // 表格操作
 export function flyToGraphic(item) {
   const graphic = terrainFlat.getAreaById(item)

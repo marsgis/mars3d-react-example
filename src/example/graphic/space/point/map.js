@@ -250,7 +250,7 @@ function weixingStyle(item) {
   const weixin = new mars3d.graphic.Satellite({
     tle1: item.tle1,
     tle2: item.tle2,
-    referenceFrame: Cesium.ReferenceFrame.FIXED, // Cesium.ReferenceFrame.INERTIAL,
+    // referenceFrame: Cesium.ReferenceFrame.FIXED, // Cesium.ReferenceFrame.INERTIAL,
     model: {
       url: "//data.mars3d.cn/gltf/mars/weixin.gltf",
       scale: 1,

@@ -143,13 +143,13 @@ function addDemoGraphic3(graphicLayer) {
 function addDemoGraphic4(graphicLayer) {
   const rectanglePrimitive = new mars3d.graphic.RectanglePrimitive({
     positions: [
-      [121.479593, 29.791632, 13],
-      [121.480136, 29.79169, 13]
+      [121.479837, 29.791722, 15.3],
+      [121.480052, 29.791846, 13.3]
     ],
     style: {
       materialType: mars3d.MaterialType.Text,
       materialOptions: {
-        text: "火星科技Mars3D平台",
+        text: "火星科技\nMars3D平台",
         font_size: 70,
         color: new Cesium.Color(1.0, 1.0, 0.0, 1.0),
         stroke: true,

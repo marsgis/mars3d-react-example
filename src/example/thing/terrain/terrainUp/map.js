@@ -109,7 +109,7 @@ export async function btnDraw(height) {
 // 清除
 export function removeAll() {
   terrainUplift.clear() // 清除挖地区域
-  table = []
+  // table = []
 }
 
 export function changeClipHeight(val) {
@@ -125,15 +125,9 @@ export function chkClippingPlanes(val) {
   terrainUplift.enabled = val
 }
 
-let table = []
 // 区域表格添加一行记录
 function addTableItem(item) {
-  table.push({ key: item.id, name: "抬升区域" + item.id })
-
-  eventTabel.fire("tableObject", { table })
-}
-export function changeTable(data) {
-  table = data
+  eventTabel.fire("tableObject", { tableItem: { key: item.id, name: "抬升区域" + item.id, show: item.show } })
 }
 
 // 表格操作
@@ -163,4 +157,3 @@ export function btnMovingAnimation() {
 export function btnMovingAnimation2() {
   terrainUplift.movingAnimation(2000, 0)
 }
-
