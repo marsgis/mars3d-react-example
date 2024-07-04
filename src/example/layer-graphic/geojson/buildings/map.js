@@ -18,7 +18,7 @@ export const mapOptions = {
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
-  map.basemap = 2017 // 暗色底图
+  map.basemap = 2017 // 蓝色底图
 
   globalMsg("文件数据较大，正在加载数据，请稍等片刻……")
   showLoading()

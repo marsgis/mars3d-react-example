@@ -11,9 +11,9 @@ const DEF_STYLE = {
  * @param {object} options 参数对象，包括以下：
  * @param {LngLatPoint|Cesium.Cartesian3|number[]} options.position 坐标位置
  * @param {DivGraphic.StyleOptions} options.style 样式信息
- * @param {string} [options.style.moveDomTop=-100]  拖动面板的top值，单位：px
- * @param {string} [options.style.moveDomLeft=50] 拖动面板的left值，单位：px
- * @param {string} [options.style.autoPoistion=true]  是否自动判断连接最近的角
+ * @param {number} [options.style.moveDomTop=-100]  拖动面板的top值，单位：px
+ * @param {number} [options.style.moveDomLeft=50] 拖动面板的left值，单位：px
+ * @param {boolean} [options.style.autoPoistion=true]  是否自动判断连接最近的角
  * @param {string} [options.style.horizontalPoistion] 横向方向的连线位置，可以取值：left、right
  * @param {string} [options.style.verticalPoistion] 垂直方向的连线位置，可以取值：top、bottom
  *

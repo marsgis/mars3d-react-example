@@ -356,7 +356,7 @@ export default function MarsStyle({ style, layerName, customType, showMarsStyle,
   function nextMaterialChange(_material: any, value: any, item: any) {
     // console.log("nextMaterialChange 修改子级材质", item)
 
-    styleValue[item.name].materialOptions[item.name] = value
+    styleValue[item.name].materialOptions[_material.name] = value
     setStyleValue(cloneDeep(styleValue))
     // updateNextMaterialViewStyles(item.name)
 

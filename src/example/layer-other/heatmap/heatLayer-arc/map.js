@@ -30,7 +30,7 @@ export function onUnmounted() {
 }
 
 function addLayer() {
-  map.basemap = 2017 // 暗色底图
+  map.basemap = 2017 // 蓝色底图
 
   // 加载城市模型
   const tilesetLayer = new mars3d.layer.TilesetLayer({

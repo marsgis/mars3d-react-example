@@ -102,7 +102,7 @@ class CesiumRoleController {
     this.options.speed ? (this.speed = this.options.speed) : (this.speed = 1)
     this.position = this.Cesium.Cartesian3.fromDegrees(this.options.position[0], this.options.position[1])
     this.event = true
-    const winPosition = this.Cesium.SceneTransforms.wgs84ToWindowCoordinates(this.viewer.scene, this.position)
+    const winPosition = this.Cesium.SceneTransforms.worldToWindowCoordinates(this.viewer.scene, this.position)
     const ray = this.viewer.camera.getPickRay(winPosition)
     const cartesian_terrain = this.viewer.scene.globe.pick(ray, this.viewer.scene)
     const cartesian_3dtiles = this.viewer.scene.pickPosition(winPosition)

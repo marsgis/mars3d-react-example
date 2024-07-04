@@ -131,7 +131,7 @@ export const choosePoint = (isChoosePoint) => {
 export function startDrawGraphic() {
   graphicLayer
     .startDraw({
-      type: "videoPrimitive",
+      type: "videoP",
       style: {
         url: "//data.mars3d.cn/file/video/lukou.mp4",
         opacity: 0.8

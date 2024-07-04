@@ -201,7 +201,6 @@
         "type": "xyz",
         "url": "{dataServer}/tile/img/{z}/{x}/{y}.jpg",
         "chinaCRS": "GCJ02",
-        "minimumLevel": 0,
         "maximumLevel": 13
       },
       {
