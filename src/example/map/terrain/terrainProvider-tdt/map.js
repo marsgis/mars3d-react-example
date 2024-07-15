@@ -32,6 +32,11 @@ export function onMounted(mapInstance) {
     key: mars3d.Token.tianditu,
     subdomains: "01234567"
   })
+
+
+  // http://mars3d.cn/dev/guide/issue/token.html
+  globalNotify("已知问题提示", `(1)如果天地图token超量或失效，请您自行申请替换mars3d.Token.updateTianditu("key value")。`)
+
 }
 
 /**

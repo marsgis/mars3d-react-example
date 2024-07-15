@@ -100,7 +100,7 @@
           },
           {
             "name": "effect 特效",
-            "thumbnail": "map-options-effect.jpg",
+            "thumbnail": "map-options-effect.gif",
             "main": "map/options/effect"
           },
           {
@@ -1608,7 +1608,7 @@
           },
           {
             "name": "gLTF自定义材质",
-            "thumbnail": "graphic-primitive-model-customShader.jpg",
+            "thumbnail": "graphic-primitive-model-customShader.gif",
             "main": "graphic/primitive/model-customShader",
             "hasPannel": true
           },
@@ -2180,7 +2180,7 @@
           },
           {
             "name": "洪水演进",
-            "thumbnail": "graphic-combine-polygon-floods.jpg",
+            "thumbnail": "graphic-combine-polygon-floods.gif",
             "main": "graphic/combine/polygon-floods"
           },
           {
@@ -2276,8 +2276,8 @@
             "main": "graphic/video/material-flv",
             "hasPannel": true,
             "libs": [
-              "flv",
-              "mars3d"
+              "mars3d",
+              "mpegts"
             ]
           },
           {
@@ -2302,8 +2302,8 @@
             "main": "graphic/video/video2D-flv",
             "hasPannel": true,
             "libs": [
-              "flv",
-              "mars3d"
+              "mars3d",
+              "mpegts"
             ]
           },
           {
@@ -2328,8 +2328,8 @@
             "main": "graphic/video/video3D-flv",
             "hasPannel": true,
             "libs": [
-              "flv",
-              "mars3d"
+              "mars3d",
+              "mpegts"
             ]
           },
           {
@@ -2984,7 +2984,7 @@
           },
           {
             "name": "customShader案例1",
-            "thumbnail": "layer3d-style-customShader-demo1.jpg",
+            "thumbnail": "layer3d-style-customShader-demo1.gif",
             "main": "layer-tileset/style/customShader-demo1",
             "hasPannel": true
           }

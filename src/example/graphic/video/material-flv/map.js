@@ -64,7 +64,7 @@ export function onUnmounted() {
 // 视频播放器播放 flv 报错 Flv: Unsupported codec in video frame: 12
 // 原因:主要是因为我们的播放器不支持 H.265 视频编码；
 // 解决办法:将设备端的视频编码改为 H.264
-const flvUrl = "https://sample-videos.com/video123/flv/720/big_buck_bunny_720p_1mb.flv"
+const flvUrl = "https://sf1-cdn-tos.huoshanstatic.com/obj/media-fe/xgplayer_doc_video/flv/xgplayer-demo-360p.flv"
 
 function createVideoDom() {
   videoElement = mars3d.DomUtil.create("video", "", document.body)
@@ -75,10 +75,11 @@ function createVideoDom() {
   videoElement.setAttribute("controls", "")
   videoElement.style.display = "none"
 
-  if (window.flvjs.isSupported()) {
-    const flvPlayer = window.flvjs.createPlayer({
+  if (window.mpegts.isSupported()) {
+    const flvPlayer = window.mpegts.createPlayer({
       type: "flv",
-      url: flvUrl
+      url: flvUrl,
+      hasAudio: false // 声音关闭，如果传来的视频流没有声音，就一定要设置这个参数，否则会报错
     })
     flvPlayer.attachMediaElement(videoElement)
     flvPlayer.load()

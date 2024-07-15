@@ -193,8 +193,10 @@ function addDemoGraphic2(graphicLayer) {
 
     // 参考API: http://mars3d.cn/api/cesium/ModelAnimationCollection.html
     model.activeAnimations.addAll({
-      multiplier: 0.5, // Play at half-speed
-      loop: Cesium.ModelAnimationLoop.REPEAT // Loop the animations
+      multiplier: 0.5, // 播放速度
+      loop: Cesium.ModelAnimationLoop.REPEAT // 循环播放动画
+      // reverse: true, // 反向播放
+      // removeOnStop: true, // 动画停止时不删除(默认)
     })
 
     // let animation = model.activeAnimations.add({

@@ -140,6 +140,7 @@ window.configLibs = {
   three: ["three/three.js"],
   'hls': ["video/hls/hls.js"],
   'flv': ["video/flv/flv.min.js"],
+  'mpegts': ["video/mpegts/mpegts.js"],
   tween: ["tween/Tween.js"],
   localforage: ["localforage/localforage.min.js"],
   xlsx: ["xlsx/xlsx.full.min.js"],

@@ -85,7 +85,7 @@
           { "name": "底图", "type": "tdt", "layer": "img_d" },
           { "name": "注记", "type": "tdt", "layer": "img_z" }
         ],
-        "show": true
+        "show": false
       },
       {
         "pid": 10,
@@ -154,7 +154,8 @@
         "icon": "/img/basemaps/esriWorldImagery.png",
         "type": "xyz",
         "url": "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-        "enablePickFeatures": false
+        "enablePickFeatures": false,
+        "show": true
       },
       {
         "pid": 10,
