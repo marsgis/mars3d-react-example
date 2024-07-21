@@ -170,7 +170,8 @@ function addDemoGraphic2() {
       angle2: 15.5,
       heading: 88.5,
       pitch: -49.5,
-      showFrustum: true
+      showFrustum: true,
+      distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 1000)
     },
     attr: { remark: "示例2" }
   })

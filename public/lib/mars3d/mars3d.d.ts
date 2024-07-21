@@ -2,8 +2,8 @@
 /**
  * Mars3D三维可视化平台  mars3d
  *
- * 版本信息：v3.7.22
- * 编译日期：2024-07-15 21:20:28
+ * 版本信息：v3.7.23
+ * 编译日期：2024-07-22 00:04:10
  * 版权所有：Copyright by 火星科技  http://mars3d.cn
  * 使用单位：免费公开版 ，2024-01-15
  */
@@ -7418,6 +7418,9 @@ declare namespace Video3D {
      * @property [flipy = false] - 是否Y方向翻转图片
      * @property [hiddenAreaColor = new Cesium.Color(0, 0, 0, 0.5)] - 无视频投影区域的颜色
      * @property [showFrustum = false] - 是否显示视椎体框线
+     * @property [distanceDisplayCondition = false] - 是否按视距显示 或 指定此框将显示在与摄像机的多大距离。
+     * @property [distanceDisplayCondition_far = number.MAX_VALUE] - 最大距离
+     * @property [distanceDisplayCondition_near = 0] - 最小距离
      */
     type StyleOptions = any | {
         container?: HTMLVideoElement;
@@ -7434,6 +7437,9 @@ declare namespace Video3D {
         flipy?: boolean;
         hiddenAreaColor?: Cesium.Color | string;
         showFrustum?: boolean;
+        distanceDisplayCondition?: boolean | Cesium.DistanceDisplayCondition;
+        distanceDisplayCondition_far?: number;
+        distanceDisplayCondition_near?: number;
     };
 }
 
@@ -15467,8 +15473,8 @@ declare class VolumeDepthMeasure extends AreaMeasure {
      */
     minHeight: number;
     /**
-     * 最高高度，对应墙的高度，
-     * 不影响测量结果，只是显示效果的区别。
+     * 最高高度，
+     * 会影响 挖方量：高于“最高高度”的挖方被忽略
      */
     maxHeight: number;
     /**
@@ -31207,9 +31213,9 @@ declare class EchartsLayer extends BaseLayer {
  * @param [options.style.arcBlurScale = 1.5] - 曲面热力图时，blur扩大比例
  * @param [options.style.arcDirection = 1] - 曲面热力图时，凹陷的方向，1向上，-1向下，0双面
  * @param [options.style.diffHeight] - 曲面热力图时，曲面的起伏差值高，默认根据数据范围的比例自动计算。
- * @param [options.maxCanvasSize = 5000] - Canvas最大尺寸（单位：像素），调大精度更高，但过大容易内存溢出
- * @param [options.minCanvasSize = 700] - Canvas最小尺寸（单位：像素）
- * @param [options.delayTime = 2] - 显示数据时的过渡动画时长（单位：秒）
+ * @param [options.canvasWidth = document.body.clientWidth] - Canvas的宽度尺寸（单位：像素），调大精度更高，但过大容易内存溢出
+ * @param [options.redrawZoom] - 视角缩放时是否进行按新的raduis进行渲染。
+ * @param [options.redrawRatio = 1.0] - redrawZoom时值变化的比例。
  * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid = -1] - 图层父级的id，一般图层管理中使用
  * @param [options.name = ''] - 图层名称
@@ -31255,9 +31261,9 @@ declare class HeatLayer extends BaseLayer {
             arcDirection?: number;
             diffHeight?: number;
         };
-        maxCanvasSize?: number;
-        minCanvasSize?: number;
-        delayTime?: number;
+        canvasWidth?: number;
+        redrawZoom?: boolean;
+        redrawRatio?: number;
         id?: string | number;
         pid?: string | number;
         name?: string;
@@ -31302,17 +31308,15 @@ declare class HeatLayer extends BaseLayer {
     /**
      * 添加新的坐标点（含热力值）
      * @param item - 坐标点（含热力值），示例: {lat:31.123,lng:103.568,value:1.2}
-     * @param [isGD] - 是否固定区域坐标，true时可以平滑更新
      * @returns 无
      */
-    addPosition(item: Cesium.Cartesian3 | LngLatPoint, isGD?: boolean): void;
+    addPosition(item: Cesium.Cartesian3 | LngLatPoint): void;
     /**
      * 更新所有坐标点（含热力值）数据
      * @param arr - 坐标点（含热力值），示例:[{lat:31.123,lng:103.568,value:1.2},{lat:31.233,lng:103.938,value:2.3}]
-     * @param [isGD] - 是否固定区域坐标，true时可以平滑更新
      * @returns 无
      */
-    setPositions(arr: Cesium.Cartesian3[] | LngLatPoint[], isGD?: boolean): void;
+    setPositions(arr: Cesium.Cartesian3[] | LngLatPoint[]): void;
     /**
      * 清除矢量对象
      * @returns 无
@@ -31327,6 +31331,12 @@ declare class HeatLayer extends BaseLayer {
     getRectangle(options?: {
         isFormat?: boolean;
     }): Cesium.Rectangle | any;
+    /**
+     * 按新的radius进行渲染
+     * @param radius - 每个数据点将具有的半径
+     * @returns 无
+     */
+    updateRadius(radius: number): void;
     /**
      * 根据坐标点获取其对应的value值和颜色值
      * @param item - 坐标点
@@ -34434,10 +34444,14 @@ declare class Sightline extends BaseThing {
      * @param target - 终点（目标点位置）
      * @param [options = {}] - 控制参数，包括：
      * @param [options.offsetHeight = 0] - 在起点增加的高度值，比如加上人的身高
+     * @param [options.objectsToExclude] - 贴模型分析时，排除的不进行贴模型计算的模型对象，可以是： primitives, entities, 或 3D Tiles features,也可以传入图层的 graphicLayer.objectsToExclude
+     * @param [options.width = 0.1] - 分析的交叉处体的宽度，单位为米
      * @returns 分析结果
      */
     add(origin: Cesium.Cartesian3, target: Cesium.Cartesian3, options?: {
         offsetHeight?: number;
+        objectsToExclude?: any;
+        width?: number;
     }): any;
     /**
      * 添加通视分析，插值异步分析

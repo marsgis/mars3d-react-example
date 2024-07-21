@@ -184,6 +184,12 @@ function addDemoGraphic3(graphicLayer) {
         color: "#ffff00",
         repeat: 30.0,
         thickness: 0.2
+      },
+      label: {
+        text: "HX2017",
+        font_size: 8,
+        background: true,
+        visibleDepth: true
       }
     }
   })

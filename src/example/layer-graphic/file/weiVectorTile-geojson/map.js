@@ -51,7 +51,7 @@ export function onUnmounted() {
 function showGeoJsonVectorTile(geojson) {
   const tileLayer = new mars3d.layer.WeiVectorTileLayer({
     source: geojson,
-    zIndex: 2,
+    zIndex: 20,
     removeDuplicate: false,
     allowPick: true, // 允许单击
     defaultStyle: {

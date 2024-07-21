@@ -159,12 +159,12 @@ export function txtMinHeight(num) {
 
 // 修改顶高
 export function txtMaxHeight(num) {
-  const maxHeight = getFixedNum(measureVolume.polygonMaxHeight)
-  if (num < maxHeight) {
-    globalMsg("墙顶部高度不能低于区域内的地表高" + maxHeight)
-    measureVolume.maxHeight = Number(maxHeight)
-    return
-  }
+  // const maxHeight = getFixedNum(measureVolume.polygonMaxHeight)
+  // if (num < maxHeight) {
+  //   globalMsg("墙顶部高度不能低于区域内的地表高" + maxHeight)
+  //   measureVolume.maxHeight = Number(maxHeight)
+  //   return
+  // }
   if (num < measureVolume.height) {
     globalMsg("墙顶部高度不能低于基准面高")
     return
