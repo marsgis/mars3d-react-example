@@ -19,7 +19,9 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
 
-  GeodePoiLayer()
+  globalNotify("已知问题提示", `(1) 高德的token如果访问失效或超流量了，请您自行申请替换mars3d.Token.updateGaode("key value")。`)
+
+  createGeodePoiLayer()
 }
 
 /**
@@ -32,7 +34,7 @@ export function onUnmounted() {
 
 let geodePoiLayer
 
-function GeodePoiLayer() {
+function createGeodePoiLayer() {
   // 高德错误代码：https://lbs.amap.com/api/webservice/guide/tools/info/
 
   // 高德POI图层，演示大数据的分块加载

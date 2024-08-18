@@ -69,18 +69,16 @@ export function setStyle2() {
       float _glowRange = 400.0; // 光环的移动范围(高度)
 
       // 建筑基础色
+      vec4 diffuse = vec4(material.diffuse, material.alpha); // 颜色
       float mars_height = position.z - _baseHeight;
-      float mars_a11 = fract(czm_frameNumber / 120.0) * 3.14159265 * 2.0;
-      float mars_a12 = mars_height / _heightRange + sin(mars_a11) * 0.1;
-      material.diffuse = vec3(0.0, 0.0, 1.0); // 颜色
-      material.diffuse *= vec3(mars_a12);// 渐变
+      diffuse *= vec4(vec3(mars_height / _heightRange), 1.0);  // 渐变
 
       // 动态光环
       float time = fract(czm_frameNumber / 360.0);
       time = abs(time - 0.5) * 2.0;
-      float mars_h = clamp(mars_height / _glowRange, 0.0, 1.0);
-      float mars_diff = step(0.005, abs(mars_h - time));
-      material.diffuse += material.diffuse * (1.0 - mars_diff);
+      float diff = step(0.005, abs( clamp(mars_height / _glowRange, 0.0, 1.0) - time));
+
+      material.diffuse = vec3(diffuse.rgb + diffuse.rgb * (1.0 - diff)) ;
     } `
   })
   // tiles3dLayer.reload()

@@ -156,7 +156,9 @@ export async function sePoint() {
     }
   })
   positionSXT = graphic.positionShow
+
   positionSXT = mars3d.PointUtil.addPositionsHeight(positionSXT, 5.0) // 增加杆子高度
+  graphic.position = positionSXT
 }
 
 export function testTerrain(val) {

@@ -96,7 +96,7 @@ export function onUnmounted() {
   map = null
 }
 
-function showDivGraphic(arr) {
+async function showDivGraphic(arr) {
   for (let i = 0; i < arr.length; i++) {
     const deepUnUsed = arr[i].deepUnUsedLength // 国道
     const deepUsed = arr[i].deepUsedLength // 县道
@@ -183,6 +183,6 @@ function showDivGraphic(arr) {
 
       chartChart.setOption(option)
     })
-    graphicLayer.addGraphic(graphic)
+    await graphicLayer.addGraphic(graphic)
   }
 }

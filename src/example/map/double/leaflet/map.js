@@ -13,6 +13,16 @@ export function onMounted(mapInstance) {
   map3d = mapInstance // 记录map
   map3d.camera.percentageChanged = 0.001
 
+  // map3d.on(mars3d.EventType.addLayer, function (event) {
+  //   if (map2d) {
+  //     const layerOptions = event.layer.toJSON() // 转为参数
+  //     const newLayer = mars2d.LayerUtil.create(layerOptions) // 创建图层(部分可能不支持的，需要此处加代码判断处理)
+  //     if (newLayer) {
+  //       map2d.addLayer(newLayer)
+  //     }
+  //   }
+  // })
+
   globalNotify("已知问题提示", `三维事件目前监听不灵敏，视角同步不够平滑。 `)
 
   creatMap2D()
@@ -53,6 +63,8 @@ function creatMap2D() {
       _map2d_extentChangeHandler()
 
       viewTo23D() // 默认
+
+      // showJsonLayer()
 
       hideLoading()
     })
@@ -148,3 +160,14 @@ export function viewTo23D() {
     map2d.invalidateSize(false)
   }
 }
+
+// // 下面演示数据同步
+// function showJsonLayer() {
+//   const graphicLayer = new mars3d.layer.GeoJsonLayer({
+//     name: "标绘示例数据",
+//     url: "//data.mars3d.cn/file/geojson/mars3d-draw.json",
+//     popup: "{type} {name}",
+//     flyTo: false
+//   })
+//   map3d.addLayer(graphicLayer)
+// }

@@ -21,15 +21,16 @@ export function onMounted(mapInstance) {
     layer.brightness = 0.4
   })
 
+  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/geojson/areas/340000.json" }).then(function (res) {
+    anhuiGeoJson = res.features[0]
+  })
+
   // 加载气象
-  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/windpoint.json" })
-    .then(function (res) {
-      showWindLine(res.data)
-    })
-    .catch(function (error) {
-      console.log("加载JSON出错", error)
-    })
+  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/windpoint.json" }).then(function (res) {
+    showWindLine(res.data)
+  })
 }
+
 
 /**
  * 释放当前地图业务的生命周期函数
@@ -81,6 +82,9 @@ function showWindLine(arr) {
     zProperty: "speed"
   })
 
+  // 按行政区划切割
+  // geojsonPoly = intersectXzqh(geojsonPoly)
+
   const geoJsonLayer = new mars3d.layer.GeoJsonLayer({
     name: "等值面",
     data: geojsonPoly,
@@ -110,6 +114,7 @@ function showWindLine(arr) {
   const geojsonLine = turf.isolines(points, breaks, {
     zProperty: "speed"
   })
+
 
   // 进行平滑处理
   // let features = geojsonLine.features;
@@ -148,4 +153,33 @@ function getColor(value) {
     }
   }
   return colors[0]
+}
+
+
+// 按行政区划切割结果
+let anhuiGeoJson
+function intersectXzqh(geojsonPoly) {
+  if (!anhuiGeoJson) {
+    console.log("行政区划面未加载")
+    return
+  }
+
+  geojsonPoly = turf.flatten(geojsonPoly)
+  const features = []
+  geojsonPoly.features.forEach(function (feature) {
+    let intersection = null
+    try {
+      intersection = turf.intersect(anhuiGeoJson, feature)
+    } catch (e) {
+      anhuiGeoJson = turf.buffer(anhuiGeoJson, 0)
+      intersection = turf.intersect(anhuiGeoJson, feature)
+    }
+    if (intersection != null) {
+      intersection.properties = feature.properties
+      features.push(intersection)
+    }
+  })
+  geojsonPoly.features = features
+
+  return geojsonPoly
 }

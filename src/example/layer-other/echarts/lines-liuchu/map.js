@@ -274,6 +274,7 @@ function getEchartsOption() {
         label: {
           show: true,
           position: "right",
+          fontSize: "18",
           formatter: "{b}",
           color: "inherit"
         },
@@ -284,11 +285,11 @@ function getEchartsOption() {
           color: function (params) {
             const tmp = params.data.value[2]
             if (tmp < 100) {
-              return "green"
+              return "#00fcff"
             } else if (tmp > 150) {
-              return "red"
+              return "#ffff00"
             } else {
-              return "yellow"
+              return "#ff0000"
             }
           }
         },

@@ -21,13 +21,7 @@ export function onMounted(mapInstance) {
   const geoJsonLayer = new mars3d.layer.GeoJsonLayer({
     name: "马拉松",
     url: "//data.mars3d.cn/file/geojson/hefei-marathon.json",
-    onCreateGraphic: function (e) {
-      const typeP = e.type + "P" // 修改type为primitive类型展示
-      if (mars3d.GraphicType[typeP]) {
-        e.type = typeP
-      }
-      geoJsonLayer.addGraphic(e)
-    }
+    toPrimitive: true // 提高渲染效率
   })
   map.addLayer(geoJsonLayer)
 }

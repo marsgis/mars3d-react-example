@@ -29,6 +29,8 @@ export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
+  globalNotify("已知问题提示", `(1) 高德的token如果访问失效或超流量了，请您自行申请替换mars3d.Token.updateGaode("key value")。`)
+
   // 创建矢量数据图层
   routeLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(routeLayer)

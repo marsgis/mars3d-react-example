@@ -57,7 +57,7 @@
       "mouseDownView": true,
       "zoom": { "insertBefore": "sceneModePicker", "zoomOutIcon": "/img/svg/sub.svg", "zoomInIcon": "/img/svg/plus.svg"},
       "compass": { "bottom": "toolbar", "left": "5px" },
-      "distanceLegend": { "left": "100px", "bottom": "2px" },
+      "distanceLegend": { "left": "10px", "bottom": "2px" },
       "locationBar": {
         "crs": "CGCS2000_GK_Zone_3",
         "crsDecimal": 0,
@@ -105,7 +105,8 @@
         "layers": [
           { "name": "底图", "type": "gaode", "layer": "img_d" },
           { "name": "注记", "type": "gaode", "layer": "img_z" }
-        ]
+        ],
+        "show": true
       },
       {
         "pid": 10,
@@ -154,8 +155,7 @@
         "icon": "/img/basemaps/esriWorldImagery.png",
         "type": "xyz",
         "url": "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-        "enablePickFeatures": false,
-        "show": true
+        "enablePickFeatures": false
       },
       {
         "pid": 10,

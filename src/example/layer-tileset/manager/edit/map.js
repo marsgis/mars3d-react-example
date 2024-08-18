@@ -96,6 +96,9 @@ export function showModel(url) {
     cacheBytes: 1073741824, // 1024MB = 1024*1024*1024
     maximumCacheOverflowBytes: 2147483648, // 2048MB = 2048*1024*1024
     popup: "all",
+    matrixMove: {
+      hasMiddle: false
+    },
     flyTo: true
   })
   map.addLayer(tiles3dLayer)

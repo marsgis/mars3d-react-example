@@ -62,13 +62,13 @@ export function onMounted(mapInstance) {
   })
   map.addLayer(geoJsonLayerDTH)
 
-  mars3d.DrawUtil.setEditPointStyle(mars3d.EditPointType.Control, { has3dtiles: true })// 编辑点贴模型
+  mars3d.DrawUtil.setEditPointStyle(mars3d.EditPointType.Control, { has3dtiles: true }) // 编辑点贴模型
 
   graphicLayer = new mars3d.layer.GraphicLayer({
     hasEdit: true,
     isAutoEditing: true, // 绘制完成后是否自动激活编辑
     symbol: {
-      type: "polygon",
+      type: "polygonP",
       merge: true, // 是否合并并覆盖json中已有的style，默认不合并
       styleOptions: {
         color: "rgba(255, 255, 0, 0.4)",

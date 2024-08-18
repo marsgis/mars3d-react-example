@@ -66,7 +66,8 @@ export async function drawRectangle() {
       color: "#ffff00",
       opacity: 0.2,
       outline: true,
-      outlineColor: "#ffffff"
+      outlineColor: "#ffffff",
+      clampToGround: true
     }
   })
 }
@@ -81,7 +82,8 @@ export async function drawPolygon() {
       color: "#ffff00",
       opacity: 0.2,
       outline: true,
-      outlineColor: "#ffffff"
+      outlineColor: "#ffffff",
+      clampToGround: true
     }
   })
 }
@@ -96,7 +98,8 @@ export async function drawCircle() {
       color: "#ffff00",
       opacity: 0.2,
       outline: true,
-      outlineColor: "#ffffff"
+      outlineColor: "#ffffff",
+      clampToGround: true
     }
   })
 }
@@ -160,47 +163,52 @@ function fxOneSatellite(item, options) {
   const graphic = options.graphic
   const startTimes = options.startTimes
   const endTimes = options.endTimes
-  const step = 10 * 1000 // 插值数
+
+  const tle = new mars3d.Tle(item.tle1, item.tle2)
+  const period_time = tle.period // 卫星绕地球一周的运行时长（单位：分钟）
+  let step = Math.floor(period_time / 10)
+  if (step < 1000) {
+    step = 1000
+  }
 
   let nowTime = startTimes
 
   let position
   while (nowTime <= endTimes) {
     // 根据时间计算卫星的位置
-    const position = mars3d.Tle.getEcfPosition(item.tle1, item.tle2, nowTime)
+    const position = tle.getPoint(nowTime, true)
     if (!position) {
       break
     }
     // 显示点[参考比较结果是否正确]
-    // let timeStr = new Date(nowTime).format("yyyy-MM-dd HH:mm:ss")
+    const timeStr = mars3d.Util.formatDate(new Date(nowTime))
     const pointPrimitive = new mars3d.graphic.PointPrimitive({
-      position,
+      position: position,
       style: {
         color: pointClr,
         pixelSize: 3
       },
-      attr: item
-      // tooltip: `编号：${item.norad} <br />卫星：${item.name} <br />时间：${timeStr}`
+      attr: item,
+      popup: `编号：${item.norad} <br />卫星：${item.name} <br />时间：${timeStr}`
     })
     map.graphicLayer.addGraphic(pointPrimitive)
+
 
     // 判断是卫星否在缓冲区内
     const isInPoly = graphic.isInPoly(position)
 
-    // console.log(`${item.name},时间：${timeStr},结果：${isInPoly}`);
-
-    if (lastObj && !lastObj.isInPoly && isInPoly) {
+    if (isInPoly && (!lastObj || !lastObj.isInPoly)) {
       // 表示进入范围
       inAreaPath.push({
-        lastPosition: lastObj.position,
-        lastTime: lastObj.time,
+        lastPosition: lastObj?.position,
+        lastTime: lastObj?.time ?? nowTime,
         time: nowTime,
         position,
         inOrOut: "in"
       })
     }
 
-    if (lastObj && lastObj.isInPoly && !isInPoly) {
+    if (!isInPoly && lastObj?.isInPoly) {
       // 表示出范围
       inAreaPath.push({
         position,
@@ -209,6 +217,7 @@ function fxOneSatellite(item, options) {
         time: nowTime,
         inOrOut: "out"
       })
+      lastObj = null
       break
     }
 
@@ -230,6 +239,8 @@ function fxOneSatellite(item, options) {
       inOrOut: "out"
     })
   }
+
+  console.log(inAreaPath)
 
   return inAreaPath
 }
@@ -277,7 +288,6 @@ function showResult(newSatelliteArr) {
             distance: mars3d.MeasureUtil.formatDistance(Cesium.Cartesian3.distance(positions[1], positions[0]))
           }
           tableList.push(data)
-
 
           showCorridor(data)
         }

@@ -250,12 +250,13 @@ function addDemoGraphic5(graphicLayer) {
         color: Cesium.Color.BLUE,
         gapColor: Cesium.Color.YELLOW,
         dashPattern: parseInt("1111000000", 2)
-      }
+      },
+      snakeAnimationDelay: 5, // 延迟多少秒执行执行流动生长(贪吃蛇)动画
+      snakeAnimationDuration: 10 // 执行流动生长(贪吃蛇)动画的时长（内部执行startSnakeAnimation方法）,单位：秒
     },
     attr: { remark: "示例5" }
   })
   graphicLayer.addGraphic(graphic)
-
 
   addSplitLabel({
     positions: graphic.positionsShow,
@@ -324,7 +325,6 @@ function addSplitLabel(options) {
     graphicLayer.addGraphic(graphic)
   })
 }
-
 
 function addDemoGraphic6(graphicLayer) {
   const graphic = new mars3d.graphic.PolylineEntity({

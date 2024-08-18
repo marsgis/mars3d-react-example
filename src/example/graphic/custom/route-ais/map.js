@@ -98,6 +98,7 @@ let offset = 0
 // 改变位置
 function changePosition(time) {
   offset += 0.02
+
   graphicLayer.eachGraphic((graphic) => {
     if (graphic.isPrivate) {
       return
@@ -107,6 +108,8 @@ function changePosition(time) {
     const point = new mars3d.LngLatPoint(item.lon + offset, item.lat + offset)
     graphic.addDynamicPosition(point, time)
   })
+
+  graphicLayer._refreshCluster()// 刷新聚合
 }
 
 // 在图层绑定Popup弹窗

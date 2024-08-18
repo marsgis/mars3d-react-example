@@ -375,7 +375,7 @@ export async function draPlane() {
   console.log("完成了draw标绘", graphic)
 }
 
-export async function drawall(closure) {
+export async function draWall(closure) {
   const graphic = await graphicLayer.startDraw({
     type: "wall",
     style: {
@@ -775,6 +775,7 @@ function loadDemoData() {
   // }
 
   mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/geojson/mars3d-draw.json" }).then(function (json) {
-    graphicLayer.loadGeoJSON(json, { clear: true, flyTo: true })
+   const graphics = graphicLayer.loadGeoJSON(json, { clear: true, flyTo: true, toPrimitive: true })
+   console.log("加载演示数据", graphics)
   })
 }

@@ -6,10 +6,7 @@ export let map // mars3d.Map三维地图对象
 export const mapOptions = {
   scene: {
     center: { lat: 20.648765, lng: 129.340334, alt: 19999976, heading: 355, pitch: -89 },
-    scene3DOnly: true,
-    contextOptions: {
-      requestWebgl1: true
-    }
+    scene3DOnly: true
   },
   control: {
     sceneModePicker: false
@@ -38,7 +35,6 @@ export function onMounted(mapInstance) {
   // map.scene.skyAtmosphere.saturationShift = 0.1
   // map.scene.skyAtmosphere.brightnessShift = 0.08 // 地面0.08 海底
 
-  globalNotify("已知问题提示", `(1) 当前示例仅支持WebGL1渲染，暂不支持WebGL2。`)
 
   addLayer()
 }

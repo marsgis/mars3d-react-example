@@ -183,6 +183,12 @@
             "hasPannel": true
           },
           {
+            "name": "近地天空盒昼夜切换",
+            "thumbnail": "map-property-skybox-multiple.jpg",
+            "main": "map/property/skybox-multiple",
+            "hasPannel": true
+          },
+          {
             "name": "DIV蒙板遮盖",
             "thumbnail": "map-other-mask-div.jpg",
             "main": "map/other/mask-div"
@@ -1435,6 +1441,12 @@
             "thumbnail": "graphic-primitive-billboard-list.jpg",
             "main": "graphic/primitive/billboard-list",
             "download": false
+          },
+          {
+            "name": "可拖拽图标点",
+            "thumbnail": "graphic-primitive-billboard-indicator.jpg",
+            "main": "graphic/primitive/billboard-indicator",
+            "hasPannel": true
           },
           {
             "name": "平面图标(FlatBillboard)",

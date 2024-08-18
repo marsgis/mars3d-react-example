@@ -20,7 +20,7 @@ export const mapOptions = {
         }
       },
       popup: "all",
-      show: true
+      show: false
     },
     {
       name: "省界线",
@@ -33,7 +33,7 @@ export const mapOptions = {
         }
       },
       popup: "all",
-      show: true
+      show: false
     }
   ]
 }
@@ -48,7 +48,7 @@ export const treeEvent = new mars3d.BaseClass()
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
-  shoRailway()
+  showExpressway()
 }
 
 /**
@@ -77,36 +77,7 @@ export function shoRailway() {
   removeLayer()
 
   graphicLayer = new mars3d.layer.Kml2JsonLayer({
-    url: "//data.mars3d.cn/file/kml/hftl.kml",
-    symbol: function (attr, style, featue) {
-      return {
-        color: "#00ffff",
-        opacity: 0.8,
-        width: 3,
-        arcType: Cesium.ArcType.GEODESIC,
-        clampToGround: true,
-        // 标记文字
-        label: {
-          text: "{name}",
-          opacity: 1,
-          font_size: 30,
-          color: "#ffffff",
-
-          font_family: "楷体",
-          outline: true,
-          outlineColor: "#000000",
-          outlineWidth: 3,
-
-          scaleByDistance: true,
-          scaleByDistance_far: 20000,
-          scaleByDistance_farValue: 0.1,
-          scaleByDistance_near: 100,
-          scaleByDistance_nearValue: 1,
-          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0.0, 20000)
-        }
-      }
-    },
-    center: { lat: 31.653222, lng: 117.273592, alt: 35183, heading: 358, pitch: -63 },
+    url: "/config/layer0.kmz",
     popup: "all",
     flyTo: true
   })
@@ -130,7 +101,8 @@ export function showExpressway() {
 
   graphicLayer = new mars3d.layer.Kml2JsonLayer({
     name: "路线",
-    url: "//data.mars3d.cn/file/kml/bslx.kmz",
+    // url: "//data.mars3d.cn/file/kml/bslx.kmz",
+    url: "/config/layer0.kmz",
     popup: "all",
     flyTo: true
   })

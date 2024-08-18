@@ -697,7 +697,7 @@ function showHeatMap(arrPoints) {
 const removeGraphic = (graphicArr, canClear) => {
   if (graphicArr && graphicArr.length !== 0) {
     graphicArr.forEach((graphic) => {
-      if (!graphic?.attr.save || canClear) {
+      if ((graphic?.attr && !graphic?.attr?.save) || canClear) {
         graphicLayer.removeGraphic(graphic)
       }
     })

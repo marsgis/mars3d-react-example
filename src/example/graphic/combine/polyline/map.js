@@ -89,6 +89,11 @@ export function addRandomGraphicByCount(count) {
   graphicLayer.addGraphic(graphic)
 
   // graphic.openPopup(0)
+  // setTimeout(() => {
+  //   const index = 0
+  //   graphic.openHighlight({ color: Cesium.Color.YELLOW }, true, index)
+  // }, 3000)
+
 
   graphicLayer.enabledEvent = true // 恢复事件
   return result.points.length

@@ -25,7 +25,7 @@ function initMap() {
         diffHeight: 50,
         image: "img/textures/poly-stone.jpg",
         imageBottom: "img/textures/poly-soil.jpg",
-        splitNum: 80,
+        splitNum: 100,
         area: [
           {
             exact: true,

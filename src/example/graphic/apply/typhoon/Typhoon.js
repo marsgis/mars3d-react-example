@@ -203,6 +203,7 @@ class Typhoon {
       const graphic = new mars3d.graphic.PolygonEntity({
         positions: points7,
         availability,
+        allowDrillPick: true,
         style: {
           setHeight: 900,
           color: "#eed139",
@@ -226,6 +227,7 @@ class Typhoon {
       const tenGraphic = new mars3d.graphic.PolygonEntity({
         positions: points10,
         availability,
+        allowDrillPick: true,
         style: {
           setHeight: 800,
           color: "#fe9c45",
@@ -250,6 +252,7 @@ class Typhoon {
       const tenGraphic = new mars3d.graphic.PolygonEntity({
         positions: points12,
         availability,
+        allowDrillPick: true,
         style: {
           setHeight: 700,
           color: "#ffff00",
@@ -417,13 +420,7 @@ class PlayTyphoon extends Typhoon {
         lastTime = Cesium.JulianDate.fromDate(arr[i + 1].time)
       }
 
-      const availability = new Cesium.TimeIntervalCollection([
-        new Cesium.TimeInterval({
-          start: pointTime,
-          stop: lastTime
-        })
-      ])
-      this.showPointFQ(item, availability)
+      this.showPointFQ(item, { start: pointTime, stop: lastTime })
     }
 
     // [起点]绘制台风起点名字

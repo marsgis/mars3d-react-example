@@ -37,7 +37,7 @@ export function onMounted(mapInstance) {
   map = mapInstance // 记录map
   map.toolbar.style.bottom = "55px" // 修改toolbar控件的样式
 
-  map.on("load", function () {
+  map.readyPromise.then(function () {
     addRoamLine()
   })
 }
