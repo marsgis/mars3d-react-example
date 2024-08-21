@@ -20,6 +20,11 @@ export const eventTarget = new mars3d.BaseClass()
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
 
+  globalNotify(
+    "已知问题提示",
+    `考虑大批量渲染性能，BillboardIndicator类存在限制：  (1)多个数据不同样式仅使用第一个style来同样式渲染;  (2)不支持setStyle更新部分样式。`
+  )
+
   // 创建DIV数据图层
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
@@ -52,7 +57,8 @@ function addDemoGraphic1(graphicLayer) {
       // 文本
       label: {
         text: "自动连线最近角",
-        font: "40px 楷体",
+        font_size: 40,
+        font_family: "楷体",
         color: "#ffffff"
       },
       // 矩形（可拖拽的）
@@ -83,7 +89,8 @@ function addDemoGraphic2(graphicLayer) {
       // 文本
       label: {
         text: "连线位置固定",
-        font: "20px 楷体",
+        font_size: 20,
+        font_family: "楷体",
         color: "#ffffff"
       },
       // 连线（自动的）
@@ -116,7 +123,8 @@ export function addRandomGraphicByCount(count) {
         // 文本
         label: {
           text: "数据" + index,
-          font: "20px 楷体",
+          font_size: 20,
+          font_family: "楷体",
           color: "#ffffff"
         },
         // 矩形（可拖拽的）
@@ -154,7 +162,8 @@ export function startDrawGraphic() {
       // 矩形内文本
       label: {
         text: "我是文本信息",
-        font: "20px 楷体",
+        font_size: 20,
+        font_family: "楷体",
         color: "#ffffff"
       },
       // 矩形（可拖拽的）

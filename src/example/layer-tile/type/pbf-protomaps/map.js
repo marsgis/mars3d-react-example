@@ -1,3 +1,6 @@
+// 矢量瓦片的目前最佳方案：使用 TileServer GL 开源地图服务工具：https://github.com/maptiler/tileserver-gl
+// 它利用 MapLibre GL Native 进行服务器端的矢量图层渲染，将pbf矢量瓦片转为普通瓦片数据后提供通过 WMTS 协议在Mars3D前端进行加载展示。
+
 import * as mars3d from "mars3d"
 
 export let map // mars3d.Map三维地图对象

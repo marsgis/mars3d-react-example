@@ -56,7 +56,8 @@ export function addLayer(height) {
     diffHeight: height, // 井的深度
     image: "img/textures/poly-stone.jpg", // 边界墙材质
     imageBottom: "img/textures/poly-soil.jpg", // 底部区域材质
-    splitNum: 50 // 井边界插值数
+    splitNum: 50, // 井边界插值数
+    exact: true
   })
   map.addThing(terrainPlanClip)
 }

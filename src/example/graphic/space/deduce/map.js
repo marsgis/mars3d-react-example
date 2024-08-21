@@ -397,7 +397,7 @@ function addDivGraphic(cameraView, divhtml) {
 
 let weixin
 function addSatelliteGrahic() {
-  if (!weixin) {
+  if (!weixin || !weixin.isAdded) {
     map.clock.currentTime = Cesium.JulianDate.fromIso8601("2019-07-15T18:48:48.36721000009856652Z")
     map.clock.multiplier = 2 // 速度
     weixin = new mars3d.graphic.Satellite({

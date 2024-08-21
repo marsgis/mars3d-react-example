@@ -38,23 +38,16 @@ export function onMounted(mapInstance) {
   map = mapInstance // 记录map
   // map.basemap = 2017 // 暗色底图
 
-  // 问题解决思路：https://zhuanlan.zhihu.com/p/361468247
-  globalNotify("已知问题提示", `纬度跨度超过一个城市时，会出现偏移情况(墨卡托投影造成的，暂未找到合适解决方式)。`)
+  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/heat-fuzhou.json" }).then(function (result) {
+    const arrPoints = []
+    for (let i = 0; i < result.Data.length; i++) {
+      const item = result.Data[i]
+      arrPoints.push({ lng: item.x, lat: item.y, value: item.t0 })
+    }
+    showHeatMap(arrPoints)
+  })
 
-  addTerrainClip()
-
-  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/heat-fuzhou.json" })
-    .then(function (result) {
-      const arrPoints = []
-      for (let i = 0; i < result.Data.length; i++) {
-        const item = result.Data[i]
-        arrPoints.push({ lng: item.x, lat: item.y, value: item.t0 })
-      }
-      showHeatMap(arrPoints)
-    })
-    .catch(function (error) {
-      console.log("加载JSON出错", error)
-    })
+  // addTerrainClip()
 }
 
 /**
@@ -63,22 +56,6 @@ export function onMounted(mapInstance) {
  */
 export function onUnmounted() {
   map = null
-}
-
-// 添加地形外裁剪
-async function addTerrainClip() {
-  const geojson = await mars3d.Util.fetchJson({ url: "http://data.mars3d.cn/file/geojson/areas/350100.json" })
-  const arr = mars3d.Util.geoJsonToGraphics(geojson) // 解析geojson
-  const options = arr[0]
-
-  const terrainClip = new mars3d.thing.TerrainClip({
-    image: false,
-    splitNum: 80 // 井边界插值数
-  })
-  map.addThing(terrainClip)
-  map.scene.globe.depthTestAgainstTerrain = false // 关闭深度
-  terrainClip.addArea(options.positions, { simplify: { tolerance: 0.002 } })
-  terrainClip.clipOutSide = true
 }
 
 function showHeatMap(arrPoints) {
@@ -109,9 +86,14 @@ function showHeatMap(arrPoints) {
   })
   map.addLayer(heatLayer)
 
+  window.heatLayer = heatLayer
+
   map.on(mars3d.EventType.mouseMove, (e) => {
     const point = mars3d.LngLatPoint.fromCartesian(e.cartesian)
     const data = heatLayer.getPointData(point)
+    if (!data.x) {
+      return
+    }
 
     const inhtml = `
       经度: ${point.lng} <br />
@@ -123,4 +105,21 @@ function showHeatMap(arrPoints) {
       `
     map.openSmallTooltip(e.windowPosition, inhtml)
   })
+}
+
+// 添加地形外裁剪
+async function addTerrainClip() {
+  const geojson = await mars3d.Util.fetchJson({ url: "http://data.mars3d.cn/file/geojson/areas/350100.json" })
+  const arr = mars3d.Util.geoJsonToGraphics(geojson) // 解析geojson
+  const options = arr[0]
+
+  const terrainClip = new mars3d.thing.TerrainClip({
+    image: false,
+    splitNum: 10, // 井边界插值数
+    clipOutSide: true
+  })
+  map.addThing(terrainClip)
+  terrainClip.addArea(options.positions, { simplify: { tolerance: 0.004 } })
+
+  map.scene.globe.depthTestAgainstTerrain = false // 关闭深度
 }
