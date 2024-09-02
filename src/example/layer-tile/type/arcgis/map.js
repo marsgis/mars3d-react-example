@@ -140,6 +140,15 @@ export function onUnmounted() {
   map = null
 }
 
+// 如需转义 layerDefs 花括号
+// Cesium.Resource.ReplaceUrl = function (url) {
+//   if (url.startsWith("http://server.mars3d.cn/arcgis/rest/services/mars/guihua/MapServer")) {
+//     return url.replace(/\{/gm, "%200").replace(/\}/gm, "%20")
+//   } else {
+//     return url
+//   }
+// }
+
 // 叠加的图层
 let arcGisLayer
 export function addTileLayer() {
@@ -190,7 +199,6 @@ export function removeTileLayer() {
     arcGisLayer = null
   }
 }
-
 
 // 特别的自定义参数的加载方式。
 // export function addTileLayer2() {

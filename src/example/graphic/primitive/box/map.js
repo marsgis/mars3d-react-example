@@ -105,7 +105,10 @@ function addDemoGraphic2(graphicLayer) {
       color: "#ff0000",
       opacity: 0.4,
       outline: true,
-      outlineColor: "#ffffff"
+      outlineColor: "#ffffff",
+      distanceDisplayCondition: true,
+      distanceDisplayCondition_far: 90000,
+      distanceDisplayCondition_near: 0
     },
     attr: { remark: "示例2" }
   })

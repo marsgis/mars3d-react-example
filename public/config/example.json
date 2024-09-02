@@ -3378,6 +3378,101 @@
         ]
       },
       {
+        "name": "气象类数据渲染",
+        "download": false,
+        "children": [
+          {
+            "name": "经纬向剖面",
+            "thumbnail": "thirdParty-qe-section.jpg",
+            "main": "thirdParty/quickearth/section",
+            "hasPannel": true,
+            "libs": [
+              "mars3d",
+              "quickearth"
+            ]
+          },
+          {
+            "name": "雷达挤压",
+            "thumbnail": "thirdParty-qe-extrusion.jpg",
+            "main": "thirdParty/quickearth/extrusion",
+            "hasPannel": true,
+            "libs": [
+              "mars3d",
+              "quickearth"
+            ]
+          },
+          {
+            "name": "高度拉升动画",
+            "thumbnail": "thirdParty-qe-liftAnimator.jpg",
+            "main": "thirdParty/quickearth/liftAnimator",
+            "hasPannel": true,
+            "libs": [
+              "mars3d",
+              "quickearth"
+            ]
+          },
+          {
+            "name": "多层切片",
+            "thumbnail": "thirdParty-qe-slice.jpg",
+            "main": "thirdParty/quickearth/slice",
+            "hasPannel": true,
+            "libs": [
+              "mars3d",
+              "quickearth"
+            ]
+          },
+          {
+            "name": "等值体",
+            "thumbnail": "thirdParty-qe-contour.jpg",
+            "main": "thirdParty/quickearth/contour",
+            "hasPannel": true,
+            "libs": [
+              "mars3d",
+              "quickearth"
+            ]
+          },
+          {
+            "name": "格点填色动画",
+            "thumbnail": "thirdParty-qe-tempAnimation.jpg",
+            "main": "thirdParty/quickearth/tempAnimation",
+            "libs": [
+              "mars3d",
+              "quickearth"
+            ]
+          },
+          {
+            "name": "填色光照",
+            "thumbnail": "thirdParty-qe-light.jpg",
+            "main": "thirdParty/quickearth/light",
+            "hasPannel": true,
+            "libs": [
+              "mars3d",
+              "quickearth"
+            ]
+          },
+          {
+            "name": "风场箭头",
+            "thumbnail": "thirdParty-qe-windArrow.jpg",
+            "main": "thirdParty/quickearth/windArrow",
+            "hasPannel": true,
+            "libs": [
+              "mars3d",
+              "quickearth"
+            ]
+          },
+          {
+            "name": "风场面条图",
+            "thumbnail": "thirdParty-qe-windLine.jpg",
+            "main": "thirdParty/quickearth/windLine",
+            "hasPannel": true,
+            "libs": [
+              "mars3d",
+              "quickearth"
+            ]
+          }
+        ]
+      },
+      {
         "name": "第3方矢量瓦片图层",
         "details": "各种不同技术栈的矢量瓦片解决方案",
         "download": false,

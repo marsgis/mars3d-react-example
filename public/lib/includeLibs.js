@@ -95,6 +95,11 @@ window.configLibs = {
   "cesium-networkPlug": [
     "mars3d/thirdParty/networkPlug/CesiumNetworkPlug.js"
   ],
+  "quickearth": [
+    "geotiff/geotiff.js",
+    "mars3d/thirdParty/quickearth/quickearth.core.js",
+    "mars3d/thirdParty/quickearth/quickearth.cesium.js",
+  ],
 
   //////////////////////////mars2d及其插件////////////////////////
   'mars2d': [//地图 主库

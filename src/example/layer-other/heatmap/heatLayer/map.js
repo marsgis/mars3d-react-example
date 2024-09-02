@@ -82,6 +82,7 @@ function showHeatMap(arrPoints) {
       opacity: 1.0
       // clampToGround: true,
     },
+    redrawZoom: true, // 视角缩放时是否进行按新的raduis进行渲染。
     flyTo: true
   })
   map.addLayer(heatLayer)

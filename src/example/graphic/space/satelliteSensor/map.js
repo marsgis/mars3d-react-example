@@ -72,7 +72,6 @@ export function addDemoGraphic1(sensorParams) {
     backwardExtrapolationType: Cesium.ExtrapolationType.HOLD,
     style: {
       sensorType: mars3d.graphic.SatelliteSensor.Type.Rect,
-      length: 1000000,
       angle1: sensorParams.angleValue1,
       angle2: sensorParams.angleValue2,
       heading: sensorParams.headingValue,
