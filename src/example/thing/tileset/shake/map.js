@@ -61,8 +61,7 @@ export async function drawArea() {
   const graphic = await map.graphicLayer.startDraw({
     type: "polygonP",
     style: {
-      color: "#00FF00",
-      opacity: 0.3,
+      color: "rgba(255, 0, 0, 0.5)",
       outline: true,
       outlineColor: "#ffffff"
     }

@@ -23,7 +23,7 @@ export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
   createControl()
-  
+
   // 加载模型图层 [也支持setLayerSplitDirection方法来设置图层]
   // const tiles3dLayer = new mars3d.layer.TilesetLayer({
   //   url: "//data.mars3d.cn/3dtiles/qx-dyt/tileset.json",
@@ -47,20 +47,11 @@ export function createControl() {
   }
   map.basemap = null
   mapSplit = new mars3d.control.MapSplit({
-    rightLayer: [
-      { name: "天地图卫星", type: "tdt", layer: "img_d" },
-      {
-        name: "大雁塔",
-        type: "3dtiles",
-        url: "//data.mars3d.cn/3dtiles/qx-dyt/tileset.json",
-        position: { alt: -27 }
-      }
-    ],
     leftLayer: [
       { name: "天地图电子", type: "tdt", layer: "vec_d" },
       { name: "天地图注记", type: "tdt", layer: "vec_z" },
       {
-        name: "大雁塔",
+        name: "大雁塔left",
         type: "3dtiles",
         url: "//data.mars3d.cn/3dtiles/qx-dyt/tileset.json",
         position: { alt: -27 },
@@ -68,7 +59,18 @@ export function createControl() {
           color: {
             conditions: [["true", "rgba(255,255,0,0.8)"]]
           }
-        }
+        },
+        popup: "我是left侧模型"
+      }
+    ],
+    rightLayer: [
+      { name: "天地图卫星", type: "tdt", layer: "img_d" },
+      {
+        name: "大雁塔right",
+        type: "3dtiles",
+        url: "//data.mars3d.cn/3dtiles/qx-dyt/tileset.json",
+        position: { alt: -27 },
+        popup: "我是right侧模型"
       }
     ]
   })
@@ -77,6 +79,32 @@ export function createControl() {
   mapSplit.on(mars3d.EventType.mouseMove, function (event) {
     console.log("拖动了mapSplit控件", event)
   })
+
+  // mapSplit.leftLayer[2].bindContextMenu([
+  //   {
+  //     text: "删除left图层",
+  //     icon: "fa fa-trash-o",
+  //     callback: (e) => {
+  //       const layer = e.layer
+  //       if (layer) {
+  //         layer.remove()
+  //       }
+  //     }
+  //   }
+  // ])
+
+  // mapSplit.rightLayer[1].bindContextMenu([
+  //   {
+  //     text: "删除right图层",
+  //     icon: "fa fa-trash-o",
+  //     callback: (e) => {
+  //       const layer = e.layer
+  //       if (layer) {
+  //         layer.remove()
+  //       }
+  //     }
+  //   }
+  // ])
 
   window.mapSplit = mapSplit // only for test
 

@@ -11,7 +11,7 @@ export const mapOptions = {
   // terrain: {
   //   type: "tdt",
   //   url: "https://t{s}.tianditu.gov.cn/mapservice/swdx",
-  //   key: mars3d.Token.tianditu,
+  //   key: "789e558be762ff832392a0393fd8a4f1",
   //   subdomains: "01234567",
   //   show: true,
   // },
@@ -26,17 +26,16 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
+  // http://mars3d.cn/dev/guide/issue/token.html
+  globalNotify("已知问题提示", `(1)如果天地图token超量或失效，请您自行申请替换mars3d.Token.updateTianditu("key value")。`)
+
   // 方式2：在创建地球后更新terrainProvider
   map.terrainProvider = new mars3d.provider.TdtTerrainProvider({
     url: "https://t{s}.tianditu.gov.cn/mapservice/swdx",
     key: mars3d.Token.tianditu,
+    // key: "789e558be762ff832392a0393fd8a4f1",
     subdomains: "01234567"
   })
-
-
-  // http://mars3d.cn/dev/guide/issue/token.html
-  globalNotify("已知问题提示", `(1)如果天地图token超量或失效，请您自行申请替换mars3d.Token.updateTianditu("key value")。`)
-
 }
 
 /**

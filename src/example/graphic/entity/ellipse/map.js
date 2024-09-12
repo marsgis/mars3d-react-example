@@ -208,6 +208,7 @@ function addDemoGraphic5(graphicLayer) {
       color: "#00ff00",
       opacity: 0.3,
       rotationDegree: 45,
+      granularity: Cesium.Math.RADIANS_PER_DEGREE * 0.1, // 可以控制圆的平滑度(值越小越平滑)。
 
       label: { text: "鼠标移入会高亮", pixelOffsetY: -30 },
       // 高亮时的样式（默认为鼠标移入，也可以指定type:'click'单击高亮），构造后也可以openHighlight、closeHighlight方法来手动调用

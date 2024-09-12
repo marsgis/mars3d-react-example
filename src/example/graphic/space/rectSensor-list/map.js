@@ -173,25 +173,26 @@ function createSatelliteList(arr) {
     graphicLayer.addGraphic(weixin)
 
     // RectSensor锥体（比Satellite内置的cone效率略高）
-    // const rectSensor = new mars3d.graphic.RectSensor({
-    //   position: new Cesium.CallbackProperty(function (time) {
-    //     return weixin.position
-    //   }, false),
-    //   style: {
-    //     angle1: 30,
-    //     angle2: 15,
-    //     length: 90000,
-    //     color: "rgba(0,255,0,0.4)",
-    //     outline: true,
-    //     topShow: true,
-    //     topSteps: 2,
-    //     rayEllipsoid: true,
-    //     heading: new Cesium.CallbackProperty(function (time) {
-    //       return weixin.heading
-    //     }, false)
-    //   },
-    //   reverse: true
-    // })
-    // graphicLayer.addGraphic(rectSensor)
+    const rectSensor = new mars3d.graphic.RectSensor({
+      position: new Cesium.CallbackProperty(function (time) {
+        return weixin.position
+      }, false),
+      style: {
+        angle1: 30,
+        angle2: 15,
+        length: 90000,
+        color: "rgba(0,255,0,0.4)",
+        outline: true,
+        topShow: true,
+        topSteps: 2,
+        rayEllipsoid: true,
+        slices: 1,
+        heading: new Cesium.CallbackProperty(function (time) {
+          return weixin.heading
+        }, false)
+      },
+      reverse: true
+    })
+    graphicLayer.addGraphic(rectSensor)
   }
 }

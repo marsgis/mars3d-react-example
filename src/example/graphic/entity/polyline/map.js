@@ -155,6 +155,7 @@ function addDemoGraphic2(graphicLayer) {
     ],
     style: {
       width: 6,
+      arcType: Cesium.ArcType.GEODESIC,
       materialType: mars3d.MaterialType.PolylineOutline,
       materialOptions: {
         color: Cesium.Color.ORANGE,

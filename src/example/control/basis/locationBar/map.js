@@ -31,8 +31,8 @@ export function onMounted(mapInstance) {
     //     pitch = "仰视:" + locationData.pitch
     //   }
 
-    //   const dfmX = mars3d.PointTrans.degree2dms(locationData.lng).str
-    //   const dfmY = mars3d.PointTrans.degree2dms(locationData.lat).str
+    //   const dfmX = mars3d.PointTrans.degree2dms(locationData.lng, 2).str
+    //   const dfmY = mars3d.PointTrans.degree2dms(locationData.lat, 2).str
 
     //   return ` <div>经度:${locationData.lat} , ${dfmY}</div>
     //           <div>纬度:${locationData.lng} , ${dfmX}</div>

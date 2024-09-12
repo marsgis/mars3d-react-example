@@ -123,7 +123,8 @@ export function onMounted(mapInstance) {
   outlineEffect = new mars3d.effect.OutlineEffect({
     color: "#FFFF00",
     width: 4,
-    eventType: mars3d.EventType.click
+    eventType: mars3d.EventType.click,
+    closeOnClick: true
   })
   map.addEffect(outlineEffect)
 

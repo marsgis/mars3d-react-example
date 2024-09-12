@@ -67,6 +67,7 @@ async function initDemoData() {
       )
     },
     completeOne: (layer) => {
+      layer.isQuickearth = true
       map.scene.primitives.add(layer)
     }
   })
@@ -99,6 +100,7 @@ export async function drawRectangle(value) {
       )
     },
     completeOne: (layer) => {
+      layer.isQuickearth = true
       map.scene.primitives.add(layer)
     },
     visibleExtent: {
@@ -108,4 +110,13 @@ export async function drawRectangle(value) {
       maxLat: extent.ymax
     }
   })
+}
+
+export function clearDraw() {
+  for (let index = map.scene.primitives.length - 1; index >= 0; index--) {
+    const layer = map.scene.primitives.get(index)
+    if (layer.isQuickearth) {
+      map.scene.primitives.remove(layer)
+    }
+  }
 }
