@@ -43,7 +43,7 @@ export function onUnmounted() {
 }
 
 /**
- * API文档，参考lib\mars3d\thirdParty\weiVectorTile\Document.rar（解压Document.rar）
+ * API文档，参考public\lib\mars3d\thirdParty\weiVectorTile\README.md
  *
  * @param {Array} geojson 获取得到的数据 数组对象
  * @returns {void} 无

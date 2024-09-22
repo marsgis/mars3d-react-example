@@ -41,7 +41,7 @@ export function onMounted(mapInstance) {
     // console.log("分析结束", e)
 
     hideLoading()
-    if (e.graphic?.type === mars3d.graphic.SectionMeasure.type) {
+    if (e.graphic?.type === mars3d.GraphicType.sectionMeasure) {
       eventTarget.fire("measureEnd", e)
     }
   })
@@ -50,7 +50,7 @@ export function onMounted(mapInstance) {
     // console.log("单击了对象", e)
     hideTipMarker()
 
-    if (e.graphic?.type === mars3d.graphic.SectionMeasure.type) {
+    if (e.graphic?.type === mars3d.GraphicType.sectionMeasure) {
       eventTarget.fire("measureClick", { value: e.graphic?.measured })
     }
   })

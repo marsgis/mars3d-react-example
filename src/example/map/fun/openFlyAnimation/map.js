@@ -50,9 +50,8 @@ export function startAnimation() {
   map.openFlyAnimation({
     // duration1:4,
     // easingFunction1: Cesium.EasingFunction.QUINTIC_IN_OUT,
-    callback: function () {
-      // 动画播放完成后回调
-    }
+  }).then(() => {
+    // 动画播放完成后回调
   })
 }
 

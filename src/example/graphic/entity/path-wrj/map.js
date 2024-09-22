@@ -7,7 +7,10 @@ let pathEntity = null
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: 32.550222, lng: 117.366824, alt: 2696, heading: 273, pitch: -67 }
+    center: { lat: 32.550222, lng: 117.366824, alt: 2696, heading: 273, pitch: -67 },
+    clock: {
+      currentTime: "2021-07-01 10:45:00"
+    }
   },
   control: {
     clockAnimate: true, // 时钟动画控制(左下角)
@@ -78,6 +81,7 @@ export function viewSide() {
 function initPath(data) {
   const property = new Cesium.SampledPositionProperty()
   property.forwardExtrapolationType = Cesium.ExtrapolationType.HOLD
+  property.backwardExtrapolationType = Cesium.ExtrapolationType.HOLD
 
   let start
   let stop

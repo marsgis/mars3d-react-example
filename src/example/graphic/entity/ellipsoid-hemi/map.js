@@ -261,9 +261,9 @@ function addDemoGraphic6(graphicLayer) {
     hasEdit: false,
     // 添加扫描面
     scanPlane: {
-      innerRadii: 2500,
       step: 0.5, // 步长
       style: {
+        innerRadii: 2500,
         color: "#00ffff",
         opacity: 0.2,
         outline: true,

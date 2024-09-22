@@ -1,13 +1,17 @@
 import * as mars3d from "mars3d"
 
 export let map // mars3d.Map三维地图对象
+
 export let graphicLayer // 矢量图层对象
+export let testGraphicLayer
+export let treeGraphicLayer
+
 export const echartTarget = new mars3d.BaseClass()
 
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: 29.526546, lng: 119.823425, alt: 803, heading: 178, pitch: -27 },
+    center: { lat: 30.328067, lng: 116.032025, alt: 1320.6, heading: 121.2, pitch: -19.3 },
     fxaa: true
   }
 }
@@ -25,14 +29,26 @@ export function onMounted(mapInstance) {
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
+  // 创建矢量数据图层
+  testGraphicLayer = new mars3d.layer.GraphicLayer()
+  map.addLayer(testGraphicLayer)
+
   // 在layer上绑定监听事件
   graphicLayer.on(mars3d.EventType.click, function (event) {
     console.log("监听layer，单击了矢量对象", event)
   })
 
-  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/tower.json" })
+  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/tower-taihu.json" })
     .then(function (res) {
-      showData(res.data)
+      showData(res)
+    })
+    .catch(function (error) {
+      console.log("加载JSON出错", error)
+    })
+
+  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/tower-taihu-tree.json" })
+    .then(function (res) {
+      showTreeData(res)
     })
     .catch(function (error) {
       console.log("加载JSON出错", error)
@@ -47,46 +63,97 @@ export function onUnmounted() {
   map = null
 }
 
+let polylines1 = []
+let polylines2 = []
+let polylines3 = []
+
 function showData(arrdata) {
-  let polylines1 = []
-  let polylines2 = []
-  let polylines3 = []
-  let polylines4 = []
+  const polylinesTB = [] // 图标显示的点
 
-  const polylinesTB = []
-  for (let i = 0; i < arrdata.length; i++) {
+  // 预处理坐标及角度
+  for (let i = 0, len = arrdata.length; i < len; i++) {
     const item = arrdata[i]
+    const position = Cesium.Cartesian3.fromDegrees(item.lon, item.lat, item.alt)
+    item.position = position
+    item.index = i + 1
 
-    // 所在经纬度坐标及海拔高度
-    const longitude = Number(item.longitude)
-    const latitude = Number(item.latitude)
-    const height = Number(item.height)
+    // 模型比例，根据塔高换算
+    item.scale = item.height / 52
 
-    const originPoint = {
-      longitude,
-      latitude,
-      height
-    }
-    const position = Cesium.Cartesian3.fromDegrees(originPoint.longitude, originPoint.latitude, originPoint.height)
+    // 测试塔顶高度与实际高度是否一致
+    // const positionTop = mars3d.PointUtil.addPositionsHeight(position, item.height) // 顶部点
+    // const graphic2 = new mars3d.graphic.PointPrimitive({
+    //   position: positionTop,
+    //   style: {
+    //     color: "#ff0000",
+    //     pixelSize: 8,
+    //     outlineColor: "#ffffff",
+    //     outlineWidth: 2
+    //   }
+    // })
+    // graphicLayer.addGraphic(graphic2)
 
     // 计算电线塔转角角度
-    const degree = parseInt(item.degree)
+    if (i !== 0) {
+      const priorPt = arrdata[i - 1].position
+      item.lineHeading = mars3d.MeasureUtil.getAngle(priorPt, position) // 线的角度
+    }
+  }
 
-    // 5条线路坐标
+  // 计算各坐标及路线坐标，并渲染矢量对象
+  for (let i = 0, len = arrdata.length; i < len; i++) {
+    const item = arrdata[i]
+    const position = item.position
+
+    // 计算电线塔转角角度
+    let degree = item.heading
+    // if (degree) {
+    //   item.degree = item.lineHeading - item.heading
+    // } else {
+    if (i === 0) {
+      degree = arrdata[i + 1].lineHeading
+    } else if (i === len - 1) {
+      degree = arrdata[i].lineHeading
+    } else {
+      const nextTower = arrdata[i + 1]
+      let stepAngle = (nextTower.lineHeading - item.lineHeading) / 2
+      if (stepAngle > 90) {
+        stepAngle = 180 - stepAngle
+      } else if (stepAngle < -90) {
+        stepAngle = stepAngle + 180
+      }
+      degree = item.lineHeading + stepAngle
+    }
+    item.degree = degree
+    // }
+
     const hpr = new Cesium.HeadingPitchRoll(Cesium.Math.toRadians(degree), 0, 0)
-    const newPoint1 = mars3d.PointUtil.getPositionByHprAndOffset(position, new Cesium.Cartesian3(0, 9, 51.5), hpr)
-    const newPoint2 = mars3d.PointUtil.getPositionByHprAndOffset(position, new Cesium.Cartesian3(0, -9, 51.5), hpr)
 
-    const newPoint3 = mars3d.PointUtil.getPositionByHprAndOffset(position, new Cesium.Cartesian3(0, -12, 47.5), hpr)
-    const newPoint4 = mars3d.PointUtil.getPositionByHprAndOffset(position, new Cesium.Cartesian3(0, 12, 47.5), hpr)
+    // 3个悬垂串的位置
+    const offsetLineZ = item.height - 3.9
+    let newPoint1 = mars3d.PointUtil.getPositionByHprAndOffset(position, new Cesium.Cartesian3(0, 10.6, offsetLineZ), hpr) // 左边挂线
+    let newPoint2 = mars3d.PointUtil.getPositionByHprAndOffset(position, new Cesium.Cartesian3(0, 0, offsetLineZ), hpr) // 中间线
+    let newPoint3 = mars3d.PointUtil.getPositionByHprAndOffset(position, new Cesium.Cartesian3(0, -10.6, offsetLineZ), hpr) // 右边挂线
 
-    polylinesTB.push(newPoint3) // 图标显示的点
+    polylinesTB.push(newPoint2) // 图标显示的点
+
+    drawWireTowerModel(position, degree, item.scale, item)
+
+    // 3个悬垂串模型
+    drawWireTowerJYZModel(newPoint1, degree)
+    drawWireTowerJYZModel(newPoint2, degree)
+    drawWireTowerJYZModel(newPoint3, degree)
+
+    // 计算路线点
+    const jyzHeight = -5
+    newPoint1 = mars3d.PointUtil.addPositionsHeight(newPoint1, jyzHeight)
+    newPoint2 = mars3d.PointUtil.addPositionsHeight(newPoint2, jyzHeight)
+    newPoint3 = mars3d.PointUtil.addPositionsHeight(newPoint3, jyzHeight)
 
     if (i === 0) {
       polylines1.push(newPoint1)
       polylines2.push(newPoint2)
       polylines3.push(newPoint3)
-      polylines4.push(newPoint4)
     } else {
       const angularityFactor = -5000
       const num = 50
@@ -98,56 +165,61 @@ function showData(arrdata) {
 
       positions = mars3d.PolyUtil.getLinkedPointList(polylines3[polylines3.length - 1], newPoint3, angularityFactor, num) // 计算曲线点
       polylines3 = polylines3.concat(positions)
-
-      positions = mars3d.PolyUtil.getLinkedPointList(polylines4[polylines4.length - 1], newPoint4, angularityFactor, num) // 计算曲线点
-      polylines4 = polylines4.concat(positions)
-
     }
-
-    const html = mars3d.Util.getTemplateHtml({
-      title: "塔杆",
-      template: [
-        { field: "roadName", name: "所属线路" },
-        { field: "towerId", name: "杆塔编号" },
-        { field: "杆塔型号", name: "杆塔型号" },
-        { field: "杆塔性质", name: "杆塔性质" },
-        { field: "杆塔类型", name: "杆塔类型" },
-        { field: "投运日期", name: "投运日期" },
-        { field: "杆塔全高", name: "杆塔全高" },
-        { field: "设计单位", name: "设计单位" },
-        { field: "施工单位", name: "施工单位" },
-        { field: "height", name: "海拔高度" }
-      ],
-      attr: item
-    })
-
-    drawWireTowerModel(position, degree, html)
   }
 
   // 绘制路线
-  drawGuideLine(polylines1, "#ffffff")
-  drawGuideLine(polylines2, "#ffffff")
-  drawGuideLine(polylines3, "#0000ff")
-  drawGuideLine(polylines4, "#ff0000")
+  drawGuideLine(polylines1, "#0000ff")
+  drawGuideLine(polylines2, "#cccccc")
+  drawGuideLine(polylines3, "#ff0000")
+
+  polylines1 = mars3d.LngLatArray.toArray(polylines1)
+  polylines2 = mars3d.LngLatArray.toArray(polylines2)
+  polylines3 = mars3d.LngLatArray.toArray(polylines3)
 
   // 绘制断面图echarts图表
   computeSurfacePointsHeight(polylinesTB)
 }
 
 // 绘制电线塔模型
-function drawWireTowerModel(position, degree, inthtml) {
+function drawWireTowerModel(position, degree, scale, item) {
+  const html = mars3d.Util.getTemplateHtml({
+    title: "塔杆",
+    template: [
+      { field: "index", name: "杆塔序号" },
+      { field: "type", name: "杆塔型号" },
+      { field: "degree", name: "方向" },
+      { field: "height", name: "杆塔高度" },
+      { field: "alt", name: "海拔高度" }
+    ],
+    attr: item
+  })
+
   const graphic = new mars3d.graphic.ModelPrimitive({
     position,
     style: {
-      url: "//data.mars3d.cn/gltf/mars/tower/tower.glb",
+      url: "//data.mars3d.cn/gltf/mars/tower/tower-500kV.glb",
       heading: degree,
+      scale: scale,
+      distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 4000.0)
+    },
+    popup: html
+  })
+  graphicLayer.addGraphic(graphic)
+}
+
+function drawWireTowerJYZModel(position, degree) {
+  const graphic2 = new mars3d.graphic.ModelPrimitive({
+    position,
+    style: {
+      url: "//data.mars3d.cn/gltf/mars/tower/tower-jyz.glb",
+      heading: degree,
+      pitch: 90, // 模型本身不是竖直，需要加pitch纠正
       scale: 1,
       distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 4000.0)
     }
   })
-  graphicLayer.addGraphic(graphic)
-
-  graphic.bindPopup(inthtml)
+  graphicLayer.addGraphic(graphic2)
 }
 
 function drawGuideLine(positions, color) {
@@ -191,30 +263,170 @@ function computeSurfacePointsHeight(polylines) {
   })
 }
 
+//= ==========计算最近点=============
 
-// function downloadNewFile(res) {
-//   const polylinesTB = []
-//   for (let i = 0; i < res.data.length; i++) {
-//     const item = res.data[i]
-//     const longitude = Number(item.longitude)
-//     const latitude = Number(item.latitude)
-//     const height = Number(item.height)
-//     const position = Cesium.Cartesian3.fromDegrees(longitude, latitude, height)
-//     polylinesTB.push(position)
-//   }
-//   mars3d.PolyUtil.computeSurfacePoints({
-//     scene: map.scene,
-//     positions: polylinesTB, // 需要计算的源路线坐标数组
-//     exact: true
-//   }).then((result) => {
-//     for (let i = 0; i < result.positions.length; i++) {
-//       const tdHeight = mars3d.Util.formatNum(Cesium.Cartographic.fromCartesian(result.positions[i]).height) // 地面高度
-//       res.data[i].height = tdHeight
+// 渲染所有树，单击可以单个计算
+function showTreeData(arrdata) {
+  // 创建矢量数据图层
+  treeGraphicLayer = new mars3d.layer.GraphicLayer()
+  map.addLayer(treeGraphicLayer)
 
-//       delete res.data[i].heightCol
-//       delete res.data[i].latCol
-//       delete res.data[i].lonCol
-//     }
-//     mars3d.Util.downloadFile("tower.json", JSON.stringify(res))
-//   })
-// }
+  // 在layer上绑定监听事件
+  treeGraphicLayer.on(mars3d.EventType.click, function (event) {
+    console.log("单击了Tree矢量对象", event)
+
+    const point = event.graphic.attr.top
+    drawNearPointInfo(point)
+  })
+
+  for (let i = 0, len = arrdata.length; i < len; i++) {
+    const item = arrdata[i]
+
+    const position = Cesium.Cartesian3.fromDegrees(item.lon, item.lat, item.alt)
+    const positionTop = mars3d.PointUtil.addPositionsHeight(position, item.height) // 树顶部点
+
+    // 模型比例，根据数高换算
+    const scale = item.height / 5.6
+
+    const graphic = new mars3d.graphic.ModelPrimitive({
+      position,
+      style: {
+        url: "//data.mars3d.cn/gltf/imap/de07d417d587494291daccb7670609fb/gltf/gltf2.gltf",
+        scale: scale,
+        distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 4000.0)
+      },
+      attr: {
+        top: positionTop
+      }
+    })
+    treeGraphicLayer.addGraphic(graphic)
+
+    // 测试 树顶部高度 与实际高度是否一致
+    const graphic2 = new mars3d.graphic.PointPrimitive({
+      position: positionTop,
+      style: {
+        color: "#ff0000",
+        pixelSize: 3,
+        outlineColor: "#ffffff",
+        outlineWidth: 1
+      },
+      attr: {
+        top: positionTop
+      }
+    })
+    treeGraphicLayer.addGraphic(graphic2)
+  }
+}
+
+// 批量计算所有树
+export async function batchComputing() {
+  globalMsg("计算的数据较多，计算中，请稍后……")
+
+  setTimeout(() => {
+    treeGraphicLayer.eachGraphic((graphic) => {
+      const point = graphic.attr.top
+      drawNearPointInfo(point)
+    })
+  }, 1000)
+}
+
+// 单个绘制点的计算
+export async function drawPoint() {
+  const graphic = await testGraphicLayer.startDraw({
+    type: "point",
+    style: {
+      pixelSize: 8,
+      color: "#3388ff"
+    }
+  })
+  console.log("完成了draw标绘", graphic)
+
+  let point = graphic.positionShow
+
+  point = mars3d.PointUtil.addPositionsHeight(point, 10) // 树高抬高测试
+  graphic.position = point
+
+  drawNearPointInfo(point)
+}
+
+function drawNearPointInfo(point) {
+  point = mars3d.LngLatPoint.toArray(point)
+
+  let selLine // 多个线中的最近线
+  let selNearest // 多个线中的最近线对应的最近点
+
+  let minDis = Number.MAX_VALUE
+  const arrLines = [polylines1, polylines2, polylines3]
+  for (let index = 0; index < arrLines.length; index++) {
+    const line = arrLines[index]
+    const snapped = turf.nearestPointOnLine(turf.lineString(line), turf.point(point), { units: "meters" }) // 点到线上最近的点
+
+    if (snapped.properties.dist < minDis) {
+      minDis = snapped.properties.dist
+
+      selLine = line
+      selNearest = snapped
+    }
+  }
+
+  const nearOnLinePt = selLine[selNearest.properties.index] // 最近点（电线上的实际点）
+  const nearOnLineNextPt = selLine[selNearest.properties.index + 1] ?? nearOnLinePt // 最近点的下一个点（电线上的实际点）
+  const resultPt = selNearest.geometry.coordinates // 与电线的垂线的 新坐标交点,但不知道高度值)
+
+  // 垂线的交点新坐标对应高度的计算
+  const h1 = nearOnLinePt[2]
+  const h2 = nearOnLineNextPt[2]
+  const dis1 = mars3d.MeasureUtil.getDistance([nearOnLinePt, resultPt])
+  const dis2 = mars3d.MeasureUtil.getDistance([nearOnLineNextPt, resultPt])
+  if (dis1 === 0) {
+    resultPt[2] = h1
+  } else if (dis2 === 0) {
+    resultPt[2] = h2
+  } else {
+    resultPt[2] = h2 + ((h1 - h2) * dis1) / (dis1 + dis2)
+  }
+
+  // addTestPoint(nearOnLinePt, "线上index点")
+  // addTestPoint(nearOnLineNextPt, "线上index+1点")
+  addTestPoint(resultPt, "我是最近点")
+
+  // 显示测量结果
+  const graphic = new mars3d.graphic.HeightTriangleMeasure({
+    positions: [point, resultPt],
+    style: {
+      width: 3,
+      color: "#ffff00"
+    },
+    label: {
+      font_size: 13,
+      color: "#ffffff",
+      pixelOffsetY: -10,
+      distanceDisplayCondition: true,
+      distanceDisplayCondition_far: 4000,
+      distanceDisplayCondition_near: 0
+    }
+  })
+  testGraphicLayer.addGraphic(graphic)
+}
+
+function addTestPoint(position, text) {
+  const graphic = new mars3d.graphic.PointEntity({
+    position: position,
+    style: {
+      color: "#00ff00",
+      pixelSize: 8,
+      outlineColor: "#ffffff",
+      outlineWidth: 2,
+      label: {
+        text: text,
+        font_size: 13,
+        color: "#ffffff",
+        pixelOffsetY: -10,
+        distanceDisplayCondition: true,
+        distanceDisplayCondition_far: 4000,
+        distanceDisplayCondition_near: 0
+      }
+    }
+  })
+  testGraphicLayer.addGraphic(graphic)
+}

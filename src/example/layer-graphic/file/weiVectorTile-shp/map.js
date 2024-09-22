@@ -28,7 +28,7 @@ export function onUnmounted() {
   map = null
 }
 /**
- * API文档，参考lib\mars3d\thirdParty\weiVectorTile\Document.rar（解压Document.rar）
+ * API文档，参考public\lib\mars3d\thirdParty\weiVectorTile\README.md
  * 显示国界线
  *
  * @returns {void}
