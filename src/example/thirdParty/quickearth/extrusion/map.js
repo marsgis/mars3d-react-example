@@ -37,6 +37,7 @@ async function initDemoData() {
   // public静态资源的路径
   consts.resourcePath = "//data.mars3d.cn/file/qe"
 
+  globalMsg("数据加载中...")
   // config资源配置
   await resourceService.loadResourceFromConfigPath("styles/demo.config.json")
 
@@ -45,7 +46,6 @@ async function initDemoData() {
   const provider = new MicapsDiamond131GridDataProvider(buffers[0])
   // 实时计算组合反射率底面（业务上建议单独输出组合反射率，减少前端计算）
   const cr = getCR(provider, 0, true, false).upper
-
   const pixelStyle = {
     fillColor: "color-cr#res",
     zScale: 5,
@@ -56,10 +56,12 @@ async function initDemoData() {
   // 或查看 public\lib\mars3d\thirdParty\quickearth\quickearth.cesium.d.ts文件
   pixelLayer = new CPixelLayer().setDataSource(cr).setDrawOptions(pixelStyle)
   map.scene.primitives.add(pixelLayer)
+
+  globalMsg("数据加载完成")
 }
 
 export function changeScale(scale) {
-  pixelLayer.setDrawOptions({
+  pixelLayer?.setDrawOptions({
     extrudeScale: scale
   })
 }

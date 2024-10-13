@@ -39,6 +39,8 @@ export function onMounted(mapInstance) {
   })
   map.addLayer(tilesetLayer)
 
+  addTestGrraphic()
+
   shadows = new mars3d.thing.Shadows({
     darkness: 0.4, // 阴影透明度, 0-1，值越大越透明
     multiplier: 1600
@@ -51,6 +53,33 @@ export function onMounted(mapInstance) {
     const shadowTime = shadows.time
     eventTarget.fire("changeShadows", { shadowTime })
   })
+}
+
+function addTestGrraphic() {
+  // 创建矢量数据图层
+  const graphicLayer = new mars3d.layer.GraphicLayer()
+  map.addLayer(graphicLayer)
+
+  const graphic = new mars3d.graphic.CircleEntity({
+    position: [119.033025, 33.588439, 14.8],
+    style: {
+      radius: 5,
+      diffHeight: 30,
+      color: "#00ff00",
+      hasShadows: true
+    }
+  })
+  graphicLayer.addGraphic(graphic)
+
+  const graphic2 = new mars3d.graphic.ModelEntity({
+    position: [119.030328, 33.58953, 15.6],
+    style: {
+      url: "//data.mars3d.cn/gltf/mars/fengche.gltf",
+      scale: 20,
+      hasShadows: true
+    }
+  })
+  graphicLayer.addGraphic(graphic2)
 }
 
 /**
@@ -77,8 +106,8 @@ export function stopPlay() {
  */
 export function startPlay(date, hours, minutes) {
   const currentTime = setShadows(date, hours, minutes)
-  const startDate = new Date(date + " 00:00:00")
-  const endDate = new Date(date + " 23:59:59")
+  const startDate = new Date(date + " 07:00:00")
+  const endDate = new Date(date + " 18:00:00")
 
   shadows.multiplier = 1600
   shadows.start(startDate, endDate, currentTime)
@@ -124,7 +153,7 @@ export async function drawArea(date) {
   // 求最大、最小高度值
   shadows.multiplier = 14400
   const result = await shadows.startRate({
-    startDate: new Date(date + " 08:00:00"),
+    startDate: new Date(date + " 07:30:00"),
     endDate: new Date(date + " 18:00:00"),
     positions,
     step: 3,
@@ -157,41 +186,3 @@ function showRateResult(result) {
     map.graphicLayer.addGraphic(graphic)
   })
 }
-
-// // 获取色带
-// function getImageData() {
-//   const nWidth = 100
-//   const canvas = document.createElement("canvas")
-//   canvas.width = nWidth
-//   canvas.height = nWidth
-//   const ctx = canvas.getContext("2d")
-//   ctx.beginPath()
-//   /* 指定渐变区域 */
-//   const grad = ctx.createLinearGradient(0, 0, nWidth, 0)
-//   /* 指定几个颜色 */
-//   grad.addColorStop(0.05, "rgb(0, 228, 0)") // green
-//   grad.addColorStop(0.15, "rgb(256, 256, 0)") // yellow
-//   grad.addColorStop(0.25, "rgb(256, 126, 0)") // orange
-//   grad.addColorStop(0.35, "rgb(256, 0, 0)") // red
-//   grad.addColorStop(0.5, "rgb(153, 0, 76)") // purple
-//   grad.addColorStop(0.8, "rgb(126, 0, 35)") // maroon
-
-//   /* 将这个渐变设置为fillStyle */
-//   ctx.fillStyle = grad
-//   /* 绘制矩形 */
-//   ctx.rect(0, 0, nWidth, nWidth)
-//   ctx.fill()
-//   return ctx.getImageData(0, 0, nWidth, 1).data
-// }
-
-// const imgData = getImageData()
-
-// // 计算颜色，色带颜色
-// function getColor(rate) {
-//   if (rate > 100) {
-//     return "rgba(126,0,35,0.8)"
-//   } else {
-//     rate = Math.round(rate)
-//     return `rgba(${imgData[rate * 4]},${imgData[rate * 4 + 1]},${imgData[rate * 4 + 2]},0.8)`
-//   }
-// }

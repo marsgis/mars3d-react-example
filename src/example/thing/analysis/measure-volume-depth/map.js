@@ -77,8 +77,9 @@ function addDemoGraphic1() {
       [116.201795, 30.865941, 443.06]
     ],
     height: 450,
-    depth: true, // 使用离屏渲染深度图的方式
     offsetHeight: 500 // 偏移高度来展示
+    // showFillBox: false, // 是否显示填方盒子
+    // showFillVolume: false // 是否显示填方体积结果文本
     // measured: {
     //   // 固化测量结果,可以测量后graphic.toJSON()获取对应值
     //   fillVolume: 152230843.6381974,

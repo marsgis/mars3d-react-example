@@ -17,12 +17,17 @@ export const mapOptions = {
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
+
+  // turf v6.5升级到v7.1的使用到的API方法名称变更
+  turf.polygonToLineString = turf.polygonToLine
+  turf.within = turf.pointsWithinPolygon
+
   mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/geojson/areas/340000_full.json" })
     .then(function (geojson) {
       showBJXLine(geojson.features[0])
     })
     .catch(function () {
-      globalAlert("Json文件加载失败！")
+      globalAlert("showBJXLine：Json文件加载失败！")
     })
 
   mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/geojson/areas/340000_full.json" })
@@ -30,7 +35,7 @@ export function onMounted(mapInstance) {
       showGeoJsonVectorTile(geojson)
     })
     .catch(function () {
-      globalAlert("Json文件加载失败！")
+      globalAlert("showGeoJsonVectorTile：Json文件加载失败！")
     })
 }
 
@@ -119,11 +124,10 @@ function showBJXLine(feature) {
     units: "meters"
   })
 
-  bufferedInner = turf.difference(bufferedInner, feature)
+  bufferedInner = turf.difference(turf.featureCollection([bufferedInner, feature]))
+  bufferedOuter = turf.difference(turf.featureCollection([bufferedOuter, bufferedInner]))
 
-  bufferedOuter = turf.difference(bufferedOuter, bufferedInner)
-
-  bufferedInner = turf.featureCollection([bufferedInner])
+  bufferedInner = turf.featureCollection([bufferedInner]) // turf v7.1
   bufferedOuter = turf.featureCollection([bufferedOuter])
 
   const tileLayer = new mars3d.layer.WeiVectorTileLayer({

@@ -87,10 +87,6 @@ function addDemoGraphic1() {
     style: {
       angle: 5,
       length: 700000,
-      // length: new Cesium.CallbackProperty(function (time) {
-      //   length += 100 //测试动态length
-      //   return length
-      // }, false),
       heading: 0,
       pitch: 40,
       roll: 0,
@@ -100,6 +96,39 @@ function addDemoGraphic1() {
     }
   })
   graphicLayer.addGraphic(conicSensor)
+
+  // 动态样式的
+  // let length = 1000
+  // let angle = 5
+  // let heading = 0
+  // let pitch = 0
+  // const conicSensor = new mars3d.graphic.ConicSensor({
+  //   position: Cesium.Cartesian3.fromDegrees(117.170264, 31.840312, 363),
+  //   style: {
+  //     angle: new Cesium.CallbackProperty(function (time) {
+  //       angle += 0.01 // 测试动态angle
+  //       return angle
+  //     }, false),
+  //     length: new Cesium.CallbackProperty(function (time) {
+  //       length += 100 // 测试动态length
+  //       return length
+  //     }, false),
+  //     heading: new Cesium.CallbackProperty(function (time) {
+  //       heading += 1 // 测试动态heading
+  //       return heading
+  //     }, false),
+  //     pitch: new Cesium.CallbackProperty(function (time) {
+  //       pitch += 1 // 测试动态pitch
+  //       return pitch
+  //     }, false),
+  //     color: "rgba(0,255,0,0.4)",
+  //     outline: true,
+  //     topShow: true,
+  //     topSteps: 2,
+  //     flat: true
+  //   }
+  // })
+  // graphicLayer.addGraphic(conicSensor)
 
   conicSensor.on(mars3d.EventType.remove, function () {
     graphicLayer.removeGraphic(testLine)

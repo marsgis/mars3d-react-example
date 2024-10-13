@@ -17,6 +17,11 @@ export const mapOptions = {
  */
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
+
+  // turf v6.5升级到v7.1的使用到的API方法名称变更
+  turf.polygonToLineString = turf.polygonToLine
+  turf.within = turf.pointsWithinPolygon
+
   showWeiVectorTileLayer()
 }
 

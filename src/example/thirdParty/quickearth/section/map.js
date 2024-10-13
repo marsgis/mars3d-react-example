@@ -34,6 +34,7 @@ export function onUnmounted() {
 
 let sectionLayer
 async function initDemoData() {
+  globalMsg("数据加载中...")
   // public静态资源的路径
   consts.resourcePath = "//data.mars3d.cn/file/qe"
   // config资源配置
@@ -67,6 +68,7 @@ async function initDemoData() {
   }
   const pixelLayer = new CPixelLayer().setDataSource(cr).setDrawOptions(pixelStyle)
   map.scene.primitives.add(pixelLayer)
+  globalMsg("数据加载完成")
 }
 
 export async function drawLine() {
@@ -79,7 +81,7 @@ export async function drawLine() {
     addHeight: 1000
     // maxPointNum: 2
   })
-  sectionLayer.setSectionPath(graphic.coordinates, CFixedPlane.lonLat, true, graphic.id)
+  sectionLayer?.setSectionPath(graphic.coordinates, CFixedPlane.lonLat, true, graphic.id)
   map.graphicLayer.removeGraphic(graphic)
 }
 
@@ -94,7 +96,7 @@ export async function drawCircle() {
   })
   const coordinates = graphic.getOutlineCoordinates()
 
-  sectionLayer.setSectionPath(coordinates, CFixedPlane.lonLat, true, graphic.id)
+  sectionLayer?.setSectionPath(coordinates, CFixedPlane.lonLat, true, graphic.id)
 
   map.graphicLayer.removeGraphic(graphic)
 }
@@ -109,11 +111,11 @@ export async function drawRectangle() {
     addHeight: 1000
   })
   const coordinates = graphic.getOutlineCoordinates(true)
-  sectionLayer.setSectionPath(coordinates, CFixedPlane.lonLat, true, graphic.id)
+  sectionLayer?.setSectionPath(coordinates, CFixedPlane.lonLat, true, graphic.id)
 
   map.graphicLayer.removeGraphic(graphic)
 }
 
 export async function removeSectionPath() {
-  sectionLayer.removeSectionPath()
+  sectionLayer?.removeSectionPath()
 }

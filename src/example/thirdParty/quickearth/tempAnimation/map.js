@@ -1,6 +1,6 @@
 import * as mars3d from "mars3d"
 
-const { consts, DataAnimationService, getBinary, GridDataGLFillMode, QEGridDataProvider, resourceService } = window.QE// quickearth.core.js
+const { consts, DataAnimationService, getBinary, GridDataGLFillMode, QEGridDataProvider, resourceService } = window.QE // quickearth.core.js
 const { CPixelLayer } = window.QEC // quickearth.cesium.js
 
 export let map // mars3d.Map三维地图对象
@@ -39,6 +39,7 @@ async function initDemoData() {
   // consts.wasmPath = "/lib/mars3d/thirdParty/quickearth/wasm"
   // consts.workerPath = "/lib/mars3d/thirdParty/quickearth/workers"
 
+  globalMsg("数据加载中...")
   // config资源配置
   await resourceService.loadResourceFromConfigPath("styles/demo.config.json")
 
@@ -64,4 +65,6 @@ const createTempAnimation = async () => {
     all: provider.allGrids().length
   })
   aniService.start()
+
+  globalMsg("数据加载完成")
 }

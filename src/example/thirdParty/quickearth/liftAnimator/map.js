@@ -40,6 +40,7 @@ async function initDemoData() {
   // consts.wasmPath = "/lib/mars3d/thirdParty/quickearth/wasm"
   // consts.workerPath = "/lib/mars3d/thirdParty/quickearth/workers"
 
+  globalMsg("数据加载中...")
   // config资源配置
   await resourceService.loadResourceFromConfigPath("styles/demo.config.json")
 
@@ -55,6 +56,7 @@ async function initDemoData() {
   // 或查看 public\lib\mars3d\thirdParty\quickearth\quickearth.cesium.d.ts文件
   const layer = new CPixelLayer({ interpFromPreSource: true }).setDrawOptions(style).setDataSource(provider)
   map.scene.primitives.add(layer)
+  globalMsg("数据加载完成")
 
   animator = new DataAnimationService(provider, {
     type: DataAnimationType.Level,
@@ -66,12 +68,12 @@ async function initDemoData() {
 }
 
 export function start() {
-  animator.start()
+  animator?.start()
 }
 export function stop() {
-  animator.stop()
+  animator?.stop()
 }
 
 export function changeChangeDelta(delta) {
-  animator.setDelta(delta)
+  animator?.setDelta(delta)
 }

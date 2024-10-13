@@ -119,12 +119,14 @@ export function shortestPath() {
 
   shortestPathLayer.clear()
 
-  const polygon = polygonZAM.toGeoJSON() // 障碍面
-  const startPoint = pointQD.toGeoJSON() // 起点
-  const endPoint = pointZD.toGeoJSON() // 终点
+  const polygon = polygonZAM.toGeoJSON({ closure: true }) // 障碍面
+  const startPoint = pointQD.coordinate // 起点
+  const endPoint = pointZD.coordinate // 终点
 
   const options = {
-    obstacles: polygon
+    obstacles: polygon.geometry,
+    units: "meters",
+    resolution: 100
   }
   const path = turf.shortestPath(startPoint, endPoint, options)
 

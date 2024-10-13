@@ -3890,6 +3890,16 @@
             ]
           },
           {
+            "name": "经纬向剖面-自动扫描",
+            "thumbnail": "thirdParty-qe-section-auto.jpg",
+            "main": "thirdParty/quickearth/section-auto",
+            "hasPannel": true,
+            "libs": [
+              "mars3d",
+              "quickearth"
+            ]
+          },
+          {
             "name": "雷达挤压",
             "thumbnail": "thirdParty-qe-extrusion.jpg",
             "main": "thirdParty/quickearth/extrusion",
@@ -3913,6 +3923,16 @@
             "name": "多层切片",
             "thumbnail": "thirdParty-qe-slice.jpg",
             "main": "thirdParty/quickearth/slice",
+            "hasPannel": true,
+            "libs": [
+              "mars3d",
+              "quickearth"
+            ]
+          },
+          {
+            "name": "多层切片对比",
+            "thumbnail": "thirdParty-qe-slice-compare.jpg",
+            "main": "thirdParty/quickearth/slice-compare",
             "hasPannel": true,
             "libs": [
               "mars3d",

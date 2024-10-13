@@ -169,10 +169,12 @@ function intersectXzqh(geojsonPoly) {
   geojsonPoly.features.forEach(function (feature) {
     let intersection = null
     try {
-      intersection = turf.intersect(anhuiGeoJson, feature)
+      // intersection = turf.intersect(anhuiGeoJson, feature)//turf v6.5
+      intersection = turf.intersect(turf.featureCollection([anhuiGeoJson, feature]))// v7.1
     } catch (e) {
       anhuiGeoJson = turf.buffer(anhuiGeoJson, 0)
-      intersection = turf.intersect(anhuiGeoJson, feature)
+      // intersection = turf.intersect(anhuiGeoJson, feature)//turf v6.5
+      intersection = turf.intersect(turf.featureCollection([anhuiGeoJson, feature]))// v7.1
     }
     if (intersection != null) {
       intersection.properties = feature.properties

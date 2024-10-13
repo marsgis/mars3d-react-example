@@ -1,8 +1,8 @@
 import * as mars3d from "mars3d"
 
 export let map // mars3d.Map三维地图对象
-const { consts, getBinary, resourceService, BinaryGridDataProvider, getCR, mcb } = window.QE // quickearth.core.js
-const { CPixelLayer, mcbLayerCreator } = window.QEC // quickearth.cesium.js
+const { consts, getBinary, resourceService, BinaryGridDataProvider, getCR, mcb, GridDataGLFillMode } = window.QE // quickearth.core.js
+const { CPixelLayer, CSectionLayer, CFixedPlane, mcbLayerCreator } = window.QEC // quickearth.cesium.js
 
 export const eventTarget = new mars3d.BaseClass()
 
@@ -41,6 +41,7 @@ async function initDemoData() {
   consts.wasmPath = "/lib/mars3d/thirdParty/quickearth/wasm"
   consts.workerPath = "/lib/mars3d/thirdParty/quickearth/workers"
 
+  globalMsg("数据加载中...")
   // config资源配置
   await resourceService.loadResourceFromConfigPath("styles/demo.config.json")
 
@@ -71,6 +72,11 @@ async function initDemoData() {
       map.scene.primitives.add(layer)
     }
   })
+
+  globalMsg("数据加载完成")
+
+  // 下面用于剖面的
+  addSectionLayer()
 }
 
 export async function drawRectangle(value) {
@@ -85,31 +91,32 @@ export async function drawRectangle(value) {
 
   const extent = graphic.getRectangle({ isFormat: true })
   map.graphicLayer.removeGraphic(graphic)
-
-  await mcb({
-    dataSource: provider,
-    analysisValues: [value],
-    layerCreator: (dataSource) => {
-      return mcbLayerCreator(
-        {
-          color: "color-cr#res",
-          zScale: 2,
-          opaque: false
-        },
-        dataSource
-      )
-    },
-    completeOne: (layer) => {
-      layer.isQuickearth = true
-      map.scene.primitives.add(layer)
-    },
-    visibleExtent: {
-      minLon: extent.xmin,
-      maxLon: extent.xmax,
-      minLat: extent.ymin,
-      maxLat: extent.ymax
-    }
-  })
+  if (provider) {
+    await mcb({
+      dataSource: provider,
+      analysisValues: [value],
+      layerCreator: (dataSource) => {
+        return mcbLayerCreator(
+          {
+            color: "color-cr#res",
+            zScale: 2,
+            opaque: false
+          },
+          dataSource
+        )
+      },
+      completeOne: (layer) => {
+        layer.isQuickearth = true
+        map.scene.primitives.add(layer)
+      },
+      visibleExtent: {
+        minLon: extent.xmin,
+        maxLon: extent.xmax,
+        minLat: extent.ymin,
+        maxLat: extent.ymax
+      }
+    })
+  }
 }
 
 export function clearDraw() {
@@ -119,4 +126,39 @@ export function clearDraw() {
       map.scene.primitives.remove(layer)
     }
   }
+}
+
+// 剖面
+let sectionLayer
+function addSectionLayer() {
+  sectionLayer = new CSectionLayer({
+    fixedPlane: CFixedPlane.lonLat,
+    sectionMode: "multiple"
+  })
+    .setDataSource(provider)
+    .setDrawOptions({
+      fillColor: "color-radar-section#res",
+      fillMode: GridDataGLFillMode.bitmap,
+      opaque: false,
+      discardColor: "rgba(200,200,200,0.6)",
+      zScale: 1
+    })
+  map.scene.primitives.add(sectionLayer)
+}
+export async function drawLine() {
+  const graphic = await map.graphicLayer.startDraw({
+    type: "polyline",
+    style: {
+      color: "#ff0000",
+      width: 2
+    },
+    addHeight: 1000,
+    maxPointNum: 2
+  })
+  sectionLayer?.setSectionPath(graphic.coordinates, CFixedPlane.lonLat, true, graphic.id)
+
+  map.graphicLayer.removeGraphic(graphic)
+}
+export async function removeSectionPath() {
+  sectionLayer?.removeSectionPath()
 }

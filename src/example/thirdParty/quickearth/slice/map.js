@@ -40,6 +40,7 @@ async function initDemoData() {
   // consts.wasmPath = "/lib/mars3d/thirdParty/quickearth/wasm"
   // consts.workerPath = "/lib/mars3d/thirdParty/quickearth/workers"
 
+  globalMsg("数据加载中...")
   // config资源配置
   await resourceService.loadResourceFromConfigPath("styles/demo.config.json")
 
@@ -73,10 +74,12 @@ async function initDemoData() {
     collection.add(layer)
   }
   map.scene.primitives.add(collection)
+
+  globalMsg("数据加载完成")
 }
 
 export function changeScale(scale) {
-  for (let index = 0; index < collection.length; index++) {
+  for (let index = 0; index < collection?.length; index++) {
     const item = collection.get(index)
     item.setDrawOptions({
       zScale: scale

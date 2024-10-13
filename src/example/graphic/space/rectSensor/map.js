@@ -79,19 +79,54 @@ function addDemoGraphic1() {
   })
   graphicLayer.addGraphic(testLine)
 
+  // 普通的
+  // const rectSensor = new mars3d.graphic.RectSensor({
+  //   position: [117.170264, 31.840312, 363],
+  //   style: {
+  //     angle1: 30,
+  //     angle2: 30,
+  //     length: 700000,
+  //     heading: 0,
+  //     pitch: 40,
+  //     roll: 0,
+  //     color: "rgba(0,255,0,0.4)",
+  //     outline: true,
+  //     topShow: true,
+  //     topSteps: 2,
+  //     flat: true
+  //   }
+  // })
+  // graphicLayer.addGraphic(rectSensor)
+
+  // 动态样式的
+  let length = 1000
+  let angle1 = 10
+  let angle2 = 20
+  let heading = 0
+  // let pitch = 0
   const rectSensor = new mars3d.graphic.RectSensor({
-    position: [117.170264, 31.840312, 363],
+    position: Cesium.Cartesian3.fromDegrees(117.170264, 31.840312, 363),
     style: {
-      angle1: 30,
-      angle2: 30,
-      length: 700000,
-      // length: new Cesium.CallbackProperty(function (time) {
-      //   length += 100 //测试动态length
-      //   return length
+      angle1: new Cesium.CallbackProperty(function (time) {
+        angle1 += 0.2 // 测试动态angle
+        return angle1
+      }, false),
+      angle2: new Cesium.CallbackProperty(function (time) {
+        angle2 += 0.1 // 测试动态angle2
+        return angle2
+      }, false),
+      length: new Cesium.CallbackProperty(function (time) {
+        length += 100 // 测试动态length
+        return length
+      }, false),
+      heading: new Cesium.CallbackProperty(function (time) {
+        heading += 1 // 测试动态heading
+        return heading
+      }, false),
+      // pitch: new Cesium.CallbackProperty(function (time) {
+      //   pitch += 1 // 测试动态pitch
+      //   return pitch
       // }, false),
-      heading: 0,
-      pitch: 40,
-      roll: 0,
       color: "rgba(0,255,0,0.4)",
       outline: true,
       topShow: true,
@@ -101,7 +136,7 @@ function addDemoGraphic1() {
   })
   graphicLayer.addGraphic(rectSensor)
 
-  rectSensor.on(mars3d.EventType.remove, function() {
+  rectSensor.on(mars3d.EventType.remove, function () {
     graphicLayer.removeGraphic(testLine)
   })
 }
@@ -173,7 +208,6 @@ export async function changeLookAt() {
     cone.lookAt = position
   }
 }
-
 
 // 在图层绑定Popup弹窗
 export function bindLayerPopup() {

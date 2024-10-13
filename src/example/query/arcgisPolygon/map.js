@@ -151,7 +151,8 @@ export function queryData(queryVal) {
         const feature = arrFeatures[i]
 
         try {
-          const geojsonNew = turf.intersect(drawGeoJSON, feature) // 切割
+          // const geojsonNew = turf.intersect(drawGeoJSON, feature) // 切割//turf v6.5
+          const geojsonNew = turf.intersect(turf.featureCollection([drawGeoJSON, feature]))// v7.1
 
           if (geojsonNew) {
             feature.geometry = geojsonNew.geometry
