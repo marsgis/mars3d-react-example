@@ -3,7 +3,7 @@
  * Mars3D三维可视化平台  mars3d
  *
  * 版本信息：v3.8.4
- * 编译日期：2024-10-13 21:30:06
+ * 编译日期：2024-10-15 23:02
  * 版权所有：Copyright by 火星科技  http://mars3d.cn
  * 使用单位：免费公开版 ，2024-08-01
  */
@@ -6558,7 +6558,7 @@ declare class FixedRoute extends Route {
      * 计算贴地线
      * @param [options] - 控制参数
      * @param [options.splitNum = 100] - 插值数，等比分割的个数(概略值，有经纬网网格来插值)
-     * @param [options.minDistance] - 插值最小间隔(单位：米)，优先级高于splitNum
+     * @param [options.minDistance] - 插值最小间隔(单位：米)，提示：优先级高于splitNum，用于计算splitNum（非严格按这个值分割）
      * @param [options.exact = false] - 是否进行精确计算， 传false时是否快速概略计算方式，该方式计算精度较低，但计算速度快，仅能计算在当前视域内坐标的高度
      * @param [options.has3dtiles = auto] - 是否在3dtiles模型上分析（模型分析较慢，按需开启）,默认内部根据点的位置自动判断（但可能不准）
      * @param [options.objectsToExclude] - 贴模型分析时，排除的不进行贴模型计算的模型对象，可以是： primitives, entities, 或 3D Tiles features
@@ -6577,7 +6577,7 @@ declare class FixedRoute extends Route {
      * 获取剖面数据
      * @param [options] - 控制参数
      * @param [options.splitNum = 100] - 插值数，等比分割的个数(概略值，有经纬网网格来插值)
-     * @param [options.minDistance] - 插值最小间隔(单位：米)，优先级高于splitNum
+     * @param [options.minDistance] - 插值最小间隔(单位：米)，提示：优先级高于splitNum，用于计算splitNum（非严格按这个值分割）
      * @param [options.has3dtiles = auto] - 是否在3dtiles模型上分析（模型分析较慢，按需开启）,默认内部根据点的位置自动判断（但可能不准）
      * @param [options.objectsToExclude] - 贴模型分析时，排除的不进行贴模型计算的模型对象，可以是： primitives, entities, 或 3D Tiles features
      * @param [options.offset = 0] - 可以按需增加偏移高度（单位：米），便于可视
@@ -15390,7 +15390,7 @@ declare class PointMeasure extends PointEntity {
  * @param options.style - 样式信息
  * @param [options.attr] - 附件的属性信息，可以任意附加属性，导出geojson或json时会自动处理导出。
  * @param [options.splitNum = 200] - 插值数，等比分割的个数(概略值，有经纬网网格来插值)
- * @param [options.minDistance] - 插值最小间隔(单位：米)，优先级高于splitNum
+ * @param [options.minDistance] - 插值最小间隔(单位：米)，提示：优先级高于splitNum，用于计算splitNum（非严格按这个值分割）
  * @param [options.has3dtiles = auto] - 是否在3dtiles模型上分析（模型分析较慢，按需开启）,默认内部根据点的位置自动判断（但可能不准）
  * @param [options.objectsToExclude] - 贴模型分析时，排除的不进行贴模型计算的模型对象，可以是： primitives, entities, 或 3D Tiles features
  * @param [options.exact = false] - 是否进行精确计算， 传false时是否快速概略计算方式，该方式计算精度较低，但计算速度快，仅能计算在当前视域内坐标的高度
@@ -15487,11 +15487,11 @@ declare class SectionMeasure extends DistanceMeasure {
  * @param [options.label] - 测量结果文本的样式
  * @param [options.offsetHeight = 0] - 盒子偏移显示的高度值，可以将盒子显示在空中来展示
  * @param [options.showDigBox = true] - 是否显示挖方盒子
- * @param [options.digBoxColor = Cesium.Color.RED.withAlpha(0.5)] - 挖方盒子的颜色
+ * @param [options.digBoxColor = "rgba(255, 0, 0, 0.3)"] - 挖方盒子的颜色
  * @param [options.showDigVolume = true] - 是否显示挖方体积结果文本
  * @param [options.digVolumeName = '挖方体积'] - 挖方体积结果的名称
  * @param [options.showFillBox = true] - 是否显示填方盒子
- * @param [options.fillBoxColor = Cesium.Color.YELLOW.withAlpha(0.5)] - 填方盒子的颜色
+ * @param [options.fillBoxColor = "rgba(140, 230, 50, 0.3)"] - 填方盒子的颜色
  * @param [options.showFillVolume = true] - 是否显示填方体积结果文本
  * @param [options.fillVolumeName = '填方体积'] - 填方体积结果的名称
  * @param [options.showArea = true] - 是否显示横切面积结果文本
@@ -24572,6 +24572,11 @@ declare class GroupLayer extends BaseGraphicLayer {
      * @returns 无
      */
     toBottom(): void;
+    /**
+     * 重新加载图层
+     * @returns 无
+     */
+    reload(): void;
 }
 
 /**
@@ -29156,6 +29161,7 @@ declare namespace Map {
      * @property [cameraController.enableTilt = true] - 3D和哥伦布视图下，是否允许用户倾斜相机
      * @property [cameraController.enableZoom = true] - 是否允许 用户放大和缩小视图
      * @property [cameraController.enableCollisionDetection = true] - 是否允许 地形相机的碰撞检测
+     * @property [cameraController.maximumTiltAngle] - 这个角度，相对于椭球法线，限制了用户可以倾斜相机的最大值。如果<code>undefined</code>，则相机倾斜的角度不受限制。
      *
      * 以下是Cesium.Clock时钟相关参数
      * @property [clock] - 时钟相关参数
@@ -29258,6 +29264,7 @@ declare namespace Map {
             enableTilt?: boolean;
             enableZoom?: boolean;
             enableCollisionDetection?: boolean;
+            maximumTiltAngle?: boolean;
         };
         clock?: {
             currentTime?: string | Cesium.JulianDate;
@@ -33325,6 +33332,10 @@ declare class CanvasWindLayer extends BaseLayer {
      */
     data: CanvasWindLayer.DataOptions;
     /**
+     * 坐标数据对应的矩形边界
+     */
+    readonly rectangle: Cesium.Rectangle;
+    /**
      * 设置 风场数据
      * @param data - 风场数据
      * @returns 无
@@ -34517,7 +34528,7 @@ declare class Measure extends BaseThing {
      * @param [options.maxPointNum = 9999] - 绘制时，最多允许点的个数
      * @param [options.addHeight] - 在绘制时，在绘制点的基础上增加的高度值
      * @param [options.splitNum = 200] - 插值数，等比分割的个数(概略值，有经纬网网格来插值)
-     * @param [options.minDistance] - 插值最小间隔(单位：米)，优先级高于splitNum
+     * @param [options.minDistance] - 插值最小间隔(单位：米)，提示：优先级高于splitNum，用于计算splitNum（非严格按这个值分割）
      * @param [options.has3dtiles = auto] - 是否在3dtiles模型上分析（模型分析较慢，按需开启）,默认内部根据点的位置自动判断（但可能不准）
      * @param [options.objectsToExclude] - 贴模型分析时，排除的不进行贴模型计算的模型对象，可以是： primitives, entities, 或 3D Tiles features
      * @param [options.exact = false] - 是否进行精确计算， 传false时是否快速概略计算方式，该方式计算精度较低，但计算速度快，仅能计算在当前视域内坐标的高度
@@ -34895,7 +34906,7 @@ declare class Sightline extends BaseThing {
      * @param [options = {}] - 控制参数，包括：
      * @param [options.offsetHeight = 0] - 在起点增加的高度值，比如加上人的身高
      * @param [options.splitNum = 50] - 插值数，等比分割的个数(概略值，有经纬网网格来插值)
-     * @param [options.minDistance] - 插值时的最小间隔(单位：米)，优先级高于splitNum
+     * @param [options.minDistance] - 插值时的最小间隔(单位：米)，提示：优先级高于splitNum，用于计算splitNum（非严格按这个值分割）
      * @returns 分析结果完成的Promise
      */
     addAsync(origin: Cesium.Cartesian3, target: Cesium.Cartesian3, options?: {
@@ -38611,7 +38622,7 @@ declare namespace PolyUtil {
      * @param options.scene - 三维地图场景对象，一般用map.scene或viewer.scene
      * @param options.positions - 坐标数组
      * @param [options.splitNum = 100] - 插值数，等比分割的个数(概略值，有经纬网网格来插值)
-     * @param [options.minDistance] - 插值最小间隔(单位：米)，优先级高于splitNum
+     * @param [options.minDistance] - 插值最小间隔(单位：米)，提示：优先级高于splitNum，用于计算splitNum（非严格按这个值分割）
      * @param [options.height = 0] - 坐标的高度
      * @param [options.surfaceHeight = true] - 是否计算贴地高度 （非精确计算，根据当前加载的地形和模型数据情况有关）
      * @returns 插值后的路线坐标数组
@@ -38643,7 +38654,7 @@ declare namespace PolyUtil {
      * @param options.scene - 三维地图场景对象，一般用map.scene或viewer.scene
      * @param options.positions - 坐标数组
      * @param [options.splitNum = 100] - 插值数，等比分割的个数(概略值，有经纬网网格来插值)
-     * @param [options.minDistance] - 插值最小间隔(单位：米)，优先级高于splitNum
+     * @param [options.minDistance] - 插值最小间隔(单位：米)，提示：优先级高于splitNum，用于计算splitNum（非严格按这个值分割）
      * @param [options.has3dtiles = auto] - 是否在3dtiles模型上分析（模型分析较慢，按需开启）,默认内部根据点的位置自动判断（但可能不准）
      * @param [options.objectsToExclude] - 贴模型分析时，排除的不进行贴模型计算的模型对象，可以是： primitives, entities, 或 3D Tiles features
      * @param [options.exact = false] - 是否进行精确计算， 传false时是否快速概略计算方式，该方式计算精度较低，但计算速度快，仅能计算在当前视域内坐标的高度
@@ -38697,7 +38708,7 @@ declare namespace PolyUtil {
      * @param options.scene - 三维地图场景对象，一般用map.scene或viewer.scene
      * @param options.positions - 坐标数组
      * @param [options.splitNum = 100] - 插值数，等比分割的个数(概略值，有经纬网网格来插值)
-     * @param [options.minDistance] - 插值最小间隔(单位：米)，优先级高于splitNum
+     * @param [options.minDistance] - 插值最小间隔(单位：米)，提示：优先级高于splitNum，用于计算splitNum（非严格按这个值分割）
      * @param [options.has3dtiles = auto] - 是否在3dtiles模型上分析（模型分析较慢，按需开启）,默认内部根据点的位置自动判断（但可能不准）
      * @param [options.objectsToExclude] - 贴模型分析时，排除的不进行贴模型计算的模型对象，可以是： primitives, entities, 或 3D Tiles features
      * @param [options.exact = false] - 是否进行精确计算， 传false时是否快速概略计算方式，该方式计算精度较低，但计算速度快，仅能计算在当前视域内坐标的高度
@@ -38814,7 +38825,7 @@ declare namespace PolyUtil {
      * @param options.scene - 三维地图场景对象，一般用map.scene或viewer.scene
      * @param options.positions - 坐标数组
      * @param [options.splitNum = 100] - 计算的间隔长度,数据量不能大于Cesium.ContextLimits.maximumTextureSize
-     * @param [options.minDistance] - 插值最小间隔(单位：米)，优先级高于splitNum
+     * @param [options.minDistance] - 插值最小间隔(单位：米)，提示：优先级高于splitNum，用于计算splitNum（非严格按这个值分割）
      * @param [options.cameraHeight = scene.camera.positionCartographic.height] - 相机高度
      * @returns 计算完成的相关数据
      */

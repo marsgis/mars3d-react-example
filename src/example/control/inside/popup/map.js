@@ -320,7 +320,7 @@ export function bindGraphicDynamicAttrDemo() {
     position: {
       // 【从后端读取的动态坐标】API: http://mars3d.cn/api/BaseGraphic.html#.AjaxPosition
       type: "ajax",
-      url: "http://studio.mars3d.cn/api/gap/open/random/point",
+      url: "http://studio-api.mars3d.cn/api/gap/open/random/point",
       dataColumn: "data", // 接口返回数据中，对应的属性数据所在的读取字段名称，支持多级(用.分割)；如果数据直接返回时可以不配置。
       latColumn: "lat",
       lngColumn: "lng",
@@ -348,7 +348,7 @@ export function bindGraphicDynamicAttrDemo() {
     attr: {
       // 【从后端读取的动态属性】API: http://mars3d.cn/api/BaseGraphic.html#.AjaxAttr
       type: "ajax",
-      url: "http://studio.mars3d.cn/api/gap/open/appInfo",
+      url: "http://studio-api.mars3d.cn/api/gap/open/appInfo",
       dataColumn: "data", // 接口返回数据中，对应的属性数据所在的读取字段名称，支持多级(用.分割)；如果数据直接返回时可以不配置。
       cacheTime: 1 // 在time秒内再次访问读取时，直接使用上一次历史值，避免高频访问后端。
     }

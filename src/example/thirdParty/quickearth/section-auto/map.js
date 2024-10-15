@@ -72,10 +72,7 @@ async function initDemoData() {
 
   updateSectionPath()
 
-  setInterval(() => {
-    thisAngle += 0.5
-    updateSectionPath()
-  }, 50)
+  setGradations(50)
 }
 
 const radius = 380000 // 半径：单位：米
@@ -87,4 +84,22 @@ function updateSectionPath() {
 
   const point = mars3d.PointUtil.getPositionByDirectionAndLen(center, thisAngle, radius)
   sectionLayer.setSectionPath([center, mars3d.LngLatPoint.toArray(point)], CFixedPlane.lonLat, false)
+}
+
+let timeTik
+let enabled = true
+export function setEnabled(val) {
+  enabled = val
+}
+
+export function setGradations(value) {
+  clearInterval(timeTik)
+  timeTik = setInterval(() => {
+    if (!enabled) {
+      return
+    }
+
+    thisAngle += 0.5
+    updateSectionPath()
+  }, value)
 }

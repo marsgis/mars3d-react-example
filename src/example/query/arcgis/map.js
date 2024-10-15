@@ -114,8 +114,8 @@ export async function drawRectangle() {
       color: "#00FF00",
       opacity: 0.3,
       outline: true,
-      outlineColor: "#ffffff",
-      clampToGround: true
+      outlineColor: "#ffffff"
+      // clampToGround: true
     }
   })
   console.log("框选矩形：", drawGraphic.toGeoJSON({ outline: true }))
@@ -130,8 +130,8 @@ export async function drawCircle() {
       color: "#00FF00",
       opacity: 0.3,
       outline: true,
-      outlineColor: "#ffffff",
-      clampToGround: true
+      outlineColor: "#ffffff"
+      // clampToGround: true
     }
   })
   console.log("框选圆：", drawGraphic.toGeoJSON({ outline: true }))
@@ -146,8 +146,8 @@ export async function drawPolygon() {
       color: "#00FF00",
       opacity: 0.3,
       outline: true,
-      outlineColor: "#ffffff",
-      clampToGround: true
+      outlineColor: "#ffffff"
+      // clampToGround: true
     }
   })
   console.log("框选多边行：", drawGraphic.toGeoJSON())

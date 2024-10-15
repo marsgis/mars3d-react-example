@@ -336,6 +336,11 @@ export class GraphicLayerState extends Component<any, any> {
             enabledEdit: graphics[0].hasEdit
           })
         }
+        // 当加载矢量只有一条时，自动打开编辑面板
+        if (graphics.length === 1) {
+          this.startEditGraphic({ key: graphics[0].id, name: graphics[0].name })
+        }
+
         this.setState({
           hasTable: graphics.length > 0
         })

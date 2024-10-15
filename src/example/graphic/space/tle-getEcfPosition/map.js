@@ -66,8 +66,8 @@ export async function drawRectangle() {
       color: "#ffff00",
       opacity: 0.2,
       outline: true,
-      outlineColor: "#ffffff",
-      clampToGround: true
+      outlineColor: "#ffffff"
+      // clampToGround: true
     }
   })
 }
@@ -82,8 +82,8 @@ export async function drawPolygon() {
       color: "#ffff00",
       opacity: 0.2,
       outline: true,
-      outlineColor: "#ffffff",
-      clampToGround: true
+      outlineColor: "#ffffff"
+      // clampToGround: true
     }
   })
 }
@@ -98,8 +98,8 @@ export async function drawCircle() {
       color: "#ffff00",
       opacity: 0.2,
       outline: true,
-      outlineColor: "#ffffff",
-      clampToGround: true
+      outlineColor: "#ffffff"
+      // clampToGround: true
     }
   })
 }

@@ -79,7 +79,9 @@ function addSatellite() {
     tle1: "1 38775U 12050B   19233.58396017  .00000002  00000-0  00000+0 0  9996",
     tle2: "2 38775  54.9682 146.4459 0022572 250.3518 274.6095  1.86232229 47268",
     model: {
-      url: "//data.mars3d.cn/gltf/mars/weixin.gltf"
+      url: "//data.mars3d.cn/gltf/mars/weixin.gltf",
+      scale: 1,
+      minimumPixelSize: 150
     },
     path: {
       color: "#36d9ec"

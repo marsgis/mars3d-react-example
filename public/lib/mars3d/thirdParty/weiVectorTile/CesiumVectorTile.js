@@ -25640,7 +25640,7 @@ exports.inflateUndermine = inflateUndermine;
           this._canvas = document.createElement("canvas")
           this._canvas.width = this._tileWidth
           this._canvas.height = this._tileHeight
-          this._context = this._canvas.getContext("2d")
+          this._context = this._canvas.getContext("2d", { willReadFrequently: true })
 
           if (this._defaultStyle.backgroundColor) {
             if (this._defaultStyle.backgroundColor instanceof Cesium["Color"]) {

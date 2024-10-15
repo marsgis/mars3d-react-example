@@ -83,6 +83,7 @@ export function measureSection() {
       const positionsShow = graphic.positionsShow
       graphic.remove(true)
 
+      showTipLine(positionsShow)
       computeStepSurfaceLine(positionsShow)
     })
 }
@@ -175,6 +176,23 @@ async function computeStepSurfaceLine(positions) {
   }
 
   eventTarget.fire("measureEnd", { arrLen, arrHB1, arrHB2, arrHB3, arrPoint })
+}
+
+let lineGraphic
+export function showTipLine(positions) {
+  if (lineGraphic) {
+    lineGraphic.remove(true)
+  }
+  lineGraphic = new mars3d.graphic.DistanceMeasure({
+    positions: positions,
+    style: {
+      width: 6,
+      color: "#3388ff",
+      clampToGround: true
+    },
+    showAddText: true
+  })
+  graphicLayer.addGraphic(lineGraphic)
 }
 
 let tipGraphic

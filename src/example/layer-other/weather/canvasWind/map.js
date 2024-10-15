@@ -100,6 +100,16 @@ export function loadEarthData() {
       }
       earthWindData = res
       canvasWindLayer.data = earthWindData
+
+      setTimeout(function () {
+        const arrPoints = []
+        const particles = canvasWindLayer._canvasParticles
+        for (let index = 0, len = particles.length; index < len; index++) {
+          const item = particles[index]
+          arrPoints.push({ lat: item.lat, lng: item.lng - 180, value: item.speed }) // - 180是针对当前数据特殊处理
+        }
+        showHeatMap(arrPoints)
+      }, 3000)
     })
     .catch(function (err) {
       console.log("请求数据失败!", err)
@@ -121,6 +131,18 @@ export function loadDongnanData() {
       }
       dongnanWindData = convertWindData(res.data)
       canvasWindLayer.data = dongnanWindData
+      canvasWindLayer.fixedHeight = 60000
+
+      // 热力图
+      setTimeout(function () {
+        const arrPoints = []
+        const particles = canvasWindLayer._canvasParticles
+        for (let index = 0, len = particles.length; index < len; index++) {
+          const item = particles[index]
+          arrPoints.push({ lat: item.lat, lng: item.lng, value: item.speed })
+        }
+        showHeatMap(arrPoints)
+      }, 3000)
     })
     .catch(function () {
       globalMsg("实时查询气象信息失败，请稍候再试")
@@ -189,4 +211,37 @@ function getKeyNumCount(arr, key) {
     count++
   }
   return count
+}
+
+let heatLayer
+function showHeatMap(arrPoints) {
+  if (heatLayer) {
+    heatLayer.destroy()
+  }
+
+  // 热力图 图层
+  heatLayer = new mars3d.layer.HeatLayer({
+    positions: arrPoints,
+    min: 0,
+    max: 20,
+    // 以下为热力图本身的样式参数，可参阅api：https://www.patrick-wied.at/static/heatmapjs/docs.html
+    heatStyle: {
+      radius: 10,
+      blur: 0.6,
+      minOpacity: 0,
+      maxOpacity: 0.6,
+      gradient: {
+        0: "#e9ec36",
+        0.25: "#ffdd2f",
+        0.5: "#fa6c20",
+        0.75: "#fe4a33",
+        1: "#ff0000"
+      }
+    },
+    // 以下为矩形矢量对象的样式参数
+    style: {
+      opacity: 1.0
+    }
+  })
+  map.addLayer(heatLayer)
 }

@@ -110,6 +110,9 @@ function showGeoJsonVectorTile(geojson) {
   })
   map.addLayer(tileLayer)
 
+  // 如果图层加 clampToTileset: true 参数存在底图异常时加下面代码
+  // map.basemap.reload()
+
   tileLayer.on(mars3d.EventType.click, function (event) {
     console.log("单击了图层", event)
   })

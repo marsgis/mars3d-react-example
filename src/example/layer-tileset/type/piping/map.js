@@ -11,6 +11,11 @@ export const mapOptions = {
     baseColor: "rgba(0,0,0.0,0.5)",
     globe: {
       depthTestAgainstTerrain: true
+    },
+    cameraController: {
+      zoomFactor: 1.5,
+      minimumZoomDistance: 0.1,
+      enableCollisionDetection: false // 允许进入地下
     }
   }
 }
