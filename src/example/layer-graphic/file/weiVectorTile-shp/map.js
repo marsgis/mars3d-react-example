@@ -1,4 +1,5 @@
 import * as mars3d from "mars3d"
+import { WeiVectorTileLayer } from "../../../../../public/lib/mars3d/thirdParty/weiVectorTile/WeiVectorTileLayer.js"
 
 export let map // mars3d.Map三维地图对象
 
@@ -50,7 +51,7 @@ function showWeiVectorTileLayer() {
     files[1].name = "hefei.dbf"
     files[2].name = "hefei.prj"
 
-    const tileLayer = new mars3d.layer.WeiVectorTileLayer({
+    const tileLayer = new WeiVectorTileLayer({
       source: files,
       removeDuplicate: false,
       zIndex: 20,

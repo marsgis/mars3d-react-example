@@ -69,6 +69,7 @@ export function onUnmounted() {
 function addDemoGraphic1(graphicLayer) {
   const graphic = new mars3d.graphic.SectionMeasure({
     exact: true,
+    // hasEditContextMenu: false,
     positions: [
       [116.193794, 30.994415, 654.8],
       [116.236077, 30.925154, 506.2],
@@ -78,6 +79,13 @@ function addDemoGraphic1(graphicLayer) {
       [116.415222, 30.880092, 580.5],
       [116.567457, 30.85223, 314.6]
     ],
+    // label: {
+    //   updateText: function (text, graphic) {
+    //     // updateText是必须，用于动态更新 text
+    //     console.log("graphic", graphic.attr)
+    //     graphic.text = text + "-扩展信息"
+    //   }
+    // },
     style: {
       width: 5,
       color: "#3388ff"
@@ -86,8 +94,6 @@ function addDemoGraphic1(graphicLayer) {
   })
   graphicLayer.addGraphic(graphic)
 }
-
-
 
 export function removeAll() {
   measureObj.clear()

@@ -302,8 +302,8 @@
   mars3d.LayerUtil.registerImageryProvider(layerType, createImageryProvider)
 
   //对外接口
-  mars3d.provider.MvtImageryProvider = MvtImageryProvider
-  mars3d.layer.PbfolLayer = PbfolLayer
+  window.MvtImageryProvider = MvtImageryProvider
+  window.PbfolLayer = PbfolLayer
 })(window)
 
 // export { PbfolLayer }

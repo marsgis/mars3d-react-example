@@ -1,4 +1,6 @@
 import * as mars3d from "mars3d"
+import { WeiVectorTileLayer } from "../../../../../public/lib/mars3d/thirdParty/weiVectorTile/WeiVectorTileLayer.js"
+
 
 export let map // mars3d.Map三维地图对象
 
@@ -54,7 +56,7 @@ export function onUnmounted() {
  * @returns {void} 无
  */
 function showGeoJsonVectorTile(geojson) {
-  const tileLayer = new mars3d.layer.WeiVectorTileLayer({
+  const tileLayer = new WeiVectorTileLayer({
     source: geojson,
     zIndex: 20,
     removeDuplicate: false,
@@ -133,7 +135,7 @@ function showBJXLine(feature) {
   bufferedInner = turf.featureCollection([bufferedInner]) // turf v7.1
   bufferedOuter = turf.featureCollection([bufferedOuter])
 
-  const tileLayer = new mars3d.layer.WeiVectorTileLayer({
+  const tileLayer = new WeiVectorTileLayer({
     source: bufferedOuter,
     zIndex: 99,
     removeDuplicate: false,
@@ -153,7 +155,7 @@ function showBJXLine(feature) {
   })
   map.addLayer(tileLayer)
 
-  const tileLayer2 = new mars3d.layer.WeiVectorTileLayer({
+  const tileLayer2 = new WeiVectorTileLayer({
     source: bufferedInner,
     zIndex: 99,
     removeDuplicate: false,

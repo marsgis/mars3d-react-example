@@ -1,5 +1,5 @@
 import * as mars3d from "mars3d"
-import { CanvasBillboard } from "CanvasBillboard.js"
+import { CanvasBillboard } from "./CanvasBillboard.js"
 
 export let map // mars3d.Map三维地图对象
 export let graphicLayer // 矢量图层对象
@@ -70,7 +70,7 @@ function addDemoGraphic1(graphicLayer) {
   for (let i = 0; i < arrData.length; i++) {
     const item = arrData[i]
 
-    const graphic = new mars3d.graphic.CanvasBillboard({
+    const graphic = new CanvasBillboard({
       position: item.position,
       style: {
         text: 18,
@@ -97,7 +97,7 @@ export function addRandomGraphicByCount(count) {
     const position = result.points[j]
     const index = j + 1
 
-    const graphic = new mars3d.graphic.CanvasBillboard({
+    const graphic = new CanvasBillboard({
       position,
       style: {
         text: 18,

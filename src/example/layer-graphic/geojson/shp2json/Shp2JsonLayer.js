@@ -51,7 +51,8 @@ class Shp2JsonLayer extends mars3d.layer.GeoJsonLayer {
   }
 }
 
-mars3d.layer.Shp2JsonLayer = Shp2JsonLayer
-
 // 注册下
 mars3d.LayerUtil.register("geojson_shp", Shp2JsonLayer)
+
+
+// export { Shp2JsonLayer }

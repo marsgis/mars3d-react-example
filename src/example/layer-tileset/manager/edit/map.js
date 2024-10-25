@@ -85,6 +85,7 @@ export function showModel(url) {
   removeLayer()
 
   if (!url) {
+    localforage.removeItem(storageName)
     globalMsg("请输入图层URL！")
     return
   }
@@ -114,6 +115,7 @@ export function showModel(url) {
     .catch((e) => {
       // 加载失败
       console.log("模型加载失败", e)
+      localforage.removeItem(storageName)
     })
 
   // 加载完成事件

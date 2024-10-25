@@ -87,3 +87,5 @@ class Geolocation extends mars3d.control.ToolButton {
     this.graphic = null
   }
 }
+
+// export { Geolocation }

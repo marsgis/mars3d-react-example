@@ -41,7 +41,6 @@ export function onUnmounted() {
 
 let modelGraphic
 
-
 // 初始化创建一个卫星视锥体
 export function addDemoGraphic1(sensorParams) {
   const position = Cesium.Cartesian3.fromDegrees(sensorParams.model_x, sensorParams.model_y, sensorParams.model_z)
@@ -117,20 +116,17 @@ export function addRandomGraphicByCount(count) {
 }
 
 // 开始绘制 相阵控雷达
-export function startDrawGraphic() {
-  graphicLayer
-    .startDraw({
-      type: "satelliteSensor",
-      style: {
-        sensorType: mars3d.graphic.SatelliteSensor.Type.Rect,
-        angle1: 20,
-        angle2: 10,
-        color: "rgba(0,255,255,0.7)"
-      }
-    })
-    .then((graphic) => {
-      graphic.height = 5000
-    })
+export async function startDrawGraphic() {
+  const graphic = await graphicLayer.startDraw({
+    type: "satelliteSensor",
+    style: {
+      sensorType: mars3d.graphic.SatelliteSensor.Type.Rect,
+      angle1: 20,
+      angle2: 10,
+      color: "rgba(0,255,255,0.7)"
+    }
+  })
+  graphic.position = mars3d.PointUtil.addPositionsHeight(graphic.position, 100)
 }
 
 let satelliteSensor

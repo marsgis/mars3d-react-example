@@ -35,11 +35,12 @@ export function onMounted(mapInstance) {
   bindLayerContextMenu() // 在图层绑定右键菜单,对所有加到这个图层的矢量数据都生效
 
   // 加一些演示数据
-  addDemoGraphic1(graphicLayer)
-  addDemoGraphic2(graphicLayer)
-  addDemoGraphic3(graphicLayer)
-  addDemoGraphic4(graphicLayer)
-  addDemoGraphic5(graphicLayer)
+  // addDemoGraphic1(graphicLayer)
+  // addDemoGraphic2(graphicLayer)
+  // addDemoGraphic3(graphicLayer)
+  // addDemoGraphic4(graphicLayer)
+  // addDemoGraphic5(graphicLayer)
+  addDemoGraphic6(graphicLayer)
 }
 
 /**
@@ -366,6 +367,34 @@ function addDemoGraphic5(graphicLayer) {
     attr: { remark: "示例5" }
   })
   graphicLayer.addGraphic(graphicModel)
+}
+
+function addDemoGraphic6() {
+  // ModelLayer仅用于单个模型的快速便捷使用（如Studio平台的小模型图层管理）
+  // 普通开发请使用 ModelPrimitive+GraphicLayer
+  const modelLayer = new mars3d.layer.ModelLayer({
+    name: "战机",
+    position: [116.354142, 30.878523, 410],
+    style: {
+      url: "//data.mars3d.cn/gltf/mars/zhanji.glb",
+      scale: 0.02
+    },
+    attr: { remark: "示例6" },
+    scaleplate: {
+      url: "/img/tietu/axis.png",
+      width: 223, // 单位：米
+      height: 213,
+      show: true
+    }
+  })
+  map.addLayer(modelLayer)
+
+  // modelLayer.flyTo()
+
+  // 在layer上绑定监听事件
+  modelLayer.on(mars3d.EventType.click, function (event) {
+    console.log("监听modelLayer，单击了矢量对象", event)
+  })
 }
 
 // 生成演示数据(测试数据量)

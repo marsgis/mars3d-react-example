@@ -527,7 +527,7 @@ const styleConfig = {
   billboard: {
     name: "图标点标记",
     primitive: true,
-    extends: ["divBillboard", "canvasBillboard"],
+    extends: ["divBillboard", "divBillboardP", "canvasBillboard"],
     style: [
       { name: "opacity", label: "透明度", type: "slider", defval: 1.0, min: 0, max: 1, step: 0.01 },
       { name: "scale", label: "大小比例", type: "number", step: 1, defval: 1.0 },
@@ -861,6 +861,97 @@ const styleConfig = {
 
       { name: "testPoint", label: "是否显示测试点", type: "radio", defval: false },
       { name: "html", label: "Html文本", type: "label", defval: "" }
+    ]
+  },
+  billboardIndicator: {
+    name: "可拖拽图标点",
+    style: [
+      { name: "opacity", label: "透明度", type: "slider", defval: 1.0, min: 0, max: 1, step: 0.01 },
+      { name: "scale", label: "大小比例", type: "number", step: 1, min: 0, defval: 1.0 },
+
+      {
+        name: "scaleByDistance",
+        label: "是否按视距缩放",
+        type: "radio",
+        defval: false
+      },
+      {
+        name: "scaleByDistance_far",
+        label: "上限",
+        type: "number",
+        step: 1,
+        defval: 1000000.0,
+        show(style, allStyle, graphicType) {
+          return style.scaleByDistance
+        }
+      },
+      {
+        name: "scaleByDistance_farValue",
+        label: "比例值",
+        type: "number",
+        step: 1,
+        defval: 0.1,
+        show(style, allStyle, graphicType) {
+          return style.scaleByDistance
+        }
+      },
+      {
+        name: "scaleByDistance_near",
+        label: "下限",
+        type: "number",
+        step: 1,
+        defval: 1000.0,
+        show(style, allStyle, graphicType) {
+          return style.scaleByDistance
+        }
+      },
+      {
+        name: "scaleByDistance_nearValue",
+        label: "比例值",
+        type: "number",
+        step: 1,
+        defval: 1.0,
+        show(style, allStyle, graphicType) {
+          return style.scaleByDistance
+        }
+      },
+
+      {
+        name: "distanceDisplayCondition",
+        label: "是否按视距显示",
+        type: "radio",
+        defval: false
+      },
+      {
+        name: "distanceDisplayCondition_far",
+        label: "最大距离",
+        type: "number",
+        step: 1,
+        defval: 100000.0,
+        show(style, allStyle, graphicType) {
+          return style.distanceDisplayCondition
+        }
+      },
+      {
+        name: "distanceDisplayCondition_near",
+        label: "最小距离",
+        type: "number",
+        step: 1,
+        defval: 0.0,
+        show(style, allStyle, graphicType) {
+          return style.distanceDisplayCondition
+        }
+      },
+      {
+        name: "clampToGround",
+        label: "是否贴地",
+        type: "radio",
+        defval: false,
+        show(style, allStyle, graphicType) {
+          return !style.diffHeight || style.diffHeight !== 0
+        }
+      },
+      { name: "visibleDepth", label: "是否被遮挡", type: "radio", defval: true },
     ]
   },
 
@@ -1466,6 +1557,7 @@ const styleConfig = {
   cylinder: {
     name: "圆锥体",
     primitive: true,
+    extends: ["coneTrack", "coneTrackP"],
     style: [
       { name: "topRadius", label: "顶部半径", type: "number", step: 1, defval: 0.0 },
       { name: "bottomRadius", label: "底部半径", type: "number", step: 1, defval: 100.0 },
@@ -2308,7 +2400,9 @@ const styleConfig = {
       { name: "pitch", label: "俯仰角", type: "slider", min: 0.0, max: 360.0, step: 0.01, defval: 0.0 },
       { name: "roll", label: "翻滚角", type: "slider", min: 0.0, max: 360.0, step: 0.01, defval: 0.0 },
 
-      { name: "topShow", label: "显示顶盖", type: "radio", defval: true }
+      { name: "topShow", label: "显示顶盖", type: "radio", defval: true },
+
+      { name: "rayEllipsoid", label: "求交地球", type: "radio", defval: false }
     ]
   },
   pointLight: {
@@ -2374,6 +2468,7 @@ const styleConfig = {
         data: [
           { label: "实线", value: "Color" },
           { label: "虚线", value: "PolylineDash" },
+          { label: "虚线箭头", value: "LineDashArrow" },
           { label: "衬色线", value: "PolylineOutline" },
           { label: "箭头", value: "PolylineArrow" },
           { label: "光晕", value: "PolylineGlow" },
@@ -3657,7 +3752,10 @@ const styleConfig = {
       { name: "shiny", label: "光照强度", type: "number", min: 1.0, max: 1000.0, step: 1.0, defval: 100.0 },
       { name: "animationSpeed", label: "动画速度", type: "number", min: 0.1, max: 10.0, step: 0.1, defval: 1.0 },
       { name: "specularIntensity", label: "反射强度", type: "slider", min: 0.0, max: 0.9, step: 0.01, defval: 0.3 },
-      { name: "distortion", label: "倒影扭曲程度", type: "number", min: 0.0, max: 10.0, step: 0.1, defval: 3.7 }
+      { name: "distortion", label: "倒影扭曲程度", type: "number", min: 0.0, max: 10.0, step: 0.1, defval: 3.7 },
+
+      { name: "farDistance", label: "远距离", type: "number", step: 1, defval: 10000 },
+      { name: "farColor", label: "远距离颜色", type: "color", defval: "#91B3FF" }
     ]
   }
 }

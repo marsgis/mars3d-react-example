@@ -7,6 +7,27 @@ export const mapOptions = {
   scene: {
     center: { lat: 23.816631, lng: 111.688366, alt: 4605984, heading: 355, pitch: -80 }
   },
+  // basemaps: [
+  //   {
+  //     name: "天地图影像",
+  //     icon: "/img/basemaps/tdt_img.png",
+  //     type: "group",
+  //     layers: [
+  //       { name: "底图", type: "tdt", layer: "img_d" },
+  //       { name: "注记", type: "tdt", layer: "img_z" }
+  //     ],
+  //     show: true
+  //   },
+  //   {
+  //     name: "三维地名",
+  //     icon: "img/basemaps/bd-img.png",
+  //     type: "group",
+  //     layers: [
+  //       { name: "底图", type: "tdt", layer: "img_d", crs: "EPSG:3857" },
+  //       { name: "注记", type: "tdt_dm", label: { pixelOffsetY: -20, visibleDepth: false } }
+  //     ]
+  //   }
+  // ],
   // 方式1：在创建地球前的传参中配置 terrain 参数[目前1个球只支持1个地形服务]
   terrain: {
     type: "tdt",

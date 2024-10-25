@@ -26,6 +26,9 @@ export const mapOptions = {
   terrain: { show: false }
 }
 
+// 行政区划编码(全国统一，可以按需修改其他省市县编码)
+const xzqhCode = "340100"
+
 /**
  * 初始化地图业务，生命周期钩子函数（必须）
  * 框架在地图初始化完成后自动调用该函数
@@ -51,18 +54,26 @@ export function onMounted(mapInstance) {
   // map.scene.debugShowFramesPerSecond = true
 
   terrainClip = new mars3d.thing.TerrainClip({
+    czm: false, // 效率高些
     image: false,
     splitNum: 80 // 井边界插值数
   })
   map.addThing(terrainClip)
 
-  mars3d.Util.fetchJson({ url: "http://data.mars3d.cn/file/geojson/areas/340100.json" })
+  mars3d.Util.fetchJson({ url: `http://data.mars3d.cn/file/geojson/areas/${xzqhCode}.json` })
     .then(function (geojson) {
       const arr = mars3d.Util.geoJsonToGraphics(geojson) // 解析geojson
       const options = arr[0]
 
-      terrainClip.addArea(options.positions, { simplify: { tolerance: 0.002 } })
-      terrainClip.clipOutSide = true
+      if (options.isRing) {
+        // 多面时
+        terrainClip.addArea(options.positions[0], { simplify: { tolerance: 0.002 } })
+        terrainClip.clipOutSide = true
+      } else {
+        // 普通面
+        terrainClip.addArea(options.positions, { simplify: { tolerance: 0.002 } })
+        terrainClip.clipOutSide = true
+      }
 
       const polylineGraphic = new mars3d.graphic.PolylineEntity({
         positions: options.positions,
@@ -99,7 +110,7 @@ export function onMounted(mapInstance) {
       console.log("加载JSON出错", error)
     })
 
-  mars3d.Util.fetchJson({ url: "http://data.mars3d.cn/file/geojson/areas/340100_full.json" }).then(function (geojson) {
+  mars3d.Util.fetchJson({ url: `http://data.mars3d.cn/file/geojson/areas/${xzqhCode}_full.json` }).then(function (geojson) {
     const arr = mars3d.Util.geoJsonToGraphics(geojson) // 解析geojson
     for (let i = 0; i < arr.length; i++) {
       const item = arr[i]

@@ -28,7 +28,13 @@ export function onMounted(mapInstance) {
         { name: "注记", type: "tdt", layer: "vec_z" }
       ]
     },
-    rectangle: {
+    // scene: {
+    //   sceneMode: Cesium.SceneMode.SCENE3D
+    // },
+    flyToOptions: {
+      scale: 3
+    },
+    polygon: {
       color: "#fecd78",
       opacity: 0.2,
       outline: 1,
@@ -68,7 +74,7 @@ function addGraphicToOverviewMap(overviewMap) {
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.CENTER,
       rotation: new Cesium.CallbackProperty(() => {
-        return map.camera.heading
+        return Cesium.Math.toRadians(360 - Cesium.Math.toDegrees(map.camera.heading))
       }, false)
     }
   })

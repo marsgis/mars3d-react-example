@@ -238,7 +238,7 @@
   mars3d.LayerUtil.registerImageryProvider(layerType, createImageryProvider)
 
   // 对外接口
-  window.mars3d.layer.PbfLayer = PbfLayer
+  window.PbfLayer = PbfLayer
 })(window)
 
 // export { PbfLayer }

@@ -105,7 +105,7 @@ function addGraphicLayer() {
 
   // ui面板信息展示
   fixedRoute.on(mars3d.EventType.change, (event) => {
-    throttled(eventTarget.fire("roamLineChange", event), 500)
+    mars3d.Util.funThrottle(eventTarget.fire("roamLineChange", event), 500)
   })
 
   fixedRoute.on(mars3d.EventType.endItem, function (event) {
@@ -120,7 +120,7 @@ function addGraphicLayer() {
   // fixedRoute.start()
 
   // 贴地时，异步计算完成后开始
-  // fixedRoute.clampToGround({ has3dtiles: true }).then(function () {//异步计算完成贴地后再启动
+  // fixedRoute.autoSurfaceHeight({ has3dtiles: true }).then(function () {//异步计算完成贴地后再启动
   //     //贴地后的路线值为flyLine.positions
   //    fixedRoute.start()
   // });
@@ -192,25 +192,4 @@ export function formatTime(val) {
 
 function getLangText(text) {
   return map.getLangText(text)
-}
-
-// 节流
-function throttled(fn, delay) {
-  let timer = null
-  let starttime = Date.now()
-  return function () {
-    const curTime = Date.now() // 当前时间
-    const remaining = delay - (curTime - starttime)
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
-    const context = this
-    // eslint-disable-next-line prefer-rest-params
-    const args = arguments
-    clearTimeout(timer)
-    if (remaining <= 0) {
-      fn.apply(context, args)
-      starttime = Date.now()
-    } else {
-      timer = setTimeout(fn, remaining)
-    }
-  }
 }

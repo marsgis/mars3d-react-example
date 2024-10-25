@@ -22,7 +22,7 @@
   mars3d.LayerUtil.registerImageryProvider(layerType, createImageryProvider)
 
   //对外接口
-  mars3d.layer.WeiVectorTileLayer = WeiVectorTileLayer
+  window.WeiVectorTileLayer = WeiVectorTileLayer
 })(window)
 
 // export { WeiVectorTileLayer }

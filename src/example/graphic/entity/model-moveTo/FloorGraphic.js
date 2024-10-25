@@ -159,3 +159,5 @@ class FloorGraphic extends mars3d.graphic.BasePointEntity {
     }
   }
 }
+
+// export { FloorGraphic }
