@@ -69,6 +69,7 @@ function createEchartsImageLayer(dataLD) {
     imageLayer.url = imageData // 更新图片，base64图片
   }
 
+  // echartsInstance.on("rendered", mars3d.Util.funDebounce(updateImage, 1000))
   let timeTik
   echartsInstance.on("rendered", function () {
     clearTimeout(timeTik) // 防抖处理

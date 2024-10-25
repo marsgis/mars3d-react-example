@@ -3,7 +3,7 @@
  * Mars3D三维可视化平台  mars3d
  *
  * 版本信息：v3.8.5
- * 编译日期：2024-10-25 09:01
+ * 编译日期：2024-10-25 21:50
  * 版权所有：Copyright by 火星科技  http://mars3d.cn
  * 使用单位：免费公开版 ，2024-08-01
  */
@@ -2631,7 +2631,7 @@ declare namespace LocationBar {
  * @param [options.style.left] - css定位left位置
  * @param [options.style.right] - css定位right位置
  * @param [options.className] - 样式名称，可以外部自定义样式。
- * @param [options.cacheTime = 100] - 鼠标移动的函数节流时间
+ * @param [options.cacheTime = 50] - 鼠标移动的缓存时间
  * @param [options.id = createGuid()] - 对象的id标识
  * @param [options.enabled = true] - 对象的启用状态
  * @param [options.parentContainer] - 控件加入的父容器，默认为map所在的DOM map.container
@@ -22572,7 +22572,6 @@ declare namespace GraphicLayer {
  * @param [options.clustering.enabled = false] - 是否开启聚合
  * @param [options.clustering.pixelRange = 20] - 多少像素矩形范围内聚合
  * @param [options.clustering.minimumClusterSize = 2] - 可以聚集的屏幕空间对象的最小数量
- * @param [options.clustering.minChanged = 0.05] - 相机变化事件，事件间变化百分比小于该值时不更新聚合
  * @param [options.clustering.clampToGround = true] - 是否贴地
  * @param [options.clustering.style] - 聚合点的样式参数
  * @param [options.clustering.radius = 26] - 内置样式时，圆形图标的半径大小（单位：像素）
@@ -22641,7 +22640,6 @@ declare class GraphicLayer extends BaseGraphicLayer {
             enabled?: boolean;
             pixelRange?: number;
             minimumClusterSize?: number;
-            minChanged?: number;
             clampToGround?: boolean;
             style?: BillboardEntity.StyleOptions | any | PointEntity.StyleOptions | any | any;
             radius?: number;
@@ -23624,7 +23622,6 @@ declare class LodGraphicLayer extends GraphicLayer {
  * @param [options.clustering.enabled = false] - 是否开启聚合
  * @param [options.clustering.pixelRange = 20] - 多少像素矩形范围内聚合
  * @param [options.clustering.minimumClusterSize = 2] - 可以聚集的屏幕空间对象的最小数量
- * @param [options.clustering.minChanged = 0.05] - 相机变化事件，事件间变化百分比小于该值时不更新聚合
  * @param [options.clustering.clampToGround = true] - 是否贴地
  * @param [options.clustering.style] - 聚合点的样式参数
  * @param [options.clustering.radius = 26] - 内置样式时，圆形图标的半径大小（单位：像素）
@@ -23700,7 +23697,6 @@ declare class ModelLayer extends GraphicLayer {
             enabled?: boolean;
             pixelRange?: number;
             minimumClusterSize?: number;
-            minChanged?: number;
             clampToGround?: boolean;
             style?: BillboardEntity.StyleOptions | any | PointEntity.StyleOptions | any | any;
             radius?: number;
@@ -28417,7 +28413,7 @@ declare class Map extends BaseClass {
      * @param [toCartesian] - 返回Cesium.Cartesian3格式坐标
      * @returns 屏幕中心点坐标
      */
-    getCenter(toCartesian?: any): LngLatPoint | Cesium.Cartesian3;
+    getCenter(toCartesian?: any): LngLatPoint | Cesium.Cartesian3 | any | undefined;
     /**
      * 获取贴地的高度值 (仅考虑当前视域内数据和精度下的高度)
      * @param position - 坐标位置
@@ -29051,7 +29047,6 @@ declare class Map extends BaseClass {
      * @param [options.roll] - 翻滚角度值，绕经度线旋转角度, -90至90
      * @param [options.duration] - 飞行持续时间（秒）。如果省略，内部会根据飞行距离计算出理想的飞行时间。
      * @param [options.clampToGround] - 是否贴地对象,true时异步计算实际高度值后进行定位。
-     * @param [options.lock] - 是否是trackedEntity锁定视角状态
      * @param [options.complete] - 飞行完成后要执行的函数。
      * @param [options.cancel] - 飞行取消时要执行的函数。
      * @param [options.endTransform] - 表示飞行完成后摄像机将位于的参考帧的变换矩阵。
@@ -29069,7 +29064,6 @@ declare class Map extends BaseClass {
         roll?: number;
         duration?: number;
         clampToGround?: boolean;
-        lock?: boolean;
         complete?: Cesium.Camera.FlightCompleteCallback;
         cancel?: Cesium.Camera.FlightCancelledCallback;
         endTransform?: Cesium.Matrix4;
@@ -39673,16 +39667,22 @@ declare namespace Util {
      */
     function exitFullscreen(): boolean;
     /**
-     * 函数节流，
+     * 事件中使用的 函数节流，
      * 说明：稀释fn函数的执行频率，但不管事件触发有多频繁，都会保证在delay毫秒内一定会执行一次fn函数
+     * @example
+     * let newFun = mars3d.Util.funThrottle(this._changeFun, 500)
+     * target.on("change", newFun)  // 解绑用 target.off("change", newFun)
      * @param fn - 执行的方法
      * @param delay - 节流时间范围，毫秒数
      * @returns 包含一层的替代方法
      */
     function funThrottle(fn: (...params: any[]) => any, delay: number): (...params: any[]) => any;
     /**
-     * 函数防抖，
+     * 事件中使用的 函数防抖，
      * 说明：在delay毫秒内的多次调用操作，仅在最后一次调用时触发一次fn函数。
+     * @example
+     * let newFun = mars3d.Util.funDebounce(this._changeFun, 500)
+     * target.on("change", newFun)  // 解绑用 target.off("change", newFun)
      * @param fn - 执行的方法
      * @param delay - 节流时间范围，毫秒数
      * @returns 包含一层的替代方法

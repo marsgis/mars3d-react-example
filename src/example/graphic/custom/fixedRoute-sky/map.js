@@ -35,9 +35,9 @@ export function onMounted(mapInstance) {
   graphicLayer.addGraphic(fixedRoute)
 
   // ui面板信息展示
-  fixedRoute.on(mars3d.EventType.change, (event) => {
-    mars3d.Util.funThrottle(eventTarget.fire("roamLineChange", event), 500)
-  })
+  fixedRoute.on(mars3d.EventType.change, mars3d.Util.funThrottle((event) => {
+    eventTarget.fire("roamLineChange", event)
+  }, 500))
 
   // 开始漫游
   fixedRoute.start()

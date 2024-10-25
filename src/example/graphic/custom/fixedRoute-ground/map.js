@@ -92,13 +92,9 @@ function addGraphicLayer() {
     console.log("漫游结束end")
   })
   // ui面板信息展示
-  fixedRoute.on(mars3d.EventType.change, (event) => {
-    // const popup = event.graphic.getPopup()
-    // const container = popup?.container // popup对应的DOM
-
-    // console.log("漫游change", event)
-    mars3d.Util.funThrottle(eventTarget.fire("roamLineChange", event), 500)
-  })
+  fixedRoute.on(mars3d.EventType.change, mars3d.Util.funThrottle((event) => {
+    eventTarget.fire("roamLineChange", event)
+  }, 500))
 
   map.on(mars3d.EventType.keydown, function (event) {
     // 空格 切换暂停/继续

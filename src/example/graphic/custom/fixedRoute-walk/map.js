@@ -104,9 +104,9 @@ function addGraphicLayer() {
   fixedRoute.openPopup()
 
   // ui面板信息展示
-  fixedRoute.on(mars3d.EventType.change, (event) => {
-    mars3d.Util.funThrottle(eventTarget.fire("roamLineChange", event), 500)
-  })
+  fixedRoute.on(mars3d.EventType.change, mars3d.Util.funThrottle((event) => {
+    eventTarget.fire("roamLineChange", event)
+  }, 500))
 
   fixedRoute.on(mars3d.EventType.endItem, function (event) {
     console.log("已漫游过点：" + event.index, event)

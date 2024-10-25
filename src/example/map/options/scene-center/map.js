@@ -85,10 +85,14 @@ export function mapGetCameraView() {
 }
 
 export function mapSetCameraView() {
+  map.graphicLayer.clear()
+
   map.setCameraView({ lat: 26.8764, lng: 91.148781, alt: 223798, heading: 0, pitch: -45 })
 }
 
 export function mapSetCameraViewList() {
+  map.graphicLayer.clear()
+
   // 视角切换（分步执行）, stop设置停留在该视角的时间
   map.setCameraViewList([
     { lng: 108.961601, lat: 34.217109, alt: 509.2, heading: 314.5, pitch: -22.5, duration: 8, stop: 0 },
@@ -99,28 +103,80 @@ export function mapSetCameraViewList() {
 }
 
 export function mapFlyHome() {
+  map.graphicLayer.clear()
   map.flyHome()
 }
 
 export function mapFlyToGraphic() {
+  map.graphicLayer.clear()
   map.flyToGraphic(graphic, { radius: 10000 })
 }
 
 export function mapFlyToExtent() {
-  map.flyToExtent({ xmin: 114.811691, xmax: 119.703609, ymin: 29.35597, ymax: 34.698585 })
+  map.graphicLayer.clear()
+
+  // const extent = { xmin: 115.779965422, xmax: 123.584853, ymin: 29.097413, ymax: 50.245553 }
+  const extent = { xmin: 114.811691, xmax: 119.703609, ymin: 29.35597, ymax: 34.698585 }
+  map.flyToExtent(extent, { scale: 1 })
+
+  // 显示参照物
+  const graphic = new mars3d.graphic.RectanglePrimitive({
+    positions: [
+      [extent.xmin, extent.ymin],
+      [extent.xmax, extent.ymax]
+    ],
+    style: {
+      color: Cesium.Color.CYAN.withAlpha(0.4)
+    }
+  })
+  map.graphicLayer.addGraphic(graphic)
 }
 
 export function mapFlyToPositions() {
-  map.flyToPositions([
+  map.graphicLayer.clear()
+
+  const positions = [
     [114.031965, 36.098482, 332.8],
     [114.038309, 36.089496, 267.6],
     [114.048026, 36.093311, 255.7],
     [114.041602, 36.102055, 377.5]
-  ])
+  ]
+  map.flyToPositions(positions)
+
+  // 显示参照物
+  for (let j = 0; j < positions.length; ++j) {
+    const position = positions[j]
+
+    const graphic = new mars3d.graphic.PointPrimitive({
+      position,
+      style: {
+        color: "#00ffff",
+        pixelSize: 6,
+        outlineColor: "#ffffff",
+        outlineWidth: 2
+      }
+    })
+    map.graphicLayer.addGraphic(graphic)
+  }
 }
 
 export function mapFlyToPoint() {
-  map.flyToPoint([113.939351, 36.068144, 350.9], { radius: 50000 })
+  map.graphicLayer.clear()
+
+  const position = [113.939351, 36.068144, 350.9]
+  map.flyToPoint(position, { radius: 50000 })
+
+  // 显示参照物
+  const graphic = new mars3d.graphic.PointPrimitive({
+    position,
+    style: {
+      color: "#00ffff",
+      pixelSize: 6,
+      outlineColor: "#ffffff",
+      outlineWidth: 2
+    }
+  })
+  map.graphicLayer.addGraphic(graphic)
 }
 
 export function mapCancelFlyTo() {

@@ -92,9 +92,9 @@ function addRoamLine() {
   bindPopup(fixedRoute)
 
   // ui面板信息展示
-  fixedRoute.on(mars3d.EventType.change, (event) => {
-    mars3d.Util.funThrottle(eventTarget.fire("roamLineChange", event), 500)
-  })
+  fixedRoute.on(mars3d.EventType.change, mars3d.Util.funThrottle((event) => {
+    eventTarget.fire("roamLineChange", event)
+  }, 500))
 
   // 不贴地时，直接开始
   // startFly(fixedRoute)

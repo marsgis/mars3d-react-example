@@ -81,7 +81,6 @@ function addBusinessLayer() {
     clustering: {
       enabled: true,
       pixelRange: 20,
-      minChanged: 0.01,
       clampToGround: false,
       addHeight: 1000,
       opacity: 1,
@@ -151,6 +150,13 @@ function addBusinessLayer() {
   graphicLayer.on("clustering", function (event) {
     console.log("新增聚合对象", event)
   })
+
+  graphicLayer.on(
+    "clusterEnd",
+    mars3d.Util.funDebounce(function (event) {
+      console.log("本批次聚合渲染完成", event)
+    }, 500)
+  )
 
   // 单击事件
   graphicLayer.on(mars3d.EventType.click, function (event) {

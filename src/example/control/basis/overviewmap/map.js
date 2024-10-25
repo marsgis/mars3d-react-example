@@ -28,11 +28,11 @@ export function onMounted(mapInstance) {
         { name: "注记", type: "tdt", layer: "vec_z" }
       ]
     },
-    // scene: {
-    //   sceneMode: Cesium.SceneMode.SCENE3D
-    // },
+    scene: {
+      sceneMode: Cesium.SceneMode.SCENE3D
+    },
     flyToOptions: {
-      scale: 3
+      scale: 2.5
     },
     polygon: {
       color: "#fecd78",
