@@ -24,7 +24,7 @@ export function onMounted(mapInstance) {
 
   // 创建矢量数据图层
   graphicLayer = new mars3d.layer.GraphicLayer({
-    clustering: {
+    cluster: {
       enabled: true, // 点的聚合配置
       pixelRange: 20
     }

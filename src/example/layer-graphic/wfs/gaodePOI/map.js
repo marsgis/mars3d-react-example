@@ -68,7 +68,7 @@ function createGeodePoiLayer() {
       }
     }
     // 当是entity类型时，点的聚合配置
-    // clustering: {
+    // cluster: {
     //   enabled: true,
     //   pixelRange: 20,
     // },

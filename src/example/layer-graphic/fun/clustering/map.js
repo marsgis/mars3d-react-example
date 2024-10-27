@@ -25,7 +25,7 @@ export function onMounted(mapInstance) {
 
 // async function addGraphicLayer() {
 //   graphicLayer = new mars3d.layer.GraphicLayer({
-//     clustering: {
+//     cluster: {
 //       enabled: true,
 //       pixelRange: 20,
 //       clampToGround: false,
@@ -78,14 +78,10 @@ function addBusinessLayer() {
     latColumn: "lat",
     altColumn: "z",
     // 点的聚合配置
-    clustering: {
+    cluster: {
       enabled: true,
       pixelRange: 20,
-      clampToGround: false,
-      addHeight: 1000,
-      opacity: 1,
-      // getImage是完全自定义方式
-      getImage: async function (count, result) {
+      image: async function (count, result) {
         const key = "type1-" + count // 唯一标识，不同图层需要设置不一样
 
         let image = singleDigitPins[key]
@@ -147,16 +143,9 @@ function addBusinessLayer() {
   })
   map.addLayer(graphicLayer)
 
-  graphicLayer.on("clustering", function (event) {
-    console.log("新增聚合对象", event)
+  graphicLayer.on(mars3d.EventType.clusterStop, function (event) {
+    console.log("聚合发生了变化，并渲染完成", event)
   })
-
-  graphicLayer.on(
-    "clusterEnd",
-    mars3d.Util.funDebounce(function (event) {
-      console.log("本批次聚合渲染完成", event)
-    }, 500)
-  )
 
   // 单击事件
   graphicLayer.on(mars3d.EventType.click, function (event) {
@@ -165,7 +154,7 @@ function addBusinessLayer() {
     if (map.camera.positionCartographic.height > 90000) {
       const graphic = event.graphic
       // graphic.closePopup()
-      if (graphic?.cluster) {
+      if (graphic?.graphicIds) {
         // 单击了聚合的点
         console.log("单击了聚合的点", graphic.getGraphics())
       } else {
@@ -184,10 +173,14 @@ function addBusinessLayer() {
   })
 
   graphicLayer.bindPopup(function (event) {
-    if (event.graphic.cluster && event.graphic.getGraphics) {
+    if (event.graphic?.graphicIds) {
       const graphics = event.graphic.getGraphics() // 对应的grpahic数组，可以自定义显示
       if (graphics) {
-        const inthtml = `单击了聚合点(${graphics.length}个)`
+        const names = []
+        for (let index = 0; index < graphics.length; index++) {
+          names.push(graphics[index].attr.text)
+        }
+        const inthtml = `单击了聚合点(${graphics.length}个):<br/>${names.join(",")}`
         return inthtml
       }
     }
@@ -301,7 +294,7 @@ export function getDataSurfaceHeight() {
 }
 
 export function enabledAggressive(val) {
-  graphicLayer.clustering = val
+  graphicLayer.clusterEnabled = val
 }
 
 export function layerShowChange(val) {

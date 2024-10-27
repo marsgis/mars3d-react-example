@@ -113,7 +113,8 @@ async function showDivGraphic(arr) {
         html: '<div style="width:60px;height:60px;border-radius: 50%;background-color: #ffffff; position: relative;"></div>',
         horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
         verticalOrigin: Cesium.VerticalOrigin.CENTER
-      }
+      },
+      private: true // 为了标识不参与聚合
     })
     graphicLayer.addGraphic(backGroundGraphic)
 
@@ -183,6 +184,11 @@ async function showDivGraphic(arr) {
 
       chartChart.setOption(option)
     })
+
+    graphic.on(mars3d.EventType.clusterItemChange, function (e) {
+      backGroundGraphic.isCluster = e.graphic.isCluster // 聚合状态同步给背景div
+    })
+
     await graphicLayer.addGraphic(graphic)
   }
 }

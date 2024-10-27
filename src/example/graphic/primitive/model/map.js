@@ -35,11 +35,11 @@ export function onMounted(mapInstance) {
   bindLayerContextMenu() // 在图层绑定右键菜单,对所有加到这个图层的矢量数据都生效
 
   // 加一些演示数据
-  // addDemoGraphic1(graphicLayer)
-  // addDemoGraphic2(graphicLayer)
-  // addDemoGraphic3(graphicLayer)
-  // addDemoGraphic4(graphicLayer)
-  // addDemoGraphic5(graphicLayer)
+  addDemoGraphic1(graphicLayer)
+  addDemoGraphic2(graphicLayer)
+  addDemoGraphic3(graphicLayer)
+  addDemoGraphic4(graphicLayer)
+  addDemoGraphic5(graphicLayer)
   addDemoGraphic6(graphicLayer)
 }
 
