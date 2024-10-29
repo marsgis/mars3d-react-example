@@ -79,6 +79,8 @@ const load = async (uiConfig, reloadData = false) => {
   }
   if (!windProvider) {
     globalMsg("数据加载中...")
+    showLoading()
+
     const dataUrl = "https://serv.91weather.com/thredds/dodsC/gfs/gfs.20220917/06/gfs.t06z.pgrb2.0p25.f003"
     const dapService = new DAPService(dataUrl)
     await dapService.loadDataInfo()
@@ -114,6 +116,7 @@ const load = async (uiConfig, reloadData = false) => {
     }
 
     globalMsg("数据加载完成")
+    hideLoading()
   }
 
   const zScale = 10

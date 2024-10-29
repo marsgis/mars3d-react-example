@@ -42,6 +42,8 @@ async function initDemoData() {
   consts.workerPath = "/lib/mars3d/thirdParty/quickearth/workers"
 
   globalMsg("数据加载中...")
+  showLoading()
+
   // config资源配置
   await resourceService.loadResourceFromConfigPath("styles/demo.config.json")
 
@@ -70,10 +72,11 @@ async function initDemoData() {
     completeOne: (layer) => {
       layer.isQuickearth = true
       map.scene.primitives.add(layer)
+
+      globalMsg("数据加载完成")
+      hideLoading()
     }
   })
-
-  globalMsg("数据加载完成")
 
   // 下面用于剖面的
   addSectionLayer()

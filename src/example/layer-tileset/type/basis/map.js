@@ -180,8 +180,7 @@ export function showQxShequDemo() {
     url: "//data.mars3d.cn/3dtiles/qx-shequ/tileset.json",
     position: { alt: 148.2 },
     maximumScreenSpaceError: 1,
-    cacheBytes: 1073741824, // 1024MB = 1024*1024*1024
-    maximumCacheOverflowBytes: 2147483648, // 2048MB = 2048*1024*1024
+    maxMemory: 1024, // 最大缓存内存大小(MB)
     cullWithChildrenBounds: false,
     skipLevelOfDetail: true,
     preferLeaves: true,

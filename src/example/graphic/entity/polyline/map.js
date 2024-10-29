@@ -259,10 +259,16 @@ function addDemoGraphic5(graphicLayer) {
   })
   graphicLayer.addGraphic(graphic)
 
-  addSplitLabel({
+  const labelArr = addSplitLabel({
     positions: graphic.positionsShow,
     text: "合肥火星科技有限公司",
     step: 200
+  })
+
+  graphic.on(mars3d.EventType.clusterItemChange, function (e) {
+    labelArr.forEach((label) => {
+      label.isCluster = e.graphic.isCluster
+    })
   })
 }
 
@@ -307,6 +313,7 @@ function addSplitLabel(options) {
     thisDistance += distance
   }
 
+  const labelArr = []
   textPoints.forEach((position, index) => {
     const graphic = new mars3d.graphic.LabelEntity({
       position: position,
@@ -321,10 +328,15 @@ function addSplitLabel(options) {
         outlineWidth: 2,
         horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
         verticalOrigin: Cesium.VerticalOrigin.BOTTOM
-      }
+      },
+      private: true
     })
     graphicLayer.addGraphic(graphic)
+
+    labelArr.push(graphic)
   })
+
+  return labelArr
 }
 
 function addDemoGraphic6(graphicLayer) {
@@ -760,7 +772,7 @@ export function bindLayerContextMenu() {
       icon: "fa fa-trash-o",
       show: (event) => {
         const graphic = event.graphic
-        if (!graphic || graphic.isDestroy) {
+        if (!graphic || graphic.isDestroy || graphic.graphicIds) {
           return false
         } else {
           return true
@@ -775,6 +787,33 @@ export function bindLayerContextMenu() {
         graphicLayer.removeGraphic(graphic)
         if (parent) {
           graphicLayer.removeGraphic(parent)
+        }
+      }
+    },
+    {
+      text: "查看聚合列表",
+      icon: "fa fa-info",
+      show: (event) => {
+        const graphic = event.graphic
+        if (graphic.graphicIds) {
+          return true
+        } else {
+          return false
+        }
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        if (!graphic) {
+          return
+        }
+        const graphics = graphic.getGraphics() // 对应的grpahic数组，可以自定义显示
+        if (graphics) {
+          const names = []
+          for (let index = 0; index < graphics.length; index++) {
+            const g = graphics[index]
+            names.push(g.attr.name || g.attr.text || g.id)
+          }
+          return globalAlert(`${names.join(",")}`, `共${graphics.length}个聚合对象`)
         }
       }
     },

@@ -41,6 +41,7 @@ async function initDemoData() {
   // consts.workerPath = "/lib/mars3d/thirdParty/quickearth/workers"
 
   globalMsg("数据加载中...")
+
   // config资源配置
   await resourceService.loadResourceFromConfigPath("styles/demo.config.json")
 
@@ -76,6 +77,7 @@ async function initDemoData() {
   map.scene.primitives.add(collection)
 
   globalMsg("数据加载完成")
+  hideLoading()
 }
 
 export function changeScale(scale) {

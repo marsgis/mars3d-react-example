@@ -3,7 +3,7 @@
  * Mars3D三维可视化平台  mars3d
  *
  * 版本信息：v3.8.5
- * 编译日期：2024-10-27 22:46
+ * 编译日期：2024-10-29 21:55
  * 版权所有：Copyright by 火星科技  http://mars3d.cn
  * 使用单位：免费公开版 ，2024-08-01
  */
@@ -2098,8 +2098,9 @@ declare class BaseControl extends BaseThing {
  * 时钟及其动画的管理控制，
  * 控件界面的相关值取自 map.clock 下相关属性值。
  * @param [options] - 参数对象，包括以下：
- * @param [options.format = "yyyy-MM-dd HH:mm:ss"] - 当前时间格式化字符串
+ * @param [options.format = "yyyy-MM-dd HH:mm:ss"] - 当前时间格式化字符串，当传 format: "duration" 时显示已过时长（相对于map.clock.startTime）和总时长（相对于map.clock.stopTime）
  * @param [options.className] - 样式名称，可以外部自定义样式。
+ * @param [options.speed = true] - 是否显示速度控制输入框
  * @param [options.id = createGuid()] - 对象的id标识
  * @param [options.enabled = true] - 对象的启用状态
  * @param [options.parentContainer] - 控件加入的父容器，默认为map所在的DOM map.container
@@ -2110,6 +2111,7 @@ declare class ClockAnimate extends BaseControl {
     constructor(options?: {
         format?: string;
         className?: string;
+        speed?: boolean;
         id?: string | number;
         enabled?: boolean;
         parentContainer?: HTMLElement;
@@ -2477,9 +2479,12 @@ declare class SceneModePicker extends BaseCzmControl {
 /**
  * 时间线 控件 (Cesium原生)
  * @param [options] - 参数对象，包括以下：
- * @param [options.zoom = true] - 刻度面板是否可以鼠标滚轮进行缩放
+ * @param [options.zoom = true] - 是否可以鼠标滚轮进行缩放刻度面板
  * @param [options.maxSpan = 1] - 刻度放大的最大刻度跨度，单位：秒
- * @param [options.formatTimeStr = true] - 是否格式化时间文本为普通格式 ，比如 yyyy-MM-dd 、HH:mm:ss
+ * @param [options.format = "simplify"] - 格式化时间文本方式，
+ * 当 format: "simplify" 时自动根据差值格式化时间文本为普通格式 ，比如 yyyy-MM-dd 、HH:mm:ss
+ * 当 format: "duration" 时显示已过时长（相对于map.clock.startTime）
+ * 当 format: "none" 时为完整的时间文本
  * @param [options.style] - 可以CSS样式，如:
  * @param [options.style.top] - css定位top位置, 如 top: '10px'
  * @param [options.style.bottom = 0] - css定位bottom位置
@@ -2495,7 +2500,7 @@ declare class Timeline extends BaseCzmControl {
     constructor(options?: {
         zoom?: boolean;
         maxSpan?: number;
-        formatTimeStr?: boolean;
+        format?: string;
         style?: any | {
             top?: string;
             bottom?: string;
@@ -4294,6 +4299,25 @@ declare namespace Globe {
         unit?: string;
         className?: string;
     };
+    /**
+     * 获取用于聚合的圆形图标对象的方法参数
+     * @property [fontColor = '#ffffff'] - 数字的颜色
+     * @property [radius = 26] - 圆形图标的整体半径大小（单位：像素）
+     * @property [color = 'rgba(181, 226, 140, 0.6)'] - 圆形图标的背景颜色
+     * @property [opacity = 0.5] - 圆形图标的透明度
+     * @property [borderWidth = 5] - 圆形图标的边框宽度（单位：像素），0不显示
+     * @property [borderColor = 'rgba(110, 204, 57, 0.5)'] - 圆形图标的边框背景颜色
+     * @property [borderOpacity = 0.6] - 圆形图标边框的透明度
+     */
+    type getCircleImageOptions = {
+        fontColor?: string;
+        radius?: number;
+        color?: string;
+        opacity?: number;
+        borderWidth?: number;
+        borderColor?: string;
+        borderOpacity?: number;
+    };
 }
 
 declare namespace BaseGraphic {
@@ -4490,9 +4514,19 @@ declare class BaseGraphic extends BaseClass {
      */
     readonly czmObject: Cesium.Entity | Cesium.Primitive | Cesium.GroundPrimitive | Cesium.ClassificationPrimitive | any;
     /**
-     * 显示隐藏状态
+     * 显示隐藏状态（属性值）
      */
     show: boolean;
+    /**
+     * 获取当前对象真实实际的显示状态
+     * @param time - 当前时间
+     * @returns 真实的实时显示状态，当时序范围外，被聚合时返回的是false
+     */
+    getRealShow(time: Cesium.JulianDate): boolean;
+    /**
+     * 是否支持聚合
+     */
+    readonly hasCluster: boolean;
     /**
      * 是否被聚合
      */
@@ -4936,6 +4970,10 @@ declare class BaseCombine extends BasePrimitive {
      * 数据集合数组，同类的构造参数
      */
     instances: any;
+    /**
+     * 是否支持聚合
+     */
+    readonly hasCluster: boolean;
     /**
      * 根据 pickId 获取对应绑定的数据据对象
      * @param pickId - 单个对象的pickid
@@ -9190,7 +9228,7 @@ declare class BasePointEntity extends BaseEntity {
      */
     setCallbackPosition(position?: string | any[] | any | Cesium.Cartesian3 | any): Cesium.Cartesian3;
     /**
-     * 显示隐藏状态
+     * 显示隐藏状态（属性值）
      */
     show: boolean;
     /**
@@ -15119,6 +15157,11 @@ declare class DistanceMeasure extends PolylineEntity {
  * @param options.positions - 坐标位置
  * @param options.style - 样式信息
  * @param [options.attr] - 附件的属性信息，可以任意附加属性，导出geojson或json时会自动处理导出。
+ * @param [options.splitNum = 200] - 插值数，等比分割的个数(概略值，有经纬网网格来插值)
+ * @param [options.minDistance] - 插值最小间隔(单位：米)，提示：优先级高于splitNum，用于计算splitNum（非严格按这个值分割）
+ * @param [options.has3dtiles = auto] - 是否在3dtiles模型上分析（模型分析较慢，按需开启）,默认内部根据点的位置自动判断（但可能不准）
+ * @param [options.objectsToExclude] - 贴模型分析时，排除的不进行贴模型计算的模型对象，可以是： primitives, entities, 或 3D Tiles features
+ * @param [options.exact = false] - 是否进行精确计算， 传false时是否快速概略计算方式，该方式计算精度较低，但计算速度快，仅能计算在当前视域内坐标的高度
  * @param [options.label] - 测量结果文本的样式
  * @param [options.decimal = 2] - 显示的 距离值 文本中保留的小数位
  * @param [options.availability] - 指定时间范围内显示该对象
@@ -15135,7 +15178,6 @@ declare class DistanceMeasure extends PolylineEntity {
  * @param [options.hasMoveEdit = false] - 编辑时，是否可以整体平移
  * @param [options.hasMidPoint = true] - 编辑时，是否可以增加中间点
  * @param [options.hasHeightEdit = true] - 编辑时，当有diffHeight时，是否可以编辑高度
- * @param [options.exact = false] - 是否进行精确计算， 传false时是否快速概略计算方式，该方式计算精度较低，但计算速度快，仅能计算在当前视域内坐标的高度
  * @param [options.popup] - 绑定的popup弹窗值，也可以bindPopup方法绑定
  * @param [options.popupOptions] - popup弹窗时的配置参数，也支持如pointerEvents等{@link Popup}构造参数
  * @param [options.tooltip] - 绑定的tooltip弹窗值，也可以bindTooltip方法绑
@@ -15154,6 +15196,11 @@ declare class DistanceSurfaceMeasure extends DistanceMeasure {
         positions: LngLatPoint[] | Cesium.Cartesian3[] | Cesium.PositionProperty | any[];
         style: PolylineEntity.StyleOptions | any;
         attr?: any | BaseGraphic.AjaxAttr;
+        splitNum?: number;
+        minDistance?: number;
+        has3dtiles?: boolean;
+        objectsToExclude?: any;
+        exact?: boolean;
         label?: LabelEntity.StyleOptions | any;
         decimal?: number;
         availability?: Cesium.TimeIntervalCollection | Cesium.TimeInterval | any[] | any;
@@ -15170,7 +15217,6 @@ declare class DistanceSurfaceMeasure extends DistanceMeasure {
         hasMoveEdit?: boolean;
         hasMidPoint?: boolean;
         hasHeightEdit?: boolean;
-        exact?: boolean;
         popup?: string | any[] | ((...params: any[]) => any);
         popupOptions?: Popup.StyleOptions | any;
         tooltip?: string | any[] | ((...params: any[]) => any);
@@ -16236,7 +16282,7 @@ declare class BasePrimitive extends BaseGraphic {
      */
     readonly czmObject: Cesium.Entity | Cesium.Primitive | Cesium.GroundPrimitive | Cesium.ClassificationPrimitive | any;
     /**
-     * 显示隐藏状态
+     * 显示隐藏状态（属性值）
      */
     show: boolean;
     /**
@@ -18289,7 +18335,7 @@ declare class LabelPrimitive extends BasePointPrimitive {
      * @param [result] - 存储结果的对象
      * @returns 屏幕空间位置，注意：屏幕空间原点是画布的左上角；X从从左到右，Y从上到下递增。
      */
-    getWindowCoordinates(result?: Cartesian2): Cartesian2;
+    getWindowCoordinates(result?: Cesium.Cartesian2): Cesium.Cartesian2;
     /**
      * 获取以coord屏幕坐标为中心的图标的屏幕空间边界框。
      * @param coord - 屏幕空间位置
@@ -19070,7 +19116,7 @@ declare class PointPrimitive extends BasePointPrimitive {
      * @param [result] - 存储结果的对象
      * @returns 屏幕空间位置，注意：屏幕空间原点是画布的左上角；X从从左到右，Y从上到下递增。
      */
-    getWindowCoordinates(result?: Cartesian2): Cartesian2;
+    getWindowCoordinates(result?: Cesium.Cartesian2): Cesium.Cartesian2;
     /**
      * 获取以coord屏幕坐标为中心的图标的屏幕空间边界框。
      * @param coord - 屏幕空间位置
@@ -21505,11 +21551,11 @@ declare class KmlLayer extends CzmGeoJsonLayer {
  * @param [options.buildings.bottomHeight] - 建筑物底部高度（如:0） 属性字段名称（如:{bottomHeight}）
  * @param [options.buildings.cloumn = 1] - 层数，楼的实际高度 = height*cloumn
  * @param [options.buildings.height = 3.5] - 层高的  固定层高数值（如:10） 或 属性字段名称（如:{height}）
- * @param [options.cluster] - 设置聚合相关参数(点状对象)：
+ * @param [options.cluster] - 聚合参数(Tip:不参与聚合的类型：合并渲染对象、处于标绘或编辑状态的对象)：
  * @param [options.cluster.enabled = false] - 是否开启聚合
  * @param [options.cluster.pixelRange = 20] - 多少像素矩形范围内聚合
  * @param [options.cluster.minimumClusterSize = 2] - 可以聚集的屏幕空间对象的最小数量
- * @param [options.cluster.includePoly] - 是否对线面对象进行聚合
+ * @param [options.cluster.includePoly = true] - 是否对线面对象进行聚合
  * @param [options.cluster.image] - 聚合点的图标样式，支持：string时直接传图片; object时定义内置样式; function时传：getImage:function(count) { return image}
  * @param [options.cluster.style] - 聚合点的样式参数
  * @param [options.popup] - 绑定的popup弹窗值，也可以bindPopup方法绑定，支持：'all'、数组、字符串模板
@@ -21588,7 +21634,7 @@ declare class ArcGisWfsLayer extends LodGraphicLayer {
             pixelRange?: number;
             minimumClusterSize?: number;
             includePoly?: number;
-            image?: string | ((...params: any[]) => any) | getCircleImageOptions;
+            image?: string | ((...params: any[]) => any) | Globe.getCircleImageOptions;
             style?: BillboardEntity.StyleOptions | any | any;
         };
         popup?: string | Globe.getTemplateHtml_template[] | ((...params: any[]) => any);
@@ -21812,11 +21858,11 @@ declare class ArcGisWfsSingleLayer extends GeoJsonLayer {
  * @param [options.symbol.merge] - 是否合并并覆盖json中已有的style，默认不合并。
  * @param [options.symbol.callback] - 自定义判断处理返回style ，示例：callback: function (attr, styleOpt){  return { color: "#ff0000" };  }
  * @param [options.graphicOptions] - 默认的graphic的构造参数，每种不同类型数据都有不同的属性，具体见各{@link GraphicType}矢量数据的构造参数。
- * @param [options.cluster] - 设置聚合相关参数(点状对象)：
+ * @param [options.cluster] - 聚合参数(Tip:不参与聚合的类型：合并渲染对象、处于标绘或编辑状态的对象)：
  * @param [options.cluster.enabled = false] - 是否开启聚合
  * @param [options.cluster.pixelRange = 20] - 多少像素矩形范围内聚合
  * @param [options.cluster.minimumClusterSize = 2] - 可以聚集的屏幕空间对象的最小数量
- * @param [options.cluster.includePoly] - 是否对线面对象进行聚合
+ * @param [options.cluster.includePoly = true] - 是否对线面对象进行聚合
  * @param [options.cluster.image] - 聚合点的图标样式，支持：string时直接传图片; object时定义内置样式; function时传：getImage:function(count) { return image}
  * @param [options.cluster.style] - 聚合点的样式参数
  * @param [options.proxy] - 加载资源时要使用的代理服务url。
@@ -21885,7 +21931,7 @@ declare class BusineDataLayer extends GraphicLayer {
             pixelRange?: number;
             minimumClusterSize?: number;
             includePoly?: number;
-            image?: string | ((...params: any[]) => any) | getCircleImageOptions;
+            image?: string | ((...params: any[]) => any) | Globe.getCircleImageOptions;
             style?: BillboardEntity.StyleOptions | any | any;
         };
         proxy?: string;
@@ -21964,11 +22010,11 @@ declare class BusineDataLayer extends GraphicLayer {
  * @param options.symbol.styleOptions - 点的Style样式。
  * @param [options.symbol.styleField] - 按 styleField 属性设置不同样式。
  * @param [options.symbol.styleFieldOptions] - 按styleField值与对应style样式的键值对象。
- * @param [options.cluster] - 设置聚合相关参数(点状对象)：
+ * @param [options.cluster] - 聚合参数(Tip:不参与聚合的类型：合并渲染对象、处于标绘或编辑状态的对象)：
  * @param [options.cluster.enabled = false] - 是否开启聚合
  * @param [options.cluster.pixelRange = 20] - 多少像素矩形范围内聚合
  * @param [options.cluster.minimumClusterSize = 2] - 可以聚集的屏幕空间对象的最小数量
- * @param [options.cluster.includePoly] - 是否对线面对象进行聚合
+ * @param [options.cluster.includePoly = true] - 是否对线面对象进行聚合
  * @param [options.cluster.image] - 聚合点的图标样式，支持：string时直接传图片; object时定义内置样式; function时传：getImage:function(count) { return image}
  * @param [options.cluster.style] - 聚合点的样式参数
  * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
@@ -22017,7 +22063,7 @@ declare class GeodePoiLayer extends LodGraphicLayer {
             pixelRange?: number;
             minimumClusterSize?: number;
             includePoly?: number;
-            image?: string | ((...params: any[]) => any) | getCircleImageOptions;
+            image?: string | ((...params: any[]) => any) | Globe.getCircleImageOptions;
             style?: BillboardEntity.StyleOptions | any | any;
         };
         id?: string | number;
@@ -22153,11 +22199,11 @@ declare namespace GeoJsonLayer {
  * @param [options.templateValues] - 一个对象，用于替换Url中的模板值的键/值对
  * @param [options.queryParameters] - 一个对象，其中包含在检索资源时将发送的查询参数。比如：queryParameters: {'access_token': '123-435-456-000'}
  * @param [options.headers] - 一个对象，将发送的其他HTTP标头。比如：headers: { 'X-My-Header': 'valueOfHeader' }
- * @param [options.cluster] - 设置聚合相关参数(点状对象)：
+ * @param [options.cluster] - 聚合参数(Tip:不参与聚合的类型：合并渲染对象、处于标绘或编辑状态的对象)：
  * @param [options.cluster.enabled = false] - 是否开启聚合
  * @param [options.cluster.pixelRange = 20] - 多少像素矩形范围内聚合
  * @param [options.cluster.minimumClusterSize = 2] - 可以聚集的屏幕空间对象的最小数量
- * @param [options.cluster.includePoly] - 是否对线面对象进行聚合
+ * @param [options.cluster.includePoly = true] - 是否对线面对象进行聚合
  * @param [options.cluster.image] - 聚合点的图标样式，支持：string时直接传图片; object时定义内置样式; function时传：getImage:function(count) { return image}
  * @param [options.cluster.style] - 聚合点的样式参数
  * @param [options.popup] - 绑定的popup弹窗值，也可以bindPopup方法绑定，支持：'all'、数组、字符串模板
@@ -22236,7 +22282,7 @@ declare class GeoJsonLayer extends GraphicLayer {
             pixelRange?: number;
             minimumClusterSize?: number;
             includePoly?: number;
-            image?: string | ((...params: any[]) => any) | getCircleImageOptions;
+            image?: string | ((...params: any[]) => any) | Globe.getCircleImageOptions;
             style?: BillboardEntity.StyleOptions | any | any;
         };
         popup?: string | Globe.getTemplateHtml_template[] | ((...params: any[]) => any);
@@ -22522,6 +22568,8 @@ declare namespace GraphicLayer {
      * @property editRemovePoint - 编辑删除了点 标绘事件
      * @property editStyle - 图上编辑修改了相关style属性 标绘事件
      * @property editStop - 停止编辑 标绘事件
+     * @property clusterItemChange - 聚合中，单个grpahic本身聚合状态发生变更时
+     * @property clusterStop - 聚合中，本批次渲染完成
      */
     type EventType = {
         addGraphic: string;
@@ -22554,6 +22602,8 @@ declare namespace GraphicLayer {
         editRemovePoint: string;
         editStyle: string;
         editStop: string;
+        clusterItemChange: string;
+        clusterStop: string;
     };
 }
 
@@ -22577,11 +22627,11 @@ declare namespace GraphicLayer {
  * @param [options.symbol.styleFieldOptions] - 按styleField值与对应style样式的键值对象。
  * @param [options.symbol.callback] - 自定义判断处理返回style ，示例：callback: function (attr, styleOpt){  return { color: "#ff0000" };  }
  * @param [options.allowDrillPick] - 是否允许鼠标穿透拾取
- * @param [options.cluster] - 设置聚合相关参数(点状对象)：
+ * @param [options.cluster] - 聚合参数(Tip:不参与聚合的类型：合并渲染对象、处于标绘或编辑状态的对象)：
  * @param [options.cluster.enabled = false] - 是否开启聚合
- * @param [options.cluster.pixelRange = 20] - 多少像素矩形范围内聚合
+ * @param [options.cluster.pixelRange = 20] - 多少像素矩形范围内聚合(判断矢量对象中心点之间像素距离)
  * @param [options.cluster.minimumClusterSize = 2] - 可以聚集的屏幕空间对象的最小数量
- * @param [options.cluster.includePoly] - 是否对线面对象进行聚合
+ * @param [options.cluster.includePoly = true] - 是否对线面对象进行聚合
  * @param [options.cluster.image] - 聚合点的图标样式，支持：string时直接传图片; object时定义内置样式; function时传：getImage:function(count) { return image}
  * @param [options.cluster.style] - 聚合点的样式参数
  * @param [options.popup] - 绑定的popup弹窗值，也可以bindPopup方法绑定，支持：'all'、数组、字符串模板
@@ -22643,7 +22693,7 @@ declare class GraphicLayer extends BaseGraphicLayer {
             pixelRange?: number;
             minimumClusterSize?: number;
             includePoly?: number;
-            image?: string | ((...params: any[]) => any) | getCircleImageOptions;
+            image?: string | ((...params: any[]) => any) | Globe.getCircleImageOptions;
             style?: BillboardEntity.StyleOptions | any | any;
         };
         popup?: string | Globe.getTemplateHtml_template[] | ((...params: any[]) => any);
@@ -23184,9 +23234,10 @@ declare namespace I3SLayer {
  *
  * //以下是Cesium3DTileset参数
  * @param [options.maximumScreenSpaceError = 16] - 用于驱动细化细节级别的最大屏幕空间错误。可以简单理解为：数值加大，能让最终成像变模糊。
- * @param [options.cacheBytes = 536870912] - 如果缓存包含当前视图不需要的块，则块缓存将被修剪到的大小(以字节为单位)。
- * @param [options.maximumCacheOverflowBytes = 536870912] - 如果当前视图需要超过{@link Cesium3DTileset#cacheBytes}，则允许缓存净空的最大额外内存(以字节为单位)。
- * @param [options.maximumMemoryUsage = 512] - 【cesium 1.107+弃用】数据集可以使用的最大内存量(以MB计)，这个参数要根据当前客户端显卡显存来配置，如果我们场景只显示这一个模型数据，这个可以设置到显存的50% 左右，比如我的显存是4G，这个可以设置到2048左右。那么既保证不超过显存限制，又可以最大利用显存缓存。<br />
+ * @param [options.maxMemory = 1024] - 最大缓存内存大小(MB), 内部换算给 cacheBytes = maxMemory*1024*1024、maximumCacheOverflowBytes = cacheBytes * 1.5 (另：如果同时配置了cacheBytes、maximumMemoryUsage时改参数无效)
+ * @param [options.cacheBytes] - 如果缓存包含当前视图不需要的块，则块缓存将被修剪到的大小(以字节为单位)
+ * @param [options.maximumCacheOverflowBytes] - 如果当前视图需要超过{@link Cesium3DTileset#cacheBytes}，则允许缓存净空的最大额外内存(以字节为单位)。
+ * @param [options.maximumMemoryUsage] - 【cesium 1.107+弃用】数据集可以使用的最大内存量(以MB计)，这个参数要根据当前客户端显卡显存来配置，如果我们场景只显示这一个模型数据，这个可以设置到显存的50% 左右，比如我的显存是4G，这个可以设置到2048左右。那么既保证不超过显存限制，又可以最大利用显存缓存。<br />
  * @param [options.style] - 模型样式， 使用{@link https://github.com/CesiumGS/3d-tiles/tree/master/specification/Styling|3D Tiles Styling language}.
  * @param [options.marsJzwStyle = false] - 开启或设置建筑物特效样式。
  * @param [options.customShader] - 自定义shader效果
@@ -23272,6 +23323,7 @@ declare class I3SLayer extends BaseGraphicLayer {
         scaleY?: number;
         scaleZ?: number;
         maximumScreenSpaceError?: number;
+        maxMemory?: number;
         cacheBytes?: number;
         maximumCacheOverflowBytes?: number;
         maximumMemoryUsage?: number;
@@ -23432,11 +23484,11 @@ declare namespace LodGraphicLayer {
  * @param [options.symbol.styleFieldOptions] - 按styleField值与对应style样式的键值对象。
  * @param [options.symbol.merge] - 是否合并并覆盖json中已有的style，默认不合并。
  * @param [options.symbol.callback] - 自定义判断处理返回style ，示例：callback: function (attr, styleOpt){  return { color: "#ff0000" };  }
- * @param [options.cluster] - 设置聚合相关参数(点状对象)：
+ * @param [options.cluster] - 聚合参数(Tip:不参与聚合的类型：合并渲染对象、处于标绘或编辑状态的对象)：
  * @param [options.cluster.enabled = false] - 是否开启聚合
  * @param [options.cluster.pixelRange = 20] - 多少像素矩形范围内聚合
  * @param [options.cluster.minimumClusterSize = 2] - 可以聚集的屏幕空间对象的最小数量
- * @param [options.cluster.includePoly] - 是否对线面对象进行聚合
+ * @param [options.cluster.includePoly = true] - 是否对线面对象进行聚合
  * @param [options.cluster.image] - 聚合点的图标样式，支持：string时直接传图片; object时定义内置样式; function时传：getImage:function(count) { return image}
  * @param [options.cluster.style] - 聚合点的样式参数
  * @param [options.popup] - 绑定的popup弹窗值，也可以bindPopup方法绑定，支持：'all'、数组、字符串模板
@@ -23503,7 +23555,7 @@ declare class LodGraphicLayer extends GraphicLayer {
             pixelRange?: number;
             minimumClusterSize?: number;
             includePoly?: number;
-            image?: string | ((...params: any[]) => any) | getCircleImageOptions;
+            image?: string | ((...params: any[]) => any) | Globe.getCircleImageOptions;
             style?: BillboardEntity.StyleOptions | any | any;
         };
         popup?: string | Globe.getTemplateHtml_template[] | ((...params: any[]) => any);
@@ -23613,11 +23665,11 @@ declare class LodGraphicLayer extends GraphicLayer {
  * @param [options.symbol.styleFieldOptions] - 按styleField值与对应style样式的键值对象。
  * @param [options.symbol.callback] - 自定义判断处理返回style ，示例：callback: function (attr, styleOpt){  return { color: "#ff0000" };  }
  * @param [options.allowDrillPick] - 是否允许鼠标穿透拾取
- * @param [options.cluster] - 设置聚合相关参数(点状对象)：
+ * @param [options.cluster] - 聚合参数(Tip:不参与聚合的类型：合并渲染对象、处于标绘或编辑状态的对象)：
  * @param [options.cluster.enabled = false] - 是否开启聚合
  * @param [options.cluster.pixelRange = 20] - 多少像素矩形范围内聚合
  * @param [options.cluster.minimumClusterSize = 2] - 可以聚集的屏幕空间对象的最小数量
- * @param [options.cluster.includePoly] - 是否对线面对象进行聚合
+ * @param [options.cluster.includePoly = true] - 是否对线面对象进行聚合
  * @param [options.cluster.image] - 聚合点的图标样式，支持：string时直接传图片; object时定义内置样式; function时传：getImage:function(count) { return image}
  * @param [options.cluster.style] - 聚合点的样式参数
  * @param [options.popup] - 绑定的popup弹窗值，也可以bindPopup方法绑定，支持：'all'、数组、字符串模板
@@ -23686,7 +23738,7 @@ declare class ModelLayer extends GraphicLayer {
             pixelRange?: number;
             minimumClusterSize?: number;
             includePoly?: number;
-            image?: string | ((...params: any[]) => any) | getCircleImageOptions;
+            image?: string | ((...params: any[]) => any) | Globe.getCircleImageOptions;
             style?: BillboardEntity.StyleOptions | any | any;
         };
         popup?: string | Globe.getTemplateHtml_template[] | ((...params: any[]) => any);
@@ -23739,9 +23791,10 @@ declare class ModelLayer extends GraphicLayer {
  * OSM在线 建筑物模型
  * @param options - 参数对象，参数包括以下：
  * @param [options.maximumScreenSpaceError = 16] - 用于驱动细化细节级别的最大屏幕空间错误。数值加大，能让最终成像变模糊
- * @param [options.cacheBytes = 536870912] - 如果缓存包含当前视图不需要的块，则块缓存将被修剪到的大小(以字节为单位)。
- * @param [options.maximumCacheOverflowBytes = 536870912] - 如果当前视图需要超过{@link Cesium3DTileset#cacheBytes}，则允许缓存净空的最大额外内存(以字节为单位)。
- * @param [options.maximumMemoryUsage = 512] - 【cesium 1.107+弃用】数据集可以使用的最大内存量(以MB计)，这个参数要根据当前客户端显卡显存来配置，如果我们场景只显示这一个模型数据，这个可以设置到显存的50% 左右，比如我的显存是4G，这个可以设置到2048左右。那么既保证不超过显存限制，又可以最大利用显存缓存。<br />
+ * @param [options.maxMemory = 1024] - 最大缓存内存大小(MB), 内部换算给 cacheBytes = maxMemory*1024*1024、maximumCacheOverflowBytes = cacheBytes * 1.5 (另：如果同时配置了cacheBytes、maximumMemoryUsage时改参数无效)
+ * @param [options.cacheBytes] - 如果缓存包含当前视图不需要的块，则块缓存将被修剪到的大小(以字节为单位)。
+ * @param [options.maximumCacheOverflowBytes] - 如果当前视图需要超过{@link Cesium3DTileset#cacheBytes}，则允许缓存净空的最大额外内存(以字节为单位)。
+ * @param [options.maximumMemoryUsage] - 【cesium 1.107+弃用】数据集可以使用的最大内存量(以MB计)，这个参数要根据当前客户端显卡显存来配置，如果我们场景只显示这一个模型数据，这个可以设置到显存的50% 左右，比如我的显存是4G，这个可以设置到2048左右。那么既保证不超过显存限制，又可以最大利用显存缓存。<br />
  * @param [options.style] - 模型样式， 使用{@link https://github.com/CesiumGS/3d-tiles/tree/master/specification/Styling|3D Tiles Styling language}.
  * @param [options.marsJzwStyle = false] - 开启或设置建筑物特效样式。
  * @param [options.customShader] - 自定义shader效果
@@ -23790,6 +23843,7 @@ declare class ModelLayer extends GraphicLayer {
 declare class OsmBuildingsLayer extends TilesetLayer {
     constructor(options: {
         maximumScreenSpaceError?: number;
+        maxMemory?: number;
         cacheBytes?: number;
         maximumCacheOverflowBytes?: number;
         maximumMemoryUsage?: number;
@@ -23902,9 +23956,10 @@ declare namespace TilesetLayer {
  * @param [options.assetId] - ion资源时对应的assetId
  * @param [options.ionToken = Cesium.Ion.defaultAccessToken] - ion资源时对应的token
  * @param [options.ionServer = Cesium.Ion.defaultServer] - ion资源时对应的server
- * @param [options.cacheBytes = 1073741824] - 额定显存大小(以字节为单位)，允许在这个值上下波动。
- * @param [options.maximumCacheOverflowBytes = 2147483648] - 最大显存大小(以字节为单位)。
- * @param [options.maximumMemoryUsage = 512] - 【cesium 1.107+弃用】数据集可以使用的最大内存量(以MB计)，这个参数要根据当前客户端显卡显存来配置，如果我们场景只显示这一个模型数据，这个可以设置到显存的50% 左右，比如我的显存是4G，这个可以设置到2048左右。那么既保证不超过显存限制，又可以最大利用显存缓存。<br />
+ * @param [options.maxMemory = 1024] - 最大缓存内存大小(MB), 内部换算给 cacheBytes = maxMemory*1024*1024、maximumCacheOverflowBytes = cacheBytes * 1.5 (另：如果同时配置了cacheBytes、maximumMemoryUsage时改参数无效)
+ * @param [options.cacheBytes] - 如果缓存包含当前视图不需要的块，则块缓存将被修剪到的大小(以字节为单位)。
+ * @param [options.maximumCacheOverflowBytes] - 最大显存大小(以字节为单位)。
+ * @param [options.maximumMemoryUsage] - 【cesium 1.107+弃用】数据集可以使用的最大内存量(以MB计)，这个参数要根据当前客户端显卡显存来配置，如果我们场景只显示这一个模型数据，这个可以设置到显存的50% 左右，比如我的显存是4G，这个可以设置到2048左右。那么既保证不超过显存限制，又可以最大利用显存缓存。<br />
  * @param [options.position] - 自定义新的中心点位置（移动模型）
  * @param [options.position.lng] - 经度值, -180 至 180
  * @param [options.position.lat] - 纬度值, -90 至 90
@@ -24040,6 +24095,7 @@ declare class TilesetLayer extends BaseGraphicLayer {
         assetId?: number;
         ionToken?: string;
         ionServer?: string | Cesium.Resource;
+        maxMemory?: number;
         cacheBytes?: number;
         maximumCacheOverflowBytes?: number;
         maximumMemoryUsage?: number;
@@ -24455,11 +24511,11 @@ declare class TilesetLayer extends BaseGraphicLayer {
  * @param [options.buildings.bottomHeight] - 建筑物底部高度（如:0） 属性字段名称（如:{bottomHeight}）
  * @param [options.buildings.cloumn = 1] - 层数，楼的实际高度 = height*cloumn
  * @param [options.buildings.height = 3.5] - 层高的  固定层高数值（如:10） 或 属性字段名称（如:{height}）
- * @param [options.cluster] - 设置聚合相关参数(点状对象)：
+ * @param [options.cluster] - 聚合参数(Tip:不参与聚合的类型：合并渲染对象、处于标绘或编辑状态的对象)：
  * @param [options.cluster.enabled = false] - 是否开启聚合
  * @param [options.cluster.pixelRange = 20] - 多少像素矩形范围内聚合
  * @param [options.cluster.minimumClusterSize = 2] - 可以聚集的屏幕空间对象的最小数量
- * @param [options.cluster.includePoly] - 是否对线面对象进行聚合
+ * @param [options.cluster.includePoly = true] - 是否对线面对象进行聚合
  * @param [options.cluster.image] - 聚合点的图标样式，支持：string时直接传图片; object时定义内置样式; function时传：getImage:function(count) { return image}
  * @param [options.cluster.style] - 聚合点的样式参数
  * @param [options.popup] - 绑定的popup弹窗值，也可以bindPopup方法绑定，支持：'all'、数组、字符串模板
@@ -24549,7 +24605,7 @@ declare class WfsLayer extends LodGraphicLayer {
             pixelRange?: number;
             minimumClusterSize?: number;
             includePoly?: number;
-            image?: string | ((...params: any[]) => any) | getCircleImageOptions;
+            image?: string | ((...params: any[]) => any) | Globe.getCircleImageOptions;
             style?: BillboardEntity.StyleOptions | any | any;
         };
         popup?: string | Globe.getTemplateHtml_template[] | ((...params: any[]) => any);
@@ -39485,25 +39541,6 @@ declare namespace Util {
         padding?: number;
     }): HTMLCanvasElement;
     /**
-     * 面内进行贴地(或贴模型)插值, 返回三角网等计算结果 的回调方法
-     * @property [fontColor = '#ffffff'] - 数字的颜色
-     * @property [radius = 26] - 圆形图标的整体半径大小（单位：像素）
-     * @property [color = 'rgba(181, 226, 140, 0.6)'] - 圆形图标的背景颜色
-     * @property [opacity = 0.5] - 圆形图标的透明度
-     * @property [borderWidth = 5] - 圆形图标的边框宽度（单位：像素），0不显示
-     * @property [borderColor = 'rgba(110, 204, 57, 0.5)'] - 圆形图标的边框背景颜色
-     * @property [borderOpacity = 0.6] - 圆形图标边框的透明度
-     */
-    type getCircleImageOptions = {
-        fontColor?: string;
-        radius?: number;
-        color?: string;
-        opacity?: number;
-        borderWidth?: number;
-        borderColor?: string;
-        borderOpacity?: number;
-    };
-    /**
      * 获取用于聚合的圆形图标对象
      * @param count - 数字
      * @param [options = {}] - 参数对象:
@@ -39582,12 +39619,12 @@ declare namespace Util {
     function formatDate(date: Date, fmt?: string): string;
     /**
      * 格式化时长
-     * @param strtime - 时长
+     * @param timeNum - 时长
      * @param [options] - 参数：
      * @param [options.getLangText] - 获取文本的对应方法
      * @returns 格式化字符串，如XX小时XX分钟
      */
-    function formatTime(strtime: number, options?: {
+    function formatTime(timeNum: number, options?: {
         getLangText?: (...params: any[]) => any;
     }): string;
     /**

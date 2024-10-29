@@ -33,19 +33,25 @@ export function onUnmounted() {
 }
 
 async function initDemoData() {
+  globalMsg("数据加载中...")
+  showLoading()
+
   // public静态资源的路径
   consts.resourcePath = "//data.mars3d.cn/file/qe"
   // consts.defaultLegendPath = "//data.mars3d.cn/file/qe/styles/colors"
   // consts.wasmPath = "/lib/mars3d/thirdParty/quickearth/wasm"
   // consts.workerPath = "/lib/mars3d/thirdParty/quickearth/workers"
 
-  globalMsg("数据加载中...")
   // config资源配置
   await resourceService.loadResourceFromConfigPath("styles/demo.config.json")
 
-  createTempAnimation()
+  await createTempAnimation()
+
+  globalMsg("数据加载完成")
+  hideLoading()
 }
-const createTempAnimation = async () => {
+
+async function createTempAnimation() {
   const buffers = await getBinary("http://data.mars3d.cn/file/qe/data/year.ano.zip")
   const provider = new QEGridDataProvider(buffers[0])
   const layer = new CPixelLayer({
@@ -60,11 +66,10 @@ const createTempAnimation = async () => {
     })
     .setDataSource(provider)
   map.scene.primitives.add(layer)
+
   const aniService = new DataAnimationService(provider, {
     layer: layer,
     all: provider.allGrids().length
   })
   aniService.start()
-
-  globalMsg("数据加载完成")
 }

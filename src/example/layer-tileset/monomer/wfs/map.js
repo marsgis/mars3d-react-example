@@ -44,7 +44,7 @@ export function onUnmounted() {
 }
 
 function addWfsLayer() {
-  // 单体化图层【支持geoserver的wfs服务配置dth属性】
+  // 单体化图层【支持geoserver的wfs服务配置】
   const wfsLayer = new mars3d.layer.WfsLayer({
     name: "建筑物面",
     url: "//server.mars3d.cn/geoserver/mars/wfs",
@@ -75,7 +75,7 @@ function addWfsLayer() {
   })
   map.addLayer(wfsLayer)
 
-  // 单体化图层【也支持arcgis的wfs服务配置dth属性】
+  // 单体化图层【也支持arcgis的wfs服务配置】
   //  let wfsLayer = new mars3d.layer.ArcGisWfsLayer({
   //   name: "建筑物面矢量图层",
   //   url: "//server.mars3d.cn/arcgis/rest/services/mars/hefei/MapServer/37",

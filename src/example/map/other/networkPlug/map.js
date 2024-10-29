@@ -40,6 +40,7 @@ export function onMounted(mapInstance) {
     url: "//data.mars3d.cn/3dtiles/qx-teh/tileset.json",
     position: { lng: 117.218434, lat: 31.81807, alt: 163 },
     maximumScreenSpaceError: 1,
+    maxMemory: 2048, // 最大缓存内存大小(MB)
     cullWithChildrenBounds: false,
     skipLevelOfDetail: true,
     preferLeaves: true

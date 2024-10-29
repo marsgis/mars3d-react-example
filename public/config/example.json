@@ -416,6 +416,11 @@
             ]
           },
           {
+            "name": "火星",
+            "thumbnail": "map-other-mars.jpg",
+            "main": "map/other/mars"
+          },
+          {
             "name": "离线数据",
             "thumbnail": "map-other-offline.jpg",
             "main": "map/other/offline",
@@ -1748,6 +1753,7 @@
             "name": "echarts饼形图点",
             "thumbnail": "graphic-divGraphic-echarts-pie.jpg",
             "main": "graphic/divGraphic/echarts-pie",
+            "hasPannel": true,
             "api": "DivGraphic.html",
             "developerShow": false,
             "libs": [
@@ -3408,6 +3414,13 @@
             "name": "ClockAnimate 时钟控制栏",
             "thumbnail": "control-basis-clockAnimate.jpg",
             "main": "control/basis/clockAnimate",
+            "api": "ClockAnimate.html",
+            "hasPannel": true
+          },
+          {
+            "name": "ClockAnimate 时钟控制栏 差值模式",
+            "thumbnail": "control-basis-clockAnimate-duration.jpg",
+            "main": "control/basis/clockAnimate-duration",
             "api": "ClockAnimate.html",
             "hasPannel": true
           },

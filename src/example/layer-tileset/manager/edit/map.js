@@ -94,8 +94,7 @@ export function showModel(url) {
     name: "模型名称",
     url,
     maximumScreenSpaceError: 16,
-    cacheBytes: 1073741824, // 1024MB = 1024*1024*1024
-    maximumCacheOverflowBytes: 2147483648, // 2048MB = 2048*1024*1024
+    maxMemory: 1024, // 最大缓存内存大小(MB)
     popup: "all",
     matrixMove: {
       hasMiddle: false

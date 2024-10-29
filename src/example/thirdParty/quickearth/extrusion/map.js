@@ -38,6 +38,8 @@ async function initDemoData() {
   consts.resourcePath = "//data.mars3d.cn/file/qe"
 
   globalMsg("数据加载中...")
+  showLoading()
+
   // config资源配置
   await resourceService.loadResourceFromConfigPath("styles/demo.config.json")
 
@@ -58,6 +60,7 @@ async function initDemoData() {
   map.scene.primitives.add(pixelLayer)
 
   globalMsg("数据加载完成")
+  hideLoading()
 }
 
 export function changeScale(scale) {

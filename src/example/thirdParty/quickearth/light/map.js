@@ -31,6 +31,9 @@ export function onUnmounted() {
 
 let layer
 async function initDemoData() {
+  globalMsg("数据加载中...")
+  showLoading()
+
   const { consts, ensureGridDataOptions, resourceService, GrayImageGridDataProvider, GridDataType, GridDataGLFillMode } = window.QE // quickearth.core.js
   const { CPixelLayer } = window.QEC // quickearth.cesium.js
 
@@ -40,7 +43,6 @@ async function initDemoData() {
   // consts.wasmPath = "/lib/mars3d/thirdParty/quickearth/wasm"
   consts.workerPath = "/lib/mars3d/thirdParty/quickearth/workers"
 
-  globalMsg("数据加载中...")
   // config资源配置
   await resourceService.loadResourceFromConfigPath("styles/demo.config.json")
 
@@ -91,6 +93,7 @@ async function initDemoData() {
   map.scene.primitives.add(layer)
 
   globalMsg("数据加载完成")
+  hideLoading()
 }
 
 export function changeScale(scale) {

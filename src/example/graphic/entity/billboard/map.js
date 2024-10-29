@@ -303,21 +303,28 @@ function addDemoGraphic10(graphicLayer) {
   graphicLayer.addGraphic(graphic)
 }
 
+
 function addDemoGraphic11(graphicLayer) {
+  const propertyFJ = getSampledPositionProperty([
+    [116.34591, 30.680609, 437],
+    [116.477653, 30.802623, 202.1],
+    [116.749545, 31.062176, 675.5]
+  ])
+
   const graphic = new mars3d.graphic.BillboardEntity({
-    position: new mars3d.LngLatPoint(116.2, 30.8, 1000),
+    position: propertyFJ,
+    orientation: new Cesium.VelocityOrientationProperty(propertyFJ),
     style: {
-      // 支持base64
-      image:
-        "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNzRweCIgaGVpZ2h0PSI4MnB4IiB2aWV3Qm94PSIwIDAgNzQgODIiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8dGl0bGU+56m6PC90aXRsZT4KICAgIDxkZWZzPgogICAgICAgIDxsaW5lYXJHcmFkaWVudCB4MT0iMTAwJSIgeTE9IjUwJSIgeDI9IjMzLjYyOTE0ODglIiB5Mj0iNTcuNzg0Njc0MyUiIGlkPSJsaW5lYXJHcmFkaWVudC0xIj4KICAgICAgICAgICAgPHN0b3Agc3RvcC1jb2xvcj0iIzdCNzk3OSIgc3RvcC1vcGFjaXR5PSIwIiBvZmZzZXQ9IjAlIj48L3N0b3A+CiAgICAgICAgICAgIDxzdG9wIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC44MTk4MjA4MDQiIG9mZnNldD0iMTAwJSI+PC9zdG9wPgogICAgICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICAgICAgPGZpbHRlciB4PSItOS4xJSIgeT0iLTE1LjclIiB3aWR0aD0iMTE4LjIlIiBoZWlnaHQ9IjEzMS40JSIgZmlsdGVyVW5pdHM9Im9iamVjdEJvdW5kaW5nQm94IiBpZD0iZmlsdGVyLTIiPgogICAgICAgICAgICA8ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSIxLjEyIiBpbj0iU291cmNlR3JhcGhpYyI+PC9mZUdhdXNzaWFuQmx1cj4KICAgICAgICA8L2ZpbHRlcj4KICAgICAgICA8bGluZWFyR3JhZGllbnQgeDE9IjUwJSIgeTE9IjEwMCUiIHgyPSI1MCUiIHkyPSIzLjA2MTYxN2UtMTUlIiBpZD0ibGluZWFyR3JhZGllbnQtMyI+CiAgICAgICAgICAgIDxzdG9wIHN0b3AtY29sb3I9IiNGRkU2NTEiIG9mZnNldD0iMCUiPjwvc3RvcD4KICAgICAgICAgICAgPHN0b3Agc3RvcC1jb2xvcj0iI0ZGQzgyRCIgb2Zmc2V0PSIxMDAlIj48L3N0b3A+CiAgICAgICAgPC9saW5lYXJHcmFkaWVudD4KICAgICAgICA8cGF0aCBkPSJNMzAuOTk3OTc4OSw2Ny4yMjAyOTE3IEMzMy42ODgyMDAzLDYyLjE3NzMwOTYgMzUuNzA2MDI5Niw1OS40OTQzMzI0IDM3LjA1MTQ2NjgsNTkuMTcxMzYwMSBDNTAuMjM0NjM4OCw1Ni4wMDY3Mzg1IDYwLjAzMiw0NC4xNDY5MDc1IDYwLjAzMiwzMCBDNjAuMDMyLDEzLjQzMTQ1NzUgNDYuNTkzMzc5LDAgMzAuMDE2LDAgQzEzLjQzODYyMSwwIDAsMTMuNDMxNDU3NSAwLDMwIEMwLDQ0LjExMzQwOTQgOS43NTEwMTgzMyw1NS45NTA1NjA1IDIyLjg4Njk0Miw1OS4xNDg3MzM2IEMyNC4yNDk5NDEsNTkuNDgwNTc5OCAyNi4yOTU3NDA0LDYyLjE3Mjc4NDUgMjkuMDI0MzQwMyw2Ny4yMjUzNDc2IEwyOS4wMjQzNjIsNjcuMjI1MzM1OSBDMjkuMzE4MjgxMSw2Ny43Njk1ODc1IDI5Ljk5Nzc1MjcsNjcuOTcyNTIyMSAzMC41NDIwMDQzLDY3LjY3ODYwMjkgQzMwLjczNTc0Myw2Ny41NzM5NzU4IDMwLjg5NDM0MzQsNjcuNDE0NTYyNiAzMC45OTc5Nzg5LDY3LjIyMDI5MTcgWiIgaWQ9InBhdGgtNCI+PC9wYXRoPgogICAgICAgIDxmaWx0ZXIgeD0iLTEyLjUlIiB5PSItMTAuOSUiIHdpZHRoPSIxMjUuMCUiIGhlaWdodD0iMTE5LjglIiBmaWx0ZXJVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giIGlkPSJmaWx0ZXItNSI+CiAgICAgICAgICAgIDxmZU9mZnNldCBkeD0iMCIgZHk9IjAiIGluPSJTb3VyY2VBbHBoYSIgcmVzdWx0PSJzaGFkb3dPZmZzZXRPdXRlcjEiPjwvZmVPZmZzZXQ+CiAgICAgICAgICAgIDxmZUdhdXNzaWFuQmx1ciBzdGREZXZpYXRpb249IjIuNSIgaW49InNoYWRvd09mZnNldE91dGVyMSIgcmVzdWx0PSJzaGFkb3dCbHVyT3V0ZXIxIj48L2ZlR2F1c3NpYW5CbHVyPgogICAgICAgICAgICA8ZmVDb2xvck1hdHJpeCB2YWx1ZXM9IjAgMCAwIDAgMCAgIDAgMCAwIDAgMCAgIDAgMCAwIDAgMCAgMCAwIDAgMC41IDAiIHR5cGU9Im1hdHJpeCIgaW49InNoYWRvd0JsdXJPdXRlcjEiPjwvZmVDb2xvck1hdHJpeD4KICAgICAgICA8L2ZpbHRlcj4KICAgICAgICA8bGluZWFyR3JhZGllbnQgeDE9IjUwJSIgeTE9Ii0yLjQ4OTQ5ODEzZS0xNSUiIHgyPSI1MCUiIHkyPSIxMDAlIiBpZD0ibGluZWFyR3JhZGllbnQtNiI+CiAgICAgICAgICAgIDxzdG9wIHN0b3AtY29sb3I9IiNGRkZERkIiIG9mZnNldD0iMCUiPjwvc3RvcD4KICAgICAgICAgICAgPHN0b3Agc3RvcC1jb2xvcj0iI0Y3QjUxRCIgb2Zmc2V0PSIxMDAlIj48L3N0b3A+CiAgICAgICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDwvZGVmcz4KICAgIDxnIGlkPSLmkJzntKIiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPgogICAgICAgIDxnIGlkPSJpY29u5LiO6aKc6ImyIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMTIwOS4wMDAwMDAsIC01MTIuMDAwMDAwKSI+CiAgICAgICAgICAgIDxnIGlkPSLnqboiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEyMTQuMDAwMDAwLCA1MTcuMDAwMDAwKSI+CiAgICAgICAgICAgICAgICA8cG9seWdvbiBpZD0i6Lev5b6ELTIiIGZpbGw9InVybCgjbGluZWFyR3JhZGllbnQtMSkiIGZpbHRlcj0idXJsKCNmaWx0ZXItMikiIHBvaW50cz0iMzAuMDE2IDY5LjEwNzE0MjkgNjcgNTMuNTcxNDI4NiA2NyA3NSI+PC9wb2x5Z29uPgogICAgICAgICAgICAgICAgPGcgaWQ9Iue8lue7hC0xNCI+CiAgICAgICAgICAgICAgICAgICAgPGcgaWQ9IuakreWchuW9oiI+CiAgICAgICAgICAgICAgICAgICAgICAgIDx1c2UgZmlsbD0iYmxhY2siIGZpbGwtb3BhY2l0eT0iMSIgZmlsdGVyPSJ1cmwoI2ZpbHRlci01KSIgeGxpbms6aHJlZj0iI3BhdGgtNCI+PC91c2U+CiAgICAgICAgICAgICAgICAgICAgICAgIDx1c2UgZmlsbD0idXJsKCNsaW5lYXJHcmFkaWVudC0zKSIgZmlsbC1ydWxlPSJldmVub2RkIiB4bGluazpocmVmPSIjcGF0aC00Ij48L3VzZT4KICAgICAgICAgICAgICAgICAgICA8L2c+CiAgICAgICAgICAgICAgICAgICAgPGVsbGlwc2UgaWQ9IuakreWchuW9oiIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2Utd2lkdGg9IjIuNCIgZmlsbC1vcGFjaXR5PSIwLjUxIiBmaWxsPSJ1cmwoI2xpbmVhckdyYWRpZW50LTYpIiBjeD0iMzAuMTI1IiBjeT0iMzAuMTExNjA3MSIgcng9IjIzLjkyNSIgcnk9IjIzLjkxMTYwNzEiPjwvZWxsaXBzZT4KICAgICAgICAgICAgICAgICAgICA8dGV4dCBpZD0iNiIgeD0nMzAnIHk9JzM0JyAgIHN0eWxlPSdkb21pbmFudC1iYXNlbGluZTptaWRkbGU7dGV4dC1hbmNob3I6bWlkZGxlOycgZm9udC1mYW1pbHk9IlBpbmdGYW5nU0MtU2VtaWJvbGQsIFBpbmdGYW5nIFNDIiBmb250LXNpemU9IjQwIiBmb250LXdlaWdodD0iNTAwIiBmaWxsPSIjRkZGRkZGIj4KICAgICAgICAgICAgICAgICAgICAgICAgMQogICAgICAgICAgICAgICAgICAgIDwvdGV4dD4KICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgPC9nPgogICAgICAgIDwvZz4KICAgIDwvZz4KPC9zdmc+",
+      image: "img/icon/huojian.svg",
       scale: 0.5,
-      horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
-      verticalOrigin: Cesium.VerticalOrigin.CENTER
+      alignedAxis: new Cesium.VelocityVectorProperty(propertyFJ, true)
     },
-    attr: { remark: "示例11" }
+    attr: { remark: "示例14" },
+    hasEdit: false
   })
   graphicLayer.addGraphic(graphic)
 }
+
 
 // 利用第3方库（gifler.js）加载gif
 function addDemoGraphic12(graphicLayer) {
@@ -398,26 +405,8 @@ function addDemoGraphic13(graphicLayer) {
   graphicLayer.addGraphic(endPoint)
 }
 
-function addDemoGraphic14(graphicLayer) {
-  const propertyFJ = getSampledPositionProperty([
-    [116.34591, 30.680609, 437],
-    [116.477653, 30.802623, 202.1],
-    [116.749545, 31.062176, 675.5]
-  ])
 
-  const graphic = new mars3d.graphic.BillboardEntity({
-    position: propertyFJ,
-    orientation: new Cesium.VelocityOrientationProperty(propertyFJ),
-    style: {
-      image: "img/icon/huojian.svg",
-      scale: 0.5,
-      alignedAxis: new Cesium.VelocityVectorProperty(propertyFJ, true)
-    },
-    attr: { remark: "示例14" },
-    hasEdit: false
-  })
-  graphicLayer.addGraphic(graphic)
-}
+
 // 计算演示的SampledPositionProperty轨迹
 function getSampledPositionProperty(points) {
   const property = new Cesium.SampledPositionProperty()
@@ -431,6 +420,22 @@ function getSampledPositionProperty(points) {
     property.addSample(time, position)
   }
   return property
+}
+
+function addDemoGraphic14(graphicLayer) {
+  const graphic = new mars3d.graphic.BillboardEntity({
+    position: new mars3d.LngLatPoint(116.2, 30.8, 1000),
+    style: {
+      // 支持base64
+      image:
+        "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNzRweCIgaGVpZ2h0PSI4MnB4IiB2aWV3Qm94PSIwIDAgNzQgODIiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8dGl0bGU+56m6PC90aXRsZT4KICAgIDxkZWZzPgogICAgICAgIDxsaW5lYXJHcmFkaWVudCB4MT0iMTAwJSIgeTE9IjUwJSIgeDI9IjMzLjYyOTE0ODglIiB5Mj0iNTcuNzg0Njc0MyUiIGlkPSJsaW5lYXJHcmFkaWVudC0xIj4KICAgICAgICAgICAgPHN0b3Agc3RvcC1jb2xvcj0iIzdCNzk3OSIgc3RvcC1vcGFjaXR5PSIwIiBvZmZzZXQ9IjAlIj48L3N0b3A+CiAgICAgICAgICAgIDxzdG9wIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC44MTk4MjA4MDQiIG9mZnNldD0iMTAwJSI+PC9zdG9wPgogICAgICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICAgICAgPGZpbHRlciB4PSItOS4xJSIgeT0iLTE1LjclIiB3aWR0aD0iMTE4LjIlIiBoZWlnaHQ9IjEzMS40JSIgZmlsdGVyVW5pdHM9Im9iamVjdEJvdW5kaW5nQm94IiBpZD0iZmlsdGVyLTIiPgogICAgICAgICAgICA8ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSIxLjEyIiBpbj0iU291cmNlR3JhcGhpYyI+PC9mZUdhdXNzaWFuQmx1cj4KICAgICAgICA8L2ZpbHRlcj4KICAgICAgICA8bGluZWFyR3JhZGllbnQgeDE9IjUwJSIgeTE9IjEwMCUiIHgyPSI1MCUiIHkyPSIzLjA2MTYxN2UtMTUlIiBpZD0ibGluZWFyR3JhZGllbnQtMyI+CiAgICAgICAgICAgIDxzdG9wIHN0b3AtY29sb3I9IiNGRkU2NTEiIG9mZnNldD0iMCUiPjwvc3RvcD4KICAgICAgICAgICAgPHN0b3Agc3RvcC1jb2xvcj0iI0ZGQzgyRCIgb2Zmc2V0PSIxMDAlIj48L3N0b3A+CiAgICAgICAgPC9saW5lYXJHcmFkaWVudD4KICAgICAgICA8cGF0aCBkPSJNMzAuOTk3OTc4OSw2Ny4yMjAyOTE3IEMzMy42ODgyMDAzLDYyLjE3NzMwOTYgMzUuNzA2MDI5Niw1OS40OTQzMzI0IDM3LjA1MTQ2NjgsNTkuMTcxMzYwMSBDNTAuMjM0NjM4OCw1Ni4wMDY3Mzg1IDYwLjAzMiw0NC4xNDY5MDc1IDYwLjAzMiwzMCBDNjAuMDMyLDEzLjQzMTQ1NzUgNDYuNTkzMzc5LDAgMzAuMDE2LDAgQzEzLjQzODYyMSwwIDAsMTMuNDMxNDU3NSAwLDMwIEMwLDQ0LjExMzQwOTQgOS43NTEwMTgzMyw1NS45NTA1NjA1IDIyLjg4Njk0Miw1OS4xNDg3MzM2IEMyNC4yNDk5NDEsNTkuNDgwNTc5OCAyNi4yOTU3NDA0LDYyLjE3Mjc4NDUgMjkuMDI0MzQwMyw2Ny4yMjUzNDc2IEwyOS4wMjQzNjIsNjcuMjI1MzM1OSBDMjkuMzE4MjgxMSw2Ny43Njk1ODc1IDI5Ljk5Nzc1MjcsNjcuOTcyNTIyMSAzMC41NDIwMDQzLDY3LjY3ODYwMjkgQzMwLjczNTc0Myw2Ny41NzM5NzU4IDMwLjg5NDM0MzQsNjcuNDE0NTYyNiAzMC45OTc5Nzg5LDY3LjIyMDI5MTcgWiIgaWQ9InBhdGgtNCI+PC9wYXRoPgogICAgICAgIDxmaWx0ZXIgeD0iLTEyLjUlIiB5PSItMTAuOSUiIHdpZHRoPSIxMjUuMCUiIGhlaWdodD0iMTE5LjglIiBmaWx0ZXJVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giIGlkPSJmaWx0ZXItNSI+CiAgICAgICAgICAgIDxmZU9mZnNldCBkeD0iMCIgZHk9IjAiIGluPSJTb3VyY2VBbHBoYSIgcmVzdWx0PSJzaGFkb3dPZmZzZXRPdXRlcjEiPjwvZmVPZmZzZXQ+CiAgICAgICAgICAgIDxmZUdhdXNzaWFuQmx1ciBzdGREZXZpYXRpb249IjIuNSIgaW49InNoYWRvd09mZnNldE91dGVyMSIgcmVzdWx0PSJzaGFkb3dCbHVyT3V0ZXIxIj48L2ZlR2F1c3NpYW5CbHVyPgogICAgICAgICAgICA8ZmVDb2xvck1hdHJpeCB2YWx1ZXM9IjAgMCAwIDAgMCAgIDAgMCAwIDAgMCAgIDAgMCAwIDAgMCAgMCAwIDAgMC41IDAiIHR5cGU9Im1hdHJpeCIgaW49InNoYWRvd0JsdXJPdXRlcjEiPjwvZmVDb2xvck1hdHJpeD4KICAgICAgICA8L2ZpbHRlcj4KICAgICAgICA8bGluZWFyR3JhZGllbnQgeDE9IjUwJSIgeTE9Ii0yLjQ4OTQ5ODEzZS0xNSUiIHgyPSI1MCUiIHkyPSIxMDAlIiBpZD0ibGluZWFyR3JhZGllbnQtNiI+CiAgICAgICAgICAgIDxzdG9wIHN0b3AtY29sb3I9IiNGRkZERkIiIG9mZnNldD0iMCUiPjwvc3RvcD4KICAgICAgICAgICAgPHN0b3Agc3RvcC1jb2xvcj0iI0Y3QjUxRCIgb2Zmc2V0PSIxMDAlIj48L3N0b3A+CiAgICAgICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDwvZGVmcz4KICAgIDxnIGlkPSLmkJzntKIiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPgogICAgICAgIDxnIGlkPSJpY29u5LiO6aKc6ImyIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMTIwOS4wMDAwMDAsIC01MTIuMDAwMDAwKSI+CiAgICAgICAgICAgIDxnIGlkPSLnqboiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEyMTQuMDAwMDAwLCA1MTcuMDAwMDAwKSI+CiAgICAgICAgICAgICAgICA8cG9seWdvbiBpZD0i6Lev5b6ELTIiIGZpbGw9InVybCgjbGluZWFyR3JhZGllbnQtMSkiIGZpbHRlcj0idXJsKCNmaWx0ZXItMikiIHBvaW50cz0iMzAuMDE2IDY5LjEwNzE0MjkgNjcgNTMuNTcxNDI4NiA2NyA3NSI+PC9wb2x5Z29uPgogICAgICAgICAgICAgICAgPGcgaWQ9Iue8lue7hC0xNCI+CiAgICAgICAgICAgICAgICAgICAgPGcgaWQ9IuakreWchuW9oiI+CiAgICAgICAgICAgICAgICAgICAgICAgIDx1c2UgZmlsbD0iYmxhY2siIGZpbGwtb3BhY2l0eT0iMSIgZmlsdGVyPSJ1cmwoI2ZpbHRlci01KSIgeGxpbms6aHJlZj0iI3BhdGgtNCI+PC91c2U+CiAgICAgICAgICAgICAgICAgICAgICAgIDx1c2UgZmlsbD0idXJsKCNsaW5lYXJHcmFkaWVudC0zKSIgZmlsbC1ydWxlPSJldmVub2RkIiB4bGluazpocmVmPSIjcGF0aC00Ij48L3VzZT4KICAgICAgICAgICAgICAgICAgICA8L2c+CiAgICAgICAgICAgICAgICAgICAgPGVsbGlwc2UgaWQ9IuakreWchuW9oiIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2Utd2lkdGg9IjIuNCIgZmlsbC1vcGFjaXR5PSIwLjUxIiBmaWxsPSJ1cmwoI2xpbmVhckdyYWRpZW50LTYpIiBjeD0iMzAuMTI1IiBjeT0iMzAuMTExNjA3MSIgcng9IjIzLjkyNSIgcnk9IjIzLjkxMTYwNzEiPjwvZWxsaXBzZT4KICAgICAgICAgICAgICAgICAgICA8dGV4dCBpZD0iNiIgeD0nMzAnIHk9JzM0JyAgIHN0eWxlPSdkb21pbmFudC1iYXNlbGluZTptaWRkbGU7dGV4dC1hbmNob3I6bWlkZGxlOycgZm9udC1mYW1pbHk9IlBpbmdGYW5nU0MtU2VtaWJvbGQsIFBpbmdGYW5nIFNDIiBmb250LXNpemU9IjQwIiBmb250LXdlaWdodD0iNTAwIiBmaWxsPSIjRkZGRkZGIj4KICAgICAgICAgICAgICAgICAgICAgICAgMQogICAgICAgICAgICAgICAgICAgIDwvdGV4dD4KICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgPC9nPgogICAgICAgIDwvZz4KICAgIDwvZz4KPC9zdmc+",
+      scale: 0.5,
+      horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+      verticalOrigin: Cesium.VerticalOrigin.CENTER
+    },
+    attr: { remark: "示例11" }
+  })
+  graphicLayer.addGraphic(graphic)
 }
 
 // 生成演示数据(测试数据量)
@@ -575,7 +580,7 @@ export function bindLayerContextMenu() {
       icon: "fa fa-trash-o",
       show: (event) => {
         const graphic = event.graphic
-        if (!graphic || graphic.isDestroy) {
+        if (!graphic || graphic.isDestroy || graphic.graphicIds) {
           return false
         } else {
           return true
@@ -590,6 +595,33 @@ export function bindLayerContextMenu() {
         graphicLayer.removeGraphic(graphic)
         if (parent) {
           graphicLayer.removeGraphic(parent)
+        }
+      }
+    },
+    {
+      text: "查看聚合列表",
+      icon: "fa fa-info",
+      show: (event) => {
+        const graphic = event.graphic
+        if (graphic.graphicIds) {
+          return true
+        } else {
+          return false
+        }
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        if (!graphic) {
+          return
+        }
+        const graphics = graphic.getGraphics() // 对应的grpahic数组，可以自定义显示
+        if (graphics) {
+          const names = []
+          for (let index = 0; index < graphics.length; index++) {
+            const g = graphics[index]
+            names.push(g.attr.name || g.attr.text || g.id)
+          }
+          return globalAlert(`${names.join(",")}`, `共${graphics.length}个聚合对象`)
         }
       }
     }

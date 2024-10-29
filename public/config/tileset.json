@@ -8,6 +8,7 @@
       "name": "合肥市区",
       "url": "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
       "maximumScreenSpaceError": 1,
+      "maxMemory": 1024,
       "style": {
         "color": {
           "conditions": [["true", "color('rgba(42, 160, 224, 1)')"]]
@@ -109,6 +110,7 @@
       "position": { "lng": 117.203994, "lat": 31.857999, "alt": 28.9 },
       "rotation": { "z": 168.1 },
       "maximumScreenSpaceError": 8,
+      "maxMemory": 1024,
       "skipLevelOfDetail": true,
       "loadSiblings": true,
       "cullRequestsWhileMoving": true,
@@ -131,6 +133,7 @@
       "position": { "lng": 117.096906, "lat": 31.851564, "alt": 45 },
       "rotation": { "z": 17.5 },
       "maximumScreenSpaceError": 16,
+      "maxMemory": 1024,
       "skipLevelOfDetail": true,
       "loadSiblings": true,
       "cullRequestsWhileMoving": true,
@@ -191,6 +194,7 @@
       "url": "//data.mars3d.cn/3dtiles/max-shihua/tileset.json",
       "position": { "lng": 117.077158, "lat": 31.659116, "alt": -2.0 },
       "maximumScreenSpaceError": 1,
+      "maxMemory": 1024,
       "highlight": { "type": "click", "color": "#00FF00" },
       "popup": "all",
       "scenetree": "scenetree.json",
@@ -292,6 +296,7 @@
       "url": "//data.mars3d.cn/3dtiles/qx-hfdxy/tileset.json",
       "position": { "alt": 43.7 },
       "maximumScreenSpaceError": 1,
+      "maxMemory": 2048,
       "center": { "lat": 31.841523, "lng": 117.205761, "alt": 166, "heading": 1, "pitch": -33 }
     },
     {
@@ -302,6 +307,7 @@
       "url": "//data.mars3d.cn/3dtiles/qx-shequ/tileset.json",
       "position": { "alt": 148.2 },
       "maximumScreenSpaceError": 2,
+      "maxMemory": 2048,
       "dynamicScreenSpaceError": true,
       "cullWithChildrenBounds": false,
       "center": { "lat": 28.440864, "lng": 119.486477, "alt": 588.23, "heading": 268.6, "pitch": -37.8 },
@@ -315,6 +321,7 @@
       "url": "//data.mars3d.cn/3dtiles/qx-teh/tileset.json",
       "position": { "lng": 117.218434, "lat": 31.81807, "alt": 163 },
       "maximumScreenSpaceError": 16,
+      "maxMemory": 2048,
       "dynamicScreenSpaceError": true,
       "cullWithChildrenBounds": false,
       "skipLevelOfDetail": true,

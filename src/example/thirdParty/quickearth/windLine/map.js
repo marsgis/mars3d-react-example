@@ -57,6 +57,9 @@ const uiConfig = {
 }
 
 async function initDemoData() {
+  globalMsg("数据加载中...")
+  showLoading()
+
   // public静态资源的路径
   consts.resourcePath = "//data.mars3d.cn/file/qe"
   // consts.defaultLegendPath = "//data.mars3d.cn/file/qe/styles/colors"
@@ -66,7 +69,10 @@ async function initDemoData() {
   // config资源配置
   await resourceService.loadResourceFromConfigPath("styles/demo.config.json")
 
-  load(uiConfig)
+  await load(uiConfig)
+
+  globalMsg("数据加载完成")
+  hideLoading()
 }
 
 const loadPressureLevelData = async (varName, dapService, xIdx1, xIdx2, yIdx1, yIdx2, zValues) => {
@@ -84,13 +90,16 @@ const loadPressureLevelData = async (varName, dapService, xIdx1, xIdx2, yIdx1, y
 
 let windProvider
 const center = [132, 27.5]
+
 const load = async (uiConfig, reloadData = false) => {
   map.scene.primitives.removeAll()
+
   if (reloadData) {
     windProvider = undefined
   }
   if (!windProvider) {
-    globalMsg("数据加载中...")
+    globalMsg("Data加载中...")
+
     const dataUrl = "https://serv.91weather.com/thredds/dodsC/gfs/gfs.20220917/06/gfs.t06z.pgrb2.0p25.f003"
     const dapService = new DAPService(dataUrl)
     await dapService.loadDataInfo()
@@ -124,7 +133,8 @@ const load = async (uiConfig, reloadData = false) => {
     } else {
       windProvider = new MemoryWindDataProvider(uProvider, vProvider, { gridOptions: uProvider.gridOptions, lazyCalc: true, isUV: true })
     }
-    globalMsg("数据加载完成")
+
+    globalMsg("Data加载完成")
   }
   const zScale = 15
   const tracingOptions = {

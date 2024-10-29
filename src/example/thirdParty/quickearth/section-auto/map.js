@@ -35,6 +35,8 @@ export function onUnmounted() {
 let sectionLayer
 async function initDemoData() {
   globalMsg("数据加载中...")
+  showLoading()
+
   // public静态资源的路径
   consts.resourcePath = "//data.mars3d.cn/file/qe"
   // config资源配置
@@ -68,7 +70,9 @@ async function initDemoData() {
   }
   const pixelLayer = new CPixelLayer().setDataSource(cr).setDrawOptions(pixelStyle)
   map.scene.primitives.add(pixelLayer)
+
   globalMsg("数据加载完成")
+  hideLoading()
 
   updateSectionPath()
 

@@ -35,7 +35,6 @@ export function onMounted(mapInstance) {
   // map.scene.skyAtmosphere.saturationShift = 0.1
   // map.scene.skyAtmosphere.brightnessShift = 0.08 // 地面0.08 海底
 
-
   addLayer()
 }
 
@@ -78,9 +77,13 @@ function addLayer() {
   })
   map.addLayer(windLayer)
 
+  showLoading()
+
   loadNetCDF("//data.mars3d.cn/file/apidemo/wind.nc").then((data) => {
     console.log("数据加载解析完成", data)
     windLayer.setData(data)
+
+    hideLoading()
   })
 }
 

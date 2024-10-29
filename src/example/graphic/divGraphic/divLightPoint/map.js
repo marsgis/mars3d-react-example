@@ -249,7 +249,7 @@ export function bindLayerContextMenu() {
       icon: "fa fa-trash-o",
       show: (event) => {
         const graphic = event.graphic
-        if (!graphic || graphic.isDestroy) {
+        if (!graphic || graphic.isDestroy || graphic.graphicIds) {
           return false
         } else {
           return true
