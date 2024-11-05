@@ -11,12 +11,12 @@ export const mapOptions = {
     },
     skyBox: {
       sources: {
-        negativeX: "img/skybox/6/tycho2t3_80_mx.jpg",
-        negativeY: "img/skybox/6/tycho2t3_80_my.jpg",
-        negativeZ: "img/skybox/6/tycho2t3_80_mz.jpg",
-        positiveX: "img/skybox/6/tycho2t3_80_px.jpg",
-        positiveY: "img/skybox/6/tycho2t3_80_py.jpg",
-        positiveZ: "img/skybox/6/tycho2t3_80_pz.jpg"
+        negativeX: "//data.mars3d.cn/img/skybox/6/tycho2t3_80_mx.jpg",
+        negativeY: "//data.mars3d.cn/img/skybox/6/tycho2t3_80_my.jpg",
+        negativeZ: "//data.mars3d.cn/img/skybox/6/tycho2t3_80_mz.jpg",
+        positiveX: "//data.mars3d.cn/img/skybox/6/tycho2t3_80_px.jpg",
+        positiveY: "//data.mars3d.cn/img/skybox/6/tycho2t3_80_py.jpg",
+        positiveZ: "//data.mars3d.cn/img/skybox/6/tycho2t3_80_pz.jpg"
       }
     }
   }
@@ -44,12 +44,12 @@ export function show1() {
   // 修改天空盒
   map.scene.skyBox = new Cesium.SkyBox({
     sources: {
-      negativeX: "img/skybox/1/tycho2t3_80_mx.jpg",
-      negativeY: "img/skybox/1/tycho2t3_80_my.jpg",
-      negativeZ: "img/skybox/1/tycho2t3_80_mz.jpg",
-      positiveX: "img/skybox/1/tycho2t3_80_px.jpg",
-      positiveY: "img/skybox/1/tycho2t3_80_py.jpg",
-      positiveZ: "img/skybox/1/tycho2t3_80_pz.jpg"
+      negativeX: "//data.mars3d.cn/img/skybox/1/tycho2t3_80_mx.jpg",
+      negativeY: "//data.mars3d.cn/img/skybox/1/tycho2t3_80_my.jpg",
+      negativeZ: "//data.mars3d.cn/img/skybox/1/tycho2t3_80_mz.jpg",
+      positiveX: "//data.mars3d.cn/img/skybox/1/tycho2t3_80_px.jpg",
+      positiveY: "//data.mars3d.cn/img/skybox/1/tycho2t3_80_py.jpg",
+      positiveZ: "//data.mars3d.cn/img/skybox/1/tycho2t3_80_pz.jpg"
     }
   })
 }
@@ -58,12 +58,12 @@ export function show2() {
   // 修改天空盒
   // map.scene.skyBox = new Cesium.SkyBox({
   //   sources: {
-  //     negativeX: "img/skybox/2/tycho2t3_80_mx.jpg",
-  //     negativeY: "img/skybox/2/tycho2t3_80_my.jpg",
-  //     negativeZ: "img/skybox/2/tycho2t3_80_mz.jpg",
-  //     positiveX: "img/skybox/2/tycho2t3_80_px.jpg",
-  //     positiveY: "img/skybox/2/tycho2t3_80_py.jpg",
-  //     positiveZ: "img/skybox/2/tycho2t3_80_pz.jpg"
+  //     negativeX: "//data.mars3d.cn/img/skybox/2/tycho2t3_80_mx.jpg",
+  //     negativeY: "//data.mars3d.cn/img/skybox/2/tycho2t3_80_my.jpg",
+  //     negativeZ: "//data.mars3d.cn/img/skybox/2/tycho2t3_80_mz.jpg",
+  //     positiveX: "//data.mars3d.cn/img/skybox/2/tycho2t3_80_px.jpg",
+  //     positiveY: "//data.mars3d.cn/img/skybox/2/tycho2t3_80_py.jpg",
+  //     positiveZ: "//data.mars3d.cn/img/skybox/2/tycho2t3_80_pz.jpg"
   //   }
   // })
 
@@ -72,12 +72,12 @@ export function show2() {
     scene: {
       skyBox: {
         sources: {
-          negativeX: "img/skybox/2/tycho2t3_80_mx.jpg",
-          negativeY: "img/skybox/2/tycho2t3_80_my.jpg",
-          negativeZ: "img/skybox/2/tycho2t3_80_mz.jpg",
-          positiveX: "img/skybox/2/tycho2t3_80_px.jpg",
-          positiveY: "img/skybox/2/tycho2t3_80_py.jpg",
-          positiveZ: "img/skybox/2/tycho2t3_80_pz.jpg"
+          negativeX: "//data.mars3d.cn/img/skybox/2/tycho2t3_80_mx.jpg",
+          negativeY: "//data.mars3d.cn/img/skybox/2/tycho2t3_80_my.jpg",
+          negativeZ: "//data.mars3d.cn/img/skybox/2/tycho2t3_80_mz.jpg",
+          positiveX: "//data.mars3d.cn/img/skybox/2/tycho2t3_80_px.jpg",
+          positiveY: "//data.mars3d.cn/img/skybox/2/tycho2t3_80_py.jpg",
+          positiveZ: "//data.mars3d.cn/img/skybox/2/tycho2t3_80_pz.jpg"
         }
       }
     }
@@ -87,12 +87,12 @@ export function show2() {
 export function show3() {
   map.scene.skyBox = new Cesium.SkyBox({
     sources: {
-      negativeX: "img/skybox/3/tycho2t3_80_mx.jpg",
-      negativeY: "img/skybox/3/tycho2t3_80_my.jpg",
-      negativeZ: "img/skybox/3/tycho2t3_80_mz.jpg",
-      positiveX: "img/skybox/3/tycho2t3_80_px.jpg",
-      positiveY: "img/skybox/3/tycho2t3_80_py.jpg",
-      positiveZ: "img/skybox/3/tycho2t3_80_pz.jpg"
+      negativeX: "//data.mars3d.cn/img/skybox/3/tycho2t3_80_mx.jpg",
+      negativeY: "//data.mars3d.cn/img/skybox/3/tycho2t3_80_my.jpg",
+      negativeZ: "//data.mars3d.cn/img/skybox/3/tycho2t3_80_mz.jpg",
+      positiveX: "//data.mars3d.cn/img/skybox/3/tycho2t3_80_px.jpg",
+      positiveY: "//data.mars3d.cn/img/skybox/3/tycho2t3_80_py.jpg",
+      positiveZ: "//data.mars3d.cn/img/skybox/3/tycho2t3_80_pz.jpg"
     }
   })
 }
@@ -100,12 +100,12 @@ export function show3() {
 export function show4() {
   map.scene.skyBox = new Cesium.SkyBox({
     sources: {
-      negativeX: "img/skybox/4/tycho2t3_80_mx.jpg",
-      negativeY: "img/skybox/4/tycho2t3_80_my.jpg",
-      negativeZ: "img/skybox/4/tycho2t3_80_mz.jpg",
-      positiveX: "img/skybox/4/tycho2t3_80_px.jpg",
-      positiveY: "img/skybox/4/tycho2t3_80_py.jpg",
-      positiveZ: "img/skybox/4/tycho2t3_80_pz.jpg"
+      negativeX: "//data.mars3d.cn/img/skybox/4/tycho2t3_80_mx.jpg",
+      negativeY: "//data.mars3d.cn/img/skybox/4/tycho2t3_80_my.jpg",
+      negativeZ: "//data.mars3d.cn/img/skybox/4/tycho2t3_80_mz.jpg",
+      positiveX: "//data.mars3d.cn/img/skybox/4/tycho2t3_80_px.jpg",
+      positiveY: "//data.mars3d.cn/img/skybox/4/tycho2t3_80_py.jpg",
+      positiveZ: "//data.mars3d.cn/img/skybox/4/tycho2t3_80_pz.jpg"
     }
   })
 }
@@ -113,12 +113,12 @@ export function show4() {
 export function show5() {
   map.scene.skyBox = new Cesium.SkyBox({
     sources: {
-      negativeX: "img/skybox/5/tycho2t3_80_mx.jpg",
-      negativeY: "img/skybox/5/tycho2t3_80_my.jpg",
-      negativeZ: "img/skybox/5/tycho2t3_80_mz.jpg",
-      positiveX: "img/skybox/5/tycho2t3_80_px.jpg",
-      positiveY: "img/skybox/5/tycho2t3_80_py.jpg",
-      positiveZ: "img/skybox/5/tycho2t3_80_pz.jpg"
+      negativeX: "//data.mars3d.cn/img/skybox/5/tycho2t3_80_mx.jpg",
+      negativeY: "//data.mars3d.cn/img/skybox/5/tycho2t3_80_my.jpg",
+      negativeZ: "//data.mars3d.cn/img/skybox/5/tycho2t3_80_mz.jpg",
+      positiveX: "//data.mars3d.cn/img/skybox/5/tycho2t3_80_px.jpg",
+      positiveY: "//data.mars3d.cn/img/skybox/5/tycho2t3_80_py.jpg",
+      positiveZ: "//data.mars3d.cn/img/skybox/5/tycho2t3_80_pz.jpg"
     }
   })
 }
@@ -126,12 +126,12 @@ export function show5() {
 export function show6() {
   map.scene.skyBox = new Cesium.SkyBox({
     sources: {
-      negativeX: "img/skybox/6/tycho2t3_80_mx.jpg",
-      negativeY: "img/skybox/6/tycho2t3_80_my.jpg",
-      negativeZ: "img/skybox/6/tycho2t3_80_mz.jpg",
-      positiveX: "img/skybox/6/tycho2t3_80_px.jpg",
-      positiveY: "img/skybox/6/tycho2t3_80_py.jpg",
-      positiveZ: "img/skybox/6/tycho2t3_80_pz.jpg"
+      negativeX: "//data.mars3d.cn/img/skybox/6/tycho2t3_80_mx.jpg",
+      negativeY: "//data.mars3d.cn/img/skybox/6/tycho2t3_80_my.jpg",
+      negativeZ: "//data.mars3d.cn/img/skybox/6/tycho2t3_80_mz.jpg",
+      positiveX: "//data.mars3d.cn/img/skybox/6/tycho2t3_80_px.jpg",
+      positiveY: "//data.mars3d.cn/img/skybox/6/tycho2t3_80_py.jpg",
+      positiveZ: "//data.mars3d.cn/img/skybox/6/tycho2t3_80_pz.jpg"
     }
   })
 }

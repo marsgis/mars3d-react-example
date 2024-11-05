@@ -10,7 +10,7 @@ export const mapOptions = function (option) {
   option.layers.push({
     name: "中科大-东区",
     type: "image",
-    url: "//data.mars3d.cn/file/img/zkd-dq.png",
+    url: "//data.mars3d.cn/img/map/zkd-dq.png",
     rectangle: { xmin: 117.259691, xmax: 117.267778, ymin: 31.834432, ymax: 31.84387 },
     zIndex: 20,
     show: true
@@ -48,7 +48,7 @@ export function addTileLayer() {
   // 方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
   tileLayer = new mars3d.layer.ImageLayer({
     name: "中科大-西区",
-    url: "//data.mars3d.cn/file/img/zkd-xq.png",
+    url: "//data.mars3d.cn/img/map/zkd-xq.png",
     rectangle: { xmin: 117.245648, xmax: 117.254431, ymin: 31.836891, ymax: 31.843413 },
     zIndex: 20
   })

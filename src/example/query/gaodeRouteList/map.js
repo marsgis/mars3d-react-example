@@ -92,7 +92,7 @@ export function startPoint() {
     .startDraw({
       type: "billboard",
       style: {
-        image: "img/marker/route-start.png",
+        image: "//data.mars3d.cn/img/marker/route-start.png",
         horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
         verticalOrigin: Cesium.VerticalOrigin.BOTTOM
       }
@@ -225,7 +225,7 @@ function addEndPointEntity(arr) {
     const graphic = new mars3d.graphic.BillboardEntity({
       position: Cesium.Cartesian3.fromDegrees(item.lng, item.lat),
       style: {
-        image: "img/marker/route-end.png",
+        image: "//data.mars3d.cn/img/marker/route-end.png",
         scale: 1,
         clampToGround: true, // 贴地
         label: {
@@ -261,7 +261,7 @@ export function centerAtRoute(id) {
   graphic.entityGraphic.width = 5
   graphic.entityGraphic.material = mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
     color: Cesium.Color.CHARTREUSE,
-    image: "img/textures/line-color-yellow.png",
+    image: "//data.mars3d.cn/img/textures/line-color-yellow.png",
     speed: 20
   })
 

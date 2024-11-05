@@ -64,13 +64,13 @@ export function onMounted(mapInstance) {
       uniforms: {
         u_envTexture: {
           value: new Cesium.TextureUniform({
-            url: "/img/textures/sky.jpg"
+            url: "//data.mars3d.cn/img/textures/sky.jpg"
           }),
           type: Cesium.UniformType.SAMPLER_2D
         },
         u_envTexture2: {
           value: new Cesium.TextureUniform({
-            url: "/img/textures/buildings-kj.jpg"
+            url: "//data.mars3d.cn/img/textures/buildings-kj.jpg"
           }),
           type: Cesium.UniformType.SAMPLER_2D
         },
@@ -150,7 +150,7 @@ function addExGltfModel() {
   const coefficients = [L00, L1_1, L10, L11, L2_2, L2_1, L20, L21, L22]
 
   const imageBasedLighting = new Cesium.ImageBasedLighting({
-    specularEnvironmentMaps: "/img/textures/ibl.ktx2",
+    specularEnvironmentMaps: "//data.mars3d.cn/img/textures/ibl.ktx2",
     sphericalHarmonicCoefficients: coefficients
   })
 
@@ -165,7 +165,7 @@ function addExGltfModel() {
         uniforms: {
           u_texture: {
             value: new Cesium.TextureUniform({
-              url: "/img/textures/buildings-colors2.png"
+              url: "//data.mars3d.cn/img/textures/buildings-colors2.png"
             }),
             type: Cesium.UniformType.SAMPLER_2D
           },
@@ -200,7 +200,7 @@ function addExGltfModel() {
         uniforms: {
           u_texture: {
             value: new Cesium.TextureUniform({
-              url: "/img/textures/buildings-kj.jpg"
+              url: "//data.mars3d.cn/img/textures/buildings-kj.jpg"
             }),
             type: Cesium.UniformType.SAMPLER_2D
           },
@@ -235,7 +235,7 @@ function addExGltfModel() {
         uniforms: {
           u_texture: {
             value: new Cesium.TextureUniform({
-              url: "/img/textures/buildings-colors.png"
+              url: "//data.mars3d.cn/img/textures/buildings-colors.png"
             }),
             type: Cesium.UniformType.SAMPLER_2D
           },
@@ -270,7 +270,7 @@ function addExGltfModel() {
         uniforms: {
           u_texture: {
             value: new Cesium.TextureUniform({
-              url: "/img/textures/buildings-colors2.png"
+              url: "//data.mars3d.cn/img/textures/buildings-colors2.png"
             }),
             type: Cesium.UniformType.SAMPLER_2D
           },

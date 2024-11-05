@@ -11,7 +11,7 @@ export const mapOptions = {
   basemaps: [
     {
       name: "山西天地图",
-      icon: "img/basemaps/blackMarble.png",
+      icon: "//data.mars3d.cn/img/control/basemap/blackMarble.png",
       type: "wmts",
       url: "http://shanxi.tianditu.gov.cn/service/SX_DOM/wmts",
       layer: "WD_DOM",
@@ -23,9 +23,9 @@ export const mapOptions = {
     },
     {
       name: "单张图片",
-      icon: "img/basemaps/offline.png",
+      icon: "//data.mars3d.cn/img/control/basemap/offline.png",
       type: "image",
-      url: "//data.mars3d.cn/file/img/world/world.jpg",
+      url: "//data.mars3d.cn/img/map/world/world.jpg",
       show: false
     }
   ]
@@ -72,7 +72,7 @@ export function addTileLayer() {
       diffHeight: 100,
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
-        image: "img/textures/fence.png",
+        image: "//data.mars3d.cn/img/textures/fence.png",
         color: "#ffff00",
         speed: 10, // 速度，建议取值范围1-100
         axisY: true

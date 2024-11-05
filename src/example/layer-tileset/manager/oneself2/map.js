@@ -15,7 +15,7 @@ export const mapOptions = function (option) {
       showSkyAtmosphere: false,
       fog: false,
       backgroundColor: "rgba(0,0,0,0)",
-      backgroundImage: "url(/img/tietu/backGroundImg.jpg)",
+      backgroundImage: "url(//data.mars3d.cn/img/busines/background1.jpg)",
       orderIndependentTranslucency: false,
       contextOptions: { webgl: { antialias: mars3d.Util.isPCBroswer() } },
       globe: {

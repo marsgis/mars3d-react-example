@@ -30,8 +30,8 @@ export function onMounted(mapInstance) {
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  addDemoGraphic1()
   addDemoGraphic2()
+  addDemoGraphic1()
 }
 
 /**

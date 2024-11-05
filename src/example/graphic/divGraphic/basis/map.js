@@ -135,13 +135,26 @@ function addDemoGraphic3(graphicLayer) {
 
 // 添加GIF图标，DIV方式
 function addDemoGraphic4(graphicLayer) {
-  const graphic = new mars3d.graphic.DivGraphic({
+  // const graphic = new mars3d.graphic.DivGraphic({
+  //   position: [116.79013, 31.164872, 289],
+  //   style: {
+  //     html: '<img src="//data.mars3d.cn/img/marker/gif/typhoon.gif" style="width:50px;height:50px;" ></img>',
+  //     distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 200000), // 按视距距离显示
+  //     horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+  //     verticalOrigin: Cesium.VerticalOrigin.CENTER
+  //   },
+  //   attr: { remark: "示例4" },
+  //   pointerEvents: false // false时不允许拾取和触发任意鼠标事件，但可以穿透div缩放地球
+  // })
+  // graphicLayer.addGraphic(graphic)
+
+  const graphic = new mars3d.graphic.DivGif({
     position: [116.79013, 31.164872, 289],
     style: {
-      html: '<img src="img/icon/tf.gif" style="width:50px;height:50px;" ></img>',
-      distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 200000), // 按视距距离显示
-      horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
-      verticalOrigin: Cesium.VerticalOrigin.CENTER
+      image: "//data.mars3d.cn/img/marker/gif/typhoon.gif",
+      width: "50px",
+      height: "50px",
+      distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 200000) // 按视距距离显示
     },
     attr: { remark: "示例4" },
     pointerEvents: false // false时不允许拾取和触发任意鼠标事件，但可以穿透div缩放地球

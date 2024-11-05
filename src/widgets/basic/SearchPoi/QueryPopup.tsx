@@ -26,7 +26,7 @@ export default function (props) {
           <div>
             {attr.current.address ? (
               <div>
-                <label>地址:</label> {attr.current.address}
+                <label>地址:</label> {attr.current.address}{" "}
               </div>
             ) : (
               ""

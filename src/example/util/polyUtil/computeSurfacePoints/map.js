@@ -213,7 +213,7 @@ export function showTipMarker(point, z, inthtml) {
       name: "当前点",
       position: _position_draw,
       style: {
-        image: "img/marker/mark-blue.png",
+        image: "//data.mars3d.cn/img/marker/mark-blue.png",
         scale: 1,
         horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
         verticalOrigin: Cesium.VerticalOrigin.BOTTOM,

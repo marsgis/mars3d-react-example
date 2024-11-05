@@ -6,13 +6,13 @@ export let map // mars3d.Map三维地图对象
 export const mapOptions = {
   control: {
     homeButton: {
-      icon: "/img/svg/homeButton.svg"
+      icon: "//data.mars3d.cn/img/control/homeButton.svg"
     },
     fullscreenButton: {
-      icon: "/img/svg/fullscreen.svg"
+      icon: "//data.mars3d.cn/img/control/fullscreenButton.svg"
     },
     navigationHelpButton: {
-      icon: "/img/svg/navigationHelp.svg"
+      icon: "//data.mars3d.cn/img/control/navigationHelpButton.svg"
     },
     sceneModePicker: true,
     infoBox: false,

@@ -28,9 +28,7 @@ export function onMounted(mapInstance) {
   map = mapInstance // 记录map
   map.container.style.backgroundColor = "#546a53" // 背景色
 
-
   globalNotify("已知问题提示", `(1) 启用透明度后，放大层级底图瓦片衔接处有黑色缝隙 `)
-
 
   addLayer()
 }

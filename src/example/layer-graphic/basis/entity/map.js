@@ -101,7 +101,7 @@ function addDemoGraphic3(graphicLayer) {
     name: "贴地图标",
     position: [116.3, 31.0, 1000],
     style: {
-      image: "img/marker/mark-blue.png",
+      image: "//data.mars3d.cn/img/marker/mark-blue.png",
       scale: 1,
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
@@ -120,7 +120,7 @@ function addDemoGraphic4(graphicLayer) {
       dimensions: new Cesium.Cartesian2(4000.0, 4000.0),
       materialType: mars3d.MaterialType.Image2,
       materialOptions: {
-        image: "img/textures/poly-rivers.png",
+        image: "//data.mars3d.cn/img/textures/poly-rivers.png",
         transparent: true
       }
     },
@@ -274,7 +274,7 @@ function addDemoGraphic13(graphicLayer) {
       // 动画线材质
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
-        image: "img/textures/fence.png",
+        image: "//data.mars3d.cn/img/textures/fence.png",
         color: "#00ff00",
         speed: 10,
         axisY: true
@@ -317,7 +317,7 @@ function addDemoGraphic15(graphicLayer) {
     style: {
       materialType: mars3d.MaterialType.Water,
       materialOptions: {
-        normalMap: "img/textures/waterNormals.jpg", // 水正常扰动的法线图
+        normalMap: "//data.mars3d.cn/img/textures/waterNormals.jpg", // 水正常扰动的法线图
         frequency: 8000.0, // 控制波数的数字。
         animationSpeed: 0.02, // 控制水的动画速度的数字。
         amplitude: 5.0, // 控制水波振幅的数字。
@@ -389,11 +389,69 @@ export function bindLayerContextMenu() {
       }
     },
     {
+      text: "还原编辑(还原到初始)",
+      icon: "fa fa-pencil",
+      show: (event) => {
+        function hasRestore(graphic) {
+          if (!graphic || !graphic.hasEdit || !graphic.isEditing) {
+            return false
+          }
+          return graphic.editing?.hasRestore()
+        }
+
+        const graphic = event.graphic
+        if (hasRestore(graphic)) {
+          return true
+        }
+        if (graphic.isPrivate && graphic.parent) {
+          return hasRestore(graphic.parent) // 右击是编辑点时
+        }
+        return false
+      },
+      callback: (event) => {
+        const graphic = event.graphic
+        if (graphic.editing?.restore) {
+          graphic.editing.restore() // 撤销编辑，可直接调用
+        } else if (graphic.parent?.editing?.restore) {
+          graphic.parent.editing.restore() // 右击是编辑点时
+        }
+      }
+    },
+    {
+      text: "撤销编辑(还原到上一步)",
+      icon: "fa fa-pencil",
+      show: (event) => {
+        function hasRevoke(graphic) {
+          if (!graphic || !graphic.hasEdit || !graphic.isEditing) {
+            return false
+          }
+          return graphic.editing?.hasRevoke()
+        }
+
+        const graphic = event.graphic
+        if (hasRevoke(graphic)) {
+          return true
+        }
+        if (graphic.isPrivate && graphic.parent) {
+          return hasRevoke(graphic.parent) // 右击是编辑点时
+        }
+        return false
+      },
+      callback: (event) => {
+        const graphic = event.graphic
+        if (graphic.editing?.revoke) {
+          graphic.editing.revoke() // 撤销编辑，可直接调用
+        } else if (graphic.parent?.editing?.revoke) {
+          graphic.parent.editing.revoke() // 右击是编辑点时
+        }
+      }
+    },
+    {
       text: "删除对象",
       icon: "fa fa-trash-o",
       show: (event) => {
         const graphic = event.graphic
-        if (!graphic || graphic.isDestroy || graphic.graphicIds) {
+        if (!graphic || graphic.isDestroy || graphic.isPrivate || graphic.graphicIds) {
           return false
         } else {
           return true

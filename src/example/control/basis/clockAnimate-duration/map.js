@@ -30,6 +30,8 @@ export const mapOptions = function (option) {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
+  addDemoData()
+
   // 时钟控制（可替代cesium本身的animation）
   const clockAnimate = new mars3d.control.ClockAnimate({
     // format: "yyyy-MM-dd HH:mm:ss"
@@ -69,4 +71,49 @@ export function setClockAnimateTime(startTimes, stopTimes) {
   if (map.control.timeline) {
     map.control.timeline.zoomTo(startTime, stopTime)
   }
+}
+
+function addDemoData() {
+  // 矢量对象
+  const graphic = new mars3d.graphic.BillboardEntity({
+    position: [116.313736, 30.86082, 420],
+    style: {
+      image: "//data.mars3d.cn/img/marker/lace-blue.png",
+      horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+      verticalOrigin: Cesium.VerticalOrigin.BOTTOM
+    },
+    availability: [{ start: 10, stop: 20 }]
+  })
+  map.graphicLayer.addGraphic(graphic)
+  console.log(`1.测试矢量对象`, graphic)
+
+  // 图层
+  const graphicLayer = new mars3d.layer.GeoJsonLayer({
+    name: "标绘示例数据",
+    url: "//data.mars3d.cn/file/geojson/mars3d-draw.json",
+    popup: "{type} {name}",
+    availability: [
+      { start: 0, stop: 10, isStartIncluded: true, isStopIncluded: false },
+      { start: 30, duration: 10 } // 支持不配置stop，直接配置duration秒数时长
+    ]
+  })
+  map.addLayer(graphicLayer)
+  console.log(`2.测试图层`, graphicLayer)
+
+  // 特效
+  const rainEffect = new mars3d.effect.RainEffect({
+    speed: 10,
+    size: 20,
+    direction: 10,
+    availability: [
+      { start: 20, stop: 30, isStartIncluded: true, isStopIncluded: false },
+      { start: 40, duration: 10 } // 支持不配置stop，直接配置duration秒数时长
+    ]
+  })
+  map.addEffect(rainEffect)
+  console.log(`3.测试特效`, rainEffect)
+
+
+  // 打印列表
+  console.log(`4.当前地图所有时序`, map.getAvailabilityList())
 }

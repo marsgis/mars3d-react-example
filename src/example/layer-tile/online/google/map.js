@@ -11,7 +11,7 @@ export const mapOptions = {
   basemaps: [
     {
       name: "谷歌影像",
-      icon: "img/basemaps/google_img.png",
+      icon: "//data.mars3d.cn/img/control/basemap/google_img.png",
       type: "google",
       layer: "img_d",
       chinaCRS: mars3d.ChinaCRS.GCJ02,
@@ -19,14 +19,14 @@ export const mapOptions = {
     },
     {
       name: "谷歌电子",
-      icon: "img/basemaps/google_vec.png",
+      icon: "//data.mars3d.cn/img/control/basemap/google_vec.png",
       type: "google",
       layer: "vec",
       chinaCRS: mars3d.ChinaCRS.GCJ02
     },
     {
       name: "谷歌地形",
-      icon: "img/basemaps/stamenWatercolor.png",
+      icon: "//data.mars3d.cn/img/control/basemap/stamenWatercolor.png",
       type: "google",
       layer: "ter",
       chinaCRS: mars3d.ChinaCRS.GCJ02

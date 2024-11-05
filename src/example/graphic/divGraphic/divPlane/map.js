@@ -142,7 +142,7 @@ function addDemoGraphic4(graphicLayer) {
   const graphic = new mars3d.graphic.DivPlane({
     position: [116.29569, 30.905512, 583.8],
     style: {
-      html: '<img src="img/icon/tf.gif" style="width:50px;height:50px;" ></img>',
+      html: '<img src="//data.mars3d.cn/img/marker/gif/typhoon.gif" style="width:50px;height:50px;" ></img>',
       scale: 10,
       distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 200000), // 按视距距离显示
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
@@ -158,7 +158,7 @@ function addDemoGraphic5(graphicLayer) {
   const graphic = new mars3d.graphic.DivPlane({
     position: [116.311175, 30.99863, 1300],
     style: {
-      html: `<iframe style="width: 2000px; height: 1200px; border: none; "src="http://mars3d.cn/dev/guide/"></iframe> `,
+      html: `<iframe style="width: 2000px; height: 1200px; border: none; "src="http://mars3d.cn/dev/guide/"  sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe> `,
       scale: 3,
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM

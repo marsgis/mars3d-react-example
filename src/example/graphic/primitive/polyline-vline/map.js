@@ -37,8 +37,6 @@ export function onUnmounted() {
   map = null
 }
 
-
-
 function showData(data) {
   const heightScale = 2000000
 

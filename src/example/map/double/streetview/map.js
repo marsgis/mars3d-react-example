@@ -65,7 +65,7 @@ export async function chooseStree() {
   markerStreet = await graphicLayer.startDraw({
     type: "billboard",
     style: {
-      image: "img/marker/street.png",
+      image: "//data.mars3d.cn/img/marker/street.png",
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
       label: {
@@ -145,7 +145,7 @@ function updateMarker(position) {
     markerStreet = new mars3d.graphic.BillboardEntity({
       position,
       style: {
-        image: "img/marker/street.png",
+        image: "//data.mars3d.cn/img/marker/street.png",
         scale: 1,
         horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
         verticalOrigin: Cesium.VerticalOrigin.BOTTOM,

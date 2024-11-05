@@ -59,7 +59,7 @@ function addLayer() {
     symbol: {
       type: "billboard",
       styleOptions: {
-        image: "img/marker/mark-red.png",
+        image: "//data.mars3d.cn/img/marker/mark-red.png",
         verticalOrigin: Cesium.VerticalOrigin.BOTTOM
       }
     },

@@ -19,24 +19,24 @@ export const mapOptions = {
   basemaps: [
     {
       name: "单张图片",
-      icon: "img/basemaps/bingmap.png",
+      icon: "//data.mars3d.cn/img/control/basemap/bingmap.png",
       type: "image",
-      url: "//data.mars3d.cn/file/img/world/world.jpg"
+      url: "//data.mars3d.cn/img/map/world/world.jpg"
     },
     {
       name: "夜晚图片",
-      icon: "img/basemaps/blackMarble.png",
+      icon: "//data.mars3d.cn/img/control/basemap/blackMarble.png",
       type: "image",
-      url: "//data.mars3d.cn/file/img/world/night.jpg",
+      url: "//data.mars3d.cn/img/map/world/night.jpg",
       dayAlpha: 0.0,
       nightAlpha: 1.0,
       brightness: 3.5
     },
     {
       name: "蓝色底图",
-      icon: "img/basemaps/bd-c-midnight.png",
+      icon: "//data.mars3d.cn/img/control/basemap/bd-c-midnight.png",
       type: "image",
-      url: "//data.mars3d.cn/file/img/world/blue.jpg",
+      url: "//data.mars3d.cn/img/map/world/blue.jpg",
       show: true
     }
   ]
@@ -68,7 +68,7 @@ export function addTileLayer() {
 
   // 方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
   tileLayer = new mars3d.layer.ImageLayer({
-    url: "//data.mars3d.cn//file/img/radar/201906211112.PNG",
+    url: "//data.mars3d.cn/img/map/radar/201906211112.PNG",
     rectangle: { xmin: 73.16895, xmax: 134.86816, ymin: 12.2023, ymax: 54.11485 },
     alpha: 0.7
   })

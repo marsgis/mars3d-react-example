@@ -69,7 +69,7 @@ function showWeiVectorTileLayer() {
         lineWidth: 2,
 
         showMaker: false, // 点状的时候需要打开
-        // markerImage: "img/marker/lace-red.png",
+        // markerImage: "//data.mars3d.cn/img/marker/lace-red.png",
 
         showCenterLabel: false
         // showCenterLabel: true, // 是否显示文本，仅对线和面数据有效

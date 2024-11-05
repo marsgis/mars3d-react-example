@@ -32,34 +32,37 @@ export const mapOptions = {
         "<div>lng:{lng}</div> <div>lat:{lat}</div> <div>alt：{alt} m</div> <div>level：{level}</div><div>heading：{heading}°</div> <div>pitch：{pitch}°</div><div>cameraHeight：{cameraHeight}m</div>"
     }
   },
-
   basemaps: [
     {
-      name: "Google Images",
-      name_cn: "谷歌影像",
-      name_en: "Google Images",
-      icon: "/img/basemaps/google_img.png",
-      type: "google",
-      layer: "img_d",
-      show: true
-    },
-    {
+      id: "100",
       name: "Tianditu Images",
       name_cn: "天地图影像",
       name_en: "Tianditu Images",
-      icon: "/img/basemaps/tdt_img.png",
+      icon: "//data.mars3d.cn/img/control/basemap/tdt_img.png",
       type: "group",
       layers: [
         { name: "底图", type: "tdt", layer: "img_d" },
         { name: "注记", type: "tdt", layer: "img_z" }
       ],
-      show: false
+      show: true
+    },
+    {
+      id: "200",
+      name: "Tianditu Images EN",
+      name_cn: "天地图影像EN",
+      name_en: "Tianditu Images EN",
+      icon: "//data.mars3d.cn/img/control/basemap/tdt_img.png",
+      type: "group",
+      layers: [
+        { name: "底图", type: "tdt", layer: "img_d" },
+        { name: "注记", type: "tdt", layer: "img_e" }
+      ]
     },
     {
       name: "Tianditu Electronic map",
       name_cn: "天地图电子",
       name_en: "Tianditu Electronic map",
-      icon: "/img/basemaps/tdt_vec.png",
+      icon: "//data.mars3d.cn/img/control/basemap/tdt_vec.png",
       type: "group",
       layers: [
         { name: "底图", type: "tdt", layer: "vec_d" },
@@ -70,7 +73,7 @@ export const mapOptions = {
       name: "not map",
       name_cn: "无底图",
       name_en: "not map",
-      icon: "/img/basemaps/null.png",
+      icon: "//data.mars3d.cn/img/control/basemap/null.png",
       type: "grid",
       color: "#ffffff",
       alpha: 0.03,
@@ -148,6 +151,7 @@ export function onUnmounted() {
 }
 
 export function toCustomLang() {
+  map.basemap = "200" // 英文天地图
   map.options.basemaps.forEach((item) => {
     item.name = item.name_en
   })
@@ -162,6 +166,7 @@ export function toCustomLang() {
 }
 
 export function toDefaultLange() {
+  map.basemap = "100" // 中文天地图
   map.options.basemaps.forEach((item) => {
     item.name = item.name_cn
   })

@@ -82,7 +82,7 @@ export function startPoint(type) {
     .startDraw({
       type: "billboard",
       style: {
-        image: "img/marker/route-start.png",
+        image: "//data.mars3d.cn/img/marker/route-start.png",
         horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
         verticalOrigin: Cesium.VerticalOrigin.BOTTOM
       }
@@ -115,7 +115,7 @@ export function endPoint(type) {
     .startDraw({
       type: "billboard",
       style: {
-        image: "img/marker/route-end.png",
+        image: "//data.mars3d.cn/img/marker/route-end.png",
         horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
         verticalOrigin: Cesium.VerticalOrigin.BOTTOM
       }

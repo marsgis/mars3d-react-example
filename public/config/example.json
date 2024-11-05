@@ -173,7 +173,7 @@
             "api": "Map.html#expImage",
             "hasPannel": true,
             "resources": [
-              "/temp/css/divGraphic.css",
+              "/img/div-graphic/divGraphic.css",
               "/lib/dom2img/dom-to-image.js",
               "/lib/dom2img/html2canvas.js"
             ]
@@ -311,6 +311,23 @@
             "main": "thing/camera/cameraHistory-limit",
             "api": "CameraHistory.html",
             "hasPannel": true
+          },
+          {
+            "name": "执行时序任务",
+            "thumbnail": "thing-other-task.jpg",
+            "main": "thing/other/task",
+            "api": "Task.html",
+            "hasPannel": true,
+            "resources": [
+              "CameraList.js",
+              "CameraView.js",
+              "MapRotate.js",
+              "PointRotate.js",
+              "RouteLine.js",
+              "ZoomIn.js",
+              "ZoomOut.js",
+              "FlickerEntity.js"
+            ]
           }
         ]
       },
@@ -874,7 +891,7 @@
             "developerShow": false,
             "hasPannel": true,
             "resources": [
-              "/temp/css/divGraphic.css"
+              "/img/div-graphic/divGraphic.css"
             ]
           },
           {
@@ -1014,7 +1031,12 @@
             "thumbnail": "layerg-wfs-geoserver.jpg",
             "main": "layer-graphic/wfs/geoserver",
             "api": "WfsLayer.html",
-            "hasPannel": true
+            "hasPannel": true,
+            "libs": [
+              "mars3d",
+              "localforage",
+              "cesium-networkPlug"
+            ]
           },
           {
             "name": "ArcGIS Server动态图层",
@@ -1036,14 +1058,6 @@
             "thumbnail": "layerg-wfs-arcgis-feature-surface.jpg",
             "main": "layer-graphic/wfs/arcgis-feature-surface",
             "api": "ArcGisWfsLayer.html",
-            "download": false
-          },
-          {
-            "name": "高德POI图层",
-            "thumbnail": "layerg-wfs-gaodePOI.jpg",
-            "main": "layer-graphic/wfs/gaodePOI",
-            "api": "GeodePoiLayer.html",
-            "hasPannel": true,
             "download": false
           }
         ]
@@ -1242,7 +1256,7 @@
             "developerShow": false,
             "hasPannel": true,
             "resources": [
-              "city.css"
+              "/img/div-graphic/divGraphic.css"
             ],
             "download": false
           }
@@ -1601,7 +1615,7 @@
             "api": "DivBillboardPrimitive.html",
             "hasPannel": true,
             "resources": [
-              "/temp/css/divGraphic.css",
+              "/img/div-graphic/divGraphic.css",
               "/lib/dom2img/dom-to-image.js"
             ]
           },
@@ -1695,7 +1709,7 @@
             "main": "graphic/divGraphic/basis",
             "api": "DivGraphic.html",
             "resources": [
-              "/temp/css/divGraphic.css"
+              "/img/div-graphic/divGraphic.css"
             ],
             "hasPannel": true
           },
@@ -1718,7 +1732,7 @@
             "api": "DivPlane.html",
             "hasPannel": true,
             "resources": [
-              "/temp/css/divGraphic.css"
+              "/img/div-graphic/divGraphic.css"
             ]
           },
           {
@@ -1735,7 +1749,7 @@
             "api": "DivGraphic.html",
             "developerShow": false,
             "resources": [
-              "/temp/css/divGraphic.css"
+              "/img/div-graphic/divGraphic.css"
             ]
           },
           {
@@ -1746,7 +1760,7 @@
             "hasPannel": true,
             "developerShow": false,
             "resources": [
-              "/temp/css/divGraphic.css"
+              "/img/div-graphic/divGraphic.css"
             ]
           },
           {
@@ -1780,8 +1794,7 @@
             "developerShow": false,
             "hasPannel": true,
             "resources": [
-              "camera.css",
-              "/temp/css/divGraphic.css"
+              "/img/div-graphic/divGraphic.css"
             ]
           },
           {
@@ -1795,8 +1808,7 @@
               "mars3d"
             ],
             "resources": [
-              "camera.css",
-              "/temp/css/divGraphic.css"
+              "/img/div-graphic/divGraphic.css"
             ],
             "hidden": true,
             "download": false
@@ -2236,7 +2248,7 @@
             "developerShow": false,
             "hasPannel": true,
             "resources": [
-              "/temp/css/divGraphic.css"
+              "/img/div-graphic/divGraphic.css"
             ]
           },
           {
@@ -2271,7 +2283,7 @@
             "developerShow": false,
             "hasPannel": true,
             "resources": [
-              "/temp/css/divGraphic.css"
+              "/img/div-graphic/divGraphic.css"
             ]
           },
           {
@@ -2613,7 +2625,7 @@
             "hasPannel": true,
             "resources": [
               "camera.css",
-              "/temp/css/divGraphic.css"
+              "/img/div-graphic/divGraphic.css"
             ]
           },
           {
@@ -3029,7 +3041,7 @@
             "thumbnail": "graphic-apply-district.jpg",
             "main": "graphic/apply/district",
             "resources": [
-              "district.css"
+              "/img/div-graphic/divGraphic.css"
             ]
           },
           {
@@ -3037,7 +3049,7 @@
             "thumbnail": "graphic-apply-district2.jpg",
             "main": "graphic/apply/district2",
             "resources": [
-              "district2.css"
+              "/img/div-graphic/divGraphic.css"
             ]
           },
           {
@@ -3061,7 +3073,7 @@
             "main": "graphic/apply/digitalCity",
             "previewListIn": true,
             "resources": [
-              "city.css"
+              "/img/div-graphic/divGraphic.css"
             ]
           }
         ]
@@ -3076,7 +3088,7 @@
             "main": "graphic/apply/steps",
             "hasPannel": true,
             "resources": [
-              "/temp/css/divGraphic.css"
+              "/img/div-graphic/divGraphic.css"
             ]
           },
           {
@@ -3148,7 +3160,7 @@
               "mars3d-heatmap"
             ],
             "resources": [
-              "/temp/css/divGraphic.css"
+              "/img/div-graphic/divGraphic.css"
             ]
           }
         ]
@@ -3271,7 +3283,7 @@
             "api": "Popup.html",
             "hasPannel": true,
             "resources": [
-              "/temp/css/divGraphic.css"
+              "/img/div-graphic/divGraphic.css"
             ]
           },
           {
@@ -3281,7 +3293,7 @@
             "api": "Tooltip.html",
             "hasPannel": true,
             "resources": [
-              "/temp/css/divGraphic.css"
+              "/img/div-graphic/divGraphic.css"
             ]
           },
           {
@@ -3418,7 +3430,7 @@
             "hasPannel": true
           },
           {
-            "name": "ClockAnimate 时钟控制栏 差值模式",
+            "name": "时钟控制栏 秒数值显示模式",
             "thumbnail": "control-basis-clockAnimate-duration.jpg",
             "main": "control/basis/clockAnimate-duration",
             "api": "ClockAnimate.html",
@@ -3483,6 +3495,13 @@
             "thumbnail": "control-basis-mapSplit.gif",
             "main": "control/basis/mapSplit",
             "api": "MapSplit.html",
+            "hasPannel": true
+          },
+          {
+            "name": "字幕",
+            "thumbnail": "control-basis-subtitles.jpg",
+            "main": "control/basis/subtitles",
+            "api": "Subtitles.html",
             "hasPannel": true
           }
         ]
@@ -3629,7 +3648,7 @@
             "api": "Measure.html",
             "hasPannel": true,
             "resources": [
-              "/temp/css/divGraphic.css"
+              "/img/div-graphic/divGraphic.css"
             ]
           },
           {

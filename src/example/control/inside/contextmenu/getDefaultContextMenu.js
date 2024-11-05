@@ -546,7 +546,7 @@ function getDefaultContextMenu(map) {
         },
         {
           text: function () {
-            return map.getLangText("_导出GeoJSON")
+            return map.getLangText("_导出文件")
           },
           icon: Icon.DrawDownJson,
           show: function (e) {

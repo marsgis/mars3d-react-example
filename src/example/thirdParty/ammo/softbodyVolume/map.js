@@ -257,7 +257,7 @@ function addDemo() {
         bufferGeom,
         new BasicMeshMaterial({
           uniforms: {
-            diffuseColorMap: "img/textures/colors.png"
+            diffuseColorMap: "//data.mars3d.cn/img/textures/colors.png"
           },
           translucent: false
         })

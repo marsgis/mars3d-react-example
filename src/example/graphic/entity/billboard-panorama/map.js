@@ -58,7 +58,7 @@ export function onMounted(mapInstance) {
       return
     }
 
-    return `<iframe style="width: 600px; height: 300px; border: none; "src="${attr.url}"></iframe> `
+    return `<iframe style="width: 600px; height: 300px; border: none; "src="${attr.url}"  sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe> `
   })
 
   // 添加数据
@@ -83,7 +83,7 @@ function addRandomGraphicByCount(graphicLayer, position) {
   const graphic = new mars3d.graphic.BillboardEntity({
     position,
     style: {
-      image: "img/marker/lace-blue.png",
+      image: "//data.mars3d.cn/img/marker/lace-blue.png",
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM
     },

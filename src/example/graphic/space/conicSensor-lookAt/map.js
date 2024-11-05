@@ -104,7 +104,6 @@ function addGraphicLayer() {
   })
   graphicLayer.addGraphic(satelliteSensor)
 
-
   // 地面站 展示
   const localStart = Cesium.Cartesian3.fromDegrees(109.51856, 18.258736, 2000)
   const conicSensor = new mars3d.graphic.ConicSensor({

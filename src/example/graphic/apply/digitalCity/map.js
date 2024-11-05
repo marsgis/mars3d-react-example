@@ -122,7 +122,7 @@ function addCityGraphics() {
       closure: true,
       materialType: mars3d.MaterialType.RectSlide,
       materialOptions: {
-        image: "img/tietu/circular.png",
+        image: "//data.mars3d.cn/img/textures/circular.png",
         speed: 2
       }
     }
@@ -142,7 +142,7 @@ function addCityGraphics() {
       height: 50,
       materialType: mars3d.MaterialType.Image2,
       materialOptions: {
-        image: "/img/textures/circle-two.png"
+        image: "//data.mars3d.cn/img/textures/circle-two.png"
       },
       rotation: new Cesium.CallbackProperty(getRotationValue, false),
       stRotation: new Cesium.CallbackProperty(getRotationValue, false)
@@ -198,7 +198,7 @@ function addCityGraphics() {
       radius: 480.0,
       materialType: mars3d.MaterialType.CircleScan,
       materialOptions: {
-        image: "/img/textures/circle-scan.png",
+        image: "//data.mars3d.cn/img/textures/circle-scan.png",
         color: "#ffffff"
       },
       stRotation: new Cesium.CallbackProperty(getRotationValue, false),

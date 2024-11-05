@@ -117,7 +117,7 @@ function addDemoGraphic4(graphicLayer) {
       // 扫描材质
       materialType: mars3d.MaterialType.CircleScan,
       materialOptions: {
-        image: "img/textures/circle-scan.png",
+        image: "//data.mars3d.cn/img/textures/circle-scan.png",
         color: "#00ff00"
       },
       stRotation: new Cesium.CallbackProperty(function (e) {
@@ -141,7 +141,7 @@ function addDemoGraphic5(graphicLayer) {
       materialType: mars3d.MaterialType.CircleScan,
       materialOptions: {
         // 扫描材质
-        image: "img/textures/circle-two.png",
+        image: "//data.mars3d.cn/img/textures/circle-two.png",
         color: "#5fc4ee"
       },
       stRotation: new Cesium.CallbackProperty(function (e) {

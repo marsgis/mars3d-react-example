@@ -30,7 +30,7 @@ export function onMounted(mapInstance) {
     position: { alt: 148.2 },
     maximumScreenSpaceError: 1,
     cullWithChildrenBounds: false,
-    luminanceAtZenith: 0.6
+    brightness: 0.6
   })
   map.addLayer(tiles3dLayer)
 

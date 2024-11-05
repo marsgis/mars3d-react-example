@@ -185,7 +185,7 @@ function addGraphics(gridOptions) {
       return selPoint
     }, false),
     style: {
-      image: "img/marker/lace-blue.png",
+      image: "//data.mars3d.cn/img/marker/lace-blue.png",
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
       heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND

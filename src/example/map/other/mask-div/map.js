@@ -49,7 +49,7 @@ export const mapOptions = {
       symbol: {
         type: "waterC",
         styleOptions: {
-          normalMap: "img/textures/waterNormals.jpg", // 水正常扰动的法线图
+          normalMap: "//data.mars3d.cn/img/textures/waterNormals.jpg", // 水正常扰动的法线图
           frequency: 5000.0, // 控制波数的数字。
           animationSpeed: 0.05, // 控制水的动画速度的数字。
           amplitude: 9.0, // 控制水波振幅的数字。

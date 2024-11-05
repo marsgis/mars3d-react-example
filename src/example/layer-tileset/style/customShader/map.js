@@ -99,7 +99,7 @@ export function setStyle3() {
     uniforms: {
       u_mars3d_texture: {
         value: new Cesium.TextureUniform({
-          url: "/img/textures/buildings.png"
+          url: "//data.mars3d.cn/img/textures/buildings.png"
         }),
         type: Cesium.UniformType.SAMPLER_2D
       }
@@ -141,13 +141,13 @@ export function setStyle4() {
       u_build0: {
         type: Cesium.UniformType.SAMPLER_2D,
         value: new Cesium.TextureUniform({
-          url: "/img/textures/buildings-blue.png"
+          url: "//data.mars3d.cn/img/textures/buildings-blue.png"
         })
       },
       u_build1: {
         type: Cesium.UniformType.SAMPLER_2D,
         value: new Cesium.TextureUniform({
-          url: "/img/textures/buildings-colors.png"
+          url: "//data.mars3d.cn/img/textures/buildings-colors.png"
         })
       }
     },

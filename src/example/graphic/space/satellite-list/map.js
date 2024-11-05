@@ -28,9 +28,9 @@ export const mapOptions = {
   layers: [
     {
       name: "夜晚图片",
-      icon: "img/basemaps/blackMarble.png",
+      icon: "//data.mars3d.cn/img/control/basemap/blackMarble.png",
       type: "image",
-      url: "//data.mars3d.cn/file/img/world/night2.jpg",
+      url: "//data.mars3d.cn/img/map/world/night2.jpg",
       dayAlpha: 0.0,
       nightAlpha: 1.0,
       brightness: 3.5,
@@ -224,7 +224,7 @@ function processInArea(weixin) {
             // 动画线材质
             materialType: mars3d.MaterialType.LineFlow,
             materialOptions: {
-              url: "./img/textures/arrow-h.png",
+              url: "//data.mars3d.cn/img/textures/arrow-h.png",
               color: Cesium.Color.AQUA,
               repeat: new Cesium.Cartesian2(15, 1),
               speed: 60 // 时长，控制速度

@@ -27,7 +27,7 @@ export const mapOptions = {
         type: "waterC",
         styleOptions: {
           height: 17, // 水面高度
-          normalMap: "img/textures/waterNormals.jpg", // 水正常扰动的法线图
+          normalMap: "//data.mars3d.cn/img/textures/waterNormals.jpg", // 水正常扰动的法线图
           frequency: 8000.0, // 控制波数的数字。
           animationSpeed: 0.02, // 控制水的动画速度的数字。
           amplitude: 5.0, // 控制水波振幅的数字。
@@ -60,7 +60,7 @@ export function onMounted(mapInstance) {
       styleOptions: {
         height: 16, // 水面高度
         offsetHeight: 0,
-        normalMap: "img/textures/waterNormals.jpg", // 水正常扰动的法线图
+        normalMap: "//data.mars3d.cn/img/textures/waterNormals.jpg", // 水正常扰动的法线图
         frequency: 8000.0, // 控制波数的数字。
         animationSpeed: 0.02, // 控制水的动画速度的数字。
         amplitude: 5.0, // 控制水波振幅的数字。
@@ -107,7 +107,7 @@ function updateHeight(height) {
   zmGraphic.height = 16 + height // 阀门高度
 
   waterLayer.eachGraphic((graphic) => {
-    graphic.offsetHeight = height// 水域高度变化
+    graphic.offsetHeight = height // 水域高度变化
   })
 }
 

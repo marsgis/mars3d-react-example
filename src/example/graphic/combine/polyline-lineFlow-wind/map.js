@@ -68,7 +68,7 @@ function showWindLine(arr) {
         width: 8,
         materialType: mars3d.MaterialType.LineFlow,
         materialOptions: {
-          image: "img/textures/line-arrow-right.png",
+          image: "//data.mars3d.cn/img/textures/line-arrow-right.png",
           color: "#00ff00",
           speed: 30
         }
@@ -91,7 +91,7 @@ function showWindLine(arr) {
   map.addLayer(graphicLayer)
 
   let lineMaterial = mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
-    image: "img/textures/line-arrow-right.png",
+    image: "//data.mars3d.cn/img/textures/line-arrow-right.png",
     color: "#00ff00",
     speed: 30
   })

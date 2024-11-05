@@ -33,8 +33,8 @@ export function onMounted(mapInstance) {
     ],
     exact: true,
     diffHeight: 1200, // 矿区深度
-    image: "./img/textures/mining.jpg", // 井墙面贴图url
-    imageBottom: "./img/textures/poly-soil.jpg", // 井底贴图url
+    image: "//data.mars3d.cn/img/textures/mining.jpg", // 井墙面贴图url
+    imageBottom: "//data.mars3d.cn/img/textures/poly-soil.jpg", // 井底贴图url
     splitNum: 2 // wall边界插值数
   })
   map.addThing(terrainClip)

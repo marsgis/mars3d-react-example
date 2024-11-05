@@ -68,7 +68,7 @@ function showRoad(arr, options) {
         name: item.name,
         position,
         style: {
-          image: "img/country/" + item.icon,
+          image: "//data.mars3d.cn/img/marker/country/" + item.icon,
           scale: 0.7,
           horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
           verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
@@ -105,7 +105,7 @@ function showRoad(arr, options) {
       width: 4,
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
-        image: "img/textures/line-pulse.png",
+        image: "//data.mars3d.cn/img/textures/line-pulse.png",
         color: options.color,
         repeat: new Cesium.Cartesian2(10.0, 1.0),
         speed: 2

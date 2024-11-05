@@ -123,8 +123,9 @@ const CustomLang = {
   _标记矩形: "Mark rectangular",
   _允许编辑: "Allowed to edit",
   _禁止编辑: "Prohibit to edit",
-  _导出GeoJSON: "Export GeoJSON",
-  _清除所有标记: "Clear",
+  _导出文件: "Export JSON",
+  _导入文件: "Import JSON",
+  _清除标记: "Clear",
 
   _特效效果: "Effects",
   _开启下雨: "Enable rain",

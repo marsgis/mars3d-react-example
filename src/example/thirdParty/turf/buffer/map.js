@@ -37,7 +37,7 @@ export function onMounted(mapInstance) {
     symbol: {
       styleOptions: {
         ...pointStyle,
-        image: "img/marker/mark-blue.png"
+        image: "//data.mars3d.cn/img/marker/mark-blue.png"
       }
     },
     popup: "{项目名称}",
@@ -172,7 +172,7 @@ function updateSelect(drawGraphic) {
     const isInArea = drawGraphic.isInPoly(position)
     if (isInArea) {
       graphic.setStyle({
-        image: "img/marker/mark-red.png"
+        image: "//data.mars3d.cn/img/marker/mark-red.png"
       })
       selectGraphic.push(graphic)
     }
@@ -183,7 +183,7 @@ export function removeSelect() {
   for (let i = 0; i < selectGraphic.length; i++) {
     const graphic = selectGraphic[i]
     graphic.setStyle({
-      image: "img/marker/mark-blue.png"
+      image: "//data.mars3d.cn/img/marker/mark-blue.png"
     })
   }
   selectGraphic = []

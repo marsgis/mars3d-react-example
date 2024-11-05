@@ -727,7 +727,7 @@ export function firstStep() {
     position: new mars3d.LngLatPoint(126.320842, 31.97364, 14000),
     id: "rescueIcon",
     style: {
-      image: "img/icon/warn.png",
+      image: "//data.mars3d.cn/img/marker/warn.png",
       scale: 0.5,
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
@@ -740,7 +740,11 @@ export function firstStep() {
     graphicLayer.addGraphic(rescueIcon)
   }
 
-  setInterval(() => {
+  const timeTik = setInterval(() => {
+    if (rescueIcon.isDestroy) {
+      clearInterval(timeTik)
+      return
+    }
     rescueIcon.show = !rescueIcon.show
   }, 500)
 
@@ -755,7 +759,7 @@ export function firstStep() {
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
         color: "rgba(255, 204, 102 , .5)",
-        image: "img/textures/line-tarans.png",
+        image: "//data.mars3d.cn/img/textures/line-tarans.png",
         speed: 8
       }
     }
@@ -802,7 +806,7 @@ export function secondStep() {
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
         color: "rgba(255, 204, 102 , .5)",
-        image: "img/textures/line-tarans.png",
+        image: "//data.mars3d.cn/img/textures/line-tarans.png",
         speed: 8
       }
     }
@@ -957,7 +961,7 @@ export function forthStep() {
       width: 20,
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
-        image: "img/textures/line-arrow-blue.png"
+        image: "//data.mars3d.cn/img/textures/line-arrow-blue.png"
       }
     },
     name: "救援船救援路线",
@@ -976,7 +980,7 @@ export function forthStep() {
       width: 20,
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
-        image: "img/textures/line-arrow-blue.png"
+        image: "//data.mars3d.cn/img/textures/line-arrow-blue.png"
       }
     },
     name: "补给船救援路线",

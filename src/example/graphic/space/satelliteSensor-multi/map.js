@@ -7,7 +7,6 @@ let satelliteSensor
 let satelliteSensor2
 let modelGraphic
 
-
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
@@ -22,9 +21,9 @@ export const mapOptions = {
   layers: [
     {
       name: "夜晚图片",
-      icon: "img/basemaps/blackMarble.png",
+      icon: "//data.mars3d.cn/img/control/basemap/blackMarble.png",
       type: "image",
-      url: "//data.mars3d.cn/file/img/world/night2.jpg",
+      url: "//data.mars3d.cn/img/map/world/night2.jpg",
       dayAlpha: 0.0,
       nightAlpha: 1.0,
       brightness: 3.5,

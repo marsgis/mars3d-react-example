@@ -47,7 +47,6 @@ export function onUnmounted() {
 }
 
 export function addDemoGraphic1() {
-
   const rectangularSensor = new mars3d.graphic.RectangularSensor({
     position: [117.218875, 31.817812, 138],
     style: {
@@ -70,7 +69,6 @@ export function addDemoGraphic1() {
     }
   })
   graphicLayer.addGraphic(rectangularSensor)
-
 
   // 加个模型
   const model = new mars3d.graphic.ModelPrimitive({

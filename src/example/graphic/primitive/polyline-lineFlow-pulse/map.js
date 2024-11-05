@@ -12,9 +12,9 @@ export const mapOptions = {
   basemaps: [
     {
       name: "蓝色底图",
-      icon: "//data.mars3d.cn/file/img/world/blue.jpg",
+      icon: "//data.mars3d.cn/img/map/world/blue.jpg",
       type: "image",
-      url: "//data.mars3d.cn/file/img/world/blue.jpg",
+      url: "//data.mars3d.cn/img/map/world/blue.jpg",
       show: true
     }
   ],
@@ -108,7 +108,7 @@ export function onMounted(mapInstance) {
           materialType: mars3d.MaterialType.LineFlow,
           materialOptions: {
             color: "#3af2f3",
-            image: "img/textures/line-pulse.png",
+            image: "//data.mars3d.cn/img/textures/line-pulse.png",
             speed: 1
           }
         }

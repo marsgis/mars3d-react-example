@@ -33,7 +33,7 @@ export function onMounted(mapInstance) {
         materialType: mars3d.MaterialType.LineFlow,
         materialOptions: {
           speed: 10, // 速度
-          image: "img/textures/fence.png", // 图片
+          image: "//data.mars3d.cn/img/textures/fence.png", // 图片
           repeatX: 1, // 重复数量
           axisY: true, // 竖直方向
           color: "#00ffff", // 颜色
@@ -104,7 +104,7 @@ function addDemoGraphic1(graphicLayer) {
             size: item["主管部门"] === "教育部" ? 15 : 10,
             distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 200000) // 按视距距离显示
             // billboard: {
-            //   image: "img/marker/lace-blue.png",
+            //   image: "//data.mars3d.cn/img/marker/lace-blue.png",
             //   horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
             //   verticalOrigin: Cesium.VerticalOrigin.BOTTOM
             // }

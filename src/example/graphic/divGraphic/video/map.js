@@ -74,11 +74,11 @@ function addRandomGraphicByCount(graphicLayer, position) {
   const graphicImg = new mars3d.graphic.DivGraphic({
     position,
     style: {
-      html: ` <div class="mars3d-camera-content">
-                      <img class="mars3d-camera-img" src="img/icon/camera.svg" >
+      html: ` <div class="mars3d-divCameraPoint-content">
+                      <img class="mars3d-divCameraPoint-img" src="//data.mars3d.cn/img/marker/svg/camera.svg" >
                     </div>
-                    <div class="mars3d-camera-line" ></div>
-                    <div class="mars3d-camera-point"></div>
+                    <div class="mars3d-divCameraPoint-line" ></div>
+                    <div class="mars3d-divCameraPoint-point"></div>
                   `,
       offsetX: -16,
       distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 100000)

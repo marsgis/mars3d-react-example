@@ -171,7 +171,7 @@ function startRoam() {
       positions,
       style: {
         color: arrColor[graphicLayer.length % arrColor.length],
-        // image: "img/tietu/gugong.jpg",
+        // image: "//data.mars3d.cn/img/map/gugong.jpg",
         // stRotationDegree: fixedRoute.model.heading,
         zIndex: graphicLayer.length
       }

@@ -12,7 +12,7 @@ export const mapOptions = {
     // showSkyAtmosphere: false,
     // fog: false,
     // contextOptions: { webgl: { alpha: true } }, // 允许透明，只能Map初始化传入 [关键代码]
-    backgroundImage: "url(/img/tietu/backGroundImg.jpg)",
+    backgroundImage: "url(//data.mars3d.cn/img/busines/background1.jpg)",
     globe: {
       baseColor: "rgba(0,0,0,0)",
       showGroundAtmosphere: false,
@@ -49,28 +49,28 @@ export function show() {
 }
 
 export function show1() {
-  // map.container.style.backgroundImage = "url(/img/tietu/backGroundImg.jpg)"
+  // map.container.style.backgroundImage = "url(//data.mars3d.cn/img/busines/background1.jpg)"
   map.setOptions({
     scene: {
-      backgroundImage: "url(/img/tietu/backGroundImg.jpg)"
+      backgroundImage: "url(//data.mars3d.cn/img/busines/background1.jpg)"
     }
   })
 }
 
 export function show2() {
-  // map.container.style.backgroundImage = "url(//data.mars3d.cn/file/img/world/world.jpg)"
+  // map.container.style.backgroundImage = "url(//data.mars3d.cn/img/map/world/world.jpg)"
   map.setOptions({
     scene: {
-      backgroundImage: "url(//data.mars3d.cn/file/img/world/world.jpg)"
+      backgroundImage: "url(//data.mars3d.cn/img/map/world/world.jpg)"
     }
   })
 }
 
 export function show3() {
-  // map.container.style.backgroundImage = "url(/img/tietu/bg4.jpg)"
+  // map.container.style.backgroundImage = "url(//data.mars3d.cn/img/busines/background2.jpg)"
   map.setOptions({
     scene: {
-      backgroundImage: "url(/img/tietu/bg4.jpg)"
+      backgroundImage: "url(//data.mars3d.cn/img/busines/background2.jpg)"
     }
   })
 }

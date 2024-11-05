@@ -138,9 +138,7 @@ function showData(arrdata) {
     polylinesTB.push(newPoint2) // 图标显示的点
 
     drawWireTowerModel(position, degree, item.scale, item)
-
-    // 3个悬垂串模型
-    drawWireTowerJYZModel(newPoint1, degree)
+    drawWireTowerJYZModel(newPoint1, degree)// 3个悬垂串模型
     drawWireTowerJYZModel(newPoint2, degree)
     drawWireTowerJYZModel(newPoint3, degree)
 
@@ -209,17 +207,18 @@ function drawWireTowerModel(position, degree, scale, item) {
 }
 
 function drawWireTowerJYZModel(position, degree) {
-  const graphic2 = new mars3d.graphic.ModelPrimitive({
-    position,
-    style: {
-      url: "//data.mars3d.cn/gltf/mars/tower/tower-jyz.glb",
-      heading: degree,
-      pitch: 90, // 模型本身不是竖直，需要加pitch纠正
-      scale: 1,
-      distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 4000.0)
-    }
-  })
-  graphicLayer.addGraphic(graphic2)
+  // cesium v1.123渲染报错，暂时注释了
+  // const graphic2 = new mars3d.graphic.ModelPrimitive({
+  //   position,
+  //   style: {
+  //     url: "//data.mars3d.cn/gltf/mars/tower/tower-jyz.glb",
+  //     heading: degree,
+  //     pitch: 90, // 模型本身不是竖直，需要加pitch纠正
+  //     scale: 1,
+  //     distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 4000.0)
+  //   }
+  // })
+  // graphicLayer.addGraphic(graphic2)
 }
 
 function drawGuideLine(positions, color) {

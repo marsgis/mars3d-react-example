@@ -87,7 +87,7 @@ function addDemoGraphics(geojson) {
 
   const arr = mars3d.Util.geoJsonToGraphics(geojson) // 解析geojson
   const lineMaterial = mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
-    image: "img/textures/line-color-yellow.png",
+    image: "//data.mars3d.cn/img/textures/line-color-yellow.png",
     color: new Cesium.Color(255 / 255, 201 / 255, 38 / 255, 0.5),
     speed: 9
   })

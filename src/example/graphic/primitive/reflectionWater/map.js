@@ -62,7 +62,7 @@ function addDemoGraphic1() {
       [117.214681, 31.81402, 32.97]
     ],
     style: {
-      normalMap: "/img/textures/waterNormals.jpg", // 水正常扰动的法线图
+      normalMap: "//data.mars3d.cn/img/textures/waterNormals.jpg", // 水正常扰动的法线图
       ripple: 100,
       reflectivity: 0.8
     },
@@ -94,7 +94,7 @@ export function addRandomGraphicByCount(count) {
     const graphic = new mars3d.graphic.ReflectionWater({
       positions: [pt1, pt2, pt3, pt4, pt5],
       style: {
-        normalMap: "/img/textures/waterNormals.jpg", // 水正常扰动的法线图
+        normalMap: "//data.mars3d.cn/img/textures/waterNormals.jpg", // 水正常扰动的法线图
         ripple: 100,
         reflectivity: 0.8
       },
@@ -114,7 +114,7 @@ export function startDrawGraphic() {
   graphicLayer.startDraw({
     type: "reflectionWater",
     style: {
-      normalMap: "/img/textures/waterNormals.jpg", // 水正常扰动的法线图
+      normalMap: "//data.mars3d.cn/img/textures/waterNormals.jpg", // 水正常扰动的法线图
       ripple: 100,
       reflectivity: 0.9
     }

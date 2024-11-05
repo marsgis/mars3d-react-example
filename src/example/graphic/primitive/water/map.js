@@ -60,7 +60,7 @@ function addDemoGraphic1() {
     ],
     style: {
       height: 3, // 水面高度
-      normalMap: "img/textures/waterNormals.jpg", // 水正常扰动的法线图
+      normalMap: "//data.mars3d.cn/img/textures/waterNormals.jpg", // 水正常扰动的法线图
       frequency: 8000.0, // 控制波数的数字。
       animationSpeed: 0.02, // 控制水的动画速度的数字。
       amplitude: 5.0, // 控制水波振幅的数字。
@@ -117,6 +117,26 @@ function initGraphicManager(graphic) {
   // 绑定右键菜单
   graphic.bindContextMenu([
     {
+      text: "开始编辑对象[graphic绑定的]",
+      icon: "fa fa-edit",
+      show: function (e) {
+        const graphic = e.graphic
+        if (!graphic || !graphic.hasEdit) {
+          return false
+        }
+        return !graphic.isEditing
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
+        if (graphic) {
+          graphicLayer.startEditing(graphic)
+        }
+      }
+    },
+    {
       text: "删除对象[graphic绑定的]",
       icon: "fa fa-trash-o",
       callback: (e) => {
@@ -143,7 +163,7 @@ function addDemoGraphic2() {
       [117.147186, 31.791731, 800]
     ],
     style: {
-      normalMap: "img/textures/waterNormals.jpg", // 水正常扰动的法线图
+      normalMap: "//data.mars3d.cn/img/textures/waterNormals.jpg", // 水正常扰动的法线图
       frequency: 8000.0, // 控制波数的数字。
       animationSpeed: 0.02, // 控制水的动画速度的数字。
       amplitude: 5.0, // 控制水波振幅的数字。
@@ -182,7 +202,7 @@ function addDemoGraphic3() {
       [117.214681, 31.81402, 32.97]
     ],
     style: {
-      normalMap: "img/textures/waterNormals.jpg", // 水正常扰动的法线图
+      normalMap: "//data.mars3d.cn/img/textures/waterNormals.jpg", // 水正常扰动的法线图
       frequency: 8000.0, // 控制波数的数字。
       animationSpeed: 0.02, // 控制水的动画速度的数字。
       amplitude: 5.0, // 控制水波振幅的数字。
@@ -215,7 +235,7 @@ function addDemoGraphic4() {
     style: {
       height: 100, // 水面高度
       diffHeight: 700,
-      normalMap: "img/textures/waterNormals.jpg", // 水正常扰动的法线图
+      normalMap: "//data.mars3d.cn/img/textures/waterNormals.jpg", // 水正常扰动的法线图
       frequency: 8000.0, // 控制波数的数字。
       animationSpeed: 0.02, // 控制水的动画速度的数字。
       amplitude: 5.0, // 控制水波振幅的数字。
@@ -251,7 +271,7 @@ export function addRandomGraphicByCount(count) {
     const graphic = new mars3d.graphic.Water({
       positions: [pt1, pt2, pt3, pt4, pt5],
       style: {
-        normalMap: "img/textures/waterNormals.jpg", // 水正常扰动的法线图
+        normalMap: "//data.mars3d.cn/img/textures/waterNormals.jpg", // 水正常扰动的法线图
         frequency: 8000.0, // 控制波数的数字。
         animationSpeed: 0.02, // 控制水的动画速度的数字。
         amplitude: 5.0, // 控制水波振幅的数字。
@@ -275,7 +295,7 @@ export function startDrawGraphic() {
     type: "water",
     style: {
       // height: 3, // 水面高度
-      normalMap: "img/textures/waterNormals.jpg", // 水正常扰动的法线图
+      normalMap: "//data.mars3d.cn/img/textures/waterNormals.jpg", // 水正常扰动的法线图
       frequency: 8000.0, // 控制波数的数字。
       animationSpeed: 0.02, // 控制水的动画速度的数字。
       amplitude: 5.0, // 控制水波振幅的数字。
@@ -293,7 +313,7 @@ export function startDrawGraphic2() {
     style: {
       height: 100, // 水面高度
       diffHeight: 700,
-      normalMap: "img/textures/waterNormals.jpg", // 水正常扰动的法线图
+      normalMap: "//data.mars3d.cn/img/textures/waterNormals.jpg", // 水正常扰动的法线图
       frequency: 8000.0, // 控制波数的数字。
       animationSpeed: 0.02, // 控制水的动画速度的数字。
       amplitude: 5.0, // 控制水波振幅的数字。
@@ -321,11 +341,69 @@ export function bindLayerPopup() {
 export function bindLayerContextMenu() {
   graphicLayer.bindContextMenu([
     {
+      text: "还原编辑(还原到初始)",
+      icon: "fa fa-pencil",
+      show: (event) => {
+        function hasRestore(graphic) {
+          if (!graphic || !graphic.hasEdit || !graphic.isEditing) {
+            return false
+          }
+          return graphic.editing?.hasRestore()
+        }
+
+        const graphic = event.graphic
+        if (hasRestore(graphic)) {
+          return true
+        }
+        if (graphic.isPrivate && graphic.parent) {
+          return hasRestore(graphic.parent) // 右击是编辑点时
+        }
+        return false
+      },
+      callback: (event) => {
+        const graphic = event.graphic
+        if (graphic.editing?.restore) {
+          graphic.editing.restore() // 撤销编辑，可直接调用
+        } else if (graphic.parent?.editing?.restore) {
+          graphic.parent.editing.restore() // 右击是编辑点时
+        }
+      }
+    },
+    {
+      text: "撤销编辑(还原到上一步)",
+      icon: "fa fa-pencil",
+      show: (event) => {
+        function hasRevoke(graphic) {
+          if (!graphic || !graphic.hasEdit || !graphic.isEditing) {
+            return false
+          }
+          return graphic.editing?.hasRevoke()
+        }
+
+        const graphic = event.graphic
+        if (hasRevoke(graphic)) {
+          return true
+        }
+        if (graphic.isPrivate && graphic.parent) {
+          return hasRevoke(graphic.parent) // 右击是编辑点时
+        }
+        return false
+      },
+      callback: (event) => {
+        const graphic = event.graphic
+        if (graphic.editing?.revoke) {
+          graphic.editing.revoke() // 撤销编辑，可直接调用
+        } else if (graphic.parent?.editing?.revoke) {
+          graphic.parent.editing.revoke() // 右击是编辑点时
+        }
+      }
+    },
+    {
       text: "删除对象",
       icon: "fa fa-trash-o",
       show: (event) => {
         const graphic = event.graphic
-        if (!graphic || graphic.isDestroy || graphic.graphicIds) {
+        if (!graphic || graphic.isDestroy || graphic.isPrivate || graphic.graphicIds) {
           return false
         } else {
           return true
@@ -373,6 +451,10 @@ export function bindLayerContextMenu() {
     {
       text: "计算周长",
       icon: "fa fa-medium",
+      show: (event) => {
+        const graphic = event.graphic
+        return !graphic.isPoint
+      },
       callback: (e) => {
         const graphic = e.graphic
         const strDis = mars3d.MeasureUtil.formatDistance(graphic.distance)
@@ -382,6 +464,10 @@ export function bindLayerContextMenu() {
     {
       text: "计算面积",
       icon: "fa fa-reorder",
+      show: (event) => {
+        const graphic = event.graphic
+        return !graphic.isPoint
+      },
       callback: (e) => {
         const graphic = e.graphic
         const strArea = mars3d.MeasureUtil.formatArea(graphic.area)

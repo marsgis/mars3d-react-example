@@ -33,7 +33,6 @@ export const mapOptions = {
         }
       },
       popup: "{name}",
-      flyTo: true,
       show: true
     }
   ]
@@ -55,7 +54,7 @@ export function onMounted(mapInstance) {
   // 设置编辑点样式
   // mars3d.DrawUtil.setEditPointStyle(mars3d.EditPointType.Control, {
   //   type: mars3d.GraphicType.billboardP, // 支持设置type指定编辑点类型
-  //   image: "img/icon/move.png",
+  //   image: "//data.mars3d.cn/img/marker/move.png",
   //   horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
   //   verticalOrigin: Cesium.VerticalOrigin.CENTER
   // })
@@ -187,7 +186,7 @@ export async function drawMarker() {
   const graphic = await graphicLayer.startDraw({
     type: "billboard",
     style: {
-      image: "img/marker/mark-red.png",
+      image: "//data.mars3d.cn/img/marker/mark-red.png",
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
       label: {
@@ -540,11 +539,143 @@ export function bindLayerContextMenu() {
       }
     },
     {
+      text: "启用按轴平移",
+      icon: "fa fa-pencil",
+      show: (event) => {
+        const graphic = event.graphic
+        if (!graphic || !graphic.hasEdit || !graphic.isEditing) {
+          // || !graphic.isPoint
+          return false
+        }
+        return !graphic.editing?.hasMoveMatrix
+      },
+      callback: (event) => {
+        const graphic = event.graphic
+        graphic.editing.startMoveMatrix(event.graphic, event)
+      }
+    },
+    {
+      text: "停止按轴平移",
+      icon: "fa fa-pencil",
+      show: (event) => {
+        const graphic = event.graphic
+        if (!graphic || !graphic.hasEdit || !graphic.isEditing) {
+          return false
+        }
+        return graphic.editing?.hasMoveMatrix
+      },
+      callback: (event) => {
+        const graphic = event.graphic
+        graphic.editing.stopMoveMatrix()
+      }
+    },
+    {
+      text: "启用按轴旋转",
+      icon: "fa fa-bullseye",
+      show: (event) => {
+        const graphic = event.graphic
+        if (!graphic || !graphic.hasEdit || !graphic.isEditing) {
+          return false
+        }
+        if (
+          !(
+            graphic.type === "model" ||
+            graphic.type === "modelP" ||
+            graphic.type === "box" ||
+            graphic.type === "boxP" ||
+            graphic.type === "cylinder" ||
+            graphic.type === "cylinderP" ||
+            graphic.type === "plane"
+          )
+        ) {
+          return false
+        }
+        return !graphic.editing?.hasRotateMatrix
+      },
+      callback: (event) => {
+        const graphic = event.graphic
+        graphic.editing.startRotateMatrix(event.graphic, event)
+      }
+    },
+    {
+      text: "停止按轴旋转",
+      icon: "fa fa-bullseye",
+      show: (event) => {
+        const graphic = event.graphic
+        if (!graphic || !graphic.hasEdit || !graphic.isEditing) {
+          return false
+        }
+        return graphic.editing?.hasRotateMatrix
+      },
+      callback: (event) => {
+        const graphic = event.graphic
+        graphic.editing.stopRotateMatrix()
+      }
+    },
+    {
+      text: "还原编辑(还原到初始)",
+      icon: "fa fa-pencil",
+      show: (event) => {
+        function hasRestore(graphic) {
+          if (!graphic || !graphic.hasEdit || !graphic.isEditing) {
+            return false
+          }
+          return graphic.editing?.hasRestore()
+        }
+
+        const graphic = event.graphic
+        if (hasRestore(graphic)) {
+          return true
+        }
+        if (graphic.isPrivate && graphic.parent) {
+          return hasRestore(graphic.parent) // 右击是编辑点时
+        }
+        return false
+      },
+      callback: (event) => {
+        const graphic = event.graphic
+        if (graphic.editing?.restore) {
+          graphic.editing.restore() // 撤销编辑，可直接调用
+        } else if (graphic.parent?.editing?.restore) {
+          graphic.parent.editing.restore() // 右击是编辑点时
+        }
+      }
+    },
+    {
+      text: "撤销编辑(还原到上一步)",
+      icon: "fa fa-pencil",
+      show: (event) => {
+        function hasRevoke(graphic) {
+          if (!graphic || !graphic.hasEdit || !graphic.isEditing) {
+            return false
+          }
+          return graphic.editing?.hasRevoke()
+        }
+
+        const graphic = event.graphic
+        if (hasRevoke(graphic)) {
+          return true
+        }
+        if (graphic.isPrivate && graphic.parent) {
+          return hasRevoke(graphic.parent) // 右击是编辑点时
+        }
+        return false
+      },
+      callback: (event) => {
+        const graphic = event.graphic
+        if (graphic.editing?.revoke) {
+          graphic.editing.revoke() // 撤销编辑，可直接调用
+        } else if (graphic.parent?.editing?.revoke) {
+          graphic.parent.editing.revoke() // 右击是编辑点时
+        }
+      }
+    },
+    {
       text: "删除对象",
       icon: "fa fa-trash-o",
       show: (event) => {
         const graphic = event.graphic
-        if (!graphic || graphic.isDestroy || graphic.graphicIds) {
+        if (!graphic || graphic.isDestroy || graphic.isPrivate || graphic.graphicIds) {
           return false
         } else {
           return true
@@ -802,7 +933,7 @@ function loadDemoData() {
   // }
 
   mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/geojson/mars3d-draw.json" }).then(function (json) {
-   const graphics = graphicLayer.loadGeoJSON(json, { clear: true, flyTo: true, toPrimitive: true })
-   console.log("加载演示数据", graphics)
+    const graphics = graphicLayer.loadGeoJSON(json, { clear: true, flyTo: true, toPrimitive: true })
+    console.log("加载演示数据", graphics)
   })
 }

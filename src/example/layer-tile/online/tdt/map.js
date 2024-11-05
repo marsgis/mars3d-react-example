@@ -15,7 +15,7 @@ export const mapOptions = {
   basemaps: [
     {
       name: "天地图影像(EPSG:3857)",
-      icon: "img/basemaps/tdt_img.png",
+      icon: "//data.mars3d.cn/img/control/basemap/tdt_img.png",
       type: "tdt",
       layer: "img_d",
       key: mars3d.Token.tiandituArr,
@@ -24,7 +24,7 @@ export const mapOptions = {
     },
     {
       name: "天地图电子(EPSG:3857)",
-      icon: "img/basemaps/tdt_vec.png",
+      icon: "//data.mars3d.cn/img/control/basemap/tdt_vec.png",
       type: "group",
       layers: [
         { name: "底图", type: "tdt", layer: "vec_d", key: mars3d.Token.tiandituArr },
@@ -34,7 +34,7 @@ export const mapOptions = {
     },
     {
       name: "天地图地形(EPSG:3857)",
-      icon: "img/basemaps/tdt_ter.png",
+      icon: "//data.mars3d.cn/img/control/basemap/tdt_ter.png",
       type: "group",
       layers: [
         { name: "底图", type: "tdt", layer: "ter_d", key: mars3d.Token.tiandituArr },
@@ -52,7 +52,7 @@ export const mapOptions = {
     },
     {
       name: "天地图影像(EPSG:4326)",
-      icon: "img/basemaps/tdt_img.png",
+      icon: "//data.mars3d.cn/img/control/basemap/tdt_img.png",
       type: "group",
       layers: [
         {
@@ -74,7 +74,7 @@ export const mapOptions = {
     },
     {
       name: "天地图电子(EPSG:4326)",
-      icon: "img/basemaps/tdt_vec.png",
+      icon: "//data.mars3d.cn/img/control/basemap/tdt_vec.png",
       type: "group",
       layers: [
         {
@@ -96,7 +96,7 @@ export const mapOptions = {
     },
     {
       name: "天地图地形(EPSG:4326)",
-      icon: "img/basemaps/tdt_ter.png",
+      icon: "//data.mars3d.cn/img/control/basemap/tdt_ter.png",
       type: "group",
       layers: [
         {
@@ -119,7 +119,7 @@ export const mapOptions = {
 
     {
       name: "天地图影像(英文)",
-      icon: "img/basemaps/tdt_img.png",
+      icon: "//data.mars3d.cn/img/control/basemap/tdt_img.png",
       type: "group",
       layers: [
         { name: "底图", type: "tdt", layer: "img_d", key: mars3d.Token.tiandituArr },
@@ -129,7 +129,7 @@ export const mapOptions = {
     },
     {
       name: "天地图电子(英文)",
-      icon: "img/basemaps/tdt_vec.png",
+      icon: "//data.mars3d.cn/img/control/basemap/tdt_vec.png",
       type: "group",
       layers: [
         { name: "底图", type: "tdt", layer: "vec_d", key: mars3d.Token.tiandituArr },

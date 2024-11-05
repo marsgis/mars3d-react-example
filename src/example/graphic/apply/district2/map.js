@@ -91,7 +91,7 @@ function addAnhui() {
             diffHeight: 15000, // 墙高
             materialType: mars3d.MaterialType.Image2,
             materialOptions: {
-              image: "./img/textures/fence-top.png",
+              image: "//data.mars3d.cn/img/textures/fence-top.png",
               color: "rgba(0,255,255,0.6)"
             }
             // renderState: Cesium.RenderState.fromCache({
@@ -189,7 +189,7 @@ function addOutCircle(graphicLayer) {
   const arrImg = [
     {
       // 刻度
-      image: "./img/icon/calib.png",
+      image: "//data.mars3d.cn/img/textures/calib.png",
       positions: [
         [113.564329, 35.654741],
         [120.802219, 28.844016]
@@ -197,7 +197,7 @@ function addOutCircle(graphicLayer) {
     },
     {
       // 刻度尺
-      image: "./img/icon/calib-value.png",
+      image: "//data.mars3d.cn/img/textures/calib-value.png",
       positions: [
         [114.162597, 29.256489],
         [120.216593, 35.055444]
@@ -205,7 +205,7 @@ function addOutCircle(graphicLayer) {
     },
     {
       // 方向
-      image: "./img/icon/calib-dir.png",
+      image: "//data.mars3d.cn/img/textures/calib-dir.png",
       positions: [
         [114.162597, 29.256489],
         [120.216593, 35.055444]

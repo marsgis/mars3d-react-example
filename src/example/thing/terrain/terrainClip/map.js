@@ -32,8 +32,8 @@ export function onUnmounted() {
 export function addTerrainClip(height) {
   terrainClip = new mars3d.thing.TerrainClip({
     diffHeight: height, // 井的深度
-    image: "img/textures/poly-stone.jpg",
-    imageBottom: "img/textures/poly-soil.jpg",
+    image: "//data.mars3d.cn/img/textures/poly-stone.jpg",
+    imageBottom: "//data.mars3d.cn/img/textures/poly-soil.jpg",
     splitNum: 80 // 井边界插值数
   })
   map.addThing(terrainClip)

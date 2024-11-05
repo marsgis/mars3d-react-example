@@ -96,6 +96,26 @@ function initGraphicManager(graphic) {
   // 绑定右键菜单
   graphic.bindContextMenu([
     {
+      text: "开始编辑对象[graphic绑定的]",
+      icon: "fa fa-edit",
+      show: function (e) {
+        const graphic = e.graphic
+        if (!graphic || !graphic.hasEdit) {
+          return false
+        }
+        return !graphic.isEditing
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
+        if (graphic) {
+          graphicLayer.startEditing(graphic)
+        }
+      }
+    },
+    {
       text: "删除对象[graphic绑定的]",
       icon: "fa fa-trash-o",
       callback: (e) => {
@@ -180,7 +200,7 @@ function addDemoGraphic3(graphicLayer) {
       cornerType: Cesium.CornerType.MITERED,
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
-        image: "./img/textures/arrow-h.png",
+        image: "//data.mars3d.cn/img/textures/arrow-h.png",
         axisY: false,
         repeat: new Cesium.Cartesian2(30.0, 1.0),
         color: "#ffff00",
@@ -212,7 +232,6 @@ function addDemoGraphic4(graphicLayer) {
   })
   graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
 }
-
 
 // 生成演示数据(测试数据量)
 export function addRandomGraphicByCount(count) {
@@ -317,11 +336,69 @@ export function bindLayerContextMenu() {
       }
     },
     {
+      text: "还原编辑(还原到初始)",
+      icon: "fa fa-pencil",
+      show: (event) => {
+        function hasRestore(graphic) {
+          if (!graphic || !graphic.hasEdit || !graphic.isEditing) {
+            return false
+          }
+          return graphic.editing?.hasRestore()
+        }
+
+        const graphic = event.graphic
+        if (hasRestore(graphic)) {
+          return true
+        }
+        if (graphic.isPrivate && graphic.parent) {
+          return hasRestore(graphic.parent) // 右击是编辑点时
+        }
+        return false
+      },
+      callback: (event) => {
+        const graphic = event.graphic
+        if (graphic.editing?.restore) {
+          graphic.editing.restore() // 撤销编辑，可直接调用
+        } else if (graphic.parent?.editing?.restore) {
+          graphic.parent.editing.restore() // 右击是编辑点时
+        }
+      }
+    },
+    {
+      text: "撤销编辑(还原到上一步)",
+      icon: "fa fa-pencil",
+      show: (event) => {
+        function hasRevoke(graphic) {
+          if (!graphic || !graphic.hasEdit || !graphic.isEditing) {
+            return false
+          }
+          return graphic.editing?.hasRevoke()
+        }
+
+        const graphic = event.graphic
+        if (hasRevoke(graphic)) {
+          return true
+        }
+        if (graphic.isPrivate && graphic.parent) {
+          return hasRevoke(graphic.parent) // 右击是编辑点时
+        }
+        return false
+      },
+      callback: (event) => {
+        const graphic = event.graphic
+        if (graphic.editing?.revoke) {
+          graphic.editing.revoke() // 撤销编辑，可直接调用
+        } else if (graphic.parent?.editing?.revoke) {
+          graphic.parent.editing.revoke() // 右击是编辑点时
+        }
+      }
+    },
+    {
       text: "删除对象",
       icon: "fa fa-trash-o",
       show: (event) => {
         const graphic = event.graphic
-        if (!graphic || graphic.isDestroy || graphic.graphicIds) {
+        if (!graphic || graphic.isDestroy || graphic.isPrivate || graphic.graphicIds) {
           return false
         } else {
           return true
@@ -369,6 +446,10 @@ export function bindLayerContextMenu() {
     {
       text: "计算长度",
       icon: "fa fa-medium",
+      show: (event) => {
+        const graphic = event.graphic
+        return !graphic.isPoint
+      },
       callback: (e) => {
         const graphic = e.graphic
         const strDis = mars3d.MeasureUtil.formatDistance(graphic.distance)

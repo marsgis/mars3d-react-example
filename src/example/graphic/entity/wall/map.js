@@ -77,7 +77,7 @@ function addDemoGraphic1(graphicLayer) {
       // 动画线材质
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
-        image: "img/textures/fence.png",
+        image: "//data.mars3d.cn/img/textures/fence.png",
         color: "#00ff00",
         mixt: true,
         speed: 10,
@@ -114,6 +114,26 @@ function initGraphicManager(graphic) {
 
   // 绑定右键菜单
   graphic.bindContextMenu([
+    {
+      text: "开始编辑对象[graphic绑定的]",
+      icon: "fa fa-edit",
+      show: function (e) {
+        const graphic = e.graphic
+        if (!graphic || !graphic.hasEdit) {
+          return false
+        }
+        return !graphic.isEditing
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
+        if (graphic) {
+          graphicLayer.startEditing(graphic)
+        }
+      }
+    },
     {
       text: "删除对象[graphic绑定的]",
       icon: "fa fa-trash-o",
@@ -153,7 +173,7 @@ function addDemoGraphic2(graphicLayer) {
       // 动画线材质
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
-        image: "img/textures/arrow.png",
+        image: "//data.mars3d.cn/img/textures/arrow.png",
         color: Cesium.Color.CHARTREUSE,
         repeat: new Cesium.Cartesian2(30, 1),
         speed: 20
@@ -180,7 +200,7 @@ function addDemoGraphic3(graphicLayer) {
       // 动画线材质
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
-        image: "img/textures/fence.png",
+        image: "//data.mars3d.cn/img/textures/fence.png",
         color: "#00ffff",
         speed: 10,
         axisY: true
@@ -202,10 +222,10 @@ function addDemoGraphic4(graphicLayer) {
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
         // 动画线材质
-        image: "img/textures/fence.png",
+        image: "//data.mars3d.cn/img/textures/fence.png",
         axisY: true,
         color: "#ff0000",
-        image2: "img/textures/tanhao.png",
+        image2: "//data.mars3d.cn/img/textures/tanhao.png",
         color2: "#ffff00",
         speed: 10
       }
@@ -275,7 +295,7 @@ function addDemoGraphic6(graphicLayer) {
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
         // 动画线材质
-        image: "img/textures/arrow.png",
+        image: "//data.mars3d.cn/img/textures/arrow.png",
         color: "#00eba8",
         repeat: new Cesium.Cartesian2(20, 1),
         speed: 20
@@ -373,7 +393,7 @@ function addDemoGraphic9(graphicLayer) {
           diffHeight: 3000,
           materialType: mars3d.MaterialType.LineFlow,
           materialOptions: {
-            image: "img/textures/fence.png",
+            image: "//data.mars3d.cn/img/textures/fence.png",
             color: "#bdf700",
             repeat: new Cesium.Cartesian2(5, 1),
             axisY: true, // 方向，true时上下，false左右
@@ -402,7 +422,7 @@ function addDemoGraphic10() {
       diffHeight: 500,
       materialType: mars3d.MaterialType.WallScroll,
       materialOptions: {
-        image: "img/textures/fence.png",
+        image: "//data.mars3d.cn/img/textures/fence.png",
         color: Cesium.Color.CHARTREUSE,
         count: 3,
         speed: 20,
@@ -526,11 +546,69 @@ export function bindLayerContextMenu() {
       }
     },
     {
+      text: "还原编辑(还原到初始)",
+      icon: "fa fa-pencil",
+      show: (event) => {
+        function hasRestore(graphic) {
+          if (!graphic || !graphic.hasEdit || !graphic.isEditing) {
+            return false
+          }
+          return graphic.editing?.hasRestore()
+        }
+
+        const graphic = event.graphic
+        if (hasRestore(graphic)) {
+          return true
+        }
+        if (graphic.isPrivate && graphic.parent) {
+          return hasRestore(graphic.parent) // 右击是编辑点时
+        }
+        return false
+      },
+      callback: (event) => {
+        const graphic = event.graphic
+        if (graphic.editing?.restore) {
+          graphic.editing.restore() // 撤销编辑，可直接调用
+        } else if (graphic.parent?.editing?.restore) {
+          graphic.parent.editing.restore() // 右击是编辑点时
+        }
+      }
+    },
+    {
+      text: "撤销编辑(还原到上一步)",
+      icon: "fa fa-pencil",
+      show: (event) => {
+        function hasRevoke(graphic) {
+          if (!graphic || !graphic.hasEdit || !graphic.isEditing) {
+            return false
+          }
+          return graphic.editing?.hasRevoke()
+        }
+
+        const graphic = event.graphic
+        if (hasRevoke(graphic)) {
+          return true
+        }
+        if (graphic.isPrivate && graphic.parent) {
+          return hasRevoke(graphic.parent) // 右击是编辑点时
+        }
+        return false
+      },
+      callback: (event) => {
+        const graphic = event.graphic
+        if (graphic.editing?.revoke) {
+          graphic.editing.revoke() // 撤销编辑，可直接调用
+        } else if (graphic.parent?.editing?.revoke) {
+          graphic.parent.editing.revoke() // 右击是编辑点时
+        }
+      }
+    },
+    {
       text: "删除对象",
       icon: "fa fa-trash-o",
       show: (event) => {
         const graphic = event.graphic
-        if (!graphic || graphic.isDestroy || graphic.graphicIds) {
+        if (!graphic || graphic.isDestroy || graphic.isPrivate || graphic.graphicIds) {
           return false
         } else {
           return true
@@ -578,6 +656,10 @@ export function bindLayerContextMenu() {
     {
       text: "计算长度",
       icon: "fa fa-medium",
+      show: (event) => {
+        const graphic = event.graphic
+        return !graphic.isPoint
+      },
       callback: (e) => {
         const graphic = e.graphic
         const strDis = mars3d.MeasureUtil.formatDistance(graphic.distance)

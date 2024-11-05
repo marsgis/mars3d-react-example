@@ -10,12 +10,12 @@ export const mapOptions = {
     skyBox: {
       type: "ground",
       sources: {
-        positiveX: "/img/skybox_near/qingtian/rightav9.jpg",
-        negativeX: "/img/skybox_near/qingtian/leftav9.jpg",
-        positiveY: "/img/skybox_near/qingtian/frontav9.jpg",
-        negativeY: "/img/skybox_near/qingtian/backav9.jpg",
-        positiveZ: "/img/skybox_near/qingtian/topav9.jpg",
-        negativeZ: "/img/skybox_near/qingtian/bottomav9.jpg"
+        positiveX: "//data.mars3d.cn/img/skybox-near/qingtian/rightav9.jpg",
+        negativeX: "//data.mars3d.cn/img/skybox-near/qingtian/leftav9.jpg",
+        positiveY: "//data.mars3d.cn/img/skybox-near/qingtian/frontav9.jpg",
+        negativeY: "//data.mars3d.cn/img/skybox-near/qingtian/backav9.jpg",
+        positiveZ: "//data.mars3d.cn/img/skybox-near/qingtian/topav9.jpg",
+        negativeZ: "//data.mars3d.cn/img/skybox-near/qingtian/bottomav9.jpg"
       }
     }
   }
@@ -43,12 +43,12 @@ export function onUnmounted() {
 export function sunny() {
   map.scene.skyBox = new mars3d.GroundSkyBox({
     sources: {
-      positiveX: "/img/skybox_near/qingtian/rightav9.jpg",
-      negativeX: "/img/skybox_near/qingtian/leftav9.jpg",
-      positiveY: "/img/skybox_near/qingtian/frontav9.jpg",
-      negativeY: "/img/skybox_near/qingtian/backav9.jpg",
-      positiveZ: "/img/skybox_near/qingtian/topav9.jpg",
-      negativeZ: "/img/skybox_near/qingtian/bottomav9.jpg"
+      positiveX: "//data.mars3d.cn/img/skybox-near/qingtian/rightav9.jpg",
+      negativeX: "//data.mars3d.cn/img/skybox-near/qingtian/leftav9.jpg",
+      positiveY: "//data.mars3d.cn/img/skybox-near/qingtian/frontav9.jpg",
+      negativeY: "//data.mars3d.cn/img/skybox-near/qingtian/backav9.jpg",
+      positiveZ: "//data.mars3d.cn/img/skybox-near/qingtian/topav9.jpg",
+      negativeZ: "//data.mars3d.cn/img/skybox-near/qingtian/bottomav9.jpg"
     }
   })
 }
@@ -56,12 +56,12 @@ export function sunny() {
 export function sunsetGlow() {
   map.scene.skyBox = new mars3d.GroundSkyBox({
     sources: {
-      positiveX: "/img/skybox_near/wanxia/SunSetRight.png",
-      negativeX: "/img/skybox_near/wanxia/SunSetLeft.png",
-      positiveY: "/img/skybox_near/wanxia/SunSetFront.png",
-      negativeY: "/img/skybox_near/wanxia/SunSetBack.png",
-      positiveZ: "/img/skybox_near/wanxia/SunSetUp.png",
-      negativeZ: "/img/skybox_near/wanxia/SunSetDown.png"
+      positiveX: "//data.mars3d.cn/img/skybox-near/wanxia/SunSetRight.png",
+      negativeX: "//data.mars3d.cn/img/skybox-near/wanxia/SunSetLeft.png",
+      positiveY: "//data.mars3d.cn/img/skybox-near/wanxia/SunSetFront.png",
+      negativeY: "//data.mars3d.cn/img/skybox-near/wanxia/SunSetBack.png",
+      positiveZ: "//data.mars3d.cn/img/skybox-near/wanxia/SunSetUp.png",
+      negativeZ: "//data.mars3d.cn/img/skybox-near/wanxia/SunSetDown.png"
     }
   })
 }
@@ -69,12 +69,12 @@ export function sunsetGlow() {
 export function blueSky() {
   // map.scene.skyBox = new mars3d.GroundSkyBox({
   //   sources: {
-  //     positiveX: "/img/skybox_near/lantian/Right.jpg",
-  //     negativeX: "/img/skybox_near/lantian/Left.jpg",
-  //     positiveY: "/img/skybox_near/lantian/Front.jpg",
-  //     negativeY: "/img/skybox_near/lantian/Back.jpg",
-  //     positiveZ: "/img/skybox_near/lantian/Up.jpg",
-  //     negativeZ: "/img/skybox_near/lantian/Down.jpg"
+  //     positiveX: "//data.mars3d.cn/img/skybox-near/lantian/Right.jpg",
+  //     negativeX: "//data.mars3d.cn/img/skybox-near/lantian/Left.jpg",
+  //     positiveY: "//data.mars3d.cn/img/skybox-near/lantian/Front.jpg",
+  //     negativeY: "//data.mars3d.cn/img/skybox-near/lantian/Back.jpg",
+  //     positiveZ: "//data.mars3d.cn/img/skybox-near/lantian/Up.jpg",
+  //     negativeZ: "//data.mars3d.cn/img/skybox-near/lantian/Down.jpg"
   //   }
   // })
 
@@ -84,12 +84,12 @@ export function blueSky() {
       skyBox: {
         type: "ground",
         sources: {
-          positiveX: "/img/skybox_near/lantian/Right.jpg",
-          negativeX: "/img/skybox_near/lantian/Left.jpg",
-          positiveY: "/img/skybox_near/lantian/Front.jpg",
-          negativeY: "/img/skybox_near/lantian/Back.jpg",
-          positiveZ: "/img/skybox_near/lantian/Up.jpg",
-          negativeZ: "/img/skybox_near/lantian/Down.jpg"
+          positiveX: "//data.mars3d.cn/img/skybox-near/lantian/Right.jpg",
+          negativeX: "//data.mars3d.cn/img/skybox-near/lantian/Left.jpg",
+          positiveY: "//data.mars3d.cn/img/skybox-near/lantian/Front.jpg",
+          negativeY: "//data.mars3d.cn/img/skybox-near/lantian/Back.jpg",
+          positiveZ: "//data.mars3d.cn/img/skybox-near/lantian/Up.jpg",
+          negativeZ: "//data.mars3d.cn/img/skybox-near/lantian/Down.jpg"
         }
       }
     }

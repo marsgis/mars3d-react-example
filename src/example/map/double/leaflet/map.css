@@ -8,7 +8,6 @@
   padding: 0;
 }
 
-
 /* 兼容屏幕大小 美观显示状态栏信息 */
 @media screen and (max-width: 2400px) {
   .mars3d-locationbar-content > div {
@@ -18,17 +17,17 @@
 @media screen and (max-width: 2000px) {
   .cesium-performanceDisplay-ms,
   .cesium-performanceDisplay-fps,
-  .mars3d-locationbar-content >.hide1000  {
+  .mars3d-locationbar-content > .hide1000 {
     display: none;
   }
-  .mars2d-locationbar-content > div ,
+  .mars2d-locationbar-content > div,
   .mars3d-locationbar-content > div {
     margin-right: 10px;
   }
 }
 @media screen and (max-width: 1400px) {
-  .mars2d-locationbar-content >.hide700,
-  .mars3d-locationbar-content >.hide700 {
+  .mars2d-locationbar-content > .hide700,
+  .mars3d-locationbar-content > .hide700 {
     display: none;
   }
 }
@@ -38,4 +37,3 @@
     display: none;
   }
 }
-

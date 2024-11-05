@@ -9,7 +9,7 @@ export const mapOptions = {
   scene: {
     center: { lat: 30.773023, lng: 116.473055, alt: 133111.3, heading: 40.4, pitch: -47.9 },
     orderIndependentTranslucency: false,
-    backgroundImage: "url(/img/tietu/backGroundImg.jpg)",
+    backgroundImage: "url(//data.mars3d.cn/img/busines/background1.jpg)",
     showMoon: false,
     showSkyBox: false,
     showSkyAtmosphere: false,
@@ -99,7 +99,7 @@ export function onMounted(mapInstance) {
           width: 10,
           materialType: mars3d.MaterialType.Image2,
           materialOptions: {
-            image: "./img/textures/fence-top.png",
+            image: "//data.mars3d.cn/img/textures/fence-top.png",
             color: "#0b88e3"
           }
         }

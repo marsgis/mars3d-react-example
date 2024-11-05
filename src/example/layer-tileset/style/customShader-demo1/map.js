@@ -36,14 +36,14 @@ export function onMounted(mapInstance) {
       uniforms: {
         u_envTexture: {
           value: new Cesium.TextureUniform({
-            url: "/img/textures/buildings-kj.jpg"
+            url: "//data.mars3d.cn/img/textures/buildings-kj.jpg"
           }),
           type: Cesium.UniformType.SAMPLER_2D
         },
         u_build1: {
           type: Cesium.UniformType.SAMPLER_2D,
           value: new Cesium.TextureUniform({
-            url: "/img/textures/buildings-colors.png"
+            url: "//data.mars3d.cn/img/textures/buildings-colors.png"
           })
         },
         u_lerp: {

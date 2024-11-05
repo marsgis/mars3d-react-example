@@ -78,7 +78,7 @@ function addDemoGraphic1() {
     position: [117.205459, 31.842988, 64.3],
     style: {
       url: "//data.mars3d.cn/file/video/duimian.mp4",
-      // maskImage: "img/textures/video-mask.png", // 羽化视频四周，融合更美观
+      // maskImage: "//data.mars3d.cn/img/textures/video-mask.png", // 羽化视频四周，融合更美观
       angle: 46.3,
       angle2: 15.5,
       heading: 88.5,

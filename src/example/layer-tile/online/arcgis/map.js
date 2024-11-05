@@ -11,7 +11,7 @@ export const mapOptions = {
   basemaps: [
     {
       name: "ArcGIS影像",
-      icon: "img/basemaps/esriWorldImagery.png",
+      icon: "//data.mars3d.cn/img/control/basemap/esriWorldImagery.png",
       type: "arcgis",
       layer: "img_d", // 使用layer时会自动用内部固定url "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer"
       enablePickFeatures: false,
@@ -19,21 +19,21 @@ export const mapOptions = {
     },
     {
       name: "ArcGIS电子街道",
-      icon: "img/basemaps/google_vec.png",
+      icon: "//data.mars3d.cn/img/control/basemap/google_vec.png",
       type: "arcgis",
       url: "https://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer",
       enablePickFeatures: false
     },
     {
       name: "ArcGIS NatGeo",
-      icon: "img/basemaps/esriWorldStreetMap.png",
+      icon: "//data.mars3d.cn/img/control/basemap/esriWorldStreetMap.png",
       type: "arcgis",
       url: "https://services.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer",
       enablePickFeatures: false
     },
     {
       name: "蓝色底图",
-      icon: "img/basemaps/bd-c-midnight.png",
+      icon: "//data.mars3d.cn/img/control/basemap/bd-c-midnight.png",
       type: "arcgis",
       url: "https://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer",
       enablePickFeatures: false,
@@ -48,7 +48,7 @@ export const mapOptions = {
     },
     {
       name: "灰色底图",
-      icon: "img/basemaps/bd-c-grayscale.png",
+      icon: "//data.mars3d.cn/img/control/basemap/bd-c-grayscale.png",
       type: "arcgis",
       url: "https://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer",
       enablePickFeatures: false,

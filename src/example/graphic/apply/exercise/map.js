@@ -117,7 +117,7 @@ function addWallPrimitive(positions, color) {
       closure: true,
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
-        image: "img/textures/fence.png",
+        image: "//data.mars3d.cn/img/textures/fence.png",
         color,
         speed: 10, // 速度，建议取值范围1-100
         axisY: true
@@ -138,7 +138,7 @@ function addPlane(property, team) {
       materialOptions: {
         color: getTeamColor(team),
         repeat: new Cesium.Cartesian2(2.0, 1.0),
-        image: "img/textures/line-gradual.png",
+        image: "//data.mars3d.cn/img/textures/line-gradual.png",
         speed: 15
       }
     },
@@ -150,7 +150,7 @@ function addPlane(property, team) {
     },
     billboard: {
       show: false,
-      image: "img/icon/plane_blue.png",
+      image: "//data.mars3d.cn/img/marker/plane_blue.png",
       color: getTeamColor(team),
       scale: 0.2,
       distanceDisplayCondition: true,
@@ -193,9 +193,9 @@ function addAttackArrow(property, team) {
 function addMissile(property, team) {
   let missileImage
   if (team === "red") {
-    missileImage = "img/icon/missile_red.png"
+    missileImage = "//data.mars3d.cn/img/marker/missile_red.png"
   } else {
-    missileImage = "img/icon/missile_blue.png"
+    missileImage = "//data.mars3d.cn/img/marker/missile_blue.png"
   }
 
   const graphic = new mars3d.graphic.BillboardEntity({
@@ -217,7 +217,7 @@ function addFire(property) {
     position: property,
     orientation: new Cesium.VelocityOrientationProperty(property),
     style: {
-      image: "img/icon/fire.png",
+      image: "//data.mars3d.cn/img/marker/fire.png",
       scale: 1.0,
       alignedAxis: new Cesium.VelocityVectorProperty(property, true)
     },

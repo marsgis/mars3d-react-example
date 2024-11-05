@@ -18,8 +18,8 @@ export function onMounted(mapInstance) {
   // 地形开挖
   terrainPlanClip = new mars3d.thing.TerrainPlanClip({
     diffHeight: 1000, // 井的深度
-    image: "img/textures/poly-stone.jpg", // 边界墙材质
-    imageBottom: "img/textures/poly-soil.jpg", // 底部区域材质
+    image: "//data.mars3d.cn/img/textures/poly-stone.jpg", // 边界墙材质
+    imageBottom: "//data.mars3d.cn/img/textures/poly-soil.jpg", // 底部区域材质
     splitNum: 50 // 井边界插值数
   })
   map.addThing(terrainPlanClip)

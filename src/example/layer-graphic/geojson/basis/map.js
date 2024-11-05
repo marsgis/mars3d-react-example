@@ -109,7 +109,7 @@ export function showPoint() {
     url: "//data.mars3d.cn/file/geojson/hfty-point.json",
     symbol: {
       styleOptions: {
-        image: "img/marker/mark-red.png",
+        image: "//data.mars3d.cn/img/marker/mark-red.png",
         verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
         scale: 1,
         scaleByDistance: true,
@@ -193,7 +193,7 @@ export function showChinaLine() {
         materialType: mars3d.MaterialType.LineFlow,
         materialOptions: {
           color: "#00ffff",
-          image: "img/textures/fence-line.png",
+          image: "//data.mars3d.cn/img/textures/fence-line.png",
           speed: 10,
           repeat_x: 10
         },
@@ -483,7 +483,7 @@ export function showBoundaryWall() {
         materialOptions: {
           color: "#00ffff", // 颜色
           opacity: 0.6, // 透明度
-          image: "img/textures/fence.png", // 图片
+          image: "//data.mars3d.cn/img/textures/fence.png", // 图片
           repeatX: 1, // 重复数量
           axisY: true, // 竖直方向
           speed: 10 // 速度

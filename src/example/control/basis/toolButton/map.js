@@ -6,8 +6,8 @@ export let map // mars3d.Map三维地图对象
 export const mapOptions = {
   control: {
     homeButton: {
-      icon: "img/svg/homeButton.svg"
-    }, // 回到默认视域按钮
+      icon: "//data.mars3d.cn/img/control/homeButton.svg" // 回到默认视域按钮
+    },
     navigationHelpButton: false, // 是否显示帮助信息控件
     fullscreenButton: false, // 右下角全屏按钮
     geocoder: false,

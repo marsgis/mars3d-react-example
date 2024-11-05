@@ -252,7 +252,7 @@ export function workLine1Sjx() {
         materialOptions: {
           color: Cesium.Color.YELLOW,
           speed: 3, // 控制速度
-          url: "img/textures/line-color-yellow.png"
+          url: "//data.mars3d.cn/img/textures/line-color-yellow.png"
         }
       },
       tooltip: "山脊线"
@@ -325,7 +325,7 @@ export function workLine2Sgx() {
         materialOptions: {
           color: Cesium.Color.AQUA,
           speed: 3, // 控制速度
-          url: "img/textures/line-color-yellow.png"
+          url: "//data.mars3d.cn/img/textures/line-color-yellow.png"
         }
       },
       tooltip: "山谷线"
@@ -392,7 +392,7 @@ export function workDgx1Point() {
       materialOptions: {
         color: Cesium.Color.MAGENTA,
         speed: 3, // 控制速度
-        url: "img/textures/line-color-yellow.png"
+        url: "//data.mars3d.cn/img/textures/line-color-yellow.png"
       }
     }
   })

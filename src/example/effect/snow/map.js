@@ -72,7 +72,6 @@ export function setScale(value) {
   snowEffect.scale = value
 }
 
-
 // 是否开启积雪效果
 export function setCover(val) {
   snowCover.enabled = val

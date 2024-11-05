@@ -53,7 +53,7 @@ function addAnhui(graphicLayer) {
       height: diffHeight,
       materialType: mars3d.MaterialType.Image2,
       materialOptions: {
-        image: "//data.mars3d.cn/file/img/anhui.png"
+        image: "//data.mars3d.cn/img/map/anhui.png"
       }
     }
   })
@@ -151,7 +151,7 @@ function addOutCircle(graphicLayer) {
   const arrImg = [
     {
       // 刻度
-      image: "./img/icon/calib.png",
+      image: "//data.mars3d.cn/img/textures/calib.png",
       positions: [
         [113.564329, 35.654741],
         [120.802219, 28.844016]
@@ -159,7 +159,7 @@ function addOutCircle(graphicLayer) {
     },
     {
       // 刻度尺
-      image: "./img/icon/calib-value.png",
+      image: "//data.mars3d.cn/img/textures/calib-value.png",
       positions: [
         [114.162597, 29.256489],
         [120.216593, 35.055444]
@@ -167,7 +167,7 @@ function addOutCircle(graphicLayer) {
     },
     {
       // 方向
-      image: "./img/icon/calib-dir.png",
+      image: "//data.mars3d.cn/img/textures/calib-dir.png",
       positions: [
         [114.162597, 29.256489],
         [120.216593, 35.055444]
@@ -204,7 +204,7 @@ function addOutCircle(graphicLayer) {
     style: {
       materialType: mars3d.MaterialType.Image2,
       materialOptions: {
-        image: "./img/icon/calib-semicircle.png",
+        image: "//data.mars3d.cn/img/textures/calib-semicircle.png",
         opacity: 0.2
       },
       clampToGround: true,

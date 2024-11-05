@@ -25,7 +25,7 @@ export const mapOptions = {
       symbol: {
         type: "billboardP",
         styleOptions: {
-          image: "img/marker/mark-red.png",
+          image: "//data.mars3d.cn/img/marker/mark-red.png",
           verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
           scaleByDistance: true,
           scaleByDistance_far: 20000,
@@ -61,6 +61,17 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
   map.basemap = 2017 // 蓝色底图
+
+  // Cesium 对资源访问的做了统一的接口，全局无论加载影像、矢量、地形、模型都是 需要通过 Cesium.Resource 模块进行统一请求。 这里通过插件的方式实现了资源请求期间，存取 indexDB 缓存的判断。
+  // eslint-disable-next-line no-undef
+  const OfflineCache = CesiumNetworkPlug.OfflineCacheController
+
+  // ① 全局缓存
+  // OfflineCache.ruleList.add("*")
+
+  // ② 对指定地址的 瓦片图层 缓存 [wfs请求比较多，建议利用这个缓存插件缓存下数据]
+  OfflineCache.ruleList.add("http://data.mars3d.cn/")
+  OfflineCache.ruleList.add("http://server.mars3d.cn/")
 
   addWmsLayer()
 }
@@ -107,6 +118,7 @@ function addWmsLayer() {
       maxFeatures: 210
     },
     minimumLevel: changeLevel,
+    maxCacheCount: 1000, // 记录临时缓存数据的最大数据量(有缓存的瓦片不再二次请求), 0时不记录
     symbol: {
       type: "polygonP",
       styleOptions: {
@@ -130,13 +142,16 @@ function addWmsLayer() {
   })
 
   let timeTik
+  let count = 0
   wfsLayer.on(mars3d.EventType.update, function (event) {
-    console.log(`图层内数据更新了`, event)
+    count++
+    console.log(`图层内数据更新了`, count, event)
 
     clearTimeout(timeTik)
     timeTik = setTimeout(() => {
       if (!wfsLayer.isLoading) {
-        console.log(`本批次数据加载完成`)
+        console.log(`本批次数据加载完成`, count)
+        count = 0
       }
     }, 1000)
   })

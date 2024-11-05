@@ -120,6 +120,26 @@ function initGraphicManager(graphic) {
   // 绑定右键菜单
   graphic.bindContextMenu([
     {
+      text: "开始编辑对象[graphic绑定的]",
+      icon: "fa fa-edit",
+      show: function (e) {
+        const graphic = e.graphic
+        if (!graphic || !graphic.hasEdit) {
+          return false
+        }
+        return !graphic.isEditing
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
+        if (graphic) {
+          graphicLayer.startEditing(graphic)
+        }
+      }
+    },
+    {
       text: "删除对象[graphic绑定的]",
       icon: "fa fa-trash-o",
       callback: (e) => {
@@ -171,7 +191,7 @@ function addDemoGraphic2(graphicLayer) {
       distanceDisplayCondition_far: 9000,
       distanceDisplayBillboard: {
         // 当视角距离超过一定距离(distanceDisplayCondition_far定义的) 后显示为图标对象的样式
-        image: "img/marker/square.png",
+        image: "//data.mars3d.cn/img/marker/square.png",
         scale: 1
       },
 
@@ -257,7 +277,7 @@ function addDemoGraphic4(graphicLayer) {
       distanceDisplayCondition_far: 8000,
       distanceDisplayBillboard: {
         // 当视角距离超过一定距离(distanceDisplayCondition_far定义的) 后显示为图标对象的样式
-        image: "img/icon/huojian.svg",
+        image: "//data.mars3d.cn/img/marker/svg/huojian.svg",
         scale: 0.5,
         alignedAxis: new Cesium.VelocityVectorProperty(propertyFJ, true)
       }
@@ -392,11 +412,69 @@ export function bindLayerContextMenu() {
       }
     },
     {
+      text: "还原编辑(还原到初始)",
+      icon: "fa fa-pencil",
+      show: (event) => {
+        function hasRestore(graphic) {
+          if (!graphic || !graphic.hasEdit || !graphic.isEditing) {
+            return false
+          }
+          return graphic.editing?.hasRestore()
+        }
+
+        const graphic = event.graphic
+        if (hasRestore(graphic)) {
+          return true
+        }
+        if (graphic.isPrivate && graphic.parent) {
+          return hasRestore(graphic.parent) // 右击是编辑点时
+        }
+        return false
+      },
+      callback: (event) => {
+        const graphic = event.graphic
+        if (graphic.editing?.restore) {
+          graphic.editing.restore() // 撤销编辑，可直接调用
+        } else if (graphic.parent?.editing?.restore) {
+          graphic.parent.editing.restore() // 右击是编辑点时
+        }
+      }
+    },
+    {
+      text: "撤销编辑(还原到上一步)",
+      icon: "fa fa-pencil",
+      show: (event) => {
+        function hasRevoke(graphic) {
+          if (!graphic || !graphic.hasEdit || !graphic.isEditing) {
+            return false
+          }
+          return graphic.editing?.hasRevoke()
+        }
+
+        const graphic = event.graphic
+        if (hasRevoke(graphic)) {
+          return true
+        }
+        if (graphic.isPrivate && graphic.parent) {
+          return hasRevoke(graphic.parent) // 右击是编辑点时
+        }
+        return false
+      },
+      callback: (event) => {
+        const graphic = event.graphic
+        if (graphic.editing?.revoke) {
+          graphic.editing.revoke() // 撤销编辑，可直接调用
+        } else if (graphic.parent?.editing?.revoke) {
+          graphic.parent.editing.revoke() // 右击是编辑点时
+        }
+      }
+    },
+    {
       text: "删除对象",
       icon: "fa fa-trash-o",
       show: (event) => {
         const graphic = event.graphic
-        if (!graphic || graphic.isDestroy || graphic.graphicIds) {
+        if (!graphic || graphic.isDestroy || graphic.isPrivate || graphic.graphicIds) {
           return false
         } else {
           return true

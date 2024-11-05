@@ -126,6 +126,7 @@ async function showDivGraphic(arr) {
         horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
         verticalOrigin: Cesium.VerticalOrigin.CENTER
       },
+      attr: { bgId: backGroundGraphic.id },
       pointerEvents: true
     })
     graphic.on(mars3d.EventType.load, function (e) {
@@ -186,7 +187,11 @@ async function showDivGraphic(arr) {
     })
 
     graphic.on(mars3d.EventType.clusterItemChange, function (e) {
-      backGroundGraphic.isCluster = e.graphic.isCluster // 聚合状态同步给背景div
+      const graphic = e.graphic
+      const bgGraphic = graphicLayer.getGraphicById(graphic.attr.bgId)
+      if (bgGraphic) {
+        bgGraphic.isCluster = graphic.isCluster // 聚合状态同步给背景div
+      }
     })
 
     await graphicLayer.addGraphic(graphic)

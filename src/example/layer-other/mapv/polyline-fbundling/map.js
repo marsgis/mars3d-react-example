@@ -140,7 +140,6 @@ function createMapvLayer() {
   const mapVLayer1 = new mars3d.layer.MapVLayer(options1)
   map.addLayer(mapVLayer1)
 
-
   const options2 = {
     fillStyle: "rgba(255, 250, 250, 0.9)",
     globalCompositeOperation: "lighter",
@@ -161,5 +160,4 @@ function createMapvLayer() {
   // 创建MapV图层
   const mapVLayer2 = new mars3d.layer.MapVLayer(options2)
   map.addLayer(mapVLayer2)
-
 }

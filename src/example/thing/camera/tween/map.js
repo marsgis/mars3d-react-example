@@ -29,7 +29,6 @@ export function onMounted(mapInstance) {
   // })
   // map.addLayer(tiles3dLayer)
 
-
   const viewPoints = [
     { id: 0, name: "地铁口", lat: 22.7407925, lng: 108.3793365, alt: 89.7, heading: 37.4, pitch: -7.1, duration: 2 },
     { id: 1, name: "电梯口1", lat: 22.7408074, lng: 108.3793484, alt: 89.7, heading: 37.4, pitch: -5.3, duration: 2 },

@@ -20,7 +20,7 @@ export const mapOptions = {
     {
       pid: 10,
       name: "影像地图",
-      icon: "img/basemaps/tdt_img.png",
+      icon: "//data.mars3d.cn/img/control/basemap/tdt_img.png",
       type: "xyz",
       url: "//data.mars3d.cn/tile/img/{z}/{x}/{y}.jpg",
       chinaCRS: mars3d.ChinaCRS.GCJ02,
@@ -31,7 +31,7 @@ export const mapOptions = {
     {
       pid: 10,
       name: "电子地图",
-      icon: "img/basemaps/tdt_vec.png",
+      icon: "//data.mars3d.cn/img/control/basemap/tdt_vec.png",
       type: "xyz",
       url: "//data.mars3d.cn/tile/vec/{z}/{x}/{y}.png",
       chinaCRS: "GCJ02",
@@ -41,15 +41,15 @@ export const mapOptions = {
     {
       pid: 10,
       name: "单张图片",
-      icon: "img/basemaps/offline.png",
+      icon: "//data.mars3d.cn/img/control/basemap/offline.png",
       type: "image",
-      url: "//data.mars3d.cn/file/img/world/world.jpg"
+      url: "//data.mars3d.cn/img/map/world/world.jpg"
     },
     {
       id: 2023,
       pid: 10,
       name: "无底图",
-      icon: "/img/basemaps/null.png",
+      icon: "//data.mars3d.cn/img/control/basemap/null.png",
       type: "grid",
       color: "#ffffff",
       alpha: 0.03,
@@ -212,7 +212,7 @@ export const mapOptions = {
       url: "//data.mars3d.cn/file/geojson/xizangyakou.json",
       symbol: {
         styleOptions: {
-          image: "img/marker/mark-red.png",
+          image: "//data.mars3d.cn/img/marker/mark-red.png",
           scaleByDistance: true,
           scaleByDistance_far: 5000000,
           scaleByDistance_farValue: 0.5,
@@ -255,7 +255,7 @@ export const mapOptions = {
       url: "//data.mars3d.cn/file/geojson/hfty-point.json",
       symbol: {
         styleOptions: {
-          image: "img/marker/mark-red.png",
+          image: "//data.mars3d.cn/img/marker/mark-red.png",
           scale: 1,
           scaleByDistance: true,
           scaleByDistance_far: 20000,

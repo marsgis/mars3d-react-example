@@ -29,7 +29,7 @@ export function onMounted(mapInstance) {
       type: "waterC",
       styleOptions: {
         height: 18, // 水面高度
-        normalMap: "img/textures/waterNormals.jpg", // 水正常扰动的法线图
+        normalMap: "//data.mars3d.cn/img/textures/waterNormals.jpg", // 水正常扰动的法线图
         frequency: 9000.0, // 控制波数的数字。
         animationSpeed: 0.03, // 控制水的动画速度的数字。
         amplitude: 5.0, // 控制水波振幅的数字。

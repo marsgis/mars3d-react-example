@@ -195,7 +195,7 @@ function addDemoGraphics(arr) {
     graphic = new mars3d.graphic.BillboardEntity({
       position: Cesium.Cartesian3.fromDegrees(item.lng, item.lat),
       style: {
-        image: "img/marker/mark-blue.png",
+        image: "//data.mars3d.cn/img/marker/mark-blue.png",
         scale: 1,
         scaleByDistance: true,
         scaleByDistance_far: 20000,
@@ -203,7 +203,7 @@ function addDemoGraphics(arr) {
         scaleByDistance_near: 1000,
         scaleByDistance_nearValue: 1,
         clampToGround: true, // 贴地
-        highlight: { type: "click", image: "img/marker/mark-red.png" },
+        highlight: { type: "click", image: "//data.mars3d.cn/img/marker/mark-red.png" },
         label: {
           text: item.name,
           font: "20px 楷体",

@@ -31,7 +31,7 @@ export function onMounted(mapInstance) {
   const fullscreenButton = new mars3d.control.FullscreenButton({
     // fullscreenElement: document.body, // 全屏整个页面
     fullscreenElement: map.container, // 仅全屏画布
-    icon: "img/svg/fullscreen.svg"
+    icon: "//data.mars3d.cn/img/control/fullscreenButton.svg"
   })
   map.addControl(fullscreenButton)
 }

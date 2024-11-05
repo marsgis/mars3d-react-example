@@ -46,7 +46,6 @@ export function shadingMaterials(val) {
   }
 }
 
-
 // 解除ALT按键的操作
 // const getInputAction_old = Cesium.ScreenSpaceEventHandler.prototype.getInputAction
 // Cesium.ScreenSpaceEventHandler.prototype.getInputAction = function (type, modifier) {

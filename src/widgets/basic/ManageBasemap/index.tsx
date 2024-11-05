@@ -72,7 +72,7 @@ export default withLifeCyle(function (props) {
               mapWork.changeBaseMaps(item.id)
             }}
           >
-            <img className={styles.icon} src={item.options.icon || "img/basemaps/bingAerial.png"} alt="" />
+            <img className={styles.icon} src={item.options.icon || "//data.mars3d.cn/img/control/basemap/bingAerial.png"} alt="" />
             <span className="title">{item.name}</span>
           </li>
         ))}

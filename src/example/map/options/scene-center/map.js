@@ -1,7 +1,6 @@
 import * as mars3d from "mars3d"
 
 export let map
-let graphic
 
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
@@ -23,33 +22,23 @@ export function onMounted(mapInstance) {
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  graphic = new mars3d.graphic.EllipsoidEntity({
-    position: [107.39956, 29.719738, 100.9],
-    style: {
-      radii: new Cesium.Cartesian3(2500.0, 2500.0, 1000.0),
-      maximumConeDegree: 90, // 半球
-      fill: false,
-      subdivisions: 64,
-      stackPartitions: 32,
-      slicePartitions: 32,
-      outline: true,
-      outlineColor: "#ffff00",
+  // let mapExtentPositions = mars3d.PolyUtil.getMapExtentPositions(map.scene)
+  // const extentPolygon = new mars3d.graphic.PolygonEntity({
+  //   positions: new Cesium.CallbackProperty((time) => {
+  //     return mapExtentPositions
+  //   }, false),
+  //   style: {
+  //     color: "rgba(0,0,255,0.2)",
+  //     outline: true,
+  //     outlineWidth: 1,
+  //     outlineColor: "#ff7800"
+  //   }
+  // })
+  // graphicLayer.addGraphic(extentPolygon)
 
-      // 高亮时的样式（默认为鼠标移入，也可以指定type:'click'单击高亮），构造后也可以openHighlight、closeHighlight方法来手动调用
-      highlight: {
-        outlineColor: "#ff0000"
-      }
-    },
-    // 添加扫描面
-    scanPlane: {
-      step: 0.5, // 步长
-      style: {
-        color: "#ffff00",
-        opacity: 0.4
-      }
-    }
-  })
-  graphicLayer.addGraphic(graphic)
+  // map.on(mars3d.EventType.cameraChanged, function () {
+  //   mapExtentPositions = mars3d.PolyUtil.getMapExtentPositions(map.scene)
+  // })
 }
 
 /**
@@ -107,8 +96,39 @@ export function mapFlyHome() {
   map.flyHome()
 }
 
+let graphic
 export function mapFlyToGraphic() {
   map.graphicLayer.clear()
+
+  if (!graphic || graphic.isDestory) {
+    graphic = new mars3d.graphic.EllipsoidEntity({
+      position: [107.39956, 29.719738, 100.9],
+      style: {
+        radii: new Cesium.Cartesian3(2500.0, 2500.0, 1000.0),
+        maximumConeDegree: 90, // 半球
+        fill: false,
+        subdivisions: 64,
+        stackPartitions: 32,
+        slicePartitions: 32,
+        outline: true,
+        outlineColor: "#ffff00",
+
+        // 高亮时的样式（默认为鼠标移入，也可以指定type:'click'单击高亮），构造后也可以openHighlight、closeHighlight方法来手动调用
+        highlight: {
+          outlineColor: "#ff0000"
+        }
+      },
+      // 添加扫描面
+      scanPlane: {
+        step: 0.5, // 步长
+        style: {
+          color: "#ffff00",
+          opacity: 0.4
+        }
+      }
+    })
+    map.graphicLayer.addGraphic(graphic)
+  }
   map.flyToGraphic(graphic, { radius: 10000 })
 }
 

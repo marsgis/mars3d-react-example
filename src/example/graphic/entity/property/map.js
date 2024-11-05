@@ -415,7 +415,7 @@ export function demoVelocityVectorProperty() {
     position: propertyFJ,
     orientation: new Cesium.VelocityOrientationProperty(propertyFJ),
     style: {
-      image: "img/icon/huojian.svg",
+      image: "//data.mars3d.cn/img/marker/svg/huojian.svg",
       scale: 0.5,
       alignedAxis: new Cesium.VelocityVectorProperty(propertyFJ, true)
     }

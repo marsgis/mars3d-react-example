@@ -15,7 +15,7 @@ export const mapOptions = {
   basemaps: [
     {
       name: "百度电子",
-      icon: "img/basemaps/gaode_vec.png",
+      icon: "//data.mars3d.cn/img/control/basemap/gaode_vec.png",
       type: "baidu",
       layer: "vec",
       credit: creditHtml,
@@ -23,7 +23,7 @@ export const mapOptions = {
     },
     {
       name: "百度影像",
-      icon: "img/basemaps/gaode_img.png",
+      icon: "//data.mars3d.cn/img/control/basemap/gaode_img.png",
       type: "group",
       layers: [
         { name: "底图", type: "baidu", layer: "img_d" },
@@ -33,7 +33,7 @@ export const mapOptions = {
     },
     {
       name: "百度深蓝色",
-      icon: "img/basemaps/bd-c-midnight.png",
+      icon: "//data.mars3d.cn/img/control/basemap/bd-c-midnight.png",
       type: "baidu",
       layer: "custom",
       style: "midnight",
@@ -41,7 +41,7 @@ export const mapOptions = {
     },
     {
       name: "百度黑色",
-      icon: "img/basemaps/bd-c-dark.png",
+      icon: "//data.mars3d.cn/img/control/basemap/bd-c-dark.png",
       type: "baidu",
       layer: "custom",
       style: "dark",
@@ -49,7 +49,7 @@ export const mapOptions = {
     },
     {
       name: "离线百度瓦片(示例)",
-      icon: "img/basemaps/arcgis.png",
+      icon: "//data.mars3d.cn/img/control/basemap/arcgis.png",
       type: "baidu",
       url: "//data.mars3d.cn/tile/baiduVec/{z}/{x}/{y}.jpg",
       maximumLevel: 12

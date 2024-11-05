@@ -231,7 +231,7 @@ export function bindGraphicDemo2() {
   const graphic = new mars3d.graphic.BillboardEntity({
     position: new mars3d.LngLatPoint(116.328539, 30.978731, 1521),
     style: {
-      image: "img/marker/point-red.png",
+      image: "//data.mars3d.cn/img/marker/point-red.png",
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
       label: {
@@ -328,7 +328,7 @@ export function bindGraphicDynamicAttrDemo() {
       time: 5 // 无配置时仅取值一次，有值时间隔time秒后不断取
     },
     style: {
-      image: "img/marker/point-red.png",
+      image: "//data.mars3d.cn/img/marker/point-red.png",
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
       label: {

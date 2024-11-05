@@ -11,7 +11,7 @@ export const mapOptions = {
   basemaps: [
     {
       name: "电子地图",
-      icon: "img/basemaps/google_vec.png",
+      icon: "//data.mars3d.cn/img/control/basemap/google_vec.png",
       type: "xyz",
       url: "https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}",
       subdomains: "1234",
@@ -20,7 +20,7 @@ export const mapOptions = {
     },
     {
       name: "离线影像地图",
-      icon: "img/basemaps/gaode_img.png",
+      icon: "//data.mars3d.cn/img/control/basemap/gaode_img.png",
       type: "xyz",
       url: "//data.mars3d.cn/tile/img/{z}/{x}/{y}.jpg",
       minimumLevel: 0,
@@ -28,7 +28,7 @@ export const mapOptions = {
     },
     {
       name: "EPSG4490影像",
-      icon: "img/basemaps/tdt_img.png",
+      icon: "//data.mars3d.cn/img/control/basemap/tdt_img.png",
       type: "xyz",
       url: "http://t3.tianditu.gov.cn/img_c/wmts?service=WMTS&version=1.0.0&request=GetTile&tilematrix={z}&layer=img&style=default&tilerow={y}&tilecol={x}&tilematrixset=c&format=tiles&tk=6c99c7793f41fccc4bd595b03711913e",
       crs: "EPSG:4490" // 标识坐标系

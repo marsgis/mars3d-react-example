@@ -60,7 +60,7 @@ function addDemoGraphic1(graphicLayer) {
   const graphic = new mars3d.graphic.BillboardPrimitive({
     position: [116.1, 31.0, 1000],
     style: {
-      image: "img/marker/lace-blue.png",
+      image: "//data.mars3d.cn/img/marker/lace-blue.png",
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM
     },
@@ -97,6 +97,26 @@ function initGraphicManager(graphic) {
   // 绑定右键菜单
   graphic.bindContextMenu([
     {
+      text: "开始编辑对象[graphic绑定的]",
+      icon: "fa fa-edit",
+      show: function (e) {
+        const graphic = e.graphic
+        if (!graphic || !graphic.hasEdit) {
+          return false
+        }
+        return !graphic.isEditing
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
+        if (graphic) {
+          graphicLayer.startEditing(graphic)
+        }
+      }
+    },
+    {
       text: "删除对象[graphic绑定的]",
       icon: "fa fa-trash-o",
       callback: (e) => {
@@ -113,7 +133,7 @@ function addDemoGraphic2(graphicLayer) {
   const graphic = new mars3d.graphic.BillboardPrimitive({
     position: new mars3d.LngLatPoint(116.2, 31.0, 1000),
     style: {
-      image: "img/marker/lace-red.png",
+      image: "//data.mars3d.cn/img/marker/lace-red.png",
       scale: 1.0,
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
@@ -142,7 +162,7 @@ function addDemoGraphic3(graphicLayer) {
   const graphic = new mars3d.graphic.BillboardPrimitive({
     position: new mars3d.LngLatPoint(116.307258, 30.999546, 1239.2),
     style: {
-      image: "img/marker/lace-yellow.png",
+      image: "//data.mars3d.cn/img/marker/lace-yellow.png",
       scale: 1,
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
@@ -159,7 +179,7 @@ function addDemoGraphic4(graphicLayer) {
   const graphic = new mars3d.graphic.BillboardPrimitive({
     position: [116.4, 31.0, 1000],
     style: {
-      image: "img/marker/route-start.png",
+      image: "//data.mars3d.cn/img/marker/route-start.png",
       scale: 1,
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
@@ -182,7 +202,7 @@ function addDemoGraphic4(graphicLayer) {
   console.log("转换后的json", json)
 
   json.position = [116.5, 31.0, 1000] // 新的坐标
-  json.style.image = "img/marker/route-end.png"
+  json.style.image = "//data.mars3d.cn/img/marker/route-end.png"
   json.style.label = json.style.label || {}
   json.style.label.text = "我是转换后生成的"
   graphicLayer.addGraphic(json) // 支持直接加json，内部转为graphic
@@ -192,7 +212,7 @@ function addDemoGraphic5(graphicLayer) {
   const graphic = new mars3d.graphic.BillboardPrimitive({
     position: [116.1, 30.9, 1000],
     style: {
-      image: "img/marker/mark-green.png",
+      image: "//data.mars3d.cn/img/marker/mark-green.png",
       scale: 1,
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM
@@ -206,7 +226,7 @@ function addDemoGraphic6(graphicLayer) {
   const graphic = new mars3d.graphic.BillboardPrimitive({
     position: new mars3d.LngLatPoint(116.2, 30.9, 1000),
     style: {
-      image: "img/marker/mark-red.png",
+      image: "//data.mars3d.cn/img/marker/mark-red.png",
       scale: 1,
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM
@@ -220,7 +240,7 @@ function addDemoGraphic7(graphicLayer) {
   const graphic = new mars3d.graphic.BillboardPrimitive({
     position: new mars3d.LngLatPoint(116.3, 30.9, 1000),
     style: {
-      image: "img/marker/mark-blue.png",
+      image: "//data.mars3d.cn/img/marker/mark-blue.png",
       scale: 1,
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM
@@ -234,7 +254,7 @@ function addDemoGraphic8(graphicLayer) {
   const graphic = new mars3d.graphic.BillboardPrimitive({
     position: new mars3d.LngLatPoint(116.4, 30.9, 1000),
     style: {
-      image: "img/marker/point-red.png",
+      image: "//data.mars3d.cn/img/marker/point-red.png",
       scale: 1,
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM
@@ -248,7 +268,7 @@ function addDemoGraphic9(graphicLayer) {
   const graphic = new mars3d.graphic.BillboardPrimitive({
     position: new mars3d.LngLatPoint(116.5, 30.9, 1000),
     style: {
-      image: "img/marker/point-yellow.png",
+      image: "//data.mars3d.cn/img/marker/point-yellow.png",
       scale: 1,
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM
@@ -262,7 +282,7 @@ function addDemoGraphic10(graphicLayer) {
   const graphic = new mars3d.graphic.BillboardPrimitive({
     position: new mars3d.LngLatPoint(116.1, 30.8, 1000),
     style: {
-      image: "img/marker/point-orange.png",
+      image: "//data.mars3d.cn/img/marker/point-orange.png",
       scale: 1,
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM
@@ -276,7 +296,7 @@ function addDemoGraphic11(graphicLayer) {
   const graphic = new mars3d.graphic.BillboardPrimitive({
     position: new mars3d.LngLatPoint(116.2, 30.8, 1000),
     style: {
-      image: "img/icon/redBaseCamp.png",
+      image: "//data.mars3d.cn/img/marker/camp-red.png",
       scale: 1,
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.CENTER
@@ -290,7 +310,7 @@ function addDemoGraphic12(graphicLayer) {
   const graphic = new mars3d.graphic.BillboardPrimitive({
     position: new mars3d.LngLatPoint(116.3, 30.8, 1000),
     style: {
-      image: "img/marker/square.png",
+      image: "//data.mars3d.cn/img/marker/square.png",
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.CENTER
     },
@@ -303,7 +323,7 @@ function addDemoGraphic13(graphicLayer) {
   const graphic = new mars3d.graphic.BillboardPrimitive({
     position: new mars3d.LngLatPoint(116.4, 30.8, 1000),
     style: {
-      image: "img/marker/street.png",
+      image: "//data.mars3d.cn/img/marker/street.png",
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM
     },
@@ -324,7 +344,7 @@ function addDemoGraphic14(graphicLayer) {
     orientation: new Cesium.VelocityOrientationProperty(propertyFJ),
     frameRate: 2,
     style: {
-      image: "img/icon/huojian.svg",
+      image: "//data.mars3d.cn/img/marker/svg/huojian.svg",
       scale: 0.5,
       alignedAxis: new Cesium.VelocityVectorProperty(propertyFJ, true)
     },
@@ -354,7 +374,7 @@ function addDemoGraphic15(graphicLayer) {
   const graphic = new mars3d.graphic.BillboardPrimitive({
     position: new mars3d.LngLatPoint(116.095828, 30.734919, 805),
     style: {
-      image: "img/marker/street.png",
+      image: "//data.mars3d.cn/img/marker/street.png",
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
       ...build
@@ -452,7 +472,7 @@ export function addRandomGraphicByCount(count) {
     const graphic = new mars3d.graphic.BillboardPrimitive({
       position,
       style: {
-        image: "img/marker/point-red.png",
+        image: "//data.mars3d.cn/img/marker/point-red.png",
         horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
         verticalOrigin: Cesium.VerticalOrigin.BOTTOM
       },
@@ -470,7 +490,7 @@ export function startDrawGraphic() {
   graphicLayer.startDraw({
     type: "billboardP",
     style: {
-      image: "img/marker/mark-red.png",
+      image: "//data.mars3d.cn/img/marker/mark-red.png",
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
       label: {
@@ -542,11 +562,69 @@ export function bindLayerContextMenu() {
       }
     },
     {
+      text: "还原编辑(还原到初始)",
+      icon: "fa fa-pencil",
+      show: (event) => {
+        function hasRestore(graphic) {
+          if (!graphic || !graphic.hasEdit || !graphic.isEditing) {
+            return false
+          }
+          return graphic.editing?.hasRestore()
+        }
+
+        const graphic = event.graphic
+        if (hasRestore(graphic)) {
+          return true
+        }
+        if (graphic.isPrivate && graphic.parent) {
+          return hasRestore(graphic.parent) // 右击是编辑点时
+        }
+        return false
+      },
+      callback: (event) => {
+        const graphic = event.graphic
+        if (graphic.editing?.restore) {
+          graphic.editing.restore() // 撤销编辑，可直接调用
+        } else if (graphic.parent?.editing?.restore) {
+          graphic.parent.editing.restore() // 右击是编辑点时
+        }
+      }
+    },
+    {
+      text: "撤销编辑(还原到上一步)",
+      icon: "fa fa-pencil",
+      show: (event) => {
+        function hasRevoke(graphic) {
+          if (!graphic || !graphic.hasEdit || !graphic.isEditing) {
+            return false
+          }
+          return graphic.editing?.hasRevoke()
+        }
+
+        const graphic = event.graphic
+        if (hasRevoke(graphic)) {
+          return true
+        }
+        if (graphic.isPrivate && graphic.parent) {
+          return hasRevoke(graphic.parent) // 右击是编辑点时
+        }
+        return false
+      },
+      callback: (event) => {
+        const graphic = event.graphic
+        if (graphic.editing?.revoke) {
+          graphic.editing.revoke() // 撤销编辑，可直接调用
+        } else if (graphic.parent?.editing?.revoke) {
+          graphic.parent.editing.revoke() // 右击是编辑点时
+        }
+      }
+    },
+    {
       text: "删除对象",
       icon: "fa fa-trash-o",
       show: (event) => {
         const graphic = event.graphic
-        if (!graphic || graphic.isDestroy || graphic.graphicIds) {
+        if (!graphic || graphic.isDestroy || graphic.isPrivate || graphic.graphicIds) {
           return false
         } else {
           return true

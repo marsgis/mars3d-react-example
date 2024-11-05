@@ -41,12 +41,12 @@ export function onMounted(mapInstance) {
   // 修改天空盒
   map.scene.skyBox = new Cesium.SkyBox({
     sources: {
-      negativeX: "img/skybox/5/tycho2t3_80_mx.jpg",
-      negativeY: "img/skybox/5/tycho2t3_80_my.jpg",
-      negativeZ: "img/skybox/5/tycho2t3_80_mz.jpg",
-      positiveX: "img/skybox/5/tycho2t3_80_px.jpg",
-      positiveY: "img/skybox/5/tycho2t3_80_py.jpg",
-      positiveZ: "img/skybox/5/tycho2t3_80_pz.jpg"
+      negativeX: "//data.mars3d.cn/img/skybox/5/tycho2t3_80_mx.jpg",
+      negativeY: "//data.mars3d.cn/img/skybox/5/tycho2t3_80_my.jpg",
+      negativeZ: "//data.mars3d.cn/img/skybox/5/tycho2t3_80_mz.jpg",
+      positiveX: "//data.mars3d.cn/img/skybox/5/tycho2t3_80_px.jpg",
+      positiveY: "//data.mars3d.cn/img/skybox/5/tycho2t3_80_py.jpg",
+      positiveZ: "//data.mars3d.cn/img/skybox/5/tycho2t3_80_pz.jpg"
     }
   })
 

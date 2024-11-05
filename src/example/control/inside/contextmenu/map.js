@@ -128,7 +128,7 @@ export function bindMapDemo() {
     },
     {
       text: "开启深度监测",
-      icon: "img/icon/监测建筑.png", // 支持base64或url图片
+      icon: "//data.mars3d.cn/img/marker/square.png", // 支持base64或url图片
       show: function () {
         return !map.scene.globe.depthTestAgainstTerrain
       },
@@ -267,6 +267,26 @@ export function unBindLayerDemo() {
 //  在graphic数据上绑定右键菜单
 export function bindGraphicDemo() {
   graphic.bindContextMenu([
+    {
+      text: "开始编辑对象[graphic绑定的]",
+      icon: "fa fa-edit",
+      show: function (e) {
+        const graphic = e.graphic
+        if (!graphic || !graphic.hasEdit) {
+          return false
+        }
+        return !graphic.isEditing
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
+        if (graphic) {
+          graphicLayer.startEditing(graphic)
+        }
+      }
+    },
     {
       text: "删除对象[graphic绑定的]",
       icon: "fa fa-trash-o",

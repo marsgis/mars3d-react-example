@@ -158,7 +158,7 @@ export function showSafetyNotice() {
       const geoType = featue.geometry?.type
       if (geoType === "Point") {
         return {
-          image: "img/marker/point-red.png",
+          image: "//data.mars3d.cn/img/marker/point-red.png",
           verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
           label: {
             text: attr.name,

@@ -17,7 +17,7 @@ export const mapOptions = {
   basemaps: [
     {
       name: "GEE地图",
-      icon: "img/basemaps/osm.png",
+      icon: "//data.mars3d.cn/img/control/basemap/osm.png",
       type: "gee",
       url: "http://www.earthenterprise.org/3d",
       // "proxy": "//server.mars3d.cn/proxy/",

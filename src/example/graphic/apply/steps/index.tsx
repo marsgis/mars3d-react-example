@@ -336,13 +336,13 @@ function UIComponent() {
             <li>前提：相邻点等坡度, 原理：比例内插</li>
 
             <li>
-              <img src="img/jiaoben/dgx1.jpg" alt="" style={{ height: "150px" }} />
+              <img src="./img/dgx1.jpg" alt="" style={{ height: "150px" }} />
             </li>
             <li>
               假设ab间的坡度是均匀的，则根据a和b点间的高差为6.4m，ab线上图上的平距为48mm，由a点到22m等高线的高差为0.8m，由b点到27m等高线的高差为0.6m，则由a点到22m等高线及由b点到27m等高线的线长，x1和x2可以根据相似三角形状原理得到如下关系式
             </li>
             <li>
-              <img src="img/jiaoben/dgx2.jpg" alt="" style={{ height: "80px" }} />
+              <img src="./img/dgx2.jpg" alt="" style={{ height: "80px" }} />
             </li>
           </ul>
         </MarsPannel>
@@ -351,7 +351,7 @@ function UIComponent() {
         <MarsPannel visible={true} top={10} left={10} width={400}>
           <Space wrap>
             等高线通过点绘制 <br />
-            <img src="img/jiaoben/dgx3.jpg" alt="" style={{ width: "100%" }} />
+            <img src="./img/dgx3.jpg" alt="" style={{ width: "100%" }} />
           </Space>
         </MarsPannel>
       ) : null}

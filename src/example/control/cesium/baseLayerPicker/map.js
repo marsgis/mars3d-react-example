@@ -20,9 +20,7 @@ export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
   // 方式2：在创建地球后按需调用addControl添加(直接new对应type类型的控件)
-  const baseLayerPicker = new mars3d.control.BaseLayerPicker({
-    icon: "img/svg/baseLayerPicker.svg"
-  })
+  const baseLayerPicker = new mars3d.control.BaseLayerPicker({})
   map.addControl(baseLayerPicker)
 
   map.on(mars3d.EventType.changeBasemap, (event) => {
@@ -50,12 +48,12 @@ function getImageryProviderArr() {
   imgModel = new Cesium.ProviderViewModel({
     name: "本地图片",
     tooltip: "本地单张图片",
-    iconUrl: "img/basemaps/esriNationalGeographic.png",
+    iconUrl: "//data.mars3d.cn/img/control/basemap/esriNationalGeographic.png",
     category: "标准坐标系",
     creationFunction: function () {
       return mars3d.LayerUtil.createImageryProvider({
         type: "image",
-        url: "//data.mars3d.cn/file/img/world/world.jpg"
+        url: "//data.mars3d.cn/img/map/world/world.jpg"
       })
     }
   })
@@ -64,7 +62,7 @@ function getImageryProviderArr() {
   imgModel = new Cesium.ProviderViewModel({
     name: "天地图影像",
     tooltip: "天地图全球影像地图服务（国家测绘局）",
-    iconUrl: "img/basemaps/tdt_img.png",
+    iconUrl: "//data.mars3d.cn/img/control/basemap/tdt_img.png",
     category: "标准坐标系",
     creationFunction: function () {
       return [
@@ -85,7 +83,7 @@ function getImageryProviderArr() {
 
   imgModel = new Cesium.ProviderViewModel({
     name: "Bing影像",
-    iconUrl: "img/basemaps/bingAerial.png",
+    iconUrl: "//data.mars3d.cn/img/control/basemap/bingAerial.png",
     tooltip: "微软提供的高清影像地图",
     category: "标准坐标系",
     creationFunction: function () {
@@ -99,7 +97,7 @@ function getImageryProviderArr() {
 
   imgModel = new Cesium.ProviderViewModel({
     name: "ESRI影像",
-    iconUrl: "img/basemaps/esriWorldImagery.png",
+    iconUrl: "//data.mars3d.cn/img/control/basemap/esriWorldImagery.png",
     tooltip: "ESRI提供的高清影像地图",
     category: "标准坐标系",
     creationFunction: function () {
@@ -114,7 +112,7 @@ function getImageryProviderArr() {
   imgModel = new Cesium.ProviderViewModel({
     name: "谷歌影像",
     tooltip: "谷歌影像地图服务",
-    iconUrl: "img/basemaps/google_img.png",
+    iconUrl: "//data.mars3d.cn/img/control/basemap/google_img.png",
     category: "国测局偏移坐标系",
     creationFunction: function () {
       return [
@@ -128,7 +126,7 @@ function getImageryProviderArr() {
   imgModel = new Cesium.ProviderViewModel({
     name: "高德影像",
     tooltip: "高德影像地图服务",
-    iconUrl: "img/basemaps/gaode_img.png",
+    iconUrl: "//data.mars3d.cn/img/control/basemap/gaode_img.png",
     category: "国测局偏移坐标系",
     creationFunction: function () {
       return [
@@ -147,7 +145,7 @@ function getTerrainProviderViewModelsArr() {
     new Cesium.ProviderViewModel({
       name: "无地形",
       tooltip: "WGS84标准球体",
-      iconUrl: "img/basemaps/TerrainEllipsoid.png",
+      iconUrl: "//data.mars3d.cn/img/control/basemap/TerrainEllipsoid.png",
       creationFunction: function () {
         return new Cesium.EllipsoidTerrainProvider({
           ellipsoid: Cesium.Ellipsoid.WGS84
@@ -157,7 +155,7 @@ function getTerrainProviderViewModelsArr() {
     new Cesium.ProviderViewModel({
       name: "全球地形",
       tooltip: "由 Cesium官方 提供的高分辨率全球地形",
-      iconUrl: "img/basemaps/TerrainSTK.png",
+      iconUrl: "//data.mars3d.cn/img/control/basemap/TerrainSTK.png",
       creationFunction: function () {
         return Cesium.createWorldTerrainAsync({
           requestWaterMask: true,
@@ -168,7 +166,7 @@ function getTerrainProviderViewModelsArr() {
     new Cesium.ProviderViewModel({
       name: "中国地形",
       tooltip: "由 Mars3D 提供的中国国内地形",
-      iconUrl: "img/basemaps/TerrainSTK.png",
+      iconUrl: "//data.mars3d.cn/img/control/basemap/TerrainSTK.png",
       creationFunction: function () {
         return new Cesium.CesiumTerrainProvider({
           url: "http://data.mars3d.cn/terrain",

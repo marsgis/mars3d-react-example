@@ -135,17 +135,14 @@ export function showModel(url) {
       callback: (e) => {
         tiles3dLayer.startEditing()
       }
+    },
+    {
+      text: "查看服务地址",
+      icon: "fa fa-info",
+      callback: (e) => {
+        window.open(tiles3dLayer.options.url, "_blank")
+      }
     }
-    // {
-    //   text: "停止编辑",
-    //   icon: "fa fa-edit",
-    //   show: function (e) {
-    //     return tiles3dLayer.hasEdit && tiles3dLayer.isEditing
-    //   },
-    //   callback: (e) => {
-    //     tiles3dLayer.stopEditing()
-    //   }
-    // }
   ])
 }
 

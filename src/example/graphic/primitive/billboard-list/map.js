@@ -28,7 +28,7 @@ export function onMounted(mapInstance) {
     symbol: {
       type: "billboardP", // 对应是 mars3d.graphic.BillboardPrimitive
       styleOptions: {
-        image: "img/marker/mark-blue.png",
+        image: "//data.mars3d.cn/img/marker/mark-blue.png",
         horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
         verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
         scaleByDistance: new Cesium.NearFarScalar(1.5e2, 1.0, 8.0e6, 0.2),

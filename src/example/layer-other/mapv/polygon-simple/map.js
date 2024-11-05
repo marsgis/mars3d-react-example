@@ -54,5 +54,4 @@ function createMapvLayer(geojson) {
   // 创建MapV图层
   const mapVLayer = new mars3d.layer.MapVLayer(options)
   map.addLayer(mapVLayer)
-
 }

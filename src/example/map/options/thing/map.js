@@ -11,7 +11,7 @@ function initMap() {
     basemaps: [
       {
         name: "天地图影像",
-        icon: "/img/basemaps/tdt_img.png",
+        icon: "//data.mars3d.cn/img/control/basemap/tdt_img.png",
         type: "group",
         layers: [
           { name: "底图", type: "tdt", layer: "img_d" },
@@ -23,8 +23,8 @@ function initMap() {
     thing: {
       terrainClip: {
         diffHeight: 50,
-        image: "img/textures/poly-stone.jpg",
-        imageBottom: "img/textures/poly-soil.jpg",
+        image: "//data.mars3d.cn/img/textures/poly-stone.jpg",
+        imageBottom: "//data.mars3d.cn/img/textures/poly-soil.jpg",
         splitNum: 100,
         area: [
           {

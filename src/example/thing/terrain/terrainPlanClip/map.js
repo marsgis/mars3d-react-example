@@ -54,8 +54,8 @@ export function addLayer(height) {
       [117.214491, 31.843807, 42.83]
     ],
     diffHeight: height, // 井的深度
-    image: "img/textures/poly-stone.jpg", // 边界墙材质
-    imageBottom: "img/textures/poly-soil.jpg", // 底部区域材质
+    image: "//data.mars3d.cn/img/textures/poly-stone.jpg", // 边界墙材质
+    imageBottom: "//data.mars3d.cn/img/textures/poly-soil.jpg", // 底部区域材质
     splitNum: 50, // 井边界插值数
     exact: true
   })

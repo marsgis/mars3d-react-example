@@ -66,4 +66,3 @@ export function setHue(val) {
 export function setSaturation(val) {
   tilesetColorCorrection.saturation = val
 }
-

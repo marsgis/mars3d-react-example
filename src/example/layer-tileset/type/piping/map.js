@@ -107,8 +107,8 @@ export function terrainClips(heightVal) {
   terrainPlanClip = new mars3d.thing.TerrainClip({
     diffHeight: heightVal, // 高度
     exact: true,
-    image: "./img/textures/poly-stone.jpg",
-    imageBottom: "./img/textures/poly-soil.jpg",
+    image: "//data.mars3d.cn/img/textures/poly-stone.jpg",
+    imageBottom: "//data.mars3d.cn/img/textures/poly-soil.jpg",
     splitNum: 50 // 井边界插值数
   })
   map.addThing(terrainPlanClip)

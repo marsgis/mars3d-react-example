@@ -163,65 +163,65 @@ export function bindLayerPopup() {
 }
 
 function getImageBySpeed(speed) {
-  let windVaneUrl = "img/windVane/01.svg"
+  let windVaneUrl = "//data.mars3d.cn/img/marker/wind/01.svg"
   if (speed >= 0 && speed <= 2) {
-    windVaneUrl = "img/windVane/01.svg"
+    windVaneUrl = "//data.mars3d.cn/img/marker/wind/01.svg"
   } else if (speed > 2 && speed <= 4) {
-    windVaneUrl = "img/windVane/02.svg"
+    windVaneUrl = "//data.mars3d.cn/img/marker/wind/02.svg"
   } else if (speed > 4 && speed <= 6) {
-    windVaneUrl = "img/windVane/03.svg"
+    windVaneUrl = "//data.mars3d.cn/img/marker/wind/03.svg"
   } else if (speed > 6 && speed <= 8) {
-    windVaneUrl = "img/windVane/04.svg"
+    windVaneUrl = "//data.mars3d.cn/img/marker/wind/04.svg"
   } else if (speed > 8 && speed <= 10) {
-    windVaneUrl = "img/windVane/05.svg"
+    windVaneUrl = "//data.mars3d.cn/img/marker/wind/05.svg"
   } else if (speed > 10 && speed <= 12) {
-    windVaneUrl = "img/windVane/06.svg"
+    windVaneUrl = "//data.mars3d.cn/img/marker/wind/06.svg"
   } else if (speed > 12 && speed <= 14) {
-    windVaneUrl = "img/windVane/07.svg"
+    windVaneUrl = "//data.mars3d.cn/img/marker/wind/07.svg"
   } else if (speed > 14 && speed <= 16) {
-    windVaneUrl = "img/windVane/08.svg"
+    windVaneUrl = "//data.mars3d.cn/img/marker/wind/08.svg"
   } else if (speed > 16 && speed <= 18) {
-    windVaneUrl = "img/windVane/09.svg"
+    windVaneUrl = "//data.mars3d.cn/img/marker/wind/09.svg"
   } else if (speed > 18 && speed <= 20) {
-    windVaneUrl = "img/windVane/10.svg"
+    windVaneUrl = "//data.mars3d.cn/img/marker/wind/10.svg"
   } else if (speed > 20 && speed <= 22) {
-    windVaneUrl = "img/windVane/11.svg"
+    windVaneUrl = "//data.mars3d.cn/img/marker/wind/11.svg"
   } else if (speed > 22 && speed <= 24) {
-    windVaneUrl = "img/windVane/12.svg"
+    windVaneUrl = "//data.mars3d.cn/img/marker/wind/12.svg"
   } else if (speed > 24 && speed <= 26) {
-    windVaneUrl = "img/windVane/13.svg"
+    windVaneUrl = "//data.mars3d.cn/img/marker/wind/13.svg"
   } else if (speed > 26 && speed <= 28) {
-    windVaneUrl = "img/windVane/14.svg"
+    windVaneUrl = "//data.mars3d.cn/img/marker/wind/14.svg"
   } else if (speed > 28 && speed <= 30) {
-    windVaneUrl = "img/windVane/15.svg"
+    windVaneUrl = "//data.mars3d.cn/img/marker/wind/15.svg"
   } else if (speed > 30 && speed <= 32) {
-    windVaneUrl = "img/windVane/16.svg"
+    windVaneUrl = "//data.mars3d.cn/img/marker/wind/16.svg"
   } else if (speed > 32 && speed <= 34) {
-    windVaneUrl = "img/windVane/17.svg"
+    windVaneUrl = "//data.mars3d.cn/img/marker/wind/17.svg"
   } else if (speed > 34 && speed <= 36) {
-    windVaneUrl = "img/windVane/18.svg"
+    windVaneUrl = "//data.mars3d.cn/img/marker/wind/18.svg"
   } else if (speed > 36 && speed <= 38) {
-    windVaneUrl = "img/windVane/19.svg"
+    windVaneUrl = "//data.mars3d.cn/img/marker/wind/19.svg"
   } else if (speed > 38 && speed <= 40) {
-    windVaneUrl = "img/windVane/20.svg"
+    windVaneUrl = "//data.mars3d.cn/img/marker/wind/20.svg"
   } else if (speed > 40 && speed <= 42) {
-    windVaneUrl = "img/windVane/21.svg"
+    windVaneUrl = "//data.mars3d.cn/img/marker/wind/21.svg"
   } else if (speed > 42 && speed <= 44) {
-    windVaneUrl = "img/windVane/22.svg"
+    windVaneUrl = "//data.mars3d.cn/img/marker/wind/22.svg"
   } else if (speed > 44 && speed <= 46) {
-    windVaneUrl = "img/windVane/23.svg"
+    windVaneUrl = "//data.mars3d.cn/img/marker/wind/23.svg"
   } else if (speed > 46 && speed <= 48) {
-    windVaneUrl = "img/windVane/24.svg"
+    windVaneUrl = "//data.mars3d.cn/img/marker/wind/24.svg"
   } else if (speed > 48 && speed <= 50) {
-    windVaneUrl = "img/windVane/25.svg"
+    windVaneUrl = "//data.mars3d.cn/img/marker/wind/25.svg"
   } else if (speed > 50 && speed <= 52) {
-    windVaneUrl = "img/windVane/26.svg"
+    windVaneUrl = "//data.mars3d.cn/img/marker/wind/26.svg"
   } else if (speed > 52 && speed <= 54) {
-    windVaneUrl = "img/windVane/27.svg"
+    windVaneUrl = "//data.mars3d.cn/img/marker/wind/27.svg"
   } else if (speed > 54 && speed <= 56) {
-    windVaneUrl = "img/windVane/28.svg"
+    windVaneUrl = "//data.mars3d.cn/img/marker/wind/28.svg"
   } else if (speed > 56) {
-    windVaneUrl = "img/windVane/29.svg"
+    windVaneUrl = "//data.mars3d.cn/img/marker/wind/29.svg"
   }
   return windVaneUrl
 }

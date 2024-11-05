@@ -1,44 +1,44 @@
 .mars-four-color {
-    width: 86px;
-    position: relative;
-    top: -68px;
-    left: -37px;
-    cursor: pointer;
+  width: 86px;
+  position: relative;
+  top: -68px;
+  left: -37px;
+  cursor: pointer;
 }
 
 .mars-four-color .four-color_bg {
-    position: absolute;
+  position: absolute;
 }
 
 .mars-four-color .four-color_name {
-    width: 100%;
-    position: absolute;
-    top: 8px;
-    text-align: center;
+  width: 100%;
+  position: absolute;
+  top: 8px;
+  text-align: center;
 }
 
 
 .mars3d-animation {
-    animation: cameraMove 1s linear infinite alternate;
-    -webkit-animation: cameraMove 1s linear infinite alternate;
+  animation: cameraMove 1s linear infinite alternate;
+  -webkit-animation: cameraMove 1s linear infinite alternate;
 }
 
 @keyframes cameraMove {
-    from {
-        top: -100px;
-    }
+  from {
+    top: -100px;
+  }
 
-    to {
-        top: -68px;
-    }
+  to {
+    top: -68px;
+  }
 }
 
 @-webkit-keyframes cameraMove {
-    from {
-        top: -100px;
-    }
+  from {
+    top: -100px;
+  }
 
-    to {
-        top: -68px;
-    }
+  to {
+    top: -68px;
+  }
 }

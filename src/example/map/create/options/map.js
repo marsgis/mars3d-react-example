@@ -24,7 +24,7 @@ function initMap() {
         enableZoom: true
       },
       mapProjection: mars3d.CRS.EPSG3857, // 2D下展示墨卡托投影
-      mapMode2D: Cesium.MapMode2D.INFINITE_SCROLL// 2D下左右一直可以滚动重复世界地图
+      mapMode2D: Cesium.MapMode2D.INFINITE_SCROLL // 2D下左右一直可以滚动重复世界地图
     },
     control: {
       baseLayerPicker: true, // basemaps底图切换按钮
@@ -41,7 +41,7 @@ function initMap() {
     basemaps: [
       {
         name: "天地图影像",
-        icon: "img/basemaps/tdt_img.png",
+        icon: "//data.mars3d.cn/img/control/basemap/tdt_img.png",
         type: "tdt",
         layer: "img_d",
         show: true
@@ -52,7 +52,6 @@ function initMap() {
   // 打印测试信息
   console.log("mars3d的Map主对象构造完成", map)
   console.log("其中Cesium原生的Cesium.Viewer为", map.viewer)
-
 
   console.log("当前电脑是否支持webgl2", Cesium.FeatureDetection.supportsWebgl2(map.scene))
 

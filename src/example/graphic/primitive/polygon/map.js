@@ -96,8 +96,8 @@ function addDemoGraphic2(graphicLayer) {
       [117.183832, 31.814237, 38.76]
     ],
     style: {
-      image: "img/textures/poly-soil.jpg",
-      // image: "img/tietu/gugong.jpg",
+      image: "//data.mars3d.cn/img/textures/poly-soil.jpg",
+      // image: "//data.mars3d.cn/img/map/gugong.jpg",
       vertexFormat: Cesium.MaterialAppearance.MaterialSupport.TEXTURED.vertexFormat,
       textureCoordinates: {
         positions: [new Cesium.Cartesian2(0, 1), new Cesium.Cartesian2(0, 0), new Cesium.Cartesian2(0.5, 0), new Cesium.Cartesian2(0.5, 1)] // 矩形平铺
@@ -132,7 +132,7 @@ function addDemoGraphic3(graphicLayer) {
     style: {
       materialType: mars3d.MaterialType.Water,
       materialOptions: {
-        normalMap: "img/textures/waterNormals.jpg", // 水正常扰动的法线图
+        normalMap: "//data.mars3d.cn/img/textures/waterNormals.jpg", // 水正常扰动的法线图
         frequency: 1000.0, // 控制波数的数字。
         animationSpeed: 0.01, // 控制水的动画速度的数字。
         amplitude: 10, // 控制水波振幅的数字。
@@ -363,7 +363,7 @@ function addDemoGraphic11(graphicLayer) {
     style: {
       materialType: mars3d.MaterialType.WaterLight,
       materialOptions: {
-        specularMap: "img/textures/poly-stone.jpg",
+        specularMap: "//data.mars3d.cn/img/textures/poly-stone.jpg",
         alpha: 0.6
       },
       clampToGround: true
@@ -534,11 +534,69 @@ export function bindLayerContextMenu() {
       }
     },
     {
+      text: "还原编辑(还原到初始)",
+      icon: "fa fa-pencil",
+      show: (event) => {
+        function hasRestore(graphic) {
+          if (!graphic || !graphic.hasEdit || !graphic.isEditing) {
+            return false
+          }
+          return graphic.editing?.hasRestore()
+        }
+
+        const graphic = event.graphic
+        if (hasRestore(graphic)) {
+          return true
+        }
+        if (graphic.isPrivate && graphic.parent) {
+          return hasRestore(graphic.parent) // 右击是编辑点时
+        }
+        return false
+      },
+      callback: (event) => {
+        const graphic = event.graphic
+        if (graphic.editing?.restore) {
+          graphic.editing.restore() // 撤销编辑，可直接调用
+        } else if (graphic.parent?.editing?.restore) {
+          graphic.parent.editing.restore() // 右击是编辑点时
+        }
+      }
+    },
+    {
+      text: "撤销编辑(还原到上一步)",
+      icon: "fa fa-pencil",
+      show: (event) => {
+        function hasRevoke(graphic) {
+          if (!graphic || !graphic.hasEdit || !graphic.isEditing) {
+            return false
+          }
+          return graphic.editing?.hasRevoke()
+        }
+
+        const graphic = event.graphic
+        if (hasRevoke(graphic)) {
+          return true
+        }
+        if (graphic.isPrivate && graphic.parent) {
+          return hasRevoke(graphic.parent) // 右击是编辑点时
+        }
+        return false
+      },
+      callback: (event) => {
+        const graphic = event.graphic
+        if (graphic.editing?.revoke) {
+          graphic.editing.revoke() // 撤销编辑，可直接调用
+        } else if (graphic.parent?.editing?.revoke) {
+          graphic.parent.editing.revoke() // 右击是编辑点时
+        }
+      }
+    },
+    {
       text: "删除对象",
       icon: "fa fa-trash-o",
       show: (event) => {
         const graphic = event.graphic
-        if (!graphic || graphic.isDestroy || graphic.graphicIds) {
+        if (!graphic || graphic.isDestroy || graphic.isPrivate || graphic.graphicIds) {
           return false
         } else {
           return true
@@ -587,6 +645,10 @@ export function bindLayerContextMenu() {
     {
       text: "计算周长",
       icon: "fa fa-medium",
+      show: (event) => {
+        const graphic = event.graphic
+        return !graphic.isPoint
+      },
       callback: (e) => {
         const graphic = e.graphic
         const strDis = mars3d.MeasureUtil.formatDistance(graphic.distance)
@@ -596,6 +658,10 @@ export function bindLayerContextMenu() {
     {
       text: "计算面积",
       icon: "fa fa-reorder",
+      show: (event) => {
+        const graphic = event.graphic
+        return !graphic.isPoint
+      },
       callback: (e) => {
         const graphic = e.graphic
         const strArea = mars3d.MeasureUtil.formatArea(graphic.area)

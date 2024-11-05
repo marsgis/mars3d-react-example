@@ -69,7 +69,7 @@ function addGraphicToOverviewMap(overviewMap) {
       return overviewMap.center
     }, false),
     style: {
-      image: "img/marker/street2.png",
+      image: "//data.mars3d.cn/img/marker/street2.png",
       scale: 0.5,
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.CENTER,

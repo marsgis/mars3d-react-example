@@ -121,8 +121,8 @@ export function terrainClips(heightVal) {
     ],
     exact: true,
     diffHeight: heightVal, // 高度
-    image: "./img/textures/poly-stone.jpg",
-    imageBottom: "./img/textures/poly-soil.jpg",
+    image: "//data.mars3d.cn/img/textures/poly-stone.jpg",
+    imageBottom: "//data.mars3d.cn/img/textures/poly-soil.jpg",
     splitNum: 80 // 井边界插值数
   })
   map.addThing(terrainClip)

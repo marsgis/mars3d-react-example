@@ -186,7 +186,7 @@ function addGraphics(points) {
     const graphic = new mars3d.graphic.BillboardPrimitive({
       position: [jd, wd, gd],
       style: {
-        image: "img/marker/point-red.png",
+        image: "//data.mars3d.cn/img/marker/point-red.png",
         scale: 1,
         horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
         verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
@@ -212,7 +212,7 @@ export function startDrawGraphic() {
   graphicLayer.startDraw({
     type: "billboardP",
     style: {
-      image: "img/marker/point-red.png",
+      image: "//data.mars3d.cn/img/marker/point-red.png",
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
       label: {

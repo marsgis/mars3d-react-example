@@ -90,7 +90,7 @@ export function addRandomGraphicByCount(count) {
       position,
       style: {
         url: "//data.mars3d.cn/file/video/menqian.mp4",
-        maskImage: "img/textures/video-mask.png", // 羽化视频四周，融合更美观
+        maskImage: "//data.mars3d.cn/img/textures/video-mask.png", // 羽化视频四周，融合更美观
         angle: 46.3,
         angle2: 15.5,
         heading: 88.5,
@@ -112,7 +112,7 @@ export function startDrawGraphic() {
     type: "video3D",
     style: {
       url: "//data.mars3d.cn/file/video/lukou.mp4",
-      // maskImage: "img/textures/video-mask.png", // 羽化视频四周，融合更美观
+      // maskImage: "//data.mars3d.cn/img/textures/video-mask.png", // 羽化视频四周，融合更美观
       addHeight: 10,
       showFrustum: true
     }
@@ -134,7 +134,7 @@ export function startDrawGraphic2() {
     targetPosition,
     style: {
       url: "//data.mars3d.cn/file/video/lukou.mp4",
-      maskImage: "img/textures/video-mask.png", // 羽化视频四周，融合更美观
+      maskImage: "//data.mars3d.cn/img/textures/video-mask.png", // 羽化视频四周，融合更美观
       angle: 33.3,
       angle2: 23.4,
       showFrustum: true
@@ -149,7 +149,7 @@ function addDemoGraphic1() {
     position: [117.204472, 31.842488, 120.9],
     style: {
       url: "//data.mars3d.cn/file/video/lukou.mp4",
-      maskImage: "img/textures/video-mask.png", // 羽化视频四周，融合更美观
+      maskImage: "//data.mars3d.cn/img/textures/video-mask.png", // 羽化视频四周，融合更美观
       angle: 33.3,
       angle2: 23.4,
       heading: 50.7,
@@ -165,7 +165,7 @@ function addDemoGraphic2() {
     position: [117.205457, 31.842984, 63.9],
     style: {
       url: "//data.mars3d.cn/file/video/menqian.mp4",
-      maskImage: "img/textures/video-mask.png", // 羽化视频四周，融合更美观
+      maskImage: "//data.mars3d.cn/img/textures/video-mask.png", // 羽化视频四周，融合更美观
       angle: 46.3,
       angle2: 15.5,
       heading: 88.5,
@@ -190,7 +190,7 @@ function addDemoGraphic3() {
     position: propertyFJ,
     style: {
       url: "//data.mars3d.cn/file/video/menqian.mp4",
-      // maskImage: "img/textures/video-mask.png", // 羽化视频四周，融合更美观
+      // maskImage: "//data.mars3d.cn/img/textures/video-mask.png", // 羽化视频四周，融合更美观
       angle: 20,
       angle2: 10,
       heading: 88.5,

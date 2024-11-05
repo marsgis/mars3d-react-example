@@ -58,7 +58,6 @@ function addSatellite() {
     return mars3d.Util.getTemplateHtml({ title: "卫星图层", template: "all", attr })
   })
 
-
   // 取数据
   const property = getDynamicProperty()
 

@@ -37,7 +37,7 @@ export function onMounted(mapInstance) {
     symbol: {
       styleOptions: {
         ...pointStyle,
-        image: "img/marker/mark-blue.png"
+        image: "//data.mars3d.cn/img/marker/mark-blue.png"
       }
     },
     popup: "{项目名称}",
@@ -68,7 +68,7 @@ export function drawPoint() {
       type: "billboard",
       style: {
         ...pointStyle,
-        image: "img/marker/route-start.png"
+        image: "//data.mars3d.cn/img/marker/route-start.png"
       }
     })
     .then((graphic) => {
@@ -90,7 +90,7 @@ function clickPoint(position) {
     position,
     style: {
       ...pointStyle,
-      image: "img/marker/route-start.png"
+      image: "//data.mars3d.cn/img/marker/route-start.png"
     },
     popup: "查询点"
   })
@@ -120,7 +120,7 @@ function clickPoint(position) {
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
         color: "rgba(89,249,255,0.8)",
-        image: "img/textures/line-tarans.png",
+        image: "//data.mars3d.cn/img/textures/line-tarans.png",
         speed: 8
       }
     }
@@ -158,7 +158,7 @@ function updateSelect(graphic) {
   if (graphic) {
     selectGraphic = graphic
     selectGraphic.setStyle({
-      image: "img/marker/mark-red.png"
+      image: "//data.mars3d.cn/img/marker/mark-red.png"
     })
   }
 }
@@ -169,7 +169,7 @@ export function removeSelect() {
   }
 
   selectGraphic.setStyle({
-    image: "img/marker/mark-blue.png"
+    image: "//data.mars3d.cn/img/marker/mark-blue.png"
   })
   selectGraphic = undefined
 }

@@ -48,7 +48,7 @@ function createMapvLayer() {
       },
       // 具体点的icon设置
       iconOptions: {
-        url: "img/marker/lace-blue.png", // 非聚合时点的icon,可设置为空
+        url: "//data.mars3d.cn/img/marker/lace-blue.png", // 非聚合时点的icon,可设置为空
         width: 25,
         height: 36
       }

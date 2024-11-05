@@ -20,9 +20,9 @@ function initMap() {
     basemaps: [
       {
         name: "单张图片",
-        icon: "img/basemaps/offline.png",
+        icon: "//data.mars3d.cn/img/control/basemap/offline.png",
         type: "image",
-        url: "//data.mars3d.cn/file/img/world/world.jpg",
+        url: "//data.mars3d.cn/img/map/world/world.jpg",
         show: true
       }
     ],
@@ -50,7 +50,7 @@ function initMap() {
   // 方式3：在创建地球后调用addLayer添加图层(用 mars3d.layer.create工厂方法创建)
   // const layerImg = mars3d.LayerUtil.create({
   //   type: "image",
-  //   url: "//data.mars3d.cn//file/img/radar/201906211112.PNG",
+  //   url: "//data.mars3d.cn/img/map/radar/201906211112.PNG",
   //   rectangle: { xmin: 73.16895, xmax: 134.86816, ymin: 12.2023, ymax: 54.11485 },
   //   alpha: 0.7
   // })

@@ -17,7 +17,7 @@ export const mapOptions = {
  * @param {mars3d.Map} mapInstance 地图对象
  * @returns {void} 无
  */
-export function onMounted (mapInstance) {
+export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
   // 创建矢量数据图层
@@ -50,12 +50,12 @@ export function onMounted (mapInstance) {
  * 释放当前地图业务的生命周期函数
  * @returns {void} 无
  */
-export function onUnmounted () {
+export function onUnmounted() {
   map = null
 }
 
 // 绘制面
-export function drawPolygon () {
+export function drawPolygon() {
   graphicLayer.clear()
   polygonsLayer.clear()
 
@@ -73,17 +73,15 @@ export function drawPolygon () {
 }
 
 // 旋转面
-export function spinPolygons (angle) {
+export function spinPolygons(angle) {
   clearGraphic()
 
   const graphic = graphicLayer.getGraphics()[0]
   const poly = graphic.toGeoJSON({ closure: true })
 
   const centerPoint = mars3d.LngLatPoint.fromCartesian(graphic.center).toArray() // 围绕执行旋转的点
-
   // truf旋转操作
   const rotatedPoly = turf.transformRotate(poly, angle, { pivot: centerPoint })
-
   const spinGraphic = mars3d.Util.geoJsonToGraphics(rotatedPoly, {
     style: {
       color: "#ff0000",
@@ -97,7 +95,7 @@ export function spinPolygons (angle) {
 }
 
 // 平移面
-export function translationPolygons (offset) {
+export function translationPolygons(offset) {
   clearGraphic()
 
   const graphic = graphicLayer.getGraphics()[0]
@@ -119,7 +117,7 @@ export function translationPolygons (offset) {
 }
 
 // 缩放面
-export function zoomPolygons (scale) {
+export function zoomPolygons(scale) {
   clearGraphic()
 
   if (scale === 0) {
@@ -143,10 +141,9 @@ export function zoomPolygons (scale) {
     })
     polygonsLayer.addGraphic(spinGraphic)
   }
-
 }
 
-function clearGraphic () {
+function clearGraphic() {
   polygonsLayer.clear()
   graphicLayer.endDraw()
 }
@@ -154,7 +151,7 @@ function clearGraphic () {
 // 颜色
 let index = 0
 const colors = ["#99CCCC", "#66FF66", "#FF6666", "#00CCFF", "#00FF33", "#CC0000", "#CC00CC", "#CCFF00", "#0000FF"]
-function getColor () {
+function getColor() {
   const i = index++ % colors.length
   return colors[i]
 }

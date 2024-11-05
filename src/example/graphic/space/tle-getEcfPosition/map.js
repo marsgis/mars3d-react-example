@@ -165,8 +165,8 @@ function fxOneSatellite(item, options) {
   const endTimes = options.endTimes
 
   const tle = new mars3d.Tle(item.tle1, item.tle2)
-  const period_time = tle.period // 卫星绕地球一周的运行时长（单位：分钟）
-  let step = Math.floor(period_time / 10)
+  const period_time = tle.period * 60 * 1000 // 卫星绕地球一周的运行时长（单位：分钟）
+  let step = Math.floor(period_time / 600)
   if (step < 1000) {
     step = 1000
   }

@@ -157,7 +157,7 @@ function initPath(data) {
       pixelOffset: new Cesium.Cartesian2(10, -25) // 偏移量
     },
     // billboard: {
-    //   image: "img/marker/lace-blue.png",
+    //   image: "//data.mars3d.cn/img/marker/lace-blue.png",
     //   horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
     //   verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
     //   visibleDepth: false

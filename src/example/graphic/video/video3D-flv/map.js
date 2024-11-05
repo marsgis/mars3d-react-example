@@ -103,7 +103,7 @@ function addDemoGraphic1() {
     position: [117.205457, 31.842984, 63.9],
     style: {
       container: videoElement,
-      maskImage: "img/textures/video-mask.png", // 羽化视频四周，融合更美观
+      maskImage: "//data.mars3d.cn/img/textures/video-mask.png", // 羽化视频四周，融合更美观
       angle: 46.3,
       angle2: 15.5,
       heading: 88.5,
@@ -137,7 +137,7 @@ export function addRandomGraphicByCount(count) {
       position,
       style: {
         container: videoElement,
-        maskImage: "img/textures/video-mask.png", // 羽化视频四周，融合更美观
+        maskImage: "//data.mars3d.cn/img/textures/video-mask.png", // 羽化视频四周，融合更美观
         angle: 46.3,
         angle2: 15.5,
         heading: 88.5,
@@ -160,7 +160,7 @@ export function startDrawGraphic() {
     type: "video3D",
     style: {
       container: videoElement,
-      maskImage: "img/textures/video-mask.png", // 羽化视频四周，融合更美观
+      maskImage: "//data.mars3d.cn/img/textures/video-mask.png", // 羽化视频四周，融合更美观
       angle: 46.3,
       angle2: 15.5,
       heading: 178.5,
@@ -186,7 +186,7 @@ export function startDrawGraphic2() {
     targetPosition,
     style: {
       container: videoElement,
-      maskImage: "img/textures/video-mask.png", // 羽化视频四周，融合更美观
+      maskImage: "//data.mars3d.cn/img/textures/video-mask.png", // 羽化视频四周，融合更美观
       angle: 46.3,
       angle2: 15.5,
       heading: 88.5,

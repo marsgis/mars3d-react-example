@@ -105,7 +105,7 @@ function addBusinessLayer() {
     symbol: {
       type: "billboardP",
       styleOptions: {
-        image: "img/marker/mark-blue.png",
+        image: "//data.mars3d.cn/img/marker/mark-blue.png",
         width: 25,
         height: 34, // billboard聚合必须有width、height
         horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
@@ -130,7 +130,7 @@ function addBusinessLayer() {
     //   const graphic = new mars3d.graphic.BillboardEntity({
     //     position: e.position,
     //     style: {
-    //       image: "img/marker/lace-blue.png",
+    //       image: "//data.mars3d.cn/img/marker/lace-blue.png",
     //       width: 25,
     //       height: 34, // 聚合必须有width、height
     //       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,

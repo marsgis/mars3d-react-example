@@ -46,7 +46,7 @@ export function onMounted(mapInstance) {
         diffHeight: 25000, // 墙高
         materialType: mars3d.MaterialType.Image2,
         materialOptions: {
-          image: "./img/textures/fence-top.png",
+          image: "//data.mars3d.cn/img/textures/fence-top.png",
           color: "#4881A7"
         }
       }

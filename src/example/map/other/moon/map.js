@@ -40,7 +40,7 @@ export const mapOptions = {
   basemaps: [
     {
       name: "嫦娥1号月球影像图",
-      icon: "img/basemaps/tdt_img.png",
+      icon: "//data.mars3d.cn/img/control/basemap/tdt_img.png",
       type: "xyz",
       url: "https://moon.bao.ac.cn/gis3globleMarsMoon/tiles/getTiles/MoonTile/2000/jpg/{z}/{reverseY}/{x}",
       crs: "EPSG:4326",
@@ -48,7 +48,7 @@ export const mapOptions = {
     },
     {
       name: "嫦娥1号月球地形图",
-      icon: "img/basemaps/tdt_ter.png",
+      icon: "//data.mars3d.cn/img/control/basemap/tdt_ter.png",
       type: "xyz",
       url: "https://moon.bao.ac.cn/gis3globleMarsMoon/tiles/getTiles/MoonDEM/2000/jpg/{z}/{reverseY}/{x}",
       crs: "EPSG:4326"
