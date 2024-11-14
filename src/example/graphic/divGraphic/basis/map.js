@@ -48,6 +48,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic9(graphicLayer)
   addDemoGraphic10(graphicLayer)
   addDemoGraphic11(graphicLayer)
+  addDemoGraphic12(graphicLayer)
 }
 
 /**
@@ -489,6 +490,24 @@ function movePoint(graphic) {
   property.addSample(tempTime, point3)
 
   graphic.position = property
+}
+
+function addDemoGraphic12(graphicLayer) {
+  const divGraphic = new mars3d.graphic.DivGraphic({
+    position: [116.520548, 31.873034, 100],
+    style: {
+      html: `<div class="mars-spot">
+        <div class="mars-spot-board">
+        <h5>我是中国人</h5>
+        </div>
+        <div class="mars-spot-line"></div>
+      </div>`,
+      offsetY: -60,
+      horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+      verticalOrigin: Cesium.VerticalOrigin.BTOOM
+    }
+  })
+  graphicLayer.addGraphic(divGraphic)
 }
 
 // 生成演示数据(测试数据量)

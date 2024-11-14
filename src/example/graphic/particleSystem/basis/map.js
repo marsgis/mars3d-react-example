@@ -44,7 +44,7 @@ function addDemoGraphic1(graphicLayer) {
   const particleSystem = new mars3d.graphic.ParticleSystem({
     position: Cesium.Cartesian3.fromDegrees(117.224855, 31.815135, 28.05), // 位置
     style: {
-      image: "./img/particle/penquan.png",
+      image: "//data.mars3d.cn/img/particle/penquan.png",
       particleSize: 8, // 粒子大小（单位：像素）
       emissionRate: 100.0, // 发射速率 （单位：次/秒）
       heading: 290, // 方向角
@@ -53,8 +53,8 @@ function addDemoGraphic1(graphicLayer) {
       transZ: 5, // 离地高度（单位：米）
       maxHeight: 5000, // 超出该高度后不显示粒子效果
 
-      startColor: new Cesium.Color(1, 1, 1, 0.6), //  开始颜色
-      endColor: new Cesium.Color(0.8, 0.86, 1, 0.4), // 结束颜色
+      startColor: "rgba(255,255,255,0.6)", //  开始颜色
+      endColor: "rgba(204,220,255,0.4)", // 结束颜色
       startScale: 1.0, //  开始比例（单位：相对于imageSize大小的倍数）
       endScale: 4.0, // 结束比例（单位：相对于imageSize大小的倍数）
       minimumParticleLife: 6, // 最小寿命时间（秒）
@@ -73,13 +73,13 @@ function addDemoGraphic2(graphicLayer) {
   const particleSystem = new mars3d.graphic.ParticleSystem({
     position: Cesium.Cartesian3.fromDegrees(117.225518, 31.815549, 28.28), // 位置
     style: {
-      image: "./img/particle/fire2.png",
+      image: "//data.mars3d.cn/img/particle/fire2.png",
       particleSize: 5, // 粒子大小（单位：像素）
       emissionRate: 100, // 发射速率 （单位：次/秒）
       maxHeight: 5000, // 超出该高度后不显示粒子效果
 
-      startColor: new Cesium.Color(1, 1, 1, 1), // 开始颜色
-      endColor: new Cesium.Color(0.5, 0, 0, 0), // 结束颜色
+      startColor: "rgb(255,255,255)", // 开始颜色
+      endColor: "rgba(128,0,0,0)", // 结束颜色
       startScale: 3.0, // 开始比例（单位：相对于imageSize大小的倍数）
       endScale: 1.5, // 结束比例（单位：相对于imageSize大小的倍数）
       minimumSpeed: 7.0, // 最小速度（单位：米/秒）
@@ -212,15 +212,15 @@ function addDemoGraphic4(graphicLayer) {
   const particleSystem = new mars3d.graphic.ParticleSystem({
     position: fixedRoute.property,
     style: {
-      image: "./img/particle/smoke.png",
+      image: "//data.mars3d.cn/img/particle/smoke.png",
       particleSize: 12, // 粒子大小（单位：像素）
       emissionRate: 30.0, // 发射速率 （单位：次/秒）
       pitch: 40, // 俯仰角
       gravity: -1, // 重力因子，会修改速度矢量以改变方向或速度（基于物理的效果）
       // maxHeight: 1000, // 超出该高度后不显示粒子效果
 
-      startColor: Cesium.Color.GREY.withAlpha(0.7), // 开始颜色
-      endColor: Cesium.Color.WHITE.withAlpha(0.0), // 结束颜色
+      startColor: "rgba(128,128,128,0.7)", // 开始颜色
+      endColor: "rgba(255,255,255,0)", // 结束颜色
       startScale: 1.0, //  开始比例（单位：相对于imageSize大小的倍数）
       endScale: 8.0, // 结束比例（单位：相对于imageSize大小的倍数）
       minimumSpeed: 1.0, // 最小速度(米/秒)
@@ -251,7 +251,7 @@ export function addRandomGraphicByCount(count) {
     const graphic = new mars3d.graphic.ParticleSystem({
       position,
       style: {
-        image: "./img/particle/fire2.png",
+        image: "//data.mars3d.cn/img/particle/fire2.png",
         particleSize: 5, // 粒子大小（单位：像素）
         emissionRate: 200, // 粒子发射器的发射速率 （单位：次/秒）
 
@@ -276,7 +276,7 @@ export function startDrawGraphic() {
   graphicLayer.startDraw({
     type: "particleSystem",
     style: {
-      image: "./img/particle/smoke.png",
+      image: "//data.mars3d.cn/img/particle/smoke.png",
       particleSize: 8, // 粒子大小（单位：像素）
       emissionRate: 100.0, // 发射速率 （单位：次/秒）
       heading: 290, // 方向角
@@ -298,7 +298,7 @@ export function startDrawGraphic2() {
   graphicLayer.startDraw({
     type: "particleSystem",
     style: {
-      image: "./img/particle/fire2.png",
+      image: "//data.mars3d.cn/img/particle/fire2.png",
       particleSize: 5, // 粒子大小（单位：像素）
       emissionRate: 200, //  发射速率 （单位：次/秒）
 

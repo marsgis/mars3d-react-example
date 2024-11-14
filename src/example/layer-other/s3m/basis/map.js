@@ -1,4 +1,3 @@
-// 仅mars3d v3.4 + cesium1.95之前版本支持超图图层
 import * as mars3d from "mars3d"
 
 export let map
@@ -15,13 +14,16 @@ export const mapOptions = {
       roll: 359.8
     },
     fxaa: true,
-    requestRenderMode: true, // 显式渲染
-    contextOptions: {
-      requestWebgl1: true // 超图 不支持webgl2
-    }
+    requestRenderMode: true // 显式渲染
   },
   control: {
     infoBox: false
+  },
+  terrain: {
+    url: "https://www.supermapol.com/realspace/services/3D-stk_terrain/rest/realspace/datas/info/data/path",
+    isSct: true, // 地形服务源自SuperMap iServer发布时需设置isSct为true
+    invisibility: true,
+    show: true
   },
   layers: []
 }
@@ -38,8 +40,7 @@ export function onMounted(mapInstance) {
 
   globalNotify("已知问题提示", `当前使用的是原生Cesium+SuperMap3D插件方式，很多API不支持，完整方式需要参考Github开源代码切换Cesium到超图版Cesium。`)
 
-  // showMaxNiaochaoDemo()
-  showQxSuofeiyaDemo()
+  showCqbmDemo()
 }
 
 /**
@@ -67,7 +68,7 @@ export function showMaxNiaochaoDemo() {
 
   s3mLayer = new mars3d.layer.S3MLayer({
     name: "鸟巢",
-    url: "http://www.supermapol.com/realspace/services/3D-OlympicGreen/rest/realspace",
+    url: "https://www.supermapol.com/realspace/services/3D-OlympicGreen/rest/realspace",
     flyTo: true
   })
   map.addLayer(s3mLayer)
@@ -91,7 +92,7 @@ export function showMaxCBDDemo() {
 
   s3mLayer = new mars3d.layer.S3MLayer({
     name: "人工建模CBD",
-    url: "http://www.supermapol.com/realspace/services/3D-CBD/rest/realspace",
+    url: "https://www.supermapol.com/realspace/services/3D-CBD/rest/realspace",
     flyTo: true
   })
   map.addLayer(s3mLayer)
@@ -104,7 +105,7 @@ export function showMaxPipeDemo() {
 
   s3mLayer = new mars3d.layer.S3MLayer({
     name: "地下管网",
-    url: "http://www.supermapol.com/realspace/services/3D-pipe/rest/realspace",
+    url: "https://www.supermapol.com/realspace/services/3D-pipe/rest/realspace",
     center: { lat: 45.768407, lng: 126.621981, alt: 101, heading: 162, pitch: -38 },
     flyTo: true
   })
@@ -150,7 +151,7 @@ export function showBIMQiaoDemo() {
 
   s3mLayer = new mars3d.layer.S3MLayer({
     name: "BIM桥梁",
-    url: "http://www.supermapol.com/realspace/services/3D-BIMMoXing/rest/realspace",
+    url: "https://www.supermapol.com/realspace/services/3D-BIMMoXing/rest/realspace",
     center: { lat: 40.234379, lng: 116.148777, alt: 223, heading: 331, pitch: -19 },
     flyTo: true
   })
@@ -178,7 +179,7 @@ export function showQxSuofeiyaDemo() {
   s3mLayer = new mars3d.layer.S3MLayer({
     name: "哈尔滨索菲亚教堂",
     type: "supermap_s3m",
-    url: "http://www.supermapol.com/realspace/services/3D-suofeiya_church/rest/realspace",
+    url: "https://www.supermapol.com/realspace/services/3D-suofeiya_church/rest/realspace",
     s3mOptions: {
       selectEnabled: false
     },
@@ -200,7 +201,7 @@ export function showQxSrsbDemo() {
 
   s3mLayer = new mars3d.layer.S3MLayer({
     name: "萨尔茨堡",
-    url: "http://www.supermapol.com/realspace/services/3D-srsb/rest/realspace",
+    url: "https://www.supermapol.com/realspace/services/3D-srsb/rest/realspace",
     // position: { alt: 400 },
     center: { lat: 47.803782, lng: 13.04465, alt: 582, heading: 0, pitch: -40 },
     flyTo: true
@@ -218,3 +219,40 @@ export function showQxSrsbDemo() {
     // waterLayer.style3D = style;
   })
 }
+
+export function showCqbmDemo() {
+  removeLayer()
+
+  s3mLayer = new mars3d.layer.S3MLayer({
+    name: "重庆白模",
+    url: "https://www.supermapol.com/realspace/services/3D-CQmodel_wireframe_2000/rest/realspace",
+    // position: { alt: 400 },
+    popup: "all",
+    flyTo: true
+  })
+  map.addLayer(s3mLayer)
+
+  // 加载完成Promise
+  s3mLayer.readyPromise.then(function (s3mLayer) {
+    console.log("s3m模型加载完成", s3mLayer)
+  })
+}
+
+export function showCloudDemo() {
+  removeLayer()
+
+  s3mLayer = new mars3d.layer.S3MLayer({
+    name: "点云",
+    url: "https://www.supermapol.com/realspace/services/3D-cloud/rest/realspace",
+    // position: { alt: 400 },
+    popup: "all",
+    flyTo: true
+  })
+  map.addLayer(s3mLayer)
+
+  // 加载完成Promise
+  s3mLayer.readyPromise.then(function (s3mLayer) {
+    console.log("s3m模型加载完成", s3mLayer)
+  })
+}
+

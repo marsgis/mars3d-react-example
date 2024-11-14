@@ -1,7 +1,7 @@
 /**
  * @license
  * Cesium - https://github.com/CesiumGS/cesium
- * Version 1.122.1
+ * Version 1.121.2
  *
  * Copyright 2011-2022 Cesium Contributors
  *

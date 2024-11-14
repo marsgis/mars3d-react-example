@@ -401,7 +401,7 @@ function addDemoGraphic6() {
     },
     attr: { remark: "示例6" },
     scaleplate: {
-      url: "/img/tietu/axis.png",
+      url: "//data.mars3d.cn/img/map/axis.png",
       width: 223, // 单位：米
       height: 213,
       show: true

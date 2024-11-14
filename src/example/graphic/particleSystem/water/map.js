@@ -82,7 +82,7 @@ function addWaterGate() {
       id: i + 1,
       position: pos, // 位置
       style: {
-        image: "./img/particle/smoke.png",
+        image: "//data.mars3d.cn/img/particle/smoke.png",
         particleSize: 16, // 粒子大小（单位：像素）
         emissionRate: 100.0, // 发射速率 （单位：次/秒）
         heading: 120, // 方向角

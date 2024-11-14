@@ -69,7 +69,7 @@ function addAnhui(graphicLayer) {
         diffHeight, // 墙高
         materialType: mars3d.MaterialType.Image2,
         materialOptions: {
-          image: "./img/icon/wall.png"
+          image: "//data.mars3d.cn/img/textures/wall.png"
         }
       }
     }

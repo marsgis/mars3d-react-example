@@ -82,6 +82,12 @@ function addGraphicLayer() {
     }
   })
   graphicLayer.addGraphic(fixedRoute)
+  fixedRoute.on(mars3d.EventType.start, function (event) {
+    console.log("漫游开始start")
+  })
+  fixedRoute.on(mars3d.EventType.end, function (event) {
+    console.log("漫游结束end")
+  })
 
   fixedRoute.start() // 启动漫游
 }

@@ -916,6 +916,13 @@
             "main": "layer-other/i3s/basis",
             "api": "I3SLayer.html",
             "hasPannel": true
+          },
+          {
+            "name": "超图S3M三维模型图层",
+            "thumbnail": "layero-s3m-basis.jpg",
+            "main": "layer-other/s3m/basis",
+            "libs": ["mars3d", "cesium-comp", "mars3d-supermap"],
+            "hasPannel": true
           }
         ]
       },

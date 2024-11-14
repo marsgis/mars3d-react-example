@@ -168,6 +168,8 @@ export function updateHeightForSurfaceTerrain(position) {
 
 // 修改更改后的参数
 export function updateModel(params, pannelData) {
+  console.log("更新模型参数", params)
+
   tiles3dLayer.setOptions(params)
 
   // 非参数，调用方法绑定或解绑

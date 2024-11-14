@@ -76,8 +76,14 @@ function addGraphicLayer() {
       minimumPixelSize: 50
     },
     polyline: {
-      color: "#ffff00",
-      width: 3
+      color: "rgba(255,0,0,0.5)",
+      width: 2,
+      showAll: true
+    },
+    path: {
+      color: "rgba(255,255,0,1.0)",
+      width: 4,
+      leadTime: 0
     }
   })
   graphicLayer.addGraphic(fixedRoute)
@@ -178,7 +184,7 @@ function addParticleSystem(property) {
   const particleSystem = new mars3d.graphic.ParticleSystem({
     position: property,
     style: {
-      image: "./img/particle/smoke.png",
+      image: "//data.mars3d.cn/img/particle/smoke.png",
       particleSize: 12, // 粒子大小（单位：像素）
       emissionRate: 20.0, // 发射速率 （单位：次/秒）
       pitch: 40, // 俯仰角

@@ -46,8 +46,13 @@ function addDemoGraphic1(graphicLayer) {
   const graphic = new mars3d.graphic.CloudPrimitive({
     position: [116.353072, 30.859836, 2000],
     style: {
-      scale: new Cesium.Cartesian2(5500, 1000),
-      maximumSize: new Cesium.Cartesian3(50, 15, 13),
+      // scale: new Cesium.Cartesian2(5500, 1000),
+      scaleX: 550,
+      scaleY: 100,
+      // maximumSize: new Cesium.Cartesian3(50, 15, 13),
+      maximumSizeX: 50,
+      maximumSizeY: 15,
+      maximumSizeZ: 13,
       slice: 0.3,
       label: {
         text: "我是一团来自火星的云",
