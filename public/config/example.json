@@ -2410,6 +2410,13 @@
             "hasPannel": true
           },
           {
+            "name": "平行四边形",
+            "thumbnail": "graphic-entity-polygon-parallelogram.jpg",
+            "main": "graphic/entity/polygon-parallelogram",
+            "api": "Parallelogram.html",
+            "hasPannel": true
+          },
+          {
             "name": "井",
             "thumbnail": "graphic-primitive-pit.jpg",
             "main": "graphic/primitive/pit",

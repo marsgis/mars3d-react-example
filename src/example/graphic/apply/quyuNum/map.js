@@ -6,7 +6,7 @@ export let graphicLayer // 矢量图层对象
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: 30.053342, lng: 117.677104, alt: 187118, heading: 350, pitch: -50 },
+    center: { lat: 21.748008, lng: 113.230533, alt: 699712.9, heading: 350.3, pitch: -52 },
     showSun: false,
     showMoon: false,
     showSkyBox: false,
@@ -26,6 +26,11 @@ export const mapOptions = {
   layers: []
 }
 
+// 行政区划编码(全国统一，可以按需修改其他省市县编码)
+const xzqhCode = "430000"
+
+const wallHeight = 40000 // 墙高
+
 /**
  * 初始化地图业务，生命周期钩子函数（必须）
  * 框架在地图初始化完成后自动调用该函数
@@ -35,15 +40,14 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
-  // 合肥市边界墙
   const borderWall = new mars3d.layer.GeoJsonLayer({
-    name: "合肥市边界墙",
-    url: "//data.mars3d.cn/file/geojson/areas/340100.json",
+    name: "边界墙",
+    url: `//data.mars3d.cn/file/geojson/areas/${xzqhCode}.json`,
     symbol: {
       type: "wallP",
       styleOptions: {
-        setHeight: -25000,
-        diffHeight: 25000, // 墙高
+        setHeight: -wallHeight,
+        diffHeight: wallHeight, // 墙高
         materialType: mars3d.MaterialType.Image2,
         materialOptions: {
           image: "//data.mars3d.cn/img/textures/fence-top.png",
@@ -53,10 +57,6 @@ export function onMounted(mapInstance) {
     }
   })
   map.addLayer(borderWall)
-
-  // 创建矢量数据图层
-  graphicLayer = new mars3d.layer.GraphicLayer()
-  map.addLayer(graphicLayer)
 
   addGraphics()
 }
@@ -77,76 +77,69 @@ export function onUnmounted() {
  *polygon面 PolylineEntity线  光锥体  和 LED数字显示
  * @returns {void} 无
  */
-function addGraphics() {
-  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/geojson/areas/340100_full.json" })
-    .then(function (geojson) {
-      const arr = mars3d.Util.geoJsonToGraphics(geojson) // 解析geojson
+async function addGraphics() {
+  const url = `//data.mars3d.cn/file/geojson/areas/${xzqhCode}_full.json`
+  const geojson = await mars3d.Util.fetchJson({ url: url })
 
-      for (let i = 0; i < arr.length; i++) {
-        const item = arr[i]
+  const arr = mars3d.Util.geoJsonToGraphics(geojson) // 解析geojson
 
-        // polygon面
-        const polygonEntity = new mars3d.graphic.PolygonEntity({
-          positions: item.positions,
-          style: {
-            fill: true,
-            color: "#4881a7",
-            opacity: 0.5,
-            label: {
-              text: item.attr.name,
-              font_size: 20,
-              color: "#ffffff",
-              font_family: "楷体",
-              outline: true,
-              outlineColor: "black",
-              setHeight: 2000,
-              visibleDepth: false,
-              distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0.0, 500000),
-              scaleByDistance: new Cesium.NearFarScalar(200000, 1.0, 500000, 0.5)
-            }
+  // 创建矢量数据图层
+  graphicLayer = new mars3d.layer.GraphicLayer()
+  map.addLayer(graphicLayer)
+
+  for (let i = 0; i < arr.length; i++) {
+    const item = arr[i]
+    if (!item.isMultiMax) {
+      continue
+    }
+    // polygon面
+    const polygonEntity = new mars3d.graphic.PolygonEntity({
+      positions: item.positions,
+      style: {
+        fill: true,
+        color: "#4881a7",
+        opacity: 0.5,
+        outline: true,
+        outlineStyle: {
+          color: "rgba(255,255,255,0.5)",
+          width: 1
+        },
+        // 高亮时的样式
+        highlight: {
+          opacity: 0.9,
+          outlineStyle: {
+            width: 2
           }
-        })
-        graphicLayer.addGraphic(polygonEntity)
-
-        // PolylineEntity线
-        const graphicLine = new mars3d.graphic.PolylineEntity({
-          positions: item.positions,
-          style: {
-            color: "rgba(255,255,255,0.5)",
-            width: 1
-          }
-        })
-        graphicLayer.addGraphic(graphicLine)
-
-        // 中心点
-        const center = item.attr.centroid
-
-        // 光锥体
-        const coneGlow = new mars3d.graphic.LightCone({
-          position: center,
-          style: {
-            radius: 1500,
-            height: 15000
-          }
-        })
-        graphicLayer.addGraphic(coneGlow)
-
-        // LED数字显示
-        const number = Math.floor(Math.random() * (4000 - 3000 + 1) + 3000) // 随机数字 3000-4000
-        const graphic = new mars3d.graphic.DivGraphic({
-          position: [center[0], center[1], 12000],
-          style: {
-            html: `<div class ="coneNum">${number}`,
-            horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
-            verticalOrigin: Cesium.VerticalOrigin.CENTER,
-            distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0.0, 500000),
-            scaleByDistance: new Cesium.NearFarScalar(200000, 1.0, 500000, 0.5)
-          }
-        })
-        graphicLayer.addGraphic(graphic)
+        }
       }
     })
-    .catch(function (error) {
-      console.log("加载JSON出错", error)
+    graphicLayer.addGraphic(polygonEntity)
+
+    // 中心点
+    const center = item.attr.centroid
+
+    // 光锥体
+    const coneGlow = new mars3d.graphic.LightCone({
+      position: center,
+      style: {
+        radius: wallHeight * 0.1,
+        height: wallHeight
+      }
     })
+    graphicLayer.addGraphic(coneGlow)
+
+    // LED数字显示
+    const number = Math.floor(Math.random() * (400 - 300 + 1) + 300) // 随机数字
+    const graphic = new mars3d.graphic.DivGraphic({
+      position: [center[0], center[1], wallHeight],
+      style: {
+        html: `<div class ="coneNum">${item.attr.name}:${number}</div>`,
+        horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+        verticalOrigin: Cesium.VerticalOrigin.CENTER,
+        distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0.0, 2000000),
+        scaleByDistance: new Cesium.NearFarScalar(500000, 1.0, 1000000, 0.5)
+      }
+    })
+    graphicLayer.addGraphic(graphic)
+  }
 }

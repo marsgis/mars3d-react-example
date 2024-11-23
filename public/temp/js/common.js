@@ -28,6 +28,8 @@ function init() {
       }).then(function (m) {
         parentGlobal._mapInstance = m
         parentGlobal.mapWork = window
+
+        parentGlobal.map = m // only for test
       })
       // parentGlobal._mapInstance = initMapFun(json.map3d)
       // parentGlobal.mapWork = window // 这句话是将当前js对象绑定赋予给index.项目内进行调用

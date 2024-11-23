@@ -294,6 +294,46 @@ export function startDrawGraphic2() {
   })
 }
 
+// 根据中心点来计算矩形
+export async function startDrawPoint() {
+  mars3d.LngLatPoint.FormatLength = 10
+  mars3d.LngLatPoint.FormatAltLength = 3
+
+  const graphic = await graphicLayer.startDraw({
+    type: "point",
+    style: {
+      color: "#ffff00",
+      clampToGround: true
+    }
+  })
+  const position = graphic.positionShow
+  graphic.remove(true)
+
+  const positions = mars3d.PolyUtil.getRectPositionsByCenter({
+    center: position,
+    width: 5.3,
+    height: 2.5
+  })
+
+  const rectangleEntity = new mars3d.graphic.RectangleEntity({
+    positions: [positions[0], positions[2]],
+    style: {
+      image: "//data.mars3d.cn/img/textures/rect-arrow.png",
+      clampToGround: true
+    }
+  })
+  graphicLayer.addGraphic(rectangleEntity)
+
+  if (map.camera.positionCartographic.height > 200) {
+    rectangleEntity.flyTo()
+  }
+
+  if (graphicLayer.hasEdit) {
+    rectangleEntity.startEditing()
+  }
+  eventTarget.fire("addTableData", { graphicLayer })
+}
+
 // 在图层绑定Popup弹窗
 export function bindLayerPopup() {
   graphicLayer.bindPopup(function (event) {

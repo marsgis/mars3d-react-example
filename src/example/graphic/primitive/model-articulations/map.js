@@ -117,23 +117,28 @@ function addRockets() {
     // })
 
     // 读取gltf内的构件信息  cesium 1.97+之后版本
-    const articulationsByName = model.sceneGraph._runtimeArticulations
-    const articulations = Object.keys(articulationsByName).map(function (articulationName) {
-      return {
-        name: articulationName,
-        name_cn: namesCN[articulationName] || articulationName, // 汉化
-        stages: articulationsByName[articulationName]._runtimeStages.map(function (stage) {
-          const stageModel = {
-            name: stage.name,
-            name_cn: namesCN[stage.name] || stage.name, // 汉化
-            minimum: stage.minimumValue,
-            maximum: stage.maximumValue,
-            current: stage.currentValue
-          }
-          return stageModel
+    const articulations = []
+    const runtimeArticulations = model.sceneGraph._runtimeArticulations
+    for (const key in runtimeArticulations) {
+      const stages = runtimeArticulations[key]._runtimeStages
+      const arr = []
+      for (let j = 0; j < stages.length; j++) {
+        const stage = stages[j]
+        arr.push({
+          name: stage.name,
+          name_cn: namesCN[stage.name] || stage.name, // 汉化
+          minimum: stage.minimumValue,
+          maximum: stage.maximumValue,
+          current: stage.currentValue
         })
       }
-    })
+      articulations.push({
+        name: key,
+        name_cn: namesCN[key] || key, // 汉化
+        stages: arr
+      })
+    }
+
 
     console.log("完成gltf内的构件信息读取", articulations)
 
@@ -146,6 +151,9 @@ export function setArticulationStage(groupName, stageName, current) {
   const name = groupName + " " + stageName
   model.setArticulationStage(name, Number(current))
   model.applyArticulations()
+
+  const nodes = model.sceneGraph._runtimeArticulations[groupName]._runtimeNodes
+  console.log(`选中的node部件`, nodes)
 }
 
 // 汉化属性名称

@@ -12,7 +12,6 @@ export const mapOptions = {
   }
 }
 
-export let tilesetColorCorrection
 export let tiles3dLayer
 
 /**
@@ -28,14 +27,18 @@ export function onMounted(mapInstance) {
     url: "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
     position: { alt: 38.8 },
     maximumScreenSpaceError: 1,
-    cullWithChildrenBounds: false
+    cullWithChildrenBounds: false,
+    // tilesetLayer.colorCorrection 是TilesetColorCorrection对象，因为与模型是1对1关系，已经内置进去
+    colorCorrection: {
+      brightness: 1.5
+    }
   })
   map.addLayer(tiles3dLayer)
 
-  tilesetColorCorrection = new mars3d.thing.TilesetColorCorrection({
-    layer: tiles3dLayer
-  })
-  map.addThing(tilesetColorCorrection)
+  // let tilesetColorCorrection = new mars3d.thing.TilesetColorCorrection({
+  //   layer: tiles3dLayer
+  // })
+  // map.addThing(tilesetColorCorrection)
 }
 
 /**
@@ -48,21 +51,21 @@ export function onUnmounted() {
 
 // 是否开启特效
 export function setDepthOfField(val) {
-  tilesetColorCorrection.enabled = val
+  tiles3dLayer.colorCorrection.enabled = val
 }
 // 修改对应参数
 export function setBrightness(val) {
-  tilesetColorCorrection.brightness = val
+  tiles3dLayer.colorCorrection.brightness = val
 }
 
 export function setContrast(val) {
-  tilesetColorCorrection.contrast = val
+  tiles3dLayer.colorCorrection.contrast = val
 }
 
 export function setHue(val) {
-  tilesetColorCorrection.hue = val
+  tiles3dLayer.colorCorrection.hue = val
 }
 
 export function setSaturation(val) {
-  tilesetColorCorrection.saturation = val
+  tiles3dLayer.colorCorrection.saturation = val
 }

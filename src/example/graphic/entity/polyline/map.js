@@ -50,6 +50,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic16(graphicLayer)
   addDemoGraphic17(graphicLayer)
   addDemoGraphic18(graphicLayer)
+  addDemoGraphic19(graphicLayer)
 }
 
 /**
@@ -652,6 +653,30 @@ function addDemoGraphic18(graphicLayer) {
       }
     },
     attr: { remark: "示例18" }
+  })
+  graphicLayer.addGraphic(graphic)
+}
+
+function addDemoGraphic19(graphicLayer) {
+  const graphic = new mars3d.graphic.PolylineEntity({
+    positions: [
+      [117.167335, 31.735739, 9.9],
+      [117.232611, 31.799572, 24.4]
+    ],
+    style: {
+      width: 10,
+      materialType: mars3d.MaterialType.LineFlow,
+      materialOptions: {
+        color: Cesium.Color.AQUA,
+        image: "//data.mars3d.cn/img/textures/arrow-small.png",
+        repeat: new Cesium.Cartesian2(40, 1),
+        speed: 30,
+        bgColor: "#0000ff"
+      },
+      clampToGround: true,
+      showAll: true
+    },
+    attr: { remark: "示例19" }
   })
   graphicLayer.addGraphic(graphic)
 }

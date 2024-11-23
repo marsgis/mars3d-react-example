@@ -7,7 +7,7 @@ let terrainClip
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并)
 export const mapOptions = {
   scene: {
-    center: { lat: 30.773023, lng: 116.473055, alt: 133111.3, heading: 40.4, pitch: -47.9 },
+    center: { lat: 21.748008, lng: 113.230533, alt: 699712.9, heading: 350.3, pitch: -52 },
     orderIndependentTranslucency: false,
     backgroundImage: "url(//data.mars3d.cn/img/busines/background1.jpg)",
     showMoon: false,
@@ -27,7 +27,9 @@ export const mapOptions = {
 }
 
 // 行政区划编码(全国统一，可以按需修改其他省市县编码)
-const xzqhCode = "340100"
+const xzqhCode = "430000"
+
+const wallHeight = 40000 // 墙高
 
 /**
  * 初始化地图业务，生命周期钩子函数（必须）
@@ -94,8 +96,8 @@ export function onMounted(mapInstance) {
       const wall = new mars3d.graphic.WallPrimitive({
         positions: options.positions,
         style: {
-          setHeight: -20000,
-          diffHeight: 20000, // 墙高
+          setHeight: -wallHeight,
+          diffHeight: wallHeight, // 墙高
           width: 10,
           materialType: mars3d.MaterialType.Image2,
           materialOptions: {
@@ -160,7 +162,7 @@ function addCenterGraphi(attr) {
     position: attr.centroid,
     style: {
       html: `<div class="mars-four-color mars3d-animation">
-                <img src="${getImage()}"  class="four-color_bg"></img>
+                <img src="//data.mars3d.cn/img/marker/bg/${getImage()}"  class="four-color_bg"></img>
                 <div class="four-color_name">${attr.name}</div>
             </div>`,
       horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
@@ -172,29 +174,21 @@ function addCenterGraphi(attr) {
   graphicLayer.addGraphic(divGraphic)
 }
 
-// 简化geojson的坐标
-function simplifyGeoJSON(geojson) {
-  try {
-    geojson = turf.simplify(geojson, { tolerance: 0.009, highQuality: true, mutate: true })
-  } catch (e) {
-    //
-  }
-  return geojson
-}
+
 
 // 根据随机数字取图片
 function getImage() {
   const num = Math.floor(Math.random() * 5)
   switch (num) {
     case 1:
-      return "/img/icon/map-title-y.png"
+      return "map-title-y.png"
     case 2:
-      return "/img/icon/map-title-h.png"
+      return "map-title-h.png"
     case 3:
-      return "/img/icon/map-title-o.png"
+      return "map-title-o.png"
     case 4:
-      return "/img/icon/map-title-r.png"
+      return "map-title-r.png"
     default:
-      return "/img/icon/map-title-b.png"
+      return "map-title-b.png"
   }
 }

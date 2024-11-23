@@ -186,6 +186,7 @@ export function showChinaLine() {
     name: "全国省界",
     url: "//data.mars3d.cn/file/geojson/areas/100000_full.json",
     format: simplifyGeoJSON, // 用于自定义处理geojson
+    // simplify: { tolerance: 0.00001 },
     symbol: {
       type: "polylineP",
       styleOptions: {

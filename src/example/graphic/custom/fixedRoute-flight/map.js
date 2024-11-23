@@ -156,6 +156,7 @@ function addGraphicLayer() {
     model: {
       url: "//data.mars3d.cn/gltf/mars/MQ-9-Predator.glb",
       scale: 1,
+      heading: 0,
       minimumPixelSize: 100
     },
     path: {
@@ -178,6 +179,7 @@ function addGraphicLayer() {
 
   // ui面板信息展示
   fixedRoute.on(mars3d.EventType.change, mars3d.Util.funThrottle((event) => {
+    // 取实时信息，可以通过  fixedRoute.info
     eventTarget.fire("roamLineChange", event)
   }, 500))
 
