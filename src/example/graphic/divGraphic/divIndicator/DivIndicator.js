@@ -28,6 +28,7 @@ class DivIndicator extends mars3d.graphic.DivGraphic {
       ...DEF_STYLE,
       ...(options.style || {})
     }
+    options.pointerEvents = options.pointerEvents ?? true
     super(options)
   }
 

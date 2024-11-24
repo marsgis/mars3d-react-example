@@ -1517,7 +1517,7 @@
     "dev": "guide/map/graphic",
     "children": [
       {
-        "name": "单点对象",
+        "name": "单点",
         "details": "主要是Label、Point、Billboard、Model 单个点的对象",
         "children": [
           {
@@ -1707,7 +1707,7 @@
         ]
       },
       {
-        "name": "DIV单点对象",
+        "name": "DIV单点",
         "details": "由DIV",
         "children": [
           {
@@ -1823,7 +1823,7 @@
         ]
       },
       {
-        "name": "gLTF模型对象",
+        "name": "gLTF模型",
         "download": false,
         "dev": "guide/map/gltf",
         "children": [
@@ -1903,7 +1903,7 @@
         ]
       },
       {
-        "name": "立体单点对象",
+        "name": "立体单点",
         "children": [
           {
             "name": "盒子",
@@ -2032,7 +2032,109 @@
         ]
       },
       {
-        "name": "线状对象",
+        "name": "漫游路线",
+        "children": [
+          {
+            "name": "Route实时轨迹路线",
+            "thumbnail": "graphic-custom-route.jpg",
+            "main": "graphic/custom/route",
+            "api": "Route.html",
+            "hasPannel": true
+          },
+          {
+            "name": "模型上实时轨迹路线",
+            "thumbnail": "graphic-custom-route-tileset.jpg",
+            "main": "graphic/custom/route-tileset",
+            "api": "Route.html",
+            "developerShow": false
+          },
+          {
+            "name": "AIS实时动态目标",
+            "thumbnail": "graphic-custom-route-ais.jpg",
+            "main": "graphic/custom/route-ais",
+            "api": "Route.html",
+            "developerShow": false
+          },
+          {
+            "name": "FixedRoute历史轨迹路线",
+            "thumbnail": "graphic-custom-fixedRoute.gif",
+            "main": "graphic/custom/fixedRoute",
+            "api": "FixedRoute.html",
+            "hasPannel": true
+          },
+          {
+            "name": "行人漫游",
+            "thumbnail": "graphic-custom-fixedRoute-walk.gif",
+            "main": "graphic/custom/fixedRoute-walk",
+            "api": "FixedRoute.html",
+            "developerShow": false,
+            "hasPannel": true,
+            "resources": [
+              "/img/div-graphic/divGraphic.css"
+            ]
+          },
+          {
+            "name": "贴地表表面漫游",
+            "thumbnail": "graphic-custom-fixedRoute-ground.gif",
+            "main": "graphic/custom/fixedRoute-ground",
+            "api": "FixedRoute.html",
+            "developerShow": false,
+            "hasPannel": true
+          },
+          {
+            "name": "贴模型表面漫游",
+            "thumbnail": "graphic-custom-fixedRoute-ground-tileset.gif",
+            "main": "graphic/custom/fixedRoute-ground-tileset",
+            "api": "FixedRoute.html",
+            "developerShow": false,
+            "hasPannel": true
+          },
+          {
+            "name": "室内漫游",
+            "thumbnail": "graphic-custom-fixedRoute-indoor.gif",
+            "main": "graphic/custom/fixedRoute-indoor",
+            "api": "FixedRoute.html",
+            "developerShow": false,
+            "hasPannel": true
+          },
+          {
+            "name": "空中漫游",
+            "thumbnail": "graphic-custom-fixedRoute-sky.gif",
+            "main": "graphic/custom/fixedRoute-sky",
+            "api": "FixedRoute.html",
+            "developerShow": false,
+            "hasPannel": true,
+            "resources": [
+              "/img/div-graphic/divGraphic.css"
+            ]
+          },
+          {
+            "name": "无人机航拍",
+            "thumbnail": "graphic-custom-fixedRoute-shoot.jpg",
+            "main": "graphic/custom/fixedRoute-shoot",
+            "api": "FixedRoute.html",
+            "developerShow": false
+          },
+          {
+            "name": "飞机路线",
+            "thumbnail": "graphic-custom-fixedRoute-flight.gif",
+            "main": "graphic/custom/fixedRoute-flight",
+            "api": "FixedRoute.html",
+            "developerShow": false,
+            "hasPannel": true
+          },
+          {
+            "name": "飞机路线(带投射)",
+            "thumbnail": "graphic-custom-fixedRoute-flight-ray.gif",
+            "main": "graphic/custom/fixedRoute-flight-ray",
+            "api": "FixedRoute.html",
+            "developerShow": false,
+            "hasPannel": true
+          }
+        ]
+      },
+      {
+        "name": "线状",
         "children": [
           {
             "name": "线",
@@ -2217,109 +2319,7 @@
         ]
       },
       {
-        "name": "漫游路线对象",
-        "children": [
-          {
-            "name": "Route实时轨迹路线",
-            "thumbnail": "graphic-custom-route.jpg",
-            "main": "graphic/custom/route",
-            "api": "Route.html",
-            "hasPannel": true
-          },
-          {
-            "name": "模型上实时轨迹路线",
-            "thumbnail": "graphic-custom-route-tileset.jpg",
-            "main": "graphic/custom/route-tileset",
-            "api": "Route.html",
-            "developerShow": false
-          },
-          {
-            "name": "AIS实时动态目标",
-            "thumbnail": "graphic-custom-route-ais.jpg",
-            "main": "graphic/custom/route-ais",
-            "api": "Route.html",
-            "developerShow": false
-          },
-          {
-            "name": "FixedRoute历史轨迹路线",
-            "thumbnail": "graphic-custom-fixedRoute.gif",
-            "main": "graphic/custom/fixedRoute",
-            "api": "FixedRoute.html",
-            "hasPannel": true
-          },
-          {
-            "name": "行人漫游",
-            "thumbnail": "graphic-custom-fixedRoute-walk.gif",
-            "main": "graphic/custom/fixedRoute-walk",
-            "api": "FixedRoute.html",
-            "developerShow": false,
-            "hasPannel": true,
-            "resources": [
-              "/img/div-graphic/divGraphic.css"
-            ]
-          },
-          {
-            "name": "贴地表表面漫游",
-            "thumbnail": "graphic-custom-fixedRoute-ground.gif",
-            "main": "graphic/custom/fixedRoute-ground",
-            "api": "FixedRoute.html",
-            "developerShow": false,
-            "hasPannel": true
-          },
-          {
-            "name": "贴模型表面漫游",
-            "thumbnail": "graphic-custom-fixedRoute-ground-tileset.gif",
-            "main": "graphic/custom/fixedRoute-ground-tileset",
-            "api": "FixedRoute.html",
-            "developerShow": false,
-            "hasPannel": true
-          },
-          {
-            "name": "室内漫游",
-            "thumbnail": "graphic-custom-fixedRoute-indoor.gif",
-            "main": "graphic/custom/fixedRoute-indoor",
-            "api": "FixedRoute.html",
-            "developerShow": false,
-            "hasPannel": true
-          },
-          {
-            "name": "空中漫游",
-            "thumbnail": "graphic-custom-fixedRoute-sky.gif",
-            "main": "graphic/custom/fixedRoute-sky",
-            "api": "FixedRoute.html",
-            "developerShow": false,
-            "hasPannel": true,
-            "resources": [
-              "/img/div-graphic/divGraphic.css"
-            ]
-          },
-          {
-            "name": "无人机航拍",
-            "thumbnail": "graphic-custom-fixedRoute-shoot.jpg",
-            "main": "graphic/custom/fixedRoute-shoot",
-            "api": "FixedRoute.html",
-            "developerShow": false
-          },
-          {
-            "name": "飞机路线",
-            "thumbnail": "graphic-custom-fixedRoute-flight.gif",
-            "main": "graphic/custom/fixedRoute-flight",
-            "api": "FixedRoute.html",
-            "developerShow": false,
-            "hasPannel": true
-          },
-          {
-            "name": "飞机路线(带投射)",
-            "thumbnail": "graphic-custom-fixedRoute-flight-ray.gif",
-            "main": "graphic/custom/fixedRoute-flight-ray",
-            "api": "FixedRoute.html",
-            "developerShow": false,
-            "hasPannel": true
-          }
-        ]
-      },
-      {
-        "name": "面状对象",
+        "name": "面状",
         "details": "适用于需要属性机制控制，并且小于一千条数据的加载场景。Entity 支持各种属性、自定义控制及操作，功能强大但渲染效率要弱些。",
         "children": [
           {
@@ -2446,7 +2446,7 @@
         ]
       },
       {
-        "name": "平面对象",
+        "name": "平面",
         "children": [
           {
             "name": "平面",
@@ -2521,7 +2521,7 @@
         ]
       },
       {
-        "name": "水域相关对象",
+        "name": "水域",
         "children": [
           {
             "name": "水面",
@@ -2580,7 +2580,7 @@
         ]
       },
       {
-        "name": "粒子及体渲染对象",
+        "name": "粒子及体渲染",
         "download": false,
         "children": [
           {
@@ -2629,7 +2629,7 @@
         ]
       },
       {
-        "name": "视频融合对象",
+        "name": "视频融合",
         "children": [
           {
             "name": "视频点位(Popup展示)",
@@ -2643,7 +2643,7 @@
             ]
           },
           {
-            "name": "视频材质(面状对象)",
+            "name": "视频材质(面状)",
             "thumbnail": "graphic-video-material.jpg",
             "main": "graphic/video/material",
             "api": "PolygonEntity.html",
@@ -2742,7 +2742,7 @@
         ]
       },
       {
-        "name": "雷达及卫星对象",
+        "name": "雷达及卫星",
         "children": [
           {
             "name": "相控阵雷达范围",

@@ -73,21 +73,21 @@ function createVideoDom() {
   videoElement.setAttribute("controls", "")
   videoElement.style.display = "none"
 
-  const sourceContainer = mars3d.DomUtil.create("source", "", videoElement)
-  sourceContainer.setAttribute("src", "//data.mars3d.cn/file/video/lukou.mp4")
-  sourceContainer.setAttribute("type", "video/mp4")
+  // const sourceContainer = mars3d.DomUtil.create("source", "", videoElement)
+  // sourceContainer.setAttribute("src", "//data.mars3d.cn/file/video/lukou.mp4")
+  // sourceContainer.setAttribute("type", "video/mp4")
 
   if (window.Hls.isSupported()) {
     const hls = new window.Hls()
     hls.loadSource(hlsUrl)
     hls.attachMedia(videoElement)
     hls.on(window.Hls.Events.MANIFEST_PARSED, function () {
-      videoElement.play()
+      playVideo()
     })
   } else if (videoElement.canPlayType("application/vnd.apple.mpegurl")) {
     videoElement.src = hlsUrl
     videoElement.addEventListener("loadedmetadata", function () {
-      videoElement.play()
+      playVideo()
     })
   }
 
@@ -102,6 +102,20 @@ function createVideoDom() {
       globalMsg("当前浏览器已限制自动播放，请单击播放按钮")
     }
   }, 3000)
+}
+
+let synchronizer
+function playVideo() {
+  videoElement.play()
+
+  // 可以使视频元素与Cesium的模拟时钟同步
+  if (!synchronizer) {
+    synchronizer = new Cesium.VideoSynchronizer({
+      clock: map.clock,
+      element: videoElement
+    })
+    map.clock.shouldAnimate = true
+  }
 }
 
 export function getGraphic(graphicId) {

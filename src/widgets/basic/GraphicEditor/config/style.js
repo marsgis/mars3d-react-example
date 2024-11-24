@@ -2543,6 +2543,18 @@ const styleConfig = {
           return style.distanceDisplayCondition
         }
       },
+      {
+        name: "arcType",
+        label: "球面弧线规则",
+        type: "combobox",
+        valType: "number",
+        defval: 0,
+        data: [
+          { label: "空间直线", value: 0 },
+          { label: "大地弧线", value: 1 },
+          { label: "方位线", value: 2 }
+        ]
+      },
 
       {
         name: "zIndex",
@@ -3189,7 +3201,8 @@ const styleConfig = {
       "gatheringPlace",
       "isosTriangle",
       "lune",
-      "regular"
+      "regular",
+      "parallelogram"
     ],
     style: [
       {
@@ -3349,6 +3362,18 @@ const styleConfig = {
         show(style, allStyle, graphicType) {
           return graphicType.endsWith("P")
         }
+      },
+      {
+        name: "arcType",
+        label: "球面弧线规则",
+        type: "combobox",
+        valType: "number",
+        defval: 0,
+        data: [
+          { label: "空间直线", value: 0 },
+          { label: "大地弧线", value: 1 },
+          { label: "方位线", value: 2 }
+        ]
       },
 
       {

@@ -21,53 +21,6 @@ export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
-
-  // 创建矢量数据图层
-  const graphicLayer = new mars3d.layer.GraphicLayer()
-  map.addLayer(graphicLayer)
-
-  // 在layer上绑定监听事件
-  graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("监听layer，单击了矢量对象", event)
-  })
-
-  const graphic = new mars3d.graphic.FrustumPrimitive({
-    position: [119.032216, 33.589536, 250],
-    // 允许穿透拾取
-    allowDrillPick: true,
-    style: {
-      angle: 7,
-      length: 4000,
-      heading: 270,
-      pitch: -90, // 平视
-      color: "#FF0000",
-      opacity: 0.4,
-      outline: true,
-      outlineColor: "#ffffff",
-      outlineOpacity: 1.0
-    },
-    attr: { remark: "示例2" },
-    flyTo: true
-  })
-  graphicLayer.addGraphic(graphic)
-
-  const graphic1 = new mars3d.graphic.BillboardPrimitive({
-    position: [119.03091, 33.609728],
-    style: {
-      image: "//data.mars3d.cn/img/marker/lace-blue.png",
-      horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
-      verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-      label: {
-        text: "点这里！",
-        font_size: 30,
-        color: "#ffffff",
-        outline: true,
-        outlineColor: "#000000"
-      }
-    }
-  })
-  graphicLayer.addGraphic(graphic1)
-
   const point = map.getCenter()
   point.format()
   eventTarget.fire("loadCenterPoint", { point })

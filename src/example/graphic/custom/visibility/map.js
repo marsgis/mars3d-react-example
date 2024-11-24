@@ -43,7 +43,7 @@ export function onMounted(mapInstance) {
   // 加一些演示数据
   addDemoGraphic1()
   addDemoGraphic2()
-  // addDemoGraphic3()
+  addDemoGraphic3()
 }
 
 /**
@@ -58,9 +58,12 @@ function addDemoGraphic1() {
   const pointLight = new mars3d.graphic.PointVisibility({
     position: [119.481049, 28.440174, 145],
     style: {
-      color: "#e3e238",
-      radius: 100
-    }
+      radius: 100,
+      visibleAreaColor: "#00ff00", // 可视颜色
+      hiddenAreaColor: "#ff0000", // 不可视颜色
+      opacity: 0.5
+    },
+    depthBiasStep: 100 // 控制准确度和锯齿的参数，如需更精确可以传0.1、如需更平滑传100优化锯齿感（牺牲了一点精度）
   })
   graphicLayer.addGraphic(pointLight)
 }
@@ -70,9 +73,9 @@ function addDemoGraphic2() {
     position: [119.481236, 28.439863, 142],
     targetPosition: [119.482314, 28.441137, 129.5],
     style: {
-      color: "#e33838"
-      // radius: 100
-      // heading: 180
+      // visibleAreaColor: "#00ff00", // 可视颜色
+      // hiddenAreaColor: "#ff0000", // 不可视颜色
+      // opacity: 0.6
     }
   })
   graphicLayer.addGraphic(pointLight)
@@ -83,7 +86,8 @@ function addDemoGraphic3() {
     position: [119.48157, 28.440346, 150],
     style: {
       radius: 100
-    }
+    },
+    depthBiasStep: 100 // 控制准确度和锯齿的参数，如需更精确可以传0.1、如需更平滑传100优化锯齿感（牺牲了一点精度）
   })
   graphicLayer.addGraphic(pointLight)
 

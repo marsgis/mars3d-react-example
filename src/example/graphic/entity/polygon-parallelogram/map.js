@@ -50,7 +50,7 @@ export function onUnmounted() {
 }
 
 function addDemoGraphic1(graphicLayer) {
-  const graphic = new mars3d.graphic.Parallelogram({
+  const graphic = new mars3d.graphic.ParallelogramEntity({
     positions: [
       [117.138753, 31.833017, 38.5],
       [117.183274, 31.833681, 44.2],
@@ -147,7 +147,7 @@ function initGraphicManager(graphic) {
 }
 
 function addDemoGraphic2(graphicLayer) {
-  const graphic = new mars3d.graphic.Parallelogram({
+  const graphic = new mars3d.graphic.ParallelogramPrimitive({
     positions: [
       [117.25844, 31.863495, 22.8],
       [117.272604, 31.834325, 16.6],
@@ -170,7 +170,7 @@ function addDemoGraphic2(graphicLayer) {
 }
 
 function addDemoGraphic3(graphicLayer) {
-  const graphic = new mars3d.graphic.Parallelogram({
+  const graphic = new mars3d.graphic.ParallelogramPrimitive({
     positions: [
       [117.127677, 31.754447, 14],
       [117.154891, 31.746376, 13.2],
@@ -194,15 +194,14 @@ function addDemoGraphic3(graphicLayer) {
 }
 
 function addDemoGraphic4(graphicLayer) {
-  const graphic = new mars3d.graphic.Parallelogram({
+  const graphic = new mars3d.graphic.ParallelogramPrimitive({
     positions: [
-      [117.259503, 31.765016, 19.7],
-      [117.307952, 31.756935, 11.4],
-      [117.338756, 31.795552, 10.3]
+      [117.25969, 31.771558, 21.3],
+      [117.304611, 31.770763, 16],
+      [117.315107, 31.738031, 1.6]
     ],
     style: {
-      image: "//data.mars3d.cn/img/map/gugong.jpg",
-      clampToGround: true
+      image: "//data.mars3d.cn/img/map/gugong.jpg"
     },
     attr: { remark: "示例4" }
   })
@@ -222,12 +221,13 @@ export function addRandomGraphicByCount(count) {
     const position = result.points[j]
     const index = j + 1
 
-    const graphic = new mars3d.graphic.Parallelogram({
-      position,
+    const pt1 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 0, result.radius)
+    const pt2 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 72, result.radius)
+    const pt3 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 144, result.radius)
+
+    const graphic = new mars3d.graphic.ParallelogramPrimitive({
+      positions: [pt1, pt2, pt3],
       style: {
-        border: 3, // 多边形边数量
-        radius: result.radius,
-        startAngle: 90, // 开始角度(正东方向为0,顺时针到360度)
         color: Cesium.Color.fromRandom({ alpha: 0.6 })
       },
       attr: { index }

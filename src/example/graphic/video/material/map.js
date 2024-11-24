@@ -86,12 +86,7 @@ function createVideoDom() {
   // quicktimeSource.setAttribute("src", "https://cesium.com/public/SandcastleSampleData/big-buck-bunny_trailer.mov")
   // quicktimeSource.setAttribute("type", "video/quicktime")
 
-  // 可以使视频元素与Cesium的模拟时钟同步
-  const synchronizer = new Cesium.VideoSynchronizer({
-    clock: map.clock,
-    element: videoElement
-  })
-  map.clock.shouldAnimate = true
+  playVideo()
 
   setTimeout(() => {
     try {
@@ -104,6 +99,20 @@ function createVideoDom() {
       globalMsg("当前浏览器已限制自动播放，请单击播放按钮")
     }
   }, 3000)
+}
+
+let synchronizer
+function playVideo() {
+  videoElement.play()
+
+  // 可以使视频元素与Cesium的模拟时钟同步
+  if (!synchronizer) {
+    synchronizer = new Cesium.VideoSynchronizer({
+      clock: map.clock,
+      element: videoElement
+    })
+    map.clock.shouldAnimate = true
+  }
 }
 
 export function getGraphic(graphicId) {

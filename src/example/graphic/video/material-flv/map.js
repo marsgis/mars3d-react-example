@@ -74,6 +74,7 @@ function createVideoDom() {
   videoElement.setAttribute("crossorigin", "")
   videoElement.setAttribute("controls", "")
   videoElement.style.display = "none"
+  videoElement.muted = true // 设置静音
 
   if (window.mpegts.isSupported()) {
     const flvPlayer = window.mpegts.createPlayer({
@@ -84,6 +85,8 @@ function createVideoDom() {
     flvPlayer.attachMediaElement(videoElement)
     flvPlayer.load()
     flvPlayer.play()
+
+    playVideo()
   } else {
     globalMsg("不支持flv格式视频")
   }
@@ -99,6 +102,20 @@ function createVideoDom() {
       globalMsg("当前浏览器已限制自动播放，请单击播放按钮")
     }
   }, 3000)
+}
+
+let synchronizer
+function playVideo() {
+  videoElement.play()
+
+  // 可以使视频元素与Cesium的模拟时钟同步
+  if (!synchronizer) {
+    synchronizer = new Cesium.VideoSynchronizer({
+      clock: map.clock,
+      element: videoElement
+    })
+    map.clock.shouldAnimate = true
+  }
 }
 
 export function getGraphic(graphicId) {
