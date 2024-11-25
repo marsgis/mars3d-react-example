@@ -1264,11 +1264,7 @@
         "data": [
           {
             "type": "modelP",
-            "position": [
-              117.219071,
-              31.828783,
-              39.87
-            ],
+            "position": [117.219071, 31.828783, 39.87],
             "style": {
               "url": "//data.mars3d.cn/gltf/mars/fengche.gltf",
               "scale": 50,
@@ -1292,11 +1288,7 @@
         "data": [
           {
             "type": "modelP",
-            "position": [
-              117.217458,
-              31.815349,
-              35.03
-            ],
+            "position": [117.217458, 31.815349, 35.03],
             "style": {
               "url": "//data.mars3d.cn/gltf/mars/jingche/jingche.gltf",
               "scale": 2,
@@ -1329,12 +1321,7 @@
         "maxMemory": 1024,
         "style": {
           "color": {
-            "conditions": [
-              [
-                "true",
-                "color('rgba(42, 160, 224, 1)')"
-              ]
-            ]
+            "conditions": [["true", "color('rgba(42, 160, 224, 1)')"]]
           }
         },
         "marsJzwStyle": true,
@@ -1411,34 +1398,13 @@
         "style": {
           "color": {
             "conditions": [
-              [
-                "${floor} >= 200",
-                "rgba(45, 0, 75, 0.5)"
-              ],
-              [
-                "${floor} >= 100",
-                "rgb(170, 162, 204)"
-              ],
-              [
-                "${floor} >= 50",
-                "rgb(224, 226, 238)"
-              ],
-              [
-                "${floor} >= 25",
-                "rgb(252, 230, 200)"
-              ],
-              [
-                "${floor} >= 10",
-                "rgb(248, 176, 87)"
-              ],
-              [
-                "${floor} >= 5",
-                "rgb(198, 106, 11)"
-              ],
-              [
-                "true",
-                "rgb(127, 59, 8)"
-              ]
+              ["${floor} >= 200", "rgba(45, 0, 75, 0.5)"],
+              ["${floor} >= 100", "rgb(170, 162, 204)"],
+              ["${floor} >= 50", "rgb(224, 226, 238)"],
+              ["${floor} >= 25", "rgb(252, 230, 200)"],
+              ["${floor} >= 10", "rgb(248, 176, 87)"],
+              ["${floor} >= 5", "rgb(198, 106, 11)"],
+              ["true", "rgb(127, 59, 8)"]
             ]
           }
         },
@@ -1483,34 +1449,13 @@
         "style": {
           "color": {
             "conditions": [
-              [
-                "(${Classification} >= 4) && (${Classification} < 5) ",
-                "color('#DC143C')"
-              ],
-              [
-                "(${Classification} >= 7) && (${Classification} < 8)  ",
-                "color('#7B68EE')"
-              ],
-              [
-                "(${Classification} >= 16) && (${Classification} < 17)  ",
-                "color('#00CED1')"
-              ],
-              [
-                "(${Classification} >= 17) && (${Classification} < 18)  ",
-                "color('#3CB371')"
-              ],
-              [
-                "(${Classification} >= 18) && (${Classification} < 19)  ",
-                "color('#FFFF00')"
-              ],
-              [
-                "(${Classification} >= 19) && (${Classification} < 20)  ",
-                "color('#FFA500')"
-              ],
-              [
-                "(${Classification} >= 20) && (${Classification} < 21)  ",
-                "color('#FF6347')"
-              ]
+              ["(${Classification} >= 4) && (${Classification} < 5) ", "color('#DC143C')"],
+              ["(${Classification} >= 7) && (${Classification} < 8)  ", "color('#7B68EE')"],
+              ["(${Classification} >= 16) && (${Classification} < 17)  ", "color('#00CED1')"],
+              ["(${Classification} >= 17) && (${Classification} < 18)  ", "color('#3CB371')"],
+              ["(${Classification} >= 18) && (${Classification} < 19)  ", "color('#FFFF00')"],
+              ["(${Classification} >= 19) && (${Classification} < 20)  ", "color('#FFA500')"],
+              ["(${Classification} >= 20) && (${Classification} < 21)  ", "color('#FF6347')"]
             ]
           }
         },
@@ -1686,6 +1631,7 @@
         "pid": 2020,
         "name": "水利闸门",
         "type": "group",
+        "open": false,
         "center": {
           "lat": 29.794301,
           "lng": 121.47998,
@@ -1701,11 +1647,7 @@
         "data": [
           {
             "type": "modelP",
-            "position": [
-              121.479813,
-              29.791278,
-              16
-            ],
+            "position": [121.479813, 29.791278, 16],
             "style": {
               "url": "//data.mars3d.cn/gltf/mars/zhamen.glb",
               "heading": 105

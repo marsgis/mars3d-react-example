@@ -3,7 +3,7 @@
  * Mars3D三维可视化平台  mars3d
  *
  * 版本信息：v3.8.8
- * 编译日期：2024-11-24 22:49
+ * 编译日期：2024-11-25 23:40
  * 版权所有：Copyright by 火星科技  http://mars3d.cn
  * 使用单位：免费公开版 ，2024-08-01
  */
@@ -29280,20 +29280,17 @@ declare class Map extends BaseClass {
     /**
      * 获取所有图层的配置信息，通常用于配置图层树
      * @param [options] - 参数对象，包括以下：
+     * @param [options.filter] - 筛选方法，方法体内返回false时排除数据 filter:function(feature){return true}
+     * @param [options.forEach] - 递归调用图层配置信息，可以对导出的图层数据进行格式化或转换键值操作
      * @param [options.basemaps = false] - 默认不比较及处理，true:返回所有basemps中配置图层，false：排除所有所有basemps中配置图层[但已加到map的除外]
      * @param [options.childs = true] - 是否获取GroupLayer内的已经实例化的子图层, 但没有加到map的图层不会去读取内部子图层
-     * @param [options.filter] - 筛选方法，方法体内返回false时排除数据 filter:function(feature){return true}
-     * @returns 返回值包括{
-     *       list: [], // id与pid关联的原始数组
-     *       tree: [], // 按children组织好的上下级树数组
-     *       showIds: [], // 是显示状态的图层id集合
-     *       openIds: [] // 存在open:true配置的图层id集合（用于展开树）
-     *     }
+     * @returns 返回值包括 { list: [id与pid关联的原始数组],  tree: [按children组织好的上下级树数组]}
      */
     getLayrsTree(options?: {
+        filter?: (...params: any[]) => any;
+        forEach?: (...params: any[]) => any;
         basemaps?: boolean;
         childs?: boolean;
-        filter?: (...params: any[]) => any;
     }): any;
     /**
      * 获取所有basemps底图图层

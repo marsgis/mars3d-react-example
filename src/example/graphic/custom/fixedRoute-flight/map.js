@@ -156,7 +156,7 @@ function addGraphicLayer() {
     model: {
       url: "//data.mars3d.cn/gltf/mars/MQ-9-Predator.glb",
       scale: 1,
-      heading: 0,
+      // heading: 0,
       minimumPixelSize: 100
     },
     path: {

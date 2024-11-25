@@ -1,7 +1,6 @@
 import * as mars3d from "mars3d"
 
 export let map // mars3d.Map三维地图对象
-let tilesetClip
 
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
@@ -39,25 +38,32 @@ export function createLayer(layers) {
   return mars3d.LayerUtil.create(layers) // 创建图层
 }
 
-// 添加矢量数据图层
-export function addLayer(layer) {
-  map.addLayer(layer)
-  layer.flyTo()
-}
-
-// 取消勾选移除图层
-export function removeLayer(layer) {
-  map.removeLayer(layer)
-}
-
 // 数据获取
-function queryTilesetData() {
-  mars3d.Util.fetchJson({ url: "config/tileset.json" })
-    .then(function (arr) {
-      const modelData = arr.layers
-      eventTarget.fire("loadTypeList", { modelData })
-    })
-    .catch(function (error) {
-      console.log("加载JSON出错", error)
-    })
+async function queryTilesetData() {
+  const result = await mars3d.Util.fetchJson({ url: "config/tileset.json" })
+  map.setLayersOptions(result.layers)
+
+  eventTarget.fire("initTree")
+}
+
+export function getLayrsTree(params) {
+  return map.getLayrsTree(params)
+}
+
+export function getLayerById(id) {
+  return map.getLayerById(id)
+}
+
+// 更新图层勾选状态
+export function updateLayerShow(layer, show) {
+  if (show) {
+    if (!layer.isAdded) {
+      map.addLayer(layer)
+    }
+    layer.show = true
+
+    layer.flyTo() // 如果不想勾选定位，注释该行
+  } else {
+    layer.show = false
+  }
 }

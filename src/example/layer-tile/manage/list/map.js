@@ -31,17 +31,28 @@ export function onUnmounted() {
   map = null
 }
 
-// 获取图层
-export function getLayers() {
-  return map.getLayers({
-    basemaps: true, // 是否取config.json中的basempas
-    layers: true // 是否取config.json中的layers
-  })
+export function getLayrsTree(params) {
+  return map.getLayrsTree(params)
 }
 
-export function addLayer(layer) {
-  map.addLayer(layer)
+export function getLayerById(id) {
+  return map.getLayerById(id)
 }
+
+// 更新图层勾选状态
+export function updateLayerShow(layer, show) {
+  if (show) {
+    if (!layer.isAdded) {
+      map.addLayer(layer)
+    }
+    layer.show = true
+
+    layer.flyTo() // 如果不想勾选定位，注释该行
+  } else {
+    layer.show = false
+  }
+}
+
 
 // 用于 config.json 中 西藏垭口 图层的详情按钮 演示
 window.showPopupDetails = (item) => {

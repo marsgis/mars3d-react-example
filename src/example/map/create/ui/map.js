@@ -35,9 +35,6 @@ export function onMounted(mapInstance) {
   bloomEffect = new mars3d.effect.BloomEffect()
   map.addEffect(bloomEffect)
 
-  eventTarget.fire("init", {
-    value: 10
-  })
   queryTilesetData()
 }
 
@@ -99,13 +96,31 @@ export function createLayer(layer) {
 }
 
 // 数据获取
-function queryTilesetData() {
-  mars3d.Util.fetchJson({ url: "config/tileset.json" })
-    .then(function (arr) {
-      const modelData = arr.layers
-      eventTarget.fire("loadTypeList", { modelData })
-    })
-    .catch(function (error) {
-      console.log("加载JSON出错", error)
-    })
+async function queryTilesetData() {
+  const result = await mars3d.Util.fetchJson({ url: "config/tileset.json" })
+  map.setLayersOptions(result.layers)
+
+  eventTarget.fire("initTree")
+}
+
+export function getLayrsTree(params) {
+  return map.getLayrsTree(params)
+}
+
+export function getLayerById(id) {
+  return map.getLayerById(id)
+}
+
+// 更新图层勾选状态
+export function updateLayerShow(layer, show) {
+  if (show) {
+    if (!layer.isAdded) {
+      map.addLayer(layer)
+    }
+    layer.show = true
+
+    layer.flyTo() // 如果不想勾选定位，注释该行
+  } else {
+    layer.show = false
+  }
 }
