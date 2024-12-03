@@ -103,6 +103,7 @@ export function shoXZM() {
   // 绑定事件
   graphicLayer.on(mars3d.EventType.load, function (event) {
     console.log("数据加载完成", event)
+    treeEvent.fire("refTree")
   })
   graphicLayer.on(mars3d.EventType.click, function (event) {
     console.log("单击了图层", event)
@@ -132,8 +133,19 @@ export function shoGCD() {
   // 绑定事件
   graphicLayer.on(mars3d.EventType.load, function (event) {
     console.log("数据加载完成", event)
+    treeEvent.fire("refTree")
   })
   graphicLayer.on(mars3d.EventType.click, function (event) {
     console.log("单击了图层", event)
   })
+}
+
+
+
+export function getGraphicsTree(options) {
+  return graphicLayer.getGraphicsTree(options)
+}
+
+export function getGraphicById(id) {
+  return graphicLayer.getGraphicById(id)
 }

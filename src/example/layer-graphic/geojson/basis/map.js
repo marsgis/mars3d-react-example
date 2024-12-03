@@ -76,9 +76,8 @@ export function showDraw(isFlyTo) {
 
   // load事件,必须在load完成前绑定才能监听
   graphicLayer.on(mars3d.EventType.load, function (event) {
-    if (event.layer) {
-      console.log("数据加载完成", event)
-    }
+    console.log("数据加载完成", event)
+    eventTarget.fire("refTree")
   })
 
   setTimeout(() => {
@@ -170,7 +169,9 @@ export function showPoint() {
   // 绑定事件
   graphicLayer.on(mars3d.EventType.load, function (event) {
     console.log("数据加载完成", event)
+    eventTarget.fire("refTree")
   })
+
   graphicLayer.on(mars3d.EventType.click, function (event) {
     console.log("单击了图层", event)
   })
@@ -227,6 +228,7 @@ export function showChinaLine() {
   // 绑定事件
   graphicLayer.on(mars3d.EventType.load, function (event) {
     console.log("数据加载完成", event)
+    eventTarget.fire("refTree")
   })
 }
 
@@ -312,6 +314,7 @@ export function showRegion() {
   // 绑定事件
   graphicLayer.on(mars3d.EventType.load, function (event) {
     console.log("数据加载完成", event)
+    eventTarget.fire("refTree")
   })
   graphicLayer.on(mars3d.EventType.click, function (event) {
     console.log("单击了图层", event)
@@ -380,6 +383,7 @@ export function showPlanningSurface() {
   // 绑定事件
   layerTest.on(mars3d.EventType.load, function (event) {
     console.log("数据加载完成", event)
+    eventTarget.fire("refTree")
   })
 
   layerTest.on(mars3d.EventType.click, function (event) {
@@ -420,6 +424,7 @@ export function showBuilding() {
   // 绑定事件
   graphicLayer.on(mars3d.EventType.load, function (event) {
     console.log("数据加载完成", event)
+    eventTarget.fire("refTree")
   })
 }
 
@@ -462,6 +467,7 @@ export function showFloor() {
   // 绑定事件
   graphicLayer.on(mars3d.EventType.load, function (event) {
     console.log("数据加载完成", event)
+    eventTarget.fire("refTree")
   })
 }
 
@@ -505,6 +511,7 @@ export function showBoundaryWall() {
   // 绑定事件
   graphicLayer.on(mars3d.EventType.load, function (event) {
     console.log("数据加载完成", event)
+    eventTarget.fire("refTree")
   })
   graphicLayer.on(mars3d.EventType.click, function (event) {
     console.log("单击了图层", event)
@@ -562,6 +569,7 @@ export function showMonomer() {
   // 绑定事件
   graphicLayer.on(mars3d.EventType.load, function (event) {
     console.log("数据加载完成", event)
+    eventTarget.fire("refTree")
   })
 }
 
@@ -603,6 +611,7 @@ export function showWorld() {
   // 绑定事件
   graphicLayer.on(mars3d.EventType.load, function (event) {
     console.log("数据加载完成", event)
+    eventTarget.fire("refTree")
   })
   graphicLayer.on(mars3d.EventType.click, function (event) {
     console.log("单击了图层", event)
@@ -648,4 +657,18 @@ export function showGCJ02Data() {
     flyTo: true
   })
   map.addLayer(graphicLayer)
+
+  // 绑定事件
+  graphicLayer.on(mars3d.EventType.load, function (event) {
+    console.log("数据加载完成", event)
+    eventTarget.fire("refTree")
+  })
+}
+
+export function getGraphicsTree(options) {
+  return graphicLayer.getGraphicsTree(options)
+}
+
+export function getGraphicById(id) {
+  return graphicLayer.getGraphicById(id)
 }

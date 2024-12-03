@@ -153,8 +153,8 @@ function addDemoGraphic4(graphicLayer) {
     position: [116.79013, 31.164872, 289],
     style: {
       image: "//data.mars3d.cn/img/marker/gif/typhoon.gif",
-      width: "50px",
-      height: "50px",
+      width: 50,
+      height: 50,
       distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 200000) // 按视距距离显示
     },
     attr: { remark: "示例4" },

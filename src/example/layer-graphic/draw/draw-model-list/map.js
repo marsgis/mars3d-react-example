@@ -112,6 +112,7 @@ export function openGeoJSON(file) {
       const graphic = new mars3d.graphic.ModelPrimitive({
         position: [117.221674, 31.823752, 34.7],
         style: {
+          basePath: fileName,
           url: new Uint8Array(arrayBuffer),
           scale: 1,
           minimumPixelSize: 50

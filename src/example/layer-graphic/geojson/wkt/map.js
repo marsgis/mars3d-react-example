@@ -64,8 +64,7 @@ function addWktData(arr) {
   // 绑定事件
   graphicLayer.on(mars3d.EventType.load, function (event) {
     console.log("数据加载完成", event)
-    const data = event.list
-    treeEvent.fire("tree", { data })
+    treeEvent.fire("refTree")
   })
   graphicLayer.on(mars3d.EventType.click, function (event) {
     console.log("单击了图层", event)
@@ -92,4 +91,12 @@ function getPoint(item) {
     geometry: geojson,
     properties: item
   }
+}
+
+export function getGraphicsTree(options) {
+  return graphicLayer.getGraphicsTree(options)
+}
+
+export function getGraphicById(id) {
+  return graphicLayer.getGraphicById(id)
 }

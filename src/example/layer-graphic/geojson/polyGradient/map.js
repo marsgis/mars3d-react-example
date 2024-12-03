@@ -1,6 +1,8 @@
 import * as mars3d from "mars3d"
 
 export let map // mars3d.Map三维地图对象
+export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+let geoJsonLayer
 
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
@@ -31,7 +33,7 @@ export function onUnmounted() {
 }
 
 function addDemoGraphics() {
-  const geoJsonLayer = new mars3d.layer.GeoJsonLayer({
+   geoJsonLayer = new mars3d.layer.GeoJsonLayer({
     name: "安徽各市",
     url: "//data.mars3d.cn/file/geojson/areas/340000_full.json",
     symbol: {
@@ -76,6 +78,7 @@ function addDemoGraphics() {
   // 绑定事件
   geoJsonLayer.on(mars3d.EventType.load, function (event) {
     console.log("数据加载完成", event)
+    eventTarget.fire("refTree")
   })
   geoJsonLayer.on(mars3d.EventType.click, function (event) {
     console.log("单击了图层", event)
@@ -87,4 +90,12 @@ const arrColor = ["rgb(15,176,255)", "rgb(18,76,154)", "#40C4E4", "#42B2BE", "rg
 let index = 0
 function getColor() {
   return arrColor[++index % arrColor.length]
+}
+
+export function getGraphicsTree(options) {
+  return geoJsonLayer.getGraphicsTree(options)
+}
+
+export function getGraphicById(id) {
+  return geoJsonLayer.getGraphicById(id)
 }

@@ -817,11 +817,15 @@ export function openGeoJSON(file) {
     const reader = new FileReader()
     reader.readAsText(file, "UTF-8")
     reader.onloadend = function (e) {
-      const geojson = this.result
-      graphicLayer.loadGeoJSON(geojson, {
-        flyTo: true,
-        simplify: { tolerance: 0.00001 }
-      })
+      const geojson = JSON.parse(this.result)
+      console.log("打开了json文件", geojson)
+
+      if (geojson.type === "graphic" && geojson.data) {
+        graphicLayer.loadJSON(geojson.data)
+        graphicLayer.flyTo()
+      } else {
+        graphicLayer.loadGeoJSON(geojson, { flyTo: true })
+      }
     }
   } else if (fileType === "kml") {
     const reader = new FileReader()
@@ -831,10 +835,7 @@ export function openGeoJSON(file) {
       kgUtil.toGeoJSON(strkml).then((geojson) => {
         console.log("kml2geojson", geojson)
 
-        graphicLayer.loadGeoJSON(geojson, {
-          flyTo: true,
-          simplify: { tolerance: 0.00001 }
-        })
+        graphicLayer.loadGeoJSON(geojson, { flyTo: true })
       })
     }
   } else if (fileType === "kmz") {
@@ -842,14 +843,21 @@ export function openGeoJSON(file) {
     kgUtil.toGeoJSON(file).then((geojson) => {
       console.log("kmz2geojson", geojson)
 
-      graphicLayer.loadGeoJSON(geojson, {
-        flyTo: true,
-        simplify: { tolerance: 0.00001 }
-      })
+      graphicLayer.loadGeoJSON(geojson, { flyTo: true })
     })
   } else {
     globalMsg("暂不支持 " + fileType + " 文件类型的数据！")
   }
+}
+
+// 点击保存JSON
+export function saveJSON() {
+  if (graphicLayer.length === 0) {
+    globalMsg("当前没有标注任何数据，无需保存！")
+    return
+  }
+  const geojson = graphicLayer.toJSON()
+  mars3d.Util.downloadFile("我的标注.json", JSON.stringify(geojson))
 }
 
 // 点击保存GeoJSON
@@ -859,7 +867,7 @@ export function saveGeoJSON() {
     return
   }
   const geojson = graphicLayer.toGeoJSON()
-  mars3d.Util.downloadFile("我的标注.json", JSON.stringify(geojson))
+  mars3d.Util.downloadFile("我的标注geojson.json", JSON.stringify(geojson))
 }
 
 // 点击保存KML

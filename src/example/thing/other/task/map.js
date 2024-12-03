@@ -152,6 +152,8 @@ export function onMounted(mapInstance) {
   console.log(`当前共${task.count}个任务需要执行,总时长${task.duration}秒`, task)
 
   eventTarget.fire("getTableData", { list: task.listDX, allDuration: task.duration })
+
+  autoAddTimeControl()
 }
 
 /**
@@ -169,4 +171,36 @@ export function startPlay() {
 
 export function updateShouldAnimate(value) {
    map.clock.shouldAnimate = value
+}
+
+
+
+function autoAddTimeControl() {
+  const taskResult = map.getTimeTaskList()
+  if (taskResult.duration > 0 && taskResult.list?.length > 0) {
+    console.log(`当前地图所有时序相关任务清单`, taskResult)
+
+    // 停止，手动开始
+    // map.clock.shouldAnimate = false
+
+    // 修改时间
+    const startTime = map.clock.startTime
+    map.clock.currentTime = map.clock.startTime // 设置当前时间 = 开始时间
+
+    const stopTime = Cesium.JulianDate.addSeconds(startTime, taskResult.duration + 1, new Cesium.JulianDate())
+    map.clock.stopTime = stopTime
+
+    // 添加控件
+    if (!map.control.timeline) {
+      const clockAnimate = new mars3d.control.ClockAnimate({ format: "duration" })
+      map.addControl(clockAnimate)
+    }
+
+    if (map.control.timeline) {
+      map.control.timeline.zoomTo(startTime, stopTime)
+    } else {
+      const timeline = new mars3d.control.Timeline({ format: "duration" })
+      map.addControl(timeline)
+    }
+  }
 }

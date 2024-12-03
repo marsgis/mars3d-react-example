@@ -117,8 +117,7 @@ export function shoRailway() {
   graphicLayer.on(mars3d.EventType.load, function (event) {
     console.log("数据加载完成", event)
 
-    const data = event.list
-    treeEvent.fire("tree", { treeData: data })
+    treeEvent.fire("refTree")
   })
   graphicLayer.on(mars3d.EventType.click, function (event) {
     console.log("单击了图层", event)
@@ -139,8 +138,8 @@ export function showExpressway() {
 
   // 绑定事件
   graphicLayer.on(mars3d.EventType.load, function (event) {
-    const data = event.list
-    treeEvent.fire("tree", { treeData: data })
+
+    treeEvent.fire("refTree")
   })
   graphicLayer.on(mars3d.EventType.click, function (event) {
     console.log("单击了图层", event)
@@ -186,8 +185,8 @@ export function showSafetyNotice() {
   // 绑定事件
   graphicLayer.on(mars3d.EventType.load, function (event) {
     console.log("数据加载完成", event)
-    const data = event.list
-    treeEvent.fire("tree", { treeData: data })
+
+    treeEvent.fire("refTree")
   })
   graphicLayer.on(mars3d.EventType.click, function (event) {
     console.log("单击了图层", event)
@@ -210,8 +209,7 @@ export function showMeteorological() {
   // 绑定事件
   graphicLayer.on(mars3d.EventType.load, function (event) {
     console.log("数据加载完成", event)
-    const data = event.list
-    treeEvent.fire("tree", { treeData: data })
+    treeEvent.fire("refTree")
   })
   graphicLayer.on(mars3d.EventType.click, function (event) {
     console.log("单击了图层", event)
@@ -252,10 +250,17 @@ export function showGDP() {
   // 绑定事件
   graphicLayer.on(mars3d.EventType.load, function (event) {
     console.log("数据加载完成", event)
-    const data = event.list
-    treeEvent.fire("tree", { treeData: data })
+    treeEvent.fire("refTree")
   })
   graphicLayer.on(mars3d.EventType.click, function (event) {
     console.log("单击了图层", event)
   })
+}
+
+export function getGraphicsTree(options) {
+  return graphicLayer.getGraphicsTree(options)
+}
+
+export function getGraphicById(id) {
+  return graphicLayer.getGraphicById(id)
 }

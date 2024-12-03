@@ -99,12 +99,14 @@ export async function downLoadDiv() {
   const mapImg = await map.expImage({ download: false })
   console.log("downLoadDiv：1. 地图部分截图成功")
 
-  const filterNode = map.container.getElementsByClassName("cesium-viewer-cesiumWidgetContainer")
-
   // 其他部分DIV，使用 lib/dom2img/dom-to-image.js
   const divImg = await window.domtoimage.toPng(map.container, {
     filter: function (node) {
-      return node !== filterNode[0]
+      const className = node.className
+      if (className && (className.indexOf("cesium-viewer-cesiumWidgetContainer") !== -1 || className.indexOf("cesium-viewer-toolbar") !== -1)) {
+        return true
+      }
+      return false
     }
   })
   console.log("downLoadDiv：2.DIV部分截图成功")
