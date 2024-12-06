@@ -64,11 +64,11 @@ function addDemoGraphic1(graphicLayer) {
       // 矩形（可拖拽的）
       rectX: 100,
       rectY: -50,
-      scaleByDistance: new Cesium.NearFarScalar(800, 0.8, 2500, 0.3),
+      // scaleByDistance: new Cesium.NearFarScalar(800, 0.8, 2500, 0.3),
       rectColor: "rgb(16 238 220)",
       // 连线（自动的）
       lineColor: "#00ff00",
-      lineWidth: 2,
+      lineWidth: 4,
       lineDash: "5,5", // 虚线
       // 圆点(不动的)
       pointColor: "#0000ff", // 颜色
@@ -95,6 +95,7 @@ function addDemoGraphic2(graphicLayer) {
       },
       // 连线（自动的）
       lineDash: "5,5", // 虚线
+      lineWidth: 2,
       autoPoistion: false
     },
     attr: { remark: "示例2" }

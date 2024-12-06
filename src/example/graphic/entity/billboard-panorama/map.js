@@ -59,13 +59,13 @@ export function onMounted(mapInstance) {
     }
 
     return `<iframe style="width: 600px; height: 300px; border: none; "src="${attr.url}"  sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe> `
-  })
+  }, { useGraphicPostion: true, offsetY: -30 })
 
   // 添加数据
-  addRandomGraphicByCount(graphicLayer, [117.080397, 31.656139, 33.3])
   addRandomGraphicByCount(graphicLayer, [117.078006, 31.65649, 49.4])
   addRandomGraphicByCount(graphicLayer, [117.080571, 31.657898, 50.2])
   addRandomGraphicByCount(graphicLayer, [117.078331, 31.660016, 47.2])
+  addRandomGraphicByCount(graphicLayer, [117.080397, 31.656139, 33.3]).openPopup()
 
   // console.log("导出数据测试", graphicLayer.toJSON())
   // const layer = mars3d.LayerUtil.create(json)
@@ -90,4 +90,6 @@ function addRandomGraphicByCount(graphicLayer, position) {
     attr: { url: "https://www.720yun.com/vr/b32jOOkmvm5", name: "上海浦江郊野公园" }
   })
   graphicLayer.addGraphic(graphic)
+
+  return graphic
 }

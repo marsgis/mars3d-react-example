@@ -12,7 +12,7 @@ export const mapOptions = {
   basemaps: [
     {
       name: "Ion影像地图",
-      icon: "//data.mars3d.cn/img/control/basemap/bingAerial.png",
+      icon: "//data.mars3d.cn/img/thumbnail/basemap/bingAerial.png",
       type: "xyz",
       assetId: 2,
       ionToken: mars3d.Token.ion,
@@ -20,7 +20,7 @@ export const mapOptions = {
     },
     {
       name: "Ion电子地图",
-      icon: "//data.mars3d.cn/img/control/basemap/bingmap.png",
+      icon: "//data.mars3d.cn/img/thumbnail/basemap/bingmap.png",
       type: "xyz",
       assetId: 4,
       ionToken: mars3d.Token.ion

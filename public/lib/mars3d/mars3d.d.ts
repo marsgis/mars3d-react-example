@@ -3,7 +3,7 @@
  * Mars3D三维可视化平台  mars3d
  *
  * 版本信息：v3.8.9
- * 编译日期：2024-12-03 18:04
+ * 编译日期：2024-12-06 08:39
  * 版权所有：Copyright by 火星科技  http://mars3d.cn
  * 使用单位：免费公开版 ，2024-08-01
  */
@@ -9087,7 +9087,8 @@ declare namespace Popup {
      * @property [zIndex = "10000000"] - 指定固定的zIndex层级属性(当hasZIndex为true时无效)
      * @property [depthTest = false] - 是否打开深度判断（true时判断是否在球背面）
      * @property [hasCache = true] - 是否启用缓存机制，如为true，在视角未变化时不重新渲染。
-     * @property [checkData] - 在多个Popup时，校验是否相同Popup进行判断关闭
+     * @property [useGraphicPostion] - 是否固定使用graphic本身的坐标，而不用鼠标单击处坐标（比如固定在图标本身点、线面中心点）
+     * @property [animation = true] - 是否执行打开时的动画效果
      * @property [toggle] - 是否打开状态下再次单击时关闭Popup
      */
     type StyleOptions = any | {
@@ -9123,7 +9124,8 @@ declare namespace Popup {
         zIndex?: number | string;
         depthTest?: boolean;
         hasCache?: boolean;
-        checkData?: (...params: any[]) => any;
+        useGraphicPostion?: boolean;
+        animation?: boolean;
         toggle?: boolean;
     };
 }
@@ -23007,6 +23009,11 @@ declare class GeoJsonLayer extends GraphicLayer {
         data?: any;
         类参数?: any;
     }): GeoJsonLayer;
+    /**
+     * 图层顺序，数字大的在上面。<br/>
+     * 只对 同类型(Entity/Primitive) + 贴地(clampToGround: true) 矢量对象间有效
+     */
+    zIndex: number;
 }
 
 /**
@@ -23526,11 +23533,15 @@ declare class GraphicLayer extends BaseGraphicLayer {
      * @param [options] - 加载控制参数,包含：
      * @param [options.clear = false] - 是否清除图层已有数据
      * @param [options.flyTo = false] - 是否加载完成后进行飞行到数据区域
+     * @param [options.toPrimitive] - 是否将entity类型转为primivate类型渲染（比如数据的point改为pointP展示，同类型大于10条时自动改为合并渲染类型展示）
+     * @param [options.onEachFeature] - 创建每个Graphic前的回调
      * @returns 绘制创建完成的Promise 添加后的Graphic对象
      */
     loadJSON(json: any | any | string, options?: {
         clear?: boolean;
         flyTo?: boolean;
+        toPrimitive?: boolean;
+        onEachFeature?: (...params: any[]) => any;
     }): Promise<BaseGraphic[] | any>;
     /**
      * 加载转换GeoJSON格式规范数据为Graphic后加载到图层中。
@@ -23539,7 +23550,7 @@ declare class GraphicLayer extends BaseGraphicLayer {
      * @param [options.clear = false] - 是否清除图层已有数据
      * @param [options.flyTo = false] - 是否加载完成后进行飞行到数据区域
      * @param [options.type] - 转为指定的类型
-     * @param [options.toPrimitive] - 是否将entity类型转为primivate类型渲染（比如数据的point改为pointP展示，切在大于5000条时，自动改为合并渲染类型展示）
+     * @param [options.toPrimitive] - 是否将entity类型转为primivate类型渲染（比如数据的point改为pointP展示，同类型大于10条时自动改为合并渲染类型展示）
      * @param [options.style] - 可以设置指定style样式,每种不同类型数据都有不同的样式，具体见各矢量数据的style参数。{@link GraphicType}
      * //  * @param {boolean} [options.style.merge] 是否合并并覆盖json中已有的style，默认不合并，仅适用style配置。
      * @param [options.crs] - 原始数据的坐标系，如'EPSG:3857' （可以从 {@link http://epsg.io }查询）
@@ -23965,7 +23976,7 @@ declare namespace I3SLayer {
  *
  * //以下是Cesium3DTileset参数
  * @param [options.maximumScreenSpaceError = 16] - 用于驱动细化细节级别的最大屏幕空间错误。可以简单理解为：数值加大，能让最终成像变模糊。
- * @param [options.maxMemory = 1024] - 最大缓存内存大小(MB), 内部换算给 cacheBytes = maxMemory*1024*1024、maximumCacheOverflowBytes = cacheBytes * 1.5 (另：如果同时配置了cacheBytes、maximumMemoryUsage时改参数无效)
+ * @param [options.maxMemory = 1024] - 最大缓存内存大小(MB), 内部换算给 cacheBytes = maxMemory*1024*1024、maximumCacheOverflowBytes = cacheBytes * 1.5 (另：如果同时配置了cacheBytes、maximumMemoryUsage时该参数无效)
  * @param [options.cacheBytes] - 如果缓存包含当前视图不需要的块，则块缓存将被修剪到的大小(以字节为单位)
  * @param [options.maximumCacheOverflowBytes] - 如果当前视图需要超过{@link Cesium3DTileset#cacheBytes}，则允许缓存净空的最大额外内存(以字节为单位)。
  * @param [options.maximumMemoryUsage] - 【cesium 1.107+弃用】数据集可以使用的最大内存量(以MB计)，这个参数要根据当前客户端显卡显存来配置，如果我们场景只显示这一个模型数据，这个可以设置到显存的50% 左右，比如我的显存是4G，这个可以设置到2048左右。那么既保证不超过显存限制，又可以最大利用显存缓存。<br />
@@ -24526,7 +24537,7 @@ declare class ModelLayer extends GraphicLayer {
  * OSM在线 建筑物模型
  * @param options - 参数对象，参数包括以下：
  * @param [options.maximumScreenSpaceError = 16] - 用于驱动细化细节级别的最大屏幕空间错误。数值加大，能让最终成像变模糊
- * @param [options.maxMemory = 1024] - 最大缓存内存大小(MB), 内部换算给 cacheBytes = maxMemory*1024*1024、maximumCacheOverflowBytes = cacheBytes * 1.5 (另：如果同时配置了cacheBytes、maximumMemoryUsage时改参数无效)
+ * @param [options.maxMemory = 1024] - 最大缓存内存大小(MB), 内部换算给 cacheBytes = maxMemory*1024*1024、maximumCacheOverflowBytes = cacheBytes * 1.5 (另：如果同时配置了cacheBytes、maximumMemoryUsage时该参数无效)
  * @param [options.cacheBytes] - 如果缓存包含当前视图不需要的块，则块缓存将被修剪到的大小(以字节为单位)。
  * @param [options.maximumCacheOverflowBytes] - 如果当前视图需要超过{@link Cesium3DTileset#cacheBytes}，则允许缓存净空的最大额外内存(以字节为单位)。
  * @param [options.maximumMemoryUsage] - 【cesium 1.107+弃用】数据集可以使用的最大内存量(以MB计)，这个参数要根据当前客户端显卡显存来配置，如果我们场景只显示这一个模型数据，这个可以设置到显存的50% 左右，比如我的显存是4G，这个可以设置到2048左右。那么既保证不超过显存限制，又可以最大利用显存缓存。<br />
@@ -24691,7 +24702,7 @@ declare namespace TilesetLayer {
  * @param [options.assetId] - ion资源时对应的assetId
  * @param [options.ionToken = Cesium.Ion.defaultAccessToken] - ion资源时对应的token
  * @param [options.ionServer = Cesium.Ion.defaultServer] - ion资源时对应的server
- * @param [options.maxMemory = 1024] - 最大缓存内存大小(MB), 内部换算给 cacheBytes = maxMemory*1024*1024、maximumCacheOverflowBytes = cacheBytes * 1.5 (另：如果同时配置了cacheBytes、maximumMemoryUsage时改参数无效)
+ * @param [options.maxMemory = 1024] - 最大缓存内存大小(MB), 内部换算给 cacheBytes = maxMemory*1024*1024、maximumCacheOverflowBytes = cacheBytes * 1.5 (另：如果同时配置了cacheBytes、maximumMemoryUsage时该参数无效)
  * @param [options.cacheBytes] - 如果缓存包含当前视图不需要的块，则块缓存将被修剪到的大小(以字节为单位)。
  * @param [options.maximumCacheOverflowBytes] - 最大显存大小(以字节为单位)。
  * @param [options.maximumMemoryUsage] - 【cesium 1.107+弃用】数据集可以使用的最大内存量(以MB计)，这个参数要根据当前客户端显卡显存来配置，如果我们场景只显示这一个模型数据，这个可以设置到显存的50% 左右，比如我的显存是4G，这个可以设置到2048左右。那么既保证不超过显存限制，又可以最大利用显存缓存。<br />
@@ -25159,6 +25170,15 @@ declare class TilesetLayer extends BaseGraphicLayer {
      * @returns 无
      */
     setOpacity(value: number): void;
+    /**
+     * 将图层转为Json简单对象，用于存储后再传参加载
+     * @param [options] - 参数对象:
+     * @param [options.full = false] - 导出冗余的完整参数，包含完整position、transform等信息。
+     * @returns Json简单对象
+     */
+    toJSON(options?: {
+        full?: boolean;
+    }): any;
     /**
      * 高亮对象。
      * 提示：该方法不支持 outlineEffect: true 高亮，因为outlineEffect需要鼠标拾取构件。
@@ -27274,10 +27294,6 @@ declare class GridLayer extends BaseTileLayer {
  * @param [options] - 参数对象，包括以下：
  * @param options.url - 图片url地址
  * @param [options.subdomains] - URL模板中用于 {s} 占位符的子域。 如果此参数是单个字符串，则字符串中的每个字符都是一个子域。如果是 一个数组，数组中的每个元素都是一个子域。
- * @param [options.minimumLevel = 0] - 服务支持的最小层级，如果服务数据中没有第0层，该参数必须配置,当地图缩放小于该级别时，平台会请求minimumLevel级数据合并展示。
- * @param [options.maximumLevel = 18] - 服务所支持的最大层级,大于该级别时会显示maximumLevel层数据图片拉伸后的效果。
- * @param [options.minimumTerrainLevel] - 图层显示的最小层级，小于该级别时，平台不显示0至minimumTerrainLevel级数据。
- * @param [options.maximumTerrainLevel] - 图层显示的最大层级，大于该级别时，平台不显示大于maximumTerrainLevel级数据。
  * @param [options.rectangle] - 瓦片数据的矩形区域范围
  * @param options.rectangle.xmin - 最小经度值, -180 至 180
  * @param options.rectangle.xmax - 最大经度值, -180 至 180
@@ -27306,8 +27322,6 @@ declare class GridLayer extends BaseTileLayer {
  * @param [options.colorToAlpha] - 用作Alpha的颜色。
  * @param [options.colorToAlphaThreshold = 0.004] - 颜色到Alpha的阈值。
  * @param [options.hasAlphaChannel = true] - 如果此图像提供者提供的图像为真 包括一个Alpha通道；否则为假。如果此属性为false，则为Alpha通道，如果 目前，将被忽略。如果此属性为true，则任何没有Alpha通道的图像都将 它们的alpha随处可见。当此属性为false时，内存使用情况 和纹理上传时间可能会减少。
- * @param [options.tileWidth = 256] - 图像图块的像素宽度。
- * @param [options.tileHeight = 256] - 图像图块的像素高度。
  * @param [options.customTags] - 允许替换网址模板中的自定义关键字。该对象必须具有字符串作为键，并且必须具有值。
  * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid] - 图层父级的id，一般图层管理中使用
@@ -27328,10 +27342,6 @@ declare class ImageLayer extends BaseTileLayer {
     constructor(options?: {
         url: Cesium.Resource | string;
         subdomains?: string | string[];
-        minimumLevel?: number;
-        maximumLevel?: number;
-        minimumTerrainLevel?: number;
-        maximumTerrainLevel?: number;
         rectangle?: {
             xmin: number;
             xmax: number;
@@ -27361,8 +27371,6 @@ declare class ImageLayer extends BaseTileLayer {
         colorToAlpha?: Cesium.Color;
         colorToAlphaThreshold?: number;
         hasAlphaChannel?: boolean;
-        tileWidth?: number;
-        tileHeight?: number;
         customTags?: any;
         id?: string | number;
         pid?: string | number;
@@ -36391,7 +36399,7 @@ declare class Skyline extends BaseThing {
  * 地下模式
  * @param [options] - 参数对象，包括以下：
  * @param [options.alpha = 0.5] - 透明度  0.0-1.0
- * @param [options.color = Cesium.Color.BLACK] - 当相机在地下或球体是半透明时，渲染球体背面的颜色
+ * @param [options.color = Cesium.Color.BLACK] - 当相机在地下时，渲染球体背面的颜色
  * @param [options.id = createGuid()] - 对象的id标识
  * @param [options.enabled = true] - 对象的启用状态
  * @param [options.eventParent] - 指定的事件冒泡对象，默认为所加入的map对象，false时不冒泡事件
@@ -36413,8 +36421,8 @@ declare class Underground extends BaseThing {
      */
     alpha: number;
     /**
-     * 当相机在地下或球体是半透明时，渲染球体背面的颜色，将根据相机的距离与地球颜色混合。
-     * 禁用地下着色时，可以设置为undefined。
+     * 当相机在地下时，渲染球体背面的颜色。
+     * 颜色值将根据相机的距离与地球颜色混合，如禁用地下着色时，可以设置为undefined
      */
     color: Cesium.Color;
     /**
@@ -36908,29 +36916,29 @@ declare class Task extends BaseThing {
      */
     readonly list: Task.ItemOptions[];
     /**
-     * 实例化后的字幕对象列表
+     * 实例化后的任务对象列表
      */
     readonly listDX: TaskItem[];
     /**
-     * 根据id获取字幕对象
+     * 根据id获取任务对象
      * @param id - id值
-     * @returns 字幕对象
+     * @returns 任务对象
      */
     getItemById(id: number | string): TaskItem;
     /**
-     * 添加单个字幕
-     * @param item - 单个字幕参数
-     * @returns 字幕对象
+     * 添加单个任务
+     * @param item - 单个任务参数
+     * @returns 任务对象
      */
     addItem(item: any): TaskItem;
     /**
-     * 根据id更新单个字幕
-     * @param item - 单个字幕参数
-     * @returns 字幕对象
+     * 根据id更新单个任务
+     * @param item - 单个任务参数
+     * @returns 任务对象
      */
     updateItem(item: any): TaskItem;
     /**
-     * 根据id删除字幕对象
+     * 根据id删除任务对象
      * @param id - id值
      * @returns 是否成功删除
      */

@@ -12,7 +12,7 @@ export const mapOptions = {
   // basemaps: [
   //   {
   //     name: "OSM开源地图",
-  //     icon: "//data.mars3d.cn/img/control/basemap/osm.png",
+  //     icon: "//data.mars3d.cn/img/thumbnail/basemap/osm.png",
   //     type: "osm",
   //     show: true
   //   }

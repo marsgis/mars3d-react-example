@@ -15,7 +15,7 @@ export const mapOptions = {
   basemaps: [
     {
       name: "高德电子",
-      icon: "//data.mars3d.cn/img/control/basemap/gaode_vec.png",
+      icon: "//data.mars3d.cn/img/thumbnail/basemap/gaode_vec.png",
       type: "gaode",
       layer: "vec",
       show: true,
@@ -23,7 +23,7 @@ export const mapOptions = {
     },
     {
       name: "高德影像",
-      icon: "//data.mars3d.cn/img/control/basemap/gaode_img.png",
+      icon: "//data.mars3d.cn/img/thumbnail/basemap/gaode_img.png",
       type: "group",
       layers: [
         { name: "底图", type: "gaode", layer: "img_d" },

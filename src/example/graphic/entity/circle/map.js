@@ -364,7 +364,7 @@ function addDemoGraphic8(graphicLayer) {
 }
 
 function addDemoGraphic9(graphicLayer) {
-  let lastPosition
+  const lastPosition = Cesium.Cartesian3.fromDegrees(116.231006, 30.80374, 499.8)
   const circleEntity = new mars3d.graphic.CircleEntity({
     position: new Cesium.CallbackProperty(function (time) {
       return lastPosition
@@ -382,10 +382,9 @@ function addDemoGraphic9(graphicLayer) {
   })
   graphicLayer.addGraphic(circleEntity)
 
-  map.on(mars3d.EventType.mouseMove, function (event) {
-    lastPosition = event.cartesian
-    // circleEntity._updatePositionsHook()
-  })
+  // map.on(mars3d.EventType.mouseMove, function (event) {
+  //   lastPosition = event.cartesian
+  // })
 }
 
 function getMarsCanves() {

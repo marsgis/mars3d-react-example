@@ -275,7 +275,7 @@ export function getDataSurfaceHeight() {
   showLoading()
 
   // 对图层内的数据做贴地运算,自动得到贴地高度
-  graphicLayer.autoSurfaceHeight().then((graphics) => {
+  graphicLayer.autoSurfaceHeight({ exact: true }).then((graphics) => {
     hideLoading()
 
     const arr = []

@@ -93,6 +93,7 @@ export function getDataSurfaceHeight() {
   // 对图层内的数据做贴地运算,自动得到贴地高度
   geoJsonLayer
     .autoSurfaceHeight({
+      exact: true,
       endItem: function (result) {
         const resultData = {
           percent: result.index + 1,

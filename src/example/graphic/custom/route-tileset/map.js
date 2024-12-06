@@ -74,6 +74,12 @@ export function onMounted(mapInstance) {
         pitch: 0
         // clampToGround: true // 支持贴模型+地形
       },
+      polyline: {
+        color: "#00ff00",
+        width: 2,
+        clampToGround: true,
+        maxDistance: 80
+      },
       // 实时贴模型的处理参数
       clampToTileset: true // 贴模型，但效率不高，车多就卡
       // frameRate: 3, // 控制贴模型的效率，多少帧计算一次

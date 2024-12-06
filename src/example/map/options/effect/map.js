@@ -18,7 +18,7 @@ function initMap() {
     basemaps: [
       {
         name: "单张图片",
-        icon: "//data.mars3d.cn/img/control/basemap/offline.png",
+        icon: "//data.mars3d.cn/img/thumbnail/basemap/offline.png",
         type: "image",
         url: "//data.mars3d.cn/img/map/world/world.jpg",
         show: true

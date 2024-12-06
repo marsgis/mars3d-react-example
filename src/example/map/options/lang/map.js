@@ -38,7 +38,7 @@ export const mapOptions = {
       name: "Tianditu Images",
       name_cn: "天地图影像",
       name_en: "Tianditu Images",
-      icon: "//data.mars3d.cn/img/control/basemap/tdt_img.png",
+      icon: "//data.mars3d.cn/img/thumbnail/basemap/tdt_img.png",
       type: "group",
       layers: [
         { name: "底图", type: "tdt", layer: "img_d" },
@@ -51,7 +51,7 @@ export const mapOptions = {
       name: "Tianditu Images EN",
       name_cn: "天地图影像EN",
       name_en: "Tianditu Images EN",
-      icon: "//data.mars3d.cn/img/control/basemap/tdt_img.png",
+      icon: "//data.mars3d.cn/img/thumbnail/basemap/tdt_img.png",
       type: "group",
       layers: [
         { name: "底图", type: "tdt", layer: "img_d" },
@@ -62,7 +62,7 @@ export const mapOptions = {
       name: "Tianditu Electronic map",
       name_cn: "天地图电子",
       name_en: "Tianditu Electronic map",
-      icon: "//data.mars3d.cn/img/control/basemap/tdt_vec.png",
+      icon: "//data.mars3d.cn/img/thumbnail/basemap/tdt_vec.png",
       type: "group",
       layers: [
         { name: "底图", type: "tdt", layer: "vec_d" },
@@ -73,7 +73,7 @@ export const mapOptions = {
       name: "not map",
       name_cn: "无底图",
       name_en: "not map",
-      icon: "//data.mars3d.cn/img/control/basemap/null.png",
+      icon: "//data.mars3d.cn/img/thumbnail/basemap/null.png",
       type: "grid",
       color: "#ffffff",
       alpha: 0.03,

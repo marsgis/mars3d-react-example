@@ -12,14 +12,14 @@ export const mapOptions = {
   basemaps: [
     {
       name: "3857地图",
-      icon: "//data.mars3d.cn/img/control/basemap/google_vec.png",
+      icon: "//data.mars3d.cn/img/thumbnail/basemap/google_vec.png",
       type: "xyz",
       url: `http://www.supermapol.com/realspace/services/map-China400/rest/maps/China400/tileImage.png?transparent=true&cacheEnabled=true&_cache=true&width=256&height=256&redirect=false&overlapDisplayed=false&origin={origin}&x={x}&y={y}&scale={scale}`,
       show: true
     },
     {
       name: "EPSG4326地图",
-      icon: "//data.mars3d.cn/img/control/basemap/gaode_img.png",
+      icon: "//data.mars3d.cn/img/thumbnail/basemap/gaode_img.png",
       type: "xyz",
       url: `http://www.supermapol.com/realspace/services/map-World/rest/maps/World_Image/tileImage.png?transparent=true&cacheEnabled=true&_cache=true&width=256&height=256&redirect=false&overlapDisplayed=false&origin={origin}&x={x}&y={y}&scale={scale}`,
       crs: "EPSG:4326"

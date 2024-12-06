@@ -20,7 +20,7 @@ export const mapOptions = {
     {
       pid: 10,
       name: "影像地图",
-      icon: "//data.mars3d.cn/img/control/basemap/tdt_img.png",
+      icon: "//data.mars3d.cn/img/thumbnail/basemap/tdt_img.png",
       type: "xyz",
       url: "//data.mars3d.cn/tile/img/{z}/{x}/{y}.jpg",
       chinaCRS: mars3d.ChinaCRS.GCJ02,
@@ -31,7 +31,7 @@ export const mapOptions = {
     {
       pid: 10,
       name: "电子地图",
-      icon: "//data.mars3d.cn/img/control/basemap/tdt_vec.png",
+      icon: "//data.mars3d.cn/img/thumbnail/basemap/tdt_vec.png",
       type: "xyz",
       url: "//data.mars3d.cn/tile/vec/{z}/{x}/{y}.png",
       chinaCRS: "GCJ02",
@@ -41,7 +41,7 @@ export const mapOptions = {
     {
       pid: 10,
       name: "单张图片",
-      icon: "//data.mars3d.cn/img/control/basemap/offline.png",
+      icon: "//data.mars3d.cn/img/thumbnail/basemap/offline.png",
       type: "image",
       url: "//data.mars3d.cn/img/map/world/world.jpg"
     },
@@ -49,7 +49,7 @@ export const mapOptions = {
       id: 2023,
       pid: 10,
       name: "无底图",
-      icon: "//data.mars3d.cn/img/control/basemap/null.png",
+      icon: "//data.mars3d.cn/img/thumbnail/basemap/null.png",
       type: "grid",
       color: "#ffffff",
       alpha: 0.03,

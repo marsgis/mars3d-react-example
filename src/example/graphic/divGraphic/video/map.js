@@ -53,10 +53,10 @@ export function onMounted(mapInstance) {
   )
 
   // 添加数据
-  addRandomGraphicByCount(graphicLayer, [117.080397, 31.656139, 33.3])
-  addRandomGraphicByCount(graphicLayer, [117.078006, 31.65649, 49.4])
   addRandomGraphicByCount(graphicLayer, [117.080571, 31.657898, 50.2])
+  addRandomGraphicByCount(graphicLayer, [117.078006, 31.65649, 49.4])
   addRandomGraphicByCount(graphicLayer, [117.078331, 31.660016, 47.2])
+  addRandomGraphicByCount(graphicLayer, [117.080397, 31.656139, 33.3]).openPopup()
 
   // console.log("导出数据测试", graphicLayer.toJSON())
   // const layer = mars3d.LayerUtil.create(json)
@@ -85,6 +85,7 @@ function addRandomGraphicByCount(graphicLayer, position) {
     },
     popup: `<video src='http://data.mars3d.cn/file/video/lukou.mp4' controls autoplay style="width: 300px;" ></video>`,
     popupOptions: {
+      useGraphicPostion: true,
       offsetY: -170, // 显示Popup的偏移值，是DivGraphic本身的像素高度值
       template: `<div class="marsBlackPanel animation-spaceInDown">
                         <div class="marsBlackPanel-text">{content}</div>
@@ -95,4 +96,6 @@ function addRandomGraphicByCount(graphicLayer, position) {
     }
   })
   graphicLayer.addGraphic(graphicImg)
+
+  return graphicImg
 }

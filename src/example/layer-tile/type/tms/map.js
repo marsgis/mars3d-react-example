@@ -11,14 +11,14 @@ export const mapOptions = {
   basemaps: [
     // {
     //   name: "TMS影像地图",
-    //   icon: "//data.mars3d.cn/img/control/basemap/tdt_img.png",
+    //   icon: "//data.mars3d.cn/img/thumbnail/basemap/tdt_img.png",
     //   type: "tms", // tms类型
     //   url: "//data.mars3d.cn/tile/tms",
     //   show: false
     // },
     // {
     //   name: "TMS影像地图2",
-    //   icon: "//data.mars3d.cn/img/control/basemap/tdt_img.png",
+    //   icon: "//data.mars3d.cn/img/thumbnail/basemap/tdt_img.png",
     //   type: "xyz", // xyz类型+tms参数
     //   tms: true,
     //   url: "//data.mars3d.cn/tile/tms/{z}/{x}/{y}.png"

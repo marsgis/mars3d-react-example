@@ -285,7 +285,7 @@ function showResult(newSatelliteArr) {
             inTime,
             outTime,
             often: mars3d.Util.formatTime((outAttr.time - inAttr.lastTime) / 1000),
-            distance: mars3d.MeasureUtil.formatDistance(Cesium.Cartesian3.distance(positions[1], positions[0]))
+            distance: mars3d.MeasureUtil.formatDistance(mars3d.MeasureUtil.getDistance(positions))
           }
           tableList.push(data)
 

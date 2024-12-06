@@ -119,7 +119,7 @@ function addGraphicLayer() {
 
   // 需要计算贴地点时，异步计算完成贴地后再启动
   showLoading()
-  fixedRoute.autoSurfaceHeight().then(function (e) {
+  fixedRoute.autoSurfaceHeight({ exact: true }).then(function (e) {
     hideLoading()
     startFly(fixedRoute)
   })

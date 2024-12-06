@@ -11,7 +11,7 @@ export const mapOptions = {
   basemaps: [
     // {
     //   name: "光污染图层",
-    //   icon: "//data.mars3d.cn/img/control/basemap/blackMarble.png",
+    //   icon: "//data.mars3d.cn/img/thumbnail/basemap/blackMarble.png",
     //   type: "wms",
     //   url: "//www.lightpollutionmap.info/geoserver/gwc/service/wms",
     //   layers: "PostGIS:VIIRS_2019",
@@ -27,7 +27,7 @@ export const mapOptions = {
     // {
     //   // wms也可以换一种xyz的直接写法
     //   name: "光污染图层(XYZ方式)",
-    //   icon: "//data.mars3d.cn/img/control/basemap/blackMarble.png",
+    //   icon: "//data.mars3d.cn/img/thumbnail/basemap/blackMarble.png",
     //   type: "xyz",
     //   url: "//www.lightpollutionmap.info/geoserver/gwc/service/wms?transparent=true&format=image%2Fpng&service=WMS&version=1.1.1&request=GetMap&styles=&layers=PostGIS%3AVIIRS_2019&bbox={westProjected},{southProjected},{eastProjected},{northProjected}&width={width}&height={height}&srs=EPSG%3A3857",
     //   alpha: 0.6, // 透明度
@@ -35,7 +35,7 @@ export const mapOptions = {
     // },
     {
       name: "单张图片",
-      icon: "//data.mars3d.cn/img/control/basemap/offline.png",
+      icon: "//data.mars3d.cn/img/thumbnail/basemap/offline.png",
       type: "image",
       url: "//data.mars3d.cn/img/map/world/world.jpg",
       show: true

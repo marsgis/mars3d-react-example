@@ -19,7 +19,7 @@ export const mapOptions = {
     {
       pid: 10,
       name: "星图影像",
-      icon: "//data.mars3d.cn/img/control/basemap/tdt_img.png",
+      icon: "//data.mars3d.cn/img/thumbnail/basemap/tdt_img.png",
       type: "group",
       layers: [
         {
@@ -41,7 +41,7 @@ export const mapOptions = {
     {
       pid: 10,
       name: "星图电子",
-      icon: "//data.mars3d.cn/img/control/basemap/tdt_vec.png",
+      icon: "//data.mars3d.cn/img/thumbnail/basemap/tdt_vec.png",
       type: "xyz",
       url: "https://tiles{s}.geovisearth.com/base/v1/vec/{z}/{x}/{y}?token=" + geovisearthToken,
       subdomains: "123",

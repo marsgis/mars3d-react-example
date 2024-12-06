@@ -50,11 +50,11 @@ export function onMounted(mapInstance) {
   })
   map.addLayer(tilesetLayer)
 
-  globalNotify(
-    "已知问题提示",
-    `(1)含DIV部分下载 功能，因当前示例特殊机制使用了iframe，且浏览器安全性要求无法下载，可以本地运行或无ifarme项目中正常使用；
-    `
-  )
+  // globalNotify(
+  //   "已知问题提示",
+  //   `(1)含DIV部分下载 功能，因当前示例特殊机制使用了iframe，且浏览器安全性要求无法下载，可以本地运行或无ifarme项目中正常使用；
+  //   `
+  // )
 
   // 创建DIV数据图层
   const graphicLayer = new mars3d.layer.GraphicLayer()
@@ -114,7 +114,11 @@ export async function downLoadDiv() {
   // 其他部分DIV，使用 lib/dom2img/html2canvas.js
   // const divImg = await window.html2canvas(map.container, {
   //   ignoreElements: function (node) {
-  //     return node !== filterNode[0]
+  //     const className = node.className
+  //     if (className && (className.indexOf("cesium-viewer-cesiumWidgetContainer") !== -1 || className.indexOf("cesium-viewer-toolbar") !== -1)) {
+  //       return false
+  //     }
+  //     return true
   //   },
   //   backgroundColor: null,
   //   allowTaint: true

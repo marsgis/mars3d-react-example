@@ -50,7 +50,7 @@ function addDemoGraphic1(graphicLayer) {
   const graphic = new mars3d.graphic.DoubleSidedPlane({
     position: [116.282587, 30.859197, 544.31],
     style: {
-      image: "/img/tietu/wzplane.png",
+      image: "//data.mars3d.cn/img/textures/wzplane.png",
       dimensions_x: 5000,
       dimensions_y: 2500,
       heading: 90
@@ -123,7 +123,7 @@ function addDemoGraphic2(graphicLayer) {
   const graphic = new mars3d.graphic.DoubleSidedPlane({
     position: new mars3d.LngLatPoint(116.329199, 30.881595, 390.3),
     style: {
-      image: "/img/tietu/wzplane.png",
+      image: "//data.mars3d.cn/img/textures/wzplane.png",
       dimensions_x: 2000,
       dimensions_y: 1000,
       heading: 20
@@ -141,7 +141,7 @@ function addDemoGraphic3(graphicLayer) {
   const graphic = new mars3d.graphic.DoubleSidedPlane({
     position: new mars3d.LngLatPoint(116.392526, 30.903729, 933.55),
     style: {
-      image: "/img/tietu/wzplane.png",
+      image: "//data.mars3d.cn/img/textures/wzplane.png",
       dimensions_x: 2000,
       dimensions_y: 1000,
       heading: 45,
@@ -158,7 +158,7 @@ function addDemoGraphic4(graphicLayer) {
   const graphic = new mars3d.graphic.DoubleSidedPlane({
     position: [116.244399, 30.920459, 573.6],
     style: {
-      image: "img/jiaoben/dgx2.jpg",
+      image: "/img/demo/dgx2.jpg",
       noWhite: false,
       dimensions_x: 1500,
       dimensions_y: 1000,
@@ -186,7 +186,7 @@ export function addRandomGraphicByCount(count) {
     const graphic = new mars3d.graphic.DoubleSidedPlane({
       position,
       style: {
-        image: "/img/tietu/wzplane.png",
+        image: "//data.mars3d.cn/img/textures/wzplane.png",
         dimensions_x: 1000,
         dimensions_y: 500,
         heading: Math.random() * 100
@@ -205,7 +205,7 @@ export function startDrawGraphic() {
   graphicLayer.startDraw({
     type: "doubleSidedPlane",
     style: {
-      image: "/img/tietu/wzplane.png",
+      image: "//data.mars3d.cn/img/textures/wzplane.png",
       dimensions_x: 2000,
       dimensions_y: 1000
     }

@@ -119,7 +119,7 @@ function getTerrainProviderViewModelsArr() {
     new Cesium.ProviderViewModel({
       name: "无地形",
       tooltip: "WGS84标准球体",
-      iconUrl: "//data.mars3d.cn/img/control/basemap/TerrainEllipsoid.png",
+      iconUrl: "//data.mars3d.cn/img/thumbnail/basemap/TerrainEllipsoid.png",
       creationFunction: function () {
         return mars3d.LayerUtil.getNoTerrainProvider()
       }
@@ -127,7 +127,7 @@ function getTerrainProviderViewModelsArr() {
     new Cesium.ProviderViewModel({
       name: "中国地形",
       tooltip: "由 火星科技 提供的中国国内地形",
-      iconUrl: "//data.mars3d.cn/img/control/basemap/TerrainSTK.png",
+      iconUrl: "//data.mars3d.cn/img/thumbnail/basemap/TerrainSTK.png",
       creationFunction: function () {
         return mars3d.LayerUtil.createTerrainProvider({
           url: "http://data.mars3d.cn/terrain"
@@ -137,7 +137,7 @@ function getTerrainProviderViewModelsArr() {
     new Cesium.ProviderViewModel({
       name: "ArcGIS地形",
       tooltip: "由 火星科技 提供的中国国内地形",
-      iconUrl: "//data.mars3d.cn/img/control/basemap/TerrainSTK.png",
+      iconUrl: "//data.mars3d.cn/img/thumbnail/basemap/TerrainSTK.png",
       creationFunction: function () {
         return mars3d.LayerUtil.createTerrainProvider({
           type: "arcgis",
@@ -148,7 +148,7 @@ function getTerrainProviderViewModelsArr() {
     new Cesium.ProviderViewModel({
       name: "全球地形",
       tooltip: "由 Cesium官方 提供的高分辨率全球地形",
-      iconUrl: "//data.mars3d.cn/img/control/basemap/TerrainSTK.png",
+      iconUrl: "//data.mars3d.cn/img/thumbnail/basemap/TerrainSTK.png",
       creationFunction: function () {
         return mars3d.LayerUtil.createTerrainProvider({
           type: "ion",

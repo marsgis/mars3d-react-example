@@ -41,7 +41,7 @@ function initMap() {
     basemaps: [
       {
         name: "天地图影像",
-        icon: "//data.mars3d.cn/img/control/basemap/tdt_img.png",
+        icon: "//data.mars3d.cn/img/thumbnail/basemap/tdt_img.png",
         type: "tdt",
         layer: "img_d",
         show: true

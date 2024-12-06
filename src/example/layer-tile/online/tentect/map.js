@@ -15,7 +15,7 @@ export const mapOptions = {
   basemaps: [
     {
       name: "腾讯电子",
-      icon: "//data.mars3d.cn/img/control/basemap/gaode_vec.png",
+      icon: "//data.mars3d.cn/img/thumbnail/basemap/gaode_vec.png",
       type: "tencent",
       layer: "vec",
       show: true,
@@ -23,7 +23,7 @@ export const mapOptions = {
     },
     {
       name: "腾讯影像",
-      icon: "//data.mars3d.cn/img/control/basemap/gaode_img.png",
+      icon: "//data.mars3d.cn/img/thumbnail/basemap/gaode_img.png",
       type: "group",
       layers: [
         { name: "底图", type: "tencent", layer: "img_d" },
@@ -33,7 +33,7 @@ export const mapOptions = {
     },
     {
       name: "腾讯深蓝色",
-      icon: "//data.mars3d.cn/img/control/basemap/bd-c-midnight.png",
+      icon: "//data.mars3d.cn/img/thumbnail/basemap/bd-c-midnight.png",
       type: "tencent",
       layer: "custom",
       style: "4",

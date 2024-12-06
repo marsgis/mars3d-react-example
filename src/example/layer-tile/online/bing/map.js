@@ -11,7 +11,7 @@ export const mapOptions = {
   basemaps: [
     {
       name: "Bing影像",
-      icon: "//data.mars3d.cn/img/control/basemap/bingAerial.png",
+      icon: "//data.mars3d.cn/img/thumbnail/basemap/bingAerial.png",
       type: "bing",
       layer: Cesium.BingMapsStyle.AERIAL,
       key: mars3d.Token.bing,
@@ -19,42 +19,42 @@ export const mapOptions = {
     },
     {
       name: "Bing影像(含注记)",
-      icon: "//data.mars3d.cn/img/control/basemap/bingAerialLabels.png",
+      icon: "//data.mars3d.cn/img/thumbnail/basemap/bingAerialLabels.png",
       type: "bing",
       layer: Cesium.BingMapsStyle.AERIAL_WITH_LABELS,
       key: mars3d.Token.bing
     },
     {
       name: "Bing电子地图",
-      icon: "//data.mars3d.cn/img/control/basemap/bingRoads.png",
+      icon: "//data.mars3d.cn/img/thumbnail/basemap/bingRoads.png",
       type: "bing",
       layer: Cesium.BingMapsStyle.ROAD,
       key: mars3d.Token.bing
     },
     {
       name: "Bing电子地图2",
-      icon: "//data.mars3d.cn/img/control/basemap/bingRoads.png",
+      icon: "//data.mars3d.cn/img/thumbnail/basemap/bingRoads.png",
       type: "bing",
       layer: Cesium.BingMapsStyle.ROAD_ON_DEMAND,
       key: mars3d.Token.bing
     },
     {
       name: "Bing浅色电子​​",
-      icon: "//data.mars3d.cn/img/control/basemap/bingAerialLabels.png",
+      icon: "//data.mars3d.cn/img/thumbnail/basemap/bingAerialLabels.png",
       type: "bing",
       layer: Cesium.BingMapsStyle.CANVAS_LIGHT,
       key: mars3d.Token.bing
     },
     {
       name: "Bing深色地图",
-      icon: "//data.mars3d.cn/img/control/basemap/bd-c-midnight.png",
+      icon: "//data.mars3d.cn/img/thumbnail/basemap/bd-c-midnight.png",
       type: "bing",
       layer: Cesium.BingMapsStyle.CANVAS_DARK,
       key: mars3d.Token.bing
     },
     {
       name: "Bing灰色地图",
-      icon: "//data.mars3d.cn/img/control/basemap/bingAerialLabels.png",
+      icon: "//data.mars3d.cn/img/thumbnail/basemap/bingAerialLabels.png",
       type: "bing",
       layer: Cesium.BingMapsStyle.CANVAS_GRAY,
       key: mars3d.Token.bing

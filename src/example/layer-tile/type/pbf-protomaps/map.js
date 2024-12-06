@@ -15,7 +15,7 @@ export const mapOptions = {
   layers: [
     {
       name: "矢量瓦片图层",
-      icon: "//data.mars3d.cn/img/control/basemap/osm.png",
+      icon: "//data.mars3d.cn/img/thumbnail/basemap/osm.png",
       type: "arcgis-pbf", //  \lib\mars3d\thirdParty\pbf-protomaps\ArcGISPbfLayer.js 中定义的类型
       url: "https://basemaps.arcgis.com/arcgis/rest/services/World_Basemap_v2/VectorTileServer",
       styleUrl: "https://jsapi.maps.arcgis.com/sharing/rest/content/items/75f4dfdff19e445395653121a95a85db/resources/styles/root.json",

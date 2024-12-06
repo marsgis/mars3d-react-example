@@ -11,7 +11,7 @@ export const mapOptions = {
   basemaps: [
     {
       name: "XYZ瓦片",
-      icon: "//data.mars3d.cn/img/control/basemap/google_vec.png",
+      icon: "//data.mars3d.cn/img/thumbnail/basemap/google_vec.png",
       type: "xyz",
       url: "http://t3.tianditu.gov.cn/img_c/wmts?service=WMTS&version=1.0.0&request=GetTile&tilematrix={z}&layer=img&style=default&tilerow={y}&tilecol={x}&tilematrixset=c&format=tiles&tk=6c99c7793f41fccc4bd595b03711913e",
       crs: "EPSG:4490", // 标识坐标系
@@ -25,7 +25,7 @@ export const mapOptions = {
   layers: [
     {
       name: "山东电子",
-      icon: "//data.mars3d.cn/img/control/basemap/google_vec.png",
+      icon: "//data.mars3d.cn/img/thumbnail/basemap/google_vec.png",
       type: "xyz",
       url: "http://service1.sdmap.gov.cn/tileservice/sdpubmap?layer=SDPubMap&style=default&tilematrixset=default028mm&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image/png&TileMatrix={z}&TileCol={x}&TileRow={y}&tk=2ec5b748cca9b24b6474d6857deec02e",
       crs: "EPSG:4490",
@@ -36,7 +36,7 @@ export const mapOptions = {
     }
     // {
     //     "name": "arcgis服务",
-    //     "icon": "//data.mars3d.cn/img/control/basemap/google_vec.png",
+    //     "icon": "//data.mars3d.cn/img/thumbnail/basemap/google_vec.png",
     //     "type": "xyz",
     //     "url": "https://localhost:6080/arcgis/rest/services/test/MapServer/tile/{z}/{y}/{x}",
     //     "crs": "EPSG:4490",
@@ -45,7 +45,7 @@ export const mapOptions = {
     // },
     // {
     //     "name": "WMTS",
-    //     "icon": "//data.mars3d.cn/img/control/basemap/google_vec.png",
+    //     "icon": "//data.mars3d.cn/img/thumbnail/basemap/google_vec.png",
     //     "type": "xyz",
     //     "url": "http://47.106.133.145:20000/geowebcache/service/wmts?SERVICE=WMTS&VERSION=1.0.0&REQUEST=GetTile&LAYER=arcgis-China&STYLE=_null&FORMAT=image/jpeg&TILEMATRIXSET=EPSG:4326_arcgis-China&TILEMATRIX=EPSG:4326_arcgis-China:{z}&TILEROW={y}&TILECOL={x}",
     //     "crs": "EPSG:4490",

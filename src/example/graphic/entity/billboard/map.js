@@ -549,7 +549,7 @@ export function bindLayerPopup() {
     attr["备注"] = "我支持鼠标交互"
 
     return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
-  })
+  }, { useGraphicPostion: true })
 }
 
 // 绑定右键菜单

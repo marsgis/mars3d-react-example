@@ -40,7 +40,7 @@ export const mapOptions = {
   basemaps: [
     {
       name: "火星影像图",
-      icon: "//data.mars3d.cn/img/control/basemap/tdt_img.png",
+      icon: "//data.mars3d.cn/img/thumbnail/basemap/tdt_img.png",
       type: "xyz",
       url: "https://moon.bao.ac.cn/gis3globleMarsMoon/tiles/getTiles/MarsTile/1000/jpg/{z}/{reverseY}/{x}",
       crs: "EPSG:4326",

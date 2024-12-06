@@ -11,7 +11,7 @@ export const mapOptions = {
   basemaps: [
     {
       name: "山西天地图",
-      icon: "//data.mars3d.cn/img/control/basemap/blackMarble.png",
+      icon: "//data.mars3d.cn/img/thumbnail/basemap/blackMarble.png",
       type: "wmts",
       url: "http://shanxi.tianditu.gov.cn/service/SX_DOM/wmts",
       layer: "WD_DOM",
@@ -23,7 +23,7 @@ export const mapOptions = {
     },
     {
       name: "单张图片",
-      icon: "//data.mars3d.cn/img/control/basemap/offline.png",
+      icon: "//data.mars3d.cn/img/thumbnail/basemap/offline.png",
       type: "image",
       url: "//data.mars3d.cn/img/map/world/world.jpg",
       show: false
