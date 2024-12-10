@@ -53,6 +53,7 @@ function getDefaultContextMenu(map) {
         alert(mpt, map.getLangText("_当前视角信息"))
       }
     },
+
     {
       text: function () {
         return map.getLangText("_视角切换")
@@ -214,362 +215,7 @@ function getDefaultContextMenu(map) {
         }
       ]
     },
-    {
-      text: function () {
-        return map.getLangText("_三维模型")
-      },
-      icon: Icon.Tileset,
-      show: function (e) {
-        const model = map.pick3DTileset(e.cartesian) // 拾取绘制返回的模型
-        return Cesium.defined(model)
-      },
-      children: [
-        {
-          text: function () {
-            return map.getLangText("_显示三角网")
-          },
-          icon: Icon.TilesetWireframeYes,
-          show: function (e) {
-            const model = map.pick3DTileset(e.cartesian) // 拾取绘制返回的模型
-            return !model.debugWireframe && model._enableDebugWireframe
-          },
-          callback: function (e) {
-            const model = map.pick3DTileset(e.cartesian) // 拾取绘制返回的模型
-            model.debugWireframe = true
-          }
-        },
-        {
-          text: function () {
-            return map.getLangText("_关闭三角网")
-          },
-          icon: Icon.TilesetWireframeNo,
-          show: function (e) {
-            const model = map.pick3DTileset(e.cartesian) // 拾取绘制返回的模型
-            return model.debugWireframe && model._enableDebugWireframe
-          },
-          callback: function (e) {
-            const model = map.pick3DTileset(e.cartesian) // 拾取绘制返回的模型
-            model.debugWireframe = false
-          }
-        },
-        {
-          text: function () {
-            return map.getLangText("_显示包围盒")
-          },
-          icon: Icon.TilesetBoundingVolumeYes,
-          show: function (e) {
-            const model = map.pick3DTileset(e.cartesian) // 拾取绘制返回的模型
-            return !model.debugShowBoundingVolume
-          },
-          callback: function (e) {
-            const model = map.pick3DTileset(e.cartesian) // 拾取绘制返回的模型
-            model.debugShowBoundingVolume = true
-          }
-        },
-        {
-          text: function () {
-            return map.getLangText("_关闭包围盒")
-          },
-          icon: Icon.TilesetBoundingVolumeNo,
-          show: function (e) {
-            const model = map.pick3DTileset(e.cartesian) // 拾取绘制返回的模型
-            return model.debugShowBoundingVolume
-          },
-          callback: function (e) {
-            const model = map.pick3DTileset(e.cartesian) // 拾取绘制返回的模型
-            model.debugShowBoundingVolume = false
-          }
-        }
-      ]
-    },
 
-    {
-      text: function () {
-        return map.getLangText("_地形服务")
-      },
-      icon: Icon.Terrain,
-      show: function (e) {
-        return Cesium.defined(e.cartesian)
-      },
-      children: [
-        {
-          text: function () {
-            return map.getLangText("_开启地形")
-          },
-          icon: Icon.TerrainYes,
-          show: function (e) {
-            return !map.hasTerrain
-          },
-          callback: function (e) {
-            map.hasTerrain = true
-          }
-        },
-        {
-          text: function () {
-            return map.getLangText("_关闭地形")
-          },
-          icon: Icon.TerrainNo,
-          show: function (e) {
-            return map.hasTerrain
-          },
-          callback: function (e) {
-            map.hasTerrain = false
-          }
-        },
-        {
-          text: function () {
-            return map.getLangText("_显示三角网")
-          },
-          icon: Icon.TerrainWireframeYes,
-          show: function (e) {
-            return !map.scene.globe._surface.tileProvider._debug.wireframe
-          },
-          callback: function (e) {
-            map.scene.globe._surface.tileProvider._debug.wireframe = true
-          }
-        },
-        {
-          text: function () {
-            return map.getLangText("_关闭三角网")
-          },
-          icon: Icon.TerrainWireframeNo,
-          show: function (e) {
-            return map.scene.globe._surface.tileProvider._debug.wireframe
-          },
-          callback: function (e) {
-            map.scene.globe._surface.tileProvider._debug.wireframe = false
-          }
-        }
-      ]
-    },
-    {
-      text: function () {
-        return map.getLangText("_图上量算")
-      },
-      icon: Icon.Measure,
-      children: [
-        {
-          text: function () {
-            return map.getLangText("_距离")
-          },
-          icon: Icon.MeasureDistance,
-          callback: function (e) {
-            if (!that.measure) {
-              that.measure = new Measure()
-              map.addThing(that.measure)
-            }
-            that.measure.distance()
-          }
-        },
-        {
-          text: function () {
-            return map.getLangText("_面积")
-          },
-          icon: Icon.MeasureArea,
-          callback: function (e) {
-            if (!that.measure) {
-              that.measure = new Measure()
-              map.addThing(that.measure)
-            }
-            that.measure.area()
-          }
-        },
-        {
-          text: function () {
-            return map.getLangText("_高度差")
-          },
-          icon: Icon.MeasureHeight,
-          callback: function (e) {
-            if (!that.measure) {
-              that.measure = new Measure()
-              map.addThing(that.measure)
-            }
-            that.measure.heightTriangle()
-          }
-        },
-        {
-          text: function () {
-            return map.getLangText("_角度")
-          },
-          icon: Icon.MeasureAngle,
-          callback: function (e) {
-            if (!that.measure) {
-              that.measure = new Measure()
-              map.addThing(that.measure)
-            }
-            that.measure.angle()
-          }
-        },
-        {
-          text: function () {
-            return map.getLangText("_删除测量")
-          },
-          icon: Icon.Delete,
-          show: function (e) {
-            return that.measure && that.measure.hasMeasure
-          },
-          callback: function (e) {
-            if (that.measure) {
-              that.measure.clear()
-            }
-          }
-        }
-      ]
-    },
-
-    {
-      text: function () {
-        return map.getLangText("_图上标记")
-      },
-      icon: Icon.Draw,
-      children: [
-        {
-          text: function () {
-            return map.getLangText("_标记点")
-          },
-          icon: Icon.DrawPoint,
-          callback: function (e) {
-            map.graphicLayer.startDraw({
-              type: "point",
-              style: {
-                pixelSize: 12,
-                color: "#3388ff"
-              },
-              success: function (graphic) {
-                // eslint-disable-next-line no-console
-                console.log(JSON.stringify(graphic.coordinates))
-              }
-            })
-          }
-        },
-        {
-          text: function () {
-            return map.getLangText("_标记线")
-          },
-          icon: Icon.DrawPolyline,
-          callback: function (e) {
-            map.graphicLayer.startDraw({
-              type: "polyline",
-              style: {
-                color: "#55ff33",
-                width: 3
-              },
-              success: function (graphic) {
-                // eslint-disable-next-line no-console
-                console.log(JSON.stringify(graphic.coordinates))
-              }
-            })
-          }
-        },
-        {
-          text: function () {
-            return map.getLangText("_标记面")
-          },
-          icon: Icon.DrawPolygon,
-          callback: function (e) {
-            map.graphicLayer.startDraw({
-              type: "polygon",
-              style: {
-                color: "#29cf34",
-                opacity: 0.5,
-                outline: true,
-                outlineWidth: 2.0
-              },
-              success: function (graphic) {
-                // eslint-disable-next-line no-console
-                console.log(JSON.stringify(graphic.coordinates))
-              }
-            })
-          }
-        },
-        {
-          text: function () {
-            return map.getLangText("_标记圆")
-          },
-          icon: Icon.DrawCircle,
-          callback: function (e) {
-            map.graphicLayer.startDraw({
-              type: "circle",
-              style: {
-                color: "#ffff00",
-                opacity: 0.6
-              },
-              success: function (graphic) {
-                // eslint-disable-next-line no-console
-                console.log(JSON.stringify(graphic.coordinates))
-              }
-            })
-          }
-        },
-        {
-          text: function () {
-            return map.getLangText("_标记矩形")
-          },
-          icon: Icon.DrawRectangle,
-          callback: function (e) {
-            map.graphicLayer.startDraw({
-              type: "rectangle",
-              style: {
-                color: "#ffff00",
-                opacity: 0.6
-              },
-              success: function (graphic) {
-                // eslint-disable-next-line no-console
-                console.log(JSON.stringify(graphic.coordinates))
-              }
-            })
-          }
-        },
-        {
-          text: function () {
-            return map.getLangText("_允许编辑")
-          },
-          icon: Icon.DrawEditYes,
-          show: function (e) {
-            return !map.graphicLayer.hasEdit
-          },
-          callback: function (e) {
-            map.graphicLayer.hasEdit = true
-          }
-        },
-        {
-          text: function () {
-            return map.getLangText("_禁止编辑")
-          },
-          icon: Icon.DrawEditNo,
-          show: function (e) {
-            return map.graphicLayer.hasEdit
-          },
-          callback: function (e) {
-            map.graphicLayer.hasEdit = false
-          }
-        },
-        {
-          text: function () {
-            return map.getLangText("_导出文件")
-          },
-          icon: Icon.DrawDownJson,
-          show: function (e) {
-            return map.graphicLayer.length > 0
-          },
-          callback: function (e) {
-            downloadFile("图上标记.json", JSON.stringify(map.graphicLayer.toGeoJSON()))
-          }
-        },
-        {
-          text: function () {
-            return map.getLangText("_清除所有标记")
-          },
-          icon: Icon.Delete,
-          show: function (e) {
-            return map.graphicLayer.length > 0
-          },
-          callback: function (e) {
-            map.graphicLayer.clear()
-          }
-        }
-      ]
-    },
     {
       text: function () {
         return map.getLangText("_特效效果")
@@ -827,9 +473,410 @@ function getDefaultContextMenu(map) {
         }
       ]
     },
+
     {
       text: function () {
-        return map.getLangText("_场景设置")
+        return map.getLangText("_图上量算")
+      },
+      icon: Icon.Measure,
+      children: [
+        {
+          text: function () {
+            return map.getLangText("_距离")
+          },
+          icon: Icon.MeasureDistance,
+          callback: function (e) {
+            if (!that.measure) {
+              that.measure = new Measure()
+              map.addThing(that.measure)
+            }
+            that.measure.distance()
+          }
+        },
+        {
+          text: function () {
+            return map.getLangText("_面积")
+          },
+          icon: Icon.MeasureArea,
+          callback: function (e) {
+            if (!that.measure) {
+              that.measure = new Measure()
+              map.addThing(that.measure)
+            }
+            that.measure.area()
+          }
+        },
+        {
+          text: function () {
+            return map.getLangText("_高度差")
+          },
+          icon: Icon.MeasureHeight,
+          callback: function (e) {
+            if (!that.measure) {
+              that.measure = new Measure()
+              map.addThing(that.measure)
+            }
+            that.measure.heightTriangle()
+          }
+        },
+        {
+          text: function () {
+            return map.getLangText("_角度")
+          },
+          icon: Icon.MeasureAngle,
+          callback: function (e) {
+            if (!that.measure) {
+              that.measure = new Measure()
+              map.addThing(that.measure)
+            }
+            that.measure.angle()
+          }
+        },
+        {
+          text: function () {
+            return map.getLangText("_删除测量")
+          },
+          icon: Icon.Delete,
+          show: function (e) {
+            return that.measure && that.measure.hasMeasure
+          },
+          callback: function (e) {
+            if (that.measure) {
+              that.measure.clear()
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      text: function () {
+        return map.getLangText("_图上标记")
+      },
+      icon: Icon.Draw,
+      children: [
+        {
+          text: function () {
+            return map.getLangText("_标记点")
+          },
+          icon: Icon.DrawPoint,
+          callback: function (e) {
+            map.graphicLayer.startDraw({
+              type: "point",
+              style: {
+                pixelSize: 12,
+                color: "#3388ff"
+              },
+              success: function (graphic) {
+                // eslint-disable-next-line no-console
+                console.log(JSON.stringify(graphic.coordinates))
+              }
+            })
+          }
+        },
+        {
+          text: function () {
+            return map.getLangText("_标记线")
+          },
+          icon: Icon.DrawPolyline,
+          callback: function (e) {
+            map.graphicLayer.startDraw({
+              type: "polyline",
+              style: {
+                color: "#55ff33",
+                width: 3
+                // arcType: Cesium.ArcType.NONE
+              },
+              success: function (graphic) {
+                // eslint-disable-next-line no-console
+                console.log(JSON.stringify(graphic.coordinates))
+              }
+            })
+          }
+        },
+        {
+          text: function () {
+            return map.getLangText("_标记面")
+          },
+          icon: Icon.DrawPolygon,
+          callback: function (e) {
+            map.graphicLayer.startDraw({
+              type: "polygon",
+              style: {
+                color: "#29cf34",
+                opacity: 0.5,
+                outline: true,
+                outlineWidth: 2.0
+              },
+              success: function (graphic) {
+                // eslint-disable-next-line no-console
+                console.log(JSON.stringify(graphic.coordinates))
+              }
+            })
+          }
+        },
+        {
+          text: function () {
+            return map.getLangText("_标记圆")
+          },
+          icon: Icon.DrawCircle,
+          callback: function (e) {
+            map.graphicLayer.startDraw({
+              type: "circle",
+              style: {
+                color: "#ffff00",
+                opacity: 0.6
+              },
+              addHeight: 1,
+              success: function (graphic) {
+                // eslint-disable-next-line no-console
+                console.log(JSON.stringify(graphic.coordinates))
+              }
+            })
+          }
+        },
+        {
+          text: function () {
+            return map.getLangText("_标记矩形")
+          },
+          icon: Icon.DrawRectangle,
+          callback: function (e) {
+            map.graphicLayer.startDraw({
+              type: "rectangle",
+              style: {
+                color: "#ffff00",
+                opacity: 0.6
+              },
+              success: function (graphic) {
+                // eslint-disable-next-line no-console
+                console.log(JSON.stringify(graphic.coordinates))
+              }
+            })
+          }
+        },
+        {
+          text: function () {
+            return map.getLangText("_允许编辑")
+          },
+          icon: Icon.DrawEditYes,
+          show: function (e) {
+            return !map.graphicLayer.hasEdit
+          },
+          callback: function (e) {
+            map.graphicLayer.hasEdit = true
+          }
+        },
+        {
+          text: function () {
+            return map.getLangText("_禁止编辑")
+          },
+          icon: Icon.DrawEditNo,
+          show: function (e) {
+            return map.graphicLayer.hasEdit
+          },
+          callback: function (e) {
+            map.graphicLayer.hasEdit = false
+          }
+        },
+        {
+          text: function () {
+            return map.getLangText("_导出JSON")
+          },
+          icon: Icon.DrawDownJson,
+          show: function (e) {
+            return map.graphicLayer.length > 0
+          },
+          callback: function (e) {
+            downloadFile("graphic标绘.json", JSON.stringify(map.graphicLayer.toGeoJSON()))
+          }
+        },
+        // {
+        //   text: function () {
+        //     return map.getLangText("_导入文件") + `<input id="defaultContextMenu_Impfile" type="file" accept=".json,.geojson" style="display: none" />`
+        //   },
+        //   icon: Icon.DrawDownJson,
+        //   // show: function (e) {
+        //   //   return map.graphicLayer.length > 0
+        //   // },
+        //   callback: function (e) {
+        //     debugger
+        //     // downloadFile("图上标记.json", JSON.stringify(map.graphicLayer.toGeoJSON()))
+        //   }
+        // },
+        {
+          text: function () {
+            return map.getLangText("_清除标记")
+          },
+          icon: Icon.Delete,
+          show: function (e) {
+            return map.graphicLayer.length > 0
+          },
+          callback: function (e) {
+            map.graphicLayer.clear()
+          }
+        }
+      ]
+    },
+
+    // 地形
+    {
+      text: function () {
+        return map.getLangText("_地形")
+      },
+      icon: Icon.Terrain,
+      show: function (e) {
+        return Cesium.defined(e.cartesian)
+      },
+      children: [
+        {
+          text: function () {
+            return map.getLangText("_开启地形")
+          },
+          icon: Icon.TerrainYes,
+          show: function (e) {
+            return !map.hasTerrain
+          },
+          callback: function (e) {
+            map.hasTerrain = true
+          }
+        },
+        {
+          text: function () {
+            return map.getLangText("_关闭地形")
+          },
+          icon: Icon.TerrainNo,
+          show: function (e) {
+            return map.hasTerrain
+          },
+          callback: function (e) {
+            map.hasTerrain = false
+          }
+        },
+        {
+          text: function () {
+            return map.getLangText("_显示三角网")
+          },
+          icon: Icon.TerrainWireframeYes,
+          show: function (e) {
+            return !map.scene.globe._surface.tileProvider._debug.wireframe
+          },
+          callback: function (e) {
+            map.scene.globe._surface.tileProvider._debug.wireframe = true
+          }
+        },
+        {
+          text: function () {
+            return map.getLangText("_关闭三角网")
+          },
+          icon: Icon.TerrainWireframeNo,
+          show: function (e) {
+            return map.scene.globe._surface.tileProvider._debug.wireframe
+          },
+          callback: function (e) {
+            map.scene.globe._surface.tileProvider._debug.wireframe = false
+          }
+        }
+      ]
+    },
+
+    // 图层专属
+    {
+      text: function () {
+        return map.getLangText("_图层")
+      },
+      icon: Icon.Tileset,
+      show: function (e) {
+        return Cesium.defined(e.layer)
+      },
+      children: [
+        {
+          text: function () {
+            return map.getLangText("_显示三角网")
+          },
+          icon: Icon.TilesetWireframeYes,
+          show: function (e) {
+            const model = map.pick3DTileset(e.cartesian) // 拾取绘制返回的模型
+            if (!model) {
+              return false
+            }
+            return !model.debugWireframe && model._enableDebugWireframe
+          },
+          callback: function (e) {
+            const model = map.pick3DTileset(e.cartesian) // 拾取绘制返回的模型
+            model.debugWireframe = true
+          }
+        },
+        {
+          text: function () {
+            return map.getLangText("_关闭三角网")
+          },
+          icon: Icon.TilesetWireframeNo,
+          show: function (e) {
+            const model = map.pick3DTileset(e.cartesian) // 拾取绘制返回的模型
+            if (!model) {
+              return false
+            }
+            return model.debugWireframe && model._enableDebugWireframe
+          },
+          callback: function (e) {
+            const model = map.pick3DTileset(e.cartesian) // 拾取绘制返回的模型
+            model.debugWireframe = false
+          }
+        },
+        {
+          text: function () {
+            return map.getLangText("_显示包围盒")
+          },
+          icon: Icon.TilesetBoundingVolumeYes,
+          show: function (e) {
+            const model = map.pick3DTileset(e.cartesian) // 拾取绘制返回的模型
+            if (!model) {
+              return false
+            }
+            return !model.debugShowBoundingVolume
+          },
+          callback: function (e) {
+            const model = map.pick3DTileset(e.cartesian) // 拾取绘制返回的模型
+            model.debugShowBoundingVolume = true
+          }
+        },
+        {
+          text: function () {
+            return map.getLangText("_关闭包围盒")
+          },
+          icon: Icon.TilesetBoundingVolumeNo,
+          show: function (e) {
+            const model = map.pick3DTileset(e.cartesian) // 拾取绘制返回的模型
+            if (!model) {
+              return false
+            }
+            return model.debugShowBoundingVolume
+          },
+          callback: function (e) {
+            const model = map.pick3DTileset(e.cartesian) // 拾取绘制返回的模型
+            model.debugShowBoundingVolume = false
+          }
+        },
+        {
+          text: function () {
+            return map.getLangText("_导出JSON")
+          },
+          icon: Icon.TilesetBoundingVolumeNo,
+          show: function (e) {
+            return e.layer.toJSON
+          },
+          callback: function (e) {
+
+            downloadFile("layer图层配置.json", JSON.stringify(e.layer.toJSON()))
+          }
+        }
+      ]
+    },
+
+    // 场景
+    {
+      text: function () {
+        return map.getLangText("_场景")
       },
       icon: Icon.Scene,
       children: [
@@ -878,7 +925,7 @@ function getDefaultContextMenu(map) {
           },
           icon: Icon.SkyBoxNo,
           show: function (e) {
-            return map.scene.skyBox.show
+            return map.scene.skyBox?.show
           },
           callback: function (e) {
             map.scene.skyBox.show = false // 天空盒
@@ -920,7 +967,7 @@ function getDefaultContextMenu(map) {
           },
           icon: Icon.SkyAtmosphereYes,
           show: function (e) {
-            return !map.scene.skyAtmosphere.show
+            return map.scene.skyAtmosphere && !map.scene.skyAtmosphere.show
           },
           callback: function (e) {
             map.scene.skyAtmosphere.show = true
@@ -933,7 +980,7 @@ function getDefaultContextMenu(map) {
           },
           icon: Icon.SkyAtmosphereNo,
           show: function (e) {
-            return map.scene.skyAtmosphere.show
+            return map.scene.skyAtmosphere?.show
           },
           callback: function (e) {
             map.scene.skyAtmosphere.show = false
@@ -941,6 +988,15 @@ function getDefaultContextMenu(map) {
           }
         },
 
+        {
+          text: function () {
+            return map.getLangText("_导出JSON")
+          },
+          icon: Icon.DrawDownJson,
+          callback: function (e) {
+            downloadFile("Map场景配置.json", JSON.stringify(map.toJSON()))
+          }
+        },
         {
           text: function () {
             return map.getLangText("_场景出图")

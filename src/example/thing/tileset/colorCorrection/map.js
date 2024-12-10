@@ -12,7 +12,7 @@ export const mapOptions = {
   }
 }
 
-export let tiles3dLayer
+let tiles3dLayer
 
 /**
  * 初始化地图业务，生命周期钩子函数（必须）
@@ -30,7 +30,7 @@ export function onMounted(mapInstance) {
     cullWithChildrenBounds: false,
     // tilesetLayer.colorCorrection 是TilesetColorCorrection对象，因为与模型是1对1关系，已经内置进去
     colorCorrection: {
-      brightness: 1.5
+      brightness: 1.0
     }
   })
   map.addLayer(tiles3dLayer)

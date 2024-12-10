@@ -162,9 +162,15 @@ export function onUnmounted() {
   map = null
 }
 
+let isEntityPrimitive = true
+
+export function changeDrawEntity(value) {
+  isEntityPrimitive = value
+}
+
 export async function drawPoint() {
   const graphic = await graphicLayer.startDraw({
-    type: "point",
+    type: isEntityPrimitive ? "point" : "pointP",
     style: {
       pixelSize: 12,
       color: "#3388ff",
@@ -184,7 +190,7 @@ export async function drawPoint() {
 
 export async function drawMarker() {
   const graphic = await graphicLayer.startDraw({
-    type: "billboard",
+    type: isEntityPrimitive ? "billboard" : "billboardP",
     style: {
       image: "//data.mars3d.cn/img/marker/mark-red.png",
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
@@ -205,7 +211,7 @@ export async function drawMarker() {
 
 export async function drawLabel() {
   const graphic = await graphicLayer.startDraw({
-    type: "label",
+    type: isEntityPrimitive ? "label" : "labelP",
     style: {
       text: "火星科技三维地球",
       color: "#0081c2",
@@ -220,7 +226,7 @@ export async function drawLabel() {
 
 export async function startDrawModel() {
   const graphic = await graphicLayer.startDraw({
-    type: "model",
+    type: isEntityPrimitive ? "model" : "modelP",
     style: {
       scale: 10,
       url: "//data.mars3d.cn/gltf/mars/firedrill/xiaofangche.gltf"
@@ -234,7 +240,7 @@ export async function drawPolyline(clampToGround) {
   // map.popup.enabled = false
 
   const graphic = await graphicLayer.startDraw({
-    type: "polyline",
+    type: isEntityPrimitive ? "polyline" : "polylineP",
     style: {
       color: clampToGround ? "#ffff00" : "#3388ff",
       width: 3,
@@ -292,7 +298,7 @@ export async function drawBrushLine(clampToGround) {
 
 export async function drawPolygon(clampToGround) {
   const graphic = await graphicLayer.startDraw({
-    type: "polygon",
+    type: isEntityPrimitive ? "polygon" : "polygonP",
     style: {
       color: clampToGround ? "#ffff00" : "#3388ff",
       opacity: 0.5,
@@ -319,7 +325,7 @@ export async function drawCurve(clampToGround) {
 
 export async function drawCorridor(clampToGround) {
   const graphic = await graphicLayer.startDraw({
-    type: "corridor",
+    type: isEntityPrimitive ? "corridor" : "corridorP",
     style: {
       color: clampToGround ? "#ffff00" : "#3388ff",
       opacity: 0.6,
@@ -332,7 +338,7 @@ export async function drawCorridor(clampToGround) {
 
 export async function drawEllipse(clampToGround) {
   const graphic = await graphicLayer.startDraw({
-    type: "circle",
+    type: isEntityPrimitive ? "circle" : "circleP",
     style: {
       color: clampToGround ? "#ffff00" : "#3388ff",
       opacity: 0.6,
@@ -347,7 +353,7 @@ export async function drawEllipse(clampToGround) {
 
 export async function drawRectangle(clampToGround) {
   const graphic = await graphicLayer.startDraw({
-    type: "rectangle",
+    type: isEntityPrimitive ? "rectangle" : "rectangleP",
     style: {
       color: clampToGround ? "#ffff00" : "#3388ff",
       opacity: 0.6,
@@ -362,7 +368,7 @@ export async function drawRectangle(clampToGround) {
 
 export async function draPlane() {
   const graphic = await graphicLayer.startDraw({
-    type: "plane",
+    type: isEntityPrimitive ? "plane" : "planeP",
     style: {
       color: "#00ff00",
       opacity: 0.8,
@@ -376,7 +382,7 @@ export async function draPlane() {
 
 export async function draWall(closure) {
   const graphic = await graphicLayer.startDraw({
-    type: "wall",
+    type: isEntityPrimitive ? "wall" : "wallP",
     style: {
       color: "#00ff00",
       opacity: 0.8,
@@ -389,7 +395,7 @@ export async function draWall(closure) {
 
 export async function drawBox() {
   const graphic = await graphicLayer.startDraw({
-    type: "box",
+    type: isEntityPrimitive ? "box" : "boxP",
     style: {
       color: "#00ff00",
       opacity: 0.6,
@@ -403,7 +409,7 @@ export async function drawBox() {
 
 export async function drawCylinder() {
   const graphic = await graphicLayer.startDraw({
-    type: "cylinder",
+    type: isEntityPrimitive ? "cylinder" : "cylinderP",
     style: {
       fill: true,
       color: "#00ff00",
@@ -416,7 +422,7 @@ export async function drawCylinder() {
 
 export async function drawEllipsoid() {
   const graphic = await graphicLayer.startDraw({
-    type: "ellipsoid",
+    type: isEntityPrimitive ? "ellipsoid" : "ellipsoidP",
     style: {
       fill: true,
       color: "#00ff00",
@@ -428,7 +434,7 @@ export async function drawEllipsoid() {
 
 export async function drawExtrudedPolygon() {
   const graphic = await graphicLayer.startDraw({
-    type: "polygon",
+    type: isEntityPrimitive ? "polygon" : "polygonP",
     style: {
       color: "#00ff00",
       opacity: 0.6,
@@ -440,7 +446,7 @@ export async function drawExtrudedPolygon() {
 
 export async function drawExtrudedRectangle() {
   const graphic = await graphicLayer.startDraw({
-    type: "rectangle",
+    type: isEntityPrimitive ? "rectangle" : "rectangleP",
     style: {
       color: "#00ff00",
       opacity: 0.6,
@@ -452,7 +458,7 @@ export async function drawExtrudedRectangle() {
 
 export async function drawExtrudedCircle() {
   const graphic = await graphicLayer.startDraw({
-    type: "circle",
+    type: isEntityPrimitive ? "circle" : "circleP",
     style: {
       color: "#00ff00",
       opacity: 0.6,
@@ -819,13 +825,7 @@ export function openGeoJSON(file) {
     reader.onloadend = function (e) {
       const geojson = JSON.parse(this.result)
       console.log("打开了json文件", geojson)
-
-      if (geojson.type === "graphic" && geojson.data) {
-        graphicLayer.loadJSON(geojson.data)
-        graphicLayer.flyTo()
-      } else {
-        graphicLayer.loadGeoJSON(geojson, { flyTo: true })
-      }
+      graphicLayer.loadJSON(geojson, { flyTo: true, clear: true })
     }
   } else if (fileType === "kml") {
     const reader = new FileReader()

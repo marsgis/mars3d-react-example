@@ -289,10 +289,8 @@ export function openGeoJSON(file) {
     reader.readAsText(file, "UTF-8")
     reader.onloadend = function (e) {
       const geojson = this.result
-      graphicLayer.loadGeoJSON(geojson, {
-        flyTo: true,
-        simplify: { tolerance: 0.00001 }
-      })
+      console.log("打开了json文件", geojson)
+      graphicLayer.loadJSON(geojson, { flyTo: true, clear: true })
     }
   } else if (fileType === "kml") {
     const reader = new FileReader()
@@ -302,10 +300,7 @@ export function openGeoJSON(file) {
       kgUtil.toGeoJSON(strkml).then((geojson) => {
         console.log("kml2geojson", geojson)
 
-        graphicLayer.loadGeoJSON(geojson, {
-          flyTo: true,
-          simplify: { tolerance: 0.00001 }
-        })
+        graphicLayer.loadGeoJSON(geojson, { flyTo: true })
       })
     }
   } else if (fileType === "kmz") {
@@ -313,10 +308,7 @@ export function openGeoJSON(file) {
     kgUtil.toGeoJSON(file).then((geojson) => {
       console.log("kmz2geojson", geojson)
 
-      graphicLayer.loadGeoJSON(geojson, {
-        flyTo: true,
-        simplify: { tolerance: 0.00001 }
-      })
+      graphicLayer.loadGeoJSON(geojson, { flyTo: true })
     })
   } else {
     globalMsg("暂不支持 " + fileType + " 文件类型的数据！")

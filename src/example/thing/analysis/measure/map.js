@@ -217,15 +217,9 @@ export function openJSON(file) {
     console.log(reader)
     reader.readAsText(file, "UTF-8")
     reader.onloadend = function (e) {
-      const geojson = JSON.parse(this.result)
-      console.log("打开了json文件", geojson)
-
-      if (geojson.type === "graphic" && geojson.data) {
-        measure.graphicLayer.addGraphic(geojson.data)
-        measure.graphicLayer.flyTo()
-      } else {
-        measure.graphicLayer.loadGeoJSON(geojson, { flyTo: true })
-      }
+      const json = JSON.parse(this.result)
+      console.log("打开了json文件", json)
+      measure.graphicLayer.loadJSON(json, { flyTo: true, clear: true })
     }
   } else {
     globalMsg("暂不支持 " + fileType + " 文件类型的数据！")

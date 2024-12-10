@@ -3,7 +3,7 @@
  * Mars3D三维可视化平台  mars3d
  *
  * 版本信息：v3.8.9
- * 编译日期：2024-12-06 08:39
+ * 编译日期：2024-12-09 19:16
  * 版权所有：Copyright by 火星科技  http://mars3d.cn
  * 使用单位：免费公开版 ，2024-08-01
  */
@@ -1244,12 +1244,12 @@ declare enum Lang {
     "_关闭键盘漫游" = "\u5173\u95ED\u952E\u76D8\u6F2B\u6E38",
     "_跟踪锁定" = "\u8DDF\u8E2A\u9501\u5B9A",
     "_取消锁定" = "\u53D6\u6D88\u9501\u5B9A",
-    "_三维模型" = "\u4E09\u7EF4\u6A21\u578B",
+    "_图层" = "\u56FE\u5C42",
     "_显示三角网" = "\u663E\u793A\u4E09\u89D2\u7F51",
     "_关闭三角网" = "\u5173\u95ED\u4E09\u89D2\u7F51",
     "_显示包围盒" = "\u663E\u793A\u5305\u56F4\u76D2",
     "_关闭包围盒" = "\u5173\u95ED\u5305\u56F4\u76D2",
-    "_地形服务" = "\u5730\u5F62\u670D\u52A1",
+    "_地形" = "\u5730\u5F62",
     "_开启地形" = "\u5F00\u542F\u5730\u5F62",
     "_关闭地形" = "\u5173\u95ED\u5730\u5F62",
     "_图上标记" = "\u56FE\u4E0A\u6807\u8BB0",
@@ -1260,7 +1260,7 @@ declare enum Lang {
     "_标记矩形" = "\u6807\u8BB0\u77E9\u5F62",
     "_允许编辑" = "\u5141\u8BB8\u7F16\u8F91",
     "_禁止编辑" = "\u7981\u6B62\u7F16\u8F91",
-    "_导出文件" = "\u5BFC\u51FA\u6587\u4EF6",
+    "_导出JSON" = "\u5BFC\u51FAJSON",
     "_导入文件" = "\u5BFC\u5165\u6587\u4EF6",
     "_清除标记" = "\u6E05\u9664\u6807\u8BB0",
     "_特效效果" = "\u7279\u6548\u6548\u679C",
@@ -1280,7 +1280,7 @@ declare enum Lang {
     "_关闭黑白" = "\u5173\u95ED\u9ED1\u767D",
     "_开启拾取高亮" = "\u5F00\u542F\u62FE\u53D6\u9AD8\u4EAE",
     "_关闭拾取高亮" = "\u5173\u95ED\u62FE\u53D6\u9AD8\u4EAE",
-    "_场景设置" = "\u573A\u666F\u8BBE\u7F6E",
+    "_场景" = "\u573A\u666F",
     "_开启深度监测" = "\u5F00\u542F\u6DF1\u5EA6\u76D1\u6D4B",
     "_关闭深度监测" = "\u5173\u95ED\u6DF1\u5EA6\u76D1\u6D4B",
     "_显示星空背景" = "\u663E\u793A\u661F\u7A7A\u80CC\u666F",
@@ -4581,7 +4581,7 @@ declare namespace BaseGraphic {
     /**
      * 【从后端读取的动态属性】
      * 动态时SDK内判断规则: `if (attr.type === "ajax" && attr.url)`
-     * 动态属性仅Popup等使用时才会自动获取，如外部代码中需要使用时，请调用代码实时获取: `let attr = await this.getAjaxAttr()`
+     * 动态属性仅Popup等使用时才会自动获取，如外部代码中需要使用时，请调用代码实时获取: `let attr = await graphic.getAjaxAttr()`
      * @property type - 类型，目前仅支持 "ajax"
      * @property url - 后端服务URL地址
      * @property [queryParameters] - 与请求一起发送的 URL 参数,例如 {id: 1987 }
@@ -8361,6 +8361,7 @@ declare namespace DivGraphic {
      * @property [offsetY] - 用于非规则div时，垂直方向偏移的px像素值
      * @property [className] - 自定义的样式名
      * @property [editClassName = "mars3d-divGraphic-edit"] - 编辑状态下的的样式名
+     * @property [scale = 1.0] - 缩放比例
      * @property [scaleByDistance = false] - 是否按视距缩放
      * @property [scaleByDistance_far = 1000000] - 上限
      * @property [scaleByDistance_farValue = 0.1] - 比例值
@@ -8385,6 +8386,7 @@ declare namespace DivGraphic {
         offsetY?: number;
         className?: string;
         editClassName?: string;
+        scale?: number;
         scaleByDistance?: boolean;
         scaleByDistance_far?: number;
         scaleByDistance_farValue?: number;
@@ -8622,6 +8624,10 @@ declare class DivGraphic extends BaseGraphic {
      * @returns 无
      */
     removeClass(className: string, isParent?: boolean): void;
+    /**
+     * 是否正在绘制状态
+     */
+    readonly isDrawing: boolean;
     /**
      * 开始绘制创建矢量数据，绘制的数据会加载在layer图层。
      * @param layer - 图层
@@ -9087,8 +9093,8 @@ declare namespace Popup {
      * @property [zIndex = "10000000"] - 指定固定的zIndex层级属性(当hasZIndex为true时无效)
      * @property [depthTest = false] - 是否打开深度判断（true时判断是否在球背面）
      * @property [hasCache = true] - 是否启用缓存机制，如为true，在视角未变化时不重新渲染。
+     * @property [checkData] - 在多个Popup时，校验是否相同Popup进行判断关闭
      * @property [useGraphicPostion] - 是否固定使用graphic本身的坐标，而不用鼠标单击处坐标（比如固定在图标本身点、线面中心点）
-     * @property [animation = true] - 是否执行打开时的动画效果
      * @property [toggle] - 是否打开状态下再次单击时关闭Popup
      */
     type StyleOptions = any | {
@@ -9124,8 +9130,8 @@ declare namespace Popup {
         zIndex?: number | string;
         depthTest?: boolean;
         hasCache?: boolean;
+        checkData?: (...params: any[]) => any;
         useGraphicPostion?: boolean;
-        animation?: boolean;
         toggle?: boolean;
     };
 }
@@ -9394,6 +9400,10 @@ declare class BaseEntity extends BaseGraphic {
      */
     stopFlicker(): void;
     /**
+     * 是否正在绘制状态
+     */
+    readonly isDrawing: boolean;
+    /**
      * 开始绘制矢量数据，绘制的数据会加载在layer图层。
      * @param layer - 图层
      * @returns 无
@@ -9616,10 +9626,6 @@ declare class BasePointEntity extends BaseEntity {
      * @returns 当前坐标
      */
     setCallbackPosition(position?: string | any[] | any | Cesium.Cartesian3 | any): Cesium.Cartesian3;
-    /**
-     * 显示隐藏状态（属性值）
-     */
-    show: boolean;
     /**
      * 指定时间范围内显示该对象 [提示：仅部分子类实现，非所有对象都支持]
      * @example
@@ -9865,6 +9871,7 @@ declare namespace BillboardEntity {
      * //  * @param {string} [highlight.type] 事件方式，鼠标移入高亮 或 单击高亮(type:'click')
      * //  * @param {boolean} [highlight.enabled=true] 是否启用
      * @property [label] - 支持附带文字的显示
+     * //  * @param {boolean} [label.combine=false] 文本是否使用Entity附带文本，比如使用动态坐标时，请传入true
      */
     type StyleOptions = any | {
         image?: string | HTMLCanvasElement;
@@ -10424,6 +10431,7 @@ declare namespace CircleEntity {
      * //  * @param {string} [highlight.type] 事件方式，鼠标移入高亮 或 单击高亮(type:'click')
      * //  * @param {boolean} [highlight.enabled=true] 是否启用
      * @property [label] - 支持附带文字的显示
+     * //  * @param {boolean} [label.combine=false] 文本是否使用Entity附带文本，比如使用动态坐标时，请传入true
      */
     type StyleOptions = any | {
         radius?: number;
@@ -12229,6 +12237,7 @@ declare namespace ModelEntity {
      * //  * @param {string} [highlight.type] 事件方式，鼠标移入高亮 或 单击高亮(type:'click')
      * //  * @param {boolean} [highlight.enabled=true] 是否启用
      * @property [label] - 支持附带文字的显示
+     * //  * @param {boolean} [label.combine=false] 文本是否使用Entity附带文本，比如使用动态坐标时，请传入true
      */
     type StyleOptions = any | {
         url?: string | Cesium.Resource;
@@ -12948,6 +12957,7 @@ declare namespace PointEntity {
      * //  * @param {string} [highlight.type] 事件方式，鼠标移入高亮 或 单击高亮(type:'click')
      * //  * @param {boolean} [highlight.enabled=true] 是否启用
      * @property [label] - 支持附带文字的显示
+     * //  * @param {boolean} [label.combine=false] 文本是否使用Entity附带文本，比如使用动态坐标时，请传入true
      */
     type StyleOptions = any | {
         pixelSize?: number;
@@ -13084,6 +13094,7 @@ declare namespace PolygonEntity {
      * @property [outlineOpacity = 0.6] - 边框透明度
      * @property [outlineStyle] - 边框的完整自定义样式，会覆盖outlineWidth、outlineColor等参数。
      * //  * @property {boolean} [outlineStyle.closure = true] 边线是否闭合
+     * //  * @property {boolean} [outlineStyle.usePolyline = false] 强制使用polyline对象模拟边线
      * @property [textureCoordinates] - 纹理坐标，是Cartesian2的UV坐标数组的多边形层次结构。对贴地对象无效。
      * @property [distanceDisplayCondition = false] - 是否按视距显示 或 指定此框将显示在与摄像机的多大距离。【编辑状态下开启了会无法拾取】
      * @property [distanceDisplayCondition_far = number.MAX_VALUE] - 最大距离
@@ -16813,6 +16824,10 @@ declare class BasePrimitive extends BaseGraphic {
      */
     closeHighlight(): void;
     /**
+     * 是否正在绘制状态
+     */
+    readonly isDrawing: boolean;
+    /**
      * 开始绘制矢量数据，绘制的数据会加载在layer图层。
      * @param layer - 图层
      * @returns 无
@@ -16843,10 +16858,6 @@ declare class BasePrimitive extends BaseGraphic {
      * 矢量数据对应的 Cesium内部对象 (不同子类中实现)
      */
     readonly czmObject: Cesium.Entity | Cesium.Primitive | Cesium.GroundPrimitive | Cesium.ClassificationPrimitive | any;
-    /**
-     * 显示隐藏状态（属性值）
-     */
-    show: boolean;
     /**
      * 设置事件的启用和禁用状态
      */
@@ -19805,6 +19816,7 @@ declare namespace PolygonPrimitive {
      * @property [outlineColor = "#ffffff"] - 边框颜色
      * @property [outlineOpacity = 0.6] - 边框透明度
      * @property [outlineStyle] - 边框的样式，会覆盖outlineColor、outlineOpacity
+     * //  * @property {boolean} [outlineStyle.usePolyline = false] 强制使用polyline对象模拟边线
      * @property [height = 0] - 高程，圆相对于椭球面的高度。
      * @property [diffHeight = 100] - 高度差（相对于本身的高度的差值），与extrudedHeight二选一。
      * @property [extrudedHeight] - 指定走廊挤压面相对于椭球面的高度。
@@ -34827,18 +34839,18 @@ declare namespace WindUtil {
 declare namespace WindLayer {
     /**
      * 风场图层， data数据结构
-     * @property rows - 行总数
-     * @property cols - 列总数
+     * @property rows - 网格行总数
+     * @property cols - 网格列总数
      * @property xmin - 最小经度（度数，-180-180）
      * @property xmax - 最大经度（度数，-180-180）
      * @property ymin - 最小纬度（度数，-90-90）
      * @property ymax - 最大纬度（度数，-90-90）
      * @property udata - U值一维数组, 数组长度应该是 rows*cols。
-     * @property [umin] - 最小U值
-     * @property [umax] - 最大U值
+     * @property [umin] - 最小U值, 可选
+     * @property [umax] - 最大U值, 可选
      * @property vdata - V值一维数组, 数组长度应该是 rows*cols。
-     * @property [vmin] - 最小v值
-     * @property [vmax] - 最大v值
+     * @property [vmin] - 最小v值, 可选
+     * @property [vmax] - 最大v值, 可选
      */
     type DataOptions = {
         rows: number;
@@ -34861,13 +34873,26 @@ declare namespace WindLayer {
  * 【需要引入 mars3d-wind 插件库】
  * @param [options] - 参数对象，包括以下：
  * @param [options.data] - 风场数据
- * @param [options.particlesnumber = 4096] - 初始粒子总数
- * @param [options.fadeOpacity = 0.996] - 消失不透明度
- * @param [options.dropRate = 0.003] - 下降率
- * @param [options.dropRateBump = 0.01] - 下降速度
- * @param [options.speedFactor = 0.5] - 速度系数
- * @param [options.lineWidth = 2.0] - 线宽度
  * @param [options.colors = ["rgb(206,255,255)"]] - 颜色色带数组
+ * @param [options.particlesTextureSize = 100] - 粒子纹理大小，决定粒子最大数量（size * size）
+ * @param [options.lineWidth] - 粒子轨迹宽度范围
+ * @param [options.lineWidth.min = 1] - 最小值
+ * @param [options.lineWidth.max = 5] - 最大值
+ * @param [options.lineLength] - 粒子轨迹长度范围
+ * @param [options.lineLength.min = 20] - 最小值
+ * @param [options.lineLength.max = 100] - 最大值
+ * @param [options.speedFactor = 0.5] - 速度系数
+ * @param [options.dropRate = 0.003] - 粒子消失率
+ * @param [options.dropRateBump = 0.01] - 额外消失率
+ * @param [options.flipY = false] - 是否翻转 Y 坐标
+ * @param [options.useViewerBounds = false] - 是否使用视域范围生成粒子
+ * @param [options.domain] - 速度渲染范围
+ * @param [options.domain.min] - 最小速度值
+ * @param [options.domain.max] - 最大速度值
+ * @param [options.displayRange] - 速度显示范围
+ * @param [options.displayRange.min] - 最小速度值
+ * @param [options.displayRange.max] - 最大速度值
+ * @param [options.dynamic = true] - 是否启用动态粒子动画
  * @param [options.id = mars3d.Util.createGuid()] - 图层id标识
  * @param [options.pid] - 图层父级的id，一般图层管理中使用
  * @param [options.name] - 图层名称
@@ -34885,13 +34910,30 @@ declare namespace WindLayer {
 declare class WindLayer extends BaseLayer {
     constructor(options?: {
         data?: WindLayer.DataOptions;
-        particlesnumber?: number;
-        fadeOpacity?: number;
+        colors?: string[];
+        particlesTextureSize?: number;
+        lineWidth?: {
+            min?: number;
+            max?: number;
+        };
+        lineLength?: {
+            min?: number;
+            max?: number;
+        };
+        speedFactor?: number;
         dropRate?: number;
         dropRateBump?: number;
-        speedFactor?: number;
-        lineWidth?: number;
-        colors?: string[];
+        flipY?: boolean;
+        useViewerBounds?: boolean;
+        domain?: {
+            min?: number;
+            max?: number;
+        };
+        displayRange?: {
+            min?: number;
+            max?: number;
+        };
+        dynamic?: boolean;
         id?: string | number;
         pid?: string | number;
         name?: string;
@@ -34922,9 +34964,10 @@ declare class WindLayer extends BaseLayer {
     /**
      * 设置 风场数据
      * @param data - 风场数据
+     * @param [redraw] - 是否重新绘制，当区域范围发生变化时，请传入ture
      * @returns 无
      */
-    setData(data: WindLayer.DataOptions): void;
+    setData(data: WindLayer.DataOptions, redraw?: boolean): void;
 }
 
 /**
@@ -35651,7 +35694,7 @@ declare class TdtPOI {
      * 天地图搜索提示
      * @param queryOptions - 查询参数
      * @param queryOptions.text - 输入建议关键字（支持拼音）
-     * @param [queryOptions.location] - 建议使用location参数，可在此location附近优先返回搜索关键词信息,在请求参数city不为空时生效
+     * @param [queryOptions.extent] - 查询的地图范围: { xmin: 70,  xmax: 140,  ymin: 0,  ymax: 55 } ，可以传入extent: map.getExtent()
      * @param [queryOptions.city] - 可以限定查询的行政区
      * @param [queryOptions.success] - 查询完成的回调方法
      * @param [queryOptions.error] - 查询失败的回调方法
@@ -35659,7 +35702,7 @@ declare class TdtPOI {
      */
     autoTip(queryOptions: {
         text: string;
-        location?: LngLatPoint | Cesium.Cartesian3 | string | any[] | any;
+        extent?: any;
         city?: string;
         success?: (...params: any[]) => any;
         error?: (...params: any[]) => any;
@@ -35696,7 +35739,7 @@ declare class TdtPOI {
      * @param [queryOptions.types = ''] - 检索分类偏好，与text组合进行检索，多个分类以","分隔（POI分类），如果需要严格按分类检索，请通过text参数设置
      * @param [queryOptions.city] - 可以重新限定查询的城市(行政区的国标码)
      * @param [queryOptions.level = 18] - 查询的级别,1-18级
-     * @param [queryOptions.mapBound] - 查询的地图范围: "minx,miny,maxx,maxy"
+     * @param [queryOptions.extent] - 查询的地图范围: { xmin: 70,  xmax: 140,  ymin: 0,  ymax: 55 } ，可以传入extent: map.getExtent()
      * @param [queryOptions.count = 20] - 单次召回POI数量，最大返回300条。多关键字检索时，返回的记录数为关键字个数*count。多关键词检索时，单页返回总数=关键词数量*count
      * @param [queryOptions.page = 0] - 分页页码，默认为0, 0代表第一页，1代表第二页，以此类推。常与 count 搭配使用，仅当返回结果为poi时可以翻页。
      * @param [queryOptions.success] - 查询完成的回调方法
@@ -35708,7 +35751,7 @@ declare class TdtPOI {
         types?: string;
         city?: string;
         level?: string;
-        mapBound?: string;
+        extent?: any;
         count?: number;
         page?: number;
         success?: (...params: any[]) => any;
@@ -35767,7 +35810,7 @@ declare class TdtPOI {
      * @param queryOptions - 查询参数
      * @param queryOptions.text - 检索关键字。支持多个关键字并集检索，不同关键字间以空格符号分隔，最多支持10个关键字检索。
      * @param [queryOptions.types = ''] - 检索分类偏好，与text组合进行检索，多个分类以","分隔（POI分类），如果需要严格按分类检索，请通过text参数设置
-     * @param queryOptions.extent - 可传入左上右下两顶点坐标对；
+     * @param queryOptions.extent - 可传入左上右下两顶点坐标对或{ xmin: 70,  xmax: 140,  ymin: 0,  ymax: 55 }；
      * @param [queryOptions.count = 20] - 单次召回POI数量，最大返回25条。多关键字检索时，返回的记录数为关键字个数*count。多关键词检索时，单页返回总数=关键词数量*count
      * @param [queryOptions.page = 0] - 分页页码，默认为0, 0代表第一页，1代表第二页，以此类推。常与 count 搭配使用，仅当返回结果为poi时可以翻页。
      * @param [queryOptions.success] - 查询完成的回调方法

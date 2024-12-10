@@ -362,3 +362,27 @@ function showInterLineResult(list) {
     return "长度:" + mars3d.MeasureUtil.formatDistance(item.distance) + "(第" + item.index + "个)"
   })
 }
+
+export async function getOffsetLine(offset) {
+  map.graphicLayer.clear()
+
+  const graphic = await map.graphicLayer.startDraw({
+    type: "polyline",
+    style: {
+      color: "#55ff33",
+      width: 3
+    }
+  })
+  const positions = graphic.positionsShow
+
+  const positionsNew = await mars3d.PolyUtil.getOffsetLine(positions, offset)
+
+  const primitiveLine = new mars3d.graphic.PolylineEntity({
+    positions: positionsNew,
+    style: {
+      width: 3,
+      color: "#ff0000"
+    }
+  })
+  map.graphicLayer.addGraphic(primitiveLine)
+}

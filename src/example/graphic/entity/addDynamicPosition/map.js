@@ -52,6 +52,7 @@ export function onMounted(mapInstance) {
         },
 
         label: {
+          combine: true,
           // 不需要文字时，去掉label配置即可
           text: "皖A000" + i,
           font_size: 16,

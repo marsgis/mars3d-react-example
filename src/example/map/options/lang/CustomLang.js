@@ -105,13 +105,13 @@ const CustomLang = {
   _跟踪锁定: "TrackedEntity",
   _取消锁定: "Unlocked",
 
-  _三维模型: "3DTiles",
+  _图层: "Layer",
   _显示三角网: "Display Wireframe",
   _关闭三角网: "Close Wireframe",
   _显示包围盒: "Display BoundingVolume",
   _关闭包围盒: "Close BoundingVolume",
 
-  _地形服务: "Terrain",
+  _地形: "Terrain",
   _开启地形: "Open terrain",
   _关闭地形: "Close terrain",
 
@@ -123,7 +123,7 @@ const CustomLang = {
   _标记矩形: "Mark rectangular",
   _允许编辑: "Allowed to edit",
   _禁止编辑: "Prohibit to edit",
-  _导出文件: "Export JSON",
+  _导出JSON: "Export JSON",
   _导入文件: "Import JSON",
   _清除标记: "Clear",
 
@@ -145,7 +145,7 @@ const CustomLang = {
   _开启拾取高亮: "Enable Pick highlighted",
   _关闭拾取高亮: "Close Pick highlighted",
 
-  _场景设置: "Scene",
+  _场景: "Scene",
   _开启深度监测: "Enable depth test against terrain",
   _关闭深度监测: "Close depth test against terrain",
   _显示星空背景: "Enable skyBox",

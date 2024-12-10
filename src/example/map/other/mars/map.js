@@ -87,6 +87,8 @@ export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
   // globalNotify("已知问题提示", `如图层未显示或服务URL访问超时，是因为数据来源方“中国科学院国家天文台”的服务存在异常。`)
+
+  openLighting()
 }
 
 /**
@@ -95,4 +97,28 @@ export function onMounted(mapInstance) {
  */
 export function onUnmounted() {
   map = null
+}
+
+// 火星昼夜阴影变化
+function openLighting() {
+  map.scene.globe.enableLighting = true
+
+  let longitude
+  let latitude
+  // 火星的春分点
+  let startTime = "2022-12-26T00:00:00Z"
+  startTime = Cesium.JulianDate.fromIso8601(startTime)
+  let direction
+  // 实时计算新的太阳直射点，difference为与春分时间的时差
+  map.clock.onTick.addEventListener(function (clock) {
+    const currentTime = clock.currentTime
+    const difference = Cesium.JulianDate.secondsDifference(currentTime, startTime)
+    longitude = 0 - difference / 246.6
+    latitude = 0 - 25.19 * Math.sin((6.28 / (687 * 24 * 3600)) * difference)
+    direction = new Cesium.Cartesian3.fromDegrees(longitude, latitude, 2.29e11)
+    map.scene.light = new Cesium.DirectionalLight({
+      color: new Cesium.Color(1.0, 1.0, 1.0, 0.5),
+      direction: direction
+    })
+  })
 }
