@@ -108,6 +108,17 @@ function addGraphicLayer() {
       opacity: 0.5,
       width: 1
     },
+    // path: {
+    //   width: 2,
+    //   materialType: mars3d.MaterialType.Image2,
+    //   materialOptions: {
+    //     image: "//data.mars3d.cn/img/textures/line-gradient.png"
+    //   },
+    //   closure: true
+    // },
+    interpolationDegree: 10,
+    interpolationAlgorithm: Cesium.HermitePolynomialApproximation,
+
     highlight: {
       type: mars3d.EventType.click,
       model: {

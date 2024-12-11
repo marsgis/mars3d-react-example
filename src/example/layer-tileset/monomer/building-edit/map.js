@@ -331,7 +331,7 @@ export function openGeoJSON(file) {
     const reader = new FileReader()
     reader.readAsText(file, "UTF-8")
     reader.onloadend = function (e) {
-      const json = this.result
+      const json = JSON.parse(this.result)
       console.log("打开了json文件", json)
       graphicLayer.loadJSON(json, { flyTo: true, clear: true })
     }

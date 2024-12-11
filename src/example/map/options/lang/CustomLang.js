@@ -2,9 +2,13 @@ const CustomLang = {
   /** 标识语言的唯一标识 */
   type: "en",
 
-  // Cesium renderError 错误弹窗
-  RenderingHasStopped: "An error occurred while rendering.  Rendering has stopped.",
-  ErrorConstructingCesiumWidget: "Error constructing CesiumWidget.",
+  /** Cesium内部 初始化CesiumWidget时 错误弹窗 标题 */
+  ErrorCreateCatch: "Error constructing CesiumWidget.",
+  /** Cesium内部 初始化CesiumWidget时 错误弹窗 内容 */
+  ErrorCreateCatchMessage: `Visit <a href="http://get.webgl.org">http://get.webgl.org</a> to verify that your web browser and hardware support WebGL.  Consider trying a different web browser or updating your video drivers.  Detailed error information is below:`,
+  /** Cesium内部 运行中 renderError时 错误弹窗 标题 */
+  ErrorTitleRenderStopped: "An error occurred while rendering.  Rendering has stopped.",
+
 
   // src\control\czm\Animation.js
   Today: "Today",

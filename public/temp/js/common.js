@@ -9,10 +9,11 @@ function init() {
   if (!mars3d.Util.webglreport()) {
     mars3d.Util.webglerror()
   }
+
   // 读取 config.json 配置文件
   mars3d.Util.fetchJson({ url: "config/config.json" })
     .then(function (json) {
-      console.log("读取 config.json 配置文件完成", json) // 打印测试信息
+      mars3d.Log.logInfo("读取 config.json 配置文件完成", json) // 打印测试信息
 
       // 构建地图
       const initMapFun = window.initMap ? window.initMap : globalInitMap
@@ -35,7 +36,7 @@ function init() {
       // parentGlobal.mapWork = window // 这句话是将当前js对象绑定赋予给index.项目内进行调用
     })
     .catch(function (error) {
-      console.log("加载JSON出错", error)
+      mars3d.Log.logError("加载JSON出错", error)
       globalAlert(error ? error.message : "加载JSON出错")
     })
 }
@@ -50,7 +51,7 @@ function globalInitMap(options) {
       window.mapOptions = options = mars3d.Util.merge(options, window.mapOptions)
     }
   }
-  console.log("地图构造参数为", options)
+  mars3d.Log.logInfo("地图构造参数为", options)
 
   // 创建三维地球场景
   return new mars3d.Map("mars3dContainer", options)

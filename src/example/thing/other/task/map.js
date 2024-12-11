@@ -54,13 +54,14 @@ export function onMounted(mapInstance) {
         center: { lat: 30.461755, lng: 116.280775, alt: 36600.2, heading: 0.8, pitch: -39.7 }
       },
       {
-        type: "flickerEntity",
+        type: "graphicStyle",
         name: "高亮矢量对象",
         start: 12,
         duration: 6,
         layerId: "20241101",
-        graphicId: "M-4492C7B1-F860-4F4B-A30D-3863A83F99C5",
-        color: "#ffff00"
+        graphicIds: ["M-4492C7B1-F860-4F4B-A30D-3863A83F99C5"],
+        interval: true,
+        style: { color: "#ffff00" }
       },
       {
         type: "camera",
@@ -124,6 +125,23 @@ export function onMounted(mapInstance) {
         }
       },
       {
+        type: "createTarget",
+        name: "创建标记",
+        start: 50,
+        duration: 8,
+        graphics: [
+          {
+            type: "billboardP",
+            position: [117.216672, 31.836147, 39.6],
+            style: {
+              image: "//data.mars3d.cn/img/marker/mark-blue.png",
+              horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+              verticalOrigin: Cesium.VerticalOrigin.BOTTOM
+            }
+          }
+        ]
+      },
+      {
         type: "cameraList",
         name: "视角列表播放",
         delay: 2, // 延迟执行秒数，当没有配置start时，内部自动算：start=前一个的stop + delay
@@ -170,10 +188,8 @@ export function startPlay() {
 }
 
 export function updateShouldAnimate(value) {
-   map.clock.shouldAnimate = value
+  map.clock.shouldAnimate = value
 }
-
-
 
 function autoAddTimeControl() {
   const taskResult = map.getTimeTaskList()

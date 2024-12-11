@@ -11,7 +11,9 @@
 class CameraList extends mars3d.TaskItem {
   // 进入，激活开始处理事务
   _activateWork() {
-    this._map.setCameraViewList(this.options.list)
+    if (this.options && this.options.list) {
+      this._map.setCameraViewList(this.options.list)
+    }
   }
 
   // 暂停(非必须)

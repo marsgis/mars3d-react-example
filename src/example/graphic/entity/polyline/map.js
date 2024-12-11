@@ -596,7 +596,8 @@ function addDemoGraphic16(graphicLayer) {
     ],
     style: {
       width: 3,
-      color: "#ff0000"
+      // color: "#ff0000"
+      image: "//data.mars3d.cn/img/textures/line-gradient.png"
     },
     attr: { remark: "示例16" }
   })

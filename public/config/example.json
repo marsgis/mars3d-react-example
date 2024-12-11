@@ -326,7 +326,8 @@
               "RouteLine.js",
               "ZoomIn.js",
               "ZoomOut.js",
-              "FlickerEntity.js"
+              "GraphicStyle.js",
+              "CreateTarget.js"
             ]
           }
         ]
@@ -3291,7 +3292,7 @@
             ]
           },
           {
-            "name": "鼠标单击信息窗",
+            "name": "Popup鼠标单击信息窗",
             "thumbnail": "control-inside-popup.jpg",
             "main": "control/inside/popup",
             "api": "Popup.html",
@@ -3301,7 +3302,7 @@
             ]
           },
           {
-            "name": "鼠标移入信息窗",
+            "name": "Tooltip鼠标移入信息窗",
             "thumbnail": "control-inside-tooltip.jpg",
             "main": "control/inside/tooltip",
             "api": "Tooltip.html",
