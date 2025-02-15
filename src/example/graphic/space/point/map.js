@@ -22,36 +22,31 @@ export const mapOptions = {
   control: {
     clockAnimate: true, // 时钟动画控制(左下角)
     timeline: true, // 是否显示时间线控件
-    compass: { top: "50px", left: "5px" }
+    compass: { style: { top: "50px", left: "5px" } }
   },
   terrain: false
 }
 export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
-  map.toolbar.style.bottom = "55px" // 修改toolbar控件的样式
+  // map.control.toolbar.container.style.bottom = "55px" // 修改toolbar控件的样式
 
   // 修改天空盒
   map.scene.skyBox = new Cesium.SkyBox({
     sources: {
-      negativeX: "//data.mars3d.cn/img/skybox/5/tycho2t3_80_mx.jpg",
-      negativeY: "//data.mars3d.cn/img/skybox/5/tycho2t3_80_my.jpg",
-      negativeZ: "//data.mars3d.cn/img/skybox/5/tycho2t3_80_mz.jpg",
-      positiveX: "//data.mars3d.cn/img/skybox/5/tycho2t3_80_px.jpg",
-      positiveY: "//data.mars3d.cn/img/skybox/5/tycho2t3_80_py.jpg",
-      positiveZ: "//data.mars3d.cn/img/skybox/5/tycho2t3_80_pz.jpg"
+      negativeX: "https://data.mars3d.cn/img/skybox/5/tycho2t3_80_mx.jpg",
+      negativeY: "https://data.mars3d.cn/img/skybox/5/tycho2t3_80_my.jpg",
+      negativeZ: "https://data.mars3d.cn/img/skybox/5/tycho2t3_80_mz.jpg",
+      positiveX: "https://data.mars3d.cn/img/skybox/5/tycho2t3_80_px.jpg",
+      positiveY: "https://data.mars3d.cn/img/skybox/5/tycho2t3_80_py.jpg",
+      positiveZ: "https://data.mars3d.cn/img/skybox/5/tycho2t3_80_pz.jpg"
     }
   })
 
   // 访问后端接口，取数据
-  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/tle.json" })
+  mars3d.Util.fetchJson({ url: "https://data.mars3d.cn/file/apidemo/tle.json" })
     .then(function (arr) {
       initData(arr.list)
     })
@@ -70,10 +65,7 @@ export function onMounted(mapInstance) {
   })
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -252,7 +244,7 @@ function weixingStyle(item) {
     tle2: item.tle2,
     // referenceFrame: Cesium.ReferenceFrame.FIXED, // Cesium.ReferenceFrame.INERTIAL,
     model: {
-      url: "//data.mars3d.cn/gltf/mars/weixin.gltf",
+      url: "https://data.mars3d.cn/gltf/mars/weixin.gltf",
       scale: 1,
       minimumPixelSize: 50
     },

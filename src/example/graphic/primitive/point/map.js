@@ -4,12 +4,7 @@ export let map // mars3d.Map三维地图对象
 export let graphicLayer // 矢量图层对象
 export const eventTarget = new mars3d.BaseClass()
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
@@ -29,12 +24,10 @@ export function onMounted(mapInstance) {
   addDemoGraphic2(graphicLayer)
   addDemoGraphic3(graphicLayer)
   addDemoGraphic4(graphicLayer)
+  addDemoGraphic5(graphicLayer)
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 
@@ -201,6 +194,32 @@ function addDemoGraphic4(graphicLayer) {
   graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
 }
 
+function addDemoGraphic5(graphicLayer) {
+  const graphic = new mars3d.graphic.PointPrimitive({
+    name: "支持时序动态坐标",
+    frameRate: 60,
+    position: {
+      type: "time", // 时序动态坐标
+      speed: 260,
+      list: [
+        [116.150051, 30.890914, 513.2],
+        [116.231619, 30.861805, 411.7],
+        [116.193657, 30.808042, 395.1],
+        [116.125243, 30.828735, 740.4],
+        [116.138846, 30.885471, 632.2]
+      ]
+    },
+    style: {
+      color: "#00ffff",
+      pixelSize: 8,
+      outlineColor: "#ffffff",
+      outlineWidth: 2
+    },
+    attr: { remark: "示例5" }
+  })
+  graphicLayer.addGraphic(graphic)
+}
+
 // 生成演示数据(测试数据量)
 export function addRandomGraphicByCount(count) {
   graphicLayer.clear()
@@ -232,8 +251,8 @@ export function addRandomGraphicByCount(count) {
 }
 
 // 开始绘制
-export function startDrawGraphic() {
-  graphicLayer.startDraw({
+export async function startDrawGraphic() {
+  const graphic = await graphicLayer.startDraw({
     type: "pointP",
     style: {
       color: "#00ffff",
@@ -251,18 +270,41 @@ export function startDrawGraphic() {
       }
     }
   })
+  console.log("标绘完成", graphic.toJSON())
 }
+
+export async function startDrawGraphic2() {
+  const graphic = await graphicLayer.startDraw({
+    type: "pointP",
+    position: {
+      type: "time", // 时序动态坐标
+      speed: 400
+    },
+    style: {
+      color: "#00ffff",
+      pixelSize: 8,
+      outlineColor: "#ffffff",
+      outlineWidth: 2
+    },
+    frameRate: 1
+  })
+  console.log("标绘完成", graphic.toJSON())
+}
+
 
 // 在图层绑定Popup弹窗
 export function bindLayerPopup() {
-  graphicLayer.bindPopup(function (event) {
-    const attr = event.graphic.attr || {}
-    attr["类型"] = event.graphic.type
-    attr["来源"] = "我是layer上绑定的Popup"
-    attr["备注"] = "我支持鼠标交互"
+  graphicLayer.bindPopup(
+    function (event) {
+      const attr = event.graphic.attr || {}
+      attr["类型"] = event.graphic.type
+      attr["来源"] = "我是layer上绑定的Popup"
+      attr["备注"] = "我支持鼠标交互"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
-  }, { useGraphicPostion: true })
+      return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
+    },
+    { useGraphicPostion: true }
+  )
 }
 
 // 绑定右键菜单
@@ -394,18 +436,14 @@ export function bindLayerContextMenu() {
       icon: "fa fa-info",
       show: (event) => {
         const graphic = event.graphic
-        if (graphic.graphicIds) {
+        if (graphic.cluster && graphic.graphics) {
           return true
         } else {
           return false
         }
       },
       callback: (e) => {
-        const graphic = e.graphic
-        if (!graphic) {
-          return
-        }
-        const graphics = graphic.getGraphics() // 对应的grpahic数组，可以自定义显示
+        const graphics = e.graphic?.graphics
         if (graphics) {
           const names = []
           for (let index = 0; index < graphics.length; index++) {

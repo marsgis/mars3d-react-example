@@ -113,79 +113,48 @@ class UIComponent extends Component<any, any> {
       })
     })
 
-    // 取图层列表数据
-    const layerUrl = "/config/tileset.json"
-    axios.get(layerUrl).then((res: any) => {
-      const data = res.data
-      const layers = data.layers
+    mapWork.eventTarget.on("initTree", () => {
+      const showIds = [] // 是显示状态的图层id集合
+      const openIds = [] // 展开的树节点id集合（如果不想展开，对应图层配置open:false）
+      const result = mapWork.getLayrsTree({
+        forEach: function (item) {
+          item.key = item.id // 树控件api需要的唯一标识
+          item.title = item.name // 树控件api需要的显示文本字段
 
-      const treeData = []
-      for (let i = layers.length - 1; i >= 0; i--) {
-        const layer = mapWork.createLayer(layers[i]) // 创建图层
-        if (layer && layer.pid === 20) {
-          const node: any = {
-            title: layer.name,
-            key: layer.id,
-            id: layer.id,
-            pId: layer.pid 
+          if (item.show) {
+            showIds.push(item.id)
           }
-          node.children = this.findChild(node, layers)
-          treeData.push(node)
-          this.expandedKeys.push(node.key)
+          if (item.group && item.open !== false) {
+            openIds.push(item.id)
+          }
         }
-      }
-
+      })
       this.setState({
-        expandedKeys: this.expandedKeys,
-        checkedKeys: this.checkedKeys,
-        treeData
+        expandedKeys: openIds,
+        checkedKeys: showIds,
+        treeData: result.tree
       })
     })
   }
 
-  findChild(parent: any, list: any[]) {
-    return list
-      .filter((item: any) => item.pid === parent.id)
-      .map((item: any) => {
-        const node: any = {
-          title: item.name,
-          key: item.id,
-          id: item.id,
-          pId: item.pid 
-        }
-        const nodeLayer = mapWork.createLayer(item) // 创建图层
-        this.layersObj[item.id] = nodeLayer
-        node.children = this.findChild(node, list)
-        this.expandedKeys.push(node.key)
-        if (item.isAdded && item.show) {
-          this.checkedKeys.push(node.key)
-        }
-        return node
-      })
-  }
-
-  onCheckTreeItem(keys: string[]) {
+  onCheckTreeItem(keys: string[], e: any) {
     this.setState({
       checkedKeys: keys
     })
-    Object.keys(this.layersObj).forEach((k) => {
-      const newKeys = keys.map((item) => {
-        return String(item)
+
+    const layer = mapWork.getLayerById(e.node?.key)
+
+    if (layer) {
+      const show = keys.indexOf(e.node.key) !== -1
+      mapWork.updateLayerShow(layer, show)
+    }
+
+    // 处理子节点
+    if (e.node.children && e.node.children.length) {
+      e.node.children.forEach((child) => {
+        this.onCheckTreeItem(keys, { node: child })
       })
-      const show = newKeys.indexOf(k) !== -1
-      const layer = this.layersObj[k]
-      layer.show = show
-      if (show) {
-        if (!layer.isAdded) {
-          window.mapWork.map.addLayer(layer)
-        }
-        layer.flyTo()
-      } else {
-        if (layer.isAdded) {
-          window.mapWork.map.removeLayer(layer)
-        }
-      }
-    })
+    }
   }
 
   render() {
@@ -318,7 +287,7 @@ class UIComponent extends Component<any, any> {
               treeData={this.state.treeData}
               expandedKeys={this.state.expandedKeys}
               checkedKeys={this.state.checkedKeys}
-              onCheck={(v: any) => this.onCheckTreeItem(v)}
+              onCheck={(v: any, e) => this.onCheckTreeItem(v, e)}
               onExpand={(v: any) => this.setState({ expandedKeys: v })}
             ></MarsTree>
             <div className="f-tac">

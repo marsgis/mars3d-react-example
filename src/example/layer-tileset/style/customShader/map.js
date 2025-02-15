@@ -10,29 +10,21 @@ export const mapOptions = {
   }
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
   map.basemap = 2017 // 蓝色底图
 
   tiles3dLayer = new mars3d.layer.TilesetLayer({
     name: "合肥市建筑物",
-    url: "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
+    url: "https://data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
     maximumScreenSpaceError: 1,
     popup: "all"
   })
   map.addLayer(tiles3dLayer)
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -99,7 +91,7 @@ export function setStyle3() {
     uniforms: {
       u_mars3d_texture: {
         value: new Cesium.TextureUniform({
-          url: "//data.mars3d.cn/img/textures/buildings.png"
+          url: "https://data.mars3d.cn/img/textures/buildings.png"
         }),
         type: Cesium.UniformType.SAMPLER_2D
       }
@@ -141,13 +133,13 @@ export function setStyle4() {
       u_build0: {
         type: Cesium.UniformType.SAMPLER_2D,
         value: new Cesium.TextureUniform({
-          url: "//data.mars3d.cn/img/textures/buildings-blue.png"
+          url: "https://data.mars3d.cn/img/textures/buildings-blue.png"
         })
       },
       u_build1: {
         type: Cesium.UniformType.SAMPLER_2D,
         value: new Cesium.TextureUniform({
-          url: "//data.mars3d.cn/img/textures/buildings-colors.png"
+          url: "https://data.mars3d.cn/img/textures/buildings-colors.png"
         })
       }
     },

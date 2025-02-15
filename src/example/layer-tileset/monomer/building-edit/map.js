@@ -17,12 +17,7 @@ export const mapOptions = {
 
 export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
@@ -30,7 +25,7 @@ export function onMounted(mapInstance) {
   const tilesetLayer = new mars3d.layer.TilesetLayer({
     type: "3dtiles",
     name: "校园",
-    url: "//data.mars3d.cn/3dtiles/qx-xuexiao/tileset.json",
+    url: "https://data.mars3d.cn/3dtiles/qx-xuexiao/tileset.json",
     position: { alt: 279.0 },
     maximumScreenSpaceError: 1
   })
@@ -65,8 +60,7 @@ export function onMounted(mapInstance) {
   mars3d.DrawUtil.setEditPointStyle(mars3d.EditPointType.Control, { has3dtiles: true }) // 编辑点贴模型
 
   graphicLayer = new mars3d.layer.GraphicLayer({
-    hasEdit: true,
-    isAutoEditing: true, // 绘制完成后是否自动激活编辑
+    isAutoEditing: true, // 自动激活编辑
     symbol: {
       type: "polygonP",
       merge: true, // 是否合并并覆盖json中已有的style，默认不合并
@@ -78,8 +72,13 @@ export function onMounted(mapInstance) {
   })
   map.addLayer(graphicLayer)
 
+  const editUpdateFun = mars3d.Util.funDebounce(openGraphicOptionsWidget, 500)
+  graphicLayer.on([mars3d.EventType.click, mars3d.EventType.drawCreated, mars3d.EventType.editStart, mars3d.EventType.editStyle], editUpdateFun)
+  const removeFun = mars3d.Util.funDebounce(closeGraphicOptionsWidget, 500)
+  graphicLayer.on(mars3d.EventType.removeGraphic, removeFun)
+
   // 加载数据
-  const configUrl = "//data.mars3d.cn/file/geojson/dth-xuexiao-fd.json"
+  const configUrl = "https://data.mars3d.cn/file/geojson/dth-xuexiao-fd.json"
   mars3d.Util.fetchJson({ url: configUrl })
     .then(function (result) {
       graphicLayer.loadGeoJSON(result)
@@ -91,12 +90,23 @@ export function onMounted(mapInstance) {
   bindLayerContextMenu()
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
+  if (graphicLayer) {
+    graphicLayer.destroy() // 销毁内部会释放所有事件及数据
+    graphicLayer = null
+  }
+
   map = null
+}
+
+// 修改样式，修改点，删除点等操作去激活或更新面板
+function openGraphicOptionsWidget(e) {
+  eventTarget.fire("updateGraphicOptionsWidget", { graphicId: e.graphic.id, layerId: graphicLayer.id })
+}
+
+function closeGraphicOptionsWidget(e) {
+  eventTarget.fire("updateGraphicOptionsWidget", { disable: true })
 }
 
 /**
@@ -231,18 +241,14 @@ export function bindLayerContextMenu() {
       icon: "fa fa-info",
       show: (event) => {
         const graphic = event.graphic
-        if (graphic.graphicIds) {
+        if (graphic.cluster && graphic.graphics) {
           return true
         } else {
           return false
         }
       },
       callback: (e) => {
-        const graphic = e.graphic
-        if (!graphic) {
-          return
-        }
-        const graphics = graphic.getGraphics() // 对应的grpahic数组，可以自定义显示
+        const graphics = e.graphic?.graphics
         if (graphics) {
           const names = []
           for (let index = 0; index < graphics.length; index++) {
@@ -288,14 +294,14 @@ export function toYLMS() {
 
   geoJsonLayerDTH.load({ data: geojson })
 
-  graphicLayer.hasEdit = false
+  graphicLayer.isAutoEditing = false
   graphicLayer.show = false
 }
 
 // 切换到编辑模式
 export function toBJMS() {
   geoJsonLayerDTH.clear()
-  graphicLayer.hasEdit = true
+  graphicLayer.isAutoEditing = true
   graphicLayer.show = true
 }
 
@@ -303,8 +309,8 @@ export function deleteAll() {
   graphicLayer.clear()
 }
 
-export function drawPolygon() {
-  graphicLayer.startDraw({
+export async function drawPolygon() {
+  const graphic = await graphicLayer.startDraw({
     type: "polygon",
     style: {
       color: "#ffff00",
@@ -314,6 +320,7 @@ export function drawPolygon() {
       clampToGround: true
     }
   })
+  console.log("标绘完成", graphic.toJSON())
 }
 
 /**

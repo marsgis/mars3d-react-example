@@ -12,7 +12,7 @@ function UIComponent() {
       type: "input",
       field: "url",
       label: "图层URL",
-      value: "//data.mars3d.cn/tile/dizhiChina/{z}/{x}/{y}.png",
+      value: "https://data.mars3d.cn/tile/dizhiChina/{z}/{x}/{y}.png",
       change(data) {
         onCheckedoutUrl(data)
         dataUpdate()
@@ -337,7 +337,7 @@ function UIComponent() {
         mapWork.creatHRectangleEntity(JSON.parse(lastData.rectangle))
       }
     } else {
-      guiRef.current.updateFields({ url: "//data.mars3d.cn/tile/dizhiChina/{z}/{x}/{y}.png" })
+      guiRef.current.updateFields({ url: "https://data.mars3d.cn/tile/dizhiChina/{z}/{x}/{y}.png" })
       dataUpdate()
     }
   }, [])

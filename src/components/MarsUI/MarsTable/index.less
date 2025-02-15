@@ -1,8 +1,12 @@
 .mars-table {
+
   .ant-table,
-  .ant-table-thead > tr > th {
+  .ant-table-thead>tr>th {
     color: @mars-base-color;
     background: none !important;
+  }
+  .ant-table-column-sorter-inner {
+    color: #fff;
   }
 
   .ant-table-row:nth-of-type(even) {
@@ -13,16 +17,16 @@
     background-color: @mars-select-bg;
   }
 
-  .ant-table-tbody > tr.ant-table-placeholder {
-    background-color: transparent;
+  .ant-table-tbody>tr.ant-table-placeholder {
+    background: transparent !important;
   }
 
-  .ant-table-tbody > tr.ant-table-placeholder > td {
-    background: #141414;
+  .ant-table-tbody>tr.ant-table-placeholder>td {
+    background: transparent !important;
   }
 
-  .ant-table-row:hover > td,
-  .ant-table-row-selected > td {
+  .ant-table-row:hover>td,
+  .ant-table-row-selected>td {
     background-color: transparent !important;
   }
 
@@ -30,10 +34,9 @@
     border: none !important;
     background: transparent !important;
     padding: 10px 10px;
-    .ant-empty-normal {
-      .ant-empty-description {
-        color: #fff;
-      }
+
+    .ant-empty-description {
+      color: #fff;
     }
   }
 
@@ -42,7 +45,7 @@
     background: transparent !important;
   }
 
-  .ant-table-placeholder > td {
+  .ant-table-placeholder>td {
     background: @mars-bg-base !important;
   }
 
@@ -80,6 +83,7 @@
         border-color: @mars-base-border-color !important;
         background: none;
         background-color: transparent !important;
+        color: @mars-base-color;
 
         &:hover,
         &:focus {

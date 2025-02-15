@@ -73,8 +73,9 @@ class DivIndicator extends mars3d.graphic.DivGraphic {
       el.preventDefault()
       el.stopPropagation()
 
-      that.style.moveDomLeft = el.clientX - disX
-      that.style.moveDomTop = el.clientY - disY
+      const scale = that._timeinfo?.scale ?? 0
+      that.style.moveDomLeft = (el.clientX - disX) / scale
+      that.style.moveDomTop = (el.clientY - disY) / scale
 
       that._updateLineStyle()
     }
@@ -122,15 +123,24 @@ class DivIndicator extends mars3d.graphic.DivGraphic {
       horizontalPoistion = this.style.horizontalPoistion
     }
 
-    const top1 = fixedRect.y + fixedRect.height / 2
-    const left1 = fixedRect.x + fixedRect.width / 2
-    const top2 = dragRect[verticalPoistion]
-    const left2 = dragRect[horizontalPoistion]
+    let top1 = fixedRect.y + fixedRect.height / 2
+    let left1 = fixedRect.x + fixedRect.width / 2
+    let top2 = dragRect[verticalPoistion]
+    let left2 = dragRect[horizontalPoistion]
+
+    if (fixedRect.x && fixedRect.y) {
+      const scale = Math.abs(this._timeinfo?.scale ?? 0)
+      top1 = top1 / scale
+      left1 = left1 / scale
+      top2 = top2 / scale
+      left2 = left2 / scale
+    }
 
     const distance = usePointsDistance({ x: top1, y: left1 }, { x: top2, y: left2 }) // 线的长度
+    const angle = -Math.atan2(left1 - left2, top1 - top2) * (180 / Math.PI) // 线的角度
+
     const topValue = (left2 - left1) / 2 - 1 // 线的坐标
     const letValue = (top2 - top1) / 2 - distance / 2
-    const angle = -Math.atan2(left1 - left2, top1 - top2) * (180 / Math.PI) // 线的角度
 
     this._line_distance = distance
 

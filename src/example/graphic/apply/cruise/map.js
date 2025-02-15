@@ -19,7 +19,7 @@ export const mapOptions = {
   control: {
     clockAnimate: true, // 时钟动画控制(左下角)
     timeline: true, // 是否显示时间线控件
-    compass: { top: "10px", left: "5px" }
+    compass: { style: { top: "10px", left: "5px" } }
   }
 }
 
@@ -100,12 +100,7 @@ const staticResources = [
   }
 ]
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
   map.basemap = "蓝色底图"
@@ -141,10 +136,7 @@ export function onMounted(mapInstance) {
   })
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -158,7 +150,7 @@ function addEllipsoidGraphics({ position, name, ellipsoidStyle, title, desc }) {
     name: name + "地面站模型",
     position,
     style: {
-      url: "//data.mars3d.cn/gltf/mars/leida.glb",
+      url: "https://data.mars3d.cn/gltf/mars/leida.glb",
       scale: 1,
       minimumPixelSize: 40,
       clampToGround: true
@@ -213,11 +205,14 @@ function addCircleFixRoute() {
 
   circleFixedRoute = new mars3d.graphic.FixedRoute({
     name: "我国巡查机",
-    speed: 3000,
-    positions: positionCircle,
+    position: {
+      type: "time", // 时序动态坐标
+      speed: 3000,
+      list: positionCircle
+    },
     autoStop: true, // 到达终点自动停止
     model: {
-      url: "//data.mars3d.cn/gltf/mars/zhanji.glb",
+      url: "https://data.mars3d.cn/gltf/mars/zhanji.glb",
       scale: 0.01,
       minimumPixelSize: 50
     },
@@ -252,7 +247,7 @@ function addCircleFixRoute() {
       if (!isinShanxi) {
         shanxiGraphic.setStyle({ outlineColor: "rgba(255, 204, 0, 0.5)" })
         isinShanxi = true
-        addDivgraphic(shanxiGraphic.coordinate, shanxiGraphic.attr)
+        addDivgraphic(shanxiGraphic.coord, shanxiGraphic.attr)
       }
     } else if (
       mars3d.PolyUtil.isInPoly(
@@ -268,7 +263,7 @@ function addCircleFixRoute() {
           }
         })
         isinHenan = true
-        addDivgraphic(henanGraphic.coordinate, henanGraphic.attr)
+        addDivgraphic(henanGraphic.coord, henanGraphic.attr)
       }
     } else if (
       mars3d.PolyUtil.isInPoly(
@@ -280,7 +275,7 @@ function addCircleFixRoute() {
         nanjingGraphic.setStyle({ outlineColor: "rgba(189, 16, 0, 0.5)" })
 
         isinNanjing = true
-        addDivgraphic(nanjingGraphic.coordinate, nanjingGraphic.attr)
+        addDivgraphic(nanjingGraphic.coord, nanjingGraphic.attr)
 
         addDivgraphic(attackFixedRoute.position, {
           ...attackFixedRoute.attr,
@@ -358,11 +353,14 @@ function addAttackPlane(startPosition) {
 
   const attackPlane = new mars3d.graphic.FixedRoute({
     name: "战机",
-    speed: 5000,
-    positions: positionAttack,
+    position: {
+      type: "time", // 时序动态坐标
+      speed: 5000,
+      list: positionAttack
+    },
     autoStop: true, // 到达终点自动停止
     model: {
-      url: "//data.mars3d.cn/gltf/mars/zhanji.glb",
+      url: "https://data.mars3d.cn/gltf/mars/zhanji.glb",
       scale: 0.01,
       minimumPixelSize: 50
     },
@@ -426,7 +424,7 @@ function addWeixinGraphic() {
     name: "卫星模型",
     position: point,
     style: {
-      url: "//data.mars3d.cn/gltf/mars/weixin.gltf",
+      url: "https://data.mars3d.cn/gltf/mars/weixin.gltf",
       scale: 30
     }
   })

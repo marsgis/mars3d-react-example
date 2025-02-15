@@ -8,14 +8,14 @@ export const mapOptions = {
     {
       type: "geojson",
       name: "示例数据",
-      url: "//data.mars3d.cn/file/geojson/mars3d-draw.json",
+      url: "https://data.mars3d.cn/file/geojson/mars3d-draw.json",
       popup: "{type} {name}",
       show: true
     },
     {
       type: "3dtiles",
       name: "测试模型",
-      url: "//data.mars3d.cn/3dtiles/bim-daxue/tileset.json",
+      url: "https://data.mars3d.cn/3dtiles/bim-daxue/tileset.json",
       position: { lng: 116.313536, lat: 31.217297, alt: 80 },
       scale: 100,
       popup: "all",
@@ -24,12 +24,7 @@ export const mapOptions = {
   ]
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance
 
@@ -50,10 +45,7 @@ export function onMounted(mapInstance) {
   // map.off(mars3d.EventType.cameraChanged, this.map_cameraChangedHandler, this)
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }

@@ -18,12 +18,7 @@ export const mapOptions = {
   }
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
@@ -31,7 +26,7 @@ export function onMounted(mapInstance) {
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/flypath.json" })
+  mars3d.Util.fetchJson({ url: "https://data.mars3d.cn/file/apidemo/flypath.json" })
     .then(function (res) {
       initPath(res)
     })
@@ -40,10 +35,7 @@ export function onMounted(mapInstance) {
     })
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -79,63 +71,31 @@ export function viewSide() {
 }
 
 function initPath(data) {
-  const property = new Cesium.SampledPositionProperty()
-  property.forwardExtrapolationType = Cesium.ExtrapolationType.HOLD
-  property.backwardExtrapolationType = Cesium.ExtrapolationType.HOLD
-
-  let start
-  let stop
+  const list = []
   for (let i = 0, len = data.length; i < len; i++) {
     const item = data[i]
-    const lng = Number(item.x.toFixed(6)) // 经度
-    const lat = Number(item.y.toFixed(6)) // 纬度
-    const height = item.z // 高度
-    const time = item.time // 时间
-
-    let position = null
-    if (lng && lat) {
-      position = Cesium.Cartesian3.fromDegrees(lng, lat, height)
-    }
-    let juliaDate = null
-    if (time) {
-      juliaDate = Cesium.JulianDate.fromIso8601(time)
-    }
-    if (position && juliaDate) {
-      property.addSample(juliaDate, position)
-    }
-
-    if (i === 0) {
-      start = juliaDate
-    } else if (i === len - 1) {
-      stop = juliaDate
-    }
+    const position = { lng: Number(item.x), lat: Number(item.y), alt: item.z, currTime: item.time }
+    list.push(position)
 
     const graphic = new mars3d.graphic.PointPrimitive({
-      position,
+      position: position,
       style: {
         pixelSize: 4,
         color: "#cccccc"
       },
-      popup: "编号:" + item.id + "<br/>时间:" + time
+      popup: "编号:" + item.id + "<br/>时间:" + item.time
     })
     graphicLayer.addGraphic(graphic)
   }
 
-  // 设置时钟属性
-  map.clock.startTime = start.clone()
-  map.clock.stopTime = stop.clone()
-  map.clock.currentTime = start.clone()
-  map.clock.clockRange = Cesium.ClockRange.LOOP_STOP
-  map.clock.multiplier = 5
-
-  if (map.control.timeline) {
-    map.control.timeline.zoomTo(start, stop)
-  }
-
   // 创建path对象
   pathEntity = new mars3d.graphic.PathEntity({
-    position: property,
-    orientation: new Cesium.VelocityOrientationProperty(property),
+    position: {
+      type: "time", // 时序动态坐标
+      list: list,
+      timeField: "currTime",
+      forwardExtrapolationType: Cesium.ExtrapolationType.HOLD // 在最后1个结束时间之后，NONE时不显示，HOLD时显示结束时间对应坐标位置
+    },
     style: {
       resolution: 1,
       leadTime: 0,
@@ -157,13 +117,13 @@ function initPath(data) {
       pixelOffset: new Cesium.Cartesian2(10, -25) // 偏移量
     },
     // billboard: {
-    //   image: "//data.mars3d.cn/img/marker/lace-blue.png",
+    //   image: "https://data.mars3d.cn/img/marker/lace-blue.png",
     //   horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
     //   verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
     //   visibleDepth: false
     // },
     model: {
-      url: "//data.mars3d.cn/gltf/mars/wrj.glb",
+      url: "https://data.mars3d.cn/gltf/mars/wrj.glb",
       scale: 0.1,
       minimumPixelSize: 20
     },
@@ -173,7 +133,7 @@ function initPath(data) {
 
   // 圆锥追踪体
   const coneTrack = new mars3d.graphic.ConeTrack({
-    position: property,
+    position: pathEntity.property,
     style: {
       length: 100,
       angle: 12, // 半场角度
@@ -182,4 +142,18 @@ function initPath(data) {
     }
   })
   graphicLayer.addGraphic(coneTrack)
+
+  // 设置时钟属性
+  const timeRange = pathEntity.timeRange
+  if (timeRange) {
+    map.clock.startTime = timeRange.startTime.clone()
+    map.clock.stopTime = timeRange.stopTime.clone()
+    map.clock.currentTime = timeRange.startTime.clone()
+    map.clock.clockRange = Cesium.ClockRange.LOOP_STOP
+    map.clock.multiplier = 5
+
+    if (map.control.timeline) {
+      map.control.timeline.zoomTo(map.clock.startTime, map.clock.stopTime)
+    }
+  }
 }

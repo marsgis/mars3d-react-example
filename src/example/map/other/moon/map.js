@@ -40,7 +40,7 @@ export const mapOptions = {
   basemaps: [
     {
       name: "嫦娥1号月球影像图",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/tdt_img.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/tdt_img.png",
       type: "xyz",
       url: "https://moon.bao.ac.cn/gis3globleMarsMoon/tiles/getTiles/MoonTile/2000/jpg/{z}/{reverseY}/{x}",
       crs: "EPSG:4326",
@@ -48,7 +48,7 @@ export const mapOptions = {
     },
     {
       name: "嫦娥1号月球地形图",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/tdt_ter.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/tdt_ter.png",
       type: "xyz",
       url: "https://moon.bao.ac.cn/gis3globleMarsMoon/tiles/getTiles/MoonDEM/2000/jpg/{z}/{reverseY}/{x}",
       crs: "EPSG:4326"
@@ -58,7 +58,7 @@ export const mapOptions = {
     {
       name: "月球地名",
       type: "geojson",
-      url: "//data.mars3d.cn/file/geojson/moon-name.json",
+      url: "https://data.mars3d.cn/file/geojson/moon-name.json",
       crs: "EPSG:4326",
       symbol: {
         type: "labelP",
@@ -84,22 +84,14 @@ export const mapOptions = {
   ]
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
   // globalNotify("已知问题提示", `如图层未显示或服务URL访问超时，是因为数据来源方“中国科学院国家天文台”的服务存在异常。`)
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }

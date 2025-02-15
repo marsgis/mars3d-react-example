@@ -13,12 +13,7 @@ export const mapOptions = {
 
 export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
@@ -34,20 +29,36 @@ export function onMounted(mapInstance) {
     console.log("监听layer，单击了矢量对象", event)
   })
 
+  const editUpdateFun = mars3d.Util.funDebounce(openGraphicOptionsWidget, 500)
+  graphicLayer.on([mars3d.EventType.click, mars3d.EventType.drawCreated, mars3d.EventType.editStart, mars3d.EventType.editStyle], editUpdateFun)
+  const removeFun = mars3d.Util.funDebounce(closeGraphicOptionsWidget, 500)
+  graphicLayer.on(mars3d.EventType.removeGraphic, removeFun)
+
   bindLayerContextMenu() // 在图层绑定右键菜单,对所有加到这个图层的矢量数据都生效
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
+  if (graphicLayer) {
+    graphicLayer.destroy() // 销毁内部会释放所有事件及数据
+    graphicLayer = null
+  }
+
   map = null
 }
 
+// 修改样式，修改点，删除点等操作去激活或更新面板
+function openGraphicOptionsWidget(e) {
+  eventTarget.fire("updateGraphicOptionsWidget", { graphicId: e.graphic.id, layerId: graphicLayer.id })
+}
+
+function closeGraphicOptionsWidget(e) {
+  eventTarget.fire("updateGraphicOptionsWidget", { disable: true })
+}
+
 // 绘制
-export function drawPolygon(type) {
-  graphicLayer.startDraw({
+export async function drawPolygon(type) {
+  const graphic = await graphicLayer.startDraw({
     type,
     styleType: "polygon",
     style: {
@@ -59,11 +70,12 @@ export function drawPolygon(type) {
       clampToGround: true
     }
   })
+  console.log("标绘完成", graphic.toJSON())
 }
 
 // 绘制(带高度)
-export function drawExtrudedPolygon(type) {
-  graphicLayer.startDraw({
+export async function drawExtrudedPolygon(type) {
+  const graphic = await graphicLayer.startDraw({
     type,
     styleType: "polygon",
     style: {
@@ -72,6 +84,7 @@ export function drawExtrudedPolygon(type) {
       diffHeight: 300
     }
   })
+  console.log("标绘完成", graphic.toJSON())
 }
 
 // 在图层绑定Popup弹窗
@@ -215,18 +228,14 @@ export function bindLayerContextMenu() {
       icon: "fa fa-info",
       show: (event) => {
         const graphic = event.graphic
-        if (graphic.graphicIds) {
+        if (graphic.cluster && graphic.graphics) {
           return true
         } else {
           return false
         }
       },
       callback: (e) => {
-        const graphic = e.graphic
-        if (!graphic) {
-          return
-        }
-        const graphics = graphic.getGraphics() // 对应的grpahic数组，可以自定义显示
+        const graphics = e.graphic?.graphics
         if (graphics) {
           const names = []
           for (let index = 0; index < graphics.length; index++) {

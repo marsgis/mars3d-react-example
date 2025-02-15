@@ -11,12 +11,7 @@ export const mapOptions = {
   }
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
@@ -24,7 +19,7 @@ export function onMounted(mapInstance) {
 
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     name: "文庙",
-    url: "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
+    url: "https://data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
     position: { alt: 138.8 },
     maximumScreenSpaceError: 1,
     enableCollision: true // 贴模型时该属性需要开启
@@ -47,7 +42,7 @@ export function onMounted(mapInstance) {
   for (let i = 0; i < 20; i++) {
     const graphic = new mars3d.graphic.ModelEntity({
       style: {
-        url: "//data.mars3d.cn/gltf/mars/qiche.gltf",
+        url: "https://data.mars3d.cn/gltf/mars/qiche.gltf",
         scale: 0.1,
         minimumPixelSize: 10,
         // clampToGround: true, // 支持贴模型+地形
@@ -88,14 +83,11 @@ function changePosition(time) {
     if (graphic.isPrivate) {
       return
     }
-    graphic.addDynamicPosition(randomPoint(), time) // 按time秒运动至指定位置
+    graphic.addTimePosition(randomPoint(), time) // 按time秒运动至指定位置
   })
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 
@@ -113,6 +105,25 @@ function random(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
+
+// 开始绘制
+export async function startDrawGraphic() {
+  const graphic = await graphicLayer.startDraw({
+    type: "billboard",
+    position: {
+      type: "time", // 时序动态坐标
+      speed: 460
+    },
+    style: {
+      image: "https://data.mars3d.cn/img/marker/point-yellow.png",
+      scale: 1,
+      horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+      verticalOrigin: Cesium.VerticalOrigin.BOTTOM
+    }
+  })
+  console.log("标绘完成", graphic.toJSON())
+}
+
 // 在图层绑定Popup弹窗
 export function bindLayerPopup() {
   graphicLayer.bindPopup(function (event) {
@@ -128,6 +139,46 @@ export function bindLayerPopup() {
 // 绑定右键菜单
 export function bindLayerContextMenu() {
   graphicLayer.bindContextMenu([
+    {
+      text: "开始编辑对象",
+      icon: "fa fa-edit",
+      show: function (e) {
+        const graphic = e.graphic
+        if (!graphic || !graphic.hasEdit) {
+          return false
+        }
+        return !graphic.isEditing
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
+        if (graphic) {
+          graphicLayer.startEditing(graphic)
+        }
+      }
+    },
+    {
+      text: "停止编辑对象",
+      icon: "fa fa-edit",
+      show: function (e) {
+        const graphic = e.graphic
+        if (!graphic || !graphic.hasEdit) {
+          return false
+        }
+        return graphic.isEditing
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
+        if (graphic) {
+          graphic.stopEditing()
+        }
+      }
+    },
     {
       text: "还原编辑(还原到初始)",
       icon: "fa fa-pencil",
@@ -214,18 +265,14 @@ export function bindLayerContextMenu() {
       icon: "fa fa-info",
       show: (event) => {
         const graphic = event.graphic
-        if (graphic.graphicIds) {
+        if (graphic.cluster && graphic.graphics) {
           return true
         } else {
           return false
         }
       },
       callback: (e) => {
-        const graphic = e.graphic
-        if (!graphic) {
-          return
-        }
-        const graphics = graphic.getGraphics() // 对应的grpahic数组，可以自定义显示
+        const graphics = e.graphic?.graphics
         if (graphics) {
           const names = []
           for (let index = 0; index < graphics.length; index++) {

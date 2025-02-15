@@ -9,12 +9,7 @@ export const mapOptions = {
   }
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
@@ -24,10 +19,7 @@ export function onMounted(mapInstance) {
   addGraphics()
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -36,7 +28,7 @@ export function onUnmounted() {
 function addTilesetLayer() {
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     name: "合肥市建筑物",
-    url: "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
+    url: "https://data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
     maximumScreenSpaceError: 1,
     marsJzwStyle: true, // 打开建筑物特效（内置Shader代码）
     style: {
@@ -63,7 +55,7 @@ function addGraphics() {
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/geojson/hefei-shequ.json" })
+  mars3d.Util.fetchJson({ url: "https://data.mars3d.cn/file/geojson/hefei-shequ.json" })
     .then(function (geojson) {
       const arr = mars3d.Util.geoJsonToGraphics(geojson) // 解析geojson
 

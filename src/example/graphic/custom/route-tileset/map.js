@@ -11,13 +11,13 @@ export const mapOptions = {
   control: {
     clockAnimate: true, // 时钟动画控制(左下角)
     timeline: true, // 是否显示时间线控件
-    compass: { top: "10px", left: "5px" }
+    compass: { style: { top: "10px", right: "5px" } }
   },
   layers: [
     {
       name: "文庙",
       type: "3dtiles",
-      url: "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
+      url: "https://data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
       position: { alt: 120 },
       maximumScreenSpaceError: 2,
       maxMemory: 1024, // 最大缓存内存大小(MB)
@@ -68,7 +68,7 @@ export function onMounted(mapInstance) {
   for (let i = 0; i < 20; i++) {
     const graphic = new mars3d.graphic.Route({
       model: {
-        url: "//data.mars3d.cn/gltf/mars/qiche.gltf",
+        url: "https://data.mars3d.cn/gltf/mars/qiche.gltf",
         scale: 0.1,
         roll: 0,
         pitch: 0
@@ -104,14 +104,11 @@ function changePosition(time) {
     if (graphic.isPrivate) {
       return
     }
-    graphic.addDynamicPosition(randomPoint(), time) // 按time秒运动至指定位置
+    graphic.addTimePosition(randomPoint(), time) // 按time秒运动至指定位置
   })
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 
@@ -144,6 +141,46 @@ export function bindLayerPopup() {
 // 绑定右键菜单
 export function bindLayerContextMenu() {
   graphicLayer.bindContextMenu([
+    {
+      text: "开始编辑对象",
+      icon: "fa fa-edit",
+      show: function (e) {
+        const graphic = e.graphic
+        if (!graphic || !graphic.hasEdit) {
+          return false
+        }
+        return !graphic.isEditing
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
+        if (graphic) {
+          graphicLayer.startEditing(graphic)
+        }
+      }
+    },
+    {
+      text: "停止编辑对象",
+      icon: "fa fa-edit",
+      show: function (e) {
+        const graphic = e.graphic
+        if (!graphic || !graphic.hasEdit) {
+          return false
+        }
+        return graphic.isEditing
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
+        if (graphic) {
+          graphic.stopEditing()
+        }
+      }
+    },
     {
       text: "还原编辑(还原到初始)",
       icon: "fa fa-pencil",
@@ -230,18 +267,14 @@ export function bindLayerContextMenu() {
       icon: "fa fa-info",
       show: (event) => {
         const graphic = event.graphic
-        if (graphic.graphicIds) {
+        if (graphic.cluster && graphic.graphics) {
           return true
         } else {
           return false
         }
       },
       callback: (e) => {
-        const graphic = e.graphic
-        if (!graphic) {
-          return
-        }
-        const graphics = graphic.getGraphics() // 对应的grpahic数组，可以自定义显示
+        const graphics = e.graphic?.graphics
         if (graphics) {
           const names = []
           for (let index = 0; index < graphics.length; index++) {

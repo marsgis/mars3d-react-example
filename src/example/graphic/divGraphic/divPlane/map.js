@@ -10,12 +10,7 @@ export const mapOptions = {
   }
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
 
@@ -49,10 +44,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic8(graphicLayer)
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -314,7 +306,17 @@ function addDemoGraphic7(graphicLayer) {
 // 倾斜指向左下角的面板样式
 function addDemoGraphic8(graphicLayer) {
   const graphic = new mars3d.graphic.DivPlane({
-    position: Cesium.Cartesian3.fromDegrees(116.166701, 31.029976, 1068.8),
+    position: {
+      type: "time", // 时序动态坐标
+      speed: 800,
+      list: [
+        [116.213974, 30.974853, 580.3],
+        [116.270249, 30.957078, 642.1],
+        [116.308503, 30.974854, 1194.6],
+        [116.378376, 30.969112, 841.1],
+        [116.388025, 30.915534, 885.1]
+      ]
+    },
     style: {
       html: `<div class="marsTiltPanel marsTiltPanel-theme-blue">
           <div class="marsTiltPanel-wrap">
@@ -380,43 +382,6 @@ function addDemoGraphic8(graphicLayer) {
     }
   })
   graphicLayer.addGraphic(graphic)
-
-  movePoint(graphic) // 动画移动示例
-}
-
-//
-function movePoint(graphic) {
-  map.clock.shouldAnimate = true
-
-  // 动画移动
-  const property = new Cesium.SampledPositionProperty()
-  property.forwardExtrapolationType = Cesium.ExtrapolationType.HOLD
-
-  const time = 20 // 移动的时长 ，秒
-  let tempTime
-
-  // 起点
-  const startPoint = Cesium.Cartesian3.fromDegrees(116.166701, 31.029976, 1068.8)
-  tempTime = map.clock.currentTime // 飞行开始时间
-  property.addSample(tempTime, startPoint)
-
-  // 移动到的第1个目标点
-  const point1 = Cesium.Cartesian3.fromDegrees(116.282471, 31.097293, 806.7)
-  tempTime = Cesium.JulianDate.addSeconds(tempTime, time, new Cesium.JulianDate())
-  property.addSample(tempTime, point1)
-
-  // 移动到的第2个目标点
-  const point2 = Cesium.Cartesian3.fromDegrees(116.457842, 31.072601, 931.6)
-  tempTime = Cesium.JulianDate.addSeconds(tempTime, time, new Cesium.JulianDate())
-  property.addSample(tempTime, point2)
-
-  // 移动到的第3个目标点
-  const point3 = Cesium.Cartesian3.fromDegrees(116.166701, 31.029976, 1068.8)
-  tempTime = Cesium.JulianDate.addSeconds(tempTime, time, new Cesium.JulianDate())
-  property.addSample(tempTime, point3)
-
-  graphic.position = property
-  graphic.orientation = new Cesium.VelocityOrientationProperty(property)
 }
 
 // 生成演示数据(测试数据量)
@@ -453,8 +418,8 @@ export function addRandomGraphicByCount(count) {
 }
 
 // 开始绘制
-export function startDrawGraphic() {
-  graphicLayer.startDraw({
+export async function startDrawGraphic() {
+  const graphic = await graphicLayer.startDraw({
     type: "divPlane",
     style: {
       html: `<div class="marsImgPanel2">
@@ -466,6 +431,7 @@ export function startDrawGraphic() {
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM
     }
   })
+  console.log("标绘完成", graphic.toJSON())
 }
 
 // 在图层绑定Popup弹窗

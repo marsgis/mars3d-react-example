@@ -11,13 +11,13 @@ export const mapOptions = {
   control: {
     clockAnimate: true, // 时钟动画控制(左下角)
     timeline: true, // 是否显示时间线控件
-    compass: { top: "10px", left: "5px" }
+    compass: { style: { top: "10px", right: "5px" } }
   },
   layers: [
     {
       name: "文庙",
       type: "3dtiles",
-      url: "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
+      url: "https://data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
       position: { alt: 120 },
       maximumScreenSpaceError: 2,
       enableCollision: true,
@@ -27,25 +27,17 @@ export const mapOptions = {
   ]
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
-  map.toolbar.style.bottom = "55px" // 修改toolbar控件的样式
+  // map.control.toolbar.container.style.bottom = "55px" // 修改toolbar控件的样式
 
   map.readyPromise.then(function () {
     addRoamLine()
   })
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -58,16 +50,19 @@ function addRoamLine() {
   // 该数据可以从 基础项目 飞行漫游功能界面操作后单个路线的 保存JSON
   const fixedRoute = new mars3d.graphic.FixedRoute({
     name: "贴模型表面漫游",
-    speed: 60,
-    positions: [
-      [119.030216, 33.59167, 50.9],
-      [119.032637, 33.590768, 50.8],
-      [119.033624, 33.592647, 53.4],
-      [119.033814, 33.59293, 53.3],
-      [119.033013, 33.593351, 53.1],
-      [119.032066, 33.593706, 52.9],
-      [119.031406, 33.593802, 53]
-    ],
+    position: {
+      type: "time", // 时序动态坐标
+      speed: 60,
+      list: [
+        [119.030216, 33.59167, 50.9],
+        [119.032637, 33.590768, 50.8],
+        [119.033624, 33.592647, 53.4],
+        [119.033814, 33.59293, 53.3],
+        [119.033013, 33.593351, 53.1],
+        [119.032066, 33.593706, 52.9],
+        [119.031406, 33.593802, 53]
+      ]
+    },
     camera: {
       type: "gs",
       heading: 0,
@@ -75,7 +70,7 @@ function addRoamLine() {
     },
     model: {
       show: true,
-      url: "//data.mars3d.cn/gltf/mars/qiche.gltf",
+      url: "https://data.mars3d.cn/gltf/mars/qiche.gltf",
       scale: 0.1,
       minimumPixelSize: 20
     },
@@ -92,10 +87,13 @@ function addRoamLine() {
   bindPopup(fixedRoute)
 
   // ui面板信息展示
-  fixedRoute.on(mars3d.EventType.change, mars3d.Util.funThrottle((event) => {
-    // 取实时信息，可以通过  fixedRoute.info
-    eventTarget.fire("roamLineChange", event)
-  }, 500))
+  fixedRoute.on(
+    mars3d.EventType.change,
+    mars3d.Util.funThrottle((event) => {
+      // 取实时信息，可以通过  fixedRoute.info
+      eventTarget.fire("roamLineChange", event)
+    }, 500)
+  )
 
   // 不贴地时，直接开始
   // startFly(fixedRoute)

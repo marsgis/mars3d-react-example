@@ -2,10 +2,14 @@
 .mars-textarea,
 .mars-input-password,
 .mars-input-search {
-  &.ant-input,&.ant-input-affix-wrapper {
+  &.ant-input,
+  &.ant-input-affix-wrapper {
     color: @mars-base-color;
     background-color: transparent !important;
     font-size: 12px !important;
+    &::placeholder {
+      color: var(--mars-text-color);
+    }
     .ant-input-suffix .anticon {
       color: @mars-base-color;
     }
@@ -14,6 +18,9 @@
     background-color: transparent !important;
     border-color: @mars-base-border-color;
     color: @mars-base-color;
+    &::placeholder {
+      color: var(--mars-text-color);
+    }
   }
 }
 .mars-input.ant-input[disabled] {

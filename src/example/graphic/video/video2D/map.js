@@ -15,19 +15,14 @@ export const mapOptions = {
   }
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
 
   // 添加参考三维模型
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     name: "合肥国家大学科技园",
-    url: "//data.mars3d.cn/3dtiles/qx-hfdxy/tileset.json",
+    url: "https://data.mars3d.cn/3dtiles/qx-hfdxy/tileset.json",
     position: { alt: 43.7 },
     maximumScreenSpaceError: 1
   })
@@ -62,12 +57,10 @@ export function onMounted(mapInstance) {
 
   // 加一些演示数据
   addDemoGraphic1()
+  addDemoGraphic3()
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -77,8 +70,8 @@ function addDemoGraphic1() {
   const video2D = new mars3d.graphic.Video2D({
     position: [117.205459, 31.842988, 64.3],
     style: {
-      url: "//data.mars3d.cn/file/video/duimian.mp4",
-      // maskImage: "//data.mars3d.cn/img/textures/video-mask.png", // 羽化视频四周，融合更美观
+      url: "https://data.mars3d.cn/file/video/duimian.mp4",
+      // maskImage: "https://data.mars3d.cn/img/textures/video-mask.png", // 羽化视频四周，融合更美观
       angle: 46.3,
       angle2: 15.5,
       heading: 88.5,
@@ -95,9 +88,42 @@ function addDemoGraphic1() {
 
   // setTimeout(() => {
   //   video2D.setStyle({
-  //     url: "//data.mars3d.cn/file/video/lukou.mp4"
+  //     url: "https://data.mars3d.cn/file/video/lukou.mp4"
   //   })
   // }, 10000)
+}
+
+function addDemoGraphic3() {
+  const video3D = new mars3d.graphic.Video2D({
+    position: {
+      type: "time", // 时序动态坐标
+      speed: 60,
+      list: [
+        [117.210592, 31.842438, 100],
+        [117.207898, 31.842374, 100],
+        [117.205376, 31.842337, 100],
+        [117.204489, 31.842824, 100]
+      ]
+    },
+    style: {
+      url: "https://data.mars3d.cn/file/video/menqian.mp4",
+      // maskImage: "https://data.mars3d.cn/img/textures/video-mask.png", // 羽化视频四周，融合更美观
+      angle: 20,
+      angle2: 10,
+      heading: 88.5,
+      pitch: -90,
+      distance: 78,
+      showFrustum: true
+    },
+    attr: { remark: "示例3" }
+  })
+  graphicLayer.addGraphic(video3D)
+
+  // map.on(mars3d.EventType.mouseMove, function (event) {
+  //   if (event.cartesian && video3D.isAdded) {
+  //     video3D.position = mars3d.PointUtil.addPositionsHeight(event.cartesian, 10)
+  //   }
+  // })
 }
 
 export function getGraphic(graphicId) {
@@ -121,7 +147,7 @@ export function addRandomGraphicByCount(count) {
     const graphic = new mars3d.graphic.Video2D({
       position,
       style: {
-        url: "//data.mars3d.cn/file/video/duimian.mp4",
+        url: "https://data.mars3d.cn/file/video/duimian.mp4",
         angle: 46.3,
         angle2: 15.5,
         heading: 88.5,
@@ -139,12 +165,12 @@ export function addRandomGraphicByCount(count) {
 }
 
 // 投射视频
-export function startDrawGraphic() {
+export async function startDrawGraphic() {
   // 开始绘制
-  graphicLayer.startDraw({
+  const graphic = await graphicLayer.startDraw({
     type: "video2D",
     style: {
-      url: "//data.mars3d.cn/file/video/lukou.mp4",
+      url: "https://data.mars3d.cn/file/video/lukou.mp4",
       angle: 46.3,
       angle2: 15.5,
       heading: 178.5,
@@ -153,10 +179,11 @@ export function startDrawGraphic() {
       showFrustum: true
     }
   })
+  console.log("标绘完成", graphic.toJSON())
 }
 
 // 按当前相机投射视频
-export function startDrawGraphic2() {
+export async function startDrawGraphic2() {
   // 取屏幕中心点
   const targetPosition = map.getCenter({ format: false })
   if (!targetPosition) {
@@ -170,7 +197,7 @@ export function startDrawGraphic2() {
     position: cameraPosition,
     targetPosition,
     style: {
-      url: "//data.mars3d.cn/file/video/lukou.mp4",
+      url: "https://data.mars3d.cn/file/video/lukou.mp4",
       angle: 46.3,
       angle2: 15.5,
       heading: 88.5,
@@ -277,10 +304,15 @@ export async function selCamera() {
     return
   }
 
+  if (selectedView.options?.position?.type && selectedView.options.position.type === "time") {
+    globalMsg("当前为时序坐标，不支持选点操作")
+    return
+  }
+
   const graphic = await map.graphicLayer.startDraw({
     type: "point"
   })
-  const point = graphic.point
+  const point = graphic.coord
   graphic.remove() // 删除绘制的点
 
   selectedView.position = point
@@ -291,9 +323,13 @@ export async function onClickSelView() {
   if (!selectedView) {
     return
   }
+  if (selectedView.options?.position?.type && selectedView.options.position.type === "time") {
+    globalMsg("当前为时序坐标，不支持选点操作")
+    return
+  }
 
   const graphic = await map.graphicLayer.startDraw({ type: "point" })
-  const point = graphic.point
+  const point = graphic.coord
   graphic.remove() // 删除绘制的点
 
   selectedView.targetPosition = point

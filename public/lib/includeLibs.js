@@ -139,10 +139,10 @@ window.configLibs = {
     "three/three.js"
   ],
   'kmlGeojson': [
-    "geojson/kml-geojson.js"  // 项目KML/KMZ解析加载GeoJson插件
+    "geojson/kml-geojson.js"  // KML/KMZ解析加载GeoJson插件
   ],
   'shpGeojson': [
-    "geojson/shp-geojson.js"  // 项目KML/KMZ解析加载GeoJson插件
+    "geojson/shp-geojson.js"  // shp解析加载GeoJson插件
   ],
   geotiff:["geotiff/geotiff.js","geotiff/plotty.js"],
 
@@ -156,21 +156,3 @@ window.configLibs = {
   xlsx: ["xlsx/xlsx.full.min.js"],
 }
 
-// 本地测试  localStorage.setItem("muyao-debugger",1)
-if (localStorage.getItem("muyao-debugger") === "1") {
-  for (const key in window.configLibs) {
-    if (key.startsWith("mars3d")) {
-      const arrUrl = window.configLibs[key]
-      for (let index = 0; index < arrUrl.length; index++) {
-        const url = arrUrl[index]
-        const fileName = url?.substring(url.lastIndexOf("/") + 1, url.length)
-        if (fileName.startsWith("mars3d")) {
-          arrUrl[index] = arrUrl[index].replace(".js", "-src.js").replace(".css", "-src.css")
-        } else if (fileName.indexOf("Cesium") !== -1) {
-          // arrUrl[index] = arrUrl[index].replace("Cesium", "CesiumUnminified")
-        }
-      }
-    }
-  }
-  console.log("正在使用SDK调试版本")
-}

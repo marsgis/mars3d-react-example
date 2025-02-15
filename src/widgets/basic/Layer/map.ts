@@ -26,15 +26,31 @@ export function onUnmounted() {
   map = null
 }
 
-export function addLayer(layer: mars3d.layer.BaseLayer) {
-  map.addLayer(layer)
+
+export function getLayrsTree(params) {
+  return map.getLayrsTree(params)
 }
 
-export function getLayers() {
-  return map.getLayers({
-    basemaps: true, // 是否取config.json中的basempas
-    layers: true // 是否取config.json中的layers
-  })
+export function getLayerById(id) {
+  return map.getLayerById(id)
+}
+
+export function getLayerByAttr(attrValue: string | number, attrName?: string) {
+  return map.getLayerByAttr(attrValue, attrName)
+}
+
+// 更新图层勾选状态
+export function updateLayerShow(layer, show) {
+  if (show) {
+    if (!layer.isAdded) {
+      map.addLayer(layer)
+    }
+    layer.show = true
+
+    layer.flyTo() // 如果不想勾选定位，注释该行
+  } else {
+    layer.show = false
+  }
 }
 
 // **********************************  图层的结构树控件  ****************************** //
@@ -85,3 +101,19 @@ export function checkModelStyle(layerid: number, arrIds: any) {
     }
   })
 }
+
+export function exchangeLayer(thisLayerId, moveLayerId) {
+  const thisLayer = map.getLayerById(thisLayerId)
+  const moveLayer = map.getLayerById(moveLayerId)
+
+  if (thisLayer == null || moveLayer == null) {
+    return
+
+  }
+  const or = thisLayer.zIndex
+  thisLayer.zIndex = moveLayer.zIndex // 向上移动
+  moveLayer.zIndex = or // 向下移动
+}
+
+
+

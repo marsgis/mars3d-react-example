@@ -10,12 +10,7 @@ export const mapOptions = function (option) {
   return option
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
@@ -51,10 +46,7 @@ export function onMounted(mapInstance) {
   })
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -95,18 +87,21 @@ function startRoam() {
   // 飞行路线
   const fixedRoute = new mars3d.graphic.FixedRoute({
     name: "无人机航拍",
-    speed: 600,
-    positions: [
-      [116.077374, 31.294215, 1000],
-      [116.107153, 31.312963, 1000],
-      [116.103816, 31.316868, 1000],
-      [116.074092, 31.297972, 1000],
-      [116.07068, 31.301908, 1000],
-      [116.100465, 31.320893, 1000]
-    ],
+    position: {
+      type: "time", // 时序动态坐标
+      speed: 600,
+      list: [
+        [116.077374, 31.294215, 1000],
+        [116.107153, 31.312963, 1000],
+        [116.103816, 31.316868, 1000],
+        [116.074092, 31.297972, 1000],
+        [116.07068, 31.301908, 1000],
+        [116.100465, 31.320893, 1000]
+      ]
+    },
     autoStop: true,
     model: {
-      url: "//data.mars3d.cn/gltf/mars/wrj.glb",
+      url: "https://data.mars3d.cn/gltf/mars/wrj.glb",
       scale: 0.02,
       minimumPixelSize: 50
     },
@@ -171,7 +166,7 @@ function startRoam() {
       positions,
       style: {
         color: arrColor[graphicLayer.length % arrColor.length],
-        // image: "//data.mars3d.cn/img/map/gugong.jpg",
+        // image: "https://data.mars3d.cn/img/map/gugong.jpg",
         // stRotationDegree: fixedRoute.model.heading,
         zIndex: graphicLayer.length
       }

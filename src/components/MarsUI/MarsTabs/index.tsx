@@ -6,6 +6,7 @@ export const MarsTabs = (props: TabsProps) => {
   return <Tabs className="mars-tabs" {...props} centered></Tabs>
 }
 
+// export const MarsTabPane = Tabs.TabPane
 export const MarsTabPane = (props: TabPaneProps) => {
   return <Tabs.TabPane {...props}></Tabs.TabPane>
 }

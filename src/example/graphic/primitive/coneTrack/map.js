@@ -13,12 +13,7 @@ export const mapOptions = {
   }
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
@@ -40,10 +35,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic3(graphicLayer)
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 
@@ -82,7 +74,7 @@ function addDemoGraphic2(graphicLayer) {
   const graphic = new mars3d.graphic.ModelPrimitive({
     position,
     style: {
-      url: "//data.mars3d.cn/gltf/mars/feiji.glb",
+      url: "https://data.mars3d.cn/gltf/mars/feiji.glb",
       scale: 1,
       minimumPixelSize: 50
     },
@@ -123,21 +115,22 @@ export async function onClickSelPoint() {
 
 // 动态的位置
 function addDemoGraphic3(graphicLayer) {
-  const propertyFJ = getSampledPositionProperty([
-    [116.364307, 31.03778, 5000],
-    [116.42794, 31.064786, 5000],
-    [116.474002, 31.003825, 5000],
-    [116.432393, 30.951142, 5000],
-    [116.368497, 30.969006, 5000],
-    [116.364307, 31.03778, 5000]
-  ])
-
   // 飞机
   const graphicModel = new mars3d.graphic.ModelEntity({
-    position: propertyFJ,
-    orientation: new Cesium.VelocityOrientationProperty(propertyFJ),
+    position: {
+      type: "time", // 时序动态坐标
+      speed: 530,
+      list: [
+        [116.364307, 31.03778, 5000],
+        [116.42794, 31.064786, 5000],
+        [116.474002, 31.003825, 5000],
+        [116.432393, 30.951142, 5000],
+        [116.368497, 30.969006, 5000],
+        [116.364307, 31.03778, 5000]
+      ]
+    },
     style: {
-      url: "//data.mars3d.cn/gltf/mars/zhanji.glb",
+      url: "https://data.mars3d.cn/gltf/mars/zhanji.glb",
       scale: 0.3,
       minimumPixelSize: 30
     },
@@ -146,17 +139,19 @@ function addDemoGraphic3(graphicLayer) {
   graphicLayer.addGraphic(graphicModel)
 
   // 汽车
-  const propertyQC = getSampledPositionProperty([
-    [116.391268, 30.956038, 827.2],
-    [116.37934, 30.980835, 898.1],
-    [116.382514, 30.999031, 921.5],
-    [116.40338, 31.009258, 1214],
-    [116.412254, 31.021635, 1224.1],
-    [116.432328, 31.045508, 804.3]
-  ])
   const graphicQC = new mars3d.graphic.PathEntity({
-    position: propertyQC,
-    orientation: new Cesium.VelocityOrientationProperty(propertyQC),
+    position: {
+      type: "time", // 时序动态坐标
+      speed: 360,
+      list: [
+        [116.391268, 30.956038, 827.2],
+        [116.37934, 30.980835, 898.1],
+        [116.382514, 30.999031, 921.5],
+        [116.40338, 31.009258, 1214],
+        [116.412254, 31.021635, 1224.1],
+        [116.432328, 31.045508, 804.3]
+      ]
+    },
     style: {
       width: 1,
       color: "#ffff00",
@@ -164,7 +159,7 @@ function addDemoGraphic3(graphicLayer) {
       leadTime: 0
     },
     model: {
-      url: "//data.mars3d.cn/gltf/mars/qiche.gltf",
+      url: "https://data.mars3d.cn/gltf/mars/qiche.gltf",
       scale: 0.5,
       minimumPixelSize: 50
     }
@@ -173,9 +168,8 @@ function addDemoGraphic3(graphicLayer) {
 
   // 圆锥追踪体（动态position=>动态targetPosition）
   const coneTrack = new mars3d.graphic.ConeTrackPrimitive({
-    position: propertyFJ,
-    // targetPosition: [116.417326, 31.046258, 841.2],
-    targetPosition: propertyQC,
+    position: graphicModel.property,
+    targetPosition: graphicQC.property,
     style: {
       // length: 4000, //targetPosition存在时无需传
       angle: 5, // 半场角度
@@ -202,21 +196,6 @@ function addDemoGraphic3(graphicLayer) {
     }
   })
   graphicLayer.addGraphic(coneTrack)
-}
-
-// 计算演示的SampledPositionProperty轨迹
-function getSampledPositionProperty(points) {
-  const property = new Cesium.SampledPositionProperty()
-  property.forwardExtrapolationType = Cesium.ExtrapolationType.HOLD
-
-  const start = map.clock.currentTime
-  const positions = mars3d.LngLatArray.toCartesians(points)
-  for (let i = 0; i < positions.length; i++) {
-    const time = Cesium.JulianDate.addSeconds(start, i * 20, new Cesium.JulianDate())
-    const position = positions[i]
-    property.addSample(time, position)
-  }
-  return property
 }
 
 // 生成演示数据(测试数据量)
@@ -390,18 +369,14 @@ export function bindLayerContextMenu() {
       icon: "fa fa-info",
       show: (event) => {
         const graphic = event.graphic
-        if (graphic.graphicIds) {
+        if (graphic.cluster && graphic.graphics) {
           return true
         } else {
           return false
         }
       },
       callback: (e) => {
-        const graphic = e.graphic
-        if (!graphic) {
-          return
-        }
-        const graphics = graphic.getGraphics() // 对应的grpahic数组，可以自定义显示
+        const graphics = e.graphic?.graphics
         if (graphics) {
           const names = []
           for (let index = 0; index < graphics.length; index++) {

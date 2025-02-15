@@ -18,48 +18,19 @@ export const mapOptions = {
   control: {
     clockAnimate: true, // 时钟动画控制(左下角)
     timeline: true, // 是否显示时间线控件,
-    compass: { top: "10px", left: "5px" }
+    compass: { style: { top: "10px", right: "5px" } }
   }
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
-  map.toolbar.style.bottom = "55px" // 修改toolbar控件的样式
+  // map.control.toolbar.container.style.bottom = "55px" // 修改toolbar控件的样式
 
   // 创建矢量数据图层
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  const property = getDynamicProperty() // 取数据
-
-  // 视锥体 展示
-  const conicSensor = new mars3d.graphic.ConicSensor({
-    position: property,
-    style: {
-      angle: 15,
-      length: 950000,
-      color: "rgba(255,0,0,0.4)",
-      outlineColor: "rgba(255,255,255,0.9)"
-    }
-  })
-  graphicLayer.addGraphic(conicSensor)
-}
-
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
-export function onUnmounted() {
-  map = null
-}
-
-function getDynamicProperty() {
   // 该数据是由后端计算返回的轨道信息
   const wxkjx = [
     {
@@ -100,21 +71,35 @@ function getDynamicProperty() {
     }
   ]
 
-  const property = new Cesium.SampledPositionProperty()
-  property.forwardExtrapolationType = Cesium.ExtrapolationType.HOLD
-
+  const list = []
   for (let z = 0; z < wxkjx.length; z++) {
     const item = wxkjx[z]
-    const thisTime = Cesium.JulianDate.fromIso8601(item.time)
-    const position = Cesium.Cartesian3.fromDegrees(item.x, item.y, item.z)
-
     // 添加每一个链接点的信息，到达的时间以及坐标位置
-    property.addSample(thisTime, position)
+    const position = { lng: item.x, lat: item.y, alt: item.z, currTime: item.time }
+    list.push(position)
   }
-  property.setInterpolationOptions({
-    interpolationDegree: 2,
-    interpolationAlgorithm: Cesium.LagrangePolynomialApproximation
-  })
 
-  return property
+  // 视锥体 展示
+  const conicSensor = new mars3d.graphic.ConicSensor({
+    position: {
+      type: "time", // 时序动态坐标
+      list: list,
+      timeField: "currTime",
+      interpolation: true,
+      interpolationDegree: 2,
+      interpolationAlgorithm: Cesium.LagrangePolynomialApproximation
+    },
+    style: {
+      angle: 15,
+      length: 950000,
+      color: "rgba(255,0,0,0.4)",
+      outlineColor: "rgba(255,255,255,0.9)"
+    }
+  })
+  graphicLayer.addGraphic(conicSensor)
+}
+
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
+export function onUnmounted() {
+  map = null
 }

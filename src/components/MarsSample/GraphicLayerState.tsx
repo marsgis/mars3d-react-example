@@ -26,7 +26,7 @@ interface GraphicTableItem {
   name: string
 }
 
-let lastGraphic = null
+const lastGraphic = null
 
 // 获取map.js中定义的需要管理的图层
 function getManagerLayer() {
@@ -349,68 +349,45 @@ export class GraphicLayerState extends Component<any, any> {
         layer.on([mars3d.EventType.drawCreated, mars3d.EventType.addGraphic, mars3d.EventType.removeGraphic], function (e) {
           that.setState({ isDrawing: layer.isDrawing })
         })
-      }
 
-      const that = this
-      // 矢量数据创建完成
-      mapWork.graphicLayer.on(mars3d.EventType.drawCreated, (e) => {
-        if (that.state.hasEdit) {
-          this.showEditor(e.graphic)
-        }
-      })
-      // 修改了矢量数据
-      mapWork.graphicLayer.on(
-        [mars3d.EventType.editStart, mars3d.EventType.editMovePoint, mars3d.EventType.editStyle, mars3d.EventType.editRemovePoint],
-        (e) => {
-          this.showEditor(e.graphic)
-        }
-      )
-      // 停止编辑
-      mapWork.graphicLayer.on([mars3d.EventType.editStop, mars3d.EventType.removeGraphic], (e) => {
-        setTimeout(() => {
-          if (!mapWork.graphicLayer.isEditing) {
-            if (this.props.customEditor) {
-              this.props.onStopEditor()
-            } else {
-              disable("GraphicEditor")
-            }
+        // 触发属性编辑面板
+        const editUpdateFun = mars3d.Util.funDebounce(that.openGraphicOptionsWidget, 500)
+        layer.on(
+          [
+            mars3d.EventType.drawCreated,
+            mars3d.EventType.editStart,
+            mars3d.EventType.editMovePoint,
+            mars3d.EventType.editStyle,
+            mars3d.EventType.editRemovePoint
+          ],
+          editUpdateFun
+        )
+        const removeFun = mars3d.Util.funDebounce(that.closeGraphicOptionsWidget, 500)
+        layer.on(mars3d.EventType.removeGraphic, removeFun)
+
+        // 添加表格数据
+        this.initGraphicableData(layer)
+
+        layer.on(mars3d.EventType.drawCreated, (event: any) => {
+          const item = event.graphic
+          if (item.isPrivate) {
+            return
           }
-        }, 100)
-      })
 
-      // 添加表格数据
+          graphicDataList.push({ key: item.id, name: getGraphicName(item) })
+          rowKeys.push(item.id)
 
-      const graphicLayer = getManagerLayer()
-      this.initGraphicableData(graphicLayer)
-
-      graphicLayer.on(mars3d.EventType.drawCreated, (event: any) => {
-        const item = event.graphic
-        if (item.isPrivate) {
-          return
-        }
-
-        graphicDataList.push({
-          key: item.id,
-          name: getGraphicName(item)
+          that.setState({ graphicDataList: [...graphicDataList], rowKeys: [...rowKeys] })
         })
-        rowKeys.push(item.id)
 
-        this.setState({
-          graphicDataList: [...graphicDataList],
-          rowKeys: [...rowKeys]
+        layer.on(mars3d.EventType.removeGraphic, (event) => {
+          const graphicId = event.graphic.id
+          const idx = graphicDataList.findIndex((item) => item.key === graphicId)
+          graphicDataList.splice(idx, 1)
+
+          that.setState({ graphicDataList: [...graphicDataList], rowKeys: [...rowKeys] })
         })
-      })
-
-      graphicLayer.on(mars3d.EventType.removeGraphic, (event) => {
-        const graphicId = event.graphic.id
-        const idx = graphicDataList.findIndex((item) => item.key === graphicId)
-        graphicDataList.splice(idx, 1)
-
-        this.setState({
-          graphicDataList: [...graphicDataList],
-          rowKeys: [...rowKeys]
-        })
-      })
+      }
     }, 500)
   }
 
@@ -436,32 +413,36 @@ export class GraphicLayerState extends Component<any, any> {
   }
 
   // 展示属性面板
-  showEditor(graphic: any) {
+  openGraphicOptionsWidget(event: any) {
+    const graphic = event.graphic
+    const graphicLayer = getManagerLayer()
+
+    if (graphic.isDestroy || graphic.isPrivate) {
+      return
+    }
+
     if (this.props.customEditor === graphic.type) {
-      disable("GraphicEditor") // 关闭属性面板
-      this.props.onStartEditor({
-        graphicId: graphic.id,
-        graphicName: getGraphicName(graphic)
-      })
+      this.closeGraphicOptionsWidget() // 关闭属性面板
+      this.props.onStartEditor({ graphicId: graphic.id, graphicName: getGraphicName(graphic) })
       return
     }
     if (this.props.onStopEditor) {
       this.props?.onStopEditor() // 关闭参数调节面板
     }
 
-    if (!graphic._conventStyleJson) {
-      graphic.options.style = graphic.toJSON().style // 因为示例中的样式可能有复杂对象，需要转为单个json简单对象
-      graphic._conventStyleJson = true // 只处理一次
-    }
-
-    if (!isActive("GraphicEditor") || lastGraphic !== graphic) {
-      activate({
-        name: "GraphicEditor",
-        data: { graphic }
-      })
-      lastGraphic = graphic
+    const data = { layerId: graphicLayer.id, graphicId: graphic.id }
+    if (isActive("graphic-options")) {
+      updateWidget("graphic-options", data)
     } else {
-      updateWidget("GraphicEditor", { graphic })
+      activate({ name: "graphic-options", data: data })
+    }
+  }
+
+  closeGraphicOptionsWidget() {
+    if (this.props.onStopEditor) {
+      this.props?.onStopEditor() // 关闭参数调节面板
+    } else {
+      disable("graphic-options")
     }
   }
 
@@ -612,11 +593,7 @@ export class GraphicLayerState extends Component<any, any> {
 
     this.setState({ graphicDataList: [], rowKeys: [], isDrawing: false })
 
-    if (this.props.customEditor) {
-      this.props.onStopEditor()
-    } else {
-      disable("GraphicEditor")
-    }
+    this.closeGraphicOptionsWidget() // 关闭属性面板
   }
 
   //  ***************************** 数据导出 ***********************  //
@@ -701,7 +678,8 @@ export class GraphicLayerState extends Component<any, any> {
   startEditGraphic(record: GraphicTableItem) {
     const graphicLayer = getManagerLayer()
     const graphic = graphicLayer.getGraphicById(record.key)
-    this.showEditor(graphic) // 修改style
+
+    this.openGraphicOptionsWidget({ graphic }) // 修改style
   }
 
   // 表格行: 删除graphic

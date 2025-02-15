@@ -8,15 +8,11 @@ export const eventTarget = new mars3d.BaseClass()
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: 31.622151, lng: 117.274595, alt: 28451, heading: 2, pitch: -49 }
+    center: { lat: 31.622151, lng: 117.274595, alt: 28451, heading: 2, pitch: -49 },
+    logarithmicDepthBuffer: false // 对数深度缓冲区[当 贴地面 出现 阴影体 时设置下]
   }
 }
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
@@ -40,12 +36,10 @@ export function onMounted(mapInstance) {
   addDemoGraphic6(graphicLayer)
   addDemoGraphic7(graphicLayer)
   addDemoGraphic8(graphicLayer)
+  addDemoGraphic9(graphicLayer)
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 
@@ -66,8 +60,18 @@ function addDemoGraphic1(graphicLayer) {
       color: "#3388ff",
       opacity: 0.5,
       outline: true,
-      outlineWidth: 3,
-      outlineColor: "#ffffff",
+      // outlineWidth: 3,
+      // outlineColor: "#ffffff",
+      outlineStyle: {
+        width: 10,
+        materialType: mars3d.MaterialType.LineBloom,
+        materialOptions: {
+          color: "#00BBFF",
+          glow: 3.0,
+          showRatio: -0.5,
+          speed: 0
+        }
+      },
       label: {
         text: "我是火星科技",
         font_size: 18,
@@ -94,7 +98,7 @@ function addDemoGraphic2(graphicLayer) {
     style: {
       materialType: mars3d.MaterialType.Image,
       materialOptions: {
-        image: "//data.mars3d.cn/img/textures/poly-soil.jpg",
+        image: "https://data.mars3d.cn/img/textures/poly-soil.jpg",
         opacity: 0.8 // 透明度
       },
       clampToGround: true
@@ -118,7 +122,7 @@ function addDemoGraphic3(graphicLayer) {
     style: {
       materialType: mars3d.MaterialType.Water,
       materialOptions: {
-        normalMap: "//data.mars3d.cn/img/textures/waterNormals.jpg", // 水正常扰动的法线图
+        normalMap: "https://data.mars3d.cn/img/textures/waterNormals.jpg", // 水正常扰动的法线图
         frequency: 1000.0, // 控制波数的数字。
         animationSpeed: 0.01, // 控制水的动画速度的数字。
         amplitude: 10, // 控制水波振幅的数字。
@@ -276,13 +280,73 @@ function addDemoGraphic8(graphicLayer) {
       ]),
       materialType: mars3d.MaterialType.Image,
       materialOptions: {
-        image: "//data.mars3d.cn/img/map/gugong.jpg"
+        image: "https://data.mars3d.cn/img/map/gugong.jpg"
       }
     },
     attr: { remark: "示例8" }
     // hasEdit: false
   })
   graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
+}
+
+function addDemoGraphic9(graphicLayer) {
+  const startTime = map.clock.startTime
+  const graphic = new mars3d.graphic.PolygonEntity({
+    positions: {
+      type: "time", // 时序动态坐标
+      list: [
+        {
+          time: Cesium.JulianDate.addSeconds(startTime, 5, new Cesium.JulianDate()), // 也可以是 时间字符串
+          positions: [
+            [117.180746, 31.773744, 20.9],
+            [117.188914, 31.778811, 24.7],
+            [117.190797, 31.770772, 22],
+            [117.19479, 31.766086, 22.2],
+            [117.186984, 31.7629, 19.6],
+            [117.182816, 31.767857, 19.9]
+          ]
+        },
+        {
+          time: Cesium.JulianDate.addSeconds(startTime, 10, new Cesium.JulianDate()),
+          pauseTime: 4,
+          positions: [
+            [117.249277, 31.772246, 42.2],
+            [117.253676, 31.776569, 22.6],
+            [117.25947, 31.769772, 21],
+            [117.264241, 31.763922, 18.6],
+            [117.258261, 31.75841, 19.1],
+            [117.252132, 31.763979, 21.2]
+          ]
+        },
+        {
+          time: Cesium.JulianDate.addSeconds(startTime, 20, new Cesium.JulianDate()),
+          positions: [
+            [117.2595, 31.78408, 19.9],
+            [117.273542, 31.768839, 18.5],
+            [117.272887, 31.749433, 15.6],
+            [117.261442, 31.749063, 18.7],
+            [117.244574, 31.754935, 20.1],
+            [117.244313, 31.778447, 29.9]
+          ]
+        }
+      ],
+      interpolation: true // setInterpolationOptions插值
+    },
+    style: {
+      color: "#3388ff",
+      opacity: 0.5,
+      outline: true,
+      outlineWidth: 3,
+      outlineColor: "#ffffff",
+      label: { text: "鼠标移入会高亮", pixelOffsetY: -30 },
+      // 高亮时的样式（默认为鼠标移入，也可以指定type:'click'单击高亮），构造后也可以openHighlight、closeHighlight方法来手动调用
+      highlight: {
+        color: "#ff0000"
+      }
+    },
+    attr: { remark: "示例9" }
+  })
+  graphicLayer.addGraphic(graphic)
 }
 
 // 生成演示数据(测试数据量)
@@ -339,11 +403,12 @@ export async function startDrawGraphic() {
     }
   })
   // graphic.positions = mars3d.PointUtil.setPositionsHeight(graphic.positionsShow, 2000)
+  console.log("标绘完成", graphic.toJSON())
 }
 
 // 开始绘制 立体面
-export function startDrawGraphic2() {
-  graphicLayer.startDraw({
+export async function startDrawGraphic2() {
+  const graphic = await graphicLayer.startDraw({
     type: "polygon",
     style: {
       color: "#00ff00",
@@ -351,6 +416,7 @@ export function startDrawGraphic2() {
       diffHeight: 300
     }
   })
+  console.log("标绘完成", graphic.toJSON())
 }
 
 // 在图层绑定Popup弹窗
@@ -494,18 +560,14 @@ export function bindLayerContextMenu() {
       icon: "fa fa-info",
       show: (event) => {
         const graphic = event.graphic
-        if (graphic.graphicIds) {
+        if (graphic.cluster && graphic.graphics) {
           return true
         } else {
           return false
         }
       },
       callback: (e) => {
-        const graphic = e.graphic
-        if (!graphic) {
-          return
-        }
-        const graphics = graphic.getGraphics() // 对应的grpahic数组，可以自定义显示
+        const graphics = e.graphic?.graphics
         if (graphics) {
           const names = []
           for (let index = 0; index < graphics.length; index++) {

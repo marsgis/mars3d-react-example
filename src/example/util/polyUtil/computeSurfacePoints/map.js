@@ -16,12 +16,7 @@ let graphic1
 let graphic2
 let graphic3
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
@@ -34,7 +29,7 @@ export function onMounted(mapInstance) {
   graphic1 = new mars3d.graphic.ModelPrimitive({
     position: point,
     style: {
-      url: "//data.mars3d.cn/gltf/mars/dikuai/c1.gltf"
+      url: "https://data.mars3d.cn/gltf/mars/dikuai/c1.gltf"
     },
     attr: { remark: "c1" }
   })
@@ -43,7 +38,7 @@ export function onMounted(mapInstance) {
   graphic2 = new mars3d.graphic.ModelPrimitive({
     position: point,
     style: {
-      url: "//data.mars3d.cn/gltf/mars/dikuai/c2.gltf"
+      url: "https://data.mars3d.cn/gltf/mars/dikuai/c2.gltf"
     },
     attr: { remark: "c2" }
   })
@@ -52,16 +47,13 @@ export function onMounted(mapInstance) {
   graphic3 = new mars3d.graphic.ModelPrimitive({
     position: point,
     style: {
-      url: "//data.mars3d.cn/gltf/mars/dikuai/c3.gltf"
+      url: "https://data.mars3d.cn/gltf/mars/dikuai/c3.gltf"
     },
     attr: { remark: "c3" }
   })
   graphicLayer.addGraphic(graphic3)
 }
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -213,7 +205,7 @@ export function showTipMarker(point, z, inthtml) {
       name: "当前点",
       position: _position_draw,
       style: {
-        image: "//data.mars3d.cn/img/marker/mark-blue.png",
+        image: "https://data.mars3d.cn/img/marker/mark-blue.png",
         scale: 1,
         horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
         verticalOrigin: Cesium.VerticalOrigin.BOTTOM,

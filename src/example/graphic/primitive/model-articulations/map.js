@@ -4,12 +4,7 @@ export let map // mars3d.Map三维地图对象
 export let graphic
 export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
@@ -17,10 +12,7 @@ export function onMounted(mapInstance) {
   addRockets()
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -41,11 +33,11 @@ function addRockets() {
 
   // 在layer上绑定监听事件
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    let nodeName = event.pickedObject?.detail?.node?._node?.articulationName
-    if (nodeName) {
-      nodeName = namesCN[nodeName] || nodeName
-      globalMsg("单击了构件：" + nodeName)
-    }
+    // let nodeName = event.pickedObject?.detail?.node?._node?.articulationName
+    // if (nodeName) {
+    //   nodeName = namesCN[nodeName] || nodeName
+    //   globalMsg("单击了构件：" + nodeName)
+    // }
 
     console.log("监听layer，单击了矢量对象", event)
   })
@@ -77,6 +69,19 @@ function addRockets() {
     }
   })
   graphicLayer.addGraphic(graphic)
+
+  // graphic.bindPopup((event) => {
+  //   const node = event.pickedObject?.detail?.node?._node
+  //   if (!node) {
+  //     return
+  //   }
+  //   console.log("监听layer，单击了构件：", node)
+
+  //   let nodeName = node.articulationName
+  //   nodeName = namesCN[nodeName] || nodeName
+
+  //   return nodeName
+  // })
 
   // gltf模型加载完成事件
   graphic.on(mars3d.EventType.load, (event) => {
@@ -138,7 +143,6 @@ function addRockets() {
         stages: arr
       })
     }
-
 
     console.log("完成gltf内的构件信息读取", articulations)
 

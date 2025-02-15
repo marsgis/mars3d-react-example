@@ -15,12 +15,7 @@ export const mapOptions = {
 
 export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
@@ -32,7 +27,7 @@ export function onMounted(mapInstance) {
 
   // 加个模型
   const tilesetLayer = new mars3d.layer.TilesetLayer({
-    url: "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
+    url: "https://data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
     position: { alt: 38.8 },
     maximumScreenSpaceError: 1,
     shadows: Cesium.ShadowMode.ENABLED
@@ -74,7 +69,7 @@ function addTestGrraphic() {
   const graphic2 = new mars3d.graphic.ModelEntity({
     position: [119.030328, 33.58953, 15.6],
     style: {
-      url: "//data.mars3d.cn/gltf/mars/fengche.gltf",
+      url: "https://data.mars3d.cn/gltf/mars/fengche.gltf",
       scale: 20,
       hasShadows: true
     }
@@ -82,10 +77,7 @@ function addTestGrraphic() {
   graphicLayer.addGraphic(graphic2)
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }

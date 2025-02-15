@@ -13,12 +13,7 @@ export const mapOptions = {
 
 export const eventTarget = new mars3d.BaseClass()
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
   map.basemap = 2017 // 蓝色底图
@@ -43,10 +38,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic4(graphicLayer)
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 
@@ -59,7 +51,7 @@ function addDemoGraphic1(graphicLayer) {
     name: "警车",
     position: [116.346929, 30.861947, 401.34],
     style: {
-      url: "//data.mars3d.cn/gltf/mars/jingche/jingche.gltf",
+      url: "https://data.mars3d.cn/gltf/mars/jingche/jingche.gltf",
       scale: 20,
       minimumPixelSize: 50,
       heading: 90,
@@ -180,7 +172,7 @@ function addDemoGraphic2(graphicLayer) {
     name: "风机",
     position: [116.35104, 30.86225, 374.4],
     style: {
-      url: "//data.mars3d.cn/gltf/mars/fengche.gltf",
+      url: "https://data.mars3d.cn/gltf/mars/fengche.gltf",
       heading: 270,
       scale: 30,
       minimumPixelSize: 100,
@@ -191,7 +183,7 @@ function addDemoGraphic2(graphicLayer) {
       distanceDisplayCondition_far: 9000,
       distanceDisplayBillboard: {
         // 当视角距离超过一定距离(distanceDisplayCondition_far定义的) 后显示为图标对象的样式
-        image: "//data.mars3d.cn/img/marker/square.png",
+        image: "https://data.mars3d.cn/img/marker/square.png",
         scale: 1
       },
 
@@ -212,7 +204,7 @@ function addDemoGraphic3(graphicLayer) {
     name: "汽车",
     position: [116.349194, 30.864603, 376],
     style: {
-      url: "//data.mars3d.cn/gltf/mars/qiche.gltf",
+      url: "https://data.mars3d.cn/gltf/mars/qiche.gltf",
       scale: 0.5,
       // minimumPixelSize: 50,
       silhouette: false,
@@ -251,24 +243,25 @@ function addDemoGraphic3(graphicLayer) {
 }
 
 function addDemoGraphic4(graphicLayer) {
-  const propertyFJ = getSampledPositionProperty([
-    [116.341348, 30.875522, 500],
-    [116.341432, 30.871815, 500],
-    [116.347965, 30.866654, 500],
-    [116.352154, 30.855531, 500],
-    [116.341181, 30.85326, 500],
-    [116.334609, 30.856601, 500],
-    [116.337695, 30.866505, 500],
-    [116.345018, 30.870448, 500],
-    [116.345028, 30.870436, 500]
-  ])
-
   // 飞机
   const graphicModel = new mars3d.graphic.ModelEntity({
-    position: propertyFJ,
-    orientation: new Cesium.VelocityOrientationProperty(propertyFJ),
+    position: {
+      type: "time", // 时序动态坐标
+      speed: 260,
+      list: [
+        [116.341348, 30.875522, 500],
+        [116.341432, 30.871815, 500],
+        [116.347965, 30.866654, 500],
+        [116.352154, 30.855531, 500],
+        [116.341181, 30.85326, 500],
+        [116.334609, 30.856601, 500],
+        [116.337695, 30.866505, 500],
+        [116.345018, 30.870448, 500],
+        [116.345028, 30.870436, 500]
+      ]
+    },
     style: {
-      url: "//data.mars3d.cn/gltf/mars/wrj.glb",
+      url: "https://data.mars3d.cn/gltf/mars/wrj.glb",
       scale: 0.1,
       minimumPixelSize: 20,
 
@@ -277,9 +270,9 @@ function addDemoGraphic4(graphicLayer) {
       distanceDisplayCondition_far: 8000,
       distanceDisplayBillboard: {
         // 当视角距离超过一定距离(distanceDisplayCondition_far定义的) 后显示为图标对象的样式
-        image: "//data.mars3d.cn/img/marker/svg/huojian.svg",
+        image: "https://data.mars3d.cn/img/marker/svg/huojian.svg",
         scale: 0.5,
-        alignedAxis: new Cesium.VelocityVectorProperty(propertyFJ, true)
+        alignedAxis: true
       }
     },
     path: {
@@ -287,25 +280,9 @@ function addDemoGraphic4(graphicLayer) {
       leadTime: 0, // 不显示前方路线
       color: "#00ffff"
     },
-    attr: { remark: "示例4" },
-    hasEdit: false
+    attr: { remark: "示例4" }
   })
   graphicLayer.addGraphic(graphicModel)
-}
-
-// 计算演示的SampledPositionProperty轨迹
-function getSampledPositionProperty(points) {
-  const property = new Cesium.SampledPositionProperty()
-  property.forwardExtrapolationType = Cesium.ExtrapolationType.HOLD
-
-  const start = map.clock.currentTime
-  const positions = mars3d.LngLatArray.toCartesians(points)
-  for (let i = 0; i < positions.length; i++) {
-    const time = Cesium.JulianDate.addSeconds(start, i * 20, new Cesium.JulianDate())
-    const position = positions[i]
-    property.addSample(time, position)
-  }
-  return property
 }
 
 // 生成演示数据(测试数据量)
@@ -324,7 +301,7 @@ export function addRandomGraphicByCount(count) {
     const graphic = new mars3d.graphic.ModelEntity({
       position,
       style: {
-        url: "//data.mars3d.cn/gltf/mars/qiche.gltf",
+        url: "https://data.mars3d.cn/gltf/mars/qiche.gltf",
         scale: 10
       },
       attr: { index }
@@ -337,12 +314,12 @@ export function addRandomGraphicByCount(count) {
 }
 
 // 开始绘制
-export function startDrawGraphic() {
-  graphicLayer.startDraw({
+export async function startDrawGraphic() {
+  const graphic = await graphicLayer.startDraw({
     type: "model",
     style: {
       scale: 10,
-      url: "//data.mars3d.cn/gltf/mars/firedrill/xiaofangche.gltf",
+      url: "https://data.mars3d.cn/gltf/mars/firedrill/xiaofangche.gltf",
       label: {
         // 不需要文字时，去掉label配置即可
         text: "可以同时支持文字",
@@ -354,6 +331,7 @@ export function startDrawGraphic() {
       }
     }
   })
+  console.log("标绘完成", graphic.toJSON())
 }
 
 // 在图层绑定Popup弹窗
@@ -497,18 +475,14 @@ export function bindLayerContextMenu() {
       icon: "fa fa-info",
       show: (event) => {
         const graphic = event.graphic
-        if (graphic.graphicIds) {
+        if (graphic.cluster && graphic.graphics) {
           return true
         } else {
           return false
         }
       },
       callback: (e) => {
-        const graphic = e.graphic
-        if (!graphic) {
-          return
-        }
-        const graphics = graphic.getGraphics() // 对应的grpahic数组，可以自定义显示
+        const graphics = e.graphic?.graphics
         if (graphics) {
           const names = []
           for (let index = 0; index < graphics.length; index++) {

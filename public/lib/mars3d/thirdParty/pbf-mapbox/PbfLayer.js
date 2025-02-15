@@ -2,17 +2,21 @@
 // const Cesium = mars3d.Cesium
 
 // 按mars3d规范，封装的pbf图层
-;(function (window) {
+; (function (window) {
   const BasicRenderer = window.mapboxRenderer.BasicRenderer
 
   // 创建一个全局变量作为pbfBasicRenderer渲染模板，避免出现16个canvas上下文的浏览器限制，以便Cesium ImageLayer.destory()正常工作。
   // https://github.com/mapbox/mapbox-gl-js/issues/7332
   const OFFSCREEN_CANV_SIZE = 1024
-  const baseCanv = document.createElement("canvas")
-  baseCanv.style.imageRendering = "pixelated"
-  baseCanv.addEventListener("webglcontextlost", () => console.log("webglcontextlost"), false)
-  baseCanv.width = OFFSCREEN_CANV_SIZE
-  baseCanv.height = OFFSCREEN_CANV_SIZE
+
+  function createBaseCanvas () {
+    let baseCanv = document.createElement("canvas")
+    baseCanv.style.imageRendering = "pixelated"
+    baseCanv.addEventListener("webglcontextlost", () => console.log("webglcontextlost"), false)
+    baseCanv.width = OFFSCREEN_CANV_SIZE
+    baseCanv.height = OFFSCREEN_CANV_SIZE
+    return baseCanv
+  }
 
   class MVTImageryProvider {
     /**
@@ -37,7 +41,7 @@
       this.mapboxRenderer._transformRequest = (url, resourceType) => {
         return this.transformRequest(url, resourceType)
       }
-      this.mapboxRenderer._canvas = baseCanv
+      this.mapboxRenderer._canvas = createBaseCanvas()
       this.mapboxRenderer._canvas.addEventListener("webglcontextrestored", () => this.mapboxRenderer._createGlContext(), false)
       this.mapboxRenderer._createGlContext()
 
@@ -48,6 +52,17 @@
       this.ready = false
       this.readyPromise = this.mapboxRenderer._style.loadedPromise.then(() => {
         this.ready = true
+        // setTimeout(() => {
+        //   console.log( this.mapboxRenderer._style)
+        //   if (options.extendImages) {
+        //     let msii = this.mapboxRenderer._style.imageManager.images
+        //     if (Object.keys(msii).length > 0) {
+        //       let copydata = msii[Object.keys(msii)[0]]
+        //       let extendImages = this.handleExtendImages(options.extendImages, copydata)
+        //       Object.assign(this.mapboxRenderer._style.imageManager.images, extendImages)
+        //     }
+        //   }
+        // },350)
       })
 
       this.tilingScheme = options.tilingScheme ?? new Cesium.WebMercatorTilingScheme()
@@ -62,6 +77,27 @@
       this.hasAlphaChannel = options.hasAlphaChannel ?? true
       this.sourceFilter = options.sourceFilter
     }
+    handleExtendImages (extImg, copydata) {
+      let extendImages = extImg
+      let parr = Object.keys(extImg)
+      if (parr.length > 0 ) {
+        if (!(extImg[parr[0]].data.data instanceof Uint8Array)) {
+          parr.forEach(item => {
+            let { width, height, data } = extendImages[item].data
+            let tempdata = {}
+            tempdata = Object.assign(
+              Object.create(Object.getPrototypeOf(copydata.data)),
+              copydata.data
+            );
+            tempdata.width = width
+            tempdata.height = height
+            tempdata.data = Uint8Array.from(Object.keys(data).map(ktm => data[ktm]))
+            extendImages[item].data = tempdata
+          })
+        }
+      }
+      return extendImages
+    }
 
     transformRequest = (url) => {
       if (this.options.transformUrl) {
@@ -70,11 +106,11 @@
       return { url: url, headers: this.options.headers || {}, credentials: "" }
     }
 
-    getTileCredits(x, y, level) {
+    getTileCredits (x, y, level) {
       return []
     }
 
-    createTile() {
+    createTile () {
       const canv = document.createElement("canvas")
       canv.width = this.tileSize
       canv.height = this.tileSize
@@ -86,7 +122,7 @@
       return canv
     }
 
-    _getTilesSpec(coord, source) {
+    _getTilesSpec (coord, source) {
       const { x, y, zoom } = coord
       const TILE_SIZE = this.tileSize
       // 3x3 grid of source tiles, where the region of interest is that corresponding to the central source tile
@@ -122,7 +158,7 @@
       return ret
     }
 
-    requestImage(x, y, zoom, releaseTile = true) {
+    requestImage (x, y, zoom, releaseTile = true) {
       if (zoom > this.maximumLevel || zoom < this.minimumLevel) {
         return Promise.reject(undefined)
       }
@@ -166,7 +202,7 @@
       })
     }
 
-    pickFeatures(x, y, zoom, longitude, latitude) {
+    pickFeatures (x, y, zoom, longitude, latitude) {
       return this.requestImage(x, y, zoom, false).then((renderRef) => {
         let targetSources = this.mapboxRenderer.getVisibleSources(zoom)
         targetSources = this.sourceFilter ? this.sourceFilter(targetSources) : targetSources
@@ -203,7 +239,7 @@
       })
     }
 
-    destroy() {
+    destroy () {
       this.mapboxRenderer._cancelAllPendingRenders()
       Object.values(this.mapboxRenderer._style.sourceCaches).forEach((cache) => cache._tileCache.reset())
       this.mapboxRenderer._gl.getExtension("WEBGL_lose_context").loseContext()
@@ -212,12 +248,12 @@
 
   class PbfLayer extends mars3d.layer.BaseTileLayer {
     // 构建ImageryProvider
-    async _createImageryProvider(options) {
+    async _createImageryProvider (options) {
       return createImageryProvider(options)
     }
   }
 
-  async function createImageryProvider(options) {
+  async function createImageryProvider (options) {
     if (options.url) {
       let data = await Cesium.Resource.fetchJson(options)
       const provider = new MVTImageryProvider({ ...options, style: data })

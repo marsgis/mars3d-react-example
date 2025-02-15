@@ -14,21 +14,13 @@ export const mapOptions = {
 }
 export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
   showGeoJsonLayer()
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -53,6 +45,26 @@ export function query(text) {
       globalAlert(msg, "服务访问错误")
     }
   })
+
+
+  // queryMapserver.queryBySql({
+  //   cql_filter: `name like '%${text}%'`,
+  //   graphic: drawGraphic,
+  //   success: (result) => {
+  //     if (result.count === 0) {
+  //       globalMsg("未查询到相关记录！")
+  //       geoJsonLayer.load({ data: { features: null } })
+  //       return
+  //     } else {
+  //       globalMsg("共查询到 " + result.count + " 条记录！")
+  //     }
+  //     geoJsonLayer.load({ data: result.geojson })
+  //   },
+  //   error: (error, msg) => {
+  //     console.log("服务访问错误", error)
+  //     globalAlert(msg, "服务访问错误")
+  //   }
+  // })
 }
 
 function showGeoJsonLayer() {
@@ -65,14 +77,14 @@ function showGeoJsonLayer() {
   geoJsonLayer = new mars3d.layer.GeoJsonLayer({
     symbol: {
       styleOptions: {
-        image: "//data.mars3d.cn/img/marker/mark-blue.png",
+        image: "https://data.mars3d.cn/img/marker/mark-blue.png",
         scale: 1,
         scaleByDistance: true,
         scaleByDistance_far: 20000,
         scaleByDistance_farValue: 0.5,
         scaleByDistance_near: 1000,
         scaleByDistance_nearValue: 1,
-        highlight: { type: "click", image: "//data.mars3d.cn/img/marker/mark-red.png" },
+        highlight: { type: "click", image: "https://data.mars3d.cn/img/marker/mark-red.png" },
         clampToGround: true,
         label: {
           text: "{项目名称}",

@@ -7,23 +7,19 @@ export let map // mars3d.Map三维地图对象
  * @type {object}
  */
 export const mapOptions = {
+  terrain: false
   // 方式1：在创建地球前的传参中配置 terrain 参数[目前1个球只支持1个地形服务]
-  terrain: {
-    url: "http://data.mars3d.cn/terrain",
-    show: true
-  },
-  control: {
-    baseLayerPicker: true,
-    terrainProviderViewModels: getTerrainProviderViewModelsArr() // 自baseLayerPicker面板的地形可选数组
-  }
+  // terrain: {
+  //   url: "http://data.mars3d.cn/terrain",
+  //   show: true
+  // },
+  // control: {
+  //   baseLayerPicker: true,
+  //   terrainProviderViewModels: getTerrainProviderViewModelsArr() // 自baseLayerPicker面板的地形可选数组
+  // }
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
@@ -46,10 +42,7 @@ export function onMounted(mapInstance) {
   // map.addLayer(terrainLayer)
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -58,34 +51,58 @@ export function radioTerrain(type) {
   switch (type) {
     case "none": // 无地形
       map.terrainProvider = mars3d.LayerUtil.getNoTerrainProvider()
+      // map.setOptions({
+      //   terrain: {
+      //     type: "none"
+      //   }
+      // })
       break
     case "xyz": // 标准xyz服务
       map.terrainProvider = mars3d.LayerUtil.createTerrainProvider({
         url: "http://data.mars3d.cn/terrain"
       })
+      // map.setOptions({
+      //   terrain: {
+      //     type: "xyz",
+      //     url: "http://data.mars3d.cn/terrain"
+      //   }
+      // })
       break
     case "arcgis": // ArcGIS地形服务
-      map.terrainProvider = mars3d.LayerUtil.createTerrainProvider({
-        type: "arcgis",
-        url: "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
-      })
-
       globalNotify(
         "已知问题提示",
         `如图层未显示或服务URL访问超时，是因为目前国家测绘主管部门对未经审核批准的国外地图服务做了屏蔽封锁。您可以需翻墙使用 或 参考示例代码替换本地服务地址使用。`
       )
+      map.terrainProvider = mars3d.LayerUtil.createTerrainProvider({
+        type: "arcgis",
+        url: "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
+      })
+      // map.setOptions({
+      //   terrain: {
+      //     type: "arcgis",
+      //     url: "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
+      //   }
+      // })
       break
     case "ion": // cesium官方ion在线服务
+      globalNotify(
+        "已知问题提示",
+        `如图层未显示或服务URL访问超时，是因为目前国家测绘主管部门对未经审核批准的国外地图服务做了屏蔽封锁。您可以需翻墙使用 或 参考示例代码替换本地服务地址使用。`
+      )
+
       map.terrainProvider = mars3d.LayerUtil.createTerrainProvider({
         type: "ion",
         requestWaterMask: true,
         requestVertexNormals: true
       })
+      // map.setOptions({
+      //   terrain: {
+      //     type: "ion",
+      //     requestWaterMask: true,
+      //     requestVertexNormals: true
+      //   }
+      // })
 
-      globalNotify(
-        "已知问题提示",
-        `如图层未显示或服务URL访问超时，是因为目前国家测绘主管部门对未经审核批准的国外地图服务做了屏蔽封锁。您可以需翻墙使用 或 参考示例代码替换本地服务地址使用。`
-      )
       break
     case "gee": // 谷歌地球企业服务
       map.terrainProvider = mars3d.LayerUtil.createTerrainProvider({
@@ -93,12 +110,25 @@ export function radioTerrain(type) {
         url: "http://www.earthenterprise.org/3d",
         proxy: "//server.mars3d.cn/proxy/"
       })
+      // map.setOptions({
+      //   terrain: {
+      //     type: "gee",
+      //     url: "http://www.earthenterprise.org/3d",
+      //     proxy: "//server.mars3d.cn/proxy/"
+      //   }
+      // })
       break
     case "vr": // vr地形服务
       map.terrainProvider = mars3d.LayerUtil.createTerrainProvider({
         type: "vr",
         url: "https://www.vr-theworld.com/vr-theworld/tiles1.0.0/73/"
       })
+      // map.setOptions({
+      //   terrain: {
+      //     type: "vr",
+      //     url: "https://www.vr-theworld.com/vr-theworld/tiles1.0.0/73/"
+      //   }
+      // })
       break
     default:
   }
@@ -119,7 +149,7 @@ function getTerrainProviderViewModelsArr() {
     new Cesium.ProviderViewModel({
       name: "无地形",
       tooltip: "WGS84标准球体",
-      iconUrl: "//data.mars3d.cn/img/thumbnail/basemap/TerrainEllipsoid.png",
+      iconUrl: "https://data.mars3d.cn/img/thumbnail/basemap/TerrainEllipsoid.png",
       creationFunction: function () {
         return mars3d.LayerUtil.getNoTerrainProvider()
       }
@@ -127,7 +157,7 @@ function getTerrainProviderViewModelsArr() {
     new Cesium.ProviderViewModel({
       name: "中国地形",
       tooltip: "由 火星科技 提供的中国国内地形",
-      iconUrl: "//data.mars3d.cn/img/thumbnail/basemap/TerrainSTK.png",
+      iconUrl: "https://data.mars3d.cn/img/thumbnail/basemap/TerrainSTK.png",
       creationFunction: function () {
         return mars3d.LayerUtil.createTerrainProvider({
           url: "http://data.mars3d.cn/terrain"
@@ -137,7 +167,7 @@ function getTerrainProviderViewModelsArr() {
     new Cesium.ProviderViewModel({
       name: "ArcGIS地形",
       tooltip: "由 火星科技 提供的中国国内地形",
-      iconUrl: "//data.mars3d.cn/img/thumbnail/basemap/TerrainSTK.png",
+      iconUrl: "https://data.mars3d.cn/img/thumbnail/basemap/TerrainSTK.png",
       creationFunction: function () {
         return mars3d.LayerUtil.createTerrainProvider({
           type: "arcgis",
@@ -148,7 +178,7 @@ function getTerrainProviderViewModelsArr() {
     new Cesium.ProviderViewModel({
       name: "全球地形",
       tooltip: "由 Cesium官方 提供的高分辨率全球地形",
-      iconUrl: "//data.mars3d.cn/img/thumbnail/basemap/TerrainSTK.png",
+      iconUrl: "https://data.mars3d.cn/img/thumbnail/basemap/TerrainSTK.png",
       creationFunction: function () {
         return mars3d.LayerUtil.createTerrainProvider({
           type: "ion",

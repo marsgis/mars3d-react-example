@@ -3,6 +3,10 @@
   "env": {
     "node": true
   },
+  "parserOptions": {
+    "ecmaVersion": 2021, 
+    "sourceType": "module"
+  },
   "extends": ["react-app", "standard"],
   "plugins": ["react-hooks"],
   "globals": {

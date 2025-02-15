@@ -13,6 +13,15 @@ export const mapOptions = {
     timeline: true, // 是否显示时间线控件
     infoBox: false
   },
+  thing: {
+    keyboardRoam: {
+      moveStep: 0.1, // 平移步长 (米)。
+      dirStep: 50, // 相机原地旋转步长，值越大步长越小。
+      rotateStep: 0.3, // 相机围绕目标点旋转速率，0.3-2.0
+      minPitch: 0.1, // 最小仰角  0-1
+      maxPitch: 0.95 // 最大仰角  0-1
+    }
+  },
   layers: [
     {
       name: "教学楼",
@@ -26,32 +35,14 @@ export const mapOptions = {
     }
   ]
 }
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
-
-  // 键盘漫游
-  map.keyboardRoam.setOptions({
-    moveStep: 0.1, // 平移步长 (米)。
-    dirStep: 50, // 相机原地旋转步长，值越大步长越小。
-    rotateStep: 0.3, // 相机围绕目标点旋转速率，0.3-2.0
-    minPitch: 0.1, // 最小仰角  0-1
-    maxPitch: 0.95 // 最大仰角  0-1
-  })
-  map.keyboardRoam.enabled = true // 开启键盘漫游
 
   addGraphicLayer()
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -63,18 +54,21 @@ function addGraphicLayer() {
 
   fixedRoute = new mars3d.graphic.FixedRoute({
     name: "室内路线",
-    speed: 5,
-    offsetHeight: 1.6,
-    positions: [
-      [117.25164, 31.843773, 32.0],
-      [117.251042, 31.843772, 32.0],
-      [117.250613, 31.844058, 32.0],
-      [117.250677, 31.844146, 32.0],
-      [117.250696, 31.844134, 32.0],
-      [117.250657, 31.844098, 36.0],
-      [117.250611, 31.84406, 36.0],
-      [117.251039, 31.843773, 36.0]
-    ],
+    position: {
+      type: "time", // 时序动态坐标
+      speed: 5,
+      offsetHeight: 1.6,
+      list: [
+        [117.25164, 31.843773, 32.0],
+        [117.251042, 31.843772, 32.0],
+        [117.250613, 31.844058, 32.0],
+        [117.250677, 31.844146, 32.0],
+        [117.250696, 31.844134, 32.0],
+        [117.250657, 31.844098, 36.0],
+        [117.250611, 31.84406, 36.0],
+        [117.251039, 31.843773, 36.0]
+      ]
+    },
     camera: {
       type: "dy",
       followedX: 1,

@@ -18,7 +18,7 @@ function init() {
       // 构建地图
       const initMapFun = window.initMap ? window.initMap : globalInitMap
       new Promise(function (resolve) {
-        const mapObj = initMapFun(json.map3d || json)
+        const mapObj = initMapFun(json)
         if (mapObj instanceof Promise) {
           mapObj.then(function (m) {
             resolve(m)
@@ -30,9 +30,9 @@ function init() {
         parentGlobal._mapInstance = m
         parentGlobal.mapWork = window
 
-        parentGlobal.map = m // only for test
+        bindVarToParent() // only for test
       })
-      // parentGlobal._mapInstance = initMapFun(json.map3d)
+      // parentGlobal._mapInstance = initMapFun(json)
       // parentGlobal.mapWork = window // 这句话是将当前js对象绑定赋予给index.项目内进行调用
     })
     .catch(function (error) {
@@ -41,6 +41,16 @@ function init() {
     })
 }
 init()
+
+ // only for test
+function bindVarToParent() {
+  for (const key in window) {
+    if (!Cesium.defined(parentGlobal[key])) {
+       parentGlobal[key] = window[key]
+    }
+  }
+}
+
 
 // 构造地图主方法【必须】
 function globalInitMap(options) {

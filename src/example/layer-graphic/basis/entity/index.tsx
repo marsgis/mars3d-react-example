@@ -4,7 +4,6 @@ import { Row, Col, Space } from "antd"
 import { useEffect, useState } from "react"
 import "./entity.css"
 import * as mapWork from "./map.js"
-import { activate, disable } from "@mars/widgets/common/store/widget"
 
 const list = {
   point: [
@@ -111,12 +110,7 @@ function UIComponent() {
     e.stopPropagation() // 阻止事件冒泡
     const graphicLayer = getManagerLayer()
     const graphic = graphicLayer.getGraphicById(record.key)
-    activate({
-      name: "GraphicEditor",
-      data: {
-        graphic
-      }
-    })
+    graphicLayer.startEditing(graphic)
   }
 
   // 表格行: 删除graphic
@@ -125,7 +119,6 @@ function UIComponent() {
 
     const graphicLayer = getManagerLayer()
     const graphic = graphicLayer.getGraphicById(record.key)
-    disable("GraphicEditor")
     graphic && graphic.remove(true)
   }
 

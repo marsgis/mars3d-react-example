@@ -9,12 +9,7 @@ export const mapOptions = {
   }
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
@@ -29,10 +24,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic3(graphicLayer)
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -42,7 +34,7 @@ function addDemoGraphic1(graphicLayer) {
     name: "飞机",
     position: [116.239918, 30.879709, 1208],
     style: {
-      url: "//data.mars3d.cn/gltf/mars/feiji.glb",
+      url: "https://data.mars3d.cn/gltf/mars/feiji.glb",
       scale: 2
     }
   })
@@ -64,7 +56,7 @@ function addDemoGraphic2(graphicLayer) {
     name: "四凌锥体",
     position: [116.257665, 30.869372, 1500],
     style: {
-      url: "//data.mars3d.cn/gltf/mars/zhui.glb",
+      url: "https://data.mars3d.cn/gltf/mars/zhui.glb",
       scale: 200,
       minimumPixelSize: 50
     }
@@ -83,7 +75,7 @@ function addDemoGraphic3(graphicLayer) {
     name: "汽车",
     position: [116.210938, 30.87518, 613.1],
     style: {
-      url: "//data.mars3d.cn/gltf/mars/qiche.gltf",
+      url: "https://data.mars3d.cn/gltf/mars/qiche.gltf",
       scale: 0.5,
       heading: 90,
       minimumPixelSize: 100

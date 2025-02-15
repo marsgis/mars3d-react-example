@@ -10,12 +10,7 @@ export const mapOptions = {
   }
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
@@ -31,7 +26,7 @@ export function onMounted(mapInstance) {
   bindLayerPopup() // 在图层上绑定popup,对所有加到这个图层的矢量数据都生效
 
   // 加载气象
-  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/windpoint.json" })
+  mars3d.Util.fetchJson({ url: "https://data.mars3d.cn/file/apidemo/windpoint.json" })
     .then(function (res) {
       showWindLine(res.data)
     })
@@ -40,10 +35,7 @@ export function onMounted(mapInstance) {
     })
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -68,7 +60,7 @@ function showWindLine(arr) {
         width: 8,
         materialType: mars3d.MaterialType.LineFlow,
         materialOptions: {
-          image: "//data.mars3d.cn/img/textures/line-arrow-right.png",
+          image: "https://data.mars3d.cn/img/textures/line-arrow-right.png",
           color: "#00ff00",
           speed: 30
         }
@@ -91,7 +83,7 @@ function showWindLine(arr) {
   map.addLayer(graphicLayer)
 
   let lineMaterial = mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
-    image: "//data.mars3d.cn/img/textures/line-arrow-right.png",
+    image: "https://data.mars3d.cn/img/textures/line-arrow-right.png",
     color: "#00ff00",
     speed: 30
   })

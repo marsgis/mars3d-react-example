@@ -10,12 +10,7 @@ export const mapOptions = {
   }
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
@@ -43,10 +38,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic10(graphicLayer)
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 
@@ -228,7 +220,7 @@ function addDemoGraphic5(graphicLayer) {
       maximumConeDegree: 90, // 半球
       materialType: mars3d.MaterialType.WallScroll,
       materialOptions: {
-        image: "//data.mars3d.cn/img/textures/line-color-azure.png",
+        image: "https://data.mars3d.cn/img/textures/line-color-azure.png",
         color: "#00ffff",
         count: 1.0,
         speed: 20,
@@ -267,7 +259,7 @@ function addDemoGraphic6(graphicLayer) {
       maximumConeDegree: 90,
       materialType: mars3d.MaterialType.WallScroll,
       materialOptions: {
-        image: "//data.mars3d.cn/img/textures/poly-san.png",
+        image: "https://data.mars3d.cn/img/textures/poly-san.png",
         count: 1.0,
         color: "#00ffff",
         speed: 10,
@@ -388,7 +380,8 @@ function addDemoGraphic9(graphicLayer) {
         minimumConeDegree: 20.0,
         maximumConeDegree: 70.0
       }
-    }
+    },
+    attr: { remark: "示例9" }
   })
   graphicLayer.addGraphic(ellipsoid)
 }
@@ -413,7 +406,8 @@ function addDemoGraphic10(graphicLayer) {
         distanceDisplayCondition_far: 100000
       }
     },
-    hasEdit: false
+    hasEdit: false,
+    attr: { remark: "示例10" }
   })
   graphicLayer.addGraphic(graphicN)
 
@@ -492,7 +486,26 @@ export function addRandomGraphicByCount(count) {
       style: {
         radii: radius,
         maximumConeDegree: 90,
-        color: Cesium.Color.fromRandom({ alpha: 0.6 })
+        color: Cesium.Color.fromRandom({ alpha: 0.6 }),
+        outline: true,
+        outlineColor: "rgba(0, 204, 0, 0.4)", // 绿色
+        stackPartitions: 30, // 竖向
+        slicePartitions: 30 // 横向
+
+      },
+      // 添加扫描面
+      scanPlane: {
+        step: 1.0, // 步长
+        style: {
+          innerRadii: radius * 0.2,
+          color: "#00ffff",
+          opacity: 0.2,
+          outline: true,
+          minimumClockDegree: 90.0,
+          maximumClockDegree: 100.0,
+          minimumConeDegree: -30.0,
+          maximumConeDegree: 70.0
+        }
       },
       attr: { index }
     })
@@ -504,14 +517,15 @@ export function addRandomGraphicByCount(count) {
 }
 
 // 开始绘制
-export function startDrawGraphic() {
-  graphicLayer.startDraw({
+export async function startDrawGraphic() {
+  const graphic = await graphicLayer.startDraw({
     type: "ellipsoid",
     style: {
       color: "rgba(0,255,255,0.6)",
       maximumConeDegree: 90
     }
   })
+  console.log("标绘完成", graphic.toJSON())
 }
 
 // 在图层绑定Popup弹窗
@@ -655,18 +669,14 @@ export function bindLayerContextMenu() {
       icon: "fa fa-info",
       show: (event) => {
         const graphic = event.graphic
-        if (graphic.graphicIds) {
+        if (graphic.cluster && graphic.graphics) {
           return true
         } else {
           return false
         }
       },
       callback: (e) => {
-        const graphic = e.graphic
-        if (!graphic) {
-          return
-        }
-        const graphics = graphic.getGraphics() // 对应的grpahic数组，可以自定义显示
+        const graphics = e.graphic?.graphics
         if (graphics) {
           const names = []
           for (let index = 0; index < graphics.length; index++) {

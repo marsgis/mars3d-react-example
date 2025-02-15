@@ -11,12 +11,7 @@ export const mapOptions = {
 
 export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
   map.basemap = 2017 // 切换到蓝色底图
@@ -24,10 +19,7 @@ export function onMounted(mapInstance) {
   addLayer()
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -40,7 +32,7 @@ export function onUnmounted() {
 function addLayer() {
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     name: "合肥市建筑物",
-    url: "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
+    url: "https://data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
     maximumScreenSpaceError: 1,
     marsJzwStyle: true, // 打开建筑物特效（内置Shader代码）
     popup: [
@@ -55,11 +47,11 @@ function addLayer() {
 
   geoJsonLayer = new mars3d.layer.GeoJsonLayer({
     name: "体育设施点",
-    url: "//data.mars3d.cn/file/geojson/hfty-point.json",
+    url: "https://data.mars3d.cn/file/geojson/hfty-point.json",
     symbol: {
       type: "billboard",
       styleOptions: {
-        image: "//data.mars3d.cn/img/marker/mark-red.png",
+        image: "https://data.mars3d.cn/img/marker/mark-red.png",
         verticalOrigin: Cesium.VerticalOrigin.BOTTOM
       }
     },
@@ -94,6 +86,9 @@ export function getDataSurfaceHeight() {
   geoJsonLayer
     .autoSurfaceHeight({
       exact: true,
+      // filter: (r) => {
+      //     return r.options.id % 2 === 0
+      // },
       endItem: function (result) {
         const resultData = {
           percent: result.index + 1,
@@ -101,6 +96,9 @@ export function getDataSurfaceHeight() {
         }
         eventTarget.fire("computedResult", { resultData })
       }
+      // end: (e) => {
+      //   console.log("分析结束", e)
+      // }
     })
     .then(() => {
       hideLoading()

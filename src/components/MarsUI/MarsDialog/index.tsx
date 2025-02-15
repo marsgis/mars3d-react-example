@@ -16,6 +16,8 @@ interface Props {
   warpper?: string // 容器id 默认是app，将作为定位的参照元素，一般不需要修改
   title?: string // 弹框标题
   visible?: boolean // 是否显示
+  show?: boolean // 是否默认显示
+
   width?: number | string // 初始宽度
   height?: number | string // 初始高度
 
@@ -174,12 +176,12 @@ const DialogElement = forwardRef<any, Props>(
     )
 
     useEffect(() => {
-      if (props.visible) {
+      if (props.visible && (props.show ?? true)) {
         pannelBox.current.style.display = "block"
       } else {
         pannelBox.current.style.display = "none"
       }
-    }, [props.visible])
+    }, [props.visible, props.show])
 
     const close = useCallback(() => {
       pannelBox.current.style.display = "none"
@@ -213,7 +215,7 @@ const DialogElement = forwardRef<any, Props>(
         <div className="mars-dialog__header" onMouseDown={drag}>
           <span className="icon">{icon && icon}</span>
           <span className="title"> {props.title} </span>
-          <MarsIcon icon="close" width="18" color="#41A8FF" className="close-btn" onClick={close}></MarsIcon>
+          <MarsIcon icon="close" width="18" color="#ffffff" className="close-btn" onClick={close}></MarsIcon>
         </div>
         <div className={`mars-dialog__body ${props.footer ? "" : "full-content"}`}>
           <div className="content">{props.children}</div>

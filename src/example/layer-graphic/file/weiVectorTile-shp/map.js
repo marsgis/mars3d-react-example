@@ -10,12 +10,7 @@ export const mapOptions = {
   }
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
 
@@ -26,10 +21,7 @@ export function onMounted(mapInstance) {
   showWeiVectorTileLayer()
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -43,9 +35,9 @@ function showWeiVectorTileLayer() {
   // shp 国界线
 
   Promise.all([
-    Cesium.Resource.fetchBlob({ url: "//data.mars3d.cn/file/shp/hefei_xz.shp" }),
-    Cesium.Resource.fetchBlob({ url: "//data.mars3d.cn/file/shp/hefei_xz.dbf" }),
-    Cesium.Resource.fetchBlob({ url: "//data.mars3d.cn/file/shp/hefei_xz.prj" })
+    Cesium.Resource.fetchBlob({ url: "https://data.mars3d.cn/file/shp/hefei_xz.shp" }),
+    Cesium.Resource.fetchBlob({ url: "https://data.mars3d.cn/file/shp/hefei_xz.dbf" }),
+    Cesium.Resource.fetchBlob({ url: "https://data.mars3d.cn/file/shp/hefei_xz.prj" })
   ]).then(function (files) {
     files[0].name = "hefei.shp"
     files[1].name = "hefei.dbf"
@@ -69,7 +61,7 @@ function showWeiVectorTileLayer() {
         lineWidth: 2,
 
         showMaker: false, // 点状的时候需要打开
-        // markerImage: "//data.mars3d.cn/img/marker/lace-red.png",
+        // markerImage: "https://data.mars3d.cn/img/marker/lace-red.png",
 
         showCenterLabel: false
         // showCenterLabel: true, // 是否显示文本，仅对线和面数据有效

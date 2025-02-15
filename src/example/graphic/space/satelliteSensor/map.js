@@ -15,12 +15,7 @@ export const mapOptions = {
   }
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
@@ -31,10 +26,7 @@ export function onMounted(mapInstance) {
   map.addLayer(graphicLayer)
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -48,8 +40,8 @@ export function addDemoGraphic1(sensorParams) {
   modelGraphic = new mars3d.graphic.ModelPrimitive({
     name: "卫星模型",
     position: position,
-    forwardExtrapolationType: Cesium.ExtrapolationType.HOLD,
-    backwardExtrapolationType: Cesium.ExtrapolationType.HOLD,
+    backwardExtrapolationType: Cesium.ExtrapolationType.HOLD, // 在第1个开始时间之前，NONE时不显示，HOLD时显示开始时间对应坐标位置
+    forwardExtrapolationType: Cesium.ExtrapolationType.HOLD, // 在最后1个结束时间之后，NONE时不显示，HOLD时显示结束时间对应坐标位置
     style: {
       url: "//data.mars3d.cn/gltf/mars/weixin.gltf",
       scale: 1,
@@ -67,8 +59,8 @@ export function addDemoGraphic1(sensorParams) {
   // 视锥体
   const satelliteSensor = new mars3d.graphic.SatelliteSensor({
     position: position,
-    forwardExtrapolationType: Cesium.ExtrapolationType.HOLD,
-    backwardExtrapolationType: Cesium.ExtrapolationType.HOLD,
+    backwardExtrapolationType: Cesium.ExtrapolationType.HOLD, // 在第1个开始时间之前，NONE时不显示，HOLD时显示开始时间对应坐标位置
+    forwardExtrapolationType: Cesium.ExtrapolationType.HOLD, // 在最后1个结束时间之后，NONE时不显示，HOLD时显示结束时间对应坐标位置
     style: {
       sensorType: mars3d.graphic.SatelliteSensor.Type.Rect,
       angle1: sensorParams.angleValue1,
@@ -127,6 +119,7 @@ export async function startDrawGraphic() {
     }
   })
   graphic.position = mars3d.PointUtil.addPositionsHeight(graphic.position, 100)
+  console.log("标绘完成", graphic.toJSON())
 }
 
 let satelliteSensor

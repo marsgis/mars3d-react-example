@@ -17,24 +17,24 @@ function initMap() {
     basemaps: [
       {
         name: "天地图影像",
-        icon: "//data.mars3d.cn/img/thumbnail/basemap/tdt_img.png",
+        icon: "https://data.mars3d.cn/img/thumbnail/basemap/tdt_img.png",
         type: "tdt",
         layer: "img_d",
         show: true
       },
       {
         name: "离线地图",
-        icon: "//data.mars3d.cn/img/thumbnail/basemap/mapboxSatellite.png",
+        icon: "https://data.mars3d.cn/img/thumbnail/basemap/mapboxSatellite.png",
         type: "xyz",
-        url: "//data.mars3d.cn/tile/img/{z}/{x}/{y}.jpg",
+        url: "https://data.mars3d.cn/tile/img/{z}/{x}/{y}.jpg",
         minimumLevel: 0,
         maximumLevel: 13
       },
       {
         name: "单张图片",
-        icon: "//data.mars3d.cn/img/thumbnail/basemap/offline.png",
+        icon: "https://data.mars3d.cn/img/thumbnail/basemap/offline.png",
         type: "image",
-        url: "//data.mars3d.cn/img/map/world/world.jpg"
+        url: "https://data.mars3d.cn/img/map/world/world.jpg"
       }
     ]
   })

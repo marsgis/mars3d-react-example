@@ -23,14 +23,9 @@ export const mapOptions = {
 
 export let weixin
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
-  map = mapInstance // 记录map  map.toolbar.style.bottom = "55px"// 修改toolbar控件的样式
+  map = mapInstance // 记录map  map.control.toolbar.container.style.bottom = "55px"// 修改toolbar控件的样式
 
   // 指定时间
   // map.clock.currentTime = Cesium.JulianDate.fromDate(new Date('2020-11-27 10:48:28'))
@@ -40,10 +35,7 @@ export function onMounted(mapInstance) {
   addGraphicLayer()
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -68,9 +60,11 @@ function addGraphicLayer() {
     name: "GAOFEN 1",
     tle1: "1 39150U 13018A   21180.50843864  .00000088  00000-0  19781-4 0  9997",
     tle2: "2 39150  97.8300 252.9072 0018449 344.7422  15.3253 14.76581022440650",
-
+    // getCustomPosition: function(time) {
+    //   // 判断时间范围，返回对应自定义坐标， 不返回值时使用内部tle计算
+    // },
     model: {
-      url: "//data.mars3d.cn/gltf/mars/weixin.gltf",
+      url: "https://data.mars3d.cn/gltf/mars/weixin.gltf",
       scale: 1,
       minimumPixelSize: 90,
       silhouette: false
@@ -112,7 +106,7 @@ function addGraphicLayer() {
     //   width: 2,
     //   materialType: mars3d.MaterialType.Image2,
     //   materialOptions: {
-    //     image: "//data.mars3d.cn/img/textures/line-gradient.png"
+    //     image: "https://data.mars3d.cn/img/textures/line-gradient.png"
     //   },
     //   closure: true
     // },

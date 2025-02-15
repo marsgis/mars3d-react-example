@@ -11,12 +11,7 @@ export const mapOptions = {
   }
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
   map.hasTerrain = false
@@ -38,10 +33,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic3(graphicLayer)
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -53,7 +45,7 @@ function addDemoGraphic1(graphicLayer) {
   const graphicFJ = new mars3d.graphic.ModelPrimitive({
     position,
     style: {
-      url: "//data.mars3d.cn/gltf/mars/feiji.glb",
+      url: "https://data.mars3d.cn/gltf/mars/feiji.glb",
       scale: 1,
       minimumPixelSize: 50,
       heading: 0
@@ -110,7 +102,7 @@ function addDemoGraphic3(graphicLayer) {
   const graphicFJ = new mars3d.graphic.ModelPrimitive({
     position: [116.303349, 31.070789, 7000],
     style: {
-      url: "//data.mars3d.cn/gltf/mars/weixin.gltf",
+      url: "https://data.mars3d.cn/gltf/mars/weixin.gltf",
       scale: 1,
       minimumPixelSize: 50,
       heading: 70
@@ -168,7 +160,7 @@ export function getRayEarthPositions() {
     positions,
     style: {
       color: new Cesium.Color(1.0, 0.0, 0.0, 0.3),
-      // image: "//data.mars3d.cn/img/map/gugong.jpg",
+      // image: "https://data.mars3d.cn/img/map/gugong.jpg",
       // stRotationDegree: fixedRoute.model.heading,
       zIndex: graphicLayer.length
     }
@@ -222,8 +214,8 @@ export function bindLayerPopup() {
 }
 
 // 开始绘制
-export function startDrawGraphic() {
-  graphicLayer.startDraw({
+export async function startDrawGraphic() {
+  const graphic = await graphicLayer.startDraw({
     type: "frustum",
     style: {
       angle: 10,
@@ -234,6 +226,7 @@ export function startDrawGraphic() {
       opacity: 0.7
     }
   })
+  console.log("标绘完成", graphic.toJSON())
 }
 
 // 绑定右键菜单
@@ -365,18 +358,14 @@ export function bindLayerContextMenu() {
       icon: "fa fa-info",
       show: (event) => {
         const graphic = event.graphic
-        if (graphic.graphicIds) {
+        if (graphic.cluster && graphic.graphics) {
           return true
         } else {
           return false
         }
       },
       callback: (e) => {
-        const graphic = e.graphic
-        if (!graphic) {
-          return
-        }
-        const graphics = graphic.getGraphics() // 对应的grpahic数组，可以自定义显示
+        const graphics = e.graphic?.graphics
         if (graphics) {
           const names = []
           for (let index = 0; index < graphics.length; index++) {

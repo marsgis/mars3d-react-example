@@ -1,7 +1,7 @@
 // poi查询按钮 控件
 class PoiQueryButton extends mars3d.control.BaseControl {
   get parentContainer() {
-    return this._map.toolbar
+    return this._map.control.toolbar.container
   }
 
   /**
@@ -15,7 +15,7 @@ class PoiQueryButton extends mars3d.control.BaseControl {
     this._initQueryUI()
 
     // 查询控制器
-    this._gaodePOI = new mars3d.query.GaodePOI({
+    this._gaodePOI = new mars3d.query.QueryPOI({
       chinaCRS: this._map.chinaCRS
     })
 
@@ -435,7 +435,7 @@ class PoiQueryButton extends mars3d.control.BaseControl {
             const suggestions = document.createElement("li")
             const resultList = document.createTextNode(name)
             const fa_search = document.createElement("img")
-            fa_search.src = "img/icon/search.svg"
+            fa_search.src = "img/icon/search.png"
             suggestions.appendChild(fa_search)
 
             suggestionsList.appendChild(suggestions)

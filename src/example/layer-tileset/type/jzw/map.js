@@ -16,7 +16,7 @@ export const mapOptions = {
     {
       type: "geojson",
       name: "道路线",
-      url: "//data.mars3d.cn/file/geojson/hefei-road.json",
+      url: "https://data.mars3d.cn/file/geojson/hefei-road.json",
       symbol: {
         styleOptions: {
           width: 12,
@@ -35,11 +35,11 @@ export const mapOptions = {
     {
       type: "geojson",
       name: "河流(面状)",
-      url: "//data.mars3d.cn/file/geojson/hefei-water.json",
+      url: "https://data.mars3d.cn/file/geojson/hefei-water.json",
       symbol: {
         type: "waterC",
         styleOptions: {
-          normalMap: "//data.mars3d.cn/img/textures/waterNormals.jpg", // 水正常扰动的法线图
+          normalMap: "https://data.mars3d.cn/img/textures/waterNormals.jpg", // 水正常扰动的法线图
           frequency: 5000.0, // 控制波数的数字。
           animationSpeed: 0.05, // 控制水的动画速度的数字。
           amplitude: 9.0, // 控制水波振幅的数字。
@@ -58,12 +58,7 @@ export const mapOptions = {
 
 export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
   map.basemap = 2017 // 切换到蓝色底图
@@ -90,7 +85,7 @@ export function onMounted(mapInstance) {
 
   tiles3dLayer = new mars3d.layer.TilesetLayer({
     name: "合肥市建筑物",
-    url: "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
+    url: "https://data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
     maximumScreenSpaceError: 1,
     // projectTo2D: true,
     popup: [
@@ -102,10 +97,7 @@ export function onMounted(mapInstance) {
   map.addLayer(tiles3dLayer)
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -127,7 +119,7 @@ export function setStyleDef() {
   tiles3dLayer = new mars3d.layer.TilesetLayer({
     type: "3dtiles",
     name: "合肥市建筑物",
-    url: "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
+    url: "https://data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
     maximumScreenSpaceError: 1,
     popup: [
       { field: "objectid", name: "编号" },
@@ -195,7 +187,7 @@ export function setStyle3() {
     uniforms: {
       u_mars3d_texture: {
         value: new Cesium.TextureUniform({
-          url: "//data.mars3d.cn/img/textures/buildings.png"
+          url: "https://data.mars3d.cn/img/textures/buildings.png"
         }),
         type: Cesium.UniformType.SAMPLER_2D
       }

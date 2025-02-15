@@ -10,69 +10,62 @@ export const mapOptions = {
   }
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
-  // addGraphicLayer()
-  addBusinessLayer()
+  addDemoLayer1()
+  // addDemoLayer2()
 }
 
-// async function addGraphicLayer() {
-//   graphicLayer = new mars3d.layer.GraphicLayer({
-//     cluster: {
-//       enabled: true,
-//       pixelRange: 20,
-//       clampToGround: false,
-//       addHeight: 1000
-//     },
-//     popup: "all",
-//     center: { lat: 31.639275, lng: 117.388877, alt: 52574.8, heading: 339.3, pitch: -65 },
-//     flyTo: true
-//   })
-//   map.addLayer(graphicLayer)
+async function addDemoLayer1() {
+  graphicLayer = new mars3d.layer.GraphicLayer({
+    // 点的聚合配置
+    cluster: {
+      enabled: true,
+      pixelRange: 20
+    },
+    popup: "all"
+  })
+  map.addLayer(graphicLayer)
 
-//   // 单击事件
-//   graphicLayer.on(mars3d.EventType.click, function (event) {
-//     console.log("你单击了", event)
-//   })
+  const res = await mars3d.Util.fetchJson({ url: "https://data.mars3d.cn/file/apidemo/mudi.json" })
+  for (let i = 0; i < res.data.length; i++) {
+    const item = res.data[i]
+    const label = new mars3d.graphic.BillboardPrimitive({
+      position: [item.lng, item.lat, item.z],
+      style: {
+        image: "https://data.mars3d.cn/img/marker/mark-blue.png",
+        horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+        verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+        scaleByDistance: new Cesium.NearFarScalar(1000, 0.7, 5000000, 0.3),
+        label: {
+          text: "{text}",
+          font_size: 19,
+          color: Cesium.Color.AZURE,
+          outline: true,
+          outlineColor: Cesium.Color.BLACK,
+          outlineWidth: 2,
+          horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
+          verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+          pixelOffset: new Cesium.Cartesian2(10, 0), // 偏移量
+          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0.0, 80000)
+        }
+      },
+      attr: item
+    })
+    graphicLayer.addGraphic(label)
+  }
 
-//   const res = await mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/geojson/hfty-point.json" })
-//   for (let i = 0; i < res.features.length; i++) {
-//     const item = res.features[i]
-//     const label = new mars3d.graphic.LabelPrimitive({
-//       position: item.geometry.coordinates,
-//       style: {
-//         show: true,
-//         text: "测试",
-//         font_size: 14,
-//         fill: true,
-//         color: "#fcfa36",
-//         font_family: "楷体",
-//         font_weight: "bold",
-//         outline: true,
-//         outlineColor: "rgba(0,0,0,0.8)",
-//         outlineWidth: 3,
-//         background: true,
-//         backgroundColor: "#009476",
-//         visibleDepth: false
-//       }
-//     })
-//     graphicLayer.addGraphic(label)
-//   }
-// }
+  bindLayerEvent(graphicLayer)
+}
 
-function addBusinessLayer() {
+function addDemoLayer2() {
   const singleDigitPins = {}
 
   // 创建矢量数据图层（业务数据图层）
   graphicLayer = new mars3d.layer.BusineDataLayer({
-    url: "//data.mars3d.cn/file/apidemo/mudi.json",
+    url: "https://data.mars3d.cn/file/apidemo/mudi.json",
     dataColumn: "data", // 数据接口中对应列表所在的取值字段名
     lngColumn: "lng",
     latColumn: "lat",
@@ -105,7 +98,7 @@ function addBusinessLayer() {
     symbol: {
       type: "billboardP",
       styleOptions: {
-        image: "//data.mars3d.cn/img/marker/mark-blue.png",
+        image: "https://data.mars3d.cn/img/marker/mark-blue.png",
         width: 25,
         height: 34, // billboard聚合必须有width、height
         horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
@@ -130,7 +123,7 @@ function addBusinessLayer() {
     //   const graphic = new mars3d.graphic.BillboardEntity({
     //     position: e.position,
     //     style: {
-    //       image: "//data.mars3d.cn/img/marker/lace-blue.png",
+    //       image: "https://data.mars3d.cn/img/marker/lace-blue.png",
     //       width: 25,
     //       height: 34, // 聚合必须有width、height
     //       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
@@ -143,6 +136,9 @@ function addBusinessLayer() {
   })
   map.addLayer(graphicLayer)
 
+  bindLayerEvent(graphicLayer)
+}
+function bindLayerEvent() {
   graphicLayer.on(mars3d.EventType.clusterStop, function (event) {
     console.log("聚合发生了变化，并渲染完成", event)
   })
@@ -154,9 +150,9 @@ function addBusinessLayer() {
     if (map.camera.positionCartographic.height > 90000) {
       const graphic = event.graphic
       // graphic.closePopup()
-      if (graphic?.graphicIds) {
+      if (graphic?.cluster) {
         // 单击了聚合的点
-        console.log("单击了聚合的点", graphic.getGraphics())
+        console.log("单击了聚合的点", graphic.graphics)
       } else {
         // 单击了具体的点对象
         const position = graphic.positionShow
@@ -173,8 +169,8 @@ function addBusinessLayer() {
   })
 
   graphicLayer.bindPopup(function (event) {
-    if (event.graphic?.graphicIds) {
-      const graphics = event.graphic.getGraphics() // 对应的grpahic数组，可以自定义显示
+    if (event.graphic?.cluster) {
+      const graphics = event.graphic.graphics // 对应的grpahic数组，可以自定义显示
       if (graphics) {
         const names = []
         for (let index = 0; index < graphics.length; index++) {
@@ -255,10 +251,7 @@ async function getClusterImage(count) {
   return circleCanvas.toDataURL("image/png") // getImage方法返回任意canvas的图片即可
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   graphicLayer.remove()
   graphicLayer = null

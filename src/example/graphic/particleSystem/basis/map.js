@@ -11,12 +11,7 @@ export const mapOptions = {
 
 export let graphicLayer
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
@@ -31,10 +26,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic4(graphicLayer)
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -44,7 +36,7 @@ function addDemoGraphic1(graphicLayer) {
   const particleSystem = new mars3d.graphic.ParticleSystem({
     position: Cesium.Cartesian3.fromDegrees(117.224855, 31.815135, 28.05), // 位置
     style: {
-      image: "//data.mars3d.cn/img/particle/penquan.png",
+      image: "https://data.mars3d.cn/img/particle/penquan.png",
       particleSize: 8, // 粒子大小（单位：像素）
       emissionRate: 100.0, // 发射速率 （单位：次/秒）
       heading: 290, // 方向角
@@ -73,7 +65,7 @@ function addDemoGraphic2(graphicLayer) {
   const particleSystem = new mars3d.graphic.ParticleSystem({
     position: Cesium.Cartesian3.fromDegrees(117.225518, 31.815549, 28.28), // 位置
     style: {
-      image: "//data.mars3d.cn/img/particle/fire2.png",
+      image: "https://data.mars3d.cn/img/particle/fire2.png",
       particleSize: 5, // 粒子大小（单位：像素）
       emissionRate: 100, // 发射速率 （单位：次/秒）
       maxHeight: 5000, // 超出该高度后不显示粒子效果
@@ -194,16 +186,19 @@ function getImage() {
 // 动态运行车辆的尾气粒子效果
 function addDemoGraphic4(graphicLayer) {
   const fixedRoute = new mars3d.graphic.FixedRoute({
-    speed: 120,
-    positions: [
-      [117.226414, 31.823551, 34.3],
-      [117.227084, 31.8003, 30.1]
-    ],
-    clockLoop: true, // 是否循环播放
+    position: {
+      type: "time", // 时序动态坐标
+      speed: 120,
+      list: [
+        [117.226414, 31.823551, 34.3],
+        [117.227084, 31.8003, 30.1]
+      ]
+    },
     model: {
-      url: "//data.mars3d.cn/gltf/mars/qiche.gltf",
+      url: "https://data.mars3d.cn/gltf/mars/qiche.gltf",
       scale: 0.2
-    }
+    },
+    clockLoop: true // 是否循环播放
   })
   graphicLayer.addGraphic(fixedRoute)
 
@@ -212,7 +207,7 @@ function addDemoGraphic4(graphicLayer) {
   const particleSystem = new mars3d.graphic.ParticleSystem({
     position: fixedRoute.property,
     style: {
-      image: "//data.mars3d.cn/img/particle/smoke.png",
+      image: "https://data.mars3d.cn/img/particle/smoke.png",
       particleSize: 12, // 粒子大小（单位：像素）
       emissionRate: 30.0, // 发射速率 （单位：次/秒）
       pitch: 40, // 俯仰角
@@ -251,7 +246,7 @@ export function addRandomGraphicByCount(count) {
     const graphic = new mars3d.graphic.ParticleSystem({
       position,
       style: {
-        image: "//data.mars3d.cn/img/particle/fire2.png",
+        image: "https://data.mars3d.cn/img/particle/fire2.png",
         particleSize: 5, // 粒子大小（单位：像素）
         emissionRate: 200, // 粒子发射器的发射速率 （单位：次/秒）
 
@@ -272,11 +267,11 @@ export function addRandomGraphicByCount(count) {
 }
 
 // 开始绘制
-export function startDrawGraphic() {
-  graphicLayer.startDraw({
+export async function startDrawGraphic() {
+  const graphic = await graphicLayer.startDraw({
     type: "particleSystem",
     style: {
-      image: "//data.mars3d.cn/img/particle/smoke.png",
+      image: "https://data.mars3d.cn/img/particle/smoke.png",
       particleSize: 8, // 粒子大小（单位：像素）
       emissionRate: 100.0, // 发射速率 （单位：次/秒）
       heading: 290, // 方向角
@@ -292,13 +287,14 @@ export function startDrawGraphic() {
       maximumParticleLife: 3.0 // 最大寿命时间（秒）
     }
   })
+  console.log("标绘完成", graphic.toJSON())
 }
 
-export function startDrawGraphic2() {
-  graphicLayer.startDraw({
+export async function startDrawGraphic2() {
+  const graphic = await graphicLayer.startDraw({
     type: "particleSystem",
     style: {
-      image: "//data.mars3d.cn/img/particle/fire2.png",
+      image: "https://data.mars3d.cn/img/particle/fire2.png",
       particleSize: 5, // 粒子大小（单位：像素）
       emissionRate: 200, //  发射速率 （单位：次/秒）
 
@@ -312,6 +308,7 @@ export function startDrawGraphic2() {
       maximumSpeed: 9.0 // 最大速度（单位：米/秒）
     }
   })
+  console.log("标绘完成", graphic.toJSON())
 }
 
 let particleGraphic
@@ -331,8 +328,8 @@ export async function btnSelectPosition() {
   const graphic = await map.graphicLayer.startDraw({
     type: "point"
   })
-  const positions = graphic.positionsShow
-  particlePosition = positions[0]
+
+  particlePosition = graphic.coord
   map.graphicLayer.clear()
 
   particleGraphic.position = particlePosition

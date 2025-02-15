@@ -15,12 +15,7 @@ export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出
 let moveGraphicObj
 const tiles3dLayerArr = []
 let removeGraphicArr
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
@@ -404,7 +399,7 @@ export function addGraphics() {
   buildPositions.forEach((e) => {
     const tiles3dLayer = new mars3d.layer.TilesetLayer({
       name: e.name,
-      url: "//data.mars3d.cn/3dtiles/bim-daxue/tileset.json",
+      url: "https://data.mars3d.cn/3dtiles/bim-daxue/tileset.json",
       position: e,
       scale: 1000,
       popup: e.name
@@ -458,7 +453,7 @@ export function addGraphics() {
       name: e.name,
       position: e.position,
       style: {
-        url: "//data.mars3d.cn/gltf/mars/leida.glb",
+        url: "https://data.mars3d.cn/gltf/mars/leida.glb",
         scale: 1,
         minimumPixelSize: 40,
         clampToGround: true,
@@ -482,7 +477,7 @@ export function addGraphics() {
     name: "救援卫星",
     position: [120, 36, 550000],
     style: {
-      url: "//data.mars3d.cn/gltf/mars/weixin.gltf",
+      url: "https://data.mars3d.cn/gltf/mars/weixin.gltf",
       scale: 100,
       label: {
         text: "救援卫星",
@@ -503,22 +498,25 @@ export function addGraphics() {
     name: "飞机1",
     position: [129, 36, 550000],
     style: {
-      url: "//data.mars3d.cn/gltf/mars/wrj.glb",
+      url: "https://data.mars3d.cn/gltf/mars/wrj.glb",
       scale: 100
     }
   })
   graphicLayer.addGraphic(plane1)
 
   const plane = new mars3d.graphic.FixedRoute({
-    name: "飞行飞机",
-    speed: 500000,
     id: "rescuePlane",
-    positions: [
-      [123, 36, 550000],
-      [127, 31.83, 10000]
-    ],
+    name: "飞行飞机",
+    position: {
+      type: "time", // 时序动态坐标
+      speed: 500000,
+      list: [
+        [123, 36, 550000],
+        [127, 31.83, 10000]
+      ]
+    },
     model: {
-      url: "//data.mars3d.cn/gltf/mars/wrj.glb",
+      url: "https://data.mars3d.cn/gltf/mars/wrj.glb",
       scale: 100,
       pitch: 15
     }
@@ -564,16 +562,19 @@ export function addGraphics() {
   shipPositions.forEach((e) => {
     if (e.name === "医疗船") {
       yiLiaoShip = new mars3d.graphic.FixedRoute({
-        name: "医疗船",
         id: "treatShip",
-        speed: 500000,
-        positions: [
-          [121.94, 27.03],
-          [125.989481, 27.620443],
-          [126.787149, 31.205917]
-        ],
+        name: "医疗船",
+        position: {
+          type: "time", // 时序动态坐标
+          speed: 500000,
+          list: [
+            [121.94, 27.03],
+            [125.989481, 27.620443],
+            [126.787149, 31.205917]
+          ]
+        },
         model: {
-          url: "//data.mars3d.cn/gltf/imap/a64cb3926a024fd8bc2638da6f7ebe32/gltf/gltf2.gltf",
+          url: "https://data.mars3d.cn/gltf/imap/a64cb3926a024fd8bc2638da6f7ebe32/gltf/gltf2.gltf",
           scale: 5000
         },
         label: {
@@ -590,16 +591,19 @@ export function addGraphics() {
       graphicLayer.addGraphic(yiLiaoShip)
     } else if (e.name === "救援船2") {
       jiuYuanShip = new mars3d.graphic.FixedRoute({
-        name: "救援船2",
-        speed: 500000,
         id: "rescueShip",
-        positions: [
-          [122.54, 29.03],
-          [123.547133, 31.293979],
-          [127, 31.8]
-        ],
+        name: "救援船2",
+        position: {
+          type: "time", // 时序动态坐标
+          speed: 500000,
+          list: [
+            [122.54, 29.03],
+            [123.547133, 31.293979],
+            [127, 31.8]
+          ]
+        },
         model: {
-          url: "//data.mars3d.cn/gltf/imap/a64cb3926a024fd8bc2638da6f7ebe32/gltf/gltf2.gltf",
+          url: "https://data.mars3d.cn/gltf/imap/a64cb3926a024fd8bc2638da6f7ebe32/gltf/gltf2.gltf",
           scale: 5000
         },
         label: {
@@ -619,7 +623,7 @@ export function addGraphics() {
         name: e.name,
         position: e.position,
         style: {
-          url: "//data.mars3d.cn/gltf/imap/a64cb3926a024fd8bc2638da6f7ebe32/gltf/gltf2.gltf",
+          url: "https://data.mars3d.cn/gltf/imap/a64cb3926a024fd8bc2638da6f7ebe32/gltf/gltf2.gltf",
           scale: 5000,
           label: {
             text: e.name,
@@ -655,10 +659,7 @@ export function addGraphics() {
   moveGraphicObj = { yiLiaoShip, jiuYuanShip, plane }
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -727,7 +728,7 @@ export function firstStep() {
     position: new mars3d.LngLatPoint(126.320842, 31.97364, 14000),
     id: "rescueIcon",
     style: {
-      image: "//data.mars3d.cn/img/marker/warn.png",
+      image: "https://data.mars3d.cn/img/marker/warn.png",
       scale: 0.5,
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
@@ -759,7 +760,7 @@ export function firstStep() {
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
         color: "rgba(255, 204, 102 , .5)",
-        image: "//data.mars3d.cn/img/textures/line-tarans.png",
+        image: "https://data.mars3d.cn/img/textures/line-tarans.png",
         speed: 8
       }
     }
@@ -806,7 +807,7 @@ export function secondStep() {
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
         color: "rgba(255, 204, 102 , .5)",
-        image: "//data.mars3d.cn/img/textures/line-tarans.png",
+        image: "https://data.mars3d.cn/img/textures/line-tarans.png",
         speed: 8
       }
     }
@@ -961,7 +962,7 @@ export function forthStep() {
       width: 20,
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
-        image: "//data.mars3d.cn/img/textures/line-arrow-blue.png"
+        image: "https://data.mars3d.cn/img/textures/line-arrow-blue.png"
       }
     },
     name: "救援船救援路线",
@@ -980,7 +981,7 @@ export function forthStep() {
       width: 20,
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
-        image: "//data.mars3d.cn/img/textures/line-arrow-blue.png"
+        image: "https://data.mars3d.cn/img/textures/line-arrow-blue.png"
       }
     },
     name: "补给船救援路线",

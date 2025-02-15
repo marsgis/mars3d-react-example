@@ -11,19 +11,14 @@ export const mapOptions = {
 
 let outlineEffect
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
   // 加模型
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     name: "石化工厂",
-    url: "//data.mars3d.cn/3dtiles/max-shihua/tileset.json",
+    url: "https://data.mars3d.cn/3dtiles/max-shihua/tileset.json",
     position: { lng: 117.077158, lat: 31.659116, alt: -2.0 },
     maximumScreenSpaceError: 1,
     flyTo: true
@@ -39,7 +34,7 @@ export function onMounted(mapInstance) {
     name: "汽车",
     position: Cesium.Cartesian3.fromDegrees(117.074035, 31.660459, 40),
     style: {
-      url: "//data.mars3d.cn/gltf/mars/qiche.gltf",
+      url: "https://data.mars3d.cn/gltf/mars/qiche.gltf",
       scale: 1,
       minimumPixelSize: 50
     }
@@ -139,10 +134,7 @@ export function onMounted(mapInstance) {
   // })
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }

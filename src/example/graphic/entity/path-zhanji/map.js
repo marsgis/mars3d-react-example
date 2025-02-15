@@ -11,22 +11,14 @@ export const mapOptions = {
   }
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
   addDemoGraphics()
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -61,42 +53,15 @@ function addDemoGraphics() {
   linePositions = mars3d.PointUtil.setPositionsHeight(linePositions, 20000)
   linePositions.push(linePositions[0]) // 闭合圆
 
-  // 圆圈线
-  // const graphicLine = new mars3d.graphic.PolylineEntity({
-  //   positions: linePositions,
-  //   style: {
-  //     width: 8,
-  //     materialType: mars3d.MaterialType.PolylineGlow,
-  //     materialOptions: {
-  //       glowPower: 0.2,
-  //       color: Cesium.Color.GREEN
-  //     }
-  //   }
-  // })
-  // graphicLayer.addGraphic(graphicLine)
-
-  // 飞机path路径
-  const property = new Cesium.SampledPositionProperty()
-  property.forwardExtrapolationType = Cesium.ExtrapolationType.HOLD
-
-  const start = map.clock.currentTime
-  let alltimes = 0
-  for (let i = 0, len = linePositions.length; i < len; i++) {
-    alltimes += 1
-    const time = Cesium.JulianDate.addSeconds(start, alltimes, new Cesium.JulianDate())
-    property.addSample(time, linePositions[i])
-  }
-  const stop = Cesium.JulianDate.addSeconds(start, alltimes, new Cesium.JulianDate())
-
-  // This is where it becomes a smooth path.
-  property.setInterpolationOptions({
-    interpolationDegree: 5,
-    interpolationAlgorithm: Cesium.LagrangePolynomialApproximation
-  })
-
   graphicPath = new mars3d.graphic.PathEntity({
-    position: property,
-    orientation: new Cesium.VelocityOrientationProperty(property),
+    position: {
+      type: "time", // 时序动态坐标
+      speed: 9000,
+      list: linePositions,
+      interpolation: true,
+      interpolationDegree: 5,
+      interpolationAlgorithm: Cesium.LagrangePolynomialApproximation
+    },
     style: {
       width: 2,
       color: "#ffff00",
@@ -122,13 +87,19 @@ function addDemoGraphics() {
   })
   graphicLayer.addGraphic(graphicPath)
 
-  // Make sure viewer is at the desired time.
-  map.clock.startTime = start.clone()
-  map.clock.stopTime = stop.clone()
-  map.clock.currentTime = start.clone()
-  map.clock.clockRange = Cesium.ClockRange.LOOP_STOP // 到达终止时间后循环
-  map.clock.multiplier = 1
-  map.clock.shouldAnimate = true
+  // 设置时钟属性
+  const timeRange = graphicPath.timeRange
+  if (timeRange) {
+    map.clock.startTime = timeRange.startTime.clone()
+    map.clock.stopTime = timeRange.stopTime.clone()
+    map.clock.currentTime = timeRange.startTime.clone()
+    map.clock.clockRange = Cesium.ClockRange.LOOP_STOP
+    map.clock.multiplier = 5
+
+    if (map.control.timeline) {
+      map.control.timeline.zoomTo(map.clock.startTime, map.clock.stopTime)
+    }
+  }
 }
 
 // 顶视图
@@ -137,6 +108,7 @@ export function viewSeeTop() {
 
   map.flyToPositions(linePositions, { pitch: -90 })
 }
+
 // 侧视图
 export function viewSeeCe() {
   map.trackedEntity = graphicPath
@@ -147,6 +119,7 @@ export function viewSeeCe() {
     duration: 0
   })
 }
+
 // 主视图
 export function viewSeeHome() {
   map.trackedEntity = graphicPath

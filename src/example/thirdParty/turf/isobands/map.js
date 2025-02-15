@@ -8,12 +8,7 @@ export const mapOptions = {
   layers: []
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
@@ -21,21 +16,18 @@ export function onMounted(mapInstance) {
     layer.brightness = 0.4
   })
 
-  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/geojson/areas/340000.json" }).then(function (res) {
+  mars3d.Util.fetchJson({ url: "https://data.mars3d.cn/file/geojson/areas/340000.json" }).then(function (res) {
     anhuiGeoJson = res.features[0]
   })
 
   // 加载气象
-  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/windpoint.json" }).then(function (res) {
+  mars3d.Util.fetchJson({ url: "https://data.mars3d.cn/file/apidemo/windpoint.json" }).then(function (res) {
     showWindLine(res.data)
   })
 }
 
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }

@@ -6,7 +6,7 @@ export let graphicLayer // 矢量图层对象
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: 21.748008, lng: 113.230533, alt: 699712.9, heading: 350.3, pitch: -52 },
+    center: { lat: 30.852556, lng: 118.436834, alt: 117839.8, heading: 311.9, pitch: -43.4 },
     showSun: false,
     showMoon: false,
     showSkyBox: false,
@@ -27,16 +27,11 @@ export const mapOptions = {
 }
 
 // 行政区划编码(全国统一，可以按需修改其他省市县编码)
-const xzqhCode = "430000"
+const xzqhCode = "340100"
 
-const wallHeight = 40000 // 墙高
+const wallHeight = 20000 // 墙高
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
@@ -61,10 +56,7 @@ export function onMounted(mapInstance) {
   addGraphics()
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 
@@ -89,9 +81,7 @@ async function addGraphics() {
 
   for (let i = 0; i < arr.length; i++) {
     const item = arr[i]
-    if (!item.isMultiMax) {
-      continue
-    }
+
     // polygon面
     const polygonEntity = new mars3d.graphic.PolygonEntity({
       positions: item.positions,
@@ -136,8 +126,8 @@ async function addGraphics() {
         html: `<div class ="coneNum">${item.attr.name}:${number}</div>`,
         horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
         verticalOrigin: Cesium.VerticalOrigin.CENTER,
-        distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0.0, 2000000),
-        scaleByDistance: new Cesium.NearFarScalar(500000, 1.0, 1000000, 0.5)
+        distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0.0, 1000000),
+        scaleByDistance: new Cesium.NearFarScalar(200000, 1.0, 500000, 0.5)
       }
     })
     graphicLayer.addGraphic(graphic)

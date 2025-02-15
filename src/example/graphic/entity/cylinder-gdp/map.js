@@ -13,7 +13,7 @@ export const mapOptions = {
       id: 1987,
       type: "geojson",
       name: "淮海经济区11市",
-      url: "//data.mars3d.cn/file/geojson/huaihai.json",
+      url: "https://data.mars3d.cn/file/geojson/huaihai.json",
       symbol: {
         styleOptions: {
           materialType: mars3d.MaterialType.PolyGradient,
@@ -46,12 +46,7 @@ export const mapOptions = {
   ]
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
@@ -61,7 +56,7 @@ export function onMounted(mapInstance) {
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/huaihai-jj.json" })
+  mars3d.Util.fetchJson({ url: "https://data.mars3d.cn/file/apidemo/huaihai-jj.json" })
     .then(function (res) {
       conventChartsData(res.data) // 单击显示的popup
       showYearZT(res.data) // 柱状图
@@ -76,10 +71,7 @@ export function onMounted(mapInstance) {
   })
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }

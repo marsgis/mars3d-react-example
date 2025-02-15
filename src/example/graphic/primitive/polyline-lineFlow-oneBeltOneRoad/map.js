@@ -11,19 +11,14 @@ export const mapOptions = {
   terrain: false
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
   map.basemap = 2017 // 蓝色底图
 
   // 加载数据
-  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/oneBeltOneRoad.json" })
+  mars3d.Util.fetchJson({ url: "https://data.mars3d.cn/file/apidemo/oneBeltOneRoad.json" })
     .then(function (res) {
       showRoad(res.data.land, {
         name: "丝绸之路经济带",
@@ -40,10 +35,7 @@ export function onMounted(mapInstance) {
     })
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -68,7 +60,7 @@ function showRoad(arr, options) {
         name: item.name,
         position,
         style: {
-          image: "//data.mars3d.cn/img/marker/country/" + item.icon,
+          image: "https://data.mars3d.cn/img/marker/country/" + item.icon,
           scale: 0.7,
           horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
           verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
@@ -105,7 +97,7 @@ function showRoad(arr, options) {
       width: 4,
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
-        image: "//data.mars3d.cn/img/textures/line-pulse.png",
+        image: "https://data.mars3d.cn/img/textures/line-pulse.png",
         color: options.color,
         repeat: new Cesium.Cartesian2(10.0, 1.0),
         speed: 2

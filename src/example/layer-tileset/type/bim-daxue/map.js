@@ -15,12 +15,21 @@ export const mapOptions = {
   control: {
     infoBox: false
   },
+  thing: {
+    keyboardRoam: {
+      moveStep: 0.1, // 平移步长 (米)。
+      dirStep: 50, // 相机原地旋转步长，值越大步长越小。
+      rotateStep: 0.3, // 相机围绕目标点旋转速率，0.3-2.0
+      minPitch: 0.1, // 最小仰角  0-1
+      maxPitch: 0.95 // 最大仰角  0-1
+    }
+  },
   layers: [
     {
       id: 1987,
       name: "教学楼",
       type: "3dtiles",
-      url: "//data.mars3d.cn/3dtiles/bim-daxue/tileset.json",
+      url: "https://data.mars3d.cn/3dtiles/bim-daxue/tileset.json",
       position: { lng: 117.251229, lat: 31.844015, alt: 31.2 },
       maximumScreenSpaceError: 16,
       highlight: {
@@ -33,12 +42,7 @@ export const mapOptions = {
   ]
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
@@ -83,23 +87,11 @@ export function onMounted(mapInstance) {
   //   })
   // })
 
-  // 键盘漫游
-  map.keyboardRoam.setOptions({
-    moveStep: 0.1, // 平移步长 (米)。
-    dirStep: 50, // 相机原地旋转步长，值越大步长越小。
-    rotateStep: 0.3, // 相机围绕目标点旋转速率，0.3-2.0
-    minPitch: 0.1, // 最小仰角  0-1
-    maxPitch: 0.95 // 最大仰角  0-1
-  })
-  map.keyboardRoam.enabled = true // 开启键盘漫游
 
   addPlaneClipThing(layerWorkBIM)
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -125,8 +117,8 @@ function addPlaneClipThing(layerWorkBIM) {
       [117.251176, 31.844216, 28.24]
     ],
     diffHeight: 10, // 高度
-    image: "//data.mars3d.cn/img/textures/poly-stone.jpg", // 边界墙材质
-    imageBottom: "//data.mars3d.cn/img/textures/poly-soil.jpg", // 底部区域材质
+    image: "https://data.mars3d.cn/img/textures/poly-stone.jpg", // 边界墙材质
+    imageBottom: "https://data.mars3d.cn/img/textures/poly-soil.jpg", // 底部区域材质
     splitNum: 50 // wall边界插值数
   })
   map.addThing(terrainPlanClip)

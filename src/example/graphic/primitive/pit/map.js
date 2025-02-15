@@ -9,12 +9,7 @@ export const mapOptions = {
     center: { lat: 31.78828, lng: 117.219198, alt: 6885, heading: 346, pitch: -62 }
   }
 }
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
@@ -37,10 +32,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic3(graphicLayer)
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
   graphicLayer.remove()
@@ -57,8 +49,8 @@ function addDemoGraphic1(graphicLayer) {
     ],
     style: {
       diffHeight: 300, // 井的深度
-      image: "//data.mars3d.cn/img/textures/poly-stone.jpg",
-      imageBottom: "//data.mars3d.cn/img/textures/poly-soil.jpg",
+      image: "https://data.mars3d.cn/img/textures/poly-stone.jpg",
+      imageBottom: "https://data.mars3d.cn/img/textures/poly-soil.jpg",
       label: {
         text: "我是火星科技",
         font_size: 18,
@@ -142,8 +134,8 @@ function addDemoGraphic2(graphicLayer) {
     ],
     style: {
       diffHeight: 200, // 井的深度
-      image: "//data.mars3d.cn/img/textures/mining.jpg",
-      imageBottom: "//data.mars3d.cn/img/textures/poly-soil.jpg",
+      image: "https://data.mars3d.cn/img/textures/mining.jpg",
+      imageBottom: "https://data.mars3d.cn/img/textures/poly-soil.jpg",
       splitNum: 50 // 井边界插值数
     },
     attr: { remark: "示例2" }
@@ -164,8 +156,8 @@ function addDemoGraphic3(graphicLayer) {
     ],
     style: {
       diffHeight: 200, // 井的深度
-      image: "//data.mars3d.cn/img/textures/poly-stone.jpg",
-      imageBottom: "//data.mars3d.cn/img/textures/poly-sand.jpg",
+      image: "https://data.mars3d.cn/img/textures/poly-stone.jpg",
+      imageBottom: "https://data.mars3d.cn/img/textures/poly-sand.jpg",
       splitNum: 50 // 井边界插值数
     },
     attr: { remark: "示例3" }
@@ -197,8 +189,8 @@ export function addRandomGraphicByCount(count) {
       positions: [pt1, pt2, pt3, pt4, pt5],
       style: {
         diffHeight: radius * 0.5, // 井的深度
-        image: "//data.mars3d.cn/img/textures/poly-stone.jpg",
-        imageBottom: "//data.mars3d.cn/img/textures/poly-soil.jpg"
+        image: "https://data.mars3d.cn/img/textures/poly-stone.jpg",
+        imageBottom: "https://data.mars3d.cn/img/textures/poly-soil.jpg"
       },
       attr: { index }
     })
@@ -210,16 +202,17 @@ export function addRandomGraphicByCount(count) {
 }
 
 // 开始绘制
-export function startDrawGraphic(height) {
-  graphicLayer.startDraw({
+export async function startDrawGraphic(height) {
+  const graphic = await graphicLayer.startDraw({
     type: "pit",
     style: {
       diffHeight: height || 50, // 井的深度
-      image: "//data.mars3d.cn/img/textures/poly-stone.jpg",
-      imageBottom: "//data.mars3d.cn/img/textures/poly-soil.jpg",
+      image: "https://data.mars3d.cn/img/textures/poly-stone.jpg",
+      imageBottom: "https://data.mars3d.cn/img/textures/poly-soil.jpg",
       splitNum: 50 // 井边界插值数
     }
   })
+  console.log("标绘完成", graphic.toJSON())
 }
 
 // 在图层绑定Popup弹窗
@@ -237,6 +230,46 @@ export function bindLayerPopup() {
 // 绑定右键菜单
 export function bindLayerContextMenu() {
   graphicLayer.bindContextMenu([
+    {
+      text: "开始编辑对象",
+      icon: "fa fa-edit",
+      show: function (e) {
+        const graphic = e.graphic
+        if (!graphic || !graphic.hasEdit) {
+          return false
+        }
+        return !graphic.isEditing
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
+        if (graphic) {
+          graphicLayer.startEditing(graphic)
+        }
+      }
+    },
+    {
+      text: "停止编辑对象",
+      icon: "fa fa-edit",
+      show: function (e) {
+        const graphic = e.graphic
+        if (!graphic || !graphic.hasEdit) {
+          return false
+        }
+        return graphic.isEditing
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
+        if (graphic) {
+          graphic.stopEditing()
+        }
+      }
+    },
     {
       text: "还原编辑(还原到初始)",
       icon: "fa fa-pencil",
@@ -323,18 +356,14 @@ export function bindLayerContextMenu() {
       icon: "fa fa-info",
       show: (event) => {
         const graphic = event.graphic
-        if (graphic.graphicIds) {
+        if (graphic.cluster && graphic.graphics) {
           return true
         } else {
           return false
         }
       },
       callback: (e) => {
-        const graphic = e.graphic
-        if (!graphic) {
-          return
-        }
-        const graphics = graphic.getGraphics() // 对应的grpahic数组，可以自定义显示
+        const graphics = e.graphic?.graphics
         if (graphics) {
           const names = []
           for (let index = 0; index < graphics.length; index++) {

@@ -1,12 +1,16 @@
+import * as React from "react"
 import type { DatePickerProps } from "antd/lib/date-picker"
 import { DatePicker } from "antd"
 import { PickerLocale } from "antd/es/date-picker/generatePicker"
-
+import type { PickerDateProps } from "antd/es/date-picker/generatePicker"
+import type { Moment } from "moment"
+import momentGenerateConfig from "rc-picker/lib/generate/moment"
 import "./index.less"
-
 import moment from "moment"
 import "moment/locale/zh-cn"
 moment.locale("zh-cn")
+
+export interface TimePickerProps extends Omit<PickerDateProps<Moment>, "picker"> {}
 
 class LocalHelper {
   getDefinedChineseLocal() {
@@ -57,9 +61,11 @@ class LocalHelper {
 
 const LocalFormat = new LocalHelper()
 
-export const MarsDatePicker = (props: DatePickerProps) => {
+const MyDatePicker = DatePicker.generatePicker<Moment>(momentGenerateConfig)
+
+export const MarsDatePicker = React.forwardRef<any, TimePickerProps>((props, ref) => {
   return (
-    <DatePicker
+    <MyDatePicker
       locale={LocalFormat.getDefinedChineseLocal()}
       className="mars-date-picker"
       popupClassName="mars-datepicker-dropdown"
@@ -67,4 +73,4 @@ export const MarsDatePicker = (props: DatePickerProps) => {
       {...props}
     />
   )
-}
+})

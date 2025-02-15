@@ -11,7 +11,7 @@ export const mapOptions = {
   basemaps: [
     {
       name: "ArcGIS影像",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/esriWorldImagery.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/esriWorldImagery.png",
       type: "arcgis",
       url: "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer",
       enablePickFeatures: false,
@@ -19,21 +19,21 @@ export const mapOptions = {
     },
     {
       name: "ArcGIS电子街道",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/google_vec.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/google_vec.png",
       type: "arcgis",
       url: "https://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer",
       enablePickFeatures: false
     },
     {
       name: "ArcGIS NatGeo",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/esriWorldStreetMap.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/esriWorldStreetMap.png",
       type: "arcgis",
       url: "https://services.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer",
       enablePickFeatures: false
     },
     {
       name: "蓝色底图",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/bd-c-midnight.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/bd-c-midnight.png",
       type: "arcgis",
       url: "https://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer",
       enablePickFeatures: false,
@@ -48,7 +48,7 @@ export const mapOptions = {
     },
     {
       name: "灰色底图",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/bd-c-grayscale.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/bd-c-grayscale.png",
       type: "arcgis",
       url: "https://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer",
       enablePickFeatures: false,
@@ -64,20 +64,12 @@ export const mapOptions = {
   ]
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }

@@ -22,19 +22,14 @@ export const mapOptions = {
 
 export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
   // 加个模型
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     name: "地下管网",
-    url: "//data.mars3d.cn/3dtiles/max-piping/tileset.json",
+    url: "https://data.mars3d.cn/3dtiles/max-piping/tileset.json",
     position: { lng: 117.215457, lat: 31.843363, alt: -3.6 },
     rotation: { z: 336.7 },
     maximumScreenSpaceError: 2,
@@ -47,10 +42,7 @@ export function onMounted(mapInstance) {
   terrainClips(30)
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -107,8 +99,8 @@ export function terrainClips(heightVal) {
   terrainPlanClip = new mars3d.thing.TerrainClip({
     diffHeight: heightVal, // 高度
     exact: true,
-    image: "//data.mars3d.cn/img/textures/poly-stone.jpg",
-    imageBottom: "//data.mars3d.cn/img/textures/poly-soil.jpg",
+    image: "https://data.mars3d.cn/img/textures/poly-stone.jpg",
+    imageBottom: "https://data.mars3d.cn/img/textures/poly-soil.jpg",
     splitNum: 50 // 井边界插值数
   })
   map.addThing(terrainPlanClip)

@@ -7,11 +7,11 @@ function initMap() {
     scene: {
       center: { lat: 30.827414, lng: 116.378229, alt: 16933, heading: 360, pitch: -56 }
     },
-    terrain: { url: "//data.mars3d.cn/terrain", show: true },
+    terrain: { url: "https://data.mars3d.cn/terrain", show: true },
     basemaps: [
       {
         name: "天地图影像",
-        icon: "//data.mars3d.cn/img/thumbnail/basemap/tdt_img.png",
+        icon: "https://data.mars3d.cn/img/thumbnail/basemap/tdt_img.png",
         type: "group",
         layers: [
           { name: "底图", type: "tdt", layer: "img_d" },
@@ -23,8 +23,8 @@ function initMap() {
     thing: {
       terrainClip: {
         diffHeight: 50,
-        image: "//data.mars3d.cn/img/textures/poly-stone.jpg",
-        imageBottom: "//data.mars3d.cn/img/textures/poly-soil.jpg",
+        image: "https://data.mars3d.cn/img/textures/poly-stone.jpg",
+        imageBottom: "https://data.mars3d.cn/img/textures/poly-soil.jpg",
         splitNum: 100,
         area: [
           {

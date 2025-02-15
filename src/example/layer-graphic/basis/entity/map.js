@@ -3,12 +3,7 @@ import * as mars3d from "mars3d"
 export let map // mars3d.Map三维地图对象
 export let graphicLayer // 矢量数据图层
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
 
@@ -53,10 +48,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic15(graphicLayer)
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -101,7 +93,7 @@ function addDemoGraphic3(graphicLayer) {
     name: "贴地图标",
     position: [116.3, 31.0, 1000],
     style: {
-      image: "//data.mars3d.cn/img/marker/mark-blue.png",
+      image: "https://data.mars3d.cn/img/marker/mark-blue.png",
       scale: 1,
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
@@ -120,7 +112,7 @@ function addDemoGraphic4(graphicLayer) {
       dimensions: new Cesium.Cartesian2(4000.0, 4000.0),
       materialType: mars3d.MaterialType.Image2,
       materialOptions: {
-        image: "//data.mars3d.cn/img/textures/poly-rivers.png",
+        image: "https://data.mars3d.cn/img/textures/poly-rivers.png",
         transparent: true
       }
     },
@@ -200,7 +192,7 @@ function addDemoGraphic9(graphicLayer) {
     name: "警车",
     position: [116.4, 30.9, 1000],
     style: {
-      url: "//data.mars3d.cn/gltf/mars/jingche/jingche.gltf",
+      url: "https://data.mars3d.cn/gltf/mars/jingche/jingche.gltf",
       scale: 16,
       minimumPixelSize: 100
     },
@@ -274,7 +266,7 @@ function addDemoGraphic13(graphicLayer) {
       // 动画线材质
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
-        image: "//data.mars3d.cn/img/textures/fence.png",
+        image: "https://data.mars3d.cn/img/textures/fence.png",
         color: "#00ff00",
         speed: 10,
         axisY: true
@@ -317,7 +309,7 @@ function addDemoGraphic15(graphicLayer) {
     style: {
       materialType: mars3d.MaterialType.Water,
       materialOptions: {
-        normalMap: "//data.mars3d.cn/img/textures/waterNormals.jpg", // 水正常扰动的法线图
+        normalMap: "https://data.mars3d.cn/img/textures/waterNormals.jpg", // 水正常扰动的法线图
         frequency: 8000.0, // 控制波数的数字。
         animationSpeed: 0.02, // 控制水的动画速度的数字。
         amplitude: 5.0, // 控制水波振幅的数字。
@@ -474,18 +466,14 @@ export function bindLayerContextMenu() {
       icon: "fa fa-info",
       show: (event) => {
         const graphic = event.graphic
-        if (graphic.graphicIds) {
+        if (graphic.cluster && graphic.graphics) {
           return true
         } else {
           return false
         }
       },
       callback: (e) => {
-        const graphic = e.graphic
-        if (!graphic) {
-          return
-        }
-        const graphics = graphic.getGraphics() // 对应的grpahic数组，可以自定义显示
+        const graphics = e.graphic?.graphics
         if (graphics) {
           const names = []
           for (let index = 0; index < graphics.length; index++) {

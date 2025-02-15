@@ -156,9 +156,7 @@
             "main": "map/options/lang",
             "api": "Map.html#lang",
             "hasPannel": true,
-            "resources": [
-              "CustomLang.js"
-            ]
+            "resources": ["CustomLang.js"]
           }
         ]
       },
@@ -172,11 +170,7 @@
             "main": "map/fun/expImage",
             "api": "Map.html#expImage",
             "hasPannel": true,
-            "resources": [
-              "/img/div-graphic/divGraphic.css",
-              "/lib/dom2img/dom-to-image.js",
-              "/lib/dom2img/html2canvas.js"
-            ]
+            "resources": ["/img/div-graphic/divGraphic.css", "/lib/dom2img/dom-to-image.js", "/lib/dom2img/html2canvas.js"]
           },
           {
             "name": "自定义空间背景图",
@@ -184,9 +178,7 @@
             "main": "map/other/backgroundImg",
             "api": "Map.html#.sceneOptions",
             "hasPannel": true,
-            "resources": [
-              "background.css"
-            ]
+            "resources": ["background.css"]
           },
           {
             "name": "自定义天空盒",
@@ -284,26 +276,26 @@
             "hasPannel": true
           },
           {
+            "name": "键盘漫游",
+            "thumbnail": "control-inside-keyboardRoam.jpg",
+            "main": "thing/camera/keyboardRoam",
+            "api": "KeyboardRoam.html",
+            "hasPannel": true
+          },
+          {
             "name": "角色控制",
             "thumbnail": "thing-camera-roleController.gif",
             "main": "thing/camera/roleController",
             "hasPannel": true,
-            "resources": [
-              "CesiumRoleController.js"
-            ]
+            "resources": ["CesiumRoleController.js"]
           },
           {
             "name": "动画漫游(tween插值)",
             "thumbnail": "thing-camera-tween.jpg",
             "main": "thing/camera/tween",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "tween"
-            ],
-            "resources": [
-              "TweensRoaming.js"
-            ]
+            "libs": ["mars3d", "tween"],
+            "resources": ["TweensRoaming.js"]
           },
           {
             "name": "限定视角范围",
@@ -327,7 +319,8 @@
               "ZoomIn.js",
               "ZoomOut.js",
               "GraphicStyle.js",
-              "CreateTarget.js"
+              "CreateTarget.js",
+              "SceneOptions.js"
             ]
           }
         ]
@@ -361,9 +354,7 @@
             "name": "DIV的transform缩放",
             "thumbnail": "map-other-transform.jpg",
             "main": "map/other/transform",
-            "resources": [
-              "map.css"
-            ]
+            "resources": ["map.css"]
           }
         ]
       },
@@ -383,41 +374,30 @@
             "thumbnail": "map-double-compare.gif",
             "main": "map/double/compare",
             "api": "MapCompare.html",
-            "hasPannel": true
+            "hasPannel": true,
+            "resources": ["/img/div-graphic/divGraphic.css", "/lib/dom2img/dom-to-image.js"]
           },
           {
             "name": "二三维联动(与leaflet)",
             "thumbnail": "map-double-leaflet.jpg",
             "main": "map/double/leaflet",
             "hasPannel": true,
-            "libs": [
-              "mars2d",
-              "mars3d"
-            ],
-            "resources": [
-              "map.css"
-            ]
+            "libs": ["mars2d", "mars3d"],
+            "resources": ["map.css"]
           },
           {
             "name": "二三维联动(与openlayers)",
             "thumbnail": "map-double-openlayers.jpg",
             "main": "map/double/openlayers",
-            "libs": [
-              "olcesium",
-              "mars3d"
-            ],
-            "resources": [
-              "map.css"
-            ]
+            "libs": ["olcesium", "mars3d"],
+            "resources": ["map.css"]
           },
           {
             "name": "街景联动【需要Token】",
             "thumbnail": "map-double-streetview.jpg",
             "main": "map/double/streetview",
             "hasPannel": true,
-            "resources": [
-              "map.css"
-            ]
+            "resources": ["map.css"]
           }
         ]
       },
@@ -429,9 +409,7 @@
             "name": "月球",
             "thumbnail": "map-other-moon.jpg",
             "main": "map/other/moon",
-            "resources": [
-              "background.css"
-            ]
+            "resources": ["background.css"]
           },
           {
             "name": "火星",
@@ -448,11 +426,7 @@
             "name": "浏览器缓存数据",
             "thumbnail": "map-other-networkPlug.jpg",
             "main": "map/other/networkPlug",
-            "libs": [
-              "mars3d",
-              "localforage",
-              "cesium-networkPlug"
-            ]
+            "libs": ["mars3d", "localforage", "cesium-networkPlug"]
           }
         ]
       }
@@ -481,10 +455,7 @@
             "details": "需要引入 mars3d-tdt 插件库",
             "hasPannel": true,
             "download": false,
-            "libs": [
-              "mars3d",
-              "mars3d-tdt"
-            ]
+            "libs": ["mars3d", "mars3d-tdt"]
           }
         ]
       },
@@ -783,23 +754,15 @@
             "main": "layer-tile/type/image-tif",
             "api": "ImageLayer.html",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "geotiff"
-            ]
+            "libs": ["mars3d", "geotiff"]
           },
           {
             "name": "全国温度图(image应用案例)",
             "thumbnail": "layert-type-image-kriging.jpg",
             "main": "layer-tile/type/image-kriging",
             "api": "ImageLayer.html",
-            "libs": [
-              "mars3d",
-              "kriging"
-            ],
-            "resources": [
-              "krigingConfig.js"
-            ],
+            "libs": ["mars3d", "kriging"],
+            "resources": ["krigingConfig.js"],
             "hasPannel": true
           },
           {
@@ -807,10 +770,7 @@
             "thumbnail": "layert-type-image-echarts.jpg",
             "main": "layer-tile/type/image-echarts",
             "api": "ImageLayer.html",
-            "libs": [
-              "mars3d",
-              "echarts"
-            ]
+            "libs": ["mars3d", "echarts"]
           }
         ]
       },
@@ -882,7 +842,8 @@
             "name": "业务后端数据图层",
             "thumbnail": "layerg-basis-busineData.jpg",
             "main": "layer-graphic/basis/busineData",
-            "api": "BusineDataLayer.html"
+            "api": "BusineDataLayer.html",
+            "hasPannel": true
           },
           {
             "name": "DIV 数据图层",
@@ -891,9 +852,7 @@
             "api": "GraphicLayer.html",
             "developerShow": false,
             "hasPannel": true,
-            "resources": [
-              "/img/div-graphic/divGraphic.css"
-            ]
+            "resources": ["/img/div-graphic/divGraphic.css"]
           },
           {
             "name": "glTF小模型 数据图层",
@@ -949,17 +908,15 @@
             "main": "layer-graphic/geojson/buildings",
             "api": "GeoJsonLayer.html",
             "hasPannel": true,
-            "libs": [
-              "echarts",
-              "mars3d"
-            ]
+            "libs": ["echarts", "mars3d"]
           },
           {
             "name": "渐变行政区域面",
             "thumbnail": "layerg-geojson-polyGradient.jpg",
             "main": "layer-graphic/geojson/polyGradient",
             "api": "GeoJsonLayer.html",
-            "developerShow": false
+            "developerShow": false,
+            "hasPannel": true
           },
           {
             "name": "立体户型图(自定义扩展)",
@@ -967,9 +924,7 @@
             "main": "layer-graphic/geojson/huxing",
             "api": "GeoJsonLayer.html",
             "hasPannel": true,
-            "resources": [
-              "HuxingLayer.js"
-            ]
+            "resources": ["HuxingLayer.js"]
           }
         ]
       },
@@ -982,46 +937,30 @@
             "thumbnail": "layerg-excel.jpg",
             "main": "layer-graphic/file/excel",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "xlsx"
-            ]
+            "libs": ["mars3d", "xlsx"]
           },
           {
             "name": "Shapefile(SHP)文件加载",
             "thumbnail": "layerg-geojson-shp2json.jpg",
             "main": "layer-graphic/geojson/shp2json",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "shpGeojson"
-            ],
-            "resources": [
-              "Shp2JsonLayer.js"
-            ]
+            "libs": ["mars3d", "shpGeojson"],
+            "resources": ["Shp2JsonLayer.js"]
           },
           {
             "name": "KML/KMZ文件加载",
             "thumbnail": "layerg-geojson-kml2json.jpg",
             "main": "layer-graphic/geojson/kml2json",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "kmlGeojson"
-            ],
-            "resources": [
-              "Kml2JsonLayer.js"
-            ]
+            "libs": ["mars3d", "kmlGeojson"],
+            "resources": ["Kml2JsonLayer.js"]
           },
           {
             "name": "WKT格式加载",
             "thumbnail": "layerg-geojson-wkt.jpg",
             "main": "layer-graphic/geojson/wkt",
             "hasPannel": true,
-            "libs": [
-              "terraformer",
-              "mars3d"
-            ]
+            "libs": ["terraformer", "mars3d"]
           }
         ]
       },
@@ -1040,11 +979,7 @@
             "main": "layer-graphic/wfs/geoserver",
             "api": "WfsLayer.html",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "localforage",
-              "cesium-networkPlug"
-            ]
+            "libs": ["mars3d", "localforage", "cesium-networkPlug"]
           },
           {
             "name": "ArcGIS Server动态图层",
@@ -1067,6 +1002,13 @@
             "main": "layer-graphic/wfs/arcgis-feature-surface",
             "api": "ArcGisWfsLayer.html",
             "download": false
+          },
+          {
+            "name": "POI图层",
+            "thumbnail": "layerg-wfs-poi.jpg",
+            "main": "layer-graphic/wfs/poi",
+            "hasPannel": true,
+            "download": false
           }
         ]
       },
@@ -1085,10 +1027,7 @@
             "thumbnail": "layerg-other-tdtDm.jpg",
             "main": "layer-graphic/other/tdtDm",
             "api": "TdtDmLayer.html",
-            "libs": [
-              "mars3d",
-              "mars3d-tdt"
-            ]
+            "libs": ["mars3d", "mars3d-tdt"]
           },
           {
             "name": "KML图层(Cesium原生加载)",
@@ -1104,10 +1043,7 @@
             "api": "CzmlLayer.html",
             "hasPannel": true,
             "params": "data=CZML",
-            "libs": [
-              "mars3d",
-              "cesium-sensorVolumes"
-            ]
+            "libs": ["mars3d", "cesium-sensorVolumes"]
           }
         ]
       },
@@ -1128,10 +1064,7 @@
             "api": "QueryArcServer.html",
             "developerShow": false,
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "echarts"
-            ]
+            "libs": ["mars3d", "echarts"]
           },
           {
             "name": "GeoServer矢量服务查询(WFS)",
@@ -1140,40 +1073,27 @@
             "main": "query/geoserver",
             "hasPannel": true
           },
+
           {
-            "name": "天地图POI点查询",
-            "thumbnail": "query-tdtPOI.jpg",
-            "main": "query/tdtPOI",
-            "api": "TdtPOI.html",
+            "name": "POI点查询",
+            "thumbnail": "query-poi.jpg",
+            "main": "query/poi",
+            "api": "QueryPOI.html",
             "hasPannel": true
           },
           {
-            "name": "百度POI点查询",
-            "thumbnail": "query-baiduPOI.jpg",
-            "main": "query/baiduPOI",
-            "api": "BaiduPOI.html",
-            "hasPannel": true
-          },
-          {
-            "name": "高德POI点查询",
-            "thumbnail": "query-gaodePOI.jpg",
-            "main": "query/gaodePOI",
-            "api": "GaodePOI.html",
-            "hasPannel": true
-          },
-          {
-            "name": "高德路径规划查询",
-            "thumbnail": "query-gaodeRoute.jpg",
-            "main": "query/gaodeRoute",
-            "api": "GaodeRoute.html",
+            "name": "路径规划查询",
+            "thumbnail": "query-route.jpg",
+            "main": "query/route",
+            "api": "QueryRoute.html",
             "developerShow": false,
             "hasPannel": true
           },
           {
-            "name": "高德路径规划查询(多条)",
-            "thumbnail": "query-gaodeRouteList.jpg",
-            "main": "query/gaodeRouteList",
-            "api": "GaodeRoute.html",
+            "name": "路径规划查询(多条)",
+            "thumbnail": "query-routeList.jpg",
+            "main": "query/routeList",
+            "api": "QueryRoute.html",
             "hasPannel": true
           }
         ]
@@ -1263,9 +1183,7 @@
             "api": "TilesetLayer.html",
             "developerShow": false,
             "hasPannel": true,
-            "resources": [
-              "/img/div-graphic/divGraphic.css"
-            ],
+            "resources": ["/img/div-graphic/divGraphic.css"],
             "download": false
           }
         ]
@@ -1443,10 +1361,7 @@
             "main": "layer-other/heatmap/heatLayer-tileset",
             "api": "HeatLayer.html",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "mars3d-heatmap"
-            ]
+            "libs": ["mars3d", "mars3d-heatmap"]
           },
           {
             "name": "地震模拟",
@@ -1473,10 +1388,7 @@
             "thumbnail": "layer3d-manager-edit.jpg",
             "main": "layer-tileset/manager/edit",
             "api": "TilesetLayer.html",
-            "libs": [
-              "mars3d",
-              "localforage"
-            ],
+            "libs": ["mars3d", "localforage"],
             "hasPannel": true
           },
           {
@@ -1491,10 +1403,7 @@
             "thumbnail": "layer3d-manager-oneself.jpg",
             "main": "layer-tileset/manager/oneself",
             "api": "TilesetLayer.html",
-            "libs": [
-              "mars3d",
-              "localforage"
-            ],
+            "libs": ["mars3d", "localforage"],
             "hasPannel": true
           },
           {
@@ -1502,10 +1411,7 @@
             "thumbnail": "layer3d-manager-oneself2.jpg",
             "main": "layer-tileset/manager/oneself2",
             "api": "TilesetLayer.html",
-            "libs": [
-              "mars3d",
-              "localforage"
-            ],
+            "libs": ["mars3d", "localforage"],
             "hasPannel": true
           }
         ]
@@ -1517,6 +1423,74 @@
     "icon": "fa-puzzle-piece",
     "dev": "guide/map/graphic",
     "children": [
+      {
+        "name": "统一机制",
+        "details": "所有矢量对象的使用机制基本上是一致的，只是类型的差异",
+        "children": [
+          {
+            "name": "静态坐标",
+            "thumbnail": "graphic-base-position.jpg",
+            "main": "graphic/base/position",
+            "hasPannel": true
+          },
+          {
+            "name": "ajax后端坐标",
+            "thumbnail": "graphic-base-position-ajax.jpg",
+            "main": "graphic/base/position-ajax",
+            "hasPannel": true
+          },
+          {
+            "name": "time时序坐标",
+            "thumbnail": "graphic-base-position-time.jpg",
+            "main": "graphic/base/position-time",
+            "hasPannel": true
+          },
+          {
+            "name": "style样式",
+            "thumbnail": "graphic-base-style.jpg",
+            "main": "graphic/base/style",
+            "hasPannel": true
+          },
+          {
+            "name": "attr属性",
+            "thumbnail": "graphic-base-attr.jpg",
+            "main": "graphic/base/attr",
+            "hasPannel": true
+          },
+
+          {
+            "name": "绘制及编辑",
+            "thumbnail": "layerg-draw-draw.jpg",
+            "main": "layer-graphic/draw/draw",
+            "api": "GraphicLayer.html#startDraw",
+            "hasPannel": true,
+            "libs": ["mars3d", "mars3d-space", "kmlGeojson", "terraformer"]
+          },
+          {
+            "name": "文本碰撞检测隐藏",
+            "thumbnail": "graphic-primitive-label-collision.jpg",
+            "main": "graphic/primitive/label-collision",
+            "api": "LabelPrimitive.html",
+            "hasPannel": true
+          },
+          {
+            "name": "对象聚合",
+            "thumbnail": "layerg-fun-clustering.jpg",
+            "main": "layer-graphic/fun/clustering",
+            "api": "GraphicLayer.html#clustering",
+            "libs": ["mars3d", "localforage"],
+            "hasPannel": true
+          },
+          {
+            "name": "Property属性机制演示",
+            "thumbnail": "graphic-entity-property.gif",
+            "main": "graphic/entity/property",
+            "api": "BaseEntity.html",
+            "hasPannel": true,
+            "download": false
+          }
+        ]
+      },
       {
         "name": "单点",
         "details": "主要是Label、Point、Billboard、Model 单个点的对象",
@@ -1584,9 +1558,7 @@
             "main": "graphic/entity/billboard",
             "api": "BillboardEntity.html",
             "hasPannel": true,
-            "resources": [
-              "/lib/dom2img/gifler.min.js"
-            ]
+            "resources": ["/lib/dom2img/gifler.min.js"]
           },
           {
             "name": "大量图标点(Primitive)",
@@ -1600,9 +1572,7 @@
             "thumbnail": "graphic-entity-billboard-canvas.jpg",
             "main": "graphic/entity/billboard-canvas",
             "api": "CanvasBillboard.html",
-            "resources": [
-              "CanvasBillboard.js"
-            ],
+            "resources": ["CanvasBillboard.js"],
             "hasPannel": true
           },
           {
@@ -1611,10 +1581,7 @@
             "main": "graphic/entity/billboard-font",
             "api": "FontBillboardEntity.html",
             "hasPannel": true,
-            "resources": [
-              "/lib/fonts/font-awesome/css/font-awesome.min.css",
-              "/lib/dom2img/dom-to-image.js"
-            ]
+            "resources": ["/lib/fonts/font-awesome/css/font-awesome.min.css", "/lib/dom2img/dom-to-image.js"]
           },
           {
             "name": "DIV图标点",
@@ -1622,10 +1589,7 @@
             "main": "graphic/primitive/billboard-div",
             "api": "DivBillboardPrimitive.html",
             "hasPannel": true,
-            "resources": [
-              "/img/div-graphic/divGraphic.css",
-              "/lib/dom2img/dom-to-image.js"
-            ]
+            "resources": ["/img/div-graphic/divGraphic.css", "/lib/dom2img/dom-to-image.js"]
           },
           {
             "name": "全景点展示",
@@ -1716,9 +1680,7 @@
             "thumbnail": "graphic-divGraphic-basis.jpg",
             "main": "graphic/divGraphic/basis",
             "api": "DivGraphic.html",
-            "resources": [
-              "/img/div-graphic/divGraphic.css"
-            ],
+            "resources": ["/img/div-graphic/divGraphic.css"],
             "hasPannel": true
           },
           {
@@ -1728,10 +1690,7 @@
             "api": "DivGraphic.html",
             "developerShow": false,
             "hasPannel": true,
-            "resources": [
-              "DivIndicator.js",
-              "DivIndicator.css"
-            ]
+            "resources": ["DivIndicator.js", "DivIndicator.css"]
           },
           {
             "name": "三维DIV面板",
@@ -1739,9 +1698,7 @@
             "main": "graphic/divGraphic/divPlane",
             "api": "DivPlane.html",
             "hasPannel": true,
-            "resources": [
-              "/img/div-graphic/divGraphic.css"
-            ]
+            "resources": ["/img/div-graphic/divGraphic.css"]
           },
           {
             "name": "动态效果点(南京高校)",
@@ -1756,9 +1713,7 @@
             "main": "graphic/divGraphic/dynamic",
             "api": "DivGraphic.html",
             "developerShow": false,
-            "resources": [
-              "/img/div-graphic/divGraphic.css"
-            ]
+            "resources": ["/img/div-graphic/divGraphic.css"]
           },
           {
             "name": "标注点样式(油气站)",
@@ -1767,9 +1722,7 @@
             "api": "DivGraphic.html",
             "hasPannel": true,
             "developerShow": false,
-            "resources": [
-              "/img/div-graphic/divGraphic.css"
-            ]
+            "resources": ["/img/div-graphic/divGraphic.css"]
           },
           {
             "name": "echarts饼形图点",
@@ -1778,10 +1731,7 @@
             "hasPannel": true,
             "api": "DivGraphic.html",
             "developerShow": false,
-            "libs": [
-              "mars3d",
-              "echarts"
-            ]
+            "libs": ["mars3d", "echarts"]
           },
           {
             "name": "echarts动态水球点",
@@ -1789,10 +1739,7 @@
             "main": "graphic/divGraphic/echarts-liqiudfill",
             "api": "DivGraphic.html",
             "developerShow": false,
-            "libs": [
-              "echarts-liquidfill",
-              "mars3d"
-            ]
+            "libs": ["echarts-liquidfill", "mars3d"]
           },
           {
             "name": "浮动视频监控点",
@@ -1801,9 +1748,7 @@
             "api": "DivGraphic",
             "developerShow": false,
             "hasPannel": true,
-            "resources": [
-              "/img/div-graphic/divGraphic.css"
-            ]
+            "resources": ["/img/div-graphic/divGraphic.css"]
           },
           {
             "name": "浮动视频监控点HLS",
@@ -1811,13 +1756,8 @@
             "main": "graphic/divGraphic/video-hls",
             "api": "DivGraphic.html",
             "developerShow": false,
-            "libs": [
-              "hls",
-              "mars3d"
-            ],
-            "resources": [
-              "/img/div-graphic/divGraphic.css"
-            ],
+            "libs": ["hls", "mars3d"],
+            "resources": ["/img/div-graphic/divGraphic.css"],
             "hidden": true,
             "download": false
           }
@@ -1884,6 +1824,13 @@
             "api": "ModelEntity.html#rotateStart"
           },
           {
+            "name": "gLTF模型颜色校正",
+            "thumbnail": "thing-tileset-colorCorrection-gltf.jpg",
+            "main": "thing/tileset/colorCorrection-gltf",
+            "api": "TilesetColorCorrection.html",
+            "hasPannel": true
+          },
+          {
             "name": "gLTF模型剖切",
             "thumbnail": "thing-gltf-modelPlanClip.jpg",
             "main": "thing/gltf/modelPlanClip",
@@ -1897,9 +1844,7 @@
             "api": "ModelEntity.html#moveTo",
             "developerShow": false,
             "hasPannel": true,
-            "resources": [
-              "FloorGraphic.js"
-            ]
+            "resources": ["FloorGraphic.js"]
           }
         ]
       },
@@ -1954,13 +1899,8 @@
             "main": "graphic/entity/cylinder-gdp",
             "api": "CylinderEntity.html",
             "developerShow": false,
-            "libs": [
-              "echarts-gl",
-              "mars3d"
-            ],
-            "resources": [
-              "cylinderGdp.css"
-            ],
+            "libs": ["echarts-gl", "mars3d"],
+            "resources": ["cylinderGdp.css"],
             "download": false
           },
           {
@@ -1969,10 +1909,7 @@
             "main": "graphic/entity/coneTrack",
             "api": "ConeTrack.html",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "mars3d-space"
-            ]
+            "libs": ["mars3d", "mars3d-space"]
           },
           {
             "name": "圆锥追踪体(Primitive)",
@@ -2036,28 +1973,33 @@
         "name": "漫游路线",
         "children": [
           {
-            "name": "Route实时轨迹路线",
-            "thumbnail": "graphic-custom-route.jpg",
-            "main": "graphic/custom/route",
-            "api": "Route.html",
+            "name": "Path轨迹",
+            "thumbnail": "graphic-entity-path.jpg",
+            "main": "graphic/entity/path",
+            "api": "PathEntity.html",
             "hasPannel": true
           },
           {
-            "name": "模型上实时轨迹路线",
-            "thumbnail": "graphic-custom-route-tileset.jpg",
-            "main": "graphic/custom/route-tileset",
-            "api": "Route.html",
-            "developerShow": false
+            "name": "无人机飞行轨迹",
+            "thumbnail": "graphic-entity-path-wrj.gif",
+            "main": "graphic/entity/path-wrj",
+            "api": "PathEntity.html",
+            "developerShow": false,
+            "hasPannel": true,
+            "download": false
           },
           {
-            "name": "AIS实时动态目标",
-            "thumbnail": "graphic-custom-route-ais.jpg",
-            "main": "graphic/custom/route-ais",
-            "api": "Route.html",
-            "developerShow": false
+            "name": "战机绕圈巡航轨迹",
+            "thumbnail": "graphic-entity-path-zhanji.gif",
+            "main": "graphic/entity/path-zhanji",
+            "api": "PathEntity.html",
+            "developerShow": false,
+            "hasPannel": true,
+            "download": false
           },
+
           {
-            "name": "FixedRoute历史轨迹路线",
+            "name": "FixedRoute 固定轨迹路线",
             "thumbnail": "graphic-custom-fixedRoute.gif",
             "main": "graphic/custom/fixedRoute",
             "api": "FixedRoute.html",
@@ -2070,9 +2012,7 @@
             "api": "FixedRoute.html",
             "developerShow": false,
             "hasPannel": true,
-            "resources": [
-              "/img/div-graphic/divGraphic.css"
-            ]
+            "resources": ["/img/div-graphic/divGraphic.css"]
           },
           {
             "name": "贴地表表面漫游",
@@ -2105,9 +2045,7 @@
             "api": "FixedRoute.html",
             "developerShow": false,
             "hasPannel": true,
-            "resources": [
-              "/img/div-graphic/divGraphic.css"
-            ]
+            "resources": ["/img/div-graphic/divGraphic.css"]
           },
           {
             "name": "无人机航拍",
@@ -2131,6 +2069,27 @@
             "api": "FixedRoute.html",
             "developerShow": false,
             "hasPannel": true
+          },
+          {
+            "name": "Route实时轨迹路线",
+            "thumbnail": "graphic-custom-route.jpg",
+            "main": "graphic/custom/route",
+            "api": "Route.html",
+            "hasPannel": true
+          },
+          {
+            "name": "模型上实时轨迹路线",
+            "thumbnail": "graphic-custom-route-tileset.jpg",
+            "main": "graphic/custom/route-tileset",
+            "api": "Route.html",
+            "developerShow": false
+          },
+          {
+            "name": "AIS实时动态目标",
+            "thumbnail": "graphic-custom-route-ais.jpg",
+            "main": "graphic/custom/route-ais",
+            "api": "Route.html",
+            "developerShow": false
           }
         ]
       },
@@ -2210,10 +2169,7 @@
             "api": "PolylinePrimitive.html",
             "developerShow": false,
             "hasPannel": true,
-            "libs": [
-              "echarts",
-              "mars3d"
-            ]
+            "libs": ["echarts", "mars3d"]
           },
           {
             "name": "北京公交线(OD线)",
@@ -2242,31 +2198,6 @@
             "thumbnail": "graphic-combine-polyline-vline-lineFlow.gif",
             "main": "graphic/combine/polyline-vline-lineFlow",
             "developerShow": false
-          },
-          {
-            "name": "Path轨迹",
-            "thumbnail": "graphic-entity-path.jpg",
-            "main": "graphic/entity/path",
-            "api": "PathEntity.html",
-            "hasPannel": true
-          },
-          {
-            "name": "无人机飞行轨迹",
-            "thumbnail": "graphic-entity-path-wrj.gif",
-            "main": "graphic/entity/path-wrj",
-            "api": "PathEntity.html",
-            "developerShow": false,
-            "hasPannel": true,
-            "download": false
-          },
-          {
-            "name": "战机绕圈巡航轨迹",
-            "thumbnail": "graphic-entity-path-zhanji.gif",
-            "main": "graphic/entity/path-zhanji",
-            "api": "PathEntity.html",
-            "developerShow": false,
-            "hasPannel": true,
-            "download": false
           },
           {
             "name": "管道线",
@@ -2399,9 +2330,7 @@
             "main": "graphic/entity/polygon-sector",
             "api": "Sector.html",
             "hasPannel": true,
-            "resources": [
-              "Circle3WaveMaterialProperty.js"
-            ]
+            "resources": ["Circle3WaveMaterialProperty.js"]
           },
           {
             "name": "正多边形",
@@ -2438,11 +2367,7 @@
             "main": "graphic/entity/arrow",
             "api": "PolygonEntity.html",
             "hasPannel": true,
-            "resources": [
-              "EditCurve.js",
-              "CloseVurveEntity.js",
-              "CurveEntity.js"
-            ]
+            "resources": ["EditCurve.js", "CloseVurveEntity.js", "CurveEntity.js"]
           }
         ]
       },
@@ -2567,9 +2492,7 @@
             "main": "graphic/combine/water-section",
             "api": "WaterCombine.html",
             "developerShow": false,
-            "resources": [
-              "water-data.js"
-            ]
+            "resources": ["water-data.js"]
           },
           {
             "name": "动态河流",
@@ -2638,10 +2561,7 @@
             "main": "graphic/divGraphic/video",
             "api": "DivGraphic.html",
             "hasPannel": true,
-            "resources": [
-              "camera.css",
-              "/img/div-graphic/divGraphic.css"
-            ]
+            "resources": ["camera.css", "/img/div-graphic/divGraphic.css"]
           },
           {
             "name": "视频材质(面状)",
@@ -2656,10 +2576,7 @@
             "main": "graphic/video/material-hls",
             "api": "PolygonEntity.html",
             "hasPannel": true,
-            "libs": [
-              "hls",
-              "mars3d"
-            ]
+            "libs": ["hls", "mars3d"]
           },
           {
             "name": "视频材质(FLV协议)",
@@ -2667,10 +2584,7 @@
             "main": "graphic/video/material-flv",
             "api": "PolygonEntity.html",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "mpegts"
-            ]
+            "libs": ["mars3d", "mpegts"]
           },
           {
             "name": "视频2D投射",
@@ -2685,10 +2599,7 @@
             "main": "graphic/video/video2D-hls",
             "api": "Video2D.html",
             "hasPannel": true,
-            "libs": [
-              "hls",
-              "mars3d"
-            ]
+            "libs": ["hls", "mars3d"]
           },
           {
             "name": "视频2D投射(FLV协议)",
@@ -2696,10 +2607,7 @@
             "main": "graphic/video/video2D-flv",
             "api": "Video2D.html",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "mpegts"
-            ]
+            "libs": ["mars3d", "mpegts"]
           },
           {
             "name": "视频3D贴物投射",
@@ -2714,10 +2622,7 @@
             "main": "graphic/video/video3D-hls",
             "api": "Video3D.html",
             "hasPannel": true,
-            "libs": [
-              "hls",
-              "mars3d"
-            ]
+            "libs": ["hls", "mars3d"]
           },
           {
             "name": "视频3D贴物投射(FLV协议)",
@@ -2725,19 +2630,14 @@
             "main": "graphic/video/video3D-flv",
             "api": "Video3D.html",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "mpegts"
-            ]
+            "libs": ["mars3d", "mpegts"]
           },
           {
             "name": "视频编辑",
             "thumbnail": "graphic-video-edit.jpg",
             "main": "graphic/video/video-edit",
             "api": "VideoPrimitive.html",
-            "resources": [
-              "CanvasEdit.js"
-            ],
+            "resources": ["CanvasEdit.js"],
             "hasPannel": true
           }
         ]
@@ -2758,10 +2658,7 @@
             "main": "graphic/space/jammingRadar",
             "api": "JammingRadar.html",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "mars3d-space"
-            ]
+            "libs": ["mars3d", "mars3d-space"]
           },
           {
             "name": "固定算法的干扰雷达",
@@ -2769,10 +2666,7 @@
             "main": "graphic/space/jammingRadar-fixed",
             "api": "FixedJammingRadar.html",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "mars3d-space"
-            ]
+            "libs": ["mars3d", "mars3d-space"]
           },
           {
             "name": "双曲面雷达范围",
@@ -2780,10 +2674,7 @@
             "main": "graphic/space/camberRadar",
             "api": "CamberRadar.html",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "mars3d-space"
-            ]
+            "libs": ["mars3d", "mars3d-space"]
           },
           {
             "name": "圆椎体(固定竖立朝上)",
@@ -2792,10 +2683,7 @@
             "api": "ConicSensor.html",
             "developerShow": false,
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "mars3d-space"
-            ]
+            "libs": ["mars3d", "mars3d-space"]
           },
           {
             "name": "圆椎体(任意方向)",
@@ -2803,10 +2691,7 @@
             "main": "graphic/space/conicSensor",
             "api": "ConicSensor.html",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "mars3d-space"
-            ]
+            "libs": ["mars3d", "mars3d-space"]
           },
           {
             "name": "圆椎体动态展示(ConicSensor应用案例)",
@@ -2814,10 +2699,7 @@
             "main": "graphic/space/conicSensor-dynamic",
             "api": "ConicSensor.html",
             "developerShow": false,
-            "libs": [
-              "mars3d",
-              "mars3d-space"
-            ]
+            "libs": ["mars3d", "mars3d-space"]
           },
           {
             "name": "圆椎体追踪目标(ConicSensor应用案例)",
@@ -2825,10 +2707,7 @@
             "main": "graphic/space/conicSensor-lookAt",
             "api": "ConicSensor.html",
             "developerShow": false,
-            "libs": [
-              "mars3d",
-              "mars3d-space"
-            ]
+            "libs": ["mars3d", "mars3d-space"]
           },
           {
             "name": "四棱椎体",
@@ -2836,10 +2715,7 @@
             "main": "graphic/space/rectSensor",
             "api": "RectSensor.html",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "mars3d-space"
-            ]
+            "libs": ["mars3d", "mars3d-space"]
           },
           {
             "name": "四棱椎体追踪目标(RectSensor应用案例)",
@@ -2847,10 +2723,7 @@
             "main": "graphic/space/rectSensor-lookAt",
             "api": "RectSensor.html",
             "developerShow": false,
-            "libs": [
-              "mars3d",
-              "mars3d-space"
-            ]
+            "libs": ["mars3d", "mars3d-space"]
           },
           {
             "name": "大量四棱椎体(RectSensor应用案例)",
@@ -2858,10 +2731,7 @@
             "main": "graphic/space/rectSensor-list",
             "api": "RectSensor.html",
             "developerShow": false,
-            "libs": [
-              "mars3d",
-              "mars3d-space"
-            ]
+            "libs": ["mars3d", "mars3d-space"]
           },
           {
             "name": "卫星视锥体",
@@ -2869,10 +2739,7 @@
             "main": "graphic/space/satelliteSensor",
             "api": "SatelliteSensor.html",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "mars3d-space"
-            ]
+            "libs": ["mars3d", "mars3d-space"]
           },
           {
             "name": "多卫星视锥体案例",
@@ -2881,10 +2748,7 @@
             "api": "SatelliteSensor.html",
             "developerShow": false,
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "mars3d-space"
-            ],
+            "libs": ["mars3d", "mars3d-space"],
             "hidden": true
           },
           {
@@ -2893,10 +2757,7 @@
             "main": "graphic/space/satelliteSensor-dynamic",
             "api": "SatelliteSensor.html",
             "developerShow": false,
-            "libs": [
-              "mars3d",
-              "mars3d-space"
-            ]
+            "libs": ["mars3d", "mars3d-space"]
           },
           {
             "name": "卫星综合对象",
@@ -2904,10 +2765,7 @@
             "main": "graphic/space/satellite",
             "api": "Satellite.html",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "mars3d-space"
-            ]
+            "libs": ["mars3d", "mars3d-space"]
           },
           {
             "name": "卫星综合对象(多相机)",
@@ -2916,10 +2774,7 @@
             "developerShow": false,
             "api": "Satellite.html",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "mars3d-space"
-            ]
+            "libs": ["mars3d", "mars3d-space"]
           },
           {
             "name": "自定义动态位置(Satellite应用案例)",
@@ -2927,10 +2782,7 @@
             "main": "graphic/space/satellite-position",
             "api": "Satellite.html",
             "developerShow": false,
-            "libs": [
-              "mars3d",
-              "mars3d-space"
-            ]
+            "libs": ["mars3d", "mars3d-space"]
           },
           {
             "name": "卫星过境动态展示(Satellite应用案例)",
@@ -2939,10 +2791,7 @@
             "api": "Satellite.html",
             "developerShow": false,
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "mars3d-space"
-            ]
+            "libs": ["mars3d", "mars3d-space"]
           },
           {
             "name": "TLE卫星列表实时展示",
@@ -2952,10 +2801,7 @@
             "developerShow": false,
             "hasPannel": true,
             "params": "data=satellite-list",
-            "libs": [
-              "mars3d",
-              "mars3d-space"
-            ]
+            "libs": ["mars3d", "mars3d-space"]
           },
           {
             "name": "TLE外太空物实时展示",
@@ -2964,10 +2810,7 @@
             "api": "PointPrimitive.html",
             "developerShow": false,
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "mars3d-space"
-            ]
+            "libs": ["mars3d", "mars3d-space"]
           },
           {
             "name": "卫星星下点计算",
@@ -2976,10 +2819,7 @@
             "api": "Satellite.html",
             "developerShow": false,
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "mars3d-space"
-            ]
+            "libs": ["mars3d", "mars3d-space"]
           },
           {
             "name": "卫星过境分析",
@@ -2988,10 +2828,7 @@
             "api": "Tle.html#.getEcfPosition",
             "developerShow": false,
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "mars3d-space"
-            ]
+            "libs": ["mars3d", "mars3d-space"]
           },
           {
             "name": "成像范围计算",
@@ -3000,10 +2837,7 @@
             "api": "Tle.html#.getPoint",
             "developerShow": false,
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "mars3d-space"
-            ]
+            "libs": ["mars3d", "mars3d-space"]
           },
           {
             "name": "卫星推演",
@@ -3011,13 +2845,8 @@
             "main": "graphic/space/deduce",
             "developerShow": false,
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "mars3d-space"
-            ],
-            "resources": [
-              "map.css"
-            ]
+            "libs": ["mars3d", "mars3d-space"],
+            "resources": ["map.css"]
           }
         ]
       },
@@ -3039,43 +2868,32 @@
             "name": "行政区数据统计图",
             "thumbnail": "graphic-apply-quyuNum.jpg",
             "main": "graphic/apply/quyuNum",
-            "resources": [
-              "/temp/css/UnidreamLED.css"
-            ]
+            "resources": ["/temp/css/UnidreamLED.css"]
           },
           {
             "name": "行政区",
             "thumbnail": "graphic-apply-quyu.jpg",
             "main": "graphic/apply/quyu",
-            "resources": [
-              "map.css"
-            ]
+            "resources": ["map.css"]
           },
           {
             "name": "行政区突出展示",
             "thumbnail": "graphic-apply-district.jpg",
             "main": "graphic/apply/district",
-            "resources": [
-              "/img/div-graphic/divGraphic.css"
-            ]
+            "resources": ["/img/div-graphic/divGraphic.css"]
           },
           {
             "name": "行政区突出展示2",
             "thumbnail": "graphic-apply-district2.jpg",
             "main": "graphic/apply/district2",
-            "resources": [
-              "/img/div-graphic/divGraphic.css"
-            ]
+            "resources": ["/img/div-graphic/divGraphic.css"]
           },
           {
             "name": "台风轨迹",
             "thumbnail": "graphic-apply-typhoon.jpg",
             "main": "graphic/apply/typhoon",
             "hasPannel": true,
-            "resources": [
-              "Typhoon.js",
-              "typhoon.css"
-            ]
+            "resources": ["Typhoon.js", "typhoon.css"]
           },
           {
             "name": "智慧社区",
@@ -3087,9 +2905,7 @@
             "thumbnail": "graphic-apply-digitalCity.gif",
             "main": "graphic/apply/digitalCity",
             "previewListIn": true,
-            "resources": [
-              "/img/div-graphic/divGraphic.css"
-            ]
+            "resources": ["/img/div-graphic/divGraphic.css"]
           }
         ]
       },
@@ -3102,9 +2918,7 @@
             "thumbnail": "graphic-apply-steps.jpg",
             "main": "graphic/apply/steps",
             "hasPannel": true,
-            "resources": [
-              "/img/div-graphic/divGraphic.css"
-            ]
+            "resources": ["/img/div-graphic/divGraphic.css"]
           },
           {
             "name": "无人机航拍过程",
@@ -3122,10 +2936,7 @@
             "thumbnail": "layerg-file-czml-chuanbo.gif",
             "main": "layer-graphic/file/czml",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "cesium-sensorVolumes"
-            ],
+            "libs": ["mars3d", "cesium-sensorVolumes"],
             "params": "data=chuanbo"
           },
           {
@@ -3133,10 +2944,7 @@
             "thumbnail": "layerg-file-czml-feiji.gif",
             "main": "layer-graphic/file/czml",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "cesium-sensorVolumes"
-            ],
+            "libs": ["mars3d", "cesium-sensorVolumes"],
             "params": "data=feiji"
           },
           {
@@ -3144,10 +2952,7 @@
             "thumbnail": "layerg-file-czml-huojian.gif",
             "main": "layer-graphic/file/czml",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "cesium-sensorVolumes"
-            ],
+            "libs": ["mars3d", "cesium-sensorVolumes"],
             "params": "data=huojian"
           },
           {
@@ -3160,23 +2965,15 @@
             "thumbnail": "graphic-apply-cruise.gif",
             "main": "graphic/apply/cruise",
             "hasPannel": true,
-            "resources": [
-              "map.css"
-            ]
+            "resources": ["map.css"]
           },
           {
             "name": "海洋应急",
             "thumbnail": "graphic-apply-seaRescue.jpg",
             "main": "graphic/apply/seaRescue",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "mars3d-space",
-              "mars3d-heatmap"
-            ],
-            "resources": [
-              "/img/div-graphic/divGraphic.css"
-            ]
+            "libs": ["mars3d", "mars3d-space", "mars3d-heatmap"],
+            "resources": ["/img/div-graphic/divGraphic.css"]
           }
         ]
       },
@@ -3191,20 +2988,7 @@
             "main": "layer-graphic/draw/draw",
             "api": "GraphicLayer.html#startDraw",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "mars3d-space",
-              "kmlGeojson",
-              "terraformer"
-            ]
-          },
-          {
-            "name": "标绘数据展示(马拉松)",
-            "thumbnail": "layerg-draw-drawRead.jpg",
-            "main": "layer-graphic/draw/drawRead",
-            "api": "GraphicLayer.html",
-            "hasPannel": true,
-            "download": false
+            "libs": ["mars3d", "mars3d-space", "kmlGeojson", "terraformer"]
           },
           {
             "name": "军事标绘",
@@ -3214,23 +2998,12 @@
             "hasPannel": true
           },
           {
-            "name": "Property属性机制演示",
-            "thumbnail": "graphic-entity-property.gif",
-            "main": "graphic/entity/property",
-            "api": "BaseEntity.html",
+            "name": "标绘数据展示(马拉松)",
+            "thumbnail": "layerg-draw-drawRead.jpg",
+            "main": "layer-graphic/draw/drawRead",
+            "api": "GraphicLayer.html",
             "hasPannel": true,
             "download": false
-          },
-          {
-            "name": "点对象聚合",
-            "thumbnail": "layerg-fun-clustering.jpg",
-            "main": "layer-graphic/fun/clustering",
-            "api": "GraphicLayer.html#clustering",
-            "libs": [
-              "mars3d",
-              "localforage"
-            ],
-            "hasPannel": true
           },
           {
             "name": "框选数据",
@@ -3297,9 +3070,7 @@
             "main": "control/inside/popup",
             "api": "Popup.html",
             "hasPannel": true,
-            "resources": [
-              "/img/div-graphic/divGraphic.css"
-            ]
+            "resources": ["/img/div-graphic/divGraphic.css"]
           },
           {
             "name": "Tooltip鼠标移入信息窗",
@@ -3307,22 +3078,13 @@
             "main": "control/inside/tooltip",
             "api": "Tooltip.html",
             "hasPannel": true,
-            "resources": [
-              "/img/div-graphic/divGraphic.css"
-            ]
+            "resources": ["/img/div-graphic/divGraphic.css"]
           },
           {
             "name": "鼠标小提示窗",
             "thumbnail": "control-inside-smallTooltip.jpg",
             "main": "control/inside/smallTooltip",
             "api": "Map.html#openSmallTooltip",
-            "hasPannel": true
-          },
-          {
-            "name": "键盘漫游",
-            "thumbnail": "control-inside-keyboardRoam.jpg",
-            "main": "control/inside/keyboardRoam",
-            "api": "KeyboardRoam.html",
             "hasPannel": true
           }
         ]
@@ -3383,9 +3145,7 @@
             "thumbnail": "control-cesium-geocoder.jpg",
             "main": "control/cesium/geocoder",
             "api": "Geocoder.html",
-            "resources": [
-              "cesiumControl.css"
-            ]
+            "resources": ["cesiumControl.css"]
           },
           {
             "name": "自定义POI兴趣点搜索",
@@ -3393,10 +3153,7 @@
             "main": "control/other/poiQueryButton",
             "details": "自定义控件，需引入单独的js和css文件",
             "developerShow": false,
-            "resources": [
-              "PoiQueryButton.css",
-              "PoiQueryButton.js"
-            ],
+            "resources": ["PoiQueryButton.css", "PoiQueryButton.js"],
             "download": false
           },
           {
@@ -3404,11 +3161,7 @@
             "thumbnail": "control-other-geolocation.jpg",
             "main": "control/other/geolocation",
             "developerShow": false,
-            "resources": [
-              "https://webapi.amap.com/maps?v=1.4.15&key=616e615727a1134331ff9459856653f1",
-              "Geolocation.js",
-              "Geolocation.css"
-            ],
+            "resources": ["https://webapi.amap.com/maps?v=1.4.15&key=616e615727a1134331ff9459856653f1", "Geolocation.js", "Geolocation.css"],
             "download": false
           },
           {
@@ -3416,9 +3169,7 @@
             "thumbnail": "control-basis-toolButton.jpg",
             "main": "control/basis/toolButton",
             "api": "ToolButton.html",
-            "resources": [
-              "index.css"
-            ]
+            "resources": ["index.css"]
           }
         ]
       },
@@ -3482,9 +3233,7 @@
             "main": "control/basis/compass-custom",
             "details": "需引入单独的css文件",
             "api": "Compass.html",
-            "resources": [
-              "compassCustom.css"
-            ]
+            "resources": ["compassCustom.css"]
           },
           {
             "name": "立方体视图",
@@ -3503,7 +3252,8 @@
             "thumbnail": "map-double-compare.gif",
             "main": "map/double/compare",
             "api": "MapCompare.html",
-            "hasPannel": true
+            "hasPannel": true,
+            "resources": ["/img/div-graphic/divGraphic.css", "/lib/dom2img/dom-to-image.js"]
           },
           {
             "name": "卷帘对比",
@@ -3662,9 +3412,7 @@
             "main": "thing/analysis/measure",
             "api": "Measure.html",
             "hasPannel": true,
-            "resources": [
-              "/img/div-graphic/divGraphic.css"
-            ]
+            "resources": ["/img/div-graphic/divGraphic.css"]
           },
           {
             "name": "剖面分析",
@@ -3853,10 +3601,14 @@
             "main": "layer-other/heatmap/heatLayer",
             "api": "HeatLayer.html",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "mars3d-heatmap"
-            ]
+            "libs": ["mars3d", "mars3d-heatmap"]
+          },
+          {
+            "name": "贴地热力图-少量数据",
+            "thumbnail": "layero-heatmap-heatLayer-simple.jpg",
+            "main": "layer-other/heatmap/heatLayer-simple",
+            "api": "HeatLayer.html",
+            "libs": ["mars3d", "mars3d-heatmap"]
           },
           {
             "name": "高度热力图",
@@ -3864,10 +3616,7 @@
             "main": "layer-other/heatmap/heatLayer-height",
             "api": "HeatLayer.html",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "mars3d-heatmap"
-            ]
+            "libs": ["mars3d", "mars3d-heatmap"]
           },
           {
             "name": "动态热力图",
@@ -3875,10 +3624,7 @@
             "main": "layer-other/heatmap/heatLayer-dynamic",
             "api": "HeatLayer.html",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "mars3d-heatmap"
-            ]
+            "libs": ["mars3d", "mars3d-heatmap"]
           },
           {
             "name": "立体曲面热力图",
@@ -3886,10 +3632,7 @@
             "main": "layer-other/heatmap/heatLayer-arc",
             "api": "HeatLayer.html",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "mars3d-heatmap"
-            ]
+            "libs": ["mars3d", "mars3d-heatmap"]
           }
         ]
       },
@@ -3903,10 +3646,7 @@
             "main": "layer-other/weather/wind",
             "api": "WindLayer.html",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "mars3d-wind"
-            ]
+            "libs": ["mars3d", "mars3d-wind"]
           },
           {
             "name": "Canvas风向图",
@@ -3914,11 +3654,7 @@
             "main": "layer-other/weather/canvasWind",
             "api": "CanvasWindLayer.html",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "mars3d-wind",
-              "mars3d-heatmap"
-            ]
+            "libs": ["mars3d", "mars3d-wind", "mars3d-heatmap"]
           }
         ]
       },
@@ -3932,109 +3668,62 @@
             "thumbnail": "thirdParty-qe-section.jpg",
             "main": "thirdParty/quickearth/section",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "quickearth"
-            ]
+            "libs": ["mars3d", "quickearth"]
           },
           {
             "name": "经纬向剖面-自动扫描",
             "thumbnail": "thirdParty-qe-section-auto.jpg",
             "main": "thirdParty/quickearth/section-auto",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "quickearth"
-            ]
+            "libs": ["mars3d", "quickearth"]
           },
           {
             "name": "雷达挤压",
             "thumbnail": "thirdParty-qe-extrusion.jpg",
             "main": "thirdParty/quickearth/extrusion",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "quickearth"
-            ]
+            "libs": ["mars3d", "quickearth"]
           },
           {
             "name": "高度拉升动画",
             "thumbnail": "thirdParty-qe-liftAnimator.jpg",
             "main": "thirdParty/quickearth/liftAnimator",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "quickearth"
-            ]
+            "libs": ["mars3d", "quickearth"]
           },
           {
             "name": "多层切片",
             "thumbnail": "thirdParty-qe-slice.jpg",
             "main": "thirdParty/quickearth/slice",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "quickearth"
-            ]
+            "libs": ["mars3d", "quickearth"]
           },
           {
             "name": "多层切片对比",
             "thumbnail": "thirdParty-qe-slice-compare.jpg",
             "main": "thirdParty/quickearth/slice-compare",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "quickearth"
-            ]
+            "libs": ["mars3d", "quickearth"]
           },
           {
             "name": "等值体",
             "thumbnail": "thirdParty-qe-contour.jpg",
             "main": "thirdParty/quickearth/contour",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "quickearth"
-            ]
+            "libs": ["mars3d", "quickearth"]
           },
           {
             "name": "格点填色动画",
             "thumbnail": "thirdParty-qe-tempAnimation.jpg",
             "main": "thirdParty/quickearth/tempAnimation",
-            "libs": [
-              "mars3d",
-              "quickearth"
-            ]
+            "libs": ["mars3d", "quickearth"]
           },
           {
             "name": "填色光照",
             "thumbnail": "thirdParty-qe-light.jpg",
             "main": "thirdParty/quickearth/light",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "quickearth"
-            ]
-          },
-          {
-            "name": "风场箭头",
-            "thumbnail": "thirdParty-qe-windArrow.jpg",
-            "main": "thirdParty/quickearth/windArrow",
-            "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "quickearth"
-            ]
-          },
-          {
-            "name": "风场面条图",
-            "thumbnail": "thirdParty-qe-windLine.jpg",
-            "main": "thirdParty/quickearth/windLine",
-            "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "quickearth"
-            ]
+            "libs": ["mars3d", "quickearth"]
           }
         ]
       },
@@ -4048,48 +3737,33 @@
             "thumbnail": "layert-type-protomaps.jpg",
             "main": "layer-tile/type/pbf-protomaps",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "cesium-pbf-protomaps"
-            ]
+            "libs": ["mars3d", "cesium-pbf-protomaps"]
           },
           {
             "name": "矢量瓦片方式加载GeoJson",
             "thumbnail": "layerg-file-weiVectorTile-geojson.jpg",
             "main": "layer-graphic/file/weiVectorTile-geojson",
-            "libs": [
-              "mars3d",
-              "cesium-weiVectorTile"
-            ]
+            "libs": ["mars3d", "cesium-weiVectorTile"]
           },
           {
             "name": "矢量瓦片方式加载Shp",
             "thumbnail": "layerg-file-weiVectorTile-shp.jpg",
             "main": "layer-graphic/file/weiVectorTile-shp",
-            "libs": [
-              "mars3d",
-              "cesium-weiVectorTile"
-            ]
+            "libs": ["mars3d", "cesium-weiVectorTile"]
           },
           {
             "name": "PBF矢量瓦片(OL渲染)",
             "thumbnail": "layert-type-mvt.jpg",
             "main": "layer-tile/type/pbf-ol",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "cesium-pbf-ol"
-            ]
+            "libs": ["mars3d", "cesium-pbf-ol"]
           },
           {
             "name": "PBF矢量瓦片(Mapbox渲染)",
             "thumbnail": "layert-type-mapbox.jpg",
             "main": "layer-tile/type/pbf-mapbox",
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "cesium-pbf-mapbox"
-            ]
+            "libs": ["mars3d", "cesium-pbf-mapbox"]
           }
         ]
       },
@@ -4103,20 +3777,14 @@
             "main": "layer-other/mapv/point-cluster",
             "api": "MapVLayer.html",
             "developerShow": false,
-            "libs": [
-              "mars3d",
-              "mars3d-mapv"
-            ]
+            "libs": ["mars3d", "mars3d-mapv"]
           },
           {
             "name": "蜂巢图",
             "thumbnail": "layero-mapv-point-honeycomb.jpg",
             "main": "layer-other/mapv/point-honeycomb",
             "api": "MapVLayer.html",
-            "libs": [
-              "mars3d",
-              "mars3d-mapv"
-            ]
+            "libs": ["mars3d", "mars3d-mapv"]
           },
           {
             "name": "方格图",
@@ -4124,10 +3792,7 @@
             "main": "layer-other/mapv/point-grid",
             "api": "MapVLayer.html",
             "developerShow": false,
-            "libs": [
-              "mars3d",
-              "mars3d-mapv"
-            ]
+            "libs": ["mars3d", "mars3d-mapv"]
           },
           {
             "name": "动态点",
@@ -4135,10 +3800,7 @@
             "main": "layer-other/mapv/point-simple-animation",
             "api": "MapVLayer.html",
             "developerShow": false,
-            "libs": [
-              "mars3d",
-              "mars3d-mapv"
-            ]
+            "libs": ["mars3d", "mars3d-mapv"]
           },
           {
             "name": "多层点(全国抖音用户态势)",
@@ -4146,10 +3808,7 @@
             "main": "layer-other/mapv/point-simple-multi",
             "api": "MapVLayer.html",
             "developerShow": false,
-            "libs": [
-              "mars3d",
-              "mars3d-mapv"
-            ]
+            "libs": ["mars3d", "mars3d-mapv"]
           },
           {
             "name": "简单线",
@@ -4157,10 +3816,7 @@
             "main": "layer-other/mapv/polyline-simple",
             "api": "MapVLayer.html",
             "developerShow": false,
-            "libs": [
-              "mars3d",
-              "mars3d-mapv"
-            ]
+            "libs": ["mars3d", "mars3d-mapv"]
           },
           {
             "name": "强度线",
@@ -4168,10 +3824,7 @@
             "main": "layer-other/mapv/polyline-intensity",
             "api": "MapVLayer.html",
             "developerShow": false,
-            "libs": [
-              "mars3d",
-              "mars3d-mapv"
-            ]
+            "libs": ["mars3d", "mars3d-mapv"]
           },
           {
             "name": "动态线",
@@ -4179,50 +3832,35 @@
             "main": "layer-other/mapv/polyline-intensity-animation",
             "api": "MapVLayer.html",
             "developerShow": false,
-            "libs": [
-              "mars3d",
-              "mars3d-mapv"
-            ]
+            "libs": ["mars3d", "mars3d-mapv"]
           },
           {
             "name": "出租车轨迹态势图",
             "thumbnail": "layero-mapv-polyline-lighter.gif",
             "main": "layer-other/mapv/polyline-lighter",
             "api": "MapVLayer.html",
-            "libs": [
-              "mars3d",
-              "mars3d-mapv"
-            ]
+            "libs": ["mars3d", "mars3d-mapv"]
           },
           {
             "name": "强边界图",
             "thumbnail": "layero-mapv-polyline-fbundling.jpg",
             "main": "layer-other/mapv/polyline-fbundling",
             "api": "MapVLayer.html",
-            "libs": [
-              "mars3d",
-              "mars3d-mapv"
-            ]
+            "libs": ["mars3d", "mars3d-mapv"]
           },
           {
             "name": "合肥建筑物",
             "thumbnail": "layero-mapv-polygon-simple.jpg",
             "main": "layer-other/mapv/polygon-simple",
             "api": "MapVLayer.html",
-            "libs": [
-              "mars3d",
-              "mars3d-mapv"
-            ]
+            "libs": ["mars3d", "mars3d-mapv"]
           },
           {
             "name": "迁徙图综合展示",
             "thumbnail": "layero-mapv-qianxi.gif",
             "main": "layer-other/mapv/qianxi",
             "api": "MapVLayer.html",
-            "libs": [
-              "mars3d",
-              "mars3d-mapv"
-            ]
+            "libs": ["mars3d", "mars3d-mapv"]
           }
         ]
       },
@@ -4235,10 +3873,7 @@
             "thumbnail": "layero-echarts-effectScatter-anhui.gif",
             "main": "layer-other/echarts/effectScatter-anhui",
             "api": "EchartsLayer.html",
-            "libs": [
-              "mars3d",
-              "mars3d-echarts"
-            ]
+            "libs": ["mars3d", "mars3d-echarts"]
           },
           {
             "name": "动态散点图 全国城市GDP态势",
@@ -4247,10 +3882,7 @@
             "api": "EchartsLayer.html",
             "developerShow": false,
             "hasPannel": true,
-            "libs": [
-              "mars3d",
-              "mars3d-echarts"
-            ]
+            "libs": ["mars3d", "mars3d-echarts"]
           },
           {
             "name": "散点图 城市空气质量",
@@ -4258,20 +3890,14 @@
             "main": "layer-other/echarts/scatter-pm25",
             "api": "EchartsLayer.html",
             "developerShow": false,
-            "libs": [
-              "mars3d",
-              "mars3d-echarts"
-            ]
+            "libs": ["mars3d", "mars3d-echarts"]
           },
           {
             "name": "北京病人就诊流向图",
             "thumbnail": "layero-echarts-lines-liuchu.gif",
             "main": "layer-other/echarts/lines-liuchu",
             "api": "EchartsLayer.html",
-            "libs": [
-              "mars3d",
-              "mars3d-echarts"
-            ]
+            "libs": ["mars3d", "mars3d-echarts"]
           },
           {
             "name": "北京航班流向图",
@@ -4279,20 +3905,14 @@
             "main": "layer-other/echarts/lines-hanban",
             "api": "EchartsLayer.html",
             "developerShow": false,
-            "libs": [
-              "mars3d",
-              "mars3d-echarts"
-            ]
+            "libs": ["mars3d", "mars3d-echarts"]
           },
           {
             "name": "EasyOP集群分布图",
             "thumbnail": "layero-echarts-lines-fenbu.gif",
             "main": "layer-other/echarts/lines-fenbu",
             "api": "EchartsLayer.html",
-            "libs": [
-              "mars3d",
-              "mars3d-echarts"
-            ]
+            "libs": ["mars3d", "mars3d-echarts"]
           },
           {
             "name": "物流运输图",
@@ -4300,10 +3920,7 @@
             "main": "layer-other/echarts/lines-wuliu",
             "api": "EchartsLayer.html",
             "developerShow": false,
-            "libs": [
-              "mars3d",
-              "mars3d-echarts"
-            ]
+            "libs": ["mars3d", "mars3d-echarts"]
           },
           {
             "name": "人口迁徙图",
@@ -4311,10 +3928,7 @@
             "main": "layer-other/echarts/lines-qianxi",
             "api": "EchartsLayer.html",
             "developerShow": false,
-            "libs": [
-              "mars3d",
-              "mars3d-echarts"
-            ]
+            "libs": ["mars3d", "mars3d-echarts"]
           },
           {
             "name": "城市流向效果",
@@ -4322,10 +3936,7 @@
             "main": "layer-other/echarts/lines-flow",
             "api": "EchartsLayer.html",
             "developerShow": false,
-            "libs": [
-              "mars3d",
-              "mars3d-echarts"
-            ]
+            "libs": ["mars3d", "mars3d-echarts"]
           },
           {
             "name": "航班动态效果",
@@ -4333,20 +3944,14 @@
             "main": "layer-other/echarts/lines-flight",
             "api": "EchartsLayer.html",
             "developerShow": false,
-            "libs": [
-              "mars3d",
-              "mars3d-echarts"
-            ]
+            "libs": ["mars3d", "mars3d-echarts"]
           },
           {
             "name": "道路拥堵图",
             "thumbnail": "layero-echarts-lines-road.jpg",
             "main": "layer-other/echarts/lines-road",
             "api": "EchartsLayer.html",
-            "libs": [
-              "mars3d",
-              "mars3d-echarts"
-            ]
+            "libs": ["mars3d", "mars3d-echarts"]
           }
         ]
       },
@@ -4358,13 +3963,8 @@
             "name": "集成Demo",
             "thumbnail": "thirdParty-threejs-demo.jpg",
             "main": "thirdParty/threejs/demo",
-            "libs": [
-              "mars3d",
-              "three"
-            ],
-            "resources": [
-              "ThreeLayer.js"
-            ]
+            "libs": ["mars3d", "three"],
+            "resources": ["ThreeLayer.js"]
           }
         ]
       },
@@ -4376,28 +3976,19 @@
             "name": "车辆运动",
             "thumbnail": "thirdParty-ammo-vehicle.gif",
             "main": "thirdParty/ammo/vehicle",
-            "libs": [
-              "mars3d",
-              "cesium-meshVisualizer"
-            ]
+            "libs": ["mars3d", "cesium-meshVisualizer"]
           },
           {
             "name": "转动（旗子）",
             "thumbnail": "thirdParty-ammo-turnCloth.gif",
             "main": "thirdParty/ammo/turnCloth",
-            "libs": [
-              "mars3d",
-              "cesium-meshVisualizer"
-            ]
+            "libs": ["mars3d", "cesium-meshVisualizer"]
           },
           {
             "name": "转动（球）",
             "thumbnail": "thirdParty-ammo-turnRope.gif",
             "main": "thirdParty/ammo/turnRope",
-            "libs": [
-              "mars3d",
-              "cesium-meshVisualizer"
-            ]
+            "libs": ["mars3d", "cesium-meshVisualizer"]
           }
         ]
       }

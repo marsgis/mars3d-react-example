@@ -4,8 +4,8 @@ import { lazy } from "react"
 const widgetState: WidgetState = {
   widgets: [
     {
-      component: lazy(() => import("@mars/widgets/basic/GraphicEditor")),
-      name: "GraphicEditor"
+      component: lazy(() => import("@mars/widgets/basic/GraphicOptions")),
+      name: "graphic-options"
     },
     {
       component: lazy(() => import("@mars/widgets/basic/SearchPoi")),

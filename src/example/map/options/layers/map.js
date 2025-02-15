@@ -20,9 +20,9 @@ function initMap() {
     basemaps: [
       {
         name: "单张图片",
-        icon: "//data.mars3d.cn/img/thumbnail/basemap/offline.png",
+        icon: "https://data.mars3d.cn/img/thumbnail/basemap/offline.png",
         type: "image",
-        url: "//data.mars3d.cn/img/map/world/world.jpg",
+        url: "https://data.mars3d.cn/img/map/world/world.jpg",
         show: true
       }
     ],
@@ -39,7 +39,7 @@ function initMap() {
 
   // 方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
   const tileLayer = new mars3d.layer.XyzLayer({
-    url: "//data.mars3d.cn/tile/dizhiChina/{z}/{x}/{y}.png",
+    url: "https://data.mars3d.cn/tile/dizhiChina/{z}/{x}/{y}.png",
     minimumLevel: 0,
     maximumLevel: 10,
     rectangle: { xmin: 69.706929, xmax: 136.560941, ymin: 15.831038, ymax: 52.558005 },
@@ -50,7 +50,7 @@ function initMap() {
   // 方式3：在创建地球后调用addLayer添加图层(用 mars3d.layer.create工厂方法创建)
   // const layerImg = mars3d.LayerUtil.create({
   //   type: "image",
-  //   url: "//data.mars3d.cn/img/map/radar/201906211112.PNG",
+  //   url: "https://data.mars3d.cn/img/map/radar/201906211112.PNG",
   //   rectangle: { xmin: 73.16895, xmax: 134.86816, ymin: 12.2023, ymax: 54.11485 },
   //   alpha: 0.7
   // })

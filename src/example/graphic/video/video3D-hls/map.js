@@ -19,12 +19,7 @@ export const mapOptions = {
   }
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
 
@@ -33,7 +28,7 @@ export function onMounted(mapInstance) {
   // 添加参考三维模型
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     name: "合肥国家大学科技园",
-    url: "//data.mars3d.cn/3dtiles/qx-hfdxy/tileset.json",
+    url: "https://data.mars3d.cn/3dtiles/qx-hfdxy/tileset.json",
     position: { alt: 43.7 },
     maximumScreenSpaceError: 1
   })
@@ -49,10 +44,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic1()
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -79,7 +71,7 @@ export function addRandomGraphicByCount(count) {
       position,
       style: {
         container: videoElement,
-        maskImage: "//data.mars3d.cn/img/textures/video-mask.png", // 羽化视频四周，融合更美观
+        maskImage: "https://data.mars3d.cn/img/textures/video-mask.png", // 羽化视频四周，融合更美观
         angle: 46.3,
         angle2: 15.5,
         heading: 88.5,
@@ -101,7 +93,7 @@ function addDemoGraphic1() {
     position: [117.205457, 31.842984, 63.9],
     style: {
       container: videoElement,
-      maskImage: "//data.mars3d.cn/img/textures/video-mask.png", // 羽化视频四周，融合更美观
+      maskImage: "https://data.mars3d.cn/img/textures/video-mask.png", // 羽化视频四周，融合更美观
       angle: 46.3,
       angle2: 15.5,
       heading: 88.5,
@@ -114,13 +106,13 @@ function addDemoGraphic1() {
 }
 
 // 添加投射视频
-export function startDrawGraphic() {
+export async function startDrawGraphic() {
   // 开始绘制
-  graphicLayer.startDraw({
+  const graphic = await graphicLayer.startDraw({
     type: "video3D",
     style: {
       container: videoElement,
-      maskImage: "//data.mars3d.cn/img/textures/video-mask.png", // 羽化视频四周，融合更美观
+      maskImage: "https://data.mars3d.cn/img/textures/video-mask.png", // 羽化视频四周，融合更美观
       angle: 46.3,
       angle2: 15.5,
       heading: 178.5,
@@ -128,10 +120,11 @@ export function startDrawGraphic() {
       showFrustum: true
     }
   })
+  console.log("标绘完成", graphic.toJSON())
 }
 
 // 按当前视角投射视频
-export function startDrawGraphic2() {
+export async function startDrawGraphic2() {
   // 取屏幕中心点
   const targetPosition = map.getCenter({ format: false })
   if (!targetPosition) {
@@ -146,7 +139,7 @@ export function startDrawGraphic2() {
     targetPosition,
     style: {
       container: videoElement,
-      maskImage: "//data.mars3d.cn/img/textures/video-mask.png", // 羽化视频四周，融合更美观
+      maskImage: "https://data.mars3d.cn/img/textures/video-mask.png", // 羽化视频四周，融合更美观
       angle: 46.3,
       angle2: 15.5,
       heading: 88.5,

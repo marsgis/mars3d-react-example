@@ -30,7 +30,7 @@ function UIComponent() {
       // 历史记录模型地址
       url = modelUrl
     } else {
-      url = "//data.mars3d.cn/3dtiles/qx-dyt/tileset.json"
+      url = "https://data.mars3d.cn/3dtiles/qx-dyt/tileset.json"
     }
 
     mapWork.showModel(url)
@@ -73,7 +73,7 @@ function UIComponent() {
       <div className="f-mb">
         <span className="mars-pannel-item-label">模型URL:</span>
         <Space>
-          <MarsInput defaultValue="//data.mars3d.cn/3dtiles/qx-dyt/tileset.json" onChange={urlChange}></MarsInput>
+          <MarsInput defaultValue="https://data.mars3d.cn/3dtiles/qx-dyt/tileset.json" onChange={urlChange}></MarsInput>
           <MarsButton onClick={showModel}>加载模型</MarsButton>
         </Space>
       </div>

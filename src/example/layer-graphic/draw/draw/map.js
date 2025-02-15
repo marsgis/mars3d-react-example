@@ -15,7 +15,7 @@ export const mapOptions = {
     {
       name: "合肥市",
       type: "geojson",
-      url: "//data.mars3d.cn/file/geojson/areas/340100_full.json",
+      url: "https://data.mars3d.cn/file/geojson/areas/340100_full.json",
       symbol: {
         styleOptions: {
           fill: true,
@@ -42,27 +42,21 @@ export const eventTarget = new mars3d.BaseClass()
 
 let keyDownCode // 一直按着的键对应的code
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
   // 设置编辑点样式
   // mars3d.DrawUtil.setEditPointStyle(mars3d.EditPointType.Control, {
   //   type: mars3d.GraphicType.billboardP, // 支持设置type指定编辑点类型
-  //   image: "//data.mars3d.cn/img/marker/move.png",
+  //   image: "https://data.mars3d.cn/img/marker/move.png",
   //   horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
   //   verticalOrigin: Cesium.VerticalOrigin.CENTER
   // })
 
   graphicLayer = new mars3d.layer.GraphicLayer({
+    isAutoEditing: true // 是否自动激活编辑
     // isRestorePositions: true,
-    hasEdit: true,
-    isAutoEditing: true // 绘制完成后是否自动激活编辑
     // drawAddEventType: false,
     // drawEndEventType: mars3d.EventType.rightClick,
     // drawDelEventType: mars3d.EventType.middleClick
@@ -152,14 +146,30 @@ export function onMounted(mapInstance) {
   //   _单击开始绘制: "新的提示内容",
   //   _单击增加点右击删除点: "新的提示内容"
   // })
+
+  const editUpdateFun = mars3d.Util.funDebounce(openGraphicOptionsWidget, 500)
+  graphicLayer.on([mars3d.EventType.click, mars3d.EventType.drawCreated, mars3d.EventType.editStart, mars3d.EventType.editStyle], editUpdateFun)
+  const removeFun = mars3d.Util.funDebounce(closeGraphicOptionsWidget, 500)
+  graphicLayer.on(mars3d.EventType.removeGraphic, removeFun)
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
+  if (graphicLayer) {
+    graphicLayer.destroy() // 销毁内部会释放所有事件及数据
+    graphicLayer = null
+  }
+
   map = null
+}
+
+// 修改样式，修改点，删除点等操作去激活或更新面板
+function openGraphicOptionsWidget(e) {
+  eventTarget.fire("updateGraphicOptionsWidget", { graphicId: e.graphic.id, layerId: graphicLayer.id })
+}
+
+function closeGraphicOptionsWidget(e) {
+  eventTarget.fire("updateGraphicOptionsWidget", { disable: true })
 }
 
 let isEntityPrimitive = true
@@ -185,14 +195,15 @@ export async function drawPoint() {
       }
     }
   })
-  console.log("完成了draw标绘", graphic)
+
+  console.log("标绘完成", graphic.toJSON())
 }
 
 export async function drawMarker() {
   const graphic = await graphicLayer.startDraw({
     type: isEntityPrimitive ? "billboard" : "billboardP",
     style: {
-      image: "//data.mars3d.cn/img/marker/mark-red.png",
+      image: "https://data.mars3d.cn/img/marker/mark-red.png",
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
       label: {
@@ -206,7 +217,8 @@ export async function drawMarker() {
       }
     }
   })
-  console.log("完成了draw标绘", graphic)
+
+  console.log("标绘完成", graphic.toJSON())
 }
 
 export async function drawLabel() {
@@ -221,7 +233,8 @@ export async function drawLabel() {
       outlineWidth: 2
     }
   })
-  console.log("完成了draw标绘", graphic)
+
+  console.log("标绘完成", graphic.toJSON())
 }
 
 export async function startDrawModel() {
@@ -229,10 +242,11 @@ export async function startDrawModel() {
     type: isEntityPrimitive ? "model" : "modelP",
     style: {
       scale: 10,
-      url: "//data.mars3d.cn/gltf/mars/firedrill/xiaofangche.gltf"
+      url: "https://data.mars3d.cn/gltf/mars/firedrill/xiaofangche.gltf"
     }
   })
-  console.log("完成了draw标绘", graphic)
+
+  console.log("标绘完成", graphic.toJSON())
 }
 
 export async function drawPolyline(clampToGround) {
@@ -263,7 +277,8 @@ export async function drawPolyline(clampToGround) {
     //   return (point.lng > 115 && point.lng < 117)
     // }
   })
-  console.log("完成了draw标绘", graphic)
+
+  console.log("标绘完成", graphic.toJSON())
 
   // map.highlightEnabled = true
   // map.popup.enabled = true
@@ -293,7 +308,8 @@ export async function drawBrushLine(clampToGround) {
       clampToGround
     }
   })
-  console.log("完成了draw标绘", graphic)
+
+  console.log("标绘完成", graphic.toJSON())
 }
 
 export async function drawPolygon(clampToGround) {
@@ -308,7 +324,8 @@ export async function drawPolygon(clampToGround) {
       clampToGround
     }
   })
-  console.log("完成了draw标绘", graphic)
+
+  console.log("标绘完成", graphic.toJSON())
 }
 
 export async function drawCurve(clampToGround) {
@@ -320,7 +337,8 @@ export async function drawCurve(clampToGround) {
       clampToGround
     }
   })
-  console.log("完成了draw标绘", graphic)
+
+  console.log("标绘完成", graphic.toJSON())
 }
 
 export async function drawCorridor(clampToGround) {
@@ -333,7 +351,8 @@ export async function drawCorridor(clampToGround) {
       clampToGround
     }
   })
-  console.log("完成了draw标绘", graphic)
+
+  console.log("标绘完成", graphic.toJSON())
 }
 
 export async function drawEllipse(clampToGround) {
@@ -348,7 +367,8 @@ export async function drawEllipse(clampToGround) {
       clampToGround
     }
   })
-  console.log("完成了draw标绘", graphic)
+
+  console.log("标绘完成", graphic.toJSON())
 }
 
 export async function drawRectangle(clampToGround) {
@@ -363,7 +383,8 @@ export async function drawRectangle(clampToGround) {
       clampToGround
     }
   })
-  console.log("完成了draw标绘", graphic)
+
+  console.log("标绘完成", graphic.toJSON())
 }
 
 export async function draPlane() {
@@ -377,7 +398,8 @@ export async function draPlane() {
       dimensions_y: 1000.0
     }
   })
-  console.log("完成了draw标绘", graphic)
+
+  console.log("标绘完成", graphic.toJSON())
 }
 
 export async function draWall(closure) {
@@ -390,7 +412,8 @@ export async function draWall(closure) {
       closure // 是否闭合
     }
   })
-  console.log("完成了draw标绘", graphic)
+
+  console.log("标绘完成", graphic.toJSON())
 }
 
 export async function drawBox() {
@@ -404,7 +427,8 @@ export async function drawBox() {
       dimensions_z: 1000.0
     }
   })
-  console.log("完成了draw标绘", graphic)
+
+  console.log("标绘完成", graphic.toJSON())
 }
 
 export async function drawCylinder() {
@@ -417,7 +441,8 @@ export async function drawCylinder() {
       length: 1000
     }
   })
-  console.log("完成了draw标绘", graphic)
+
+  console.log("标绘完成", graphic.toJSON())
 }
 
 export async function drawEllipsoid() {
@@ -429,7 +454,8 @@ export async function drawEllipsoid() {
       opacity: 0.6
     }
   })
-  console.log("完成了draw标绘", graphic)
+
+  console.log("标绘完成", graphic.toJSON())
 }
 
 export async function drawExtrudedPolygon() {
@@ -441,7 +467,8 @@ export async function drawExtrudedPolygon() {
       diffHeight: 300
     }
   })
-  console.log("完成了draw标绘", graphic)
+
+  console.log("标绘完成", graphic.toJSON())
 }
 
 export async function drawExtrudedRectangle() {
@@ -453,7 +480,8 @@ export async function drawExtrudedRectangle() {
       diffHeight: 300
     }
   })
-  console.log("完成了draw标绘", graphic)
+
+  console.log("标绘完成", graphic.toJSON())
 }
 
 export async function drawExtrudedCircle() {
@@ -465,25 +493,28 @@ export async function drawExtrudedCircle() {
       diffHeight: 300
     }
   })
-  console.log("完成了draw标绘", graphic)
+
+  console.log("标绘完成", graphic.toJSON())
 }
 
 export async function drawSatellite() {
   const graphic = await graphicLayer.startDraw({
     type: "satellite",
-    style: {
-      tle1: "1 39150U 13018A   21180.50843864  .00000088  00000-0  19781-4 0  9997",
-      tle2: "2 39150  97.8300 252.9072 0018449 344.7422  15.3253 14.76581022440650",
-      path_show: true,
-      path_color: "#00ff00",
-      path_width: 1,
-      model_show: true,
-      model_url: "//data.mars3d.cn/gltf/mars/weixin.gltf",
-      model_scale: 1,
-      model_minimumPixelSize: 90
+    tle1: "1 39150U 13018A   21180.50843864  .00000088  00000-0  19781-4 0  9997",
+    tle2: "2 39150  97.8300 252.9072 0018449 344.7422  15.3253 14.76581022440650",
+    path: {
+      color: "#00ff00",
+      width: 1,
+      show: true
+    },
+    model: {
+      show: true,
+      url: "https://data.mars3d.cn/gltf/mars/weixin.gltf",
+      scale: 1,
+      minimumPixelSize: 90
     }
   })
-  console.log("完成了draw标绘", graphic)
+  console.log("标绘完成", graphic.toJSON())
 
   setTimeout(() => {
     graphic.flyToPoint()
@@ -544,80 +575,80 @@ export function bindLayerContextMenu() {
         }
       }
     },
-    {
-      text: "启用按轴平移",
-      icon: "fa fa-pencil",
-      show: (event) => {
-        const graphic = event.graphic
-        if (!graphic || !graphic.hasEdit || !graphic.isEditing) {
-          // || !graphic.isPoint
-          return false
-        }
-        return !graphic.editing?.hasMoveMatrix
-      },
-      callback: (event) => {
-        const graphic = event.graphic
-        graphic.editing.startMoveMatrix(event.graphic, event)
-      }
-    },
-    {
-      text: "停止按轴平移",
-      icon: "fa fa-pencil",
-      show: (event) => {
-        const graphic = event.graphic
-        if (!graphic || !graphic.hasEdit || !graphic.isEditing) {
-          return false
-        }
-        return graphic.editing?.hasMoveMatrix
-      },
-      callback: (event) => {
-        const graphic = event.graphic
-        graphic.editing.stopMoveMatrix()
-      }
-    },
-    {
-      text: "启用按轴旋转",
-      icon: "fa fa-bullseye",
-      show: (event) => {
-        const graphic = event.graphic
-        if (!graphic || !graphic.hasEdit || !graphic.isEditing) {
-          return false
-        }
-        if (
-          !(
-            graphic.type === "model" ||
-            graphic.type === "modelP" ||
-            graphic.type === "box" ||
-            graphic.type === "boxP" ||
-            graphic.type === "cylinder" ||
-            graphic.type === "cylinderP" ||
-            graphic.type === "plane"
-          )
-        ) {
-          return false
-        }
-        return !graphic.editing?.hasRotateMatrix
-      },
-      callback: (event) => {
-        const graphic = event.graphic
-        graphic.editing.startRotateMatrix(event.graphic, event)
-      }
-    },
-    {
-      text: "停止按轴旋转",
-      icon: "fa fa-bullseye",
-      show: (event) => {
-        const graphic = event.graphic
-        if (!graphic || !graphic.hasEdit || !graphic.isEditing) {
-          return false
-        }
-        return graphic.editing?.hasRotateMatrix
-      },
-      callback: (event) => {
-        const graphic = event.graphic
-        graphic.editing.stopRotateMatrix()
-      }
-    },
+    // {
+    //   text: "启用按轴平移",
+    //   icon: "fa fa-pencil",
+    //   show: (event) => {
+    //     const graphic = event.graphic
+    //     if (!graphic || !graphic.hasEdit || !graphic.isEditing) {
+    //       // || !graphic.isPoint
+    //       return false
+    //     }
+    //     return !graphic.editing?.hasMoveMatrix
+    //   },
+    //   callback: (event) => {
+    //     const graphic = event.graphic
+    //     graphic.editing.startMoveMatrix(event.graphic, event)
+    //   }
+    // },
+    // {
+    //   text: "停止按轴平移",
+    //   icon: "fa fa-pencil",
+    //   show: (event) => {
+    //     const graphic = event.graphic
+    //     if (!graphic || !graphic.hasEdit || !graphic.isEditing) {
+    //       return false
+    //     }
+    //     return graphic.editing?.hasMoveMatrix
+    //   },
+    //   callback: (event) => {
+    //     const graphic = event.graphic
+    //     graphic.editing.stopMoveMatrix()
+    //   }
+    // },
+    // {
+    //   text: "启用按轴旋转",
+    //   icon: "fa fa-bullseye",
+    //   show: (event) => {
+    //     const graphic = event.graphic
+    //     if (!graphic || !graphic.hasEdit || !graphic.isEditing) {
+    //       return false
+    //     }
+    //     if (
+    //       !(
+    //         graphic.type === "model" ||
+    //         graphic.type === "modelP" ||
+    //         graphic.type === "box" ||
+    //         graphic.type === "boxP" ||
+    //         graphic.type === "cylinder" ||
+    //         graphic.type === "cylinderP" ||
+    //         graphic.type === "plane"
+    //       )
+    //     ) {
+    //       return false
+    //     }
+    //     return !graphic.editing?.hasRotateMatrix
+    //   },
+    //   callback: (event) => {
+    //     const graphic = event.graphic
+    //     graphic.editing.startRotateMatrix(event.graphic, event)
+    //   }
+    // },
+    // {
+    //   text: "停止按轴旋转",
+    //   icon: "fa fa-bullseye",
+    //   show: (event) => {
+    //     const graphic = event.graphic
+    //     if (!graphic || !graphic.hasEdit || !graphic.isEditing) {
+    //       return false
+    //     }
+    //     return graphic.editing?.hasRotateMatrix
+    //   },
+    //   callback: (event) => {
+    //     const graphic = event.graphic
+    //     graphic.editing.stopRotateMatrix()
+    //   }
+    // },
     {
       text: "还原编辑(还原到初始)",
       icon: "fa fa-pencil",
@@ -704,18 +735,14 @@ export function bindLayerContextMenu() {
       icon: "fa fa-info",
       show: (event) => {
         const graphic = event.graphic
-        if (graphic.graphicIds) {
+        if (graphic.cluster && graphic.graphics) {
           return true
         } else {
           return false
         }
       },
       callback: (e) => {
-        const graphic = e.graphic
-        if (!graphic) {
-          return
-        }
-        const graphics = graphic.getGraphics() // 对应的grpahic数组，可以自定义显示
+        const graphics = e.graphic?.graphics
         if (graphics) {
           const names = []
           for (let index = 0; index < graphics.length; index++) {
@@ -930,7 +957,7 @@ function loadDemoData() {
   //   return
   // }
 
-  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/geojson/mars3d-draw.json" }).then(function (json) {
+  mars3d.Util.fetchJson({ url: "https://data.mars3d.cn/file/geojson/mars3d-draw.json" }).then(function (json) {
     const graphics = graphicLayer.loadGeoJSON(json, { clear: true, flyTo: true, toPrimitive: true })
     console.log("加载演示数据", graphics)
   })

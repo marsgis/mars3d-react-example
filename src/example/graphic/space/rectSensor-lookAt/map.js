@@ -16,19 +16,14 @@ export const mapOptions = {
   control: {
     clockAnimate: true, // 时钟动画控制(左下角)
     timeline: true, // 是否显示时间线控件
-    compass: { top: "10px", left: "5px" }
+    compass: { style: { top: "10px", right: "5px" } }
   }
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
-  map.toolbar.style.bottom = "55px" // 修改toolbar控件的样式
+  // map.control.toolbar.container.style.bottom = "55px" // 修改toolbar控件的样式
 
   map.clock.shouldAnimate = true
   map.clock.multiplier = 60 // 速度
@@ -36,10 +31,7 @@ export function onMounted(mapInstance) {
   addGraphicLayer()
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -65,7 +57,7 @@ function addGraphicLayer() {
     tle1: "1 39150U 13018A   21180.50843864  .00000088  00000-0  19781-4 0  9997",
     tle2: "2 39150  97.8300 252.9072 0018449 344.7422  15.3253 14.76581022440650",
     model: {
-      url: "//data.mars3d.cn/gltf/mars/weixin.gltf",
+      url: "https://data.mars3d.cn/gltf/mars/weixin.gltf",
       scale: 1,
       minimumPixelSize: 90
     },
@@ -105,7 +97,7 @@ function addGraphicLayer() {
     tle1: "1 33916U 93036DV  21197.38574736  .00000034  00000-0  48020-4 0  9991",
     tle2: "2 33916  74.0517 160.4563 0330253 328.4241 153.7022 13.66391564618811",
     model: {
-      url: "//data.mars3d.cn/gltf/mars/weixin.gltf",
+      url: "https://data.mars3d.cn/gltf/mars/weixin.gltf",
       scale: 1,
       minimumPixelSize: 90
     },

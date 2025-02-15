@@ -18,7 +18,7 @@ export const mapOptions = {
   control: {
     clockAnimate: true, // 时钟动画控制(左下角)
     timeline: true, // 是否显示时间线控件
-    compass: { bottom: "380px", left: "5px" }
+    compass: { style: { bottom: "380px", left: "5px" } }
   }
 }
 
@@ -32,23 +32,15 @@ const args = {
   cleanTimeInter: null
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
-  map.toolbar.style.bottom = "55px" // 修改toolbar控件的样式
+  // map.control.toolbar.container.style.bottom = "55px" // 修改toolbar控件的样式
 
   addLayer()
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -82,6 +74,7 @@ function addLayer() {
   // 求对比的贴地地面高度（用于echarts展示）
   mars3d.PolyUtil.computeSurfacePoints({
     scene: map.scene,
+    exact: true,
     positions: positionsNew // 需要计算的源路线坐标数组
   }).then((result) => {
     // raisedPositions为含高程信息的新坐标数组，noHeight为标识是否存在无地形数据。
@@ -144,71 +137,46 @@ function inintRoad(positionsSJ, positionsTD) {
   graphicLayer.addGraphic(primitiveTD)
 
   // =================计算路线====================
+  const speed = 180
   const start = map.clock.currentTime.clone()
-
-  const counts = mpoints.length
-
-  const arrProperty = []
-
+  const arrStartTime = []
+  let alltimes = 0
   // 16组车身+头尾2个车头 共18组
   for (let j = 0; j < 18; j++) {
-    const stime = Cesium.JulianDate.addSeconds(start, j, new Cesium.JulianDate()) // 每隔j秒，添加一次时间
-
-    const property = new Cesium.SampledPositionProperty()
-
-    for (let i = 0; i < counts; i++) {
-      const time = Cesium.JulianDate.addSeconds(stime, i + 1, new Cesium.JulianDate())
-      const point = Cesium.Cartesian3.fromDegrees(mpoints[i][0], mpoints[i][1], mpoints[i][2] + 0.5)
-      property.addSample(time, point) // 添加新样本，时间、位置
-    }
-
-    property.setInterpolationOptions({
-      interpolationDegree: 1,
-      interpolationAlgorithm: Cesium.LinearApproximation
-    })
-
-    arrProperty.push(property)
+    const timeSecond = 20 / (speed / 3.6) // 车身长度除以车速
+    alltimes += timeSecond
+    const stime = Cesium.JulianDate.addSeconds(start, alltimes, new Cesium.JulianDate()) // 每隔j秒，添加一次时间
+    arrStartTime.push(stime)
   }
 
-  // =================时间相关====================
+  // =================添加高铁车头================
+  const graphicHead = addTrainHead(mpoints, speed, arrStartTime[0])
 
-  const stop = Cesium.JulianDate.addSeconds(start, counts + 60, new Cesium.JulianDate())
+  // =================添加16组车身====================
+  for (let j = 1, len = arrStartTime.length - 1; j < len; j++) {
+    addTrainBody(mpoints, speed, arrStartTime[j])
+  }
+
+  // =================添加高铁车尾================
+  const graphicRear = addTrainHead(mpoints, speed, arrStartTime[17], true) // 车尾部的反向车头
+
+  // ==============添加铁路，定时更新================
+  addRailway(graphicHead, mpoints)
+
+  // 设置相机的视角跟随的Entity实例
+  map.trackedEntity = graphicHead
+
+  // =================时间相关====================
+  const stop = graphicRear.timeRange.stopTime
   map.clock.startTime = start.clone()
   map.clock.stopTime = stop.clone()
   map.clock.currentTime = start.clone()
   map.clock.multiplier = 1 // 当前速度，默认为1
   map.clock.shouldAnimate = true // 是否开启时钟动画，默认true
-  //  map.clock.clockRange = Cesium.ClockRange.LOOP_STOP; // 到达终止时间后循环
 
   if (map.control.timeline) {
     map.control.timeline.zoomTo(start, stop)
   }
-
-  const availability = new Cesium.TimeIntervalCollection([
-    new Cesium.TimeInterval({
-      start,
-      stop: Cesium.JulianDate.addSeconds(start, counts, new Cesium.JulianDate())
-    })
-  ])
-
-  // =================添加高铁车头================
-  const graphicHead = addTrainHead(arrProperty[0], availability)
-
-  // =================添加车身====================
-  const len = arrProperty.length
-  for (let j = 1; j < len - 1; j++) {
-    addTrainBody(arrProperty[j], availability)
-  }
-
-  // =================添加高铁车尾================
-  addTrainHead(arrProperty[len - 1], availability, true) // 车尾部的反向车头
-
-  // ==============添加铁路，定时更新================
-  addRailway(graphicHead, mpoints)
-
-  // // 设置相机的视角跟随的Entity实例
-  // map.trackedEntity = graphicHead
-
 
   // ==============更新echarts================
   let lastDistance
@@ -232,14 +200,22 @@ function inintRoad(positionsSJ, positionsTD) {
 }
 
 // 添加车头
-function addTrainHead(position, availability, rotatePI) {
+function addTrainHead(positions, speed, startTime, rotatePI) {
   const graphicModel = new mars3d.graphic.ModelEntity({
     name: "和谐号车头",
-    position,
-    orientation: new Cesium.VelocityOrientationProperty(position),
-    availability,
+    position: {
+      type: "time", // 时序动态坐标
+      speed: speed,
+      startTime,
+      list: positions,
+      forwardExtrapolationType: Cesium.ExtrapolationType.NONE, // 在最后1个结束时间之后，NONE时不显示，HOLD时显示结束时间对应坐标位置
+      backwardExtrapolationType: Cesium.ExtrapolationType.NONE, //  在第1个开始时间之前，NONE时不显示，HOLD时显示开始时间对应坐标位置
+      interpolation: true,
+      interpolationDegree: 1,
+      interpolationAlgorithm: Cesium.LinearApproximation
+    },
     style: {
-      url: "//data.mars3d.cn/gltf/mars/train/heada.glb",
+      url: "https://data.mars3d.cn/gltf/mars/train/heada.glb",
       scale: 0.001,
       minimumPixelSize: 16,
       heading: rotatePI ? 90 : -90,
@@ -251,14 +227,22 @@ function addTrainHead(position, availability, rotatePI) {
 }
 
 // 添加车身
-function addTrainBody(position, availability) {
+function addTrainBody(positions, speed, startTime) {
   const graphicModel = new mars3d.graphic.ModelEntity({
     name: "和谐号车身",
-    position,
-    orientation: new Cesium.VelocityOrientationProperty(position),
-    availability,
+    position: {
+      type: "time", // 时序动态坐标
+      speed: speed,
+      startTime,
+      list: positions,
+      forwardExtrapolationType: Cesium.ExtrapolationType.NONE, // 在最后1个结束时间之后，NONE时不显示，HOLD时显示结束时间对应坐标位置
+      backwardExtrapolationType: Cesium.ExtrapolationType.NONE, // 在第1个开始时间之前，NONE时不显示，HOLD时显示开始时间对应坐标位置
+      interpolation: true,
+      interpolationDegree: 1,
+      interpolationAlgorithm: Cesium.LinearApproximation
+    },
     style: {
-      url: "//data.mars3d.cn/gltf/mars/train/body.glb",
+      url: "https://data.mars3d.cn/gltf/mars/train/body.glb",
       scale: 0.001,
       minimumPixelSize: 16,
       heading: -90,
@@ -317,7 +301,7 @@ function addRailway(graphicHead, mpoints) {
             orientation: orientations[i],
             availability,
             style: {
-              url: "//data.mars3d.cn/gltf/mars/railway/suidao.glb",
+              url: "https://data.mars3d.cn/gltf/mars/railway/suidao.glb",
               scale: 0.001
             }
           })
@@ -337,7 +321,7 @@ function addRailway(graphicHead, mpoints) {
           orientation: orientations[i],
           availability,
           style: {
-            url: "//data.mars3d.cn/gltf/mars/railway/railway.glb",
+            url: "https://data.mars3d.cn/gltf/mars/railway/railway.glb",
             scale: 0.001
           }
         })
@@ -357,7 +341,7 @@ function addRailway(graphicHead, mpoints) {
             orientation: orientations[i],
             availability,
             style: {
-              url: "//data.mars3d.cn/gltf/mars/railway/bridge.glb",
+              url: "https://data.mars3d.cn/gltf/mars/railway/bridge.glb",
               scale: 0.001
             }
           })
@@ -378,7 +362,7 @@ function addRailway(graphicHead, mpoints) {
             orientation: orientations[i],
             availability,
             style: {
-              url: "//data.mars3d.cn/gltf/mars/railway/jiazi.glb",
+              url: "https://data.mars3d.cn/gltf/mars/railway/jiazi.glb",
               scale: 0.001
             }
           })

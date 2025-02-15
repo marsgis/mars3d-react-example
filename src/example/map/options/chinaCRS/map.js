@@ -15,7 +15,7 @@ export const mapOptions = {
   basemaps: [
     {
       name: "天地图影像",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/tdt_img.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/tdt_img.png",
       type: "group",
       layers: [
         { name: "底图", type: "tdt", layer: "img_d" },
@@ -25,7 +25,7 @@ export const mapOptions = {
     {
       name: "高德影像",
       type: "group",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/gaode_img.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/gaode_img.png",
       layers: [
         { name: "底图", type: "gaode", layer: "img_d" },
         { name: "注记", type: "gaode", layer: "img_z" }
@@ -35,12 +35,7 @@ export const mapOptions = {
   ]
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
   map.hasTerrain = false
@@ -48,7 +43,7 @@ export function onMounted(mapInstance) {
   // 添加参考三维模型
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     name: "合肥国家大学科技园",
-    url: "//data.mars3d.cn/3dtiles/qx-hfdxy/tileset.json",
+    url: "https://data.mars3d.cn/3dtiles/qx-hfdxy/tileset.json",
     position: { alt: 0 },
     maximumScreenSpaceError: 1,
     chinaCRS: mars3d.ChinaCRS.WGS84 // 标识坐标系，自动加偏
@@ -77,10 +72,7 @@ export function onMounted(mapInstance) {
   map.graphicLayer.addGraphic(graphic)
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }

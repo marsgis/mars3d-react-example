@@ -13,7 +13,7 @@ export const mapOptions = {
     {
       name: "国境线",
       type: "geojson_kml",
-      url: "//data.mars3d.cn/file/kml/countryboundary.kml",
+      url: "https://data.mars3d.cn/file/kml/countryboundary.kml",
       symbol: {
         styleOptions: {
           color: "#FED976",
@@ -26,7 +26,7 @@ export const mapOptions = {
     {
       name: "省界线",
       type: "geojson_kml",
-      url: "//data.mars3d.cn/file/kml/province.kml",
+      url: "https://data.mars3d.cn/file/kml/province.kml",
       symbol: {
         styleOptions: {
           color: "#00FF00",
@@ -41,21 +41,13 @@ export const mapOptions = {
 
 export const treeEvent = new mars3d.BaseClass()
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
   shoRailway()
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -78,7 +70,7 @@ export function shoRailway() {
   removeLayer()
 
   graphicLayer = new Kml2JsonLayer({
-    url: "//data.mars3d.cn/file/kml/hftl.kml",
+    url: "https://data.mars3d.cn/file/kml/hftl.kml",
     symbol: function (attr, style, featue) {
       return {
         color: "#00ffff",
@@ -130,7 +122,7 @@ export function showExpressway() {
 
   graphicLayer = new Kml2JsonLayer({
     name: "路线",
-    url: "//data.mars3d.cn/file/kml/bslx.kmz",
+    url: "https://data.mars3d.cn/file/kml/bslx.kmz",
     popup: "all",
     flyTo: true
   })
@@ -138,7 +130,6 @@ export function showExpressway() {
 
   // 绑定事件
   graphicLayer.on(mars3d.EventType.load, function (event) {
-
     treeEvent.fire("refTree")
   })
   graphicLayer.on(mars3d.EventType.click, function (event) {
@@ -152,12 +143,12 @@ export function showSafetyNotice() {
 
   graphicLayer = new Kml2JsonLayer({
     name: "海上安全警告",
-    url: "//data.mars3d.cn/file/kml/NAVWARN.kmz",
+    url: "https://data.mars3d.cn/file/kml/NAVWARN.kmz",
     symbol: function (attr, style, featue) {
       const geoType = featue.geometry?.type
       if (geoType === "Point") {
         return {
-          image: "//data.mars3d.cn/img/marker/point-red.png",
+          image: "https://data.mars3d.cn/img/marker/point-red.png",
           verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
           label: {
             text: attr.name,
@@ -199,7 +190,7 @@ export function showMeteorological() {
 
   graphicLayer = new Kml2JsonLayer({
     name: "气象数据",
-    url: "//data.mars3d.cn/file/kml/dg8.kml",
+    url: "https://data.mars3d.cn/file/kml/dg8.kml",
     opacity: 0.7,
     popup: "all",
     flyTo: true
@@ -222,7 +213,7 @@ export function showGDP() {
 
   graphicLayer = new Kml2JsonLayer({
     name: "全球各国GDP",
-    url: "//data.mars3d.cn/file/kml/gdpPerCapita2008.kmz",
+    url: "https://data.mars3d.cn/file/kml/gdpPerCapita2008.kmz",
     symbol: function (attr, style, featue) {
       const geoType = featue.geometry?.type
       if (geoType === "Point") {

@@ -7,12 +7,7 @@ export let graphicLayer // 矢量图层对象
 
 export const eventTarget = new mars3d.BaseClass()
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
@@ -47,10 +42,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic14(graphicLayer)
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 
@@ -63,7 +55,7 @@ function addDemoGraphic1(graphicLayer) {
   const graphic = new mars3d.graphic.BillboardEntity({
     position: [116.1, 31.0, 1000],
     style: {
-      image: "//data.mars3d.cn/img/marker/lace-blue.png",
+      image: "https://data.mars3d.cn/img/marker/lace-blue.png",
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM
     },
@@ -150,7 +142,7 @@ function addDemoGraphic2(graphicLayer) {
   const graphic = new mars3d.graphic.BillboardEntity({
     position: new mars3d.LngLatPoint(116.2, 31.0, 1000),
     style: {
-      image: "//data.mars3d.cn/img/marker/lace-red.png",
+      image: "https://data.mars3d.cn/img/marker/lace-red.png",
       scale: 1.0,
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
@@ -178,7 +170,7 @@ function addDemoGraphic3(graphicLayer) {
   const graphic0 = new mars3d.graphic.BillboardEntity({
     position: new mars3d.LngLatPoint(116.307258, 30.999546, 1239.2),
     style: {
-      image: "//data.mars3d.cn/img/marker/lace-red.png",
+      image: "https://data.mars3d.cn/img/marker/lace-red.png",
       scale: 1,
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
@@ -192,7 +184,7 @@ function addDemoGraphic3(graphicLayer) {
   const graphic = new mars3d.graphic.BillboardEntity({
     position: new mars3d.LngLatPoint(116.307258, 30.999546, 1239.2),
     style: {
-      image: "//data.mars3d.cn/img/marker/lace-yellow.png",
+      image: "https://data.mars3d.cn/img/marker/lace-yellow.png",
       scale: 1,
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
@@ -209,7 +201,7 @@ function addDemoGraphic4(graphicLayer) {
   const graphic = new mars3d.graphic.BillboardEntity({
     position: [116.4, 31.0, 1000],
     style: {
-      image: "//data.mars3d.cn/img/marker/route-start.png",
+      image: "https://data.mars3d.cn/img/marker/route-start.png",
       scale: 1,
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
@@ -233,7 +225,7 @@ function addDemoGraphic4(graphicLayer) {
   console.log("转换后的json", json)
 
   json.position = [116.5, 31.0, 1000] // 新的坐标
-  json.style.image = "//data.mars3d.cn/img/marker/route-end.png"
+  json.style.image = "https://data.mars3d.cn/img/marker/route-end.png"
   json.style.label = json.style.label || {}
   json.style.label.text = "我是转换后生成的"
   graphicLayer.addGraphic(json) // 支持直接加json，内部转为graphic
@@ -243,7 +235,7 @@ function addDemoGraphic5(graphicLayer) {
   const graphic = new mars3d.graphic.BillboardEntity({
     position: [116.1, 30.9, 1000],
     style: {
-      image: "//data.mars3d.cn/img/marker/mark-green.png",
+      image: "https://data.mars3d.cn/img/marker/mark-green.png",
       scale: 1,
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM
@@ -255,9 +247,20 @@ function addDemoGraphic5(graphicLayer) {
 
 function addDemoGraphic6(graphicLayer) {
   const graphic = new mars3d.graphic.BillboardEntity({
-    position: new mars3d.LngLatPoint(116.2, 30.9, 1000),
+    position: {
+      type: "time", // 时序动态坐标
+      speed: 360,
+      list: [
+        [116.149105, 30.907981, 503.6],
+        [116.190348, 30.955769, 594.9],
+        [116.246612, 30.915395, 604.5],
+        [116.231737, 30.859761, 405.2],
+        [116.184267, 30.859695, 323.1],
+        [116.153552, 30.899044, 521.4]
+      ]
+    },
     style: {
-      image: "//data.mars3d.cn/img/marker/mark-red.png",
+      image: "https://data.mars3d.cn/img/marker/mark-red.png",
       scale: 1,
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM
@@ -271,7 +274,7 @@ function addDemoGraphic7(graphicLayer) {
   const graphic = new mars3d.graphic.BillboardEntity({
     position: new mars3d.LngLatPoint(116.3, 30.9, 1000),
     style: {
-      image: "//data.mars3d.cn/img/marker/mark-blue.png",
+      image: "https://data.mars3d.cn/img/marker/mark-blue.png",
       scale: 1,
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM
@@ -285,7 +288,7 @@ function addDemoGraphic8(graphicLayer) {
   const graphic = new mars3d.graphic.BillboardEntity({
     position: new mars3d.LngLatPoint(116.4, 30.9, 1000),
     style: {
-      image: "//data.mars3d.cn/img/marker/point-red.png",
+      image: "https://data.mars3d.cn/img/marker/point-red.png",
       scale: 1,
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM
@@ -299,7 +302,7 @@ function addDemoGraphic9(graphicLayer) {
   const graphic = new mars3d.graphic.BillboardEntity({
     position: new mars3d.LngLatPoint(116.5, 30.9, 1000),
     style: {
-      image: "//data.mars3d.cn/img/marker/point-yellow.png",
+      image: "https://data.mars3d.cn/img/marker/point-yellow.png",
       scale: 1,
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM
@@ -313,7 +316,7 @@ function addDemoGraphic10(graphicLayer) {
   const graphic = new mars3d.graphic.BillboardEntity({
     position: new mars3d.LngLatPoint(116.1, 30.8, 1000),
     style: {
-      image: "//data.mars3d.cn/img/marker/point-orange.png",
+      image: "https://data.mars3d.cn/img/marker/point-orange.png",
       scale: 1,
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM
@@ -323,28 +326,26 @@ function addDemoGraphic10(graphicLayer) {
   graphicLayer.addGraphic(graphic)
 }
 
-
 function addDemoGraphic11(graphicLayer) {
-  const propertyFJ = getSampledPositionProperty([
-    [116.34591, 30.680609, 437],
-    [116.477653, 30.802623, 202.1],
-    [116.749545, 31.062176, 675.5]
-  ])
-
   const graphic = new mars3d.graphic.BillboardEntity({
-    position: propertyFJ,
-    orientation: new Cesium.VelocityOrientationProperty(propertyFJ),
-    style: {
-      image: "//data.mars3d.cn/img/marker/svg/huojian.svg",
-      scale: 0.5,
-      alignedAxis: new Cesium.VelocityVectorProperty(propertyFJ, true)
+    position: {
+      type: "time", // 时序动态坐标
+      speed: 260,
+      list: [
+        [116.34591, 30.680609, 437],
+        [116.477653, 30.802623, 202.1],
+        [116.749545, 31.062176, 675.5]
+      ]
     },
-    attr: { remark: "示例14" },
-    hasEdit: false
+    style: {
+      image: "https://data.mars3d.cn/img/marker/svg/huojian.svg",
+      scale: 0.5,
+      alignedAxis: true
+    },
+    attr: { remark: "示例11" }
   })
   graphicLayer.addGraphic(graphic)
 }
-
 
 // 利用第3方库（gifler.js）加载gif
 function addDemoGraphic12(graphicLayer) {
@@ -364,7 +365,7 @@ function addDemoGraphic12(graphicLayer) {
   graphicLayer.addGraphic(graphic)
 
   // eslint-disable-next-line no-undef
-  const gif = gifler("//data.mars3d.cn/img/marker/gif/typhoon.gif")
+  const gif = gifler("https://data.mars3d.cn/img/marker/gif/typhoon.gif")
   gif.frames(document.createElement("canvas"), function (ctx, frame) {
     gifImgBuffer = frame.buffer.toDataURL()
   })
@@ -377,7 +378,7 @@ function addDemoGraphic13(graphicLayer) {
   const graphic = new mars3d.graphic.BillboardEntity({
     position: startPoint,
     style: {
-      image: "//data.mars3d.cn/img/marker/street.png",
+      image: "https://data.mars3d.cn/img/marker/street.png",
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
       label: {
@@ -390,7 +391,7 @@ function addDemoGraphic13(graphicLayer) {
         distanceDisplayCondition_near: 0
       }
     },
-    attr: { remark: "示例13" }
+    attr: { remark: "示例13-BillboardEntity" }
   })
   graphicLayer.addGraphic(graphic)
 
@@ -409,7 +410,8 @@ function addDemoGraphic13(graphicLayer) {
       outline: true,
       outlineWidth: 3,
       outlineColor: "#ffffff"
-    }
+    },
+    attr: { remark: "示例13-Sector" }
   })
   graphicLayer.addGraphic(sector)
 
@@ -420,26 +422,10 @@ function addDemoGraphic13(graphicLayer) {
       pixelSize: 10,
       outlineColor: "#ffffff",
       outlineWidth: 2
-    }
+    },
+    attr: { remark: "示例13-PointEntity" }
   })
   graphicLayer.addGraphic(endPoint)
-}
-
-
-
-// 计算演示的SampledPositionProperty轨迹
-function getSampledPositionProperty(points) {
-  const property = new Cesium.SampledPositionProperty()
-  property.forwardExtrapolationType = Cesium.ExtrapolationType.HOLD
-
-  const start = map.clock.currentTime
-  const positions = mars3d.LngLatArray.toCartesians(points)
-  for (let i = 0; i < positions.length; i++) {
-    const time = Cesium.JulianDate.addSeconds(start, i * 20, new Cesium.JulianDate())
-    const position = positions[i]
-    property.addSample(time, position)
-  }
-  return property
 }
 
 function addDemoGraphic14(graphicLayer) {
@@ -453,7 +439,7 @@ function addDemoGraphic14(graphicLayer) {
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.CENTER
     },
-    attr: { remark: "示例11" }
+    attr: { remark: "示例14" }
   })
   graphicLayer.addGraphic(graphic)
 }
@@ -474,7 +460,7 @@ export function addRandomGraphicByCount(count) {
     const graphic = new mars3d.graphic.BillboardEntity({
       position,
       style: {
-        image: "//data.mars3d.cn/img/marker/point-red.png",
+        image: "https://data.mars3d.cn/img/marker/point-red.png",
         horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
         verticalOrigin: Cesium.VerticalOrigin.BOTTOM
       },
@@ -488,11 +474,11 @@ export function addRandomGraphicByCount(count) {
 }
 
 // 开始绘制
-export function startDrawGraphic() {
-  graphicLayer.startDraw({
+export async function startDrawGraphic() {
+  const graphic = await graphicLayer.startDraw({
     type: "billboard",
     style: {
-      image: "//data.mars3d.cn/img/marker/mark-red.png",
+      image: "https://data.mars3d.cn/img/marker/mark-red.png",
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
       label: {
@@ -506,6 +492,22 @@ export function startDrawGraphic() {
       }
     }
   })
+  console.log("标绘完成", graphic.toJSON())
+}
+export async function startDrawGraphic2() {
+  const graphic = await graphicLayer.startDraw({
+    type: "billboard",
+    position: {
+      type: "time", // 时序动态坐标
+      speed: 960
+    },
+    style: {
+      image: "https://data.mars3d.cn/img/marker/point-red.png",
+      horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+      verticalOrigin: Cesium.VerticalOrigin.BOTTOM
+    }
+  })
+  console.log("标绘完成", graphic.toJSON())
 }
 
 export function btnStartBounce() {
@@ -538,18 +540,21 @@ export function btnStopBounce() {
 
 // 在图层绑定Popup弹窗
 export function bindLayerPopup() {
-  graphicLayer.bindPopup(function (event) {
-    if (event.graphics?.length > 1) {
-      return `您单击了重叠图标，该区域有${event.graphics.length}个对象` // 如果存在坐标完全相同的图标点时
-    }
+  graphicLayer.bindPopup(
+    function (event) {
+      if (event.graphics?.length > 1) {
+        return `您单击了重叠图标，该区域有${event.graphics.length}个对象` // 如果存在坐标完全相同的图标点时
+      }
 
-    const attr = event.graphic.attr || {}
-    attr["类型"] = event.graphic.type
-    attr["来源"] = "我是layer上绑定的Popup"
-    attr["备注"] = "我支持鼠标交互"
+      const attr = event.graphic.attr || {}
+      attr["类型"] = event.graphic.type
+      attr["来源"] = "我是layer上绑定的Popup"
+      attr["备注"] = "我支持鼠标交互"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
-  }, { useGraphicPostion: true })
+      return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
+    },
+    { useGraphicPostion: true }
+  )
 }
 
 // 绑定右键菜单
@@ -681,18 +686,14 @@ export function bindLayerContextMenu() {
       icon: "fa fa-info",
       show: (event) => {
         const graphic = event.graphic
-        if (graphic.graphicIds) {
+        if (graphic.cluster && graphic.graphics) {
           return true
         } else {
           return false
         }
       },
       callback: (e) => {
-        const graphic = e.graphic
-        if (!graphic) {
-          return
-        }
-        const graphics = graphic.getGraphics() // 对应的grpahic数组，可以自定义显示
+        const graphics = e.graphic?.graphics
         if (graphics) {
           const names = []
           for (let index = 0; index < graphics.length; index++) {

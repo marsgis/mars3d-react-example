@@ -6,19 +6,15 @@ export let graphicLayer // 矢量图层对象
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: 31.805326, lng: 117.241767, alt: 2281, heading: 357, pitch: -42 }
+    center: { lat: 31.805326, lng: 117.241767, alt: 2281, heading: 357, pitch: -42 },
+    logarithmicDepthBuffer: false // 对数深度缓冲区[当 贴地面 出现 阴影体 时设置下]
   },
   terrain: {
     show: false
   }
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map // 创建矢量数据图层
 
@@ -34,10 +30,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic1()
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
   graphicLayer.remove()

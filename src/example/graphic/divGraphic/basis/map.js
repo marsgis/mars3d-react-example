@@ -10,12 +10,7 @@ export const mapOptions = {
   }
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
 
@@ -51,10 +46,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic12(graphicLayer)
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -139,7 +131,7 @@ function addDemoGraphic4(graphicLayer) {
   // const graphic = new mars3d.graphic.DivGraphic({
   //   position: [116.79013, 31.164872, 289],
   //   style: {
-  //     html: '<img src="//data.mars3d.cn/img/marker/gif/typhoon.gif" style="width:50px;height:50px;" ></img>',
+  //     html: '<img src="https://data.mars3d.cn/img/marker/gif/typhoon.gif" style="width:50px;height:50px;" ></img>',
   //     distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 200000), // 按视距距离显示
   //     horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
   //     verticalOrigin: Cesium.VerticalOrigin.CENTER
@@ -152,7 +144,7 @@ function addDemoGraphic4(graphicLayer) {
   const graphic = new mars3d.graphic.DivGif({
     position: [116.79013, 31.164872, 289],
     style: {
-      image: "//data.mars3d.cn/img/marker/gif/typhoon.gif",
+      image: "https://data.mars3d.cn/img/marker/gif/typhoon.gif",
       width: 50,
       height: 50,
       distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 200000) // 按视距距离显示
@@ -389,7 +381,17 @@ function addDemoGraphic10(graphicLayer) {
 // 倾斜指向左下角的面板样式
 function addDemoGraphic11(graphicLayer) {
   const graphic = new mars3d.graphic.DivGraphic({
-    position: Cesium.Cartesian3.fromDegrees(116.706926, 30.945346, 457.5),
+    position: {
+      type: "time", // 时序动态坐标
+      speed: 1500,
+      list: [
+        [116.38546, 30.965609, 864.3],
+        [116.472052, 30.876167, 579.1],
+        [116.682461, 30.859745, 68],
+        [116.900543, 30.92267, 37.4],
+        [116.943531, 31.144053, 330.7]
+      ]
+    },
     style: {
       html: `<div class="marsTiltPanel marsTiltPanel-theme-blue">
           <div class="marsTiltPanel-wrap">
@@ -454,42 +456,6 @@ function addDemoGraphic11(graphicLayer) {
     }
   })
   graphicLayer.addGraphic(graphic)
-
-  movePoint(graphic) // 动画移动示例
-}
-
-//
-function movePoint(graphic) {
-  map.clock.shouldAnimate = true
-
-  // 动画移动
-  const property = new Cesium.SampledPositionProperty()
-  property.forwardExtrapolationType = Cesium.ExtrapolationType.HOLD
-
-  const time = 20 // 移动的时长 ，秒
-  let tempTime
-
-  // 起点
-  const startPoint = Cesium.Cartesian3.fromDegrees(116.706926, 30.945346, 457.5)
-  tempTime = map.clock.currentTime // 飞行开始时间
-  property.addSample(tempTime, startPoint)
-
-  // 移动到的第1个目标点
-  const point1 = Cesium.Cartesian3.fromDegrees(116.311439, 30.76485, 423.7)
-  tempTime = Cesium.JulianDate.addSeconds(tempTime, time, new Cesium.JulianDate())
-  property.addSample(tempTime, point1)
-
-  // 移动到的第2个目标点
-  const point2 = Cesium.Cartesian3.fromDegrees(116.63081, 30.786585, 85)
-  tempTime = Cesium.JulianDate.addSeconds(tempTime, time, new Cesium.JulianDate())
-  property.addSample(tempTime, point2)
-
-  // 移动到的第3个目标点
-  const point3 = Cesium.Cartesian3.fromDegrees(116.706926, 30.945346, 457.5)
-  tempTime = Cesium.JulianDate.addSeconds(tempTime, time, new Cesium.JulianDate())
-  property.addSample(tempTime, point3)
-
-  graphic.position = property
 }
 
 function addDemoGraphic12(graphicLayer) {
@@ -543,8 +509,8 @@ export function addRandomGraphicByCount(count) {
 }
 
 // 开始绘制
-export function startDrawGraphic() {
-  graphicLayer.startDraw({
+export async function startDrawGraphic() {
+  const graphic = await graphicLayer.startDraw({
     type: "div",
     style: {
       html: `<div class="marsImgPanel2">
@@ -555,7 +521,9 @@ export function startDrawGraphic() {
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM
     }
   })
+  console.log("标绘完成", graphic.toJSON())
 }
+
 
 // 在图层绑定Popup弹窗
 export function bindLayerPopup() {

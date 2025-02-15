@@ -10,29 +10,21 @@ export const mapOptions = {
   control: {
     clockAnimate: true, // 时钟动画控制(左下角)
     timeline: true, // 是否显示时间线控件
-    compass: { bottom: "380px", left: "5px" }
+    compass: { style: { bottom: "380px", left: "5px" } }
   }
 }
 
 export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到组件中
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
-  map.toolbar.style.bottom = "55px" // 修改toolbar控件的样式
+  // map.control.toolbar.container.style.bottom = "55px" // 修改toolbar控件的样式
 
   addGraphicLayer()
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -143,9 +135,12 @@ function addGraphicLayer() {
 
   fixedRoute = new mars3d.graphic.FixedRoute({
     name: "飞机航线",
-    speed: 100,
-    startTime: "2017-08-25 09:00:00",
-    positions,
+    position: {
+      type: "time", // 时序动态坐标
+      speed: 100,
+      startTime: "2017-08-25 09:00:00",
+      list: positions
+    },
     // "clockLoop": true,      //是否循环播放
     clockRange: Cesium.ClockRange.CLAMPED, // CLAMPED 到达终止时间后停止
     camera: {
@@ -154,7 +149,7 @@ function addGraphicLayer() {
       radius: 500
     },
     model: {
-      url: "//data.mars3d.cn/gltf/mars/MQ-9-Predator.glb",
+      url: "https://data.mars3d.cn/gltf/mars/MQ-9-Predator.glb",
       scale: 1,
       // heading: 0,
       minimumPixelSize: 100
@@ -178,10 +173,13 @@ function addGraphicLayer() {
   bindPopup(fixedRoute)
 
   // ui面板信息展示
-  fixedRoute.on(mars3d.EventType.change, mars3d.Util.funThrottle((event) => {
-    // 取实时信息，可以通过  fixedRoute.info
-    eventTarget.fire("roamLineChange", event)
-  }, 500))
+  fixedRoute.on(
+    mars3d.EventType.change,
+    mars3d.Util.funThrottle((event) => {
+      // 取实时信息，可以通过  fixedRoute.info
+      eventTarget.fire("roamLineChange", event)
+    }, 500)
+  )
 
   // fixedRoute.start()
   // fixedRoute.openPopup()
@@ -265,14 +263,13 @@ function bindPopup(fixedRoute) {
 export const formatDistance = mars3d.MeasureUtil.formatDistance
 export const formatTime = mars3d.Util.formatTime
 
-
 function addVideoDemo() {
   const video2D = new mars3d.graphic.Video2D({
     position: new Cesium.CallbackProperty((time) => {
       return fixedRoute.position
     }, false),
     style: {
-      url: "//data.mars3d.cn/file/video/lukou.mp4",
+      url: "https://data.mars3d.cn/file/video/lukou.mp4",
       angle: 40,
       angle2: 20,
       heading: -84,

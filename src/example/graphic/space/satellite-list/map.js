@@ -22,15 +22,15 @@ export const mapOptions = {
   control: {
     clockAnimate: true, // 时钟动画控制(左下角)
     timeline: true, // 是否显示时间线控件
-    compass: { top: "10px", left: "5px" }
+    compass: { style: { top: "10px", right: "5px" } }
   },
   terrain: false,
   layers: [
     {
       name: "夜晚图片",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/blackMarble.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/blackMarble.png",
       type: "image",
-      url: "//data.mars3d.cn/img/map/world/night2.jpg",
+      url: "https://data.mars3d.cn/img/map/world/night2.jpg",
       dayAlpha: 0.0,
       nightAlpha: 1.0,
       brightness: 3.5,
@@ -39,14 +39,9 @@ export const mapOptions = {
   ]
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
-  map = mapInstance // 记录map  map.toolbar.style.bottom = "55px"// 修改toolbar控件的样式
+  map = mapInstance // 记录map  map.control.toolbar.container.style.bottom = "55px"// 修改toolbar控件的样式
 
   // 创建矢量数据图层
   graphicLayer = new mars3d.layer.GraphicLayer()
@@ -66,7 +61,7 @@ export function onMounted(mapInstance) {
 
   creatreDmzList()
 
-  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/tle-china.json" })
+  mars3d.Util.fetchJson({ url: "https://data.mars3d.cn/file/apidemo/tle-china.json" })
     .then(function (data) {
       createSatelliteList(data.data)
     })
@@ -75,10 +70,7 @@ export function onMounted(mapInstance) {
     })
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -95,7 +87,7 @@ function createSatelliteList(arr) {
 
     // 属性处理
     item.model = {
-      url: "//data.mars3d.cn/gltf/mars/weixin.gltf",
+      url: "https://data.mars3d.cn/gltf/mars/weixin.gltf",
       scale: 1,
       minimumPixelSize: 50,
       ...(item.model || {}),
@@ -163,7 +155,7 @@ export function bindLayerPopup() {
 let lastSelectWX
 
 function highlightSatellite(satelliteObj) {
-  if (lastSelectWX) {
+  if (lastSelectWX && !lastSelectWX.isDestroy) {
     // 重置上次选中的轨道样式
     lastSelectWX.setOptions({
       path: {
@@ -224,7 +216,7 @@ function processInArea(weixin) {
             // 动画线材质
             materialType: mars3d.MaterialType.LineFlow,
             materialOptions: {
-              url: "//data.mars3d.cn/img/textures/arrow-h.png",
+              url: "https://data.mars3d.cn/img/textures/arrow-h.png",
               color: Cesium.Color.AQUA,
               repeat: new Cesium.Cartesian2(15, 1),
               speed: 60 // 时长，控制速度
@@ -278,7 +270,7 @@ function creatreDmzList() {
       name: "地面站模型",
       position: item.point,
       style: {
-        url: "//data.mars3d.cn/gltf/mars/leida.glb",
+        url: "https://data.mars3d.cn/gltf/mars/leida.glb",
         heading: 270,
         scale: 30,
         minimumPixelSize: 40

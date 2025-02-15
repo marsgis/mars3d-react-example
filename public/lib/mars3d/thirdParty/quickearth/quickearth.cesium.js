@@ -44,30 +44,30 @@
   return (()=>{
       w['r'](Q),
       w['d'](Q, {
-          'CCSLayer': ()=>fY,
-          'CFixedPlane': ()=>fV,
-          'CGeoJSONLayer': ()=>fq,
-          'CGeometryLayer': ()=>fP,
-          'CGroundLayer': ()=>fD,
-          'CPixelLayer': ()=>fj,
-          'CPointImageLayer': ()=>fz,
-          'CSectionLayer': ()=>fU,
-          'CTracingService': ()=>fc,
-          'CView': ()=>f0,
-          'CVolumeLayer': ()=>fG,
-          'CWindArrowLayer': ()=>fS,
-          'CWindLayer': ()=>fo,
-          'cColor': ()=>fN,
-          'createCTileLayer': ()=>fL,
-          'mcbGeometryLayerCreator': ()=>fr,
-          'mcbLayerCreator': ()=>fa
+          'CCSLayer': ()=>CCSLayer,
+          'CFixedPlane': ()=>CFixedPlane,
+          'CGeoJSONLayer': ()=>CGeoJSONLayer,
+          'CGeometryLayer': ()=>CGeometryLayer,
+          'CGroundLayer': ()=>CGroundLayer,
+          'CPixelLayer': ()=>CPixelLayer,
+          'CPointImageLayer': ()=>CPointImageLayer,
+          'CSectionLayer': ()=>CSectionLayer,
+          'CTracingService': ()=>CTracingService,
+          'CView': ()=>CView,
+          'CVolumeLayer': ()=>CVolumeLayer,
+          'CWindArrowLayer': ()=>CWindArrowLayer,
+          'CWindLayer': ()=>CWindLayer,
+          'cColor': ()=>cColor,
+          'createCTileLayer': ()=>createCTileLayer,
+          'mcbGeometryLayerCreator': ()=>mcbGeometryLayerCreator,
+          'mcbLayerCreator': ()=>mcbLayerCreator
       });
       var K = w(0x1e9)
         , J = w(0x38d);
-      class f0 extends J['Viewer'] {
+      class CView extends J['Viewer'] {
           constructor(fp, fR) {
               const fm = (0x0,
-              K['setOptions'])({}, fR, f0['DefaultOptions']);
+              K['setOptions'])({}, fR, CView['DefaultOptions']);
               true !== K['consts']['useWebGL2'] && (fm['contextOptions'] = fm['contextOptions'] || {},
               fm['contextOptions']['requestWebgl1'] = true),
               fm['defaultRect'] && (J['Camera']['DEFAULT_VIEW_RECTANGLE'] = J['Rectangle']['fromDegrees'](fm['defaultRect']['west'], fm['defaultRect']['south'], fm['defaultRect']['east'], fm['defaultRect']['north'])),
@@ -302,7 +302,7 @@
               throw new Error('Method\x20not\x20implemented.');
           }
       }
-      f0['DefaultOptions'] = {
+      CView['DefaultOptions'] = {
           'baseLayerPicker': false,
           'timeline': false,
           'navigationHelpButton': false,
@@ -1144,10 +1144,10 @@
           }
       }
       fC['DefaultOptions'] = Object['assign']({}, fJ['DefaultOptions']);
-      class fj extends fC {
+      class CPixelLayer extends fC {
           constructor(fp) {
               super((0x0,
-              K['setOptions'])({}, fp || {}, fj['DefaultOptions']));
+              K['setOptions'])({}, fp || {}, CPixelLayer['DefaultOptions']));
           }
           ['setDrawOptions'](fp, fR=true) {
               if (super['setDrawOptions'](fp, fR),
@@ -1538,14 +1538,14 @@
               return new K['PixelLayerStyle3D'](fp);
           }
       }
-      fj['DefaultOptions'] = {
+      CPixelLayer['DefaultOptions'] = {
           'allowPicking': false,
           'cull': false
       };
-      class fc extends K['TracingService'] {
+      class CTracingService extends K['TracingService'] {
           constructor() {
               super({
-                  'layerCreator': (fp,fR,fm)=>new fq(fp)['setDataSource'](fR)['setDrawOptions'](fm)
+                  'layerCreator': (fp,fR,fm)=>new CGeoJSONLayer(fp)['setDataSource'](fR)['setDrawOptions'](fm)
               });
           }
       }
@@ -1662,10 +1662,10 @@
           }
       }
       fn['DefaultOptions'] = {};
-      class fP extends fn {
+      class CGeometryLayer extends fn {
           constructor(fp) {
               super((0x0,
-              K['setOptions'])({}, fp || {}, fP['DefaultOptions'])),
+              K['setOptions'])({}, fp || {}, CGeometryLayer['DefaultOptions'])),
               this['_dirty'] = false;
           }
           ['setDrawOptions'](fp, fR=true) {
@@ -1952,17 +1952,17 @@
               return new K['Geometry3DLayerStyle'](fp);
           }
       }
-      function fN(fp) {
+      function cColor(fp) {
           const fR = fp['getColor']();
           return new J['Color'](fR['r1'],fR['g1'],fR['b1'],fR['a']);
       }
-      function fL(fp) {
+      function createCTileLayer(fp) {
           let fR = Object['assign']({}, (0x0,
           K['getImageTileUrls'])(fp));
           return fR['tms'] && (fR['url'] = fR['url']['replaceAll']('{y}', '{reverseY}')),
           new J['UrlTemplateImageryProvider'](fR);
       }
-      function fr(fp, fR, fm) {
+      function mcbGeometryLayerCreator(fp, fR, fm) {
           var fH, fe;
           const fA = new K['Geometry3DLayerStyle'](fp)
             , fI = fR['allMeshes']()[fR['getIntTIdx']()][0x0];
@@ -2026,11 +2026,11 @@
               fO['values']['push'](F7);
           }
           );
-          const F0 = new fP(fO);
+          const F0 = new CGeometryLayer(fO);
           return F0['setDrawOptions'](fA)['setDataSource'](fm),
           F0;
       }
-      function fa(fp, fR) {
+      function mcbLayerCreator(fp, fR) {
           var fm, fH;
           const fe = new K['VolumeLayerStyle'](fp)
             , fA = fR['allMeshes']()[fR['getIntTIdx']()][0x0];
@@ -2106,7 +2106,7 @@
               'allowPicking': false
           });
       }
-      fP['DefaultOptions'] = {};
+      CGeometryLayer['DefaultOptions'] = {};
       class fi extends J['BillboardCollection'] {
           ['update'](fp) {
               J['BillboardCollection']['prototype']['update']['call'](this, fp);
@@ -2299,7 +2299,7 @@
       }
       fh['default'] = fh;
       const fW = fh;
-      class fq extends J['PrimitiveCollection'] {
+      class CGeoJSONLayer extends J['PrimitiveCollection'] {
           constructor(fp) {
               super(fp),
               this['textWidthCache'] = {},
@@ -2401,7 +2401,7 @@
               }
               ,
               this['options'] = (0x0,
-              K['setOptions'])({}, fp, fq['DefaultOptions']),
+              K['setOptions'])({}, fp, CGeoJSONLayer['DefaultOptions']),
               this['options']['name'] = this['options']['name'] || (0x0,
               K['uid'])(),
               this['options']['handleResize'] && (0x0,
@@ -2659,7 +2659,7 @@
                   fA['push'](fI(fO));
               }
               );
-              const fx = fN(fR['color']);
+              const fx = cColor(fR['color']);
               if (fR['simpleLine']) {
                   const fE = {
                       'positions': fA,
@@ -2684,15 +2684,15 @@
                   'positions': fA
               };
               fR['glowColor'] ? (fB['material'] = J['Material']['fromType']('PolylineGlow'),
-              fB['material']['uniforms']['color'] = fN(fR['glowColor']),
+              fB['material']['uniforms']['color'] = cColor(fR['glowColor']),
               fB['material']['uniforms']['glowPower'] = fR['glowPower'],
               fB['material']['uniforms']['taperPower'] = fR['taperPower']) : fR['dashArray'] ? (fB['material'] = J['Material']['fromType']('PolylineDash'),
               fB['material']['uniforms']['color'] = fx,
               fB['material']['uniforms']['dashLength'] = fR['dashArray'][0x0],
-              fR['dashColor'] && (fB['material']['uniforms']['gapColor'] = fN(fR['dashColor'])),
+              fR['dashColor'] && (fB['material']['uniforms']['gapColor'] = cColor(fR['dashColor'])),
               fR['dashArray']['length'] > 0x1 && (fB['material']['uniforms']['dashPattern'] = fR['dashArray'][0x1])) : fR['strokeColor'] ? (fB['material'] = J['Material']['fromType']('PolylineOutline'),
               fB['material']['uniforms']['color'] = fx,
-              fB['material']['uniforms']['outlineColor'] = fN(fR['strokeColor']),
+              fB['material']['uniforms']['outlineColor'] = cColor(fR['strokeColor']),
               fB['material']['uniforms']['outlineWidth'] = fR['strokeWidth']) : (fB['material'] = J['Material']['fromType']('Color'),
               fB['material']['uniforms']['color'] = fx),
               fB['material']['translucent'] = true,
@@ -2739,7 +2739,7 @@
                           'vertexFormat': J['PerInstanceColorAppearance']['VERTEX_FORMAT']
                       }
                         , fM = new J['PolygonGeometry'](fB)
-                        , fl = fN(fR['color'])
+                        , fl = cColor(fR['color'])
                         , fX = new J['GeometryInstance']({
                           'geometry': fM,
                           'attributes': {
@@ -2749,7 +2749,7 @@
                       });
                       if (fm['polygonGeometryInstances']['push'](fX),
                       fR['strokeColor']) {
-                          const F1 = fN(fR['strokeColor'])
+                          const F1 = cColor(fR['strokeColor'])
                             , F2 = new J['GeometryInstance']({
                               'geometry': new J['PolygonOutlineGeometry']({
                                   'polygonHierarchy': new J['PolygonHierarchy'](fI,fx),
@@ -2803,9 +2803,9 @@
                   'position': fH,
                   'pixelSize': fR['size'],
                   'show': fR['visible'],
-                  'color': fN(fR['color'])
+                  'color': cColor(fR['color'])
               };
-              fR['strokeColor'] && (fe['outlineColor'] = fN(fR['strokeColor']),
+              fR['strokeColor'] && (fe['outlineColor'] = cColor(fR['strokeColor']),
               fe['outlineWidth'] = fR['strokeWidth']),
               fm['add'](fe)['feature'] = fp;
           }
@@ -2826,7 +2826,7 @@
               };
               if (fR['offset'] && (fA['pixelOffset'] = J['Cartesian2']['fromArray'](fR['offset'])),
               fR['heightMode'] ? 'clamp' === fR['heightMode'] ? fA['heightReference'] = J['HeightReference']['CLAMP_TO_GROUND'] : 'relative' === fR['heightMode'] && (fA['heightReference'] = J['HeightReference']['RELATIVE_TO_GROUND']) : fA['heightReference'] = J['HeightReference']['NONE'],
-              fR['color'] && (fA['color'] = fN(fR['color'])),
+              fR['color'] && (fA['color'] = cColor(fR['color'])),
               fR['angle'] && (fA['rotation'] = fR['angle']),
               fR['size']) {
                   const fI = fR['size'];
@@ -2855,17 +2855,17 @@
               const fI = {
                   'position': fA,
                   'text': fR['data'],
-                  'fillColor': fN(fR['color']),
+                  'fillColor': cColor(fR['color']),
                   'style': J['LabelStyle']['FILL'],
                   'disableDepthTestDistance': fR['depthTest'] ? 0x0 : Number['POSITIVE_INFINITY'],
                   'eyeOffset': new J['Cartesian3'](fR['eyeOffset'][0x0],fR['eyeOffset'][0x1],fR['eyeOffset'][0x2])
               };
               if (fI['text'] && 0x0 !== fI['text']['length']) {
                   if (fR['backColor'] ? (fI['showBackground'] = true,
-                  fI['backgroundColor'] = fN(fR['backColor'])) : fI['showBackground'] = false,
+                  fI['backgroundColor'] = cColor(fR['backColor'])) : fI['showBackground'] = false,
                   fR['font'] && (fI['font'] = fR['font']),
                   fR['offset'] && (fI['pixelOffset'] = J['Cartesian2']['fromArray'](fR['offset'])),
-                  fR['strokeColor'] && (fI['outlineColor'] = fN(fR['strokeColor']),
+                  fR['strokeColor'] && (fI['outlineColor'] = cColor(fR['strokeColor']),
                   fI['style'] = J['LabelStyle']['FILL_AND_OUTLINE']),
                   fR['strokeWidth'] && (fI['outlineWidth'] = fR['strokeWidth']),
                   'clamp' === fR['heightMode'] ? fI['heightReference'] = J['HeightReference']['CLAMP_TO_GROUND'] : 'relative' === fR['heightMode'] ? fI['heightReference'] = J['HeightReference']['RELATIVE_TO_GROUND'] : fI['heightReference'] = J['HeightReference']['NONE'],
@@ -3010,7 +3010,7 @@
               this['dataSource'] && this['drawOptions'] && this['redraw']()));
           }
       }
-      fq['DefaultOptions'] = {
+      CGeoJSONLayer['DefaultOptions'] = {
           'debugShowPerformance': false,
           'cacheDrawOptions': true,
           'trackDataSource': false,
@@ -3023,7 +3023,7 @@
           'allowPointCollisionDetect': true
       };
       const fT = J['PolylineCollection']['prototype']['update'];
-      var fV;
+      var CFixedPlane;
       J['PolylineCollection']['prototype']['update'] = function(fp) {
           if (fT['call'](this, fp),
           this['topMost']) {
@@ -3044,16 +3044,16 @@
           fp[fp['lonZ'] = 0x1] = 'lonZ',
           fp[fp['latZ'] = 0x2] = 'latZ',
           fp[fp['fixedLonLat'] = 0x3] = 'fixedLonLat';
-      }(fV || (fV = {}));
-      class fU extends fn {
+      }(CFixedPlane || (CFixedPlane = {}));
+      class CSectionLayer extends fn {
           get['empty']() {
               var fp;
               return !((null === (fp = Object['keys'](this['_meshPath'])) || undefined === fp ? undefined : fp['length']) > 0x0);
           }
           constructor(fp) {
               super((0x0,
-              K['setOptions'])({}, fp || {}, fU['DefaultOptions'])),
-              this['_fixedPlane'] = fV['lonLat'],
+              K['setOptions'])({}, fp || {}, CSectionLayer['DefaultOptions'])),
+              this['_fixedPlane'] = CFixedPlane['lonLat'],
               this['_meshPath'] = {},
               this['_needRebuildVao'] = false,
               (0x0,
@@ -3107,19 +3107,19 @@
                   })),
                   fp = fl;
               }
-              fR = null !== (fA = null != fR ? fR : this['_fixedPlane']) && undefined !== fA ? fA : fV['lonLat'];
+              fR = null !== (fA = null != fR ? fR : this['_fixedPlane']) && undefined !== fA ? fA : CFixedPlane['lonLat'];
               let fI = this['dataSource']['gridOptions']['xDelta']
                 , fx = this['dataSource']['gridOptions']['yDelta']
                 , fB = 0x0;
-              if (fR === fV['lonZ'])
+              if (fR === CFixedPlane['lonZ'])
                   fI = this['dataSource']['gridOptions']['yDelta'],
                   fx = (this['zValuesWithScale'][this['zValuesWithScale']['length'] - 0x1] - this['zValuesWithScale'][0x0]) / this['zValuesWithScale']['length'] / 0x2;
               else {
-                  if (fR === fV['latZ'])
+                  if (fR === CFixedPlane['latZ'])
                       fI = this['dataSource']['gridOptions']['xDelta'],
                       fx = (this['zValuesWithScale'][this['zValuesWithScale']['length'] - 0x1] - this['zValuesWithScale'][0x0]) / this['zValuesWithScale']['length'] / 0x2;
                   else {
-                      if (fR === fV['fixedLonLat']) {
+                      if (fR === CFixedPlane['fixedLonLat']) {
                           this['_fixedLonLat'] || (this['_fixedLonLat'] = new J['Cartesian2'](Math['min'](this['dataSource']['gridOptions']['xStart'], this['dataSource']['gridOptions']['xEnd']),Math['max'](this['dataSource']['gridOptions']['yStart'], this['dataSource']['gridOptions']['yEnd'])));
                           const fX = fp;
                           if (fX[0x0]['x'] === fX[0x1]['x'])
@@ -3130,7 +3130,7 @@
                               fB = 0x0;
                           }
                       } else {
-                          if (fR !== fV['lonLat'])
+                          if (fR !== CFixedPlane['lonLat'])
                               throw new Error('不正确的fixedPlane！');
                       }
                   }
@@ -3152,7 +3152,7 @@
                   return;
               if (!(null === (fm = this['zValuesWithScale']) || undefined === fm ? undefined : fm['length']))
                   throw new Error('当前数据源没有提供z轴信息，请检查gridOptions.zValues!');
-              if (this['_fixedPlane'] !== fV['lonLat'] && this['_fixedPlane'] !== fV['fixedLonLat'])
+              if (this['_fixedPlane'] !== CFixedPlane['lonLat'] && this['_fixedPlane'] !== CFixedPlane['fixedLonLat'])
                   return void K['logger']['error']('该快捷方法不支持非经纬度固定平面，请使用任意路径剖面方法！');
               fp = null != fp ? fp : (this['dataSource']['gridOptions']['yStart'] + this['dataSource']['gridOptions']['yEnd']) / 0x2;
               const fH = [{
@@ -3170,7 +3170,7 @@
                   return;
               if (!(null === (fm = this['zValuesWithScale']) || undefined === fm ? undefined : fm['length']))
                   throw new Error('当前数据源没有提供z轴信息，请检查gridOptions.zValues!');
-              if (this['_fixedPlane'] !== fV['lonLat'] && this['_fixedPlane'] !== fV['fixedLonLat'])
+              if (this['_fixedPlane'] !== CFixedPlane['lonLat'] && this['_fixedPlane'] !== CFixedPlane['fixedLonLat'])
                   return void K['logger']['error']('该快捷方法不支持非经纬度固定平面，请使用任意路径剖面方法！');
               const fH = [{
                   'x': fp = null != fp ? fp : (this['dataSource']['gridOptions']['xStart'] + this['dataSource']['gridOptions']['xEnd']) / 0x2,
@@ -3211,7 +3211,7 @@
               this['_csTexture'] = undefined);
           }
           ['setFixedLonLat'](fp) {
-              this['_fixedPlane'] = fV['fixedLonLat'],
+              this['_fixedPlane'] = CFixedPlane['fixedLonLat'],
               this['_drawCommand'] && (this['_needRebuildVao'] = true),
               this['_fixedLonLat'] = fp;
           }
@@ -3219,7 +3219,7 @@
               const fH = performance['now']();
               let fe, fA;
               const fI = this['dataSource']['gridOptions'];
-              if (this['_fixedPlane'] === fV['lonLat'] || this['_fixedPlane'] === fV['fixedLonLat'])
+              if (this['_fixedPlane'] === CFixedPlane['lonLat'] || this['_fixedPlane'] === CFixedPlane['fixedLonLat'])
                   fe = this['currentGrids']['length'],
                   fA = (F5,F6)=>({
                       'lon': F6['x'],
@@ -3227,7 +3227,7 @@
                       'hgt': this['zValuesWithScale'][F5]
                   });
               else {
-                  if (this['_fixedPlane'] === fV['lonZ'])
+                  if (this['_fixedPlane'] === CFixedPlane['lonZ'])
                       fe = this['currentGrids'][0x0]['xSize'],
                       fA = (F5,F6)=>({
                           'lon': fI['xStart'] + F5 * fI['xDelta'],
@@ -3235,7 +3235,7 @@
                           'hgt': F6['y']
                       });
                   else {
-                      if (this['_fixedPlane'] !== fV['latZ'])
+                      if (this['_fixedPlane'] !== CFixedPlane['latZ'])
                           throw new Error('不正确的固定平面！');
                       fe = this['currentGrids'][0x0]['ySize'],
                       fA = (F5,F6)=>({
@@ -3567,14 +3567,14 @@
               return new K['PixelLayerStyle3D'](fp);
           }
       }
-      fU['DefaultOptions'] = {
-          'fixedPlane': fV['lonLat'],
+      CSectionLayer['DefaultOptions'] = {
+          'fixedPlane': CFixedPlane['lonLat'],
           'allowPicking': false
       };
-      class fG extends fn {
+      class CVolumeLayer extends fn {
           constructor(fp) {
               super((0x0,
-              K['setOptions'])({}, fp, fG['DefaultOptions'])),
+              K['setOptions'])({}, fp, CVolumeLayer['DefaultOptions'])),
               this['options']['camera'] && K['logger']['debug']('体渲染传入了相机对象，将使用指定的相机状态渲染！');
           }
           ['setDrawOptions'](fp, fR=true) {
@@ -3706,7 +3706,7 @@
               return new K['VolumeLayerStyle'](fp);
           }
       }
-      fG['DefaultOptions'] = {
+      CVolumeLayer['DefaultOptions'] = {
           'camera': undefined,
           'appearance': new J['MaterialAppearance']({
               'material': new J['Material']({
@@ -3723,14 +3723,14 @@
               })
           })
       };
-      class fo extends fn {
+      class CWindLayer extends fn {
           constructor(fp) {
               super((0x0,
-              K['setOptions'])({}, fp || {}, fo['DefaultOptions'])),
+              K['setOptions'])({}, fp || {}, CWindLayer['DefaultOptions'])),
               this['_moving'] = false,
               this['ptTextureDirty'] = false,
               this['vectorGridMode'] = 'uv',
-              this['_pixelLayer'] = new fj(fp);
+              this['_pixelLayer'] = new CPixelLayer(fp);
           }
           ['updateVisExtent']() {
               var fp;
@@ -4660,14 +4660,14 @@
               return new K['Wind3DLayerStyle'](fp);
           }
       }
-      fo['DefaultOptions'] = {
+      CWindLayer['DefaultOptions'] = {
           'disableFadeWhenMoving': true,
           'hideWhenMoving': false
       };
-      class fS extends fJ {
+      class CWindArrowLayer extends fJ {
           constructor(fp) {
               super((0x0,
-              K['setOptions'])({}, fp || {}, fS['DefaultOptions'])),
+              K['setOptions'])({}, fp || {}, CWindArrowLayer['DefaultOptions'])),
               this['_dirty'] = false,
               this['_loadingVector'] = false,
               this['options']['interpFromPreSource'] = false,
@@ -5095,16 +5095,16 @@
               return new K['WindArrowLayerStyle'](fp);
           }
       }
-      fS['DefaultOptions'] = Object['assign'](Object['assign']({}, fJ['DefaultOptions']), {
+      CWindArrowLayer['DefaultOptions'] = Object['assign'](Object['assign']({}, fJ['DefaultOptions']), {
           'preserveGeometryWorker': false,
           'interpFromPreSource': false,
           'trackDataSource': false
       });
-      class fD extends fC {
+      class CGroundLayer extends fC {
           constructor(fp) {
               super(),
               this['options'] = (0x0,
-              K['setOptions'])({}, fp, fD['DefaultOptions']);
+              K['setOptions'])({}, fp, CGroundLayer['DefaultOptions']);
           }
           ['setDrawOptions'](fp, fR=true) {
               if (super['setDrawOptions'](fp, fR),
@@ -5224,11 +5224,11 @@
               return new K['PixelLayerStyle'](fp);
           }
       }
-      fD['DefaultOptions'] = Object['assign'](Object['assign']({}, fC['DefaultOptions']), {
+      CGroundLayer['DefaultOptions'] = Object['assign'](Object['assign']({}, fC['DefaultOptions']), {
           'flat': true,
           'onGround': true
       });
-      class fz extends fJ {
+      class CPointImageLayer extends fJ {
           ['setDataSource'](fp) {
               return this['dataSource'] = fp,
               this['resetCommand'](true),
@@ -5330,10 +5330,10 @@
               J['destroyObject'])(this);
           }
       }
-      class fY extends fq {
+      class CCSLayer extends CGeoJSONLayer {
           constructor(fp) {
               super((0x0,
-              K['setOptions'])({}, fp, fY['DefaultOptions'])),
+              K['setOptions'])({}, fp, CCSLayer['DefaultOptions'])),
               this['redrawFromDataSourceTracking'] = ()=>{
                   this['options']['trackDataSource'] && this['drawOptions'] && this['_getCSDatasource']()['then'](fR=>{
                       super['setDataSource'](fR);
@@ -5421,11 +5421,11 @@
               return new K['CSStyle3D'](fp);
           }
       }
-      fY['DefaultOptions'] = {
+      CCSLayer['DefaultOptions'] = {
           'wasm': false
       },
-      fY['qeName'] = 'l_grid_cs',
-      K['layerCreator']['register'](fY),
+      CCSLayer['qeName'] = 'l_grid_cs',
+      K['layerCreator']['register'](CCSLayer),
       (0x0,
       K['auth'])();
   }

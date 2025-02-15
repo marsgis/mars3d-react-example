@@ -2957,29 +2957,29 @@
                       vs['pending_buf'][vs['pending']++] = 0xff & vh;
                   }
                   function vc(vs, vh) {
-                      var vu, vY, vT = vs['max_chain_length'], vX = vs['strstart'], vE = vs['prev_length'], vf = vs['nice_match'], vW = vs['strstart'] > vs['w_size'] - v9 ? vs['strstart'] - (vs['w_size'] - v9) : 0x0, vI = vs['window'], vj = vs['w_mask'], vD = vs['prev'], vV = vs['strstart'] + v8, vZ = vI[vX + vE - 0x1], vB = vI[vX + vE];
+                      var vu, vY, vT = vs['max_chain_length'], vX = vs['strstart'], Quadtree = vs['prev_length'], vf = vs['nice_match'], vW = vs['strstart'] > vs['w_size'] - v9 ? vs['strstart'] - (vs['w_size'] - v9) : 0x0, vI = vs['window'], vj = vs['w_mask'], vD = vs['prev'], vV = vs['strstart'] + v8, vZ = vI[vX + Quadtree - 0x1], vB = vI[vX + Quadtree];
                       vs['prev_length'] >= vs['good_match'] && (vT >>= 0x2),
                       vf > vs['lookahead'] && (vf = vs['lookahead']);
                       do {
-                          if (vI[(vu = vh) + vE] === vB && vI[vu + vE - 0x1] === vZ && vI[vu] === vI[vX] && vI[++vu] === vI[vX + 0x1]) {
+                          if (vI[(vu = vh) + Quadtree] === vB && vI[vu + Quadtree - 0x1] === vZ && vI[vu] === vI[vX] && vI[++vu] === vI[vX + 0x1]) {
                               vX += 0x2,
                               vu++;
                               do {} while (vI[++vX] === vI[++vu] && vI[++vX] === vI[++vu] && vI[++vX] === vI[++vu] && vI[++vX] === vI[++vu] && vI[++vX] === vI[++vu] && vI[++vX] === vI[++vu] && vI[++vX] === vI[++vu] && vI[++vX] === vI[++vu] && vX < vV);
                               if (vY = v8 - (vV - vX),
                               vX = vV - v8,
-                              vE < vY) {
+                              Quadtree < vY) {
                                   if (vs['match_start'] = vh,
-                                  vf <= (vE = vY))
+                                  vf <= (Quadtree = vY))
                                       break;
-                                  vZ = vI[vX + vE - 0x1],
-                                  vB = vI[vX + vE];
+                                  vZ = vI[vX + Quadtree - 0x1],
+                                  vB = vI[vX + Quadtree];
                               }
                           }
                       } while ((vh = vD[vh & vj]) > vW && 0x0 != --vT);
-                      return vE <= vs['lookahead'] ? vE : vs['lookahead'];
+                      return Quadtree <= vs['lookahead'] ? Quadtree : vs['lookahead'];
                   }
                   function vH(vs) {
-                      var vh, vu, vY, vT, vX, vE, vf, vW, vI, vj, vD = vs['w_size'];
+                      var vh, vu, vY, vT, vX, Quadtree, vf, vW, vI, vj, vD = vs['w_size'];
                       do {
                           if (vT = vs['window_size'] - vs['lookahead'] - vs['strstart'],
                           vs['strstart'] >= vD + (vD - v9)) {
@@ -2999,16 +2999,16 @@
                           }
                           if (0x0 === vs['strm']['avail_in'])
                               break;
-                          if (vE = vs['strm'],
+                          if (Quadtree = vs['strm'],
                           vf = vs['window'],
                           vW = vs['strstart'] + vs['lookahead'],
                           vj = undefined,
-                          (vI = vT) < (vj = vE['avail_in']) && (vj = vI),
-                          vu = 0x0 === vj ? 0x0 : (vE['avail_in'] -= vj,
-                          j['arraySet'](vf, vE['input'], vE['next_in'], vj, vW),
-                          0x1 === vE['state']['wrap'] ? vE['adler'] = Z(vE['adler'], vf, vj, vW) : 0x2 === vE['state']['wrap'] && (vE['adler'] = q(vE['adler'], vf, vj, vW)),
-                          vE['next_in'] += vj,
-                          vE['total_in'] += vj,
+                          (vI = vT) < (vj = Quadtree['avail_in']) && (vj = vI),
+                          vu = 0x0 === vj ? 0x0 : (Quadtree['avail_in'] -= vj,
+                          j['arraySet'](vf, Quadtree['input'], Quadtree['next_in'], vj, vW),
+                          0x1 === Quadtree['state']['wrap'] ? Quadtree['adler'] = Z(Quadtree['adler'], vf, vj, vW) : 0x2 === Quadtree['state']['wrap'] && (Quadtree['adler'] = q(Quadtree['adler'], vf, vj, vW)),
+                          Quadtree['next_in'] += vj,
+                          Quadtree['total_in'] += vj,
                           vj),
                           vs['lookahead'] += vu,
                           vs['lookahead'] + vs['insert'] >= v7) {
@@ -3227,17 +3227,17 @@
                   function vw(vs, vh, vu, vY, vT, vX) {
                       if (!vs)
                           return Q;
-                      var vE = 0x1;
+                      var Quadtree = 0x1;
                       if (-0x1 === vh && (vh = 0x6),
-                      vY < 0x0 ? (vE = 0x0,
-                      vY = -vY) : 0xf < vY && (vE = 0x2,
+                      vY < 0x0 ? (Quadtree = 0x0,
+                      vY = -vY) : 0xf < vY && (Quadtree = 0x2,
                       vY -= 0x10),
                       vT < 0x1 || 0x9 < vT || vu !== v1 || vY < 0x8 || 0xf < vY || vh < 0x0 || 0x9 < vh || vX < 0x0 || 0x4 < vX)
                           return vn(vs, Q);
                       0x8 === vY && (vY = 0x9);
                       var vf = new vF();
                       return (vs['state'] = vf)['strm'] = vs,
-                      vf['wrap'] = vE,
+                      vf['wrap'] = Quadtree,
                       vf['gzhead'] = null,
                       vf['w_bits'] = vY,
                       vf['w_size'] = 0x1 << vf['w_bits'],
@@ -3336,12 +3336,12 @@
                               vb(vY, 0x3),
                               vY['status'] = vA);
                           else {
-                              var vE = v1 + (vY['w_bits'] - 0x8 << 0x4) << 0x8;
-                              vE |= (0x2 <= vY['strategy'] || vY['level'] < 0x2 ? 0x0 : vY['level'] < 0x6 ? 0x1 : 0x6 === vY['level'] ? 0x2 : 0x3) << 0x6,
-                              0x0 !== vY['strstart'] && (vE |= 0x20),
-                              vE += 0x1f - vE % 0x1f,
+                              var Quadtree = v1 + (vY['w_bits'] - 0x8 << 0x4) << 0x8;
+                              Quadtree |= (0x2 <= vY['strategy'] || vY['level'] < 0x2 ? 0x0 : vY['level'] < 0x6 ? 0x1 : 0x6 === vY['level'] ? 0x2 : 0x3) << 0x6,
+                              0x0 !== vY['strstart'] && (Quadtree |= 0x20),
+                              Quadtree += 0x1f - Quadtree % 0x1f,
                               vY['status'] = vA,
-                              ve(vY, vE),
+                              ve(vY, Quadtree),
                               0x0 !== vY['strstart'] && (ve(vY, vs['adler'] >>> 0x10),
                               ve(vY, 0xffff & vs['adler'])),
                               vs['adler'] = 0x1;
@@ -3503,7 +3503,7 @@
                   }
                   ,
                   X['deflateSetDictionary'] = function(vs, vh) {
-                      var vu, vY, vT, vX, vE, vf, vW, vI, vj = vh['length'];
+                      var vu, vY, vT, vX, Quadtree, vf, vW, vI, vj = vh['length'];
                       if (!vs || !vs['state'])
                           return Q;
                       if (0x2 === (vX = (vu = vs['state'])['wrap']) || 0x1 === vX && vu['status'] !== vv || vu['lookahead'])
@@ -3518,7 +3518,7 @@
                       j['arraySet'](vI, vh, vj - vu['w_size'], vu['w_size'], 0x0),
                       vh = vI,
                       vj = vu['w_size']),
-                      vE = vs['avail_in'],
+                      Quadtree = vs['avail_in'],
                       vf = vs['next_in'],
                       vW = vs['input'],
                       vs['avail_in'] = vj,
@@ -3544,7 +3544,7 @@
                       vu['match_available'] = 0x0,
                       vs['next_in'] = vf,
                       vs['input'] = vW,
-                      vs['avail_in'] = vE,
+                      vs['avail_in'] = Quadtree,
                       vu['wrap'] = vX,
                       N;
                   }
@@ -4755,12 +4755,12 @@
                   var v7 = new Array(0x1d);
                   j(v7);
                   var v8, v9, vv, vA = new Array(J);
-                  function vn(vu, vY, vT, vX, vE) {
+                  function vn(vu, vY, vT, vX, Quadtree) {
                       this['static_tree'] = vu,
                       this['extra_bits'] = vY,
                       this['extra_base'] = vT,
                       this['elems'] = vX,
-                      this['max_length'] = vE,
+                      this['max_length'] = Quadtree,
                       this['has_stree'] = vu && vu['length'];
                   }
                   function vk(vu, vY) {
@@ -4794,12 +4794,12 @@
                       return vT >>> 0x1;
                   }
                   function vc(vu, vY, vT) {
-                      var vX, vE, vf = new Array(G + 0x1), vW = 0x0;
+                      var vX, Quadtree, vf = new Array(G + 0x1), vW = 0x0;
                       for (vX = 0x1; vX <= G; vX++)
                           vf[vX] = vW = vW + vT[vX - 0x1] << 0x1;
-                      for (vE = 0x0; vE <= vY; vE++) {
-                          var vI = vu[0x2 * vE + 0x1];
-                          0x0 !== vI && (vu[0x2 * vE] = ve(vf[vI]++, vI));
+                      for (Quadtree = 0x0; Quadtree <= vY; Quadtree++) {
+                          var vI = vu[0x2 * Quadtree + 0x1];
+                          0x0 !== vI && (vu[0x2 * Quadtree] = ve(vf[vI]++, vI));
                       }
                   }
                   function vH(vu) {
@@ -4820,26 +4820,26 @@
                       vu['bi_valid'] = 0x0;
                   }
                   function vx(vu, vY, vT, vX) {
-                      var vE = 0x2 * vY
+                      var Quadtree = 0x2 * vY
                         , vf = 0x2 * vT;
-                      return vu[vE] < vu[vf] || vu[vE] === vu[vf] && vX[vY] <= vX[vT];
+                      return vu[Quadtree] < vu[vf] || vu[Quadtree] === vu[vf] && vX[vY] <= vX[vT];
                   }
                   function vp(vu, vY, vT) {
-                      for (var vX = vu['heap'][vT], vE = vT << 0x1; vE <= vu['heap_len'] && (vE < vu['heap_len'] && vx(vY, vu['heap'][vE + 0x1], vu['heap'][vE], vu['depth']) && vE++,
-                      !vx(vY, vX, vu['heap'][vE], vu['depth'])); )
-                          vu['heap'][vT] = vu['heap'][vE],
-                          vT = vE,
-                          vE <<= 0x1;
+                      for (var vX = vu['heap'][vT], Quadtree = vT << 0x1; Quadtree <= vu['heap_len'] && (Quadtree < vu['heap_len'] && vx(vY, vu['heap'][Quadtree + 0x1], vu['heap'][Quadtree], vu['depth']) && Quadtree++,
+                      !vx(vY, vX, vu['heap'][Quadtree], vu['depth'])); )
+                          vu['heap'][vT] = vu['heap'][Quadtree],
+                          vT = Quadtree,
+                          Quadtree <<= 0x1;
                       vu['heap'][vT] = vX;
                   }
                   function vF(vu, vY, vT) {
-                      var vX, vE, vf, vW, vI = 0x0;
+                      var vX, Quadtree, vf, vW, vI = 0x0;
                       if (0x0 !== vu['last_lit']) {
                           for (; vX = vu['pending_buf'][vu['d_buf'] + 0x2 * vI] << 0x8 | vu['pending_buf'][vu['d_buf'] + 0x2 * vI + 0x1],
-                          vE = vu['pending_buf'][vu['l_buf'] + vI],
+                          Quadtree = vu['pending_buf'][vu['l_buf'] + vI],
                           vI++,
-                          0x0 === vX ? vb(vu, vE, vY) : (vb(vu, (vf = v6[vE]) + Z + 0x1, vY),
-                          0x0 !== (vW = Q[vf]) && vi(vu, vE -= v7[vf], vW),
+                          0x0 === vX ? vb(vu, Quadtree, vY) : (vb(vu, (vf = v6[Quadtree]) + Z + 0x1, vY),
+                          0x0 !== (vW = Q[vf]) && vi(vu, Quadtree -= v7[vf], vW),
                           vb(vu, vf = vl(--vX), vT),
                           0x0 !== (vW = v0[vf]) && vi(vu, vX -= vA[vf], vW)),
                           vI < vu['last_lit']; )
@@ -4848,30 +4848,30 @@
                       vb(vu, 0x100, vY);
                   }
                   function vy(vu, vY) {
-                      var vT, vX, vE, vf = vY['dyn_tree'], vW = vY['stat_desc']['static_tree'], vI = vY['stat_desc']['has_stree'], vj = vY['stat_desc']['elems'], vD = -0x1;
+                      var vT, vX, Quadtree, vf = vY['dyn_tree'], vW = vY['stat_desc']['static_tree'], vI = vY['stat_desc']['has_stree'], vj = vY['stat_desc']['elems'], vD = -0x1;
                       for (vu['heap_len'] = 0x0,
                       vu['heap_max'] = 0x23d,
                       vT = 0x0; vT < vj; vT++)
                           0x0 !== vf[0x2 * vT] ? (vu['heap'][++vu['heap_len']] = vD = vT,
                           vu['depth'][vT] = 0x0) : vf[0x2 * vT + 0x1] = 0x0;
                       for (; vu['heap_len'] < 0x2; )
-                          vf[0x2 * (vE = vu['heap'][++vu['heap_len']] = vD < 0x2 ? ++vD : 0x0)] = 0x1,
-                          vu['depth'][vE] = 0x0,
+                          vf[0x2 * (Quadtree = vu['heap'][++vu['heap_len']] = vD < 0x2 ? ++vD : 0x0)] = 0x1,
+                          vu['depth'][Quadtree] = 0x0,
                           vu['opt_len']--,
-                          vI && (vu['static_len'] -= vW[0x2 * vE + 0x1]);
+                          vI && (vu['static_len'] -= vW[0x2 * Quadtree + 0x1]);
                       for (vY['max_code'] = vD,
                       vT = vu['heap_len'] >> 0x1; 0x1 <= vT; vT--)
                           vp(vu, vf, vT);
-                      for (vE = vj; vT = vu['heap'][0x1],
+                      for (Quadtree = vj; vT = vu['heap'][0x1],
                       vu['heap'][0x1] = vu['heap'][vu['heap_len']--],
                       vp(vu, vf, 0x1),
                       vX = vu['heap'][0x1],
                       vu['heap'][--vu['heap_max']] = vT,
                       vu['heap'][--vu['heap_max']] = vX,
-                      vf[0x2 * vE] = vf[0x2 * vT] + vf[0x2 * vX],
-                      vu['depth'][vE] = (vu['depth'][vT] >= vu['depth'][vX] ? vu['depth'][vT] : vu['depth'][vX]) + 0x1,
-                      vf[0x2 * vT + 0x1] = vf[0x2 * vX + 0x1] = vE,
-                      vu['heap'][0x1] = vE++,
+                      vf[0x2 * Quadtree] = vf[0x2 * vT] + vf[0x2 * vX],
+                      vu['depth'][Quadtree] = (vu['depth'][vT] >= vu['depth'][vX] ? vu['depth'][vT] : vu['depth'][vX]) + 0x1,
+                      vf[0x2 * vT + 0x1] = vf[0x2 * vX + 0x1] = Quadtree,
+                      vu['heap'][0x1] = Quadtree++,
                       vp(vu, vf, 0x1),
                       0x2 <= vu['heap_len']; )
                           ;
@@ -4910,43 +4910,43 @@
                       vc(vf, vD, vu['bl_count']);
                   }
                   function vr(vu, vY, vT) {
-                      var vX, vE, vf = -0x1, vW = vY[0x1], vI = 0x0, vj = 0x7, vD = 0x4;
+                      var vX, Quadtree, vf = -0x1, vW = vY[0x1], vI = 0x0, vj = 0x7, vD = 0x4;
                       for (0x0 === vW && (vj = 0x8a,
                       vD = 0x3),
                       vY[0x2 * (vT + 0x1) + 0x1] = 0xffff,
                       vX = 0x0; vX <= vT; vX++)
-                          vE = vW,
+                          Quadtree = vW,
                           vW = vY[0x2 * (vX + 0x1) + 0x1],
-                          ++vI < vj && vE === vW || (vI < vD ? vu['bl_tree'][0x2 * vE] += vI : 0x0 !== vE ? (vE !== vf && vu['bl_tree'][0x2 * vE]++,
+                          ++vI < vj && Quadtree === vW || (vI < vD ? vu['bl_tree'][0x2 * Quadtree] += vI : 0x0 !== Quadtree ? (Quadtree !== vf && vu['bl_tree'][0x2 * Quadtree]++,
                           vu['bl_tree'][0x20]++) : vI <= 0xa ? vu['bl_tree'][0x22]++ : vu['bl_tree'][0x24]++,
-                          vf = vE,
+                          vf = Quadtree,
                           vD = (vI = 0x0) === vW ? (vj = 0x8a,
-                          0x3) : vE === vW ? (vj = 0x6,
+                          0x3) : Quadtree === vW ? (vj = 0x6,
                           0x3) : (vj = 0x7,
                           0x4));
                   }
                   function vw(vu, vY, vT) {
-                      var vX, vE, vf = -0x1, vW = vY[0x1], vI = 0x0, vj = 0x7, vD = 0x4;
+                      var vX, Quadtree, vf = -0x1, vW = vY[0x1], vI = 0x0, vj = 0x7, vD = 0x4;
                       for (0x0 === vW && (vj = 0x8a,
                       vD = 0x3),
                       vX = 0x0; vX <= vT; vX++)
-                          if (vE = vW,
+                          if (Quadtree = vW,
                           vW = vY[0x2 * (vX + 0x1) + 0x1],
-                          !(++vI < vj && vE === vW)) {
+                          !(++vI < vj && Quadtree === vW)) {
                               if (vI < vD) {
-                                  for (; vb(vu, vE, vu['bl_tree']),
+                                  for (; vb(vu, Quadtree, vu['bl_tree']),
                                   0x0 != --vI; )
                                       ;
                               } else
-                                  0x0 !== vE ? (vE !== vf && (vb(vu, vE, vu['bl_tree']),
+                                  0x0 !== Quadtree ? (Quadtree !== vf && (vb(vu, Quadtree, vu['bl_tree']),
                                   vI--),
                                   vb(vu, 0x10, vu['bl_tree']),
                                   vi(vu, vI - 0x3, 0x2)) : vI <= 0xa ? (vb(vu, 0x11, vu['bl_tree']),
                                   vi(vu, vI - 0x3, 0x3)) : (vb(vu, 0x12, vu['bl_tree']),
                                   vi(vu, vI - 0xb, 0x7));
-                              vf = vE,
+                              vf = Quadtree,
                               vD = (vI = 0x0) === vW ? (vj = 0x8a,
-                              0x3) : vE === vW ? (vj = 0x6,
+                              0x3) : Quadtree === vW ? (vj = 0x6,
                               0x3) : (vj = 0x7,
                               0x4);
                           }
@@ -4955,30 +4955,30 @@
                   var vs = false;
                   function vh(vu, vY, vT, vX) {
                       vi(vu, 0x0 + (vX ? 0x1 : 0x0), 0x3),
-                      function(vE, vf, vW, vI) {
-                          vt(vE),
-                          vK(vE, vW),
-                          vK(vE, ~vW),
-                          W['arraySet'](vE['pending_buf'], vE['window'], vf, vW, vE['pending']),
-                          vE['pending'] += vW;
+                      function(Quadtree, vf, vW, vI) {
+                          vt(Quadtree),
+                          vK(Quadtree, vW),
+                          vK(Quadtree, ~vW),
+                          W['arraySet'](Quadtree['pending_buf'], Quadtree['window'], vf, vW, Quadtree['pending']),
+                          Quadtree['pending'] += vW;
                       }(vu, vY, vT);
                   }
                   X['_tr_init'] = function(vu) {
                       vs || (function() {
-                          var vY, vT, vX, vE, vf, vW = new Array(G + 0x1);
-                          for (vE = vX = 0x0; vE < 0x1c; vE++)
-                              for (v7[vE] = vX,
-                              vY = 0x0; vY < 0x1 << Q[vE]; vY++)
-                                  v6[vX++] = vE;
-                          for (v6[vX - 0x1] = vE,
-                          vE = vf = 0x0; vE < 0x10; vE++)
-                              for (vA[vE] = vf,
-                              vY = 0x0; vY < 0x1 << v0[vE]; vY++)
-                                  v5[vf++] = vE;
-                          for (vf >>= 0x7; vE < J; vE++)
-                              for (vA[vE] = vf << 0x7,
-                              vY = 0x0; vY < 0x1 << v0[vE] - 0x7; vY++)
-                                  v5[0x100 + vf++] = vE;
+                          var vY, vT, vX, Quadtree, vf, vW = new Array(G + 0x1);
+                          for (Quadtree = vX = 0x0; Quadtree < 0x1c; Quadtree++)
+                              for (v7[Quadtree] = vX,
+                              vY = 0x0; vY < 0x1 << Q[Quadtree]; vY++)
+                                  v6[vX++] = Quadtree;
+                          for (v6[vX - 0x1] = Quadtree,
+                          Quadtree = vf = 0x0; Quadtree < 0x10; Quadtree++)
+                              for (vA[Quadtree] = vf,
+                              vY = 0x0; vY < 0x1 << v0[Quadtree]; vY++)
+                                  v5[vf++] = Quadtree;
+                          for (vf >>= 0x7; Quadtree < J; Quadtree++)
+                              for (vA[Quadtree] = vf << 0x7,
+                              vY = 0x0; vY < 0x1 << v0[Quadtree] - 0x7; vY++)
+                                  v5[0x100 + vf++] = Quadtree;
                           for (vT = 0x0; vT <= G; vT++)
                               vW[vT] = 0x0;
                           for (vY = 0x0; vY <= 0x8f; )
@@ -5016,7 +5016,7 @@
                   ,
                   X['_tr_stored_block'] = vh,
                   X['_tr_flush_block'] = function(vu, vY, vT, vX) {
-                      var vE, vf, vW = 0x0;
+                      var Quadtree, vf, vW = 0x0;
                       0x0 < vu['level'] ? (0x2 === vu['strm']['data_type'] && (vu['strm']['data_type'] = function(vI) {
                           var vj, vD = 0xf3ffc07f;
                           for (vj = 0x0; vj <= 0x1f; vj++,
@@ -5042,9 +5042,9 @@
                           return vI['opt_len'] += 0x3 * (vj + 0x1) + 0x5 + 0x5 + 0x4,
                           vj;
                       }(vu),
-                      vE = vu['opt_len'] + 0x3 + 0x7 >>> 0x3,
-                      (vf = vu['static_len'] + 0x3 + 0x7 >>> 0x3) <= vE && (vE = vf)) : vE = vf = vT + 0x5,
-                      vT + 0x4 <= vE && -0x1 !== vY ? vh(vu, vY, vT, vX) : 0x4 === vu['strategy'] || vf === vE ? (vi(vu, 0x2 + (vX ? 0x1 : 0x0), 0x3),
+                      Quadtree = vu['opt_len'] + 0x3 + 0x7 >>> 0x3,
+                      (vf = vu['static_len'] + 0x3 + 0x7 >>> 0x3) <= Quadtree && (Quadtree = vf)) : Quadtree = vf = vT + 0x5,
+                      vT + 0x4 <= Quadtree && -0x1 !== vY ? vh(vu, vY, vT, vX) : 0x4 === vu['strategy'] || vf === Quadtree ? (vi(vu, 0x2 + (vX ? 0x1 : 0x0), 0x3),
                       vF(vu, v3, v4)) : (vi(vu, 0x4 + (vX ? 0x1 : 0x0), 0x3),
                       function(vI, vj, vD, vV) {
                           var vZ;
@@ -8361,7 +8361,7 @@
               F['a'] = c['clamp'](F['a'], 0x0, 0x1),
               F['r1'] = F['r'] / 0xff,
               F['g1'] = F['g'] / 0xff,
-              F['b1'] = F['b'] / 0xff,
+              F['Array2DGridDataProvider'] = F['b'] / 0xff,
               F;
           }
           ;
@@ -8521,7 +8521,7 @@
                   return c['rgbToLab'](this['color']);
               }
               ['glNumberArray']() {
-                  return [this['color']['r1'], this['color']['g1'], this['color']['b1'], this['alpha']()];
+                  return [this['color']['r1'], this['color']['g1'], this['color']['Array2DGridDataProvider'], this['alpha']()];
               }
               ['getColor']() {
                   return this['color'];
@@ -10210,7 +10210,7 @@
                   let v8 = false;
                   var v9;
                   return v9 = navigator['userAgent'] || navigator['vendor'] || window['opera'],
-                  (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i['test'](v9) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i['test'](v9['substr'](0x0, 0x4))) && (v8 = true),
+                  (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i['test'](v9) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|FeatureDataProviderBase|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i['test'](v9['substr'](0x0, 0x4))) && (v8 = true),
                   v8 || (null === (v7 = navigator['userAgent']) || undefined === v7 ? undefined : v7['toLowerCase']()['indexOf']('mobile')) >= 0x0;
               }()),
               v0) : W);
@@ -10472,7 +10472,7 @@
               'Rc': ()=>vW,
               'LG': ()=>vH,
               'hQ': ()=>vc,
-              'Rf': ()=>vE,
+              'Rf': ()=>Quadtree,
               '_6': ()=>vL
           });
           var v3 = v2(0x17a)
@@ -10682,7 +10682,7 @@
               });
           }
           let vX = fetch['bind'](window);
-          function vE(Ai, Ab, Ae) {
+          function Quadtree(Ai, Ab, Ae) {
               return null == Ai ? Ab : Ae ? Ae(Ai) : Ai;
           }
           function vf(Ai, ...Ab) {
@@ -11402,46 +11402,46 @@
       'use strict';
       n['r'](k),
       n['d'](k, {
-          'Array2DGridDataProvider': ()=>b1,
-          'BinaryGridDataProvider': ()=>bA,
-          'BinaryReader': ()=>KQ,
+          'Array2DGridDataProvider': ()=>Array2DGridDataProvider,
+          'BinaryGridDataProvider': ()=>BinaryGridDataProvider,
+          'BinaryReader': ()=>BinaryReader,
           'BitmapColorScaleGL': ()=>iS['Xm'],
           'CSStyle': ()=>iB['NX'],
-          'CSStyle3D': ()=>iM,
-          'CimissGridDataProvider': ()=>b2,
-          'CimissStationFeatureProvider': ()=>b5,
-          'CollisionDetectMode': ()=>iD,
-          'CollisonDetector': ()=>iZ,
+          'CSStyle3D': ()=>CSStyle3D,
+          'CimissGridDataProvider': ()=>CimissGridDataProvider,
+          'CimissStationFeatureProvider': ()=>CimissStationFeatureProvider,
+          'CollisionDetectMode': ()=>CollisionDetectMode,
+          'CollisonDetector': ()=>CollisonDetector,
           'DAPParserType': ()=>e1['ko'],
-          'DAPService': ()=>e4,
+          'DAPService': ()=>DAPService,
           'DASParser': ()=>e1['Bn'],
           'DDSParser': ()=>e1['cF'],
-          'DODSUnpacker': ()=>e2,
-          'DataAnimationService': ()=>bp,
-          'DataAnimationType': ()=>bk,
+          'DODSUnpacker': ()=>DODSUnpacker,
+          'DataAnimationService': ()=>DataAnimationService,
+          'DataAnimationType': ()=>DataAnimationType,
           'Evented': ()=>iT['c'],
           'FeatureBaseClass': ()=>iB['rJ'],
           'FeatureBooleanField2FeatureBooleanFunc': ()=>iB['pd'],
           'FeatureColorField2FeatureColorFunc': ()=>iB['Jf'],
-          'FeatureDataProviderBase': ()=>b3,
+          'FeatureDataProviderBase': ()=>FeatureDataProviderBase,
           'FeatureImageField2FeatureImageFunc': ()=>iB['cQ'],
           'FeatureImageStyle': ()=>iB['Tw'],
           'FeatureLabelStyle': ()=>iB['PE'],
-          'FeatureLabelStyle3D': ()=>iC,
+          'FeatureLabelStyle3D': ()=>FeatureLabelStyle3D,
           'FeatureNumberArrayField2FeatureNumberArrayFunc': ()=>iB['q$'],
           'FeatureNumberField2FeatureNumberFunc': ()=>iB['JW'],
           'FeatureStringField2FeatureStringFunc': ()=>iB['Fj'],
           'FeatureStyle': ()=>iB['sC'],
-          'FeatureStyle3D': ()=>iN,
+          'FeatureStyle3D': ()=>FeatureStyle3D,
           'FeatureTextStyle': ()=>iB['oL'],
-          'FeatureVolumeStyle': ()=>iJ,
-          'FrameDrawService': ()=>ev,
-          'GeoJSONFeatureProvider': ()=>b7,
+          'FeatureVolumeStyle': ()=>FeatureVolumeStyle,
+          'FrameDrawService': ()=>FrameDrawService,
+          'GeoJSONFeatureProvider': ()=>GeoJSONFeatureProvider,
           'Geometry3DLayerStyle': ()=>iS['Yv'],
           'Geometry3DSectionMode': ()=>iS['vS'],
           'GeometryStyle': ()=>iB['CI'],
           'GrayImageGridData': ()=>KN['K'],
-          'GrayImageGridDataProvider': ()=>i0,
+          'GrayImageGridDataProvider': ()=>GrayImageGridDataProvider,
           'GridBaseStyle': ()=>iU['W6'],
           'GridBooleanField2GridBooleanFunc': ()=>iU['se'],
           'GridColorField2GridColorFunc': ()=>iU['vX'],
@@ -11459,25 +11459,26 @@
           'GridNumberField2GridNumberFunc': ()=>iU['Dg'],
           'GridStringField2GridStringFunc': ()=>iU['no'],
           'GridTextStyle': ()=>iU['x1'],
-          'IDWScatterInterpolator': ()=>iY,
-          'LayerCreator': ()=>iQ,
-          'LegendService': ()=>e0,
+          'IDWScatterInterpolator': ()=>IDWScatterInterpolator,
+          'LayerCreator': ()=>LayerCreator,
+          'LegendService': ()=>LegendService,
           'LogService': ()=>v0['$V'],
-          'MCBDefaults': ()=>iI,
-          'MapToolService': ()=>bR,
+          'MCBDefaults': ()=>MCBDefaults,
+          'MapToolService': ()=>MapToolService,
           'MemoryGridDataProvider': ()=>iu['o'],
-          'MemoryWindDataProvider': ()=>b8,
-          'MicapsDiamond131GridDataProvider': ()=>bv,
-          'MicapsDiamond14FeatureProvider': ()=>bc,
-          'MicapsDiamond2WindGridProvider': ()=>bx,
-          'MicapsDiamond4GridDataProvider': ()=>b9,
+          'MemoryWindDataProvider': ()=>MemoryWindDataProvider,
+          'MicapsDiamond131GridDataProvider': ()=>MicapsDiamond131GridDataProvider,
+          'JsonGridDataProvider': ()=>JsonGridDataProvider,
+          'MicapsDiamond14FeatureProvider': ()=>MicapsDiamond14FeatureProvider,
+          'MicapsDiamond2WindGridProvider': ()=>MicapsDiamond2WindGridProvider,
+          'MicapsDiamond4GridDataProvider': ()=>MicapsDiamond4GridDataProvider,
           'PixelLayerStyle': ()=>iS['lj'],
           'PixelLayerStyle3D': ()=>iS['_E'],
           'PlainNumberArrayField2PlainNumberArrayFunc': ()=>iB['M'],
-          'PlotConstants': ()=>ec,
-          'PlotLineBase': ()=>eK,
-          'PlotPointBase': ()=>eb,
-          'PlotPolygonBase': ()=>ek,
+          'PlotConstants': ()=>PlotConstants,
+          'PlotLineBase': ()=>PlotLineBase,
+          'PlotPointBase': ()=>PlotPointBase,
+          'PlotPolygonBase': ()=>PlotPolygonBase,
           'PlotShapeBase': ()=>eA,
           'PlotTypes': ()=>eH,
           'PointArrayFeatureProvider': ()=>b4,
@@ -11487,9 +11488,9 @@
           'PolygonStyle': ()=>iB['_7'],
           'PolygonStyle3D': ()=>ig,
           'PolylineStyle': ()=>iB['Xx'],
-          'PolylineStyle3D': ()=>iG,
-          'QEGridDataProvider': ()=>b6,
-          'Quadtree': ()=>vE,
+          'PolylineStyle3D': ()=>PolylineStyle3D,
+          'QEGridDataProvider': ()=>QEGridDataProvider,
+          'Quadtree': ()=>Quadtree,
           'RandomFeatureProvider': ()=>bH,
           'ResourceService': ()=>iz['zc'],
           'SimpleDapInfoParser': ()=>e1['b_'],
@@ -11501,7 +11502,7 @@
           'TifGridDataProvider': ()=>bb,
           'TracingService': ()=>bL,
           'TypeOf': ()=>Kz['BR'],
-          'VectorMapTool': ()=>cv,
+          'VectorMapTool': ()=>VectorMapTool,
           'VectorMapToolPointerButtonType': ()=>c9,
           'VolumeLayerStyle': ()=>iS['IW'],
           'Wind3DLayerStyle': ()=>iS['we'],
@@ -11522,8 +11523,8 @@
           'colorStopRuleItemConverter': ()=>iq['$k'],
           'consts': ()=>Kg['v'],
           'createBoxGeometry': ()=>cK,
-          'createDrawPlot': ()=>c8,
-          'createGLTypedArray': ()=>ib,
+          'createDrawPlot': ()=>createDrawPlot,
+          'createGLTypedArray': ()=>createGLTypedArray,
           'createRadarRangeRingGeoJSON': ()=>Kz['Ef'],
           'createTypeArr': ()=>Kz['cM'],
           'deepCopyLiteral': ()=>Kz['f8'],
@@ -12000,7 +12001,7 @@
           }
           return cd;
       }
-      class vE {
+      class Quadtree {
           constructor(cS, cU, cd, cq) {
               this['max_objects'] = cU || 0xa,
               this['max_levels'] = cd || 0x4,
@@ -12015,25 +12016,25 @@
                 , cd = this['bounds']['height'] / 0x2
                 , cq = this['bounds']['x']
                 , cJ = this['bounds']['y'];
-              this['nodes'][0x0] = new vE({
+              this['nodes'][0x0] = new Quadtree({
                   'x': cq + cU,
                   'y': cJ,
                   'width': cU,
                   'height': cd
               },this['max_objects'],this['max_levels'],cS),
-              this['nodes'][0x1] = new vE({
+              this['nodes'][0x1] = new Quadtree({
                   'x': cq,
                   'y': cJ,
                   'width': cU,
                   'height': cd
               },this['max_objects'],this['max_levels'],cS),
-              this['nodes'][0x2] = new vE({
+              this['nodes'][0x2] = new Quadtree({
                   'x': cq,
                   'y': cJ + cd,
                   'width': cU,
                   'height': cd
               },this['max_objects'],this['max_levels'],cS),
-              this['nodes'][0x3] = new vE({
+              this['nodes'][0x3] = new Quadtree({
                   'x': cq + cU,
                   'y': cJ + cd,
                   'width': cU,
@@ -15245,7 +15246,7 @@
         , KP = n(0x60)
         , KM = n(0x240)
         , Kz = n(0x1);
-      class KQ {
+      class BinaryReader {
           constructor(cd, cq=true) {
               this['_buffer'] = cd,
               this['littleEndian'] = cq,
@@ -15349,7 +15350,7 @@
           }
           );
       };
-      class i0 extends Km['r'] {
+      class GrayImageGridDataProvider extends Km['r'] {
           constructor(cd, cq) {
               super(cq),
               this['options'] = {},
@@ -15410,7 +15411,7 @@
               });
           }
           static['extractHeaderFromBuffer'](cd) {
-              const cq = new KQ(cd)
+              const cq = new BinaryReader(cd)
                 , cJ = cq['readFloat32']()
                 , cC = cq['readFloat32']()
                 , cO = cq['readFloat32']()
@@ -15487,7 +15488,7 @@
                               v0['kg']['error'](cg);
                           }
                       if ('function' == typeof window['wasm_webp']) {
-                          let cN = yield i0['decodeWebp'](cd);
+                          let cN = yield GrayImageGridDataProvider['decodeWebp'](cd);
                           if (cN) {
                               const cP = Object['assign']({}, cJ['gridOptions']);
                               if (cP['xSize'] > 0x400 || cP['ySize'] > 0x400) {
@@ -15524,7 +15525,7 @@
                               cM['height'] = cJ['gridOptions']['ySize'];
                               const cz = new ImageData(new Uint8ClampedArray(cN),cM['width'],cM['height']);
                               return cM['getContext']('2d')['putImageData'](cz, 0x0, 0x0),
-                              new i0(cM,cJ);
+                              new GrayImageGridDataProvider(cM,cJ);
                           }
                       }
                   } else
@@ -15532,18 +15533,18 @@
                       KL['sU'])() || v0['kg']['warn']('当前系统版本低于IOS14，且设置了不兼容旧版，可能造成数据无法渲染，您可以反馈给您的程序提供商！');
                   const cC = new Blob([cd])
                     , cO = URL['createObjectURL'](cC);
-                  return i0['fromURL'](cO, cq, cJ);
+                  return GrayImageGridDataProvider['fromURL'](cO, cq, cJ);
               });
           }
           static['fromURL'](cd, cq, cJ) {
               return KR(this, undefined, undefined, function*() {
                   if (cJ['withHeader']) {
                       const cO = yield(yield fetch(cd))['arrayBuffer']();
-                      return i0['fromBuffer'](cO, cq, cJ);
+                      return GrayImageGridDataProvider['fromBuffer'](cO, cq, cJ);
                   }
                   let cC = this['loadImage'];
                   return cq && (cC = this['loadVideo']),
-                  cC(cd)['then'](cG=>new i0(cG,cJ))['catch'](cG=>{}
+                  cC(cd)['then'](cG=>new GrayImageGridDataProvider(cG,cJ))['catch'](cG=>{}
                   );
               });
           }
@@ -15726,10 +15727,10 @@
       function iK() {
           return '\x0a\x20\x20\x20\x20const\x20vec4\x20bitEnc\x20=\x20vec4(1.,255.,65025.,16581375.);\x0a\x20\x20\x20\x20const\x20vec4\x20bitDec\x20=\x201./bitEnc;\x0a\x20\x20\x20\x20';
       }
-      function ib(cd, cq) {
+      function createGLTypedArray(cd, cq) {
           return cd === KP['U']['UInt8'] ? new Uint8Array(Uint8Array['BYTES_PER_ELEMENT'] * cq) : new Float32Array(Float32Array['BYTES_PER_ELEMENT'] * cq);
       }
-      i0['qeName'] = 'g_gray';
+      GrayImageGridDataProvider['qeName'] = 'g_gray';
       let ic = {
           'attrIn': 'in',
           'varIn': 'in',
@@ -15768,7 +15769,7 @@
               return (0x0,
               KM['T'])(cG),
               cC['getContext']('2d')['drawImage'](cO, 0x0, 0x0, cO['width'], cO['height'], 0x0, 0x0, cC['width'], cC['height']),
-              new i0(cC,Object['assign'](Object['assign']({}, cd['options']), {
+              new GrayImageGridDataProvider(cC,Object['assign'](Object['assign']({}, cd['options']), {
                   'gridOptions': cG
               }));
           }
@@ -15855,14 +15856,14 @@
           iw = true);
       }
       var iu = n(0x1ca);
-      class iY {
+      class IDWScatterInterpolator {
           constructor() {
               this['interpUniforms'] = {};
           }
           ['init'](cd) {
               if (this['destroyShaders'](),
               this['options'] = (0x0,
-              Kz['Ov'])({}, cd, iY['DefaultOptions']),
+              Kz['Ov'])({}, cd, IDWScatterInterpolator['DefaultOptions']),
               !this['gl']) {
                   const cC = document['createElement']('canvas');
                   this['gl'] = Kg['v']['useWebGL2'] ? cC['getContext']('webgl2') : cC['getContext']('webgl'),
@@ -16039,7 +16040,7 @@
               this['gl'] = undefined;
           }
       }
-      iY['DefaultOptions'] = {
+      IDWScatterInterpolator['DefaultOptions'] = {
           'gridOptions': undefined,
           'p': 0x2,
           'maxSearchGridSpan': 0x5,
@@ -16310,14 +16311,14 @@
           }
           );
       };
-      const iI = {
+      const MCBDefaults = {
           'threadCount': 0x4
       };
       function ij(cd) {
           var cq, cJ, cC;
           return iW(this, undefined, undefined, function*() {
               const cO = cd['wasm'] ? Kg['v']['wasmPath'] + '/mcb.js' : Kg['v']['workerPath'] + '/mcb.worker.js'
-                , cG = new iX(cO,null !== (cq = cd['threadCount']) && undefined !== cq ? cq : iI['threadCount'],'mcb_' + (0x0,
+                , cG = new iX(cO,null !== (cq = cd['threadCount']) && undefined !== cq ? cq : MCBDefaults['threadCount'],'mcb_' + (0x0,
               Kz['hQ'])(),{
                   'type': 'module'
               });
@@ -16471,11 +16472,11 @@
               };
           });
       }
-      var iD;
+      var CollisionDetectMode;
       !function(cd) {
           cd[cd['Hide_All_When_Any'] = 0x0] = 'Hide_All_When_Any',
           cd[cd['Hide_Only_Self'] = 0x1] = 'Hide_Only_Self';
-      }(iD || (iD = {}));
+      }(CollisionDetectMode || (CollisionDetectMode = {}));
       class iV {
           constructor(cd, cq, cJ, cC) {
               this['minX'] = cd,
@@ -16489,12 +16490,12 @@
               return cq && cJ;
           }
       }
-      class iZ {
+      class CollisonDetector {
           constructor(cd) {
               cd['width'] && cd['height'] || v0['kg']['error']('碰撞检测类需要提供宽高属性！'),
               this['options'] = (0x0,
-              Kz['Ov'])({}, cd, iZ['DefaultOptions']),
-              this['collisionTree'] = new vE({
+              Kz['Ov'])({}, cd, CollisonDetector['DefaultOptions']),
+              this['collisionTree'] = new Quadtree({
                   'x': this['options']['x'],
                   'y': this['options']['y'],
                   'width': this['options']['width'],
@@ -16549,7 +16550,7 @@
           ['collisionDectect'](cd) {
               if (!cd || 0x0 === cd['length'])
                   return [];
-              if (this['options']['collisonMode'] === iD['Hide_All_When_Any'])
+              if (this['options']['collisonMode'] === CollisionDetectMode['Hide_All_When_Any'])
                   return this['_collisionDetectByFeature'](cd);
               let cq = [];
               for (const cJ of cd) {
@@ -16577,20 +16578,20 @@
               this['collisionTree']['clear']();
           }
       }
-      iZ['DefaultOptions'] = {
+      CollisonDetector['DefaultOptions'] = {
           'x': 0x0,
           'y': 0x0,
           'width': undefined,
           'height': undefined,
           'maxNodeItems': 0xa,
-          'collisonMode': iD['Hide_Only_Self']
+          'collisonMode': CollisionDetectMode['Hide_Only_Self']
       };
       var iB = n(0x19d)
         , iS = n(0x35a)
         , iU = n(0x219)
         , id = n(0x1de)
         , iq = n(0x133);
-      class iJ extends iB['rJ'] {
+      class FeatureVolumeStyle extends iB['rJ'] {
           constructor(cd) {
               super(cd),
               (0x0,
@@ -16600,16 +16601,16 @@
           ['_update'](cd, cq) {
               cq ? (this['xDelta'] = (0x0,
               iB['JW'])((0x0,
-              Kz['En'])(cd['xDelta'], iJ['DefaultOptions']['xDelta'])),
+              Kz['En'])(cd['xDelta'], FeatureVolumeStyle['DefaultOptions']['xDelta'])),
               this['yDelta'] = (0x0,
               iB['JW'])((0x0,
-              Kz['En'])(cd['yDelta'], iJ['DefaultOptions']['yDelta'])),
+              Kz['En'])(cd['yDelta'], FeatureVolumeStyle['DefaultOptions']['yDelta'])),
               this['color'] = (0x0,
               iB['Jf'])((0x0,
-              Kz['En'])(cd['color'], iJ['DefaultOptions']['color'])),
+              Kz['En'])(cd['color'], FeatureVolumeStyle['DefaultOptions']['color'])),
               this['visible'] = (0x0,
               iB['pd'])((0x0,
-              Kz['En'])(cd['visible'], iJ['DefaultOptions']['visible']))) : (this['xDelta'] = (0x0,
+              Kz['En'])(cd['visible'], FeatureVolumeStyle['DefaultOptions']['visible']))) : (this['xDelta'] = (0x0,
               Kz['Rf'])(cd['xDelta'], this['xDelta'], iB['JW']),
               this['yDelta'] = (0x0,
               Kz['Rf'])(cd['yDelta'], this['yDelta'], iB['JW']),
@@ -16621,17 +16622,17 @@
               Kz['Rf'])(cd['height'], this['height'], iB['JW']);
           }
       }
-      iJ['DefaultOptions'] = {
+      FeatureVolumeStyle['DefaultOptions'] = {
           'xDelta': 0.1,
           'yDelta': 0.1,
           'color': id['m']['aliceblue'],
           'visible': true,
           'height': undefined
       };
-      class iC extends iB['PE'] {
+      class FeatureLabelStyle3D extends iB['PE'] {
           ['_update'](cd, cq) {
               super['_update'](cd, cq),
-              cd['volume'] && (this['volume'] && !cq ? this['volume']['update'](cd['volume']) : this['volume'] = new iJ(cd['volume']));
+              cd['volume'] && (this['volume'] && !cq ? this['volume']['update'](cd['volume']) : this['volume'] = new FeatureVolumeStyle(cd['volume']));
           }
       }
       class iO extends iB['SC'] {
@@ -16642,12 +16643,12 @@
               const cq = [];
               if (cd['label'] && cd['label']['length'] > 0x0) {
                   for (const cJ of cd['label'])
-                      cq['push'](new iC(cJ));
+                      cq['push'](new FeatureLabelStyle3D(cJ));
               }
               this['label'] = cq;
           }
       }
-      class iG extends iB['Xx'] {
+      class PolylineStyle3D extends iB['Xx'] {
           constructor(cd) {
               super(cd);
           }
@@ -16655,16 +16656,16 @@
               super['_update'](cd, cq),
               cq ? (this['simpleLine'] = (0x0,
               iB['pd'])((0x0,
-              Kz['En'])(cd['simpleLine'], iG['DefaultOptions']['simpleLine'])),
+              Kz['En'])(cd['simpleLine'], PolylineStyle3D['DefaultOptions']['simpleLine'])),
               this['glowPower'] = (0x0,
               iB['JW'])((0x0,
-              Kz['En'])(cd['glowPower'], iG['DefaultOptions']['glowPower'])),
+              Kz['En'])(cd['glowPower'], PolylineStyle3D['DefaultOptions']['glowPower'])),
               this['taperPower'] = (0x0,
               iB['JW'])((0x0,
-              Kz['En'])(cd['taperPower'], iG['DefaultOptions']['taperPower'])),
+              Kz['En'])(cd['taperPower'], PolylineStyle3D['DefaultOptions']['taperPower'])),
               this['strokeWidth'] = (0x0,
               iB['JW'])((0x0,
-              Kz['En'])(cd['strokeWidth'], iG['DefaultOptions']['strokeWidth']))) : (this['simpleLine'] = (0x0,
+              Kz['En'])(cd['strokeWidth'], PolylineStyle3D['DefaultOptions']['strokeWidth']))) : (this['simpleLine'] = (0x0,
               Kz['Rf'])(cd['simpleLine'], this['simpleLine'], iB['pd']),
               this['glowPower'] = (0x0,
               Kz['Rf'])(cd['glowPower'], this['glowPower'], iB['JW']),
@@ -16680,7 +16681,7 @@
               Kz['Rf'])(cd['strokeColor'], this['strokeColor'], iB['Jf']);
           }
       }
-      iG['DefaultOptions'] = Object['assign'](Object['assign']({}, iB['Xx']['DefaultOptions']), {
+      PolylineStyle3D['DefaultOptions'] = Object['assign'](Object['assign']({}, iB['Xx']['DefaultOptions']), {
           'simpleLine': false,
           'glowPower': 0.5,
           'taperPower': 0.5,
@@ -16707,13 +16708,13 @@
               Kz['Rf'])(cd['strokeColor'], this['strokeColor'], iB['Jf']);
           }
           ['updateLineStyle'](cd) {
-              this['lineStyle'] = cd['lineStyle'] && new iG(cd['lineStyle']);
+              this['lineStyle'] = cd['lineStyle'] && new PolylineStyle3D(cd['lineStyle']);
           }
           ['updateLabels'](cd) {
               const cq = [];
               if (cd['label'] && cd['label']['length'] > 0x0) {
                   for (const cJ of cd['label'])
-                      cq['push'](new iC(cJ));
+                      cq['push'](new FeatureLabelStyle3D(cJ));
               }
               this['label'] = cq;
           }
@@ -16722,13 +16723,13 @@
           'closeTop': true,
           'closeBottom': true
       });
-      class iN extends iB['sC'] {
+      class FeatureStyle3D extends iB['sC'] {
           constructor(cd) {
               super(cd);
           }
           ['_update'](cd, cq) {
               cd && (cd['point'] && (this['point'] && !cq ? this['point']['update'](cd['point']) : this['point'] = new iO(cd['point'])),
-              cd['polyline'] && (this['polyline'] && !cq ? this['polyline']['update'](cd['polyline']) : this['polyline'] = new iG(cd['polyline'])),
+              cd['polyline'] && (this['polyline'] && !cq ? this['polyline']['update'](cd['polyline']) : this['polyline'] = new PolylineStyle3D(cd['polyline'])),
               cd['polygon'] && (this['polygon'] && !cq ? this['polygon']['update'](cd['polygon']) : this['polygon'] = new ig(cd['polygon'])));
           }
       }
@@ -16762,7 +16763,7 @@
           'size': 0x20,
           'scaleMax': 0x1
       };
-      class iM extends iN {
+      class CSStyle3D extends FeatureStyle3D {
           constructor(cd) {
               cd['analysisValues'] ? super(cd) : v0['kg']['error']('分析值analysisValues必须配置！', true);
           }
@@ -16770,7 +16771,7 @@
               cq ? (this['analysisValues'] = (0x0,
               iB['M'])(cd['analysisValues']),
               this['withShaded'] = (0x0,
-              Kz['En'])(cd['withShaded'], iM['DefaultOptions']['withShaded'])) : (this['analysisValues'] = (0x0,
+              Kz['En'])(cd['withShaded'], CSStyle3D['DefaultOptions']['withShaded'])) : (this['analysisValues'] = (0x0,
               Kz['Rf'])(cd['analysisValues'], this['analysisValues'], iB['M']),
               this['withShaded'] = (0x0,
               Kz['Rf'])(cd['withShaded'], this['withShaded'])),
@@ -16785,12 +16786,12 @@
               super['_update'](cd, cq);
           }
       }
-      iM['DefaultOptions'] = Object['assign'](Object['assign']({}, iB['sC']['DefaultOptions']), {
+      CSStyle3D['DefaultOptions'] = Object['assign'](Object['assign']({}, iB['sC']['DefaultOptions']), {
           'withShaded': true,
           'analysisValues': undefined
       });
       var iz = n(0x13c);
-      class iQ {
+      class LayerCreator {
           constructor() {
               this['creators'] = {},
               this['providerCreators'] = {};
@@ -16867,10 +16868,10 @@
           }
           )['catch'](v0['kg']['debug']) : cO(cd);
       }
-      const iL = new iQ();
+      const iL = new LayerCreator();
       var iR = n(0x260)
         , b0 = n(0x313);
-      class b1 extends Km['r'] {
+      class Array2DGridDataProvider extends Km['r'] {
           constructor(cd, cq) {
               super(cq),
               this['gridOptions'] = this['options']['gridOptions'],
@@ -16886,9 +16887,9 @@
               this['grids'] = [[cC]];
           }
       }
-      b1['qeName'] = 'g_array2d',
-      iL['registerProviderCreator'](b1);
-      class b2 extends b1 {
+      Array2DGridDataProvider['qeName'] = 'g_array2d',
+      iL['registerProviderCreator'](Array2DGridDataProvider);
+      class CimissGridDataProvider extends Array2DGridDataProvider {
           constructor(cd, cq) {
               'string' == typeof cd && (cd = JSON['parse'](cd)),
               super(cd['DS'], Object['assign']({
@@ -16907,9 +16908,9 @@
               }, cq || {}));
           }
       }
-      b2['qeName'] = 'g_cimiss',
-      iL['registerProviderCreator'](b2);
-      class b3 extends iT['c'] {
+      CimissGridDataProvider['qeName'] = 'g_cimiss',
+      iL['registerProviderCreator'](CimissGridDataProvider);
+      class FeatureDataProviderBase extends iT['c'] {
           constructor() {
               super(...arguments),
               this['eventNames'] = {
@@ -16955,7 +16956,7 @@
               };
           }
       }
-      class b4 extends b3 {
+      class b4 extends FeatureDataProviderBase {
           constructor(cd, cq) {
               super(),
               this['featuresMap'] = {},
@@ -17031,7 +17032,7 @@
       },
       b4['qeName'] = 'v_array',
       iL['registerProviderCreator'](b4);
-      class b5 extends b4 {
+      class CimissStationFeatureProvider extends b4 {
           constructor(cd, cq) {
               super(()=>('string' == typeof cd && (cd = JSON['parse'](cd)),
               cd['DS']), cq),
@@ -17047,9 +17048,9 @@
               super['_updateFeatures'](cd['DS']);
           }
       }
-      b5['qeName'] = 'v_cimiss',
-      iL['registerProviderCreator'](b5);
-      class b6 extends Km['r'] {
+      CimissStationFeatureProvider['qeName'] = 'v_cimiss',
+      iL['registerProviderCreator'](CimissStationFeatureProvider);
+      class QEGridDataProvider extends Km['r'] {
           constructor(cd, cq) {
               super(cq),
               this['load'](cd);
@@ -17074,7 +17075,7 @@
               }
           }
           ['load'](cd) {
-              const cq = new KQ(cd,true)
+              const cq = new BinaryReader(cd,true)
                 , cJ = cq['readInt32']()
                 , cC = String['fromCharCode']['apply'](null, new Uint8Array(cq['readBuffer'](cJ)));
               this['meta'] = JSON['parse'](cC),
@@ -17129,9 +17130,9 @@
               }
           }
       }
-      b6['qeName'] = 'g_qe',
-      iL['registerProviderCreator'](b6);
-      class b7 extends b3 {
+      QEGridDataProvider['qeName'] = 'g_qe',
+      iL['registerProviderCreator'](QEGridDataProvider);
+      class GeoJSONFeatureProvider extends FeatureDataProviderBase {
           constructor(cd) {
               super(),
               this['featuresMap'] = {},
@@ -17199,13 +17200,13 @@
                   return this['featuresMap'][cd];
           }
       }
-      b7['qeName'] = 'v_geojson',
-      iL['registerProviderCreator'](b7);
-      class b8 extends Km['r'] {
+      GeoJSONFeatureProvider['qeName'] = 'v_geojson',
+      iL['registerProviderCreator'](GeoJSONFeatureProvider);
+      class MemoryWindDataProvider extends Km['r'] {
           constructor(cd, cq, cJ) {
               var cC;
               super((0x0,
-              Kz['Ov'])({}, cJ, b8['DefaultOptions'])),
+              Kz['Ov'])({}, cJ, MemoryWindDataProvider['DefaultOptions'])),
               this['gridOptions'] = (null == cd ? undefined : cd['gridOptions']) || cJ['gridOptions'],
               this['defaultGrid'] = null == cJ ? undefined : cJ['defaultGrid'],
               this['meta'] = Object['assign'](Object['assign'](Object['assign']({}, null !== (cC = this['meta']) && undefined !== cC ? cC : {}), (null == cd ? undefined : cd['meta']) || {}), (null == cq ? undefined : cq['meta']) || {}),
@@ -17431,15 +17432,15 @@
               return this['grids'];
           }
       }
-      b8['DefaultOptions'] = {
+      MemoryWindDataProvider['DefaultOptions'] = {
           'isUV': true,
           'lazyCalc': false,
           'meta': {},
           'defaultGrid': 'speed'
       },
-      b8['qeName'] = 'g_wind',
-      iL['registerProviderCreator'](b8);
-      class b9 extends b1 {
+      MemoryWindDataProvider['qeName'] = 'g_wind',
+      iL['registerProviderCreator'](MemoryWindDataProvider);
+      class MicapsDiamond4GridDataProvider extends Array2DGridDataProvider {
           constructor(cd, cq) {
               const cJ = (cd = cd['replaceAll']('\x0a', '\x20')['replaceAll']('\x0d', '\x20'))['split'](/\s+/);
               for (; 0x0 === cJ[0x0]['trim']()['length']; )
@@ -17464,18 +17465,20 @@
               this['meta'] = this['headers'];
           }
       }
-      class bv extends Km['r'] {
+
+      class MicapsDiamond131GridDataProvider extends Km['r'] {
           constructor(cd, cq) {
               super((0x0,
-              Kz['Ov'])({}, cq, bv['DefaultOptions'])),
-              this['_decoder'] = new TextDecoder(),
+              Kz['Ov'])({}, cq, MicapsDiamond131GridDataProvider['DefaultOptions'])),
+              this['_decoder'] = new TextDecoder()
+
               this['_load'](cd);
           }
           ['_readString'](cd, cq) {
               return this['_decoder']['decode'](cd['readBuffer'](cq))['replace'](/\0/g, '')['trim']();
           }
           ['_load'](cd) {
-              const cq = new KQ(cd,true);
+              const cq = new BinaryReader(cd,true);
               this['meta'] = {},
               this['meta']['zoneName'] = this['_readString'](cq, 0xc),
               this['meta']['dataName'] = this['_readString'](cq, 0x26);
@@ -17531,15 +17534,68 @@
               this['grids'] = [[]];
               for (let cR = 0x0; cR < cO['length']; cR++) {
                   const H0 = cq['readBuffer'](cz)
-                    , H1 = new KN['P'](cQ,this['gridOptions']['xSize'],this['gridOptions']['ySize'],H0,0x1 === cM ? 0xff : 0x270f,0x2,0x1 === cM ? 0.5 : 0x1,0x1 === cM ? -0x42 : 0x0);
+                  const  H1 = new KN['P'](cQ,this['gridOptions']['xSize'],this['gridOptions']['ySize'],H0,0x1 === cM ? 0xff : 0x270f,0x2,0x1 === cM ? 0.5 : 0x1,0x1 === cM ? -0x42 : 0x0);
                   this['grids'][0x0]['push'](H1);
               }
           }
+          //mars3d 增加 2024-12-29
+          toJSON(){
+            let gridData=[]
+            for (let i = 0; i < this.grids[0].length; i++) {
+              let grid = this.grids[0][i]
+              gridData.push(Array.from(grid.raw))
+            }
+            return {
+              grids:gridData,
+              options:this.gridOptions
+            }
+          }
       }
-      bv['DefaultOptions'] = {
+      MicapsDiamond131GridDataProvider['DefaultOptions'] = {
           'isZUnitKM': true
       };
-      class bA extends Km['r'] {
+      function arrayToArrayBuffer(array) {
+        const buffer = new ArrayBuffer(array.length);
+        const view = new Uint8Array(buffer);
+        for (let i = 0; i < array.length; i++) {
+            view[i] = array[i];  // 遍历数组，并将每个元素的值复制到视图中
+        }
+        return buffer;
+    }
+
+     //mars3d 增加 2024-12-29
+      class JsonGridDataProvider extends Km['r'] {
+        constructor(cd, cq) {
+            super((0x0, Kz['Ov'])({}, cq, JsonGridDataProvider['DefaultOptions']))
+            this._load(cd);
+        }
+        _load(data) {
+         this.gridOptions=data.options
+
+         let cM = 1
+         this.grids = [[]];
+         for (let i = 0x0; i < data.grids.length; i++) {
+          let grid = arrayToArrayBuffer(data.grids[i])
+
+          const  H1 = new KN['P'](
+            cM,
+            this.gridOptions.xSize,
+            this.gridOptions.ySize,
+            grid,
+            0x1 === cM ? 0xff : 0x270f,
+            0x2,
+            0x1 === cM ? 0.5 : 0x1,0x1 === cM ? -0x42 : 0x0
+          );
+          this.grids[0].push(H1);
+         }
+        }
+      }
+      JsonGridDataProvider['DefaultOptions'] = {
+        'isZUnitKM': true
+      };
+
+
+      class BinaryGridDataProvider extends Km['r'] {
           constructor(cd, cq) {
               super(cq),
               this['load'](cd);
@@ -17677,7 +17733,7 @@
               };
           }
       }
-      var bk, bK = function(cd, cq, cJ, cC) {
+      var DataAnimationType, bK = function(cd, cq, cJ, cC) {
           return new (cJ || (cJ = Promise))(function(cO, cG) {
               function cg(cM) {
                   try {
@@ -17782,7 +17838,7 @@
           );
       }),
       bb['qeName'] = 'g_tif';
-      class bc extends b3 {
+      class MicapsDiamond14FeatureProvider extends FeatureDataProviderBase {
           constructor(cd, cq) {
               super(),
               this['featuresMap'] = {},
@@ -17879,8 +17935,8 @@
               return this['featuresMap'][cd];
           }
       }
-      bc['qeName'] = 'v_diamond14';
-      class bH extends b3 {
+      MicapsDiamond14FeatureProvider['qeName'] = 'v_diamond14';
+      class bH extends FeatureDataProviderBase {
           constructor(cd) {
               super(),
               this['featuresMap'] = {},
@@ -17962,13 +18018,13 @@
           'count': 0x3e8,
           'extent': undefined
       };
-      class bx extends b8 {
+      class MicapsDiamond2WindGridProvider extends MemoryWindDataProvider {
           constructor(cd, cq) {
               if (!(null == cq ? undefined : cq['gridOptions']))
                   throw new Error('该provider必须传入格点参数信息');
               (0x0,
               KM['T'])(cq['gridOptions']);
-              const {s: cJ, d: cC} = bx['_getSDProvider'](cd, cq['gridOptions']);
+              const {s: cJ, d: cC} = MicapsDiamond2WindGridProvider['_getSDProvider'](cd, cq['gridOptions']);
               super(cJ, cC, Object['assign']({
                   'isUV': false
               }, cq));
@@ -17999,15 +18055,15 @@
       !function(cd) {
           cd[cd['Time'] = 0x0] = 'Time',
           cd[cd['Level'] = 0x1] = 'Level';
-      }(bk || (bk = {}));
-      class bp extends iT['c'] {
+      }(DataAnimationType || (DataAnimationType = {}));
+      class DataAnimationService extends iT['c'] {
           constructor(cd, cq) {
               super(),
               this['paused'] = 0x0,
               undefined === cq['all'] && v0['kg']['error']('动画的最大长度未设置！'),
               this['dataSources'] = cd instanceof Array ? cd : [cd],
               this['options'] = (0x0,
-              Kz['Ov'])({}, cq, bp['DefaultOptions']),
+              Kz['Ov'])({}, cq, DataAnimationService['DefaultOptions']),
               !this['options']['layer'] || this['options']['layer']instanceof Array || (this['options']['layer'] = [this['options']['layer']]),
               this['setAnimationFunc']();
           }
@@ -18034,7 +18090,7 @@
               (0x0,
               Kz['ri'])(this['options']['toIdx']) && (this['options']['toIdx'] <= cJ && v0['kg']['error']('暂不支持toIdx<=fromIdx的播放模式'),
               cq = Math['max'](Math['min'](this['options']['toIdx'] + 0x1, this['options']['all']), 0x2) - this['options']['delta']);
-              const cC = this['options']['type'] === bk['Level'] ? 'currentZIdx' : 'currentTIdx'
+              const cC = this['options']['type'] === DataAnimationType['Level'] ? 'currentZIdx' : 'currentTIdx'
                 , cO = ()=>{
                   if (!(this['paused'] > 0x0)) {
                       if (this['dataSources'][0x0][cC] < cJ && this['dataSources']['forEach'](cG=>cG[cC] = cJ),
@@ -18046,7 +18102,7 @@
                               ),
                               this['options']['layer'] && this['options']['layer']['forEach'](cG=>cG['clearPreDataSource'] && cG['clearPreDataSource']()),
                               this['options']['clearPreSource'] && this['options']['clearPreSource'](),
-                              void this['fire'](bp['EventTypes']['backUpdate'], {
+                              void this['fire'](DataAnimationService['EventTypes']['backUpdate'], {
                                   'firer': this,
                                   'msg': 0x0
                               });
@@ -18056,7 +18112,7 @@
                           cG[cC] += this['options']['delta'];
                       }
                       ),
-                      this['fire'](bp['EventTypes']['idxUpdate'], {
+                      this['fire'](DataAnimationService['EventTypes']['idxUpdate'], {
                           'firer': this,
                           'msg': this['dataSources'][0x0][cC]
                       });
@@ -18093,24 +18149,24 @@
               return this['animationId'] ? (this['stopFunc'](this['animationId']),
               this['animationId'] = undefined,
               this['paused'] = 0x0,
-              this['fire'](bp['EventTypes']['stopped'], {
+              this['fire'](DataAnimationService['EventTypes']['stopped'], {
                   'firer': this,
                   'msg': this
               }),
               this) : this;
           }
       }
-      bp['DefaultOptions'] = {
+      DataAnimationService['DefaultOptions'] = {
           'timerInterval': 0x1e,
           'loop': true,
           'autoStart': false,
           'useTimer': true,
           'all': undefined,
-          'type': bk['Time'],
+          'type': DataAnimationType['Time'],
           'layer': undefined,
           'delta': 0.05
       },
-      bp['EventTypes'] = {
+      DataAnimationService['EventTypes'] = {
           'idxUpdate': 'update:idx',
           'backUpdate': 'update:back',
           'stopped': 'stopped'
@@ -22586,7 +22642,7 @@
           }
           ['traceShadedWithContourResult'](cd) {
               const cq = this['traceShaded'](cd['contourInfo'], cd['analysisValues'], cd['dataSource']['getGrid']()['getYxArr'](), [], cd['valueFieldName'])
-                , cJ = new b7(cq);
+                , cJ = new GeoJSONFeatureProvider(cq);
               let cC = cd['drawOptions'];
               return cC || (cC = {
                   'polygon': {
@@ -22642,7 +22698,7 @@
                   'drawOptions': cz
               };
               cd['withShaded'] && this['traceShaded'](cQ, cd['analysisValues'], cO, cP, cd['valueFieldName']);
-              const cm = new b7(cM);
+              const cm = new GeoJSONFeatureProvider(cM);
               cQ['dataSource'] = cm;
               const cL = this['options']['layerCreator'] && this['options']['layerCreator'](cd['layerOptions'], cm, cz);
               return cQ['layer'] = cL,
@@ -22689,7 +22745,7 @@
                           bU['__wbindgen_free'](H6, H7);
                       }
                   }(cG['getGrid']()['toNumberArr'](), cd['analysisValues'], cG['getGrid']()['xSize'], cG['getGrid']()['ySize'], cg['xStart'], cg['xDelta'], cg['yStart'], cg['yDelta'], null !== (cO = null !== (cC = cd['undef']) && undefined !== cC ? cC : cG['getGrid']()['undef']) && undefined !== cO ? cO : Kg['v']['defaultUndef']))
-                    , cP = new b7(cN);
+                    , cP = new GeoJSONFeatureProvider(cN);
                   let cM = cd['drawOptions'];
                   cM ? 'string' == typeof cM && (cM = iz['Zc']['getResource'](cM),
                   cM || v0['kg']['error']('当前资源' + cM + '未找到！请先使用资源管理器加载！')) : cM = {
@@ -23162,7 +23218,7 @@
                                   Hb++,
                                   Hb === HK) {
                                       const HS = {
-                                          'provider': new b7(Hc),
+                                          'provider': new GeoJSONFeatureProvider(Hc),
                                           'streamlines': HH
                                       };
                                       cd['needVolume'] && HX(HS),
@@ -23213,7 +23269,7 @@
           }],
           'field': 'value'
       };
-      class bR {
+      class MapToolService {
           constructor(cd) {
               this['map'] = cd;
           }
@@ -23228,7 +23284,7 @@
               null === (cC = this['currentTool']) || undefined === cC || cC['begin']();
           }
       }
-      class e0 extends iT['c'] {
+      class LegendService extends iT['c'] {
           constructor() {
               super(...arguments),
               this['stopRulesMap'] = {};
@@ -23248,8 +23304,8 @@
                   'sr': cJ,
                   'changed': [cq]
               },
-              this['fire'](e0['EventTypes']['attachFirst'], cC)),
-              this['fire'](e0['EventTypes']['attach'], cC);
+              this['fire'](LegendService['EventTypes']['attachFirst'], cC)),
+              this['fire'](LegendService['EventTypes']['attach'], cC);
           }
           ['setOpacity'](cd, cq, cJ, cC=iR['DY']['outside'], cO=0x0) {
               const cG = this['stopRulesMap'][cd];
@@ -23257,7 +23313,7 @@
               cG['sr']['setOpacityByIndex'](cq, cC, cO, cJ);
               for (const cg of cG['changed'])
                   cg();
-              this['fire'](e0['EventTypes']['changeOpacity'], {
+              this['fire'](LegendService['EventTypes']['changeOpacity'], {
                   'firer': this,
                   'msg': {
                       'key': cd,
@@ -23269,14 +23325,14 @@
               const cJ = this['stopRulesMap'][cd];
               cJ || v0['kg']['warn']('未能找到key为' + cd + '的调色板！');
               const cC = ()=>{
-                  this['fire'](e0['EventTypes']['detachLast'], {
+                  this['fire'](LegendService['EventTypes']['detachLast'], {
                       'firer': this,
                       'msg': {
                           'key': cd,
                           'sr': cJ['sr']
                       }
                   }),
-                  this['fire'](e0['EventTypes']['detach'], {
+                  this['fire'](LegendService['EventTypes']['detach'], {
                       'firer': this,
                       'msg': {
                           'key': cd,
@@ -23291,7 +23347,7 @@
               if (cq) {
                   const cO = cJ['changed']['indexOf'](cq);
                   cO >= 0x0 && cJ['changed']['splice'](cO, 0x1),
-                  0x0 === cJ['changed']['length'] ? cC() : this['fire'](e0['EventTypes']['detach'], {
+                  0x0 === cJ['changed']['length'] ? cC() : this['fire'](LegendService['EventTypes']['detach'], {
                       'firer': this,
                       'msg': {
                           'key': cd,
@@ -23302,7 +23358,7 @@
                   cC();
           }
       }
-      e0['EventTypes'] = {
+      LegendService['EventTypes'] = {
           'attach': 'attach',
           'attachFirst': 'attach:first',
           'detachLast': 'detach:last',
@@ -23310,10 +23366,10 @@
           'changeOpacity': 'change:opacity'
       };
       var e1 = n(0x11d);
-      class e2 {
+      class DODSUnpacker {
           constructor(cd, cq) {
               this['options'] = (0x0,
-              Kz['Ov'])({}, cq, e2['DefaultOptions']),
+              Kz['Ov'])({}, cq, DODSUnpacker['DefaultOptions']),
               this['_buf'] = cd,
               this['_pos'] = 0x0;
           }
@@ -23484,7 +23540,7 @@
               return cG;
           }
       }
-      e2['DefaultOptions'] = {
+      DODSUnpacker['DefaultOptions'] = {
           'reshape': false
       };
       var e3 = function(cd, cq, cJ, cC) {
@@ -23515,7 +23571,7 @@
           }
           );
       };
-      class e4 extends iT['c'] {
+      class DAPService extends iT['c'] {
           constructor(cd, cq=[], cJ=false) {
               super(),
               this['baseUrl'] = cd,
@@ -23654,7 +23710,7 @@
               )['catch'](v0['kg']['debug']))['catch'](v0['kg']['debug']);
           }
           ['loadDataByRawFilter'](cd) {
-              return fetch(this['baseUrl'] + ('.dods?' + encodeURI(cd)))['then'](cq=>cq['arrayBuffer']()['then'](cJ=>new e2(cJ)['unpack']())['catch'](v0['kg']['debug']))['catch'](v0['kg']['debug']);
+              return fetch(this['baseUrl'] + ('.dods?' + encodeURI(cd)))['then'](cq=>cq['arrayBuffer']()['then'](cJ=>new DODSUnpacker(cJ)['unpack']())['catch'](v0['kg']['debug']))['catch'](v0['kg']['debug']);
           }
           ['loadDataByFullFilter'](cd) {
               return e3(this, undefined, undefined, function*() {
@@ -23881,9 +23937,9 @@
           return (0x0,
           bF['xm'])(cC[cC['length'] - 0x1]);
       }
-      class ev {
+      class FrameDrawService {
           constructor(cd) {
-              'h' === (null == cd ? undefined : cd['defaultMode']) ? this['_defaultDrawOptions'] = ev['HDefaultOptions'] : this['_defaultDrawOptions'] = ev['VDefaultOptions'];
+              'h' === (null == cd ? undefined : cd['defaultMode']) ? this['_defaultDrawOptions'] = FrameDrawService['HDefaultOptions'] : this['_defaultDrawOptions'] = FrameDrawService['VDefaultOptions'];
           }
           ['setDrawOptions'](cd, cq=true) {
               if (cd)
@@ -24171,7 +24227,7 @@
               };
           }
       }
-      ev['VDefaultOptions'] = {
+      FrameDrawService['VDefaultOptions'] = {
           'background': 'black',
           'content': {
               'ltOffset': [0x46, 0x4b],
@@ -24335,7 +24391,7 @@
               'color': undefined
           }
       },
-      ev['HDefaultOptions'] = (0x0,
+      FrameDrawService['HDefaultOptions'] = (0x0,
       Kz['uw'])({}, {
           'content': {
               'rbOffset': [0x32, 0x73]
@@ -24351,7 +24407,7 @@
                   'offset': [0x0, 0x5]
               }
           }
-      }, ev['VDefaultOptions']);
+      }, FrameDrawService['VDefaultOptions']);
       class eA {
           constructor(cd) {
               this['finishPointCount'] = -0x1,
@@ -24396,7 +24452,7 @@
           }
           ['finishDrawing']() {}
       }
-      class ek extends eA {
+      class PlotPolygonBase extends eA {
           ['getGeoJSON']() {
               if (this['coordinates'])
                   return {
@@ -24405,7 +24461,7 @@
                   };
           }
       }
-      class eK extends eA {
+      class PlotLineBase extends eA {
           ['getGeoJSON']() {
               if (this['coordinates'])
                   return {
@@ -24414,7 +24470,7 @@
                   };
           }
       }
-      class eb extends eA {
+      class PlotPointBase extends eA {
           ['getGeoJSON']() {
               if (this['coordinates'])
                   return {
@@ -24423,7 +24479,7 @@
                   };
           }
       }
-      const ec = {
+      const PlotConstants = {
           'TWO_PI': 0x2 * Math['PI'],
           'HALF_PI': Math['PI'] / 0x2,
           'FITTING_COUNT': 0x64,
@@ -24491,12 +24547,12 @@
       }
         , eu = function(cd, cq) {
           var cJ, cC = Math['asin'](Math['abs'](cq[0x1] - cd[0x1]) / ex(cd, cq));
-          return cq[0x1] >= cd[0x1] && cq[0x0] >= cd[0x0] ? cJ = cC + Math['PI'] : cq[0x1] >= cd[0x1] && cq[0x0] < cd[0x0] ? cJ = ec['TWO_PI'] - cC : cq[0x1] < cd[0x1] && cq[0x0] < cd[0x0] ? cJ = cC : cq[0x1] < cd[0x1] && cq[0x0] >= cd[0x0] && (cJ = Math['PI'] - cC),
+          return cq[0x1] >= cd[0x1] && cq[0x0] >= cd[0x0] ? cJ = cC + Math['PI'] : cq[0x1] >= cd[0x1] && cq[0x0] < cd[0x0] ? cJ = PlotConstants['TWO_PI'] - cC : cq[0x1] < cd[0x1] && cq[0x0] < cd[0x0] ? cJ = cC : cq[0x1] < cd[0x1] && cq[0x0] >= cd[0x0] && (cJ = Math['PI'] - cC),
           cJ;
       }
         , eY = function(cd, cq, cJ) {
           var cC = eu(cq, cd) - eu(cq, cJ);
-          return cC < 0x0 ? cC + ec['TWO_PI'] : cC;
+          return cC < 0x0 ? cC + PlotConstants['TWO_PI'] : cC;
       }
         , eT = function(cd, cq, cJ) {
           return (cJ[0x1] - cd[0x1]) * (cq[0x0] - cd[0x0]) > (cq[0x1] - cd[0x1]) * (cJ[0x0] - cd[0x0]);
@@ -24518,9 +24574,9 @@
       }
         , ef = function(cd, cq, cJ, cC) {
           var cO, cG, cg = [], cN = cC - cJ;
-          cN = cN < 0x0 ? cN + ec['TWO_PI'] : cN;
-          for (var cP = 0x0; cP <= ec['FITTING_COUNT']; cP++) {
-              var cM = cJ + cN * cP / ec['FITTING_COUNT'];
+          cN = cN < 0x0 ? cN + PlotConstants['TWO_PI'] : cN;
+          for (var cP = 0x0; cP <= PlotConstants['FITTING_COUNT']; cP++) {
+              var cM = cJ + cN * cP / PlotConstants['FITTING_COUNT'];
               cO = cd[0x0] + cq * Math['cos'](cM),
               cG = cd[0x1] + cq * Math['sin'](cM),
               cg['push']([cO, cG]);
@@ -24534,7 +24590,7 @@
             , cN = cO[0x1] / cG
             , cP = ex(cq, cJ)
             , cM = ex(cJ, cC);
-          if (cG > ec['ZERO_TOLERANCE']) {
+          if (cG > PlotConstants['ZERO_TOLERANCE']) {
               if (eT(cq, cJ, cC)) {
                   var cz = cd * cP
                     , cQ = cJ[0x0] - cz * cN
@@ -24569,7 +24625,7 @@
             , cO = cd[0x2]
             , cG = eW(0x0, cJ, cC, cO)[0x0]
             , cg = eI(cJ, cC, cO);
-          if (Math['sqrt'](cg[0x0] * cg[0x0] + cg[0x1] * cg[0x1]) > ec['ZERO_TOLERANCE'])
+          if (Math['sqrt'](cg[0x0] * cg[0x0] + cg[0x1] * cg[0x1]) > PlotConstants['ZERO_TOLERANCE'])
               var cN = ey(cJ, cC)
                 , cP = cJ[0x0] - cN[0x0]
                 , cM = cJ[0x1] - cN[0x1]
@@ -24643,7 +24699,7 @@
         , eS = function(cd, cq) {
           return 0x0 == cd ? Math['pow'](cq - 0x1, 0x2) / 0x2 : 0x1 == cd ? (-0x2 * Math['pow'](cq, 0x2) + 0x2 * cq + 0x1) / 0x2 : 0x2 == cd ? Math['pow'](cq, 0x2) / 0x2 : 0x0;
       };
-      class eU extends eK {
+      class eU extends PlotLineBase {
           constructor() {
               super(...arguments),
               this['type'] = eH['ARC'],
@@ -24668,7 +24724,7 @@
               }
           }
       }
-      class ed extends ek {
+      class ed extends PlotPolygonBase {
           constructor() {
               super(...arguments),
               this['type'] = eH['ELLIPSE'],
@@ -24685,15 +24741,15 @@
               }
           }
           ['generatePoints'](cd, cq, cJ) {
-              for (var cC, cO, cG, cg = [], cN = 0x0; cN <= ec['FITTING_COUNT']; cN++)
-                  cG = 0x2 * Math['PI'] * cN / ec['FITTING_COUNT'],
+              for (var cC, cO, cG, cg = [], cN = 0x0; cN <= PlotConstants['FITTING_COUNT']; cN++)
+                  cG = 0x2 * Math['PI'] * cN / PlotConstants['FITTING_COUNT'],
                   cC = cd[0x0] + cq * Math['cos'](cG),
                   cO = cd[0x1] + cJ * Math['sin'](cG),
                   cg['push']([cC, cO]);
               return cg;
           }
       }
-      class eq extends eK {
+      class eq extends PlotLineBase {
           constructor() {
               super(...arguments),
               this['type'] = eH['CURVE'],
@@ -24715,7 +24771,7 @@
                         , H1 = cQ[cL - 0x1]
                         , H2 = eW(0x0, cR, H0, H1)[0x1]
                         , H3 = eI(cR, H0, H1);
-                      if (Math['sqrt'](H3[0x0] * H3[0x0] + H3[0x1] * H3[0x1]) > ec['ZERO_TOLERANCE'])
+                      if (Math['sqrt'](H3[0x0] * H3[0x0] + H3[0x1] * H3[0x1]) > PlotConstants['ZERO_TOLERANCE'])
                           var H4 = ey(H0, H1)
                             , H5 = H1[0x0] - H4[0x0]
                             , H6 = H1[0x1] - H4[0x1]
@@ -24740,8 +24796,8 @@
                       cO = cq[cC],
                       cG = cq[cC + 0x1],
                       cM['push'](cO);
-                      for (let cQ = 0x0; cQ < ec['FITTING_COUNT']; cQ++) {
-                          var cz = eX(cQ / ec['FITTING_COUNT'], cO, cJ[0x2 * cC], cJ[0x2 * cC + 0x1], cG);
+                      for (let cQ = 0x0; cQ < PlotConstants['FITTING_COUNT']; cQ++) {
+                          var cz = eX(cQ / PlotConstants['FITTING_COUNT'], cO, cJ[0x2 * cC], cJ[0x2 * cC + 0x1], cG);
                           cM['push'](cz);
                       }
                       cM['push'](cG);
@@ -24750,7 +24806,7 @@
               }(this['t'], this['points']));
           }
       }
-      class eJ extends ek {
+      class eJ extends PlotPolygonBase {
           constructor() {
               super(...arguments),
               this['type'] = eH['CLOSED_CURVE'],
@@ -24770,8 +24826,8 @@
                       var cg = cq[cC]
                         , cN = cq[cC + 0x1];
                       cG['push'](cg);
-                      for (var cP = 0x0; cP <= ec['FITTING_COUNT']; cP++) {
-                          var cM = eX(cP / ec['FITTING_COUNT'], cg, cJ[0x2 * cC], cJ[0x2 * cC + 0x1], cN);
+                      for (var cP = 0x0; cP <= PlotConstants['FITTING_COUNT']; cP++) {
+                          var cM = eX(cP / PlotConstants['FITTING_COUNT'], cg, cJ[0x2 * cC], cJ[0x2 * cC + 0x1], cN);
                           cG['push'](cM);
                       }
                       cG['push'](cN);
@@ -24780,7 +24836,7 @@
               }
           }
       }
-      class eC extends ek {
+      class eC extends PlotPolygonBase {
           constructor() {
               super(...arguments),
               this['type'] = eH['LUNE'],
@@ -24792,7 +24848,7 @@
                   if (0x2 == this['getPointCount']()) {
                       var cq = ey(cd[0x0], cd[0x1])
                         , cJ = ex(cd[0x0], cq)
-                        , cC = eE(cd[0x0], cq, ec['HALF_PI'], cJ, undefined);
+                        , cC = eE(cd[0x0], cq, PlotConstants['HALF_PI'], cJ, undefined);
                       cd['push'](cC);
                   }
                   var cO = cd[0x0]
@@ -24813,7 +24869,7 @@
               }
           }
       }
-      class eO extends ek {
+      class eO extends PlotPolygonBase {
           constructor() {
               super(...arguments),
               this['type'] = eH['SECTOR'],
@@ -24834,7 +24890,7 @@
               }
           }
       }
-      class eG extends ek {
+      class eG extends PlotPolygonBase {
           constructor() {
               super(...arguments),
               this['type'] = eH['GATHERING_PLACE'],
@@ -24847,7 +24903,7 @@
                   if (0x2 == this['getPointCount']()) {
                       var cq = ey(cd[0x0], cd[0x1])
                         , cJ = ex(cd[0x0], cq) / 0.9
-                        , cC = eE(cd[0x0], cq, ec['HALF_PI'], cJ, true);
+                        , cC = eE(cd[0x0], cq, PlotConstants['HALF_PI'], cJ, true);
                       cd = [cd[0x0], cC, cd[0x1]];
                   }
                   cq = ey(cd[0x0], cd[0x2]),
@@ -24866,8 +24922,8 @@
                       cg = cd[cG],
                       cN = cd[cG + 0x1],
                       cQ['push'](cg);
-                      for (var cm = 0x0; cm <= ec['FITTING_COUNT']; cm++)
-                          cC = eX(cm / ec['FITTING_COUNT'], cg, cO[0x2 * cG], cO[0x2 * cG + 0x1], cN),
+                      for (var cm = 0x0; cm <= PlotConstants['FITTING_COUNT']; cm++)
+                          cC = eX(cm / PlotConstants['FITTING_COUNT'], cg, cO[0x2 * cG], cO[0x2 * cG + 0x1], cN),
                           cQ['push'](cC);
                       cQ['push'](cN);
                   }
@@ -24875,7 +24931,7 @@
               }
           }
       }
-      class eg extends ek {
+      class eg extends PlotPolygonBase {
           constructor() {
               super(...arguments),
               this['type'] = eH['FINE_ARROW'],
@@ -24895,8 +24951,8 @@
                     , cO = cC * this['tailWidthFactor']
                     , cG = cC * this['neckWidthFactor']
                     , cg = cC * this['headWidthFactor']
-                    , cN = eE(cJ, cq, ec['HALF_PI'], cO, true)
-                    , cP = eE(cJ, cq, ec['HALF_PI'], cO, false)
+                    , cN = eE(cJ, cq, PlotConstants['HALF_PI'], cO, true)
+                    , cP = eE(cJ, cq, PlotConstants['HALF_PI'], cO, false)
                     , cM = eE(cq, cJ, this['headAngle'], cg, false)
                     , cz = eE(cq, cJ, this['headAngle'], cg, true)
                     , cQ = [cN, eE(cq, cJ, this['neckAngle'], cG, false), cM, cJ, cz, eE(cq, cJ, this['neckAngle'], cG, true), cP];
@@ -24915,7 +24971,7 @@
               this['neckAngle'] = 0.17741 * Math['PI'];
           }
       }
-      class eP extends ek {
+      class eP extends PlotPolygonBase {
           constructor() {
               super(...arguments),
               this['type'] = eH['ATTACK_ARROW'],
@@ -24960,9 +25016,9 @@
                 , cM = (cO = cO > cC ? cC : cO) * this['neckHeightFactor']
                 , cz = eE(cd[cd['length'] - 0x2], cG, 0x0, cO, true)
                 , cQ = eE(cd[cd['length'] - 0x2], cG, 0x0, cM, true)
-                , cm = eE(cG, cz, ec['HALF_PI'], cN, false)
-                , cL = eE(cG, cz, ec['HALF_PI'], cN, true);
-              return [eE(cG, cQ, ec['HALF_PI'], cP, false), cm, cG, cL, eE(cG, cQ, ec['HALF_PI'], cP, true)];
+                , cm = eE(cG, cz, PlotConstants['HALF_PI'], cN, false)
+                , cL = eE(cG, cz, PlotConstants['HALF_PI'], cN, true);
+              return [eE(cG, cQ, PlotConstants['HALF_PI'], cP, false), cm, cG, cL, eE(cG, cQ, PlotConstants['HALF_PI'], cP, true)];
           }
           ['getArrowBodyPoints'](cd, cq, cJ, cC) {
               for (var cO = ep(cd), cG = eF(cd) * cC, cg = (cG - ex(cq, cJ)) / 0x2, cN = 0x0, cP = [], cM = [], cz = 0x1; cz < cd['length'] - 0x1; cz++) {
@@ -24976,7 +25032,7 @@
               return cP['concat'](cM);
           }
       }
-      class eM extends ek {
+      class eM extends PlotPolygonBase {
           constructor() {
               super(...arguments),
               this['type'] = eH['CIRCLE'],
@@ -24990,15 +25046,15 @@
               }
           }
           ['generatePoints'](cd, cq) {
-              for (var cJ, cC, cO, cG = [], cg = 0x0; cg <= ec['FITTING_COUNT']; cg++)
-                  cO = 0x2 * Math['PI'] * cg / ec['FITTING_COUNT'],
+              for (var cJ, cC, cO, cG = [], cg = 0x0; cg <= PlotConstants['FITTING_COUNT']; cg++)
+                  cO = 0x2 * Math['PI'] * cg / PlotConstants['FITTING_COUNT'],
                   cJ = cd[0x0] + cq * Math['cos'](cO),
                   cC = cd[0x1] + cq * Math['sin'](cO),
                   cG['push']([cJ, cC]);
               return cG;
           }
       }
-      class ez extends ek {
+      class ez extends PlotPolygonBase {
           constructor() {
               super(...arguments),
               this['type'] = eH['DOUBLE_ARROW'],
@@ -25042,7 +25098,7 @@
                 , cG = ex(cO, cJ)
                 , cg = eE(cJ, cO, 0x0, 0.3 * cG, true)
                 , cN = eE(cJ, cO, 0x0, 0.5 * cG, true)
-                , cP = [cO, cg = eE(cO, cg, ec['HALF_PI'], cG / 0x5, cC), cN = eE(cO, cN, ec['HALF_PI'], cG / 0x4, cC), cJ]
+                , cP = [cO, cg = eE(cO, cg, PlotConstants['HALF_PI'], cG / 0x5, cC), cN = eE(cO, cN, PlotConstants['HALF_PI'], cG / 0x4, cC), cJ]
                 , cM = this['getArrowHeadPoints'](cP, this['headHeightFactor'], this['headWidthFactor'])
                 , cz = cM[0x0]
                 , cQ = cM[0x4]
@@ -25066,9 +25122,9 @@
                 , cN = cC * this['neckHeightFactor']
                 , cP = eE(cd[cd['length'] - 0x2], cO, 0x0, cC, true)
                 , cM = eE(cd[cd['length'] - 0x2], cO, 0x0, cN, true)
-                , cz = eE(cO, cP, ec['HALF_PI'], cG, false)
-                , cQ = eE(cO, cP, ec['HALF_PI'], cG, true);
-              return [eE(cO, cM, ec['HALF_PI'], cg, false), cz, cO, cQ, eE(cO, cM, ec['HALF_PI'], cg, true)];
+                , cz = eE(cO, cP, PlotConstants['HALF_PI'], cG, false)
+                , cQ = eE(cO, cP, PlotConstants['HALF_PI'], cG, true);
+              return [eE(cO, cM, PlotConstants['HALF_PI'], cg, false), cz, cO, cQ, eE(cO, cM, PlotConstants['HALF_PI'], cg, true)];
           }
           ['getArrowBodyPoints'](cd, cq, cJ, cC) {
               for (var cO = ep(cd), cG = eF(cd) * cC, cg = (cG - ex(cq, cJ)) / 0x2, cN = 0x0, cP = [], cM = [], cz = 0x1; cz < cd['length'] - 0x1; cz++) {
@@ -25083,19 +25139,19 @@
           }
           ['getTempPoint4'](cd, cq, cJ) {
               var cC, cO, cG, cg, cN = ey(cd, cq), cP = ex(cN, cJ), cM = eY(cd, cN, cJ);
-              return cM < ec['HALF_PI'] ? (cO = cP * Math['sin'](cM),
+              return cM < PlotConstants['HALF_PI'] ? (cO = cP * Math['sin'](cM),
               cG = cP * Math['cos'](cM),
-              cg = eE(cd, cN, ec['HALF_PI'], cO, false),
-              cC = eE(cN, cg, ec['HALF_PI'], cG, true)) : cM >= ec['HALF_PI'] && cM < Math['PI'] ? (cO = cP * Math['sin'](Math['PI'] - cM),
+              cg = eE(cd, cN, PlotConstants['HALF_PI'], cO, false),
+              cC = eE(cN, cg, PlotConstants['HALF_PI'], cG, true)) : cM >= PlotConstants['HALF_PI'] && cM < Math['PI'] ? (cO = cP * Math['sin'](Math['PI'] - cM),
               cG = cP * Math['cos'](Math['PI'] - cM),
-              cg = eE(cd, cN, ec['HALF_PI'], cO, false),
-              cC = eE(cN, cg, ec['HALF_PI'], cG, false)) : cM >= Math['PI'] && cM < 1.5 * Math['PI'] ? (cO = cP * Math['sin'](cM - Math['PI']),
+              cg = eE(cd, cN, PlotConstants['HALF_PI'], cO, false),
+              cC = eE(cN, cg, PlotConstants['HALF_PI'], cG, false)) : cM >= Math['PI'] && cM < 1.5 * Math['PI'] ? (cO = cP * Math['sin'](cM - Math['PI']),
               cG = cP * Math['cos'](cM - Math['PI']),
-              cg = eE(cd, cN, ec['HALF_PI'], cO, true),
-              cC = eE(cN, cg, ec['HALF_PI'], cG, true)) : (cO = cP * Math['sin'](0x2 * Math['PI'] - cM),
+              cg = eE(cd, cN, PlotConstants['HALF_PI'], cO, true),
+              cC = eE(cN, cg, PlotConstants['HALF_PI'], cG, true)) : (cO = cP * Math['sin'](0x2 * Math['PI'] - cM),
               cG = cP * Math['cos'](0x2 * Math['PI'] - cM),
-              cg = eE(cd, cN, ec['HALF_PI'], cO, true),
-              cC = eE(cN, cg, ec['HALF_PI'], cG, false)),
+              cg = eE(cd, cN, PlotConstants['HALF_PI'], cO, true),
+              cC = eE(cN, cg, PlotConstants['HALF_PI'], cG, false)),
               cC;
           }
       }
@@ -25170,7 +25226,7 @@
           }
           ['getTailPoints'](cd) {
               var cq = eF(cd) * this['tailWidthFactor'];
-              return [eE(cd[0x1], cd[0x0], ec['HALF_PI'], cq, false), eE(cd[0x1], cd[0x0], ec['HALF_PI'], cq, true)];
+              return [eE(cd[0x1], cd[0x0], PlotConstants['HALF_PI'], cq, false), eE(cd[0x1], cd[0x0], PlotConstants['HALF_PI'], cq, true)];
           }
       }
       class eL extends eP {
@@ -25205,13 +25261,13 @@
           }
           ['getTailPoints'](cd) {
               var cq = eF(cd) * this['tailWidthFactor']
-                , cJ = eE(cd[0x1], cd[0x0], ec['HALF_PI'], cq, false)
-                , cC = eE(cd[0x1], cd[0x0], ec['HALF_PI'], cq, true)
+                , cJ = eE(cd[0x1], cd[0x0], PlotConstants['HALF_PI'], cq, false)
+                , cC = eE(cd[0x1], cd[0x0], PlotConstants['HALF_PI'], cq, true)
                 , cO = cq * this['swallowTailFactor'];
               return [cJ, eE(cd[0x1], cd[0x0], 0x0, cO, true), cC];
           }
       }
-      class eR extends eK {
+      class eR extends PlotLineBase {
           constructor() {
               super(...arguments),
               this['type'] = eH['FREEHAND_LINE'],
@@ -25221,7 +25277,7 @@
               this['getPointCount']() < 0x2 || this['setCoordinates'](this['points']);
           }
       }
-      class c0 extends ek {
+      class c0 extends PlotPolygonBase {
           constructor() {
               super(...arguments),
               this['type'] = eH['FREEHAND_POLYGON'],
@@ -25231,7 +25287,7 @@
               this['getPointCount']() <= 0x2 || this['setCoordinates']([this['points']]);
           }
       }
-      class c1 extends ek {
+      class c1 extends PlotPolygonBase {
           constructor() {
               super(...arguments),
               this['type'] = eH['POLYGON'];
@@ -25240,7 +25296,7 @@
               this['getPointCount']() <= 0x2 || this['setCoordinates']([this['points']]);
           }
       }
-      class c2 extends eb {
+      class c2 extends PlotPointBase {
           constructor() {
               super(...arguments),
               this['type'] = eH['MARKER'],
@@ -25251,7 +25307,7 @@
               this['setCoordinates'](cd);
           }
       }
-      class c3 extends eK {
+      class c3 extends PlotLineBase {
           constructor(cd, cq) {
               super(cd),
               this['type'] = eH['POLYLINE'],
@@ -25261,7 +25317,7 @@
               this['getPointCount']() < 0x2 || this['setCoordinates'](this['points']);
           }
       }
-      class c4 extends eK {
+      class c4 extends PlotLineBase {
           constructor() {
               super(...arguments),
               this['type'] = eH['STRAIGHT_ARROW'],
@@ -25282,7 +25338,7 @@
               }
           }
       }
-      class c5 extends ek {
+      class c5 extends PlotPolygonBase {
           constructor() {
               super(...arguments),
               this['type'] = eH['RECTANGLE'],
@@ -25308,7 +25364,7 @@
       function c7(cd, cq) {
           c6[cd] = cq;
       }
-      function c8(cd, cq, cJ) {
+      function createDrawPlot(cd, cq, cJ) {
           if (c6[cd] && 'function' == typeof c6[cd])
               return c6[cd](cq);
           switch (cd) {
@@ -25365,7 +25421,7 @@
           cd[cd['middle'] = 0x1] = 'middle',
           cd[cd['right'] = 0x2] = 'right';
       }(c9 || (c9 = {}));
-      class cv extends iT['c'] {
+      class VectorMapTool extends iT['c'] {
           constructor(cd) {
               super(),
               this['dragging'] = false,
@@ -25395,14 +25451,14 @@
                   if (this['dragging'] = false,
                   cq['buttonType'] === c9['left']) {
                       const cJ = this['pointDownTime'] && performance['now']() - this['pointDownTime'] || 0x0;
-                      if (this['draggingMoved'] && cJ > cv['PointDownAsDragTime'])
+                      if (this['draggingMoved'] && cJ > VectorMapTool['PointDownAsDragTime'])
                           return this['draggingMoved'] = false,
                           void (this['pointDownTime'] = undefined);
                       v0['kg']['debug']('pointer\x20down\x20time\x20' + cJ),
-                      this['shape'] ? this['movePointAdded'] || this['shape']['addPoint'](cq['coords']) : (this['shape'] = c8(this['options']['drawType'], [cq['coords']], this['options']['shapeOptions']),
+                      this['shape'] ? this['movePointAdded'] || this['shape']['addPoint'](cq['coords']) : (this['shape'] = createDrawPlot(this['options']['drawType'], [cq['coords']], this['options']['shapeOptions']),
                       this['options']['autoClear'] && this['clear']()),
                       this['updateShape'](),
-                      this['fire'](cv['EventTypes']['pointAdd'], {
+                      this['fire'](VectorMapTool['EventTypes']['pointAdd'], {
                           'firer': this,
                           'msg': {
                               'point': cq['coords'],
@@ -25411,7 +25467,7 @@
                       }),
                       this['shape']['finishPointCount'] > 0x0 && this['shape']['getPointCount']() >= this['shape']['finishPointCount'] && this['finishDraw'](cq);
                   } else
-                      this['shape'] && cq['buttonType'] === c9['right'] && (this['fire'](cv['EventTypes']['pointAdd'], {
+                      this['shape'] && cq['buttonType'] === c9['right'] && (this['fire'](VectorMapTool['EventTypes']['pointAdd'], {
                           'firer': this,
                           'msg': {
                               'point': cq['coords'],
@@ -25431,7 +25487,7 @@
           }
           ['finishDraw'](cd) {
               var cq;
-              this['shape'] && this['shape']['generated'] && this['fire'](cv['EventTypes']['drawFinish'], {
+              this['shape'] && this['shape']['generated'] && this['fire'](VectorMapTool['EventTypes']['drawFinish'], {
                   'firer': this,
                   'msg': cd
               }),
@@ -25440,7 +25496,7 @@
               this['shape'] = undefined,
               this['drawId'] = (0x0,
               Kz['hQ'])()) : this['end'](),
-              this['fire'](cv['EventTypes']['afterFinish'], {
+              this['fire'](VectorMapTool['EventTypes']['afterFinish'], {
                   'firer': this,
                   'msg': cd
               });
@@ -25456,7 +25512,7 @@
               null === (cJ = this['options']['tempLineRenderer']) || undefined === cJ || cJ['updateShape'](this['drawId'] + '_temp', this['tempLineShape'], this['properties']);
           }
           ['addPoint'](cd) {
-              this['shape'] ? this['shape']['addPoint'](cd) : (this['shape'] = c8(this['options']['drawType'], [cd], this['options']['shapeOptions']),
+              this['shape'] ? this['shape']['addPoint'](cd) : (this['shape'] = createDrawPlot(this['options']['drawType'], [cd], this['options']['shapeOptions']),
               this['options']['autoClear'] && this['clear']());
           }
           ['begin'](cd) {
@@ -25498,12 +25554,12 @@
               null === (cq = this['options']['tempLineRenderer']) || undefined === cq || cq['clear']();
           }
       }
-      cv['EventTypes'] = {
+      VectorMapTool['EventTypes'] = {
           'drawFinish': 'draw:finish',
           'pointAdd': 'point:add',
           'afterFinish': 'after:finish'
       },
-      cv['PointDownAsDragTime'] = 0xc8;
+      VectorMapTool['PointDownAsDragTime'] = 0xc8;
       class cA {
           constructor() {
               this['EarthRadius'] = 6371.1,

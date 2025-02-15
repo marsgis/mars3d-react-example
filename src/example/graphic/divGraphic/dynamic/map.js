@@ -2,7 +2,7 @@ import * as mars3d from "mars3d"
 
 export let map // mars3d.Map三维地图对象
 let graphicLayer
-const centerArr = [] // 视角数组
+
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
@@ -16,16 +16,11 @@ export const mapOptions = {
     // animation: true, //是否创建 动画小器件，左下角仪表
     timeline: true,
     clockAnimate: true,
-    distanceLegend: { left: "100px", bottom: "27px" }
+    distanceLegend: { style: { left: "10px", bottom: "27px" } }
   }
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
@@ -50,10 +45,7 @@ export function onMounted(mapInstance) {
   showDitailInfo()
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -94,22 +86,27 @@ const arrData = [
 ]
 
 function showDitailInfo() {
+  const centerArr = [] // 视角数组
   for (let i = 0; i < arrData.length; i++) {
-    // 动态坐标属性
-    const property = new Cesium.SampledPositionProperty()
-    const startTime = Cesium.JulianDate.fromDate(new Date(arrData[i].startTime))
-    const endTime = Cesium.JulianDate.fromDate(new Date(arrData[i].endTime))
-
-    property.addSample(startTime, Cesium.Cartesian3.fromDegrees(...arrData[i].position)) // 此刻显示
-    property.addSample(endTime, Cesium.Cartesian3.fromDegrees(...arrData[i].position)) // 此刻不显示
+    const item = arrData[i]
 
     const stopTime = new Date(arrData[i].endTime).getSeconds() - new Date(arrData[i].startTime).getSeconds()
-
-    arrData[i].center.stop = stopTime // 停顿视角
-    centerArr.push(arrData[i].center) // center集合
+    centerArr.push({
+      ...arrData[i].center,
+      stop: stopTime // 停顿视角
+    })
 
     const graphic = new mars3d.graphic.DivGraphic({
-      position: property,
+      position: {
+        type: "time", // 时序动态坐标
+        timeField: "time",
+        list: [
+          { time: item.startTime, lng: item.position[0], lat: item.position[1], alt: item.position[2] },
+          { time: item.endTime, lng: item.position[0], lat: item.position[1], alt: item.position[2] }
+        ],
+        backwardExtrapolationType: Cesium.ExtrapolationType.NONE, // 在第1个开始时间之前，NONE时不显示，HOLD时显示开始时间对应坐标位置
+        forwardExtrapolationType: Cesium.ExtrapolationType.NONE // 在最后1个结束时间之后，NONE时不显示，HOLD时显示结束时间对应坐标位置
+      },
       style: {
         html: `<div class="marsTiltPanel marsTiltPanel-theme-red">
       <div class="marsTiltPanel-wrap">

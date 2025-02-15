@@ -9,16 +9,12 @@ export const eventTarget = new mars3d.BaseClass()
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: 31.61982, lng: 117.230607, alt: 22746, heading: 2, pitch: -49 }
+    center: { lat: 31.61982, lng: 117.230607, alt: 22746, heading: 2, pitch: -49 },
+    logarithmicDepthBuffer: false // 对数深度缓冲区[当 贴地面 出现 阴影体 时设置下]
   }
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
@@ -48,10 +44,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic12(graphicLayer)
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
   graphicLayer.remove()
@@ -96,8 +89,8 @@ function addDemoGraphic2(graphicLayer) {
       [117.183832, 31.814237, 38.76]
     ],
     style: {
-      image: "//data.mars3d.cn/img/textures/poly-soil.jpg",
-      // image: "//data.mars3d.cn/img/map/gugong.jpg",
+      image: "https://data.mars3d.cn/img/textures/poly-soil.jpg",
+      // image: "https://data.mars3d.cn/img/map/gugong.jpg",
       vertexFormat: Cesium.MaterialAppearance.MaterialSupport.TEXTURED.vertexFormat,
       textureCoordinates: {
         positions: [new Cesium.Cartesian2(0, 1), new Cesium.Cartesian2(0, 0), new Cesium.Cartesian2(0.5, 0), new Cesium.Cartesian2(0.5, 1)] // 矩形平铺
@@ -132,7 +125,7 @@ function addDemoGraphic3(graphicLayer) {
     style: {
       materialType: mars3d.MaterialType.Water,
       materialOptions: {
-        normalMap: "//data.mars3d.cn/img/textures/waterNormals.jpg", // 水正常扰动的法线图
+        normalMap: "https://data.mars3d.cn/img/textures/waterNormals.jpg", // 水正常扰动的法线图
         frequency: 1000.0, // 控制波数的数字。
         animationSpeed: 0.01, // 控制水的动画速度的数字。
         amplitude: 10, // 控制水波振幅的数字。
@@ -363,7 +356,7 @@ function addDemoGraphic11(graphicLayer) {
     style: {
       materialType: mars3d.MaterialType.WaterLight,
       materialOptions: {
-        specularMap: "//data.mars3d.cn/img/textures/poly-stone.jpg",
+        specularMap: "https://data.mars3d.cn/img/textures/poly-stone.jpg",
         alpha: 0.6
       },
       clampToGround: true
@@ -446,8 +439,8 @@ export function addRandomGraphicByCount(count) {
 }
 
 // 开始绘制
-export function startDrawGraphic() {
-  graphicLayer.startDraw({
+export async function startDrawGraphic() {
+  const graphic = await graphicLayer.startDraw({
     type: "polygonP",
     style: {
       color: "#29cf34",
@@ -465,10 +458,11 @@ export function startDrawGraphic() {
       }
     }
   })
+  console.log("标绘完成", graphic.toJSON())
 }
 // 开始绘制
-export function startDrawGraphic2() {
-  graphicLayer.startDraw({
+export async function startDrawGraphic2() {
+  const graphic = await graphicLayer.startDraw({
     type: "polygonP",
     style: {
       color: "#00ff00",
@@ -476,6 +470,7 @@ export function startDrawGraphic2() {
       diffHeight: 300
     }
   })
+  console.log("标绘完成", graphic.toJSON())
 }
 
 // 在图层绑定Popup弹窗
@@ -619,18 +614,14 @@ export function bindLayerContextMenu() {
       icon: "fa fa-info",
       show: (event) => {
         const graphic = event.graphic
-        if (graphic.graphicIds) {
+        if (graphic.cluster && graphic.graphics) {
           return true
         } else {
           return false
         }
       },
       callback: (e) => {
-        const graphic = e.graphic
-        if (!graphic) {
-          return
-        }
-        const graphics = graphic.getGraphics() // 对应的grpahic数组，可以自定义显示
+        const graphics = e.graphic?.graphics
         if (graphics) {
           const names = []
           for (let index = 0; index < graphics.length; index++) {

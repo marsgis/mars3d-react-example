@@ -12,7 +12,7 @@ export const mapOptions = {
     {
       name: "国境线",
       type: "kml",
-      url: "//data.mars3d.cn/file/kml/countryboundary.kml",
+      url: "https://data.mars3d.cn/file/kml/countryboundary.kml",
       symbol: {
         styleOptions: {
           color: "#FED976",
@@ -25,7 +25,7 @@ export const mapOptions = {
     {
       name: "省界线",
       type: "kml",
-      url: "//data.mars3d.cn/file/kml/province.kml",
+      url: "https://data.mars3d.cn/file/kml/province.kml",
       symbol: {
         styleOptions: {
           color: "#00FF00",
@@ -40,21 +40,13 @@ export const mapOptions = {
 
 export const eventTarget = new mars3d.BaseClass()
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
   shoRailway()
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -76,7 +68,7 @@ export function shoRailway() {
   removeLayer()
 
   graphicLayer = new mars3d.layer.KmlLayer({
-    url: "//data.mars3d.cn/file/kml/hftl.kml",
+    url: "https://data.mars3d.cn/file/kml/hftl.kml",
     symbol: {
       styleOptions: {
         color: "#00ffff",
@@ -84,6 +76,10 @@ export function shoRailway() {
         width: 3,
         arcType: Cesium.ArcType.GEODESIC,
         clampToGround: true,
+        highlight: {
+          type: mars3d.EventType.click,
+          color: "#ff0000"
+        },
         // 标记文字
         label: {
           text: "{name}",
@@ -139,7 +135,7 @@ export function showExpressway() {
 
   graphicLayer = new mars3d.layer.KmlLayer({
     name: "路线",
-    url: "//data.mars3d.cn/file/kml/bslx.kmz",
+    url: "https://data.mars3d.cn/file/kml/bslx.kmz",
     symbol: {
       styleOptions: {
         font_family: "楷体",
@@ -170,7 +166,7 @@ export function showSafetyNotice() {
 
   graphicLayer = new mars3d.layer.KmlLayer({
     name: "海上安全警告",
-    url: "//data.mars3d.cn/file/kml/NAVWARN.kmz",
+    url: "https://data.mars3d.cn/file/kml/NAVWARN.kmz",
     popup: "{description}",
     center: { lat: 3.851186, lng: 110.508244, alt: 3510625, heading: 7, pitch: -74 },
     flyTo: true
@@ -195,7 +191,7 @@ export function showMeteorological() {
 
   graphicLayer = new mars3d.layer.KmlLayer({
     name: "气象数据",
-    url: "//data.mars3d.cn/file/kml/dg8.kml",
+    url: "https://data.mars3d.cn/file/kml/dg8.kml",
     opacity: 0.7,
     popup: "all",
     flyTo: true
@@ -220,7 +216,7 @@ export function showGDP() {
 
   graphicLayer = new mars3d.layer.KmlLayer({
     name: "全球各国GDP",
-    url: "//data.mars3d.cn/file/kml/gdpPerCapita2008.kmz",
+    url: "https://data.mars3d.cn/file/kml/gdpPerCapita2008.kmz",
     center: { lat: 5.723953, lng: 90.735755, alt: 24143420, heading: 359, pitch: -87 },
     popup: "all",
     flyTo: true

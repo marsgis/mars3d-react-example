@@ -10,12 +10,7 @@ export const mapOptions = {
   }
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
@@ -31,10 +26,7 @@ export function onMounted(mapInstance) {
   addOutCircle(graphicLayer)
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -53,7 +45,7 @@ function addAnhui(graphicLayer) {
       height: diffHeight,
       materialType: mars3d.MaterialType.Image2,
       materialOptions: {
-        image: "//data.mars3d.cn/img/map/anhui.png"
+        image: "https://data.mars3d.cn/img/map/anhui.png"
       }
     }
   })
@@ -62,14 +54,14 @@ function addAnhui(graphicLayer) {
   // 安徽省边界线墙
   const anhuiWall = new mars3d.layer.GeoJsonLayer({
     name: "安徽省边界墙",
-    url: "//data.mars3d.cn/file/geojson/areas/340000.json",
+    url: "https://data.mars3d.cn/file/geojson/areas/340000.json",
     symbol: {
       type: "wallP",
       styleOptions: {
         diffHeight, // 墙高
         materialType: mars3d.MaterialType.Image2,
         materialOptions: {
-          image: "//data.mars3d.cn/img/textures/wall.png"
+          image: "https://data.mars3d.cn/img/textures/wall.png"
         }
       }
     }
@@ -79,7 +71,7 @@ function addAnhui(graphicLayer) {
   // 安徽各市边界线和名称
   const shiLayer = new mars3d.layer.GeoJsonLayer({
     name: "安徽各市边界线",
-    url: "//data.mars3d.cn/file/geojson/areas/340000_full.json",
+    url: "https://data.mars3d.cn/file/geojson/areas/340000_full.json",
     symbol: {
       type: "polyline",
       styleOptions: {
@@ -151,7 +143,7 @@ function addOutCircle(graphicLayer) {
   const arrImg = [
     {
       // 刻度
-      image: "//data.mars3d.cn/img/textures/calib.png",
+      image: "https://data.mars3d.cn/img/textures/calib.png",
       positions: [
         [113.564329, 35.654741],
         [120.802219, 28.844016]
@@ -159,7 +151,7 @@ function addOutCircle(graphicLayer) {
     },
     {
       // 刻度尺
-      image: "//data.mars3d.cn/img/textures/calib-value.png",
+      image: "https://data.mars3d.cn/img/textures/calib-value.png",
       positions: [
         [114.162597, 29.256489],
         [120.216593, 35.055444]
@@ -167,7 +159,7 @@ function addOutCircle(graphicLayer) {
     },
     {
       // 方向
-      image: "//data.mars3d.cn/img/textures/calib-dir.png",
+      image: "https://data.mars3d.cn/img/textures/calib-dir.png",
       positions: [
         [114.162597, 29.256489],
         [120.216593, 35.055444]
@@ -204,7 +196,7 @@ function addOutCircle(graphicLayer) {
     style: {
       materialType: mars3d.MaterialType.Image2,
       materialOptions: {
-        image: "//data.mars3d.cn/img/textures/calib-semicircle.png",
+        image: "https://data.mars3d.cn/img/textures/calib-semicircle.png",
         opacity: 0.2
       },
       clampToGround: true,

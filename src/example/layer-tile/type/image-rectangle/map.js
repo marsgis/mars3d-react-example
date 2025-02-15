@@ -10,7 +10,7 @@ export const mapOptions = function (option) {
   option.layers.push({
     name: "中科大-东区",
     type: "image",
-    url: "//data.mars3d.cn/img/map/zkd-dq.png",
+    url: "https://data.mars3d.cn/img/map/zkd-dq.png",
     rectangle: { xmin: 117.259691, xmax: 117.267778, ymin: 31.834432, ymax: 31.84387 },
     zIndex: 20,
     show: true
@@ -19,22 +19,14 @@ export const mapOptions = function (option) {
   return option
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
 
   addTileLayer()
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -48,7 +40,7 @@ export function addTileLayer() {
   // 方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
   tileLayer = new mars3d.layer.ImageLayer({
     name: "中科大-西区",
-    url: "//data.mars3d.cn/img/map/zkd-xq.png",
+    url: "https://data.mars3d.cn/img/map/zkd-xq.png",
     rectangle: { xmin: 117.245648, xmax: 117.254431, ymin: 31.836891, ymax: 31.843413 },
     zIndex: 20
   })

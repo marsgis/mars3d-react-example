@@ -35,13 +35,13 @@ function initMap() {
       contextmenu: { hasDefault: true } // 右键菜单
     },
     terrain: {
-      url: "//data.mars3d.cn/terrain",
+      url: "https://data.mars3d.cn/terrain",
       show: true
     },
     basemaps: [
       {
         name: "天地图影像",
-        icon: "//data.mars3d.cn/img/thumbnail/basemap/tdt_img.png",
+        icon: "https://data.mars3d.cn/img/thumbnail/basemap/tdt_img.png",
         type: "tdt",
         layer: "img_d",
         show: true

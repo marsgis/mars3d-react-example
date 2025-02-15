@@ -7,12 +7,7 @@ export let lineLayer
 export let satelliteLayer
 const Cesium = mars3d.Cesium
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export const mapOptions = {
   scene: {
     center: { lat: 42.126999, lng: 98.685654, alt: 16560060, heading: 5.6, pitch: -89 }
@@ -24,7 +19,7 @@ export const mapOptions = {
 }
 
 export function onMounted(mapInstance) {
-  map = mapInstance // 记录map  map.toolbar.style.bottom = "55px"// 修改toolbar控件的样式
+  map = mapInstance // 记录map  map.control.toolbar.container.style.bottom = "55px"// 修改toolbar控件的样式
 
   // 创建矢量数据图层
   graphicLayer = new mars3d.layer.GraphicLayer()
@@ -39,10 +34,7 @@ export function onMounted(mapInstance) {
   map.addLayer(satelliteLayer)
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -50,90 +42,90 @@ const posArr = [
   {
     name: "中国资源卫星应用中心",
     pos: [116.240032464881, 40.0797910765005, 0],
-    model: "//data.mars3d.cn/gltf/mars/leida.glb"
+    model: "https://data.mars3d.cn/gltf/mars/leida.glb"
   },
 
   {
     name: "自然资源部",
     pos: [116.364862, 39.922346, 0],
-    model: "//data.mars3d.cn/gltf/imap/171112f22bf34b09a80dfe36b7a2c3ce/gltf/gltf2.gltf"
+    model: "https://data.mars3d.cn/gltf/imap/171112f22bf34b09a80dfe36b7a2c3ce/gltf/gltf2.gltf"
   },
   {
     name: "生态环境部",
     pos: [116.352146287861, 39.9315519489232, 0],
-    model: "//data.mars3d.cn/gltf/imap/171112f22bf34b09a80dfe36b7a2c3ce/gltf/gltf2.gltf"
+    model: "https://data.mars3d.cn/gltf/imap/171112f22bf34b09a80dfe36b7a2c3ce/gltf/gltf2.gltf"
   },
   {
     name: "农业农村部",
     pos: [116.457555, 39.932756, 0],
-    model: "//data.mars3d.cn/gltf/imap/171112f22bf34b09a80dfe36b7a2c3ce/gltf/gltf2.gltf"
+    model: "https://data.mars3d.cn/gltf/imap/171112f22bf34b09a80dfe36b7a2c3ce/gltf/gltf2.gltf"
   },
   {
     name: "水利部",
     pos: [116.352155, 39.884728, 0],
-    model: "//data.mars3d.cn/gltf/imap/171112f22bf34b09a80dfe36b7a2c3ce/gltf/gltf2.gltf"
+    model: "https://data.mars3d.cn/gltf/imap/171112f22bf34b09a80dfe36b7a2c3ce/gltf/gltf2.gltf"
   },
   {
     name: "国家发展改革委",
     pos: [116.331546, 39.912456, 0],
-    model: "//data.mars3d.cn/gltf/imap/171112f22bf34b09a80dfe36b7a2c3ce/gltf/gltf2.gltf"
+    model: "https://data.mars3d.cn/gltf/imap/171112f22bf34b09a80dfe36b7a2c3ce/gltf/gltf2.gltf"
   },
 
   {
     name: "住建部",
     pos: [116.326609, 39.930379, 0],
-    model: "//data.mars3d.cn/gltf/imap/171112f22bf34b09a80dfe36b7a2c3ce/gltf/gltf2.gltf"
+    model: "https://data.mars3d.cn/gltf/imap/171112f22bf34b09a80dfe36b7a2c3ce/gltf/gltf2.gltf"
   },
   {
     name: "国家林业草原局",
     pos: [116.419465, 39.954384, 0],
-    model: "//data.mars3d.cn/gltf/imap/171112f22bf34b09a80dfe36b7a2c3ce/gltf/gltf2.gltf"
+    model: "https://data.mars3d.cn/gltf/imap/171112f22bf34b09a80dfe36b7a2c3ce/gltf/gltf2.gltf"
   },
   {
     name: "交通运输部",
     pos: [116.419109, 39.908169, 0],
-    model: "//data.mars3d.cn/gltf/imap/171112f22bf34b09a80dfe36b7a2c3ce/gltf/gltf2.gltf"
+    model: "https://data.mars3d.cn/gltf/imap/171112f22bf34b09a80dfe36b7a2c3ce/gltf/gltf2.gltf"
   },
   {
     name: "中国地震局",
     pos: [116.284736, 39.906494, 0],
-    model: "//data.mars3d.cn/gltf/imap/171112f22bf34b09a80dfe36b7a2c3ce/gltf/gltf2.gltf"
+    model: "https://data.mars3d.cn/gltf/imap/171112f22bf34b09a80dfe36b7a2c3ce/gltf/gltf2.gltf"
   },
   {
     name: "西安卫星测控中心",
     pos: [109.023912, 34.250872, 0],
-    model: "//data.mars3d.cn/gltf/mars/leida.glb"
+    model: "https://data.mars3d.cn/gltf/mars/leida.glb"
   },
   {
     name: "中国科学院遥感与数字地球研究所",
     pos: [116.276306422658, 40.0706289383518, 0],
-    model: "//data.mars3d.cn/gltf/mars/leida.glb"
+    model: "https://data.mars3d.cn/gltf/mars/leida.glb"
   },
 
   {
     name: "密云站",
     pos: [116.858716105082, 40.452385253501, 0],
-    model: "//data.mars3d.cn/gltf/mars/leida.glb"
+    model: "https://data.mars3d.cn/gltf/mars/leida.glb"
   },
   {
     name: "喀什站",
     pos: [75.93105, 39.505111, 0],
-    model: "//data.mars3d.cn/gltf/mars/leida.glb"
+    model: "https://data.mars3d.cn/gltf/mars/leida.glb"
   },
   {
     name: "北极站",
     pos: [20.186391, 67.8537518, 0],
-    model: "//data.mars3d.cn/gltf/mars/leida.glb"
+    model: "https://data.mars3d.cn/gltf/mars/leida.glb"
   },
   {
     name: "三亚站",
     pos: [109.311472012774, 18.312718489265, 0],
-    model: "//data.mars3d.cn/gltf/mars/leida.glb"
+    model: "https://data.mars3d.cn/gltf/mars/leida.glb"
   },
   {
     name: "昆明站",
     pos: [102.372779, 25.532377, 0],
-    model: "//data.mars3d.cn/gltf/mars/leida.glb"
+    model: "https://data.mars3d.cn/gltf/mars/leida.glb"
   }
 ]
 
@@ -225,11 +217,11 @@ export function startTask() {
 function addTask() {
   const weixin = addSatelliteGrahic()
   satelliteLayer.addGraphic(weixin)
-  const propertyQC = getSampledPositionProperty([[75.93105, 39.505111, 0]])
+  // const propertyQC = getSampledPositionProperty([[75.93105, 39.505111, 0]])
 
   // 圆锥追踪体（动态position=>动态targetPosition）
   const coneTrack = new mars3d.graphic.ConeTrack({
-    position: propertyQC,
+    position: [75.93105, 39.505111, 0],
     targetPosition: weixin.property,
     style: {
       angle: 5, // 半场角度
@@ -281,12 +273,12 @@ export function sendDataAction() {
 
 function sendData() {
   const weixin = addSatelliteGrahic()
-  const propertyQC = getSampledPositionProperty([[75.93105, 39.505111, 0]])
+  // const propertyQC = getSampledPositionProperty([[75.93105, 39.505111, 0]])
 
   // 圆锥追踪体（动态position=>动态targetPosition）
   const coneTrack = new mars3d.graphic.ConeTrack({
     position: weixin.property,
-    targetPosition: propertyQC,
+    targetPosition: [75.93105, 39.505111, 0],
     style: {
       angle: 5, // 半场角度
       // 自定义扩散波纹纹理
@@ -405,7 +397,7 @@ function addSatelliteGrahic() {
       tle1: "1 39150U 13018A   19351.75901006  .00000041  00000-0  13118-4 0  9991",
       tle2: "2 39150  97.8876  68.0565 0018875 352.9713   7.1223 14.76542863358056",
       model: {
-        url: "//data.mars3d.cn/gltf/mars/weixin.gltf",
+        url: "https://data.mars3d.cn/gltf/mars/weixin.gltf",
         scale: 1,
         minimumPixelSize: 90
       },
@@ -424,21 +416,6 @@ function addSatelliteGrahic() {
   }
   // 目标卫星
   return weixin
-}
-
-// 计算演示的SampledPositionProperty轨迹
-function getSampledPositionProperty(points) {
-  const property = new Cesium.SampledPositionProperty()
-  property.forwardExtrapolationType = Cesium.ExtrapolationType.HOLD
-
-  const start = map.clock.currentTime
-  const positions = mars3d.LngLatArray.toCartesians(points)
-  for (let i = 0; i < positions.length; i++) {
-    const time = Cesium.JulianDate.addSeconds(start, i * 20, new Cesium.JulianDate())
-    const position = positions[i]
-    property.addSample(time, position)
-  }
-  return property
 }
 
 function clearGraphicLayer() {

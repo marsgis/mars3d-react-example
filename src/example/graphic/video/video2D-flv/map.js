@@ -16,12 +16,7 @@ export const mapOptions = {
   }
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
 
@@ -67,10 +62,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic1()
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -174,10 +166,10 @@ function addDemoGraphic1() {
 }
 
 // 投射视频
-export function startDrawGraphic() {
+export async function startDrawGraphic() {
   graphicLayer.clear()
   // 开始绘制
-  graphicLayer.startDraw({
+  const graphic = await graphicLayer.startDraw({
     type: "video2D",
     style: {
       container: videoElement,
@@ -189,10 +181,11 @@ export function startDrawGraphic() {
       showFrustum: true
     }
   })
+  console.log("标绘完成", graphic.toJSON())
 }
 
 // 按当前相机投射视频
-export function startDrawGraphic2() {
+export async function startDrawGraphic2() {
   graphicLayer.clear()
   // 取屏幕中心点
   const targetPosition = map.getCenter({ format: false })

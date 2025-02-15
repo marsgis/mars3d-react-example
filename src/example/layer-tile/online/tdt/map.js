@@ -15,7 +15,7 @@ export const mapOptions = {
   basemaps: [
     {
       name: "天地图影像(EPSG:3857)",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/tdt_img.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/tdt_img.png",
       type: "tdt",
       layer: "img_d",
       key: mars3d.Token.tiandituArr,
@@ -24,7 +24,7 @@ export const mapOptions = {
     },
     {
       name: "天地图电子(EPSG:3857)",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/tdt_vec.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/tdt_vec.png",
       type: "group",
       layers: [
         { name: "底图", type: "tdt", layer: "vec_d", key: mars3d.Token.tiandituArr },
@@ -34,7 +34,7 @@ export const mapOptions = {
     },
     {
       name: "天地图地形(EPSG:3857)",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/tdt_ter.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/tdt_ter.png",
       type: "group",
       layers: [
         { name: "底图", type: "tdt", layer: "ter_d", key: mars3d.Token.tiandituArr },
@@ -52,7 +52,7 @@ export const mapOptions = {
     },
     {
       name: "天地图影像(EPSG:4326)",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/tdt_img.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/tdt_img.png",
       type: "group",
       layers: [
         {
@@ -74,7 +74,7 @@ export const mapOptions = {
     },
     {
       name: "天地图电子(EPSG:4326)",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/tdt_vec.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/tdt_vec.png",
       type: "group",
       layers: [
         {
@@ -96,7 +96,7 @@ export const mapOptions = {
     },
     {
       name: "天地图地形(EPSG:4326)",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/tdt_ter.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/tdt_ter.png",
       type: "group",
       layers: [
         {
@@ -119,7 +119,7 @@ export const mapOptions = {
 
     {
       name: "天地图影像(英文)",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/tdt_img.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/tdt_img.png",
       type: "group",
       layers: [
         { name: "底图", type: "tdt", layer: "img_d", key: mars3d.Token.tiandituArr },
@@ -129,7 +129,7 @@ export const mapOptions = {
     },
     {
       name: "天地图电子(英文)",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/tdt_vec.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/tdt_vec.png",
       type: "group",
       layers: [
         { name: "底图", type: "tdt", layer: "vec_d", key: mars3d.Token.tiandituArr },
@@ -142,12 +142,7 @@ export const mapOptions = {
 
 export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
   addCreditDOM()
@@ -159,10 +154,7 @@ export function onMounted(mapInstance) {
   map.scene.globe.maximumScreenSpaceError = 4 / 3
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   removeCreditDOM()
   map = null

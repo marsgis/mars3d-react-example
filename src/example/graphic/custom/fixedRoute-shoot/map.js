@@ -16,17 +16,12 @@ export const mapOptions = {
 
 export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到组件中
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
-  map.toolbar.style.bottom = "55px" // 修改toolbar控件的
+  map.control.toolbar.container.style.bottom = "55px" // 修改toolbar控件的
 
-  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/uav-route.json" })
+  mars3d.Util.fetchJson({ url: "https://data.mars3d.cn/file/apidemo/uav-route.json" })
     .then(function (arr) {
       const arrNew = []
       for (let i = 0; i < arr.length; i++) {
@@ -46,10 +41,7 @@ export function onMounted(mapInstance) {
     })
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -74,10 +66,13 @@ function addGraphicLayer(arr) {
 
   fixedRoute = new mars3d.graphic.FixedRoute({
     name: "飞机航线",
-    speed: 50,
-    positions: arr,
+    position: {
+      type: "time", // 时序动态坐标
+      speed: 50,
+      list: arr
+    },
     model: {
-      url: "//data.mars3d.cn/gltf/mars/dajiang/dajiang.gltf",
+      url: "https://data.mars3d.cn/gltf/mars/dajiang/dajiang.gltf",
       scale: 1,
       minimumPixelSize: 100,
       pitch: 0 // 固定角度
@@ -94,10 +89,13 @@ function addGraphicLayer(arr) {
   bindPopup(fixedRoute)
 
   // ui面板信息展示
-  fixedRoute.on(mars3d.EventType.change, mars3d.Util.funThrottle((event) => {
-    // 取实时信息，可以通过  fixedRoute.info
-    eventTarget.fire("roamLineChange", event)
-  }, 500))
+  fixedRoute.on(
+    mars3d.EventType.change,
+    mars3d.Util.funThrottle((event) => {
+      // 取实时信息，可以通过  fixedRoute.info
+      eventTarget.fire("roamLineChange", event)
+    }, 500)
+  )
 
   fixedRoute.start()
 
@@ -111,7 +109,7 @@ function addGraphicLayer(arr) {
       return fixedRoute.position
     }, false),
     style: {
-      url: "//data.mars3d.cn/file/video/lukou.mp4",
+      url: "https://data.mars3d.cn/file/video/lukou.mp4",
       angle: 40,
       angle2: 20,
       heading: 0,

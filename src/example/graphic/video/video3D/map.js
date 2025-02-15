@@ -18,12 +18,7 @@ export const mapOptions = {
   }
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
 
@@ -32,7 +27,7 @@ export function onMounted(mapInstance) {
   // 添加参考三维模型
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     name: "合肥国家大学科技园",
-    url: "//data.mars3d.cn/3dtiles/qx-hfdxy/tileset.json",
+    url: "https://data.mars3d.cn/3dtiles/qx-hfdxy/tileset.json",
     position: { alt: 43.7 },
     maximumScreenSpaceError: 1
   })
@@ -60,10 +55,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic3()
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -89,8 +81,8 @@ export function addRandomGraphicByCount(count) {
     const graphic = new mars3d.graphic.Video3D({
       position,
       style: {
-        url: "//data.mars3d.cn/file/video/menqian.mp4",
-        maskImage: "//data.mars3d.cn/img/textures/video-mask.png", // 羽化视频四周，融合更美观
+        url: "https://data.mars3d.cn/file/video/menqian.mp4",
+        maskImage: "https://data.mars3d.cn/img/textures/video-mask.png", // 羽化视频四周，融合更美观
         angle: 46.3,
         angle2: 15.5,
         heading: 88.5,
@@ -106,20 +98,21 @@ export function addRandomGraphicByCount(count) {
   return result.points.length
 }
 
-export function startDrawGraphic() {
+export async function startDrawGraphic() {
   // 开始绘制
-  graphicLayer.startDraw({
+  const graphic = await graphicLayer.startDraw({
     type: "video3D",
     style: {
-      url: "//data.mars3d.cn/file/video/lukou.mp4",
-      // maskImage: "//data.mars3d.cn/img/textures/video-mask.png", // 羽化视频四周，融合更美观
+      url: "https://data.mars3d.cn/file/video/lukou.mp4",
+      // maskImage: "https://data.mars3d.cn/img/textures/video-mask.png", // 羽化视频四周，融合更美观
       addHeight: 10,
       showFrustum: true
     }
   })
+  console.log("标绘完成", graphic.toJSON())
 }
 
-export function startDrawGraphic2() {
+export async function startDrawGraphic2() {
   // 取屏幕中心点
   const targetPosition = map.getCenter({ format: false })
   if (!targetPosition) {
@@ -133,8 +126,8 @@ export function startDrawGraphic2() {
     position: cameraPosition,
     targetPosition,
     style: {
-      url: "//data.mars3d.cn/file/video/lukou.mp4",
-      maskImage: "//data.mars3d.cn/img/textures/video-mask.png", // 羽化视频四周，融合更美观
+      url: "https://data.mars3d.cn/file/video/lukou.mp4",
+      maskImage: "https://data.mars3d.cn/img/textures/video-mask.png", // 羽化视频四周，融合更美观
       angle: 33.3,
       angle2: 23.4,
       showFrustum: true
@@ -148,8 +141,8 @@ function addDemoGraphic1() {
   const video3D = new mars3d.graphic.Video3D({
     position: [117.204472, 31.842488, 120.9],
     style: {
-      url: "//data.mars3d.cn/file/video/lukou.mp4",
-      maskImage: "//data.mars3d.cn/img/textures/video-mask.png", // 羽化视频四周，融合更美观
+      url: "https://data.mars3d.cn/file/video/lukou.mp4",
+      maskImage: "https://data.mars3d.cn/img/textures/video-mask.png", // 羽化视频四周，融合更美观
       angle: 33.3,
       angle2: 23.4,
       heading: 50.7,
@@ -164,8 +157,8 @@ function addDemoGraphic2() {
   const video3D = new mars3d.graphic.Video3D({
     position: [117.205457, 31.842984, 63.9],
     style: {
-      url: "//data.mars3d.cn/file/video/menqian.mp4",
-      maskImage: "//data.mars3d.cn/img/textures/video-mask.png", // 羽化视频四周，融合更美观
+      url: "https://data.mars3d.cn/file/video/menqian.mp4",
+      maskImage: "https://data.mars3d.cn/img/textures/video-mask.png", // 羽化视频四周，融合更美观
       angle: 46.3,
       angle2: 15.5,
       heading: 88.5,
@@ -179,18 +172,20 @@ function addDemoGraphic2() {
 }
 
 function addDemoGraphic3() {
-  const propertyFJ = getSampledPositionProperty([
-    [117.210592, 31.842438, 100],
-    [117.207898, 31.842374, 100],
-    [117.205376, 31.842337, 100],
-    [117.204489, 31.842824, 100]
-  ])
-
   const video3D = new mars3d.graphic.Video3D({
-    position: propertyFJ,
+    position: {
+      type: "time", // 时序动态坐标
+      speed: 60,
+      list: [
+        [117.210592, 31.842438, 100],
+        [117.207898, 31.842374, 100],
+        [117.205376, 31.842337, 100],
+        [117.204489, 31.842824, 100]
+      ]
+    },
     style: {
-      url: "//data.mars3d.cn/file/video/menqian.mp4",
-      // maskImage: "//data.mars3d.cn/img/textures/video-mask.png", // 羽化视频四周，融合更美观
+      url: "https://data.mars3d.cn/file/video/menqian.mp4",
+      // maskImage: "https://data.mars3d.cn/img/textures/video-mask.png", // 羽化视频四周，融合更美观
       angle: 20,
       angle2: 10,
       heading: 88.5,
@@ -206,20 +201,6 @@ function addDemoGraphic3() {
   //     video3D.position = mars3d.PointUtil.addPositionsHeight(event.cartesian, 10)
   //   }
   // })
-}
-// 计算演示的SampledPositionProperty轨迹
-function getSampledPositionProperty(points) {
-  const property = new Cesium.SampledPositionProperty()
-  property.forwardExtrapolationType = Cesium.ExtrapolationType.HOLD
-
-  const start = map.clock.currentTime
-  const positions = mars3d.LngLatArray.toCartesians(points)
-  for (let i = 0; i < positions.length; i++) {
-    const time = Cesium.JulianDate.addSeconds(start, i * 30, new Cesium.JulianDate())
-    const position = positions[i]
-    property.addSample(time, position)
-  }
-  return property
 }
 
 export function onChangeAngle(value) {

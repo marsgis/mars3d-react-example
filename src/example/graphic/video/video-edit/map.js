@@ -11,12 +11,7 @@ export const mapOptions = {
   }
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
 
@@ -35,10 +30,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic1(graphicLayer)
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 
@@ -61,7 +53,7 @@ function addDemoGraphic1(graphicLayer) {
       [117.204827, 31.842712, 43.6]
     ],
     style: {
-      url: "//data.mars3d.cn/file/video/lukou.mp4",
+      url: "https://data.mars3d.cn/file/video/lukou.mp4",
       opacity: 0.9,
       distanceDisplayCondition_far: 5000
     }
@@ -90,11 +82,13 @@ export function addRandomGraphicByCount(count) {
     const graphic = new mars3d.graphic.VideoPrimitive({
       positions: [pt1, pt2, pt3, pt4],
       style: {
-        url: "//data.mars3d.cn/file/video/lukou.mp4"
+        url: "https://data.mars3d.cn/file/video/lukou.mp4"
       },
       attr: { index }
     })
     graphicLayer.addGraphic(graphic)
+
+    videoPolygon = graphic
   }
 
   graphicLayer.enabledEvent = true // 恢复事件
@@ -127,23 +121,28 @@ export const choosePoint = (isChoosePoint) => {
   }
 }
 
+// 播放暂停
+export function playOrpause() {
+  if (!videoPolygon || videoPolygon.isDestroy) {
+    return
+  }
+  videoPolygon.play = !videoPolygon.play
+  return videoPolygon.play
+}
+
 // 开始绘制
-export function startDrawGraphic() {
-  graphicLayer
-    .startDraw({
-      type: "videoP",
-      style: {
-        url: "//data.mars3d.cn/file/video/lukou.mp4",
-        opacity: 0.8
-      }
-    })
-    .then((graphic) => {
-      videoPolygon = graphic
-    })
+export async function startDrawGraphic() {
+  videoPolygon = await graphicLayer.startDraw({
+    type: "videoP",
+    style: {
+      url: "https://data.mars3d.cn/file/video/lukou.mp4",
+      opacity: 0.8
+    }
+  })
 }
 
 // 按当前相机投射视频
-export function startDrawGraphic2() {
+export async function startDrawGraphic2() {
   const positions = mars3d.PolyUtil.getMapExtentPositions(map.scene)
   if (positions.length < 3) {
     return
@@ -152,7 +151,7 @@ export function startDrawGraphic2() {
   const graphic = new mars3d.graphic.VideoPrimitive({
     positions: positions,
     style: {
-      url: "//data.mars3d.cn/file/video/lukou.mp4"
+      url: "https://data.mars3d.cn/file/video/lukou.mp4"
     }
   })
   graphicLayer.addGraphic(graphic)
@@ -341,18 +340,14 @@ export function bindLayerContextMenu() {
       icon: "fa fa-info",
       show: (event) => {
         const graphic = event.graphic
-        if (graphic.graphicIds) {
+        if (graphic.cluster && graphic.graphics) {
           return true
         } else {
           return false
         }
       },
       callback: (e) => {
-        const graphic = e.graphic
-        if (!graphic) {
-          return
-        }
-        const graphics = graphic.getGraphics() // 对应的grpahic数组，可以自定义显示
+        const graphics = e.graphic?.graphics
         if (graphics) {
           const names = []
           for (let index = 0; index < graphics.length; index++) {

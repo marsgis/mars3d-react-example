@@ -15,7 +15,7 @@ export const mapOptions = {
   basemaps: [
     {
       name: "百度电子",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/gaode_vec.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/gaode_vec.png",
       type: "baidu",
       layer: "vec",
       credit: creditHtml,
@@ -23,7 +23,7 @@ export const mapOptions = {
     },
     {
       name: "百度影像",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/gaode_img.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/gaode_img.png",
       type: "group",
       layers: [
         { name: "底图", type: "baidu", layer: "img_d" },
@@ -33,7 +33,7 @@ export const mapOptions = {
     },
     {
       name: "百度深蓝色",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/bd-c-midnight.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/bd-c-midnight.png",
       type: "baidu",
       layer: "custom",
       style: "midnight",
@@ -41,7 +41,7 @@ export const mapOptions = {
     },
     {
       name: "百度黑色",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/bd-c-dark.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/bd-c-dark.png",
       type: "baidu",
       layer: "custom",
       style: "dark",
@@ -49,9 +49,9 @@ export const mapOptions = {
     },
     {
       name: "离线百度瓦片(示例)",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/arcgis.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/arcgis.png",
       type: "baidu",
-      url: "//data.mars3d.cn/tile/baiduVec/{z}/{x}/{y}.jpg",
+      url: "https://data.mars3d.cn/tile/baiduVec/{z}/{x}/{y}.jpg",
       maximumLevel: 12
     }
   ]
@@ -59,12 +59,7 @@ export const mapOptions = {
 
 export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
   addCreditDOM()
@@ -72,10 +67,7 @@ export function onMounted(mapInstance) {
   globalNotify("已知问题提示", `(1) 百度瓦片纠偏后在部分瓦片拼接处有文字注记对不齐情况。`)
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   removeCreditDOM()
   map = null

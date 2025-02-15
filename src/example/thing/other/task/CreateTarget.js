@@ -20,7 +20,7 @@ class CreateTarget extends mars3d.TaskItem {
     // 存在需要创建的矢量对象时
     const graphicsOptions = this.options.graphics || []
     if (graphicsOptions && graphicsOptions.length > 0) {
-      this._graphicLayer = new mars3d.graphicLayer({
+      this._graphicLayer = new mars3d.layer.GraphicLayer({
         data: graphicsOptions // 直接支持传入构造参数数组
       })
       this._map.addLayer(this._graphicLayer)
@@ -88,6 +88,13 @@ class CreateTarget extends mars3d.TaskItem {
         layer.remove(true)
       })
       delete this._effects
+    }
+
+    if (this._controls) {
+      this._controls.forEach((control) => {
+        control.remove(true)
+      })
+      delete this._controls
     }
   }
 }

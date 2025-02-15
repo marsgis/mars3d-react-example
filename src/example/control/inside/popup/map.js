@@ -6,12 +6,7 @@ let graphicLayer // 矢量图层对象,用于graphic绑定展示
 
 export const eventTarget = new mars3d.BaseClass()
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
@@ -31,10 +26,7 @@ export function onMounted(mapInstance) {
   bindLayerDemo()
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -66,32 +58,28 @@ export function bindLayerDemo() {
 
   geoJsonLayer = new mars3d.layer.GeoJsonLayer({
     name: "标绘示例数据",
-    url: "//data.mars3d.cn/file/geojson/mars3d-draw.json"
+    url: "https://data.mars3d.cn/file/geojson/mars3d-draw.json"
   })
   map.addLayer(geoJsonLayer)
 
   // 在layer上绑定Popup单击弹窗
-  geoJsonLayer.bindPopup(
-    function (event) {
-      const attr = event.graphic.attr
-      return attr.type + " 我是layer上绑定的Popup" + new Date().toLocaleTimeString()
+  geoJsonLayer.bindPopup(async (event) => {
+    const attr = event.graphic.attr
+    const newAttr = await mars3d.Util.sendAjax({ url: "http://studio-api.mars3d.cn/api/gap/open/appInfo" })
+    const showAttr = {
+      ...attr,
+      name: newAttr.data.name,
+      address: newAttr.data.address
+    }
+    return mars3d.Util.getTemplateHtml({ title: "标绘示例数据", template: "all", attr: showAttr })
+  })
 
-      // return new Promise((resolve) => {
-      //   // 这里可以进行后端接口请求数据，setTimeout测试异步
-      //   setTimeout(() => {
-      //     resolve("Promise异步回调显示的弹窗内容信息")
-      //   }, 2000)
-      // })
-    },
-    { timeRender: true, closeButton: false } // timeRender实时刷新
-  )
-
-  // geoJsonLayer.on(mars3d.EventType.click, function (event) {
-  //   setTimeout(() => {
-  //     const popup = event.graphic.getPopup()
-  //     console.log("测试获取popup", popup)
-  //   }, 1000)
-  // })
+  geoJsonLayer.on(mars3d.EventType.click, function (event) {
+    setTimeout(() => {
+      const popup = event.graphic.getPopup()
+      console.log("测试获取popup", popup)
+    }, 1000)
+  })
 
   geoJsonLayer.on(mars3d.EventType.popupOpen, function (event) {
     const container = event.container // popup对应的DOM
@@ -113,7 +101,7 @@ export function bindLayerDemo2() {
 
   geoJsonLayer = new mars3d.layer.GeoJsonLayer({
     name: "标绘示例数据",
-    url: "//data.mars3d.cn/file/geojson/mars3d-draw.json",
+    url: "https://data.mars3d.cn/file/geojson/mars3d-draw.json",
     // popup按属性字段配置，可以是字符串模板或数组
     // popup: 'all', //显示所有属性，常用于测试
     // popup: '{name} {type}',
@@ -139,7 +127,7 @@ export function bindLayerTemplateDemo() {
 
   geoJsonLayer = new mars3d.layer.GeoJsonLayer({
     name: "标绘示例数据",
-    url: "//data.mars3d.cn/file/geojson/mars3d-draw.json"
+    url: "https://data.mars3d.cn/file/geojson/mars3d-draw.json"
   })
   map.addLayer(geoJsonLayer)
 
@@ -231,7 +219,7 @@ export function bindGraphicDemo2() {
   const graphic = new mars3d.graphic.BillboardEntity({
     position: new mars3d.LngLatPoint(116.328539, 30.978731, 1521),
     style: {
-      image: "//data.mars3d.cn/img/marker/point-red.png",
+      image: "https://data.mars3d.cn/img/marker/point-red.png",
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
       label: {
@@ -328,7 +316,7 @@ export function bindGraphicDynamicAttrDemo() {
       time: 5 // 无配置时仅取值一次，有值时间隔time秒后不断取
     },
     style: {
-      image: "//data.mars3d.cn/img/marker/point-red.png",
+      image: "https://data.mars3d.cn/img/marker/point-red.png",
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
       label: {

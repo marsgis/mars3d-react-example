@@ -356,9 +356,7 @@ class PlayTyphoon extends Typhoon {
     this.stopTime = Cesium.JulianDate.fromDate(endItem.time) // 结束时间
 
     let lastType = arr[0].level
-    let property = new Cesium.SampledPositionProperty()
-    property.forwardExtrapolationType = Cesium.ExtrapolationType.HOLD
-
+    let pathList = []
     for (let i = 0, len = arr.length; i < len; i++) {
       const item = arr[i]
       const point = [item.lon, item.lat]
@@ -366,7 +364,7 @@ class PlayTyphoon extends Typhoon {
       const position = Cesium.Cartesian3.fromDegrees(item.lon, item.lat) // 经度、纬度坐标转化
       const pointTime = Cesium.JulianDate.fromDate(item.time) // 将时间转化成需要的格式
 
-      property.addSample(pointTime, position)
+      pathList.push({ time: pointTime, lng: item.lon, lat: item.lat })
 
       // 绘制点
       const pointEntity = new mars3d.graphic.PointEntity({
@@ -398,7 +396,11 @@ class PlayTyphoon extends Typhoon {
       if (lastType !== item.level || i === len - 1) {
         // 绘制线
         const graphicLine = new mars3d.graphic.PathEntity({
-          position: property,
+          position: {
+            type: "time", // 时序动态坐标
+            list: pathList,
+            forwardExtrapolationType: Cesium.ExtrapolationType.HOLD// 在开始时间之前，NONE不显示，HOLD显示第一个时间对应坐标位置
+          },
           style: {
             leadTime: 0,
             color: getColor(lastType)
@@ -406,10 +408,9 @@ class PlayTyphoon extends Typhoon {
         })
         this.typhoonLayer.addGraphic(graphicLine)
 
+        // 进行下一个路线的处理
         lastType = item.level
-        property = new Cesium.SampledPositionProperty() // 控制动画播放的对象
-        property.forwardExtrapolationType = Cesium.ExtrapolationType.HOLD
-        property.addSample(pointTime, position)
+        pathList = [{ time: pointTime, lng: item.lon, lat: item.lat }]
       }
 
       // 显示每个点的风圈和预测路线

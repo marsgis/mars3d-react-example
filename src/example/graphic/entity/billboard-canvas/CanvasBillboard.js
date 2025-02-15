@@ -31,11 +31,13 @@ class CanvasBillboard extends mars3d.graphic.BillboardPrimitive {
       pixelOffsetX: 0,
       pixelOffsetY: -36 * (style.scale ?? 1)
     }
-    if (style.scaleByDistance) {
-      style.label.pixelOffsetScaleByDistance = style.scaleByDistance
-    }
 
     super._addedHook(style)
+  }
+
+  _toJSON_Ex(json) {
+    delete json.style.image
+    delete json.style.label
   }
 }
 

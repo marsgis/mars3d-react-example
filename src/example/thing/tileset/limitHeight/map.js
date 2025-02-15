@@ -9,12 +9,7 @@ export const mapOptions = {
   }
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
   map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
@@ -28,7 +23,7 @@ export function onMounted(mapInstance) {
   //   name: "风机",
   //   position: [117.221189, 31.814105, 30],
   //   style: {
-  //     url: "//data.mars3d.cn/gltf/mars/fengche.gltf",
+  //     url: "https://data.mars3d.cn/gltf/mars/fengche.gltf",
   //     colorBlendMode: Cesium.ColorBlendMode.MIX,
   //     scale: 50
   //   }
@@ -39,7 +34,7 @@ export function onMounted(mapInstance) {
   const tilesetLayer = new mars3d.layer.TilesetLayer({
     name: "合肥天鹅湖",
     type: "3dtiles",
-    url: "//data.mars3d.cn/3dtiles/qx-teh/tileset.json",
+    url: "https://data.mars3d.cn/3dtiles/qx-teh/tileset.json",
     position: { lng: 117.218434, lat: 31.81807, alt: 163 },
     maximumScreenSpaceError: 16,
     maxMemory: 2048, // 最大缓存内存大小(MB)
@@ -70,10 +65,7 @@ export function onMounted(mapInstance) {
   // })
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }

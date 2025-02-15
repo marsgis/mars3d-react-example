@@ -85,7 +85,7 @@ git clone git@gitee.com:marsgis/mars3d-react-example.git
   建议从[http://mars3d.cn/download.html](http://mars3d.cn/download.html)下载最新 mars3d 类库后覆盖至`public/lib/`目录下，更新 mars3d 为最新版本。
 
 ### 运行命令
-请将机器Node版本升级到v16及以上版本
+请将机器Node版本升级到v18及以上版本(建议下载安装官网最新稳定版本)
 
 #### 首次运行前安装依赖
 

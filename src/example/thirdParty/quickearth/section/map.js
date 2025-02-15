@@ -1,6 +1,6 @@
 import * as mars3d from "mars3d"
 
-const { consts, getBinary, resourceService, MicapsDiamond131GridDataProvider, getCR, GridDataGLFillMode } = window.QE // quickearth.core.js
+const { consts, getBinary, resourceService, MicapsDiamond131GridDataProvider, JsonGridDataProvider, getCR, GridDataGLFillMode } = window.QE // quickearth.core.js
 const { CPixelLayer, CSectionLayer, CFixedPlane } = window.QEC // quickearth.cesium.js
 
 export let map // mars3d.Map三维地图对象
@@ -12,22 +12,14 @@ export const mapOptions = {
   }
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
   initDemoData()
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -42,10 +34,17 @@ async function initDemoData() {
   // config资源配置
   await resourceService.loadResourceFromConfigPath("styles/demo.config.json")
 
-  // 加载数据
+  // 加载数据[原始二进制气象数据时]
   const buffers = await getBinary("http://data.mars3d.cn/file/qe/data/Z_OTHE_RADAMOSAIC_20220412000000.bin.zip")
   const provider = new MicapsDiamond131GridDataProvider(buffers[0])
+  // mars3d.Util.downloadFile("Z_OTHE_RADAMOSAIC_20220412000000.json", JSON.stringify(provider.toJSON()))
 
+  // 加载数据[JSON格式数据时]
+  // const json = await mars3d.Util.fetchJson({ url: "http://data.mars3d.cn/file/qe/data/Z_OTHE_RADAMOSAIC_20220412000000.json" })
+  // console.log("JSON数据加载完成", json)
+  // const provider = new JsonGridDataProvider(json)
+
+  // 构造渲染图层
   sectionLayer = new CSectionLayer({
     fixedPlane: CFixedPlane.lonLat,
     sectionMode: "multiple"
@@ -85,7 +84,7 @@ export async function drawLine() {
     addHeight: 1000
     // maxPointNum: 2
   })
-  sectionLayer?.setSectionPath(graphic.coordinates, CFixedPlane.lonLat, true, graphic.id)
+  sectionLayer?.setSectionPath(graphic.coord, CFixedPlane.lonLat, true, graphic.id)
   map.graphicLayer.removeGraphic(graphic)
 }
 

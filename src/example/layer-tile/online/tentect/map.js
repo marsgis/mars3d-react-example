@@ -15,7 +15,7 @@ export const mapOptions = {
   basemaps: [
     {
       name: "腾讯电子",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/gaode_vec.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/gaode_vec.png",
       type: "tencent",
       layer: "vec",
       show: true,
@@ -23,7 +23,7 @@ export const mapOptions = {
     },
     {
       name: "腾讯影像",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/gaode_img.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/gaode_img.png",
       type: "group",
       layers: [
         { name: "底图", type: "tencent", layer: "img_d" },
@@ -33,7 +33,7 @@ export const mapOptions = {
     },
     {
       name: "腾讯深蓝色",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/bd-c-midnight.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/bd-c-midnight.png",
       type: "tencent",
       layer: "custom",
       style: "4",
@@ -44,12 +44,7 @@ export const mapOptions = {
 
 export const eventTarget = new mars3d.BaseClass()
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
   addCreditDOM()
@@ -57,10 +52,7 @@ export function onMounted(mapInstance) {
 
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   removeCreditDOM()
   map = null

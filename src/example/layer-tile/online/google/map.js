@@ -11,7 +11,7 @@ export const mapOptions = {
   basemaps: [
     {
       name: "谷歌影像",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/google_img.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/google_img.png",
       type: "google",
       layer: "img_d",
       chinaCRS: mars3d.ChinaCRS.GCJ02,
@@ -19,14 +19,14 @@ export const mapOptions = {
     },
     {
       name: "谷歌电子",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/google_vec.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/google_vec.png",
       type: "google",
       layer: "vec",
       chinaCRS: mars3d.ChinaCRS.GCJ02
     },
     {
       name: "谷歌地形",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/stamenWatercolor.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/stamenWatercolor.png",
       type: "google",
       layer: "ter",
       chinaCRS: mars3d.ChinaCRS.GCJ02
@@ -36,26 +36,18 @@ export const mapOptions = {
 
 export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
-  // globalNotify(
-  //   "已知问题提示",
-  //   `如图层未显示或服务URL访问超时，是因为目前国家测绘主管部门对未经审核批准的国外地图服务做了屏蔽封锁。
-  //    您可以需翻墙使用 或 参考示例代码替换本地服务地址使用。`
-  // )
+  globalNotify(
+    "已知问题提示",
+    `如图层未显示或服务URL访问超时，是因为目前国家测绘主管部门对未经审核批准的国外地图服务做了屏蔽封锁。
+     您可以需翻墙使用 或 参考示例代码替换本地服务地址使用。`
+  )
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }

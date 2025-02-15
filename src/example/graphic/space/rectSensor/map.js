@@ -13,12 +13,7 @@ export const mapOptions = {
   }
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
@@ -49,10 +44,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic1()
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -173,8 +165,8 @@ export function addRandomGraphicByCount(count) {
 }
 
 // 开始绘制 相阵控雷达
-export function startDrawGraphic() {
-  graphicLayer.startDraw({
+export async function startDrawGraphic() {
+  const graphic = await graphicLayer.startDraw({
     type: "rectSensor",
     style: {
       angle1: 30,
@@ -187,6 +179,7 @@ export function startDrawGraphic() {
       topSteps: 2
     }
   })
+  console.log("标绘完成", graphic.toJSON())
 }
 
 // 开始绘制
@@ -205,6 +198,8 @@ export async function startDrawGraphic2() {
     }
   })
   graphic.position = mars3d.PointUtil.addPositionsHeight(graphic.position, 100)
+
+  console.log("标绘完成", graphic.toJSON())
 }
 
 // 凝视目标
@@ -368,18 +363,14 @@ export function bindLayerContextMenu() {
       icon: "fa fa-info",
       show: (event) => {
         const graphic = event.graphic
-        if (graphic.graphicIds) {
+        if (graphic.cluster && graphic.graphics) {
           return true
         } else {
           return false
         }
       },
       callback: (e) => {
-        const graphic = e.graphic
-        if (!graphic) {
-          return
-        }
-        const graphics = graphic.getGraphics() // 对应的grpahic数组，可以自定义显示
+        const graphics = e.graphic?.graphics
         if (graphics) {
           const names = []
           for (let index = 0; index < graphics.length; index++) {

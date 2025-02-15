@@ -1,8 +1,15 @@
-// import kgUtil from "kml-geojson"
+// import * as mars3d from "mars3d"
+// import { toGeoJSON as kml2geojson } from "kml-geojson"
 
 /**
  * 通过转geojson方式 加载kml和kmz文件。
- * kgUtil使用需要引入 ../lib/geojson/kml-geojson.js文件
+ *
+ * 提示：静态引入项目中使用时，kgUtil使用需要引入 ../lib/geojson/kml-geojson.js文件
+ *
+ * 提示：vue项目中使用时，
+ * 1.把顶部的import行注释取消；
+ * 2.class Kml2JsonLayer前面加export；
+ * 3.再把源码的 kgUtil.toGeoJSON 替换为 kml2geojson；
  */
 class Kml2JsonLayer extends mars3d.layer.GeoJsonLayer {
   /**
@@ -67,6 +74,5 @@ class Kml2JsonLayer extends mars3d.layer.GeoJsonLayer {
 }
 // 注册下
 mars3d.LayerUtil.register("geojson_kml", Kml2JsonLayer)
-
 
 // export { Kml2JsonLayer }

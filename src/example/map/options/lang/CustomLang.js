@@ -218,6 +218,7 @@ const CustomLang = {
   _拖动该点后: "Drag that point",
   _拖动对象后: "Drag that object",
   _修改位置: "Modify the position",
+  _修改第X个坐标: "Modify No.{index} position",
   _整体平移: "The overall translation",
   _增加点: "Add point",
   _修改高度: "Modify the height",

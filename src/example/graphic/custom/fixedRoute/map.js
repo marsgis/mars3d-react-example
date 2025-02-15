@@ -2,6 +2,7 @@ import * as mars3d from "mars3d"
 
 export let map // mars3d.Map三维地图对象
 export let graphicLayer
+export const eventTarget = new mars3d.BaseClass()
 
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
@@ -11,20 +12,15 @@ export const mapOptions = {
   control: {
     clockAnimate: true, // 时钟动画控制(左下角)
     timeline: true, // 是否显示时间线控件
-    compass: { top: "10px", left: "5px" }
+    compass: { style: { top: "10px", right: "5px" } }
   }
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
   map.basemap = 2017
-  map.toolbar.style.bottom = "55px" // 修改toolbar控件的样式
+  // map.control.toolbar.container.style.bottom = "55px" // 修改toolbar控件的样式
 
   // 创建矢量数据图层
   graphicLayer = new mars3d.layer.GraphicLayer()
@@ -37,15 +33,11 @@ export function onMounted(mapInstance) {
   bindLayerPopup() // 在图层上绑定popup,对所有加到这个图层的矢量数据都生效
   bindLayerContextMenu() // 在图层绑定右键菜单,对所有加到这个图层的矢量数据都生效
 
-  map.clock.multiplier = 10
-
+  // 加一些演示数据
   addRoamLines()
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -55,13 +47,16 @@ function addRoamLines() {
     {
       id: "1",
       name: "A01",
-      speed: 100,
-      positions: [
-        [117.298794, 31.882442, 500],
-        [117.249731, 31.88091, 600]
-      ],
+      position: {
+        type: "time", // 时序动态坐标
+        speed: 100,
+        list: [
+          [117.298794, 31.882442, 500],
+          [117.249731, 31.88091, 600]
+        ]
+      },
       model: {
-        url: "//data.mars3d.cn/gltf/mars/zhanji.glb",
+        url: "https://data.mars3d.cn/gltf/mars/zhanji.glb",
         scale: 0.01,
         minimumPixelSize: 60
       },
@@ -79,19 +74,22 @@ function addRoamLines() {
     {
       id: "2",
       name: "A02",
-      speed: 100,
-      positions: [
-        [117.244308, 31.876828, 900],
-        [117.246598, 31.815902, 900]
-      ],
+      position: {
+        type: "time", // 时序动态坐标
+        speed: 100,
+        list: [
+          [117.244308, 31.876828, 900],
+          [117.246598, 31.815902, 900]
+        ]
+      },
       model: {
         show: true,
-        url: "//data.mars3d.cn/gltf/mars/MQ-9-Predator.glb",
+        url: "https://data.mars3d.cn/gltf/mars/MQ-9-Predator.glb",
         scale: 1,
         minimumPixelSize: 60
       },
       billboard: {
-        image: "//data.mars3d.cn/img/marker/svg/huojian.svg",
+        image: "https://data.mars3d.cn/img/marker/svg/huojian.svg",
         scale: 0.3
       },
       path: {
@@ -104,19 +102,22 @@ function addRoamLines() {
     {
       id: "3",
       name: "A03",
-      speed: 100,
-      positions: [
-        [117.160928, 31.82166, 400],
-        [117.18824, 31.811822, 400],
-        [117.227675, 31.790077, 400],
-        [117.279938, 31.797397, 400]
-      ],
-      startTime: Cesium.JulianDate.addSeconds(map.clock.currentTime, 60, new Cesium.JulianDate()),
-      forwardExtrapolationType: Cesium.ExtrapolationType.NONE,
-      backwardExtrapolationType: Cesium.ExtrapolationType.NONE,
+      position: {
+        type: "time", // 时序动态坐标
+        speed: 100,
+        list: [
+          [117.160928, 31.82166, 400],
+          [117.18824, 31.811822, 400],
+          [117.227675, 31.790077, 400],
+          [117.279938, 31.797397, 400]
+        ],
+        startTime: Cesium.JulianDate.addSeconds(map.clock.currentTime, 60, new Cesium.JulianDate()),
+        backwardExtrapolationType: Cesium.ExtrapolationType.NONE, // 在第1个开始时间之前，NONE时不显示，HOLD时显示开始时间对应坐标位置
+        forwardExtrapolationType: Cesium.ExtrapolationType.NONE // 在最后1个结束时间之后，NONE时不显示，HOLD时显示结束时间对应坐标位置
+      },
       showStop: false,
       model: {
-        url: "//data.mars3d.cn/gltf/mars/zhanji.glb",
+        url: "https://data.mars3d.cn/gltf/mars/zhanji.glb",
         scale: 0.01,
         minimumPixelSize: 60
       },
@@ -133,13 +134,16 @@ function addRoamLines() {
     {
       id: "4",
       name: "A04",
-      speed: 100,
-      positions: [
-        [117.24595, 31.843448, 800],
-        [117.184863, 31.841885, 800]
-      ],
+      position: {
+        type: "time", // 时序动态坐标
+        speed: 100,
+        list: [
+          [117.24595, 31.843448, 800],
+          [117.184863, 31.841885, 800]
+        ]
+      },
       model: {
-        url: "//data.mars3d.cn/gltf/mars/MQ-9-Predator.glb",
+        url: "https://data.mars3d.cn/gltf/mars/MQ-9-Predator.glb",
         scale: 1,
         minimumPixelSize: 60
       },
@@ -150,13 +154,16 @@ function addRoamLines() {
     {
       id: "5",
       name: "A05",
-      speed: 100,
-      positions: [
-        [117.281458, 31.873736, 1000],
-        [117.280849, 31.679814, 1000]
-      ],
+      position: {
+        type: "time", // 时序动态坐标
+        speed: 100,
+        list: [
+          [117.281458, 31.873736, 1000],
+          [117.280849, 31.679814, 1000]
+        ]
+      },
       model: {
-        url: "//data.mars3d.cn/gltf/mars/zhanji.glb",
+        url: "https://data.mars3d.cn/gltf/mars/zhanji.glb",
         scale: 0.01,
         minimumPixelSize: 60
       },
@@ -170,14 +177,17 @@ function addRoamLines() {
     {
       id: "6",
       name: "A06",
-      speed: 100,
-      positions: [
-        [117.259156, 31.831094, 600],
-        [117.22723, 31.791011, 700],
-        [117.190839, 31.751602, 1000]
-      ],
+      position: {
+        type: "time", // 时序动态坐标
+        speed: 100,
+        list: [
+          [117.259156, 31.831094, 600],
+          [117.22723, 31.791011, 700],
+          [117.190839, 31.751602, 1000]
+        ]
+      },
       model: {
-        url: "//data.mars3d.cn/gltf/mars/MQ-9-Predator.glb",
+        url: "https://data.mars3d.cn/gltf/mars/MQ-9-Predator.glb",
         scale: 1,
         minimumPixelSize: 60
       },
@@ -194,13 +204,16 @@ function addRoamLines() {
     {
       id: "7",
       name: "A07",
-      speed: 100,
-      positions: [
-        [117.224735, 31.868128, 500],
-        [117.226971, 31.810324, 500]
-      ],
+      position: {
+        type: "time", // 时序动态坐标
+        speed: 100,
+        list: [
+          [117.224735, 31.868128, 500],
+          [117.226971, 31.810324, 500]
+        ]
+      },
       model: {
-        url: "//data.mars3d.cn/gltf/mars/zhanji.glb",
+        url: "https://data.mars3d.cn/gltf/mars/zhanji.glb",
         scale: 0.01,
         minimumPixelSize: 60
       },
@@ -214,15 +227,18 @@ function addRoamLines() {
     {
       id: "8",
       name: "A08",
-      speed: 100,
-      positions: [
-        [117.169828, 31.83365, 900],
-        [117.189117, 31.83417, 900],
-        [117.211684, 31.83573, 900],
-        [117.232588, 31.833755, 900]
-      ],
+      position: {
+        type: "time", // 时序动态坐标
+        speed: 100,
+        list: [
+          [117.169828, 31.83365, 900],
+          [117.189117, 31.83417, 900],
+          [117.211684, 31.83573, 900],
+          [117.232588, 31.833755, 900]
+        ]
+      },
       model: {
-        url: "//data.mars3d.cn/gltf/mars/MQ-9-Predator.glb",
+        url: "https://data.mars3d.cn/gltf/mars/MQ-9-Predator.glb",
         scale: 1,
         minimumPixelSize: 60
       },
@@ -230,7 +246,7 @@ function addRoamLines() {
         width: 10,
         materialType: mars3d.MaterialType.LineFlow,
         materialOptions: {
-          image: "//data.mars3d.cn/img/textures/line-arrow-blue.png",
+          image: "https://data.mars3d.cn/img/textures/line-arrow-blue.png",
           color: "#ff0000",
           mixt: true,
           speed: 20,
@@ -241,12 +257,16 @@ function addRoamLines() {
     {
       id: "9",
       name: "A09",
-      positions: [
-        [117.189192, 31.856163, 100],
-        [117.188899, 31.818951, 100]
-      ],
+      position: {
+        type: "time", // 时序动态坐标
+        speed: 100,
+        list: [
+          [117.189192, 31.856163, 100],
+          [117.188899, 31.818951, 100]
+        ]
+      },
       model: {
-        url: "//data.mars3d.cn/gltf/mars/zhanji.glb",
+        url: "https://data.mars3d.cn/gltf/mars/zhanji.glb",
         scale: 0.01,
         minimumPixelSize: 60
       },
@@ -260,15 +280,18 @@ function addRoamLines() {
     {
       id: "10",
       name: "A10",
-      speed: 200,
-      positions: [
-        [117.163332, 31.853159, 1000],
-        [117.181507, 31.853928, 1000],
-        [117.210678, 31.858777, 1000],
-        [117.232448, 31.853065, 1000]
-      ],
+      position: {
+        type: "time", // 时序动态坐标
+        speed: 200,
+        list: [
+          [117.163332, 31.853159, 1000],
+          [117.181507, 31.853928, 1000],
+          [117.210678, 31.858777, 1000],
+          [117.232448, 31.853065, 1000]
+        ]
+      },
       model: {
-        url: "//data.mars3d.cn/gltf/mars/MQ-9-Predator.glb",
+        url: "https://data.mars3d.cn/gltf/mars/MQ-9-Predator.glb",
         scale: 1,
         minimumPixelSize: 60
       },
@@ -319,9 +342,6 @@ function addRoamLines() {
       distanceDisplayCondition_far: Number.MAX_VALUE
     }
 
-    // flydata.forwardExtrapolationType = Cesium.ExtrapolationType.NONE
-    // flydata.backwardExtrapolationType = Cesium.ExtrapolationType.NONE
-
     const fixedRoute = new mars3d.graphic.FixedRoute(flydata)
     graphicLayer.addGraphic(fixedRoute)
 
@@ -340,6 +360,95 @@ function addRoamLines() {
   map.control.timeline.zoomTo(startTime, stopTime)
 }
 
+export async function startAll() {
+  graphicLayer.eachGraphic((graphic) => {
+    if (!graphic || graphic.isPrivate) {
+      return
+    }
+    graphic.start && graphic.start()
+  })
+}
+export async function stopAll() {
+  graphicLayer.eachGraphic((graphic) => {
+    if (!graphic || graphic.isPrivate) {
+      return
+    }
+    graphic.stop && graphic.stop()
+  })
+}
+
+// 生成演示数据(测试数据量)
+export function addRandomGraphicByCount(count) {
+  graphicLayer.clear()
+  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
+
+  const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
+  const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
+  console.log("生成的测试网格坐标", result)
+
+  let tempTime
+
+  for (let j = 0; j < result.points.length; ++j) {
+    const position = result.points[j]
+    const pt1 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 225, result.radius)
+    const pt2 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 315, result.radius)
+
+    const graphic = new mars3d.graphic.FixedRoute({
+      position: {
+        type: "time", // 时序动态坐标
+        speed: 160,
+        list: [pt1, position, pt2]
+      },
+      model: {
+        url: "https://data.mars3d.cn/gltf/mars/man/walk.gltf",
+        scale: 5,
+        minimumPixelSize: 50,
+        clampToGround: true
+      },
+      polyline: {
+        color: "#ffff00",
+        width: 2,
+        showAll: true
+      },
+      attr: { index: j + 1 }
+    })
+    graphicLayer.addGraphic(graphic)
+  }
+
+  graphicLayer.enabledEvent = true // 恢复事件
+  return result.points.length
+}
+
+// 开始绘制
+export async function startDrawGraphic() {
+  const graphic = await graphicLayer.startDraw({
+    type: "fixedRoute",
+    camera: {
+      type: "gs",
+      radius: 300
+    },
+    model: {
+      url: "https://data.mars3d.cn/gltf/mars/jingche/jingche.gltf",
+      heading: 90,
+      mergeOrientation: true, // 用于设置模型不是标准的方向时的纠偏处理,在orientation基础的方式值上加上设置是heading值
+      minimumPixelSize: 50
+    },
+    polyline: {
+      width: 6,
+      materialType: mars3d.MaterialType.LineFlow,
+      materialOptions: {
+        color: Cesium.Color.AQUA,
+        image: "https://data.mars3d.cn/img/textures/arrow-small.png",
+        repeat: new Cesium.Cartesian2(80, 1),
+        speed: 30,
+        bgColor: "rgba(0,255,255,0.3)"
+      },
+      showAll: true
+    }
+  })
+  console.log("标绘完成", graphic.toJSON())
+}
+
 // 在图层绑定Popup弹窗
 export function bindLayerPopup() {
   graphicLayer.bindPopup(function (event) {
@@ -355,6 +464,46 @@ export function bindLayerPopup() {
 // 绑定右键菜单
 export function bindLayerContextMenu() {
   graphicLayer.bindContextMenu([
+    {
+      text: "开始编辑对象",
+      icon: "fa fa-edit",
+      show: function (e) {
+        const graphic = e.graphic
+        if (!graphic || !graphic.hasEdit) {
+          return false
+        }
+        return !graphic.isEditing
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
+        if (graphic) {
+          graphicLayer.startEditing(graphic)
+        }
+      }
+    },
+    {
+      text: "停止编辑对象",
+      icon: "fa fa-edit",
+      show: function (e) {
+        const graphic = e.graphic
+        if (!graphic || !graphic.hasEdit) {
+          return false
+        }
+        return graphic.isEditing
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
+        if (graphic) {
+          graphic.stopEditing()
+        }
+      }
+    },
     {
       text: "还原编辑(还原到初始)",
       icon: "fa fa-pencil",
@@ -441,18 +590,14 @@ export function bindLayerContextMenu() {
       icon: "fa fa-info",
       show: (event) => {
         const graphic = event.graphic
-        if (graphic.graphicIds) {
+        if (graphic.cluster && graphic.graphics) {
           return true
         } else {
           return false
         }
       },
       callback: (e) => {
-        const graphic = e.graphic
-        if (!graphic) {
-          return
-        }
-        const graphics = graphic.getGraphics() // 对应的grpahic数组，可以自定义显示
+        const graphics = e.graphic?.graphics
         if (graphics) {
           const names = []
           for (let index = 0; index < graphics.length; index++) {

@@ -11,7 +11,7 @@ export const mapOptions = {
     {
       type: "3dtiles",
       name: "上海市建筑物",
-      url: "//data.mars3d.cn/3dtiles/jzw-shanghai/tileset.json",
+      url: "https://data.mars3d.cn/3dtiles/jzw-shanghai/tileset.json",
       maximumScreenSpaceError: 1,
       style: {
         color: "rgb(0, 99, 255)"
@@ -33,7 +33,7 @@ export const mapOptions = {
     {
       type: "geojson",
       name: "市区一级道路",
-      url: "//data.mars3d.cn/file/geojson/shanghai-road.json",
+      url: "https://data.mars3d.cn/file/geojson/shanghai-road.json",
       symbol: {
         styleOptions: {
           width: 2.0,
@@ -52,12 +52,7 @@ export const mapOptions = {
   ]
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
   map.basemap = 2017 // 切换到蓝色底图
@@ -79,10 +74,7 @@ export function onMounted(mapInstance) {
   addCityGraphics()
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -122,7 +114,7 @@ function addCityGraphics() {
       closure: true,
       materialType: mars3d.MaterialType.RectSlide,
       materialOptions: {
-        image: "//data.mars3d.cn/img/textures/circular.png",
+        image: "https://data.mars3d.cn/img/textures/circular.png",
         speed: 2
       }
     }
@@ -142,7 +134,7 @@ function addCityGraphics() {
       height: 50,
       materialType: mars3d.MaterialType.Image2,
       materialOptions: {
-        image: "//data.mars3d.cn/img/textures/circle-two.png"
+        image: "https://data.mars3d.cn/img/textures/circle-two.png"
       },
       rotation: new Cesium.CallbackProperty(getRotationValue, false),
       stRotation: new Cesium.CallbackProperty(getRotationValue, false)
@@ -155,7 +147,7 @@ function addCityGraphics() {
   //   name: "四面体",
   //   position: [position[0], position[1], 180],
   //   style: {
-  //     url: "//data.mars3d.cn/gltf/mars/zhui.glb",
+  //     url: "https://data.mars3d.cn/gltf/mars/zhui.glb",
   //     scale: 30
   //   }
   // })
@@ -196,9 +188,10 @@ function addCityGraphics() {
     position: Cesium.Cartesian3.fromDegrees(121.501618, 31.235704, 24.2),
     style: {
       radius: 480.0,
-      materialType: mars3d.MaterialType.CircleScan,
+      materialType: mars3d.MaterialType.Image2,
       materialOptions: {
-        image: "//data.mars3d.cn/img/textures/circle-scan.png",
+        image: "https://data.mars3d.cn/img/textures/circle-scan.png",
+        noWhite: false,
         color: "#ffffff"
       },
       stRotation: new Cesium.CallbackProperty(getRotationValue, false),
@@ -209,7 +202,7 @@ function addCityGraphics() {
   graphicLayer.addGraphic(scanCircle)
 
   // 远眺的线 ,数据获取的pointArr
-  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/geojson/shanghai-point.json" })
+  mars3d.Util.fetchJson({ url: "https://data.mars3d.cn/file/geojson/shanghai-point.json" })
     .then((result) => {
       const pointArr = []
       result.features.forEach((obj) => {

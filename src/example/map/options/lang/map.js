@@ -25,8 +25,8 @@ export const mapOptions = {
     timeline: true, // 是否显示时间线控件
 
     contextmenu: { hasDefault: true }, // 涉及到多语言的模块：右键菜单
-    compass: { top: "10px", left: "5px" },
-    distanceLegend: { left: "180px", bottom: "30px" },
+    compass: { style: { top: "10px", right: "5px" } },
+    distanceLegend: { style: { left: "10px", bottom: "27px" } },
     locationBar: {
       template:
         "<div>lng:{lng}</div> <div>lat:{lat}</div> <div>alt：{alt} m</div> <div>level：{level}</div><div>heading：{heading}°</div> <div>pitch：{pitch}°</div><div>cameraHeight：{cameraHeight}m</div>"
@@ -38,7 +38,7 @@ export const mapOptions = {
       name: "Tianditu Images",
       name_cn: "天地图影像",
       name_en: "Tianditu Images",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/tdt_img.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/tdt_img.png",
       type: "group",
       layers: [
         { name: "底图", type: "tdt", layer: "img_d" },
@@ -51,7 +51,7 @@ export const mapOptions = {
       name: "Tianditu Images EN",
       name_cn: "天地图影像EN",
       name_en: "Tianditu Images EN",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/tdt_img.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/tdt_img.png",
       type: "group",
       layers: [
         { name: "底图", type: "tdt", layer: "img_d" },
@@ -62,7 +62,7 @@ export const mapOptions = {
       name: "Tianditu Electronic map",
       name_cn: "天地图电子",
       name_en: "Tianditu Electronic map",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/tdt_vec.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/tdt_vec.png",
       type: "group",
       layers: [
         { name: "底图", type: "tdt", layer: "vec_d" },
@@ -73,7 +73,7 @@ export const mapOptions = {
       name: "not map",
       name_cn: "无底图",
       name_en: "not map",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/null.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/null.png",
       type: "grid",
       color: "#ffffff",
       alpha: 0.03,
@@ -84,15 +84,10 @@ export const mapOptions = {
 
 export const eventTarget = new mars3d.BaseClass()
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance
-  map.toolbar.style.bottom = "55px" // 修改toolbar控件的样式
+  // map.control.toolbar.container.style.bottom = "55px" // 修改toolbar控件的样式
 
   // 涉及到多语言的模块：标绘提示
   drawLayer = new mars3d.layer.GraphicLayer({
@@ -142,10 +137,7 @@ export function onMounted(mapInstance) {
   map.addThing(measure)
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }

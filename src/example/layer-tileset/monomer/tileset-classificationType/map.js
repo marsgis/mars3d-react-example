@@ -10,19 +10,14 @@ export const mapOptions = {
   }
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
   // 添加三维模型
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     name: "校园",
-    url: "//data.mars3d.cn/3dtiles/qx-xuexiao/tileset.json",
+    url: "https://data.mars3d.cn/3dtiles/qx-xuexiao/tileset.json",
     position: { alt: 279.0 },
     maximumScreenSpaceError: 1
   })
@@ -31,7 +26,7 @@ export function onMounted(mapInstance) {
   // 创建单体化图层
   tiles3dLayerDTH = new mars3d.layer.TilesetLayer({
     name: "学校-单体",
-    url: "//data.mars3d.cn/3dtiles/qx-xuexiao-dth/tileset.json",
+    url: "https://data.mars3d.cn/3dtiles/qx-xuexiao-dth/tileset.json",
     position: { alt: 217 },
     classificationType: Cesium.ClassificationType.CESIUM_3D_TILE,
     style: {
@@ -61,10 +56,7 @@ export function onMounted(mapInstance) {
   })
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }

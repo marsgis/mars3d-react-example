@@ -3,12 +3,7 @@ import * as mars3d from "mars3d"
 let map3d
 let map2d
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map3d = mapInstance // 记录map
   map3d.camera.percentageChanged = 0.001
@@ -28,10 +23,7 @@ export function onMounted(mapInstance) {
   creatMap2D()
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   unbind3dEvent()
   unbind2dEvent()
@@ -56,7 +48,7 @@ function creatMap2D() {
   mars2d.Util.fetchJson({ url: configUrl })
     .then(function (data) {
       // 构建地图
-      map2d = new mars2d.Map("map2d", data.mars2d)
+      map2d = new mars2d.Map("map2d", data)
       bind2dEvent(map2d)
       bind3dEvent()
 

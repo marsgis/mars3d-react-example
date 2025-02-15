@@ -27,12 +27,7 @@ export const mapOptions = {
   layers: []
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
@@ -46,10 +41,7 @@ export function onMounted(mapInstance) {
   addOutCircle(graphicLayer)
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -58,7 +50,7 @@ export function onUnmounted() {
 function addAnhui() {
   // 安徽省卫星底图
   const tileLayer = new mars3d.layer.XyzLayer({
-    url: "//data.mars3d.cn/tile/anhui/{z}/{x}/{y}.png",
+    url: "https://data.mars3d.cn/tile/anhui/{z}/{x}/{y}.png",
     minimumLevel: 0,
     maximumLevel: 12,
     rectangle: { xmin: 114.883371, xmax: 119.649144, ymin: 29.395253, ymax: 34.650809 }
@@ -68,7 +60,7 @@ function addAnhui() {
   // 安徽省边界线墙
   const anhuiWall = new mars3d.layer.GeoJsonLayer({
     name: "安徽省边界墙",
-    url: "//data.mars3d.cn/file/geojson/areas/340000.json",
+    url: "https://data.mars3d.cn/file/geojson/areas/340000.json",
     // 自定义解析数据
     onCreateGraphic: function (options) {
       const points = options.positions[0] // 坐标
@@ -91,7 +83,7 @@ function addAnhui() {
             diffHeight: 15000, // 墙高
             materialType: mars3d.MaterialType.Image2,
             materialOptions: {
-              image: "//data.mars3d.cn/img/textures/fence-top.png",
+              image: "https://data.mars3d.cn/img/textures/fence-top.png",
               color: "rgba(0,255,255,0.6)"
             }
             // renderState: Cesium.RenderState.fromCache({
@@ -118,7 +110,7 @@ function addAnhui() {
   // 安徽各市边界线和名称
   const shiLayer = new mars3d.layer.GeoJsonLayer({
     name: "安徽各市边界线",
-    url: "//data.mars3d.cn/file/geojson/areas/340000_full.json",
+    url: "https://data.mars3d.cn/file/geojson/areas/340000_full.json",
     symbol: {
       type: "polyline",
       styleOptions: {
@@ -189,7 +181,7 @@ function addOutCircle(graphicLayer) {
   const arrImg = [
     {
       // 刻度
-      image: "//data.mars3d.cn/img/textures/calib.png",
+      image: "https://data.mars3d.cn/img/textures/calib.png",
       positions: [
         [113.564329, 35.654741],
         [120.802219, 28.844016]
@@ -197,7 +189,7 @@ function addOutCircle(graphicLayer) {
     },
     {
       // 刻度尺
-      image: "//data.mars3d.cn/img/textures/calib-value.png",
+      image: "https://data.mars3d.cn/img/textures/calib-value.png",
       positions: [
         [114.162597, 29.256489],
         [120.216593, 35.055444]
@@ -205,7 +197,7 @@ function addOutCircle(graphicLayer) {
     },
     {
       // 方向
-      image: "//data.mars3d.cn/img/textures/calib-dir.png",
+      image: "https://data.mars3d.cn/img/textures/calib-dir.png",
       positions: [
         [114.162597, 29.256489],
         [120.216593, 35.055444]

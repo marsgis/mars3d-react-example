@@ -7,16 +7,11 @@ export const eventTarget = new mars3d.BaseClass()
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: 31.471758, lng: 117.20494, alt: 47660, heading: 4, pitch: -45 }
+    center: { lat: 31.309468, lng: 117.241223, alt: 58363.3, heading: 0, pitch: -48.8 }
   }
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
@@ -51,12 +46,10 @@ export function onMounted(mapInstance) {
   addDemoGraphic17(graphicLayer)
   addDemoGraphic18(graphicLayer)
   addDemoGraphic19(graphicLayer)
+  addDemoGraphic20(graphicLayer)
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
   graphicLayer.remove()
@@ -371,7 +364,7 @@ function addDemoGraphic6(graphicLayer) {
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
         color: "#00ff00",
-        image: "//data.mars3d.cn/img/textures/line-pulse.png",
+        image: "https://data.mars3d.cn/img/textures/line-pulse.png",
         speed: 3
       }
     },
@@ -392,7 +385,7 @@ function addDemoGraphic7(graphicLayer) {
       // 动画线材质
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
-        image: "//data.mars3d.cn/img/textures/line-gradual.png",
+        image: "https://data.mars3d.cn/img/textures/line-gradual.png",
         color: "#66bd63",
         repeat: new Cesium.Cartesian2(2.0, 1.0),
         speed: 25
@@ -415,7 +408,7 @@ function addDemoGraphic8(graphicLayer) {
       // 动画线材质
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
-        image: "//data.mars3d.cn/img/textures/line-arrow-blue.png",
+        image: "https://data.mars3d.cn/img/textures/line-arrow-blue.png",
         color: "#1a9850",
         mixt: true,
         speed: 20,
@@ -461,7 +454,7 @@ function addDemoGraphic10(graphicLayer) {
       width: 10,
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
-        image: "//data.mars3d.cn/img/textures/line-colour.png",
+        image: "https://data.mars3d.cn/img/textures/line-colour.png",
         speed: 10
       }
     },
@@ -481,7 +474,7 @@ function addDemoGraphic11(graphicLayer) {
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
         color: Cesium.Color.AQUA,
-        image: "//data.mars3d.cn/img/textures/arrow-h.png",
+        image: "https://data.mars3d.cn/img/textures/arrow-h.png",
         repeat: new Cesium.Cartesian2(20, 1),
         speed: 30
       }
@@ -503,7 +496,7 @@ function addDemoGraphic12(graphicLayer) {
       materialOptions: {
         color: "#a6d96a",
         repeat: new Cesium.Cartesian2(4.0, 1.0),
-        image: "//data.mars3d.cn/img/textures/line-arrow-dovetail.png",
+        image: "https://data.mars3d.cn/img/textures/line-arrow-dovetail.png",
         speed: 20
       }
     },
@@ -524,7 +517,7 @@ function addDemoGraphic13(graphicLayer) {
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
         color: Cesium.Color.CHARTREUSE,
-        image: "//data.mars3d.cn/img/textures/line-color-yellow.png",
+        image: "https://data.mars3d.cn/img/textures/line-color-yellow.png",
         speed: 25
       }
     },
@@ -545,7 +538,7 @@ function addDemoGraphic14(graphicLayer) {
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
         color: "rgba(89,249,255,0.8)",
-        image: "//data.mars3d.cn/img/textures/line-tarans.png",
+        image: "https://data.mars3d.cn/img/textures/line-tarans.png",
         speed: 8
       }
     },
@@ -575,7 +568,7 @@ function addDemoGraphic15(graphicLayer) {
       width: 7,
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
-        image: "//data.mars3d.cn/img/textures/line-interval.png",
+        image: "https://data.mars3d.cn/img/textures/line-interval.png",
         axisY: false,
         repeat: new Cesium.Cartesian2(10.0, 1.0),
         color: "#ffffff",
@@ -597,7 +590,7 @@ function addDemoGraphic16(graphicLayer) {
     style: {
       width: 3,
       // color: "#ff0000"
-      image: "//data.mars3d.cn/img/textures/line-gradient.png"
+      image: "https://data.mars3d.cn/img/textures/line-gradient.png"
     },
     attr: { remark: "示例16" }
   })
@@ -669,7 +662,7 @@ function addDemoGraphic19(graphicLayer) {
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
         color: Cesium.Color.AQUA,
-        image: "//data.mars3d.cn/img/textures/arrow-small.png",
+        image: "https://data.mars3d.cn/img/textures/arrow-small.png",
         repeat: new Cesium.Cartesian2(40, 1),
         speed: 30,
         bgColor: "#0000ff"
@@ -680,6 +673,74 @@ function addDemoGraphic19(graphicLayer) {
     attr: { remark: "示例19" }
   })
   graphicLayer.addGraphic(graphic)
+}
+
+function addDemoGraphic20(graphicLayer) {
+  const startTime = map.clock.startTime
+  const graphic = new mars3d.graphic.PolylineEntity({
+    positions: {
+      type: "time", // 时序动态坐标
+      list: [
+        {
+          time: startTime, // 也可以是 时间字符串
+          positions: [
+            [117.132627, 31.662247, 29.2],
+            [117.179303, 31.658454, 16.3],
+            [117.152026, 31.693737, 15],
+            [117.205759, 31.67818, 6.9],
+            [117.184114, 31.716714, 8]
+          ]
+        },
+        {
+          time: Cesium.JulianDate.addSeconds(startTime, 6, new Cesium.JulianDate()),
+          positions: [
+            [117.348942, 31.660488, -1.7],
+            [117.284129, 31.650731, 4.2],
+            [117.344008, 31.609281, -1.3],
+            [117.269501, 31.599646, 3],
+            [117.328488, 31.562399, 1.1]
+          ]
+        }
+      ],
+      interpolation: true // setInterpolationOptions插值
+    },
+    style: {
+      width: 5,
+      color: "#3388ff",
+      label: { text: "我是时序动态坐标的线", pixelOffsetY: -30 }
+    },
+    attr: { remark: "示例20" }
+  })
+  graphicLayer.addGraphic(graphic)
+
+  // 方式二：addTimePositions方法
+  // const graphic = new mars3d.graphic.PolylineEntity({
+  //   style: {
+  //     width: 5,
+  //     color: "#3388ff",
+  //     label: { text: "我是时序动态坐标的线", pixelOffsetY: -30 }
+  //   },
+  //   attr: { remark: "示例20" }
+  // })
+  // graphicLayer.addGraphic(graphic)
+
+  // graphic.addTimePositions([
+  //   [117.132627, 31.662247, 29.2],
+  //   [117.179303, 31.658454, 16.3],
+  //   [117.152026, 31.693737, 15],
+  //   [117.205759, 31.67818, 6.9],
+  //   [117.184114, 31.716714, 8]
+  // ])
+  // graphic.addTimePositions(
+  //   [
+  //     [117.348942, 31.660488, -1.7],
+  //     [117.284129, 31.650731, 4.2],
+  //     [117.344008, 31.609281, -1.3],
+  //     [117.269501, 31.599646, 3],
+  //     [117.328488, 31.562399, 1.1]
+  //   ],
+  //   6
+  // )
 }
 
 // 生成演示数据(测试数据量)
@@ -714,8 +775,8 @@ export function addRandomGraphicByCount(count) {
 }
 
 // 开始绘制
-export function startDrawGraphic() {
-  graphicLayer.startDraw({
+export async function startDrawGraphic() {
+  const graphic = await graphicLayer.startDraw({
     type: "polyline",
     // maxPointNum: 2, //可以限定最大点数，2个点绘制后自动结束
     // hasMidPoint: false,
@@ -732,11 +793,12 @@ export function startDrawGraphic() {
       }
     }
   })
+  console.log("标绘完成", graphic.toJSON())
 }
 
 // 开始绘制
-export function startDrawGraphic2() {
-  graphicLayer.startDraw({
+export async function startDrawGraphic2() {
+  const graphic = await graphicLayer.startDraw({
     type: "polyline",
     style: {
       color: "#ff0000",
@@ -744,11 +806,12 @@ export function startDrawGraphic2() {
       closure: true
     }
   })
+  console.log("标绘完成", graphic.toJSON())
 }
 
 // 开始绘制 自由曲线
-export function startDrawBrushLine() {
-  graphicLayer.startDraw({
+export async function startDrawBrushLine() {
+  const graphic = await graphicLayer.startDraw({
     type: "brushLine",
     style: {
       color: "#55ff33",
@@ -756,6 +819,7 @@ export function startDrawBrushLine() {
       clampToGround: false
     }
   })
+  console.log("标绘完成", graphic.toJSON())
 }
 
 // 在图层绑定Popup弹窗
@@ -899,18 +963,14 @@ export function bindLayerContextMenu() {
       icon: "fa fa-info",
       show: (event) => {
         const graphic = event.graphic
-        if (graphic.graphicIds) {
+        if (graphic.cluster && graphic.graphics) {
           return true
         } else {
           return false
         }
       },
       callback: (e) => {
-        const graphic = e.graphic
-        if (!graphic) {
-          return
-        }
-        const graphics = graphic.getGraphics() // 对应的grpahic数组，可以自定义显示
+        const graphics = e.graphic?.graphics
         if (graphics) {
           const names = []
           for (let index = 0; index < graphics.length; index++) {

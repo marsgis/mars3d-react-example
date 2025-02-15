@@ -22,22 +22,17 @@ const pointStyle = {
   clampToGround: true
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
   pointLayer = new mars3d.layer.GeoJsonLayer({
     name: "体育设施点",
-    url: "//data.mars3d.cn/file/geojson/hfty-point.json",
+    url: "https://data.mars3d.cn/file/geojson/hfty-point.json",
     symbol: {
       styleOptions: {
         ...pointStyle,
-        image: "//data.mars3d.cn/img/marker/mark-blue.png"
+        image: "https://data.mars3d.cn/img/marker/mark-blue.png"
       }
     },
     popup: "{项目名称}",
@@ -52,10 +47,7 @@ export function onMounted(mapInstance) {
   map.addLayer(graphicLayer)
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -68,7 +60,7 @@ export function drawPoint() {
       type: "billboard",
       style: {
         ...pointStyle,
-        image: "//data.mars3d.cn/img/marker/route-start.png"
+        image: "https://data.mars3d.cn/img/marker/route-start.png"
       }
     })
     .then((graphic) => {
@@ -90,7 +82,7 @@ function clickPoint(position) {
     position,
     style: {
       ...pointStyle,
-      image: "//data.mars3d.cn/img/marker/route-start.png"
+      image: "https://data.mars3d.cn/img/marker/route-start.png"
     },
     popup: "查询点"
   })
@@ -120,7 +112,7 @@ function clickPoint(position) {
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
         color: "rgba(89,249,255,0.8)",
-        image: "//data.mars3d.cn/img/textures/line-tarans.png",
+        image: "https://data.mars3d.cn/img/textures/line-tarans.png",
         speed: 8
       }
     }
@@ -158,7 +150,7 @@ function updateSelect(graphic) {
   if (graphic) {
     selectGraphic = graphic
     selectGraphic.setStyle({
-      image: "//data.mars3d.cn/img/marker/mark-red.png"
+      image: "https://data.mars3d.cn/img/marker/mark-red.png"
     })
   }
 }
@@ -169,7 +161,7 @@ export function removeSelect() {
   }
 
   selectGraphic.setStyle({
-    image: "//data.mars3d.cn/img/marker/mark-blue.png"
+    image: "https://data.mars3d.cn/img/marker/mark-blue.png"
   })
   selectGraphic = undefined
 }

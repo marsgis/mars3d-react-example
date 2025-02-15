@@ -15,20 +15,15 @@ export const mapOptions = {
   layers: [
     {
       name: "单张图片",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/bingmap.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/bingmap.png",
       type: "image",
-      url: "//data.mars3d.cn/img/map/world/world.jpg",
+      url: "https://data.mars3d.cn/img/map/world/world.jpg",
       show: true
     }
   ]
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
 
@@ -45,10 +40,7 @@ export function onMounted(mapInstance) {
   map.addLayer(tileLayer)
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }

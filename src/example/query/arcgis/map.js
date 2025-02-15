@@ -15,22 +15,14 @@ export const mapOptions = {
 
 export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
   showGeoJsonLayer()
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -68,7 +60,7 @@ function showGeoJsonLayer() {
   geoJsonLayer = new mars3d.layer.GeoJsonLayer({
     symbol: {
       styleOptions: {
-        image: "//data.mars3d.cn/img/marker/mark-blue.png",
+        image: "https://data.mars3d.cn/img/marker/mark-blue.png",
         scale: 1,
         scaleByDistance: true,
         scaleByDistance_far: 20000,
@@ -76,7 +68,7 @@ function showGeoJsonLayer() {
         scaleByDistance_near: 1000,
         scaleByDistance_nearValue: 1,
         clampToGround: true,
-        highlight: { type: "click", image: "//data.mars3d.cn/img/marker/mark-red.png" },
+        highlight: { type: "click", image: "https://data.mars3d.cn/img/marker/mark-red.png" },
         label: {
           text: "{项目名称}",
           font_size: 25,
@@ -153,7 +145,8 @@ export async function drawPolygon() {
   console.log("框选多边行：", drawGraphic.toGeoJSON())
 }
 
-export function flyToGraphic(graphic) {
+export function flyToGraphic(graphicId) {
+  const graphic = geoJsonLayer.getGraphicById(graphicId)
   graphic.openHighlight()
   graphic.flyTo({
     radius: 1000, // 点数据：radius控制视距距离

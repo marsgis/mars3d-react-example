@@ -5,90 +5,68 @@ import { Space, Upload } from "antd"
 import { activate, disable, updateWidget, isActive } from "@mars/widgets/common/store/widget"
 import "./index.less"
 import { LocationTo } from "@mars/components/MarsSample/LocationTo"
+
+let plotDataJSON: any
 function UIComponent() {
-  const [modelData, setmodelData] = useState([])
+  const [value1, setValue1] = useState("车辆")
   const [selectOptions, setSelectOptions] = useState([])
   const [dataList, setDataList] = useState([])
 
   useEffect(() => {
     mapWork.eventTarget.on("loadModelList", function (event: any) {
-      const modelData = event.data
+      let jsonData = event.data
+      // 替换路径JSON内的mars3d_data路径
+      jsonData = JSON.parse(JSON.stringify(jsonData).replaceAll("{mars3d_data}", `//data.mars3d.cn`))
 
-      setmodelData(modelData)
-      const options = []
+      const arrNewGroup = []
+      plotDataJSON = {}
+
       // 下拉框数据
-      Object.keys(modelData).forEach((k) => {
-        options.push({
-          value: k,
-          lable: k
-        })
-      })
-      setSelectOptions(options)
+      for (let i = 0; i < jsonData.length; i++) {
+        const item1 = jsonData[i]
+        const arrNew = item1.children
+        if (arrNew.length === 0) {
+          continue
+        }
 
-      const defauList = modelData["车辆"]
-      for (let i = 0; i < defauList.length; i++) {
-        const item = defauList[i]
-        item.image = mapWork.changeItemImage(item)
-        item.style.url = mapWork.changeItemUrl(item)
-        defauList[i] = item
+        const name = `${item1.name}`
+        arrNewGroup.push({
+          value: name,
+          label: name + "(" + arrNew.length + ")"
+        })
+        plotDataJSON[name] = arrNew
       }
-      setDataList(defauList)
+
+      setSelectOptions(arrNewGroup)
+      handleChange(null)
     })
   }, [])
 
   useEffect(() => {
-    // @ts-ignore
-    const mars3d = window.mars3d
-    // 矢量数据创建完成
-    mapWork.graphicLayer.on(mars3d.EventType.drawCreated, function (e) {
-      activate({
-        name: "GraphicEditor",
-        data: { graphic: e.graphic }
-      })
-    })
-    // 修改了矢量数据
-    mapWork.graphicLayer.on(
-      [
-        mars3d.EventType.click,
-        mars3d.EventType.editStart,
-        mars3d.EventType.editMovePoint,
-        mars3d.EventType.editStyle,
-        mars3d.EventType.editRemovePoint
-      ],
-      function (e) {
-        if (isActive("GraphicEditor")) {
-          updateWidget("GraphicEditor", { graphic: e.graphic })
+    // ************************属性面板************************/
+    mapWork.eventTarget.on("updateGraphicOptionsWidget", (event) => {
+      if (event.disable) {
+        disable("graphic-options")
+      } else {
+        const data = { layerId: event.layerId, graphicId: event.graphicId }
+        if (!isActive("graphic-options")) {
+          activate({ name: "graphic-options", data })
         } else {
-          activate({
-            name: "GraphicEditor",
-            data: { graphic: e.graphic }
-          })
+          updateWidget("graphic-options", data)
         }
       }
-    )
-    // 停止编辑
-    mapWork.graphicLayer.on([mars3d.EventType.editStop, mars3d.EventType.removeGraphic], function (e) {
-      setTimeout(() => {
-        if (!mapWork.graphicLayer.isEditing) {
-          disable("GraphicEditor")
-        }
-      }, 100)
     })
   }, [])
 
   // 下拉框改变
   const handleChange = useCallback(
     (e: any) => {
-      const dataList = modelData[e]
-      for (let i = 0; i < dataList.length; i++) {
-        const item = dataList[i]
-        item.image = mapWork.changeItemImage(item)
-        item.style.url = mapWork.changeItemUrl(item)
-        dataList[i] = item
-      }
+      const dataList = plotDataJSON[e ?? value1]
+
+      setValue1(e)
       setDataList(dataList)
     },
-    [modelData]
+    [value1]
   )
 
   const props = {
@@ -144,7 +122,7 @@ function UIComponent() {
                     onClick={() => {
                       mapWork.startDrawModel(item.style)
                     }}
-                    src={item.image}
+                    src={item.icon}
                     alt=""
                   ></img>
                 </li>

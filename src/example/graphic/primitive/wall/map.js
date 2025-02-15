@@ -12,12 +12,7 @@ export const mapOptions = {
   }
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
   // 创建矢量数据图层
@@ -43,15 +38,12 @@ export function onMounted(mapInstance) {
   addDemoGraphic9(graphicLayer)
   addDemoGraphic10(graphicLayer)
 
-  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/geojson/areas/340100.json" }).then(function (data) {
+  mars3d.Util.fetchJson({ url: "https://data.mars3d.cn/file/geojson/areas/340100.json" }).then(function (data) {
     addDemoGraphic11(data)
   })
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 
@@ -154,7 +146,7 @@ function addDemoGraphic2() {
       diffHeight: 500,
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
-        image: "//data.mars3d.cn/img/textures/arrow.png",
+        image: "https://data.mars3d.cn/img/textures/arrow.png",
         color: Cesium.Color.CHARTREUSE,
         repeat: new Cesium.Cartesian2(30, 1),
         speed: 20 // 速度，建议取值范围1-100
@@ -180,7 +172,7 @@ function addDemoGraphic3() {
       closure: true,
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
-        image: "//data.mars3d.cn/img/textures/fence.png",
+        image: "https://data.mars3d.cn/img/textures/fence.png",
         color: "#ffff00",
         mixt: true,
         speed: 10, // 速度，建议取值范围1-100
@@ -214,7 +206,7 @@ function addDemoGraphic4() {
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
         // 动画线材质
-        image: "//data.mars3d.cn/img/textures/fence.png",
+        image: "https://data.mars3d.cn/img/textures/fence.png",
         axisY: true,
         color: "#ff0000",
         speed: 10 // 速度，建议取值范围1-100
@@ -236,11 +228,11 @@ function addDemoGraphic5() {
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
         // 动画线材质
-        image: "//data.mars3d.cn/img/textures/fence.png",
+        image: "https://data.mars3d.cn/img/textures/fence.png",
         axisY: true,
         color: "#ff0000",
         hasImage2: true,
-        image2: "//data.mars3d.cn/img/textures/tanhao.png",
+        image2: "https://data.mars3d.cn/img/textures/tanhao.png",
         color2: "#ffff00",
         speed: 10 // 速度，建议取值范围1-100
       },
@@ -266,7 +258,7 @@ function addDemoGraphic6() {
     ],
     style: {
       diffHeight: 400,
-      image: "//data.mars3d.cn/img/textures/poly-rivers.png"
+      image: "https://data.mars3d.cn/img/textures/poly-rivers.png"
     },
     attr: { remark: "示例6" }
   })
@@ -284,7 +276,7 @@ function addDemoGraphic7() {
       diffHeight: 400,
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
-        image: "//data.mars3d.cn/img/textures/arrow.png",
+        image: "https://data.mars3d.cn/img/textures/arrow.png",
         color: "#00eba8",
         repeat: new Cesium.Cartesian2(20, 1),
         speed: 20 // 速度，建议取值范围1-100
@@ -309,7 +301,7 @@ function addDemoGraphic8() {
       diffHeight: 500,
       materialType: mars3d.MaterialType.WallScroll,
       materialOptions: {
-        image: "//data.mars3d.cn/img/textures/fence.png",
+        image: "https://data.mars3d.cn/img/textures/fence.png",
         color: Cesium.Color.CHARTREUSE,
         count: 3,
         speed: 20,
@@ -335,7 +327,7 @@ function addDemoGraphic9() {
       diffHeight: 500,
       materialType: mars3d.MaterialType.WallScroll,
       materialOptions: {
-        image: "//data.mars3d.cn/img/textures/poly-san.png",
+        image: "https://data.mars3d.cn/img/textures/poly-san.png",
         color: Cesium.Color.RED,
         count: 2,
         direction: false,
@@ -361,9 +353,9 @@ function addDemoGraphic10() {
       diffHeight: 500,
       materialType: mars3d.MaterialType.WallScroll,
       materialOptions: {
-        image: "//data.mars3d.cn/img/textures/flow-wall-1.png",
-        image2: "//data.mars3d.cn/img/textures/flow-wall-2.png",
-        image3: "//data.mars3d.cn/img/textures/flow-wall-3.png",
+        image: "https://data.mars3d.cn/img/textures/flow-wall-1.png",
+        image2: "https://data.mars3d.cn/img/textures/flow-wall-2.png",
+        image3: "https://data.mars3d.cn/img/textures/flow-wall-3.png",
         color: Cesium.Color.BLUE,
         count: 5,
         reverse: true,
@@ -387,7 +379,7 @@ function addDemoGraphic11(data) {
         diffHeight: 3000,
         materialType: mars3d.MaterialType.LineFlow,
         materialOptions: {
-          image: "//data.mars3d.cn/img/textures/fence.png",
+          image: "https://data.mars3d.cn/img/textures/fence.png",
           color: "#bdf700",
           repeat: new Cesium.Cartesian2(5, 1),
           axisY: true, // 方向，true时上下，false左右
@@ -433,8 +425,8 @@ export function addRandomGraphicByCount(count) {
 }
 
 // 开始绘制
-export function startDrawGraphic() {
-  graphicLayer.startDraw({
+export async function startDrawGraphic() {
+  const graphic = await graphicLayer.startDraw({
     type: "wallP",
     style: {
       color: "#55ff33",
@@ -442,11 +434,12 @@ export function startDrawGraphic() {
       diffHeight: 800
     }
   })
+  console.log("标绘完成", graphic.toJSON())
 }
 
 // 开始绘制
-export function startDrawGraphic2() {
-  graphicLayer.startDraw({
+export async function startDrawGraphic2() {
+  const graphic = await graphicLayer.startDraw({
     type: "wallP",
     style: {
       color: "#55ff33",
@@ -455,6 +448,7 @@ export function startDrawGraphic2() {
       closure: true
     }
   })
+  console.log("标绘完成", graphic.toJSON())
 }
 
 // 在图层绑定Popup弹窗
@@ -598,18 +592,14 @@ export function bindLayerContextMenu() {
       icon: "fa fa-info",
       show: (event) => {
         const graphic = event.graphic
-        if (graphic.graphicIds) {
+        if (graphic.cluster && graphic.graphics) {
           return true
         } else {
           return false
         }
       },
       callback: (e) => {
-        const graphic = e.graphic
-        if (!graphic) {
-          return
-        }
-        const graphics = graphic.getGraphics() // 对应的grpahic数组，可以自定义显示
+        const graphics = e.graphic?.graphics
         if (graphics) {
           const names = []
           for (let index = 0; index < graphics.length; index++) {

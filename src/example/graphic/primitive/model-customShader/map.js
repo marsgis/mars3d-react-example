@@ -12,12 +12,7 @@ export const mapOptions = {
   }
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
@@ -64,13 +59,13 @@ export function onMounted(mapInstance) {
       uniforms: {
         u_envTexture: {
           value: new Cesium.TextureUniform({
-            url: "//data.mars3d.cn/img/textures/sky.jpg"
+            url: "https://data.mars3d.cn/img/textures/sky.jpg"
           }),
           type: Cesium.UniformType.SAMPLER_2D
         },
         u_envTexture2: {
           value: new Cesium.TextureUniform({
-            url: "//data.mars3d.cn/img/textures/buildings-kj.jpg"
+            url: "https://data.mars3d.cn/img/textures/buildings-kj.jpg"
           }),
           type: Cesium.UniformType.SAMPLER_2D
         },
@@ -128,10 +123,7 @@ export function onMounted(mapInstance) {
   addExGltfModel()
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -150,7 +142,7 @@ function addExGltfModel() {
   const coefficients = [L00, L1_1, L10, L11, L2_2, L2_1, L20, L21, L22]
 
   const imageBasedLighting = new Cesium.ImageBasedLighting({
-    specularEnvironmentMaps: "//data.mars3d.cn/img/textures/ibl.ktx2",
+    specularEnvironmentMaps: "https://data.mars3d.cn/img/textures/ibl.ktx2",
     sphericalHarmonicCoefficients: coefficients
   })
 
@@ -159,13 +151,13 @@ function addExGltfModel() {
     popup: "东方明珠塔",
     modelMatrix: generateModelMatrix([121.49697607088487, 31.241891679352257, 10], [0, 0, 0], [0.15, 0.15, 0.126]),
     style: {
-      url: "//data.mars3d.cn/gltf/mars/shanghai/dongfangmingzhu/scene.gltf",
+      url: "https://data.mars3d.cn/gltf/mars/shanghai/dongfangmingzhu/scene.gltf",
       imageBasedLighting: imageBasedLighting,
       customShader: new Cesium.CustomShader({
         uniforms: {
           u_texture: {
             value: new Cesium.TextureUniform({
-              url: "//data.mars3d.cn/img/textures/buildings-colors2.png"
+              url: "https://data.mars3d.cn/img/textures/buildings-colors2.png"
             }),
             type: Cesium.UniformType.SAMPLER_2D
           },
@@ -194,13 +186,13 @@ function addExGltfModel() {
     popup: "环球金融中心",
     modelMatrix: generateModelMatrix([121.50306517515779, 31.236594411927722, 0], [0, 0, 0], [3, 3, 4.4]),
     style: {
-      url: "//data.mars3d.cn/gltf/mars/shanghai/huanqiujingrong/scene.gltf",
+      url: "https://data.mars3d.cn/gltf/mars/shanghai/huanqiujingrong/scene.gltf",
       imageBasedLighting: imageBasedLighting,
       customShader: new Cesium.CustomShader({
         uniforms: {
           u_texture: {
             value: new Cesium.TextureUniform({
-              url: "//data.mars3d.cn/img/textures/buildings-kj.jpg"
+              url: "https://data.mars3d.cn/img/textures/buildings-kj.jpg"
             }),
             type: Cesium.UniformType.SAMPLER_2D
           },
@@ -229,13 +221,13 @@ function addExGltfModel() {
     popup: "上海中心大厦",
     modelMatrix: generateModelMatrix([121.50140479453857, 31.237266571858395, 0], [0, 0, 0], [2.5, 2.5, 3.0]),
     style: {
-      url: "//data.mars3d.cn/gltf/mars/shanghai/shanghaizhongxin/scene.gltf",
+      url: "https://data.mars3d.cn/gltf/mars/shanghai/shanghaizhongxin/scene.gltf",
       imageBasedLighting: imageBasedLighting,
       customShader: new Cesium.CustomShader({
         uniforms: {
           u_texture: {
             value: new Cesium.TextureUniform({
-              url: "//data.mars3d.cn/img/textures/buildings-colors.png"
+              url: "https://data.mars3d.cn/img/textures/buildings-colors.png"
             }),
             type: Cesium.UniformType.SAMPLER_2D
           },
@@ -264,13 +256,13 @@ function addExGltfModel() {
     popup: "金茂大厦",
     modelMatrix: generateModelMatrix([121.49805570610201, 31.23266477688614, 400], [0, 0, 45], [3, 3, 2.5]),
     style: {
-      url: "//data.mars3d.cn/gltf/mars/shanghai/jinmaodasha/scene.gltf",
+      url: "https://data.mars3d.cn/gltf/mars/shanghai/jinmaodasha/scene.gltf",
       imageBasedLighting: imageBasedLighting,
       customShader: new Cesium.CustomShader({
         uniforms: {
           u_texture: {
             value: new Cesium.TextureUniform({
-              url: "//data.mars3d.cn/img/textures/buildings-colors2.png"
+              url: "https://data.mars3d.cn/img/textures/buildings-colors2.png"
             }),
             type: Cesium.UniformType.SAMPLER_2D
           },

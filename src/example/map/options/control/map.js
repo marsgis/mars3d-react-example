@@ -25,20 +25,20 @@ function initMap() {
       contextmenu: { hasDefault: true },
       mouseDownView: true,
       zoom: { insertIndex: 1 },
-      compass: { top: "10px", left: "5px" },
-      distanceLegend: { left: "180px", bottom: "27px" }
+      compass: { style: { top: "10px", right: "5px" } },
+      distanceLegend: { style: { left: "10px", bottom: "27px" } }
     },
     basemaps: [
       {
         name: "单张图片",
-        icon: "//data.mars3d.cn/img/thumbnail/basemap/offline.png",
+        icon: "https://data.mars3d.cn/img/thumbnail/basemap/offline.png",
         type: "image",
-        url: "//data.mars3d.cn/img/map/world/world.jpg",
+        url: "https://data.mars3d.cn/img/map/world/world.jpg",
         show: true
       }
     ]
   })
-  map.toolbar.style.bottom = "120px" // 修改toolbar控件的样式
+  map.control.toolbar.container.style.bottom = "120px" // 修改toolbar控件的样式
 
   // 方式2：在创建地球后按需调用addControl添加(直接new对应type类型的控件)
   const locationBar = new mars3d.control.LocationBar({

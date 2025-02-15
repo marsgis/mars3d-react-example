@@ -1,3 +1,4 @@
+import { race } from "core-js/fn/promise"
 import * as mars3d from "mars3d"
 
 export let map
@@ -7,7 +8,7 @@ let terrainClip
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并)
 export const mapOptions = {
   scene: {
-    center: { lat: 21.748008, lng: 113.230533, alt: 699712.9, heading: 350.3, pitch: -52 },
+    center: { lat: 30.682034, lng: 118.386385, alt: 145162.7, heading: 319.7, pitch: -48.4 },
     orderIndependentTranslucency: false,
     backgroundImage: "url(//data.mars3d.cn/img/busines/background1.jpg)",
     showMoon: false,
@@ -21,22 +22,27 @@ export const mapOptions = {
     }
   },
   control: {
+    toolbar: {
+      position: "right-bottom"
+    },
+    compass: {
+      style: {
+        bottom: "toolbar",
+        right: "5px",
+        left: "auto"
+      }
+    },
     baseLayerPicker: true
   },
   terrain: { show: false }
 }
 
 // 行政区划编码(全国统一，可以按需修改其他省市县编码)
-const xzqhCode = "430000"
+const xzqhCode = "340100"
 
 const wallHeight = 40000 // 墙高
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
   map.basemap = 2017
@@ -101,7 +107,7 @@ export function onMounted(mapInstance) {
           width: 10,
           materialType: mars3d.MaterialType.Image2,
           materialOptions: {
-            image: "//data.mars3d.cn/img/textures/fence-top.png",
+            image: "https://data.mars3d.cn/img/textures/fence-top.png",
             color: "#0b88e3"
           }
         }
@@ -134,10 +140,7 @@ export function onMounted(mapInstance) {
   })
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -162,7 +165,7 @@ function addCenterGraphi(attr) {
     position: attr.centroid,
     style: {
       html: `<div class="mars-four-color mars3d-animation">
-                <img src="//data.mars3d.cn/img/marker/bg/${getImage()}"  class="four-color_bg"></img>
+                <img src="https://data.mars3d.cn/img/marker/bg/${getImage()}"  class="four-color_bg"></img>
                 <div class="four-color_name">${attr.name}</div>
             </div>`,
       horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
@@ -173,8 +176,6 @@ function addCenterGraphi(attr) {
   })
   graphicLayer.addGraphic(divGraphic)
 }
-
-
 
 // 根据随机数字取图片
 function getImage() {

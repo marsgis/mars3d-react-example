@@ -10,12 +10,7 @@ export const mapOptions = {
 
 export let tilesetLayer
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
   map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
@@ -25,10 +20,7 @@ export function onMounted(mapInstance) {
   showDytDemo()
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -43,7 +35,7 @@ export function showDytDemo() {
   // 加模型
   tilesetLayer = new mars3d.layer.TilesetLayer({
     name: "大雁塔",
-    url: "//data.mars3d.cn/3dtiles/qx-dyt/tileset.json",
+    url: "https://data.mars3d.cn/3dtiles/qx-dyt/tileset.json",
     position: { alt: -27 },
     maximumScreenSpaceError: 1,
     flood: {
@@ -76,7 +68,7 @@ export function showTehDemo() {
   tilesetLayer = new mars3d.layer.TilesetLayer({
     name: "合肥天鹅湖",
     type: "3dtiles",
-    url: "//data.mars3d.cn/3dtiles/qx-teh/tileset.json",
+    url: "https://data.mars3d.cn/3dtiles/qx-teh/tileset.json",
     position: { lng: 117.218434, lat: 31.81807, alt: 163 },
     maximumScreenSpaceError: 16,
     maxMemory: 2048, // 最大缓存内存大小(MB)
@@ -119,7 +111,7 @@ export function showXianDemo() {
 
   tilesetLayer = new mars3d.layer.TilesetLayer({
     name: "县城社区",
-    url: "//data.mars3d.cn/3dtiles/qx-shequ/tileset.json",
+    url: "https://data.mars3d.cn/3dtiles/qx-shequ/tileset.json",
     position: { alt: 148.2 },
     maximumScreenSpaceError: 1,
     skipLevelOfDetail: true,

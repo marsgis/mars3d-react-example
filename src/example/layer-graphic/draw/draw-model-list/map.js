@@ -12,12 +12,7 @@ export const mapOptions = {
   }
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
   map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
@@ -33,6 +28,11 @@ export function onMounted(mapInstance) {
     console.log("监听layer，单击了矢量对象", event)
   })
 
+  const editUpdateFun = mars3d.Util.funDebounce(openGraphicOptionsWidget, 500)
+  graphicLayer.on([mars3d.EventType.click, mars3d.EventType.drawCreated, mars3d.EventType.editStart, mars3d.EventType.editStyle], editUpdateFun)
+  const removeFun = mars3d.Util.funDebounce(closeGraphicOptionsWidget, 500)
+  graphicLayer.on(mars3d.EventType.removeGraphic, removeFun)
+
   // 加载模型列表
   const configUrl = "//data.mars3d.cn/gltf/list.json"
   mars3d.Util.fetchJson({ url: configUrl })
@@ -44,22 +44,33 @@ export function onMounted(mapInstance) {
     })
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
+  if (graphicLayer) {
+    graphicLayer.destroy() // 销毁内部会释放所有事件及数据
+    graphicLayer = null
+  }
+
   map = null
-  deleteAll()
+}
+
+// 修改样式，修改点，删除点等操作去激活或更新面板
+function openGraphicOptionsWidget(e) {
+  eventTarget.fire("updateGraphicOptionsWidget", { graphicId: e.graphic.id, layerId: graphicLayer.id })
+}
+
+function closeGraphicOptionsWidget(e) {
+  eventTarget.fire("updateGraphicOptionsWidget", { disable: true })
 }
 
 // 绘制模型
-export function startDrawModel(style) {
-  graphicLayer.startDraw({
+export async function startDrawModel(style) {
+  const graphic = await graphicLayer.startDraw({
     type: "model",
     drawShow: true, // 绘制时，是否显示模型，可避免在3dtiles上拾取坐标存在问题。
     style
   })
+  console.log("标绘完成", graphic.toJSON())
 }
 
 // 深度检测
@@ -73,14 +84,6 @@ export function onlyVertexPosition(val) {
 
 export function deleteAll() {
   graphicLayer.clear()
-}
-
-export function changeItemImage(item) {
-  return mars3d.Util.template(item.image, map.templateValues)
-}
-
-export function changeItemUrl(item) {
-  return mars3d.Util.template(item.style.url, map.templateValues)
 }
 
 /**

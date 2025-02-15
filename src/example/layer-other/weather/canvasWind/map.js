@@ -10,12 +10,7 @@ export const mapOptions = {
   }
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
   map.basemap = 2017 // 蓝色底图
@@ -23,27 +18,46 @@ export function onMounted(mapInstance) {
 
   // 风场
   canvasWindLayer = new mars3d.layer.CanvasWindLayer({
-    worker: window.currentPath + "windWorker.js", // 启用多线程模式，注释后是单线程模式(非必须)
-    frameRate: 20, // 每秒刷新次数
-    speedRate: 60, // 风前进速率
-    particlesNumber: 10000,
+    fixedHeight: 1000,
+    // worker: window.currentPath + "windWorker.js", // 启用多线程模式，注释后是单线程模式(非必须)
+    frameRate: 30, // 每秒刷新次数
+    speedRate: 100, // 风前进速率
+    particlesNumber: 5000,
     maxAge: 120,
     lineWidth: 2,
     // 单颜色
-    color: "#ffffff"
+    // color: "#ffffff",
     // 多颜色
-    // colors: ["rgb(0, 228, 0)", "rgb(256, 256, 0)", "rgb(256, 126, 0)", "rgb(256, 0, 0)", "rgb(153, 0, 76)", "rgb(126, 0, 35)"],
-    // steps: [1.0, 2.0, 5.4, 7.9, 10.7, 13.8]
+    colors: [
+      "rgb(175, 240, 91)",
+      "rgb(150, 243, 87)",
+      "rgb(124, 246, 88)",
+      "rgb(100, 247, 95)",
+      "rgb(78, 246, 105)",
+      "rgb(59, 242, 119)",
+      "rgb(44, 237, 135)",
+      "rgb(34, 229, 153)",
+      "rgb(27, 218, 170)",
+      "rgb(25, 206, 186)",
+      "rgb(27, 192, 201)",
+      "rgb(32, 177, 212)",
+      "rgb(41, 161, 221)",
+      "rgb(51, 145, 225)",
+      "rgb(62, 129, 225)",
+      "rgb(74, 113, 221)",
+      "rgb(85, 99, 213)",
+      "rgb(95, 86, 201)",
+      "rgb(104, 74, 187)",
+      "rgb(110, 64, 170)"
+    ],
+    steps: [0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0, 17.0, 18.0, 19.0]
   })
   map.addLayer(canvasWindLayer)
 
-  loadEarthData()
+  loadHongkongData()
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -82,136 +96,153 @@ export function changeColor(color) {
   canvasWindLayer.color = color
 }
 
-// 加载全球数据
-let earthWindData
-// 加载气象
-let dongnanWindData
-export function loadEarthData() {
-  map.flyHome()
+// 加载局部数据1
+export async function loadHongkongData() {
+  map.setCameraView({ lat: 19.658703, lng: 114.870135, alt: 357062.4, heading: 341.1, pitch: -52.9 }, { duration: 0 })
 
-  canvasWindLayer.speedRate = 50
-  canvasWindLayer.reverseY = false // false时表示 纬度顺序从大到小
-
-  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/windyuv.json" })
-    .then(function (res) {
-      if (earthWindData) {
-        canvasWindLayer.data = earthWindData
-        return
-      }
-      earthWindData = res
-      canvasWindLayer.data = earthWindData
-
-      setTimeout(function () {
-        const arrPoints = []
-        const particles = canvasWindLayer._canvasParticles
-        for (let index = 0, len = particles.length; index < len; index++) {
-          const item = particles[index]
-          arrPoints.push({ lat: item.lat, lng: item.lng - 180, value: item.speed }) // - 180是针对当前数据特殊处理
-        }
-        showHeatMap(arrPoints)
-      }, 3000)
-    })
-    .catch(function (err) {
-      console.log("请求数据失败!", err)
-    })
-}
-// 加载局部数据
-export function loadDongnanData() {
-  map.setCameraView({ lat: 30.484229, lng: 116.627601, alt: 1719951, heading: 0, pitch: -90, roll: 0 })
-
-  canvasWindLayer.speedRate = 85
-  canvasWindLayer.reverseY = true // true时表示 纬度顺序从小到到大
-
-  // 访问windpoint.json后端接口，取数据
-  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/windpoint.json" })
-    .then(function (res) {
-      if (dongnanWindData) {
-        canvasWindLayer.data = dongnanWindData
-        return
-      }
-      dongnanWindData = convertWindData(res.data)
-      canvasWindLayer.data = dongnanWindData
-      canvasWindLayer.fixedHeight = 60000
-
-      // 热力图
-      setTimeout(function () {
-        const arrPoints = []
-        const particles = canvasWindLayer._canvasParticles
-        for (let index = 0, len = particles.length; index < len; index++) {
-          const item = particles[index]
-          arrPoints.push({ lat: item.lat, lng: item.lng, value: item.speed })
-        }
-        showHeatMap(arrPoints)
-      }, 3000)
-    })
-    .catch(function () {
-      globalMsg("实时查询气象信息失败，请稍候再试")
-    })
-}
-
-// 将数据转换为需要的格式:风向转UV
-function convertWindData(arr) {
-  const arrU = []
-  const arrV = []
-
-  let xmin = arr[0].x
-  let xmax = arr[0].x
-  let ymin = arr[0].y
-  let ymax = arr[0].y
-
-  // 风向是以y轴正方向为零度顺时针转，0度表示北风。90度表示东风。
-  // u表示经度方向上的风，u为正，表示西风，从西边吹来的风。
-  // v表示纬度方向上的风，v为正，表示南风，从南边吹来的风。
-  for (let i = 0, len = arr.length; i < len; i++) {
-    const item = arr[i]
-
-    if (xmin > item.x) {
-      xmin = item.x
-    }
-    if (xmax < item.x) {
-      xmax = item.x
-    }
-    if (ymin > item.y) {
-      ymin = item.y
-    }
-    if (ymax < item.y) {
-      ymax = item.y
-    }
-
-    const u = mars3d.WindUtil.getU(item.speed, item.dir)
-    arrU.push(u)
-
-    const v = mars3d.WindUtil.getV(item.speed, item.dir)
-    arrV.push(v)
-  }
-
-  const rows = getKeyNumCount(arr, "y") // 计算 行数
-  const cols = getKeyNumCount(arr, "x") // 计算 列数
-
-  return {
-    xmin,
-    xmax,
-    ymax,
-    ymin,
-    rows,
-    cols,
-    udata: arrU, // 横向风速
-    vdata: arrV // 纵向风速
-  }
-}
-
-function getKeyNumCount(arr, key) {
-  const obj = {}
-  arr.forEach((item) => {
-    obj[item[key]] = true
+  canvasWindLayer.setOptions({
+    speedRate: 150, // 风前进速率
+    flipY: false
   })
 
-  let count = 0
-  for (const col in obj) {
-    count++
-  }
-  return count
+  // 取数据
+  const res = await mars3d.Util.fetchJson({ url: "https://data.mars3d.cn/file/apidemo/wind-hongkong.json" })
+  canvasWindLayer.setData(res)
 }
+// 加载局部数据2
+export async function loadDongnanData1() {
+  map.setCameraView({ lat: -8.188301, lng: 103.011488, alt: 1423712.3, heading: 4.8, pitch: -59.5 }, { duration: 0 })
+
+  canvasWindLayer.setOptions({
+    speedRate: 90, // 风前进速率
+    flipY: true
+  })
+
+  // 访问windpoint.json后端接口，取数据
+  const res = await mars3d.Util.fetchJson({ url: "https://data.mars3d.cn/file/apidemo/wind-singapore.json" })
+  canvasWindLayer.setData(res)
+
+  setTimeout(function () {
+    const arrPoints = []
+    const particles = canvasWindLayer._canvasParticles
+    for (let index = 0, len = particles.length; index < len; index++) {
+      const item = particles[index]
+      arrPoints.push({ lat: item.lat, lng: item.lng, value: item.speed })
+    }
+    showHeatMap(arrPoints)
+  }, 3000)
+}
+
+// 加载局部数据
+export async function loadDongnanData2() {
+  map.setCameraView({ lat: -8.188301, lng: 103.011488, alt: 1423712.3, heading: 4.8, pitch: -59.5 }, { duration: 0 })
+
+  canvasWindLayer.setOptions({
+    speedRate: 90, // 风前进速率
+    flipY: true
+  })
+
+  // 访问windpoint.json后端接口，取数据
+  const res = await mars3d.Util.fetchJson({ url: "https://data.mars3d.cn/file/apidemo/wind-singapore-ocean.json" })
+  canvasWindLayer.setData(res)
+}
+
+// 加载全球数据
+export async function loadEarthData() {
+  map.setCameraView({ lat: 15.026094, lng: 112.896676, alt: 13975128, heading: 0, pitch: -89 }, { duration: 0 })
+  showLoading()
+
+  canvasWindLayer.setOptions({
+    particlesNumber: 8000,
+    speedRate: 30, // 风前进速率
+    flipY: false
+  })
+
+  // 建议用后面qingxiNCData()清洗数据后直接加载json，当前只是为了演示nc的加载
+  const data = await loadNetCDF("https://data.mars3d.cn/file/apidemo/wind.nc")
+  console.log("数据加载解析完成", data)
+  canvasWindLayer.setData(data)
+
+  hideLoading()
+}
+
+// 加载并解析NC数据,
+function loadNetCDF(filePath) {
+  return new Promise(function (resolve) {
+    const request = new XMLHttpRequest()
+    request.open("GET", filePath)
+    request.responseType = "arraybuffer"
+
+    request.onload = function () {
+      // eslint-disable-next-line new-cap
+      const reader = new netcdfjs(request.response)
+
+      // 【通用】读取变量,组织为前端方便使用的对象
+      const attr = {}
+      reader.variables.forEach((item) => {
+        const column = item.name
+        const newItem = {
+          ...item,
+          value: reader.getDataVariable(column)
+        }
+        if (item.attributes && Array.isArray(item.attributes)) {
+          newItem.attributes = {}
+          item.attributes.forEach((item2) => {
+            newItem.attributes[item2.name] = item2
+          })
+        }
+        attr[column] = newItem
+      })
+
+      // 【每个nc可能不一样】组织数据为mars3d需要的格式，字段名称来源于nc文件的描述文件（每个标准的nc文件都可能不同）
+      const arrLon = attr.lon.value
+      const arrLat = attr.lat.value
+      const arrU = attr.U.value
+      const arrV = attr.V.value
+
+      // 构造WindLayer类需要的格式数据
+      const result = {
+        xmin: Math.min(...arrLon),
+        xmax: Math.max(...arrLon),
+        ymin: Math.min(...arrLat),
+        ymax: Math.max(...arrLat),
+        rows: arrLat.length,
+        cols: arrLon.length,
+        udata: arrU, // 横向风速
+        vdata: arrV // 纵向风速
+      }
+      resolve(result)
+    }
+    request.send()
+  })
+}
+
+// 【清洗nc数据】无论你数据原始什么格式，建议都按api组织下新json数据，后期加载都用新数据提高效率
+// async function qingxiNCData() {
+//   const newData = await loadNetCDF("https://data.mars3d.cn/file/apidemo/wind.nc")
+//   mars3d.Util.downloadFile("newWindData.json", JSON.stringify(newData))
+// }
+
+// // 【清洗json数据】无论你数据原始什么格式，建议都按api组织下新json数据，后期加载都用新数据提高效率
+// async function qingxiJsonData() {
+//   const res = await mars3d.Util.fetchJson({ url: "/oldWindData.json" })
+
+//   // const udata = res[0]
+//   // const vdata = res[1]
+
+//   const newData = {
+//     xmin: res.bbox[0],
+//     ymin: res.bbox[1],
+//     xmax: res.bbox[2],
+//     ymax: res.bbox[3],
+//     cols: res.width,
+//     rows: res.height,
+//     udata: res.u.array, // 横向风速
+//     vdata: res.v.array // 纵向风速
+//   }
+
+//   mars3d.Util.downloadFile("newWindData.json", JSON.stringify(newData))
+// }
 
 let heatLayer
 function showHeatMap(arrPoints) {

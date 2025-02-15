@@ -20,36 +20,18 @@ interface FileInfo {
 
 function UIComponent() {
   useEffect(() => {
-    // @ts-ignore
-    const mars3d = window.mars3d
-    // 矢量数据创建完成
-    // mapWork.graphicLayer.on(mars3d.EventType.drawCreated, function (e) {
-    //   activate({
-    //     name: "GraphicEditor",
-    //     data: { graphic: e.graphic }
-    //   })
-    // })
-    // 修改了矢量数据
-    mapWork.graphicLayer.on(
-      [mars3d.EventType.editStart, mars3d.EventType.editMovePoint, mars3d.EventType.editStyle, mars3d.EventType.editRemovePoint],
-      function (e) {
-        if (isActive("GraphicEditor")) {
-          updateWidget("GraphicEditor", { graphic: e.graphic })
+    // ************************属性面板************************/
+    mapWork.eventTarget.on("updateGraphicOptionsWidget", (event) => {
+      if (event.disable) {
+        disable("graphic-options")
+      } else {
+        const data = { layerId: event.layerId, graphicId: event.graphicId }
+        if (!isActive("graphic-options")) {
+          activate({ name: "graphic-options", data })
         } else {
-          activate({
-            name: "GraphicEditor",
-            data: { graphic: e.graphic }
-          })
+          updateWidget("graphic-options", data)
         }
       }
-    )
-    // 停止编辑
-    mapWork.graphicLayer.on([mars3d.EventType.editStop, mars3d.EventType.removeGraphic], function (e) {
-      setTimeout(() => {
-        if (!mapWork.graphicLayer.isEditing) {
-          disable("GraphicEditor")
-        }
-      }, 100)
     })
   }, [])
 
@@ -229,7 +211,7 @@ function onChangeHasEdit(enabledEdit: boolean) {
 
 // 是否仅在Tiles上拾取
 function onChangeOnlyPickModel(onlyVertexPosition: boolean) {
-  mapWork.updateonlyVertexPosition(onlyVertexPosition)
+  mapWork.updateOnlyVertexPosition(onlyVertexPosition)
 }
 
 export default UIComponent

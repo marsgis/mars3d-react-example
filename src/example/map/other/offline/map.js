@@ -11,7 +11,7 @@ export const mapOptions = {
     center: { lat: 14.741847, lng: 108.420914, alt: 10003793, heading: 0, pitch: -83 }
   },
   terrain: {
-    url: "//data.mars3d.cn/terrain",
+    url: "https://data.mars3d.cn/terrain",
     show: true,
     clip: true
   },
@@ -20,9 +20,9 @@ export const mapOptions = {
     {
       pid: 10,
       name: "影像地图",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/tdt_img.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/tdt_img.png",
       type: "xyz",
-      url: "//data.mars3d.cn/tile/img/{z}/{x}/{y}.jpg",
+      url: "https://data.mars3d.cn/tile/img/{z}/{x}/{y}.jpg",
       chinaCRS: mars3d.ChinaCRS.GCJ02,
       minimumLevel: 0,
       maximumLevel: 13,
@@ -31,9 +31,9 @@ export const mapOptions = {
     {
       pid: 10,
       name: "电子地图",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/tdt_vec.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/tdt_vec.png",
       type: "xyz",
-      url: "//data.mars3d.cn/tile/vec/{z}/{x}/{y}.png",
+      url: "https://data.mars3d.cn/tile/vec/{z}/{x}/{y}.png",
       chinaCRS: "GCJ02",
       minimumLevel: 0,
       maximumLevel: 13
@@ -41,15 +41,15 @@ export const mapOptions = {
     {
       pid: 10,
       name: "单张图片",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/offline.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/offline.png",
       type: "image",
-      url: "//data.mars3d.cn/img/map/world/world.jpg"
+      url: "https://data.mars3d.cn/img/map/world/world.jpg"
     },
     {
       id: 2023,
       pid: 10,
       name: "无底图",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/null.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/null.png",
       type: "grid",
       color: "#ffffff",
       alpha: 0.03,
@@ -66,7 +66,7 @@ export const mapOptions = {
       pid: 4030,
       name: "合肥规划图",
       type: "arcgis_cache",
-      url: "//data.mars3d.cn/arcgis_cache/hfgh/_alllayers/{z}/{y}/{x}.png",
+      url: "https://data.mars3d.cn/arcgis_cache/hfgh/_alllayers/{z}/{y}/{x}.png",
       minimumLevel: 1,
       maximumLevel: 17,
       minimumTerrainLevel: 1,
@@ -81,7 +81,7 @@ export const mapOptions = {
       pid: 3030,
       type: "geojson",
       name: "平台标绘",
-      url: "//data.mars3d.cn/file/geojson/mars3d-draw.json",
+      url: "https://data.mars3d.cn/file/geojson/mars3d-draw.json",
       popup: "{type}{name}",
       show: false,
       flyTo: true
@@ -90,7 +90,7 @@ export const mapOptions = {
       pid: 3030,
       type: "geojson",
       name: "用地规划",
-      url: "//data.mars3d.cn/file/geojson/guihua.json",
+      url: "https://data.mars3d.cn/file/geojson/guihua.json",
       symbol: {
         styleOptions: { opacity: 0.6, color: "#0000FF", width: 3, clampToGround: true },
         styleField: "类型",
@@ -129,7 +129,7 @@ export const mapOptions = {
       pid: 3030,
       type: "geojson",
       name: "建筑物面",
-      url: "//data.mars3d.cn/file/geojson/buildings-demo.json",
+      url: "https://data.mars3d.cn/file/geojson/buildings-demo.json",
       symbol: { styleOptions: { color: "#0d3685", outlineColor: "#0d3685", opacity: 0.8 } },
       buildings: { cloumn: "floors", height: "flo_height" },
       popup: "all",
@@ -140,7 +140,7 @@ export const mapOptions = {
       pid: 3030,
       type: "geojson",
       name: "安徽各市",
-      url: "//data.mars3d.cn/file/geojson/areas/340000_full.json",
+      url: "https://data.mars3d.cn/file/geojson/areas/340000_full.json",
       symbol: {
         type: "polygon",
         styleOptions: {
@@ -177,7 +177,7 @@ export const mapOptions = {
       pid: 3030,
       type: "geojson",
       name: "中国省界",
-      url: "//data.mars3d.cn/file/geojson/areas/100000_full.json",
+      url: "https://data.mars3d.cn/file/geojson/areas/100000_full.json",
       symbol: {
         type: "polylineP",
         styleOptions: {
@@ -209,10 +209,10 @@ export const mapOptions = {
       pid: 3030,
       type: "geojson",
       name: "西藏垭口",
-      url: "//data.mars3d.cn/file/geojson/xizangyakou.json",
+      url: "https://data.mars3d.cn/file/geojson/xizangyakou.json",
       symbol: {
         styleOptions: {
-          image: "//data.mars3d.cn/img/marker/mark-red.png",
+          image: "https://data.mars3d.cn/img/marker/mark-red.png",
           scaleByDistance: true,
           scaleByDistance_far: 5000000,
           scaleByDistance_farValue: 0.5,
@@ -252,10 +252,10 @@ export const mapOptions = {
       pid: 3030,
       type: "geojson",
       name: "体育设施点",
-      url: "//data.mars3d.cn/file/geojson/hfty-point.json",
+      url: "https://data.mars3d.cn/file/geojson/hfty-point.json",
       symbol: {
         styleOptions: {
-          image: "//data.mars3d.cn/img/marker/mark-red.png",
+          image: "https://data.mars3d.cn/img/marker/mark-red.png",
           scale: 1,
           scaleByDistance: true,
           scaleByDistance_far: 20000,
@@ -319,7 +319,7 @@ export const mapOptions = {
       pid: 3060,
       type: "czml",
       name: "汽车",
-      url: "//data.mars3d.cn/file/czml/car.czml",
+      url: "https://data.mars3d.cn/file/czml/car.czml",
       center: { lat: 40.894745, lng: 121.920252, alt: 904, heading: 64, pitch: -67 },
       radio: true,
       flyTo: true
@@ -329,25 +329,25 @@ export const mapOptions = {
       pid: 3060,
       type: "czml",
       name: "卫星轨道",
-      url: "//data.mars3d.cn/file/czml/satellite-simple.czml",
+      url: "https://data.mars3d.cn/file/czml/satellite-simple.czml",
       popup: "all",
       radio: true,
       flyTo: true
     },
     { id: 3050, pid: 30, name: "KML数据", type: "group" },
-    { pid: 3050, type: "kml", name: "海上安全警告", url: "//data.mars3d.cn/file/kml/NAVWARN.kmz", popup: "all" },
+    { pid: 3050, type: "kml", name: "海上安全警告", url: "https://data.mars3d.cn/file/kml/NAVWARN.kmz", popup: "all" },
     {
       pid: 3050,
       type: "kml",
       name: "国境线",
-      url: "//data.mars3d.cn/file/kml/countryboundary.kml",
+      url: "https://data.mars3d.cn/file/kml/countryboundary.kml",
       symbol: { styleOptions: { color: "#FED976", width: 2 } }
     },
     {
       pid: 3050,
       type: "kml",
       name: "省界线",
-      url: "//data.mars3d.cn/file/kml/province.kml",
+      url: "https://data.mars3d.cn/file/kml/province.kml",
       symbol: { styleOptions: { color: "#00FF00", width: 2 } }
     },
     { id: 20, name: "三维模型", type: "group" },
@@ -361,7 +361,7 @@ export const mapOptions = {
           type: "modelP",
           position: [117.219071, 31.828783, 39.87],
           style: {
-            url: "//data.mars3d.cn/gltf/mars/fengche.gltf",
+            url: "https://data.mars3d.cn/gltf/mars/fengche.gltf",
             scale: 50,
             heading: -93
           }
@@ -379,7 +379,7 @@ export const mapOptions = {
           type: "modelP",
           position: [117.217458, 31.815349, 35.03],
           style: {
-            url: "//data.mars3d.cn/gltf/mars/jingche/jingche.gltf",
+            url: "https://data.mars3d.cn/gltf/mars/jingche/jingche.gltf",
             scale: 2,
             heading: -95,
             clampToGround: true
@@ -394,7 +394,7 @@ export const mapOptions = {
       pid: 2040,
       type: "3dtiles",
       name: "合肥市区",
-      url: "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
+      url: "https://data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
       maximumScreenSpaceError: 1,
       style: {
         color: {
@@ -414,7 +414,7 @@ export const mapOptions = {
       pid: 2040,
       type: "3dtiles",
       name: "合肥市区-带贴图",
-      url: "//data.mars3d.cn/3dtiles/jzw-hefei-cz/tileset.json",
+      url: "https://data.mars3d.cn/3dtiles/jzw-hefei-cz/tileset.json",
       maximumScreenSpaceError: 1,
       marsJzwStyle: true,
       highlight: { type: "click", color: "#FFFF00" },
@@ -430,7 +430,7 @@ export const mapOptions = {
       pid: 2040,
       type: "3dtiles",
       name: "上海市区",
-      url: "//data.mars3d.cn/3dtiles/jzw-shanghai/tileset.json",
+      url: "https://data.mars3d.cn/3dtiles/jzw-shanghai/tileset.json",
       maximumScreenSpaceError: 4,
       style: {
         color: {
@@ -459,7 +459,7 @@ export const mapOptions = {
       pid: 2050,
       type: "3dtiles",
       name: "高压线塔杆",
-      url: "//data.mars3d.cn/3dtiles/pnts-ganta/tileset.json",
+      url: "https://data.mars3d.cn/3dtiles/pnts-ganta/tileset.json",
       maximumScreenSpaceError: 1,
       position: { alt: 31 },
       style: {
@@ -484,7 +484,7 @@ export const mapOptions = {
       pid: 2060,
       type: "3dtiles",
       name: "大学教学楼",
-      url: "//data.mars3d.cn/3dtiles/bim-daxue/tileset.json",
+      url: "https://data.mars3d.cn/3dtiles/bim-daxue/tileset.json",
       position: { lng: 117.251229, lat: 31.844015, alt: 31.2 },
       highlight: { type: "click", color: "#FFFF00" },
       popup: "all",
@@ -495,7 +495,7 @@ export const mapOptions = {
       pid: 2060,
       type: "3dtiles",
       name: "轻轨地铁站",
-      url: "//data.mars3d.cn/3dtiles/bim-ditiezhan/tileset.json",
+      url: "https://data.mars3d.cn/3dtiles/bim-ditiezhan/tileset.json",
       position: { lng: 117.203994, lat: 31.857999, alt: 28.9 },
       rotation: { z: 168.1 },
       highlight: { type: "click", color: "#00FF00" },
@@ -508,7 +508,7 @@ export const mapOptions = {
       pid: 2060,
       type: "3dtiles",
       name: "桥梁",
-      url: "//data.mars3d.cn/3dtiles/bim-qiaoliang/tileset.json",
+      url: "https://data.mars3d.cn/3dtiles/bim-qiaoliang/tileset.json",
       position: { lng: 117.096906, lat: 31.851564, alt: 45 },
       rotation: { z: 17.5 },
       maximumScreenSpaceError: 16,
@@ -531,7 +531,7 @@ export const mapOptions = {
       pid: 2020,
       type: "3dtiles",
       name: "地下管网",
-      url: "//data.mars3d.cn/3dtiles/max-piping/tileset.json",
+      url: "https://data.mars3d.cn/3dtiles/max-piping/tileset.json",
       position: { lng: 117.215457, lat: 31.843363, alt: -3.6 },
       rotation: { z: 336.7 },
       maximumScreenSpaceError: 2,
@@ -545,7 +545,7 @@ export const mapOptions = {
       pid: 2020,
       type: "3dtiles",
       name: "石化工厂",
-      url: "//data.mars3d.cn/3dtiles/max-shihua/tileset.json",
+      url: "https://data.mars3d.cn/3dtiles/max-shihua/tileset.json",
       position: { lng: 117.077158, lat: 31.659116, alt: -2.0 },
       maximumScreenSpaceError: 1,
       highlight: { type: "click", color: "#00FF00" },
@@ -569,7 +569,7 @@ export const mapOptions = {
           type: "modelP",
           position: [121.479813, 29.791278, 16],
           style: {
-            url: "//data.mars3d.cn/gltf/mars/zhamen.glb",
+            url: "https://data.mars3d.cn/gltf/mars/zhamen.glb",
             heading: 105
           }
         }
@@ -581,7 +581,7 @@ export const mapOptions = {
       pid: 202030,
       type: "3dtiles",
       name: "整体",
-      url: "//data.mars3d.cn/3dtiles/max-fsdzm/tileset.json",
+      url: "https://data.mars3d.cn/3dtiles/max-fsdzm/tileset.json",
       position: { alt: 15.2 },
       maximumScreenSpaceError: 1,
       center: { lat: 29.792675, lng: 121.480207, alt: 190.8, heading: 196.1, pitch: -49 }
@@ -591,7 +591,7 @@ export const mapOptions = {
       pid: 2030,
       type: "3dtiles",
       name: "大雁塔",
-      url: "//data.mars3d.cn/3dtiles/qx-dyt/tileset.json",
+      url: "https://data.mars3d.cn/3dtiles/qx-dyt/tileset.json",
       position: { alt: -27 },
       maximumScreenSpaceError: 1,
       center: { lat: 34.215516, lng: 108.960251, alt: 834, heading: 4, pitch: -48 },
@@ -612,7 +612,7 @@ export const mapOptions = {
         {
           type: "geojson",
           name: "校园-单体化",
-          url: "//data.mars3d.cn/file/geojson/dth-xuexiao-fd.json",
+          url: "https://data.mars3d.cn/file/geojson/dth-xuexiao-fd.json",
           symbol: {
             type: "polygonP",
             styleOptions: {
@@ -636,7 +636,7 @@ export const mapOptions = {
           pid: 2030,
           type: "3dtiles",
           name: "校园",
-          url: "//data.mars3d.cn/3dtiles/qx-xuexiao/tileset.json",
+          url: "https://data.mars3d.cn/3dtiles/qx-xuexiao/tileset.json",
           position: { alt: 279.0 },
           maximumScreenSpaceError: 1
         }
@@ -647,7 +647,7 @@ export const mapOptions = {
       pid: 2030,
       type: "3dtiles",
       name: "县城社区",
-      url: "//data.mars3d.cn/3dtiles/qx-shequ/tileset.json",
+      url: "https://data.mars3d.cn/3dtiles/qx-shequ/tileset.json",
       position: { alt: 148.2 },
       maximumScreenSpaceError: 2,
       dynamicScreenSpaceError: true,
@@ -661,7 +661,7 @@ export const mapOptions = {
       pid: 2030,
       name: "合肥天鹅湖",
       type: "3dtiles",
-      url: "//data.mars3d.cn/3dtiles/qx-teh/tileset.json",
+      url: "https://data.mars3d.cn/3dtiles/qx-teh/tileset.json",
       position: { lng: 117.218434, lat: 31.81807, alt: 163 },
       maximumScreenSpaceError: 16,
       maxMemory: 2048, // 最大缓存内存大小(MB)
@@ -701,7 +701,7 @@ export const mapOptions = {
       pid: 2030,
       type: "3dtiles",
       name: "文庙",
-      url: "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
+      url: "https://data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
       position: { alt: 38.8 },
       maximumScreenSpaceError: 2,
       dynamicScreenSpaceError: true,
@@ -713,20 +713,12 @@ export const mapOptions = {
     { id: 99, name: "数据图层", type: "group" }
   ]
 }
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }

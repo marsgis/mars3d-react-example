@@ -6,22 +6,17 @@ export let graphicLayer // 矢量图层对象
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: 31.756263, lng: 117.209077, alt: 7696, heading: 5, pitch: -33 },
-    clock: {
-      currentTime: "2017-08-25 08:00:00"
-    }
+    center: { lat: 31.756263, lng: 117.209077, alt: 7696, heading: 5, pitch: -33 }
+    // clock: {
+    //   currentTime: "2017-08-25 08:00:00"
+    // }
   },
   control: {
     clockAnimate: true, // 时钟动画控制(左下角)
     timeline: true // 是否显示时间线控件
   }
 }
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
@@ -39,12 +34,10 @@ export function onMounted(mapInstance) {
   // 加一些演示数据
   addDemoGraphic1(graphicLayer)
   addDemoGraphic2(graphicLayer)
+  addDemoGraphic3(graphicLayer)
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 
@@ -53,28 +46,20 @@ export function onUnmounted() {
 }
 
 function addDemoGraphic1(graphicLayer) {
-  const property = new Cesium.SampledPositionProperty()
-  property.forwardExtrapolationType = Cesium.ExtrapolationType.HOLD
-
-  let tempTime
-
-  // 起点
-  tempTime = map.clock.currentTime // 飞行开始时间
-  property.addSample(tempTime, Cesium.Cartesian3.fromDegrees(117.172852, 31.862736, 50))
-
-  // 移动到的第1个目标点
-  tempTime = Cesium.JulianDate.addSeconds(tempTime, 120, new Cesium.JulianDate())
-  property.addSample(tempTime, Cesium.Cartesian3.fromDegrees(117.251461, 31.856011, 50))
-
-  // 移动到的第2个目标点
-  tempTime = Cesium.JulianDate.addSeconds(tempTime, 120, new Cesium.JulianDate())
-  property.addSample(tempTime, Cesium.Cartesian3.fromDegrees(117.265321, 31.876336, 50))
-
-  tempTime = Cesium.JulianDate.addSeconds(tempTime, 600, new Cesium.JulianDate())
-  property.addSample(tempTime, Cesium.Cartesian3.fromDegrees(117.160215, 31.890639, 50))
-
   const graphic = new mars3d.graphic.PathEntity({
-    position: property,
+    position: {
+      type: "time", // 时序动态坐标
+      speed: 260,
+      list: [
+        [117.124125, 31.853866, 36.7],
+        [117.176992, 31.853218, 39.5],
+        [117.208337, 31.859107, 27.3],
+        [117.225442, 31.835016, 38.4],
+        [117.225975, 31.800578, 27.3],
+        [117.143601, 31.798851, 29.6]
+      ],
+      forwardExtrapolationType: Cesium.ExtrapolationType.HOLD // 在最后1个结束时间之后，NONE时不显示，HOLD时显示结束时间对应坐标位置
+    },
     style: {
       width: 2,
       color: "#ffff00",
@@ -99,7 +84,7 @@ function addDemoGraphic1(graphicLayer) {
       pixelOffset: new Cesium.Cartesian2(10, -25) // 偏移量
     },
     model: {
-      url: "//data.mars3d.cn/gltf/mars/wrj.glb",
+      url: "https://data.mars3d.cn/gltf/mars/wrj.glb",
       scale: 0.5,
       minimumPixelSize: 40
     },
@@ -110,6 +95,38 @@ function addDemoGraphic1(graphicLayer) {
 
 function addDemoGraphic2(graphicLayer) {
   const graphic = new mars3d.graphic.PathEntity({
+    position: {
+      type: "time", // 时序动态坐标
+      speed: 160,
+      list: [
+        [117.329716, 31.799715, 5.7],
+        [117.303715, 31.821496, 13.7],
+        [117.299162, 31.886182, 15.5],
+        [117.329549, 31.942893, 21.8]
+      ]
+    },
+    style: {
+      width: 2,
+      color: "#ff0000",
+      opacity: 1.0,
+      leadTime: 0 // 前方的路线不显示
+    },
+    model: {
+      url: "https://data.mars3d.cn/gltf/mars/qiche.gltf",
+      scale: 0.5,
+      minimumPixelSize: 30
+    },
+    attr: { remark: "示例2" }
+  })
+  graphicLayer.addGraphic(graphic)
+}
+
+function addDemoGraphic3(graphicLayer) {
+  const graphic = new mars3d.graphic.PathEntity({
+    position: {
+      type: "time", // 时序动态坐标
+      forwardExtrapolationType: Cesium.ExtrapolationType.HOLD // 在最后1个结束时间之后，NONE时不显示，HOLD时显示结束时间对应坐标位置
+    },
     // maxCacheCount: -1,
     style: {
       width: 2,
@@ -136,11 +153,11 @@ function addDemoGraphic2(graphicLayer) {
       pixelOffset: new Cesium.Cartesian2(10, -25) // 偏移量
     },
     model: {
-      url: "//data.mars3d.cn/gltf/mars/qiche.gltf",
+      url: "https://data.mars3d.cn/gltf/mars/qiche.gltf",
       scale: 0.5,
       minimumPixelSize: 30
     },
-    attr: { remark: "示例2" }
+    attr: { remark: "示例3" }
   })
   graphicLayer.addGraphic(graphic)
 
@@ -160,7 +177,7 @@ function addDemoGraphic2(graphicLayer) {
 
 // 改变位置
 function changePosition(graphic, time) {
-  graphic.addDynamicPosition(randomPoint(), time) // 按time秒运动至指定位置
+  graphic.addTimePosition(randomPoint(), time) // 按time秒运动至指定位置
 }
 
 // 取区域内的随机点
@@ -186,27 +203,15 @@ export function addRandomGraphicByCount(count) {
 
   for (let j = 0; j < result.points.length; ++j) {
     const position = result.points[j]
-    const index = j + 1
-
-    const property = new Cesium.SampledPositionProperty()
-    property.forwardExtrapolationType = Cesium.ExtrapolationType.HOLD
-
-    // 起点
-    tempTime = map.clock.currentTime // 飞行开始时间
     const pt1 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 225, result.radius)
-    property.addSample(tempTime, pt1)
-
-    // 移动到的第1个目标点
-    tempTime = Cesium.JulianDate.addSeconds(tempTime, 60, new Cesium.JulianDate())
-    property.addSample(tempTime, mars3d.LngLatPoint.toCartesian(position))
-
-    // 移动到的第2个目标点
-    tempTime = Cesium.JulianDate.addSeconds(tempTime, 60, new Cesium.JulianDate())
     const pt2 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 315, result.radius)
-    property.addSample(tempTime, pt2)
 
     const graphic = new mars3d.graphic.PathEntity({
-      position: property,
+      position: {
+        type: "time", // 时序动态坐标
+        speed: 160,
+        list: [pt1, position, pt2]
+      },
       style: {
         width: 2,
         color: "#ffff00",
@@ -219,17 +224,36 @@ export function addRandomGraphicByCount(count) {
         }
       },
       model: {
-        url: "//data.mars3d.cn/gltf/mars/wrj.glb",
+        url: "https://data.mars3d.cn/gltf/mars/wrj.glb",
         scale: 0.5,
         minimumPixelSize: 40
       },
-      attr: { index }
+      attr: { index: j + 1 }
     })
     graphicLayer.addGraphic(graphic)
   }
 
   graphicLayer.enabledEvent = true // 恢复事件
   return result.points.length
+}
+
+// 开始绘制
+export async function startDrawGraphic() {
+  const graphic = await graphicLayer.startDraw({
+    type: "path",
+    style: {
+      width: 2,
+      color: "#00ffff",
+      leadTime: 0 // 前方的路线不显示
+    },
+    point: {
+      color: "#00ffff",
+      pixelSize: 6,
+      outlineColor: "#ffffff",
+      outlineWidth: 2
+    }
+  })
+  console.log("标绘完成", graphic.toJSON())
 }
 
 // 在图层绑定Popup弹窗
@@ -247,6 +271,46 @@ export function bindLayerPopup() {
 // 绑定右键菜单
 export function bindLayerContextMenu() {
   graphicLayer.bindContextMenu([
+    {
+      text: "开始编辑对象",
+      icon: "fa fa-edit",
+      show: function (e) {
+        const graphic = e.graphic
+        if (!graphic || !graphic.hasEdit) {
+          return false
+        }
+        return !graphic.isEditing
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
+        if (graphic) {
+          graphicLayer.startEditing(graphic)
+        }
+      }
+    },
+    {
+      text: "停止编辑对象",
+      icon: "fa fa-edit",
+      show: function (e) {
+        const graphic = e.graphic
+        if (!graphic || !graphic.hasEdit) {
+          return false
+        }
+        return graphic.isEditing
+      },
+      callback: (e) => {
+        const graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
+        if (graphic) {
+          graphic.stopEditing()
+        }
+      }
+    },
     {
       text: "还原编辑(还原到初始)",
       icon: "fa fa-pencil",
@@ -333,18 +397,14 @@ export function bindLayerContextMenu() {
       icon: "fa fa-info",
       show: (event) => {
         const graphic = event.graphic
-        if (graphic.graphicIds) {
+        if (graphic.cluster && graphic.graphics) {
           return true
         } else {
           return false
         }
       },
       callback: (e) => {
-        const graphic = e.graphic
-        if (!graphic) {
-          return
-        }
-        const graphics = graphic.getGraphics() // 对应的grpahic数组，可以自定义显示
+        const graphics = e.graphic?.graphics
         if (graphics) {
           const names = []
           for (let index = 0; index < graphics.length; index++) {

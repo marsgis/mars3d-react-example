@@ -11,12 +11,7 @@ export const mapOptions = {
   }
 }
 
-/**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
- */
+// 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
 
@@ -27,10 +22,7 @@ export function onMounted(mapInstance) {
   showDraw()
 }
 
-/**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
- */
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
 }
@@ -55,7 +47,7 @@ export function showDraw(isFlyTo) {
 
   graphicLayer = new mars3d.layer.GeoJsonLayer({
     name: "标绘示例数据",
-    url: "//data.mars3d.cn/file/geojson/mars3d-draw.json",
+    url: "https://data.mars3d.cn/file/geojson/mars3d-draw.json",
     popup: "{type} {name}",
     queryParameters: {
       token: "mars3d" // 可以传自定义url参数，如token等
@@ -105,10 +97,10 @@ export function showPoint() {
 
   graphicLayer = new mars3d.layer.GeoJsonLayer({
     name: "体育设施点",
-    url: "//data.mars3d.cn/file/geojson/hfty-point.json",
+    url: "https://data.mars3d.cn/file/geojson/hfty-point.json",
     symbol: {
       styleOptions: {
-        image: "//data.mars3d.cn/img/marker/mark-red.png",
+        image: "https://data.mars3d.cn/img/marker/mark-red.png",
         verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
         scale: 1,
         scaleByDistance: true,
@@ -185,7 +177,7 @@ export function showChinaLine() {
 
   graphicLayer = new mars3d.layer.GeoJsonLayer({
     name: "全国省界",
-    url: "//data.mars3d.cn/file/geojson/areas/100000_full.json",
+    url: "https://data.mars3d.cn/file/geojson/areas/100000_full.json",
     format: simplifyGeoJSON, // 用于自定义处理geojson
     // simplify: { tolerance: 0.00001 },
     symbol: {
@@ -195,7 +187,7 @@ export function showChinaLine() {
         materialType: mars3d.MaterialType.LineFlow,
         materialOptions: {
           color: "#00ffff",
-          image: "//data.mars3d.cn/img/textures/fence-line.png",
+          image: "https://data.mars3d.cn/img/textures/fence-line.png",
           speed: 10,
           repeat_x: 10
         },
@@ -250,7 +242,7 @@ export function showRegion() {
 
   graphicLayer = new mars3d.layer.GeoJsonLayer({
     name: "合肥市",
-    url: "//data.mars3d.cn/file/geojson/areas/340100_full.json",
+    url: "https://data.mars3d.cn/file/geojson/areas/340100_full.json",
     symbol: {
       styleOptions: {
         fill: true,
@@ -331,7 +323,7 @@ export function showPlanningSurface() {
     id: 1987,
     name: "用地规划",
     // 1.支持URL
-    url: "//data.mars3d.cn/file/geojson/guihua.json",
+    url: "https://data.mars3d.cn/file/geojson/guihua.json",
     // 2.也支持直接传入数据
     // data: {
     //   type: "FeatureCollection",
@@ -400,7 +392,7 @@ export function showBuilding() {
 
   graphicLayer = new mars3d.layer.GeoJsonLayer({
     name: "建筑物面",
-    url: "//data.mars3d.cn/file/geojson/buildings-demo.json",
+    url: "https://data.mars3d.cn/file/geojson/buildings-demo.json",
     symbol: {
       styleOptions: {
         color: "#0d3685",
@@ -436,7 +428,7 @@ export function showFloor() {
 
   graphicLayer = new mars3d.layer.GeoJsonLayer({
     name: "分层分户建筑物面",
-    url: "//data.mars3d.cn/file/geojson/huxing.json",
+    url: "https://data.mars3d.cn/file/geojson/huxing.json",
     symbol: {
       styleOptions: {
         color: "#ffffff",
@@ -481,7 +473,7 @@ export function showBoundaryWall() {
 
   graphicLayer = new mars3d.layer.GeoJsonLayer({
     name: "合肥市",
-    url: "//data.mars3d.cn/file/geojson/areas/340100_full.json",
+    url: "https://data.mars3d.cn/file/geojson/areas/340100_full.json",
     symbol: {
       type: "wall",
       styleOptions: {
@@ -490,7 +482,7 @@ export function showBoundaryWall() {
         materialOptions: {
           color: "#00ffff", // 颜色
           opacity: 0.6, // 透明度
-          image: "//data.mars3d.cn/img/textures/fence.png", // 图片
+          image: "https://data.mars3d.cn/img/textures/fence.png", // 图片
           repeatX: 1, // 重复数量
           axisY: true, // 竖直方向
           speed: 10 // 速度
@@ -530,7 +522,7 @@ export function showMonomer() {
     tilesetLayer = new mars3d.layer.TilesetLayer({
       name: "文庙",
       type: "3dtiles",
-      url: "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
+      url: "https://data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
       position: { alt: 38.8 },
       maximumScreenSpaceError: 1,
       show: true
@@ -583,7 +575,7 @@ export function showWorld() {
 
   graphicLayer = new mars3d.layer.GeoJsonLayer({
     name: "国界线",
-    url: "//data.mars3d.cn/file/geojson/world.json",
+    url: "https://data.mars3d.cn/file/geojson/world.json",
     symbol: {
       type: "polygonP",
       styleOptions: {
@@ -624,7 +616,7 @@ export function showGCJ02Data() {
 
   const gcjLayer = new mars3d.layer.GeoJsonLayer({
     name: "纠偏前",
-    url: "//data.mars3d.cn/file/geojson/areas/340303.json",
+    url: "https://data.mars3d.cn/file/geojson/areas/340303.json",
     symbol: {
       styleOptions: {
         fill: false,
@@ -641,7 +633,7 @@ export function showGCJ02Data() {
 
   graphicLayer = new mars3d.layer.GeoJsonLayer({
     name: "纠偏后",
-    url: "//data.mars3d.cn/file/geojson/areas/340303.json",
+    url: "https://data.mars3d.cn/file/geojson/areas/340303.json",
     chinaCRS: mars3d.ChinaCRS.GCJ02, // 标识数据坐标，内部会纠偏
     symbol: {
       styleOptions: {
