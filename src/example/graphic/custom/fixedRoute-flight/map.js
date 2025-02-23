@@ -144,9 +144,9 @@ function addGraphicLayer() {
     // "clockLoop": true,      //是否循环播放
     clockRange: Cesium.ClockRange.CLAMPED, // CLAMPED 到达终止时间后停止
     camera: {
-      type: "gs",
-      heading: -84,
-      radius: 500
+      type: "gs"
+      // heading: -84,
+      // radius: 500
     },
     model: {
       url: "https://data.mars3d.cn/gltf/mars/MQ-9-Predator.glb",

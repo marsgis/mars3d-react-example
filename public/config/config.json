@@ -74,13 +74,15 @@
     "compass": {
       "style": {
         "bottom": "toolbar",
-        "left": "5px"
+        "left": "5px",
+        "merge": false
       }
     },
     "distanceLegend": {
       "style": {
         "left": "10px",
-        "bottom": "2px"
+        "bottom": "2px",
+        "merge": false
       }
     },
     "locationBar": {

@@ -8,14 +8,14 @@ const Cesium = mars3d.Cesium
 
 let map: mars3d.Map // 地图对象
 let graphicLayer: mars3d.layer.GraphicLayer
-let queryPoi: mars3d.query.GaodePOI // GaodePOI查询
+let queryPoi: mars3d.query.QueryPOI // GaodePOI查询
 let address: any = null
 
 // 初始化当前业务
 export function onMounted(mapInstance: mars3d.Map): void {
   map = mapInstance // 记录map
 
-  queryPoi = new mars3d.query.GaodePOI({
+  queryPoi = new mars3d.query.QueryPOI({
     // city: '合肥市',
   })
 

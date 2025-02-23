@@ -44,12 +44,14 @@ export function onUnmounted() {
 export function viewAircraft() {
   map.trackedEntity = pathEntity.entity
 
-  pathEntity.flyToPoint({
-    radius: 500, // 距离目标点的距离
-    heading: 40,
-    pitch: -50,
-    duration: 0.01
-  })
+  setTimeout(() => {
+    pathEntity.flyToPoint({
+      radius: 500, // 距离目标点的距离
+      heading: 40,
+      pitch: -50,
+      duration: 0
+    })
+  }, 100)
 }
 export function viewTopDown() {
   map.trackedEntity = undefined

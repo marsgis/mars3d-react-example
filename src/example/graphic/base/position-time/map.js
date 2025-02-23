@@ -55,7 +55,7 @@ function addDemoGraphic11(graphicLayer) {
   const graphic = new mars3d.graphic.BillboardEntity({
     position: {
       type: "time", // 时序动态坐标
-      speed: 900,
+      speed: 800,
       list: [
         [117.228059, 31.791955, 33.1],
         [117.207606, 31.79867, 32],
@@ -81,7 +81,7 @@ function addDemoGraphic12(graphicLayer) {
     name: "步行路线",
     position: {
       type: "time", // 时序动态坐标
-      speed: 1800,
+      speed: 700,
       pauseTime: 0.5,
       list: [
         [117.166589, 31.819284, 41.4],
@@ -117,13 +117,12 @@ function addDemoGraphic21(graphicLayer) {
   // 线面状数据的坐标是传 positions 参数
   // positions支持从时序的动态坐标，API: http://mars3d.cn/api/BaseGraphic.html#.TimePolyPositions
 
-  const startTime = map.clock.startTime
   const graphic = new mars3d.graphic.PolylineEntity({
     positions: {
       type: "time",
       list: [
         {
-          time: 10,
+          time: 5,
           positions: [
             [117.010135, 31.813058, 34.8],
             [117.035708, 31.794232, 35.2],
@@ -131,7 +130,7 @@ function addDemoGraphic21(graphicLayer) {
           ]
         },
         {
-          time: 20,
+          time: 10,
           positions: [
             [117.075295, 31.848101, 33.5],
             [117.100002, 31.818779, 33],
@@ -140,7 +139,7 @@ function addDemoGraphic21(graphicLayer) {
           ]
         },
         {
-          time: 30,
+          time: 20,
           positions: [
             [117.149741, 31.864366, 32.5],
             [117.118684, 31.835242, 35.4],
@@ -151,7 +150,7 @@ function addDemoGraphic21(graphicLayer) {
           ]
         },
         {
-          time: 40,
+          time: 30,
           positions: [
             [117.19204, 31.810702, 31.7],
             [117.208252, 31.760556, 25.1],
@@ -159,7 +158,7 @@ function addDemoGraphic21(graphicLayer) {
           ]
         },
         {
-          time: 50,
+          time: 40,
           positions: [
             [117.210314, 31.72052, 13.6],
             [117.063394, 31.724854, 49.5]
@@ -188,7 +187,7 @@ function addDemoGraphic22(graphicLayer) {
       type: "time", // 时序动态坐标
       list: [
         {
-          time: 10,
+          time: 5,
           positions: [
             [117.171524, 31.796989, 27.9],
             [117.201915, 31.782426, 36.3],
@@ -196,7 +195,7 @@ function addDemoGraphic22(graphicLayer) {
           ]
         },
         {
-          time: 20,
+          time: 15,
           pauseTime: 4,
           positions: [
             [117.207479, 31.762051, 26.2],

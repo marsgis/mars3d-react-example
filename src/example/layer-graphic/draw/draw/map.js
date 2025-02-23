@@ -165,22 +165,26 @@ export function onUnmounted() {
 
 // 修改样式，修改点，删除点等操作去激活或更新面板
 function openGraphicOptionsWidget(e) {
-  eventTarget.fire("updateGraphicOptionsWidget", { graphicId: e.graphic.id, layerId: graphicLayer.id })
+  const graphic = e.graphic
+  if (graphic.isDrawing) {
+    return
+  }
+  eventTarget.fire("updateGraphicOptionsWidget", { graphicId: graphic.id, layerId: graphicLayer.id })
 }
 
 function closeGraphicOptionsWidget(e) {
   eventTarget.fire("updateGraphicOptionsWidget", { disable: true })
 }
 
-let isEntityPrimitive = true
+let isEntityGraphic = true
 
 export function changeDrawEntity(value) {
-  isEntityPrimitive = value
+  isEntityGraphic = value
 }
 
 export async function drawPoint() {
   const graphic = await graphicLayer.startDraw({
-    type: isEntityPrimitive ? "point" : "pointP",
+    type: isEntityGraphic ? "point" : "pointP",
     style: {
       pixelSize: 12,
       color: "#3388ff",
@@ -201,7 +205,7 @@ export async function drawPoint() {
 
 export async function drawMarker() {
   const graphic = await graphicLayer.startDraw({
-    type: isEntityPrimitive ? "billboard" : "billboardP",
+    type: isEntityGraphic ? "billboard" : "billboardP",
     style: {
       image: "https://data.mars3d.cn/img/marker/mark-red.png",
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
@@ -223,7 +227,7 @@ export async function drawMarker() {
 
 export async function drawLabel() {
   const graphic = await graphicLayer.startDraw({
-    type: isEntityPrimitive ? "label" : "labelP",
+    type: isEntityGraphic ? "label" : "labelP",
     style: {
       text: "火星科技三维地球",
       color: "#0081c2",
@@ -239,7 +243,7 @@ export async function drawLabel() {
 
 export async function startDrawModel() {
   const graphic = await graphicLayer.startDraw({
-    type: isEntityPrimitive ? "model" : "modelP",
+    type: isEntityGraphic ? "model" : "modelP",
     style: {
       scale: 10,
       url: "https://data.mars3d.cn/gltf/mars/firedrill/xiaofangche.gltf"
@@ -254,7 +258,7 @@ export async function drawPolyline(clampToGround) {
   // map.popup.enabled = false
 
   const graphic = await graphicLayer.startDraw({
-    type: isEntityPrimitive ? "polyline" : "polylineP",
+    type: isEntityGraphic ? "polyline" : "polylineP",
     style: {
       color: clampToGround ? "#ffff00" : "#3388ff",
       width: 3,
@@ -314,7 +318,7 @@ export async function drawBrushLine(clampToGround) {
 
 export async function drawPolygon(clampToGround) {
   const graphic = await graphicLayer.startDraw({
-    type: isEntityPrimitive ? "polygon" : "polygonP",
+    type: isEntityGraphic ? "polygon" : "polygonP",
     style: {
       color: clampToGround ? "#ffff00" : "#3388ff",
       opacity: 0.5,
@@ -343,7 +347,7 @@ export async function drawCurve(clampToGround) {
 
 export async function drawCorridor(clampToGround) {
   const graphic = await graphicLayer.startDraw({
-    type: isEntityPrimitive ? "corridor" : "corridorP",
+    type: isEntityGraphic ? "corridor" : "corridorP",
     style: {
       color: clampToGround ? "#ffff00" : "#3388ff",
       opacity: 0.6,
@@ -357,7 +361,7 @@ export async function drawCorridor(clampToGround) {
 
 export async function drawEllipse(clampToGround) {
   const graphic = await graphicLayer.startDraw({
-    type: isEntityPrimitive ? "circle" : "circleP",
+    type: isEntityGraphic ? "circle" : "circleP",
     style: {
       color: clampToGround ? "#ffff00" : "#3388ff",
       opacity: 0.6,
@@ -373,7 +377,7 @@ export async function drawEllipse(clampToGround) {
 
 export async function drawRectangle(clampToGround) {
   const graphic = await graphicLayer.startDraw({
-    type: isEntityPrimitive ? "rectangle" : "rectangleP",
+    type: isEntityGraphic ? "rectangle" : "rectangleP",
     style: {
       color: clampToGround ? "#ffff00" : "#3388ff",
       opacity: 0.6,
@@ -389,7 +393,7 @@ export async function drawRectangle(clampToGround) {
 
 export async function draPlane() {
   const graphic = await graphicLayer.startDraw({
-    type: isEntityPrimitive ? "plane" : "planeP",
+    type: isEntityGraphic ? "plane" : "planeP",
     style: {
       color: "#00ff00",
       opacity: 0.8,
@@ -404,7 +408,7 @@ export async function draPlane() {
 
 export async function draWall(closure) {
   const graphic = await graphicLayer.startDraw({
-    type: isEntityPrimitive ? "wall" : "wallP",
+    type: isEntityGraphic ? "wall" : "wallP",
     style: {
       color: "#00ff00",
       opacity: 0.8,
@@ -418,7 +422,7 @@ export async function draWall(closure) {
 
 export async function drawBox() {
   const graphic = await graphicLayer.startDraw({
-    type: isEntityPrimitive ? "box" : "boxP",
+    type: isEntityGraphic ? "box" : "boxP",
     style: {
       color: "#00ff00",
       opacity: 0.6,
@@ -433,7 +437,7 @@ export async function drawBox() {
 
 export async function drawCylinder() {
   const graphic = await graphicLayer.startDraw({
-    type: isEntityPrimitive ? "cylinder" : "cylinderP",
+    type: isEntityGraphic ? "cylinder" : "cylinderP",
     style: {
       fill: true,
       color: "#00ff00",
@@ -447,7 +451,7 @@ export async function drawCylinder() {
 
 export async function drawEllipsoid() {
   const graphic = await graphicLayer.startDraw({
-    type: isEntityPrimitive ? "ellipsoid" : "ellipsoidP",
+    type: isEntityGraphic ? "ellipsoid" : "ellipsoidP",
     style: {
       fill: true,
       color: "#00ff00",
@@ -460,7 +464,7 @@ export async function drawEllipsoid() {
 
 export async function drawExtrudedPolygon() {
   const graphic = await graphicLayer.startDraw({
-    type: isEntityPrimitive ? "polygon" : "polygonP",
+    type: isEntityGraphic ? "polygon" : "polygonP",
     style: {
       color: "#00ff00",
       opacity: 0.6,
@@ -473,7 +477,7 @@ export async function drawExtrudedPolygon() {
 
 export async function drawExtrudedRectangle() {
   const graphic = await graphicLayer.startDraw({
-    type: isEntityPrimitive ? "rectangle" : "rectangleP",
+    type: isEntityGraphic ? "rectangle" : "rectangleP",
     style: {
       color: "#00ff00",
       opacity: 0.6,
@@ -486,7 +490,7 @@ export async function drawExtrudedRectangle() {
 
 export async function drawExtrudedCircle() {
   const graphic = await graphicLayer.startDraw({
-    type: isEntityPrimitive ? "circle" : "circleP",
+    type: isEntityGraphic ? "circle" : "circleP",
     style: {
       color: "#00ff00",
       opacity: 0.6,
@@ -514,6 +518,7 @@ export async function drawSatellite() {
       minimumPixelSize: 90
     }
   })
+  graphic.stopDraw()
   console.log("标绘完成", graphic.toJSON())
 
   setTimeout(() => {

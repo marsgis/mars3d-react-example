@@ -31,4 +31,5 @@ const baseConfig = [
   }
 ]
 
+// window.baseConfig = baseConfig
 export default baseConfig

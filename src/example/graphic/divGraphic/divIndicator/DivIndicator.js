@@ -60,8 +60,8 @@ class DivIndicator extends mars3d.graphic.DivGraphic {
     event.preventDefault()
     event.stopPropagation()
 
-    const disX = event.clientX - this._container_drag?.offsetLeft
-    const disY = event.clientY - this._container_drag?.offsetTop
+    const disX = event.clientX - this._container_drag?.offsetLeft * (this._timeinfo?.scale ?? 1)
+    const disY = event.clientY - this._container_drag?.offsetTop * (this._timeinfo?.scale ?? 1)
 
     addEvent(document.documentElement, "mousemove", handleMove)
     addEvent(document.documentElement, "mouseup", handleUp)
@@ -73,7 +73,7 @@ class DivIndicator extends mars3d.graphic.DivGraphic {
       el.preventDefault()
       el.stopPropagation()
 
-      const scale = that._timeinfo?.scale ?? 0
+      const scale = that._timeinfo?.scale ?? 1
       that.style.moveDomLeft = (el.clientX - disX) / scale
       that.style.moveDomTop = (el.clientY - disY) / scale
 

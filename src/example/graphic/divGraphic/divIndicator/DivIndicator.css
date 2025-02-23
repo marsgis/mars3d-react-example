@@ -7,10 +7,10 @@
 }
 
 .divIndicator-drag {
-  width: 100px;
+  width: max-content;
+  max-width: 500px;
+  max-height: 130px;
   position: absolute;
-  /* left: 50px;
-    top: -100px; */
   cursor: pointer;
   user-select: none;
   text-align: center;
@@ -21,7 +21,10 @@
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
-  max-height: 130px;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .divIndicator-line {

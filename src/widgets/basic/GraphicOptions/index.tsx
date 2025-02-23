@@ -1,12 +1,12 @@
-import { MarsDialog, MarsIcon, MarsTabs, MarsTabPane, MarsButton } from "@mars/components/MarsUI"
+import { MarsDialog, MarsIcon, MarsTabs } from "@mars/components/MarsUI"
 import { useLifecycle } from "@mars/widgets/common/uses/useLifecycle"
+import { aloneTypeStyle } from "@mars/utils/mars-util"
 import { Space } from "antd"
 import * as mars3d from "mars3d"
 import { useEffect, useState, useCallback } from "react"
 import MarsStyle from "./MarsStyle"
 import MarsBaseinfo from "./MarsBaseinfo"
 import * as mapWork from "./map"
-// import _ from "lodash"
 import "./index.less"
 
 let graphicData: any
@@ -21,10 +21,11 @@ function GraphicEditor({ currentWidget, ...props }) {
 
   // 样式
   const [style, setStyle] = useState(null)
+  // 多个类型作为参数设置的矢量,如fixedRoute
+  const [styleParArr, setStyleParArr] = useState([])
 
   useEffect(() => {
     // console.log("编辑面板接收到了graphic对象更新:", currentWidget)
-
     if (!currentWidget.data.layerId || !currentWidget.data.graphicId) {
       return
     }
@@ -42,7 +43,25 @@ function GraphicEditor({ currentWidget, ...props }) {
     }
     setGraphicOptions(graphicData)
     // =====style===========
-    setStyle(graphicData.style ?? {})
+    const styleOptions = graphicData.style ?? {}
+
+    const paraArr = aloneTypeStyle[graphicData.type]
+    if (paraArr && paraArr.length) {
+      paraArr.forEach((typeItem) => {
+        const typeData = graphicData[typeItem]
+
+        if (typeof typeItem !== "string" && typeItem.length) {
+          typeItem.forEach((item) => {
+            styleOptions[item] = graphicData[item]
+          })
+        } else if (typeData) {
+          styleOptions[typeItem] = { ...typeData }
+        }
+      })
+      setStyleParArr(paraArr)
+    }
+
+    setStyle(styleOptions)
 
     // =====其他参数===========
     setGraphicType(graphicData.type)
@@ -52,6 +71,76 @@ function GraphicEditor({ currentWidget, ...props }) {
   const tabChange = useCallback((key: string) => {
     setAcTab(key)
   }, [])
+
+  function getStyleHtml() {
+    if (!styleParArr?.length) {
+      return (
+        <MarsStyle
+          style={style}
+          customType={customType}
+          graphicType={graphicType}
+          onChange={(data, key?) => {
+            mapWork.setGraphicOptions({ style: data })
+
+            let newStyle: any = {}
+            if (key) {
+              newStyle = { ...style, [key]: { ...style[key], ...data[key] } }
+            } else {
+              newStyle = { ...style, ...data }
+            }
+            // console.log("修改了style样式", style, data, newStyle)
+            setStyle(newStyle)
+          }}
+        ></MarsStyle>
+      )
+    } else {
+      return (
+        <>
+          <MarsStyle
+            style={style}
+            customType={customType}
+            graphicType={graphicType}
+            isParent={true}
+            onChange={(data, key) => {
+              mapWork.setGraphicOptions({ ...data })
+
+              let newStyle: any = {}
+              if (key) {
+                newStyle = { ...style, [key]: { ...style[key], ...data[key] } }
+              } else {
+                newStyle = { ...style, ...data }
+              }
+              // console.log("修改了style样式", style, data, newStyle)
+              setStyle(newStyle)
+            }}
+          ></MarsStyle>
+          {styleParArr.map(
+            (item, index) =>
+              typeof item === "string" && (
+                <MarsStyle
+                  key={index}
+                  style={style[item]}
+                  graphicType={item}
+                  parentType={graphicType}
+                  onChange={(data, key) => {
+                    mapWork.setGraphicOptions({ ...data })
+
+                    let newStyle: any = {}
+                    if (key) {
+                      newStyle = { ...style, [key]: { ...style[key], ...data[key] } }
+                    } else {
+                      newStyle = { ...style, ...data }
+                    }
+                    // console.log("修改了style样式", style, data, newStyle)
+                    setStyle(newStyle)
+                  }}
+                ></MarsStyle>
+              )
+          )}
+        </>
+      )
+    }
+  }
 
   return (
     <MarsDialog
@@ -96,20 +185,7 @@ function GraphicEditor({ currentWidget, ...props }) {
             </Space>
           </div>
           <div className="attr-editor-main">
-            {acTab === "style" && (
-              <MarsStyle
-                style={style}
-                customType={customType}
-                graphicType={graphicType}
-                onChange={(data) => {
-                  // console.log("修改了style样式", data)
-                  mapWork.setGraphicOptions({ style: data })
-
-                  const newStyle = { ...style, ...data }
-                  setStyle(newStyle)
-                }}
-              ></MarsStyle>
-            )}
+            {acTab === "style" && graphicType && getStyleHtml()}
             {acTab === "baseInfo" && (
               <MarsBaseinfo
                 data={graphicOptions}

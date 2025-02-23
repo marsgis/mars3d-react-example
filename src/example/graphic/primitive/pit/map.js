@@ -135,6 +135,7 @@ function addDemoGraphic2(graphicLayer) {
     style: {
       diffHeight: 200, // 井的深度
       image: "https://data.mars3d.cn/img/textures/mining.jpg",
+      repeatX: 1, // 贴图X方向重复次数
       imageBottom: "https://data.mars3d.cn/img/textures/poly-soil.jpg",
       splitNum: 50 // 井边界插值数
     },

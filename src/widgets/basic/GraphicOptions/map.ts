@@ -1,10 +1,10 @@
-import * as mars3d from "mars3d"
+ import * as mars3d from "mars3d"
 
 const Cesium = mars3d.Cesium
 
 let map: mars3d.Map // 地图对象
-let layer
-export let graphic
+let layer:mars3d.layer.GraphicLayer
+export let graphic : mars3d.graphic.BaseGraphic
 
 // 初始化当前业务
 export function onMounted(mapInstance: mars3d.Map): void {
@@ -42,10 +42,14 @@ export function getGraphicOptions(layerId, graphicId) {
   graphicOptions.isPoint = graphic.isPoint // 判断是否是点对象
   graphicOptions.positionType = getPositionType(graphicOptions)
   if (graphic.isPoint) {
+    // @ts-expect-error
     graphicOptions.minPointNum = graphic._minPointNum ?? 1
+    // @ts-expect-error
     graphicOptions.maxPointNum = graphic._maxPointNum ?? 1
   } else {
+    // @ts-expect-error
     graphicOptions.minPointNum = graphic._minPointNum ?? 3
+    // @ts-expect-error
     graphicOptions.maxPointNum = graphic._maxPointNum ?? 999
   }
 
@@ -84,4 +88,6 @@ export function setGraphicOptions(options) {
     return
   }
   graphic.setOptions(options)
+
+  // console.log("改变后的矢量对象", graphic)
 }

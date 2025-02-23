@@ -158,6 +158,15 @@ function UIComponent() {
                   <MarsButton onClick={() => mapWork.drawExtrudedRectangle()}>矩形立体</MarsButton>
                 </Space>
               )
+            },
+            {
+              type: "custom",
+              label: "其他",
+              element: (
+                <Space wrap>
+                  <MarsButton onClick={() => mapWork.drawSatellite()}>卫星</MarsButton>
+                </Space>
+              )
             }
           ]}
         ></MarsGui>

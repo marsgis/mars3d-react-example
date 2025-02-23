@@ -199,6 +199,9 @@ export const LayerState = (props) => {
   // 展示属性面板
   function openGraphicOptionsWidget(event: any) {
     const graphic = event.graphic
+    if (graphic.isDrawing) {
+      return
+    }
     const graphicLayer = getManagerLayer()
 
     const data = { layerId: graphicLayer.id, graphicId: graphic.id }

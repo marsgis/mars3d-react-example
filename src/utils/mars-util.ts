@@ -108,3 +108,10 @@ export function apiArrayToSync(context: any, apiNames: string[], success = "succ
       })
   })
 }
+
+export const aloneTypeStyle = {
+  fixedRoute: ["label", "billboard", "point", "model", "circle", "coneTrack", "path", "polyline", "wall"],
+  route: ["label", "billboard", "point", "model", "circle", "coneTrack", "path", "polyline", "wall"],
+  satellite: [["tle1", "tle2"], "model", "label", "billboard", "point", "path"]
+}
+

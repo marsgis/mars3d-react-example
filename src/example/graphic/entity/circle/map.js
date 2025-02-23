@@ -291,8 +291,7 @@ function addDemoGraphic7(graphicLayer) {
       // 扫描材质
       materialType: mars3d.MaterialType.Image2,
       materialOptions: {
-        image: "https://data.mars3d.cn/img/textures/poly-hexa.png",
-        color: "#ff0000"
+        image: "https://data.mars3d.cn/img/textures/poly-hexa.png"
       }
     },
     attr: { remark: "示例7" }

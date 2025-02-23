@@ -57,11 +57,12 @@ function addDemoGraphic1() {
   const testLine = new mars3d.graphic.PolylineEntity({
     id: "testLine",
     positions: new Cesium.CallbackProperty(function (time) {
+      const localStart = conicSensor?.position
       const localEnd = conicSensor?.rayPosition
-      if (!localEnd) {
+      if (!localStart || !localEnd) {
         return []
       }
-      return [conicSensor.position, localEnd]
+      return [localStart, localEnd]
     }, false),
     style: {
       arcType: Cesium.ArcType.NONE,
