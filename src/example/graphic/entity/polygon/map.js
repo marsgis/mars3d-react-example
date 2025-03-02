@@ -106,6 +106,13 @@ function addDemoGraphic2(graphicLayer) {
     attr: { remark: "示例2" }
   })
   graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
+
+  // 测试整体平移
+  setTimeout(function () {
+    const centerNew = [117.169529, 31.841169, 235.3]
+    const positionsNew = mars3d.PolyUtil.movePoints(graphic.positions, centerNew)
+    graphic.positions = positionsNew
+  }, 6000)
 }
 
 function addDemoGraphic3(graphicLayer) {

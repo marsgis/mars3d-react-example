@@ -112,7 +112,7 @@ function addDemoGraphic3() {
       angle2: 10,
       heading: 88.5,
       pitch: -90,
-      distance: 78,
+      distance: 70,
       showFrustum: true
     },
     attr: { remark: "示例3" }

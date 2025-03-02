@@ -10,13 +10,15 @@ function UIComponent() {
         <br />
         2、 包括0-12级影像底图(当前页面效果)
         <br />
-        3、 包括所有模型数据：
-        <MarsButton href="editor-react.html?id=layer-tileset/type/list" target="_blank">
-          3dtiles模型
-        </MarsButton>
-        <MarsButton href="editor-react.html?id=layer-graphic/draw/draw-model-list" target="_blank">
-          gltf模型
-        </MarsButton>
+        <div>
+          3、 包括所有模型数据：
+          <MarsButton href="editor-react.html?id=layer-tileset/type/list" target="_blank">
+            3dtiles模型
+          </MarsButton>
+          <MarsButton href="editor-react.html?id=layer-graphic/draw/draw-model-list" target="_blank">
+            gltf模型
+          </MarsButton>
+        </div>
         <br />
         4、 包括其他所有示例的json等文件
       </Space>

@@ -1,3 +1,4 @@
+import { console } from "inspector"
 import * as mars3d from "mars3d"
 
 export let map // mars3d.Map三维地图对象
@@ -36,6 +37,14 @@ export function onMounted(mapInstance) {
   map.addThing(terrainClip)
 
   globalNotify("功能提示", "非真实数据，仅体现岩层效果。")
+
+  // setTimeout(() => {
+  //   const pitEntity = terrainClip._areaList[0].downGraphic
+  //   pitEntity.setStyle({
+  //     image: "https://data.mars3d.cn/img/textures/poly-stone.jpg",
+  //     imageBottom: "https://data.mars3d.cn/img/textures/poly-soil.jpg"
+  //   })
+  // }, 5000)
 }
 
 // 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）

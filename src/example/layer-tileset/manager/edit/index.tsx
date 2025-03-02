@@ -227,12 +227,6 @@ function UIComponent() {
     [agent, inputUrl, popupEnable, highlightEnable]
   )
 
-  useEffect(() => {
-    // setTimeout(() => {
-    //   mapWork.showModel(inputUrl)
-    // }, 1000)
-  }, [inputUrl])
-
   const checkedChange = useCallback((keys: any, item: any) => {
     setCheckedKeys(keys)
     mapWork.compModelChange(item.node.id, item.node.sphere)
@@ -240,10 +234,9 @@ function UIComponent() {
 
   useMemo(() => {
     mapWork.eventTarget.on("tiles3dLayerLoad", function (event: any) {
-      const tiles3dLayer = event.layer
+      const json = event.layer
       // 取模型中心点信息
-      const locParams = tiles3dLayer.center
-
+      const locParams = json.position // 取模型中心点信息
       if (locParams.alt < -1000 || locParams.alt > 10000) {
         locParams.alt = 0 // 高度异常数据，自动赋值高度为0
       }
@@ -252,15 +245,15 @@ function UIComponent() {
       marsGuiRef.current.updateField("txtY", locParams.lat.toFixed(6))
       marsGuiRef.current.updateField("txtZ", locParams.alt.toFixed(6))
 
-      marsGuiRef2.current.updateField("maximumScreenSpaceError", tiles3dLayer.tileset.maximumScreenSpaceError)
+      marsGuiRef2.current.updateField("maximumScreenSpaceError", json.maximumScreenSpaceError ?? 16)
 
-      if (tiles3dLayer.transform) {
-        marsGuiRef2.current.updateField("rotationX", tiles3dLayer.rotation_x.toFixed(1))
-        marsGuiRef2.current.updateField("rotationY", tiles3dLayer.rotation_y.toFixed(1))
-        marsGuiRef2.current.updateField("rotationZ", tiles3dLayer.rotation_z.toFixed(1))
-        marsGuiRef2.current.updateField("axis", tiles3dLayer.axis)
+      if (json.transform) {
+        marsGuiRef2.current.updateField("rotationX", json.rotation.x ?? 0)
+        marsGuiRef2.current.updateField("rotationY", json.rotation.y ?? 0)
+        marsGuiRef2.current.updateField("rotationZ", json.rotation.z ?? 0)
+        marsGuiRef2.current.updateField("axis", json.axis ?? "")
 
-        marsGuiRef3.current.updateField("scale", tiles3dLayer.scale || 1)
+        marsGuiRef3.current.updateField("scale", json.scale ?? 1)
       } else {
         mapWork.updateHeightForSurfaceTerrain(locParams)
       }
@@ -300,9 +293,11 @@ function UIComponent() {
     mapWork.eventTarget.on("changeHeight", function (event: any) {
       marsGuiRef.current.updateField("txtZ", event.alt)
     })
-    mapWork.eventTarget.on("historyUrl", function (event: any) { 
-      setInputUrl(event.url)
-      mapWork.showModel(inputUrl)
+    mapWork.eventTarget.on("historyUrl", function (event: any) {
+      if (event.url) {
+        setInputUrl(event.url)
+      }
+      mapWork.showModel(event.url ?? inputUrl)
     })
   }, [])
 
@@ -397,7 +392,7 @@ function UIComponent() {
             <div className="f-tac f-pdg-10-t">
               <MarsButton
                 onClick={() => {
-                  mapWork.saveBookmark(updataValue())
+                  mapWork.saveBookmark()
                 }}
               >
                 保存参数

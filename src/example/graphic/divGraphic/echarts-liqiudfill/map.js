@@ -43,7 +43,7 @@ function addRandomGraphicByCount(position, attr) {
   const graphic = new mars3d.graphic.DivGraphic({
     position,
     style: {
-      html: `<div style="width: 80px;height:80px;"></div>`,
+      html: `<div></div>`,
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM
     },
@@ -51,6 +51,8 @@ function addRandomGraphicByCount(position, attr) {
   })
   graphic.on(mars3d.EventType.load, function (e) {
     const dom = e.target.container.firstChild
+    dom.style.width = "60px"
+    dom.style.height = "60px"
     const attr = e.target.attr
 
     const liquidfillchartChart = echarts.init(dom)

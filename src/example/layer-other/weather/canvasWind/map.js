@@ -25,7 +25,7 @@ export function onMounted(mapInstance) {
     particlesNumber: 5000,
     maxAge: 120,
     lineWidth: 2,
-    // 单颜色
+    // 单颜色 - 可放开颜色选择控件，进行修改
     // color: "#ffffff",
     // 多颜色
     colors: [

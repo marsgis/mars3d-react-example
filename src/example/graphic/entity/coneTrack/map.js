@@ -247,6 +247,7 @@ export function addRandomGraphicByCount(count) {
     const graphic = new mars3d.graphic.ConeTrack({
       position,
       style: {
+        angle: 15, // 半场角度
         length: result.radius * 2,
         topRadius: 0.0,
         bottomRadius: result.radius,

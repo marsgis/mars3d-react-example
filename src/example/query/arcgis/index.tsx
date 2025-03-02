@@ -37,11 +37,11 @@ const query = () => {
 const customRow = (record: any) => {
   return {
     onClick: () => {
-      if (record.graphic == null) {
+      if (record.graphicId == null) {
         $message(record.name + " 无经纬度坐标信息！")
         return
       }
-      mapWork.flyToGraphic(record.graphic)
+      mapWork.flyToGraphic(record.graphicId)
     }
   }
 }
@@ -65,7 +65,7 @@ function UIComponent() {
       resultData = []
       setTableData([])
       event.list.forEach((item: any, index: number) => {
-        resultData.push({ key: index, name: item["项目名称"], type: item["设施类型"], address: item["具体位置"], graphic: item.graphic })
+        resultData.push({ key: index, name: item["项目名称"], type: item["设施类型"], address: item["具体位置"], graphicId: item.graphicId })
       })
       setTableData(resultData)
     })

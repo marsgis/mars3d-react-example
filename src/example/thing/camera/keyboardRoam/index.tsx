@@ -96,12 +96,11 @@ function UIComponent() {
       codeName: "→",
       codeClass: "zm_right"
     }
-    
   ]
 
   return (
     <>
-      <MarsPannel visible={true} right={10} top={10} >
+      <MarsPannel visible={true} right={10} top={10}>
         <MarsForm>
           <MarsFormItem label="演示视角：">
             <Space>
@@ -116,13 +115,14 @@ function UIComponent() {
       </MarsPannel>
       <MarsPannel visible={true} left={10} top={10}>
         <div className="keyboard-img">
-          {codeList.map((item) => (
+          {codeList.map((item, index) => (
             <div
+              key={index}
               style={{ display: activeValue === item.codeValue ? "block" : "none" }}
               className={classNames({
                 zm: true,
                 [item.codeClass]: true,
-                active: activeValue === item.codeValue 
+                active: activeValue === item.codeValue
               })}
             >
               {item.codeName}

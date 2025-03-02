@@ -7,6 +7,10 @@ export let map // mars3d.Map三维地图对象
 export const mapOptions = {
   scene: {
     center: { lat: 8.560501, lng: 111.849127, alt: 10725692, heading: 358, pitch: -87 }
+  },
+  control: {
+    clockAnimate: true, // 时钟动画控制(左下角)
+    timeline: true // 是否显示时间线控件
   }
 }
 

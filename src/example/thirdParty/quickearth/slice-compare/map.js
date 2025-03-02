@@ -23,8 +23,6 @@ export function onMounted(mapInstance) {
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  createControl()
-
   initDemoData()
 }
 
@@ -189,9 +187,9 @@ function addGraphics(gridOptions) {
 
 let mapEx // 对比的地图
 let selPoint // 单击选中的坐标
-export function createControl() {
+export function createControl(domId) {
   // 修改已有地图为50%
-  const mapOld = document.getElementById("centerDiv3D")
+  const mapOld = document.getElementById(domId)
   mapOld.style.width = "50%"
 
   // 获取原来地图的参数

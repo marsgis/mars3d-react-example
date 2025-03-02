@@ -1,14 +1,11 @@
 import * as mapWork from "./map.js"
-import { MarsFormItem, MarsGui, MarsPannel } from "@mars/components/MarsUI"
+import { MarsFormItem, MarsGui, MarsButton, MarsPannel } from "@mars/components/MarsUI"
 import type { GuiItem } from "@mars/components/MarsUI"
-import { Button, Space } from "antd"
+import { Space } from "antd"
 import { useRef } from "react"
 
 function UIComponent() {
   const guiRef = useRef<any>()
-
-  
-  
 
   const options: GuiItem[] = [
     {
@@ -20,7 +17,6 @@ function UIComponent() {
       max: 1000,
       step: 1,
       change(value) {
-        // console.log("value------", value)
         mapWork.setLayerOptions({ particlesTextureSize: value })
       }
     },
@@ -34,9 +30,7 @@ function UIComponent() {
       max: 10,
       step: 0.1,
       change(value) {
-        // console.log("value------", value)
         mapWork.setLayerOptions({ lineWidth: { min: value[0], max: value[1] } })
-        
       }
     },
     {
@@ -49,9 +43,7 @@ function UIComponent() {
       max: 200,
       step: 1,
       change(value) {
-        // console.log("value------", value)
         mapWork.setLayerOptions({ lineLength: { min: value[0], max: value[1] } })
-        
       }
     },
     {
@@ -63,9 +55,7 @@ function UIComponent() {
       max: 1,
       step: 0.01,
       change(value) {
-        // console.log("value------", value)
         mapWork.setLayerOptions({ speedFactor: value })
-        
       }
     },
     {
@@ -77,9 +67,7 @@ function UIComponent() {
       max: 0.01,
       step: 0.0001,
       change(value) {
-        // console.log("value------", value)
         mapWork.setLayerOptions({ dropRate: value })
-        
       }
     },
     {
@@ -91,9 +79,7 @@ function UIComponent() {
       max: 0.2,
       step: 0.001,
       change(value) {
-        // console.log("value------", value)
         mapWork.setLayerOptions({ dropRateBump: value })
-        
       }
     },
     {
@@ -102,9 +88,7 @@ function UIComponent() {
       label: "翻转Y坐标",
       value: false,
       change(value) {
-        // console.log("value------", value)
         mapWork.setLayerOptions({ flipY: value })
-       
       }
     },
     {
@@ -113,9 +97,7 @@ function UIComponent() {
       label: "线颜色",
       value: "#4696DB",
       change(value) {
-        // console.log("value------", value)
         mapWork.setLayerOptions({ colors: [value] })
-        
       }
     }
   ]
@@ -123,10 +105,10 @@ function UIComponent() {
     <MarsPannel visible={true} width="400px" right="10" top="10">
       <MarsFormItem label="演示数据">
         <Space>
-          <Button onClick={() => mapWork.loadHongkongData()}>香港</Button>
-          <Button onClick={() => mapWork.loadDongnanData1()}>新加坡</Button>
-          <Button onClick={() => mapWork.loadDongnanData2()}>洋流</Button>
-          <Button onClick={() => mapWork.loadEarthData()}>全球</Button>
+          <MarsButton onClick={() => mapWork.loadHongkongData()}>香港</MarsButton>
+          <MarsButton onClick={() => mapWork.loadDongnanData1()}>新加坡</MarsButton>
+          <MarsButton onClick={() => mapWork.loadDongnanData2()}>洋流</MarsButton>
+          <MarsButton onClick={() => mapWork.loadEarthData()}>全球</MarsButton>
         </Space>
       </MarsFormItem>
       <MarsGui formProps={{ labelCol: { span: 7 } }} ref={guiRef} options={options}></MarsGui>

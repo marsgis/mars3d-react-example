@@ -31,6 +31,8 @@ export const mapOptions = {
   layers: []
 }
 
+export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+
 // 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
@@ -103,6 +105,7 @@ export function onMounted(mapInstance) {
       break
     default:
       showQxShequDemo()
+      eventTarget.fire("showControl")
       break
   }
 }

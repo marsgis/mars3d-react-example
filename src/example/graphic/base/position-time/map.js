@@ -272,6 +272,8 @@ export async function startDrawGraphic2() {
       showAll: true
     }
   })
+
+  graphic.start()
   console.log("标绘完成", graphic.toJSON())
 }
 

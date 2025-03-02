@@ -93,9 +93,6 @@ class UIComponent extends Component<any, any> {
     }))
   }
 
-  private layersObj = {}
-  private expandedKeys = []
-  private checkedKeys = []
   componentDidMount(): void {
     // 访问后端接口，取台风列表数据
     const url = "//data.mars3d.cn/file/apidemo/typhoon/list_2020.json"

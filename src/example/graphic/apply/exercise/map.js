@@ -221,7 +221,7 @@ function addDynamicsGraphic() {
       color: "#FF0000",
       list: [
         {
-          time: "2017/08/25 08:00:06",
+          time: "2017/08/25 08:00:04",
           positions: [
             [116.463145, 30.818331, 556.9],
             [116.213265, 30.879942, 639.8],
@@ -358,7 +358,6 @@ function addDynamicsGraphic() {
       name: item.name,
       position: {
         type: "time", // 时序动态坐标
-        speed: 260,
         list: item.list,
         forwardExtrapolationType: item.forwardExtrapolationType ?? Cesium.ExtrapolationType.NONE, // 在最后1个结束时间之后，NONE时不显示，HOLD时显示结束时间对应坐标位置
         backwardExtrapolationType: Cesium.ExtrapolationType.NONE // 在第1个开始时间之前，NONE时不显示，HOLD时显示开始时间对应坐标位置
@@ -442,7 +441,6 @@ function addDynamicsGraphic() {
       name: item.name,
       position: {
         type: "time", // 时序动态坐标
-        speed: 260,
         list: item.list,
         backwardExtrapolationType: Cesium.ExtrapolationType.NONE, // 在第1个开始时间之前，NONE时不显示，HOLD时显示开始时间对应坐标位置
         forwardExtrapolationType: Cesium.ExtrapolationType.NONE // 在最后1个结束时间之后，NONE时不显示，HOLD时显示结束时间对应坐标位置
@@ -501,7 +499,6 @@ function addDynamicsGraphic() {
       name: item.name,
       position: {
         type: "time", // 时序动态坐标
-        speed: 260,
         list: item.list,
         backwardExtrapolationType: Cesium.ExtrapolationType.NONE, // 在第1个开始时间之前，NONE时不显示，HOLD时显示开始时间对应坐标位置
         forwardExtrapolationType: Cesium.ExtrapolationType.NONE // 在最后1个结束时间之后，NONE时不显示，HOLD时显示结束时间对应坐标位置

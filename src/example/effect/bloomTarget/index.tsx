@@ -126,7 +126,7 @@ function UIComponent() {
         type: "color",
         field: "color",
         label: "泛光颜色",
-        value: "#fff",
+        value: "#ffff00",
         change(value) {
           mapWork.setColor(value)
         }

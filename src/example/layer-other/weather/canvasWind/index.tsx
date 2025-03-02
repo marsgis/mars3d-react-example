@@ -52,24 +52,26 @@ function UIComponent() {
       change(value) {
         mapWork.changeLinewidth(value)
       }
-    },
-    {
-      type: "color",
-      field: "color",
-      label: "线颜色:",
-      value: "#4696db",
-      change(value) {
-        mapWork.changeColor(value)
-      }
     }
+    // {
+    //   type: "color",
+    //   field: "color",
+    //   label: "线颜色:",
+    //   value: "#4696db",
+    //   change(value) {
+    //     mapWork.changeColor(value)
+    //   }
+    // }
   ]
   return (
     <MarsPannel visible={true} right="10" top="10">
       <MarsForm>
         <MarsFormItem label="演示数据:">
           <Space>
-            <MarsButton onClick={() => mapWork.loadEarthData()}>全球区域</MarsButton>
-            <MarsButton onClick={() => mapWork.loadDongnanData()}>局部区域</MarsButton>
+            <MarsButton onClick={mapWork.loadHongkongData}>香港</MarsButton>
+            <MarsButton onClick={mapWork.loadDongnanData1}>新加坡</MarsButton>
+            <MarsButton onClick={mapWork.loadDongnanData2}>洋流</MarsButton>
+            <MarsButton onClick={mapWork.loadEarthData}>全球区域</MarsButton>
           </Space>
         </MarsFormItem>
       </MarsForm>

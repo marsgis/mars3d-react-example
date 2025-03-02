@@ -258,7 +258,7 @@ export function bindGraphicDemo2() {
     }
   })
   // 绑定Tooltip
-  graphic.bindTooltip(innerHtml, { offsetY: -30, pointerEvents: true }).openTooltip()
+  graphic.bindTooltip(innerHtml, { offsetY: -2, pointerEvents: true }).openTooltip()
 }
 
 // 只是为了演示，可以单击详情

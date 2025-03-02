@@ -8,7 +8,8 @@ import {
   $message,
   $alert,
   $showLoading,
-  $hideLoading
+  $hideLoading,
+  MarsFormItem
 } from "@mars/components/MarsUI"
 import { Space, Upload } from "antd"
 import { Component } from "react"
@@ -254,7 +255,9 @@ export class GraphicLayerState extends Component<any, any> {
       enabledRightMenu: false,
       enabledShowHide: true,
       enabledOpacity: true,
+      enabledCluster: true,
       isDrawing: false,
+      isCluster: false,
       opacity: 1,
       currentPage: 5, // 分页查询每页条数
       graphicDataList: [], // 表格数据
@@ -333,7 +336,8 @@ export class GraphicLayerState extends Component<any, any> {
         if (graphics.length > 0) {
           this.setState({
             enabledOpacity: graphics[0].hasOpacity,
-            enabledEdit: graphics[0].hasEdit
+            enabledEdit: graphics[0].hasEdit,
+            enabledCluster: graphics[0].hasCluster
           })
         }
         // 当加载矢量只有一条时，自动打开编辑面板
@@ -352,9 +356,9 @@ export class GraphicLayerState extends Component<any, any> {
 
         // 触发属性编辑面板
         const editUpdateFun = mars3d.Util.funDebounce(that.openGraphicOptionsWidget, 500)
-        layer.on([mars3d.EventType.click, mars3d.EventType.drawCreated, mars3d.EventType.editStart, mars3d.EventType.editStyle], editUpdateFun)
+        layer.on([mars3d.EventType.click, mars3d.EventType.drawCreated, mars3d.EventType.editStart, mars3d.EventType.editStyle], editUpdateFun, that)
         const removeFun = mars3d.Util.funDebounce(that.closeGraphicOptionsWidget, 500)
-        layer.on(mars3d.EventType.removeGraphic, removeFun)
+        layer.on(mars3d.EventType.removeGraphic, removeFun, that)
 
         // 表格相关操作 - 添加、删除
         this.initGraphicableData(layer)
@@ -385,6 +389,7 @@ export class GraphicLayerState extends Component<any, any> {
   initGraphicableData(graphicLayer) {
     const list = graphicLayer.graphics
 
+    let graphic
     list.forEach((item) => {
       if (item.isPrivate) {
         return
@@ -395,12 +400,22 @@ export class GraphicLayerState extends Component<any, any> {
         name: getGraphicName(item)
       })
       rowKeys.push(item.id)
+
+      graphic = item
     })
 
     this.setState({
       graphicDataList: [...graphicDataList],
       rowKeys: [...rowKeys]
     })
+
+    if (graphic) {
+      this.setState({
+        enabledOpacity: graphic.hasOpacity,
+        enabledEdit: graphic.hasEdit,
+        enabledCluster: graphic.hasCluster
+      })
+    }
   }
 
   // 展示属性面板
@@ -414,6 +429,9 @@ export class GraphicLayerState extends Component<any, any> {
     if (graphic.isDestroy || graphic.isPrivate) {
       return
     }
+
+    console.log("this.props?.customEditor", this.props)
+    console.log("graphic.type", graphic.type)
 
     if (this.props?.customEditor === graphic.type) {
       this.closeGraphicOptionsWidget() // 关闭属性面板
@@ -433,8 +451,8 @@ export class GraphicLayerState extends Component<any, any> {
   }
 
   closeGraphicOptionsWidget() {
-    if (this.props.onStopEditor) {
-      this.props?.onStopEditor() // 关闭参数调节面板
+    if (this.props?.onStopEditor) {
+      this.props.onStopEditor() // 关闭参数调节面板
     } else {
       disable("graphic-options")
     }
@@ -523,6 +541,13 @@ export class GraphicLayerState extends Component<any, any> {
     })
   }
 
+  onChangClustering = (checked: boolean) => {
+    const layer = getManagerLayer()
+    layer.clusterEnabled = checked
+
+    this.setState({ isCluster: checked })
+  }
+
   //  ***************************** 数据维护 ***********************  //
   // drawLabel1
   onClickStartDraw() {
@@ -548,7 +573,7 @@ export class GraphicLayerState extends Component<any, any> {
 
   // 是否编辑
   onChangeHasEdit(checked: boolean) {
-    mapWork.graphicLayer.hasEdit = checked
+    mapWork.graphicLayer.isAutoEditing = checked
 
     this.setState({
       hasEdit: checked
@@ -712,8 +737,8 @@ export class GraphicLayerState extends Component<any, any> {
             "f-dn": !this.state.interaction
           })}
         >
-          <Space>
-            <span className="mars-pannel-item-label">图层交互:</span>
+          <span className="mars-pannel-item-label">数据维护：</span>
+          <Space wrap style={{ width: "350px" }}>
             <MarsCheckbox checked={this.state.enabledPopup} onChange={(e) => this.onChangePopup(e.target.checked)}>
               单击Popup
             </MarsCheckbox>
@@ -723,6 +748,11 @@ export class GraphicLayerState extends Component<any, any> {
             <MarsCheckbox checked={this.state.enabledRightMenu} onChange={(e) => this.onChangeRightMenu(e.target.checked)}>
               右键菜单
             </MarsCheckbox>
+            {this.state.enabledCluster && (
+              <MarsCheckbox checked={this.state.isCluster} onChange={(e) => this.onChangClustering(e.target.checked)}>
+                是否聚合
+              </MarsCheckbox>
+            )}
           </Space>
         </div>
 
@@ -747,19 +777,13 @@ export class GraphicLayerState extends Component<any, any> {
               取消绘制
             </MarsButton>
 
-            <span
-              className={classNames({
-                "f-dn": !this.state.interaction && this.state.enabledEdit
-              })}
-            >
-              {this.state.interaction && this.state.enabledEdit ? (
-                <MarsCheckbox checked={this.state.hasEdit} onChange={(e) => this.onChangeHasEdit(e.target.checked)}>
-                  是否编辑
-                </MarsCheckbox>
-              ) : (
-                ""
-              )}
-            </span>
+            {this.state.interaction && this.state.enabledEdit ? (
+              <MarsCheckbox checked={this.state.hasEdit} onChange={(e) => this.onChangeHasEdit(e.target.checked)}>
+                是否编辑
+              </MarsCheckbox>
+            ) : (
+              ""
+            )}
 
             <MarsCheckbox checked={this.state.hasTable} onChange={(e) => this.setState({ hasTable: e.target.checked })}>
               显示列表
@@ -767,31 +791,36 @@ export class GraphicLayerState extends Component<any, any> {
           </Space>
         </div>
 
-        <div className="f-mb">
-          <Space>
-            <span className="mars-pannel-item-label">数据测试:</span>
-            <MarsInputNumber
-              defaultValue={this.state.count}
-              {...{ min: 1, max: 1000000, step: 1 }}
-              onChange={(data: number) => {
-                this.setState({
-                  count: data
-                })
-              }}
-              style={{ width: "152px" }}
-            ></MarsInputNumber>
-            条<MarsButton onClick={() => this.addRandomGraphicByCount()}>生成</MarsButton>
-            <MarsButton onClick={() => this.onClickClear()}>
-              <MarsIcon icon="delete" />
-              清除
-            </MarsButton>
-          </Space>
-        </div>
+        {mapWork.addRandomGraphicByCount && (
+          <div className="f-mb">
+            <Space>
+              <span className="mars-pannel-item-label">数据测试:</span>
+              <MarsInputNumber
+                defaultValue={this.state.count}
+                {...{ min: 1, max: 1000000, step: 1 }}
+                onChange={(data: number) => {
+                  this.setState({
+                    count: data
+                  })
+                }}
+                style={{ width: "152px" }}
+              ></MarsInputNumber>
+              条<MarsButton onClick={() => this.addRandomGraphicByCount()}>生成</MarsButton>
+              <MarsButton onClick={() => this.onClickClear()}>
+                <MarsIcon icon="delete" />
+                清除
+              </MarsButton>
+            </Space>
+          </div>
+        )}
 
         <div className="f-mb">
           <Space>
             <span className="mars-pannel-item-label">数据导出:</span>
 
+            <MarsButton onClick={() => this.expJSONFile()} title={"导出图层数据为JSON文件"}>
+              导出数据
+            </MarsButton>
             <Upload
               {...{
                 name: "file",
@@ -804,20 +833,21 @@ export class GraphicLayerState extends Component<any, any> {
                 onChange: (info: any) => this.onClickImpFile(info)
               }}
             >
-              <MarsButton title={"打开GeoJSON"}>
+              <MarsButton title={"打开历史导出的JSON文件图层数据"}>
                 <MarsIcon icon="folder-open" />
-                打开
+                导入数据
               </MarsButton>
             </Upload>
+            {!mapWork.addRandomGraphicByCount && (
+              <MarsButton danger onClick={() => this.onClickClear()}>
+                清除
+              </MarsButton>
+            )}
 
-            <MarsButton onClick={() => this.expGeoJSONFile()} title={"保存GeoJSON"}>
+            {/* <MarsButton onClick={() => this.expGeoJSONFile()} title={"保存GeoJSON"}>
               <MarsIcon icon="save-one" />
               导出GeoJSON
-            </MarsButton>
-
-            <MarsButton onClick={() => this.expJSONFile()} title={"导出构造参数Json"}>
-              导出构造JSON
-            </MarsButton>
+            </MarsButton> */}
           </Space>
         </div>
 

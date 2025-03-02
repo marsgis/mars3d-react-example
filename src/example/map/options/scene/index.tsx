@@ -141,7 +141,7 @@ const dataSource = [
     max: 80,
     step: 1,
     change(multiple: number) {
-      mapWork.setSceneGlobeOptions("terrainExaggeration", multiple)
+      mapWork.setSceneOptions("verticalExaggeration", multiple)
     }
   },
   {
@@ -284,9 +284,9 @@ const dataSource = [
     value: "1",
     change(index: string) {
       if (index === "1") {
-        mapWork.setSceneCameraControllerOptions("enableCollisionDetection", true)
+        mapWork.setSceneCameraControllerOptions("enableCollisionDetection", false) // 不允许 地形相机的碰撞检测 = 可进入地下
       } else {
-        mapWork.setSceneCameraControllerOptions("enableCollisionDetection", false)
+        mapWork.setSceneCameraControllerOptions("enableCollisionDetection", true) // 允许 地形相机的碰撞检测 = 不可进入地下
       }
     }
   },

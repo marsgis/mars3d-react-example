@@ -361,7 +361,7 @@ class PlayTyphoon extends Typhoon {
       const item = arr[i]
       const point = [item.lon, item.lat]
 
-      const position = Cesium.Cartesian3.fromDegrees(item.lon, item.lat) // 经度、纬度坐标转化
+      // const position = Cesium.Cartesian3.fromDegrees(item.lon, item.lat) // 经度、纬度坐标转化
       const pointTime = Cesium.JulianDate.fromDate(item.time) // 将时间转化成需要的格式
 
       pathList.push({ time: pointTime, lng: item.lon, lat: item.lat })

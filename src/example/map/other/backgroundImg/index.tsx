@@ -40,7 +40,7 @@ function UIComponent(props) {
         optionType="button"
         buttonStyle="solid"
         options={options}
-        defaultValue={"2"}
+        defaultValue={"img1"}
         onChange={(e) => {
           changeBackground(e.target.value)
         }}

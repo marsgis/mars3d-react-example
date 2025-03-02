@@ -68,7 +68,9 @@ function closeGraphicOptionsWidget(e) {
 }
 
 // 绘制模型
-export async function startDrawModel(style) {
+export async function startDrawModel(styleOptions) {
+  const style = mars3d.Util.clone(styleOptions)
+
   const graphic = await graphicLayer.startDraw({
     type: "model",
     drawShow: true, // 绘制时，是否显示模型，可避免在3dtiles上拾取坐标存在问题。

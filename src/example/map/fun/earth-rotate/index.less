@@ -13,7 +13,7 @@
   width: 100%;
   color: #ffffff;
   padding: 10px;
-  background: url("/img/btnBar/infoBox.png") no-repeat;
+  background: url("./img/infoBox.png") no-repeat;
   background-size: 100% 100%;
   margin-right: 5px;
   span {
@@ -39,36 +39,37 @@
   bottom: 40px;
   left: 10%;
   position: absolute;
-  .mars-button {
-    background: url("/img/btnBar/button.png") no-repeat !important;
-  }
 
   .mars-button:not([disabled]) {
     &:hover {
       color: @mars-base-color;
-      background: url("/img/btnBar/button_select.png") no-repeat !important ;
+      background: url("./img/button_select.png") no-repeat !important ;
+      background-size: 100% 100% !important;
     }
     &:focus {
       color: @mars-base-color;
-      background: url("/img/btnBar/button_select.png") no-repeat !important ;
+      background: url("./img/button_select.png") no-repeat !important ;
+      background-size: 100% 100% !important;
     }
   }
 }
 
 .btnbar_item {
+  color: #ffffff !important;
+  border: none !important;
+  background: url("./img/button.png") no-repeat !important;
+  background-size: 100% 100% !important;
+  border-radius: 0 !important;
   font: 16px "Microsoft YaHei";
-  color: rgba(255, 255, 255, 1);
   pointer-events: auto;
   display: inline-block;
   width: 170px;
   height: 40px;
   line-height: 40px;
   text-align: center;
-  border: none;
-  background: url("/img/btnBar/button.png") no-repeat;
-  background-size: 100% 100%;
   margin-right: 40px;
 }
+
 .infoview_panel_scroll {
   height: 98%;
   width: 99%;

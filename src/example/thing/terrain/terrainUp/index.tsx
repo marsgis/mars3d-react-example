@@ -3,6 +3,7 @@ import { Space } from "antd"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import * as mapWork from "./map.js"
 
+let dataArr = []
 function UIComponent() {
   const [enabledWadi, setEnabledWadi] = useState(true) // 是否挖地
 
@@ -12,7 +13,7 @@ function UIComponent() {
   const [rowKeys, setSelectRow] = useState([]) // 默认选中的项
   const [tableData, setTableData] = useState([]) // 表格数据
 
-  const columns = [
+  const columns: any = [
     {
       title: "抬升区域",
       dataIndex: "name",
@@ -55,10 +56,14 @@ function UIComponent() {
   // 事件监听
   useMemo(() => {
     mapWork.eventTabel.on("tableObject", function (event: any) {
-      setTableData([])
-      setTableData([...event.table])
-      const seletData = event.table.map((item: any) => item.key)
-      setSelectRow(seletData)
+      if (!event.tableItem) {
+        return
+      }
+      dataArr.push(event.tableItem)
+      setTableData([...dataArr])
+
+      const keysArr = dataArr.map((item) => item.key)
+      setSelectRow([...keysArr])
     })
   }, [])
   useEffect(() => {
@@ -89,8 +94,9 @@ function UIComponent() {
   const deleted = (record: any) => {
     mapWork.deletedGraphic(record.key)
     const data = tableData.filter((item: any) => item.key !== record.key)
+
+    dataArr = data
     setTableData(data)
-    mapWork.changeTable(data)
   }
 
   // 清除
@@ -98,6 +104,7 @@ function UIComponent() {
     resetEnabled()
     mapWork.removeAll()
     // 清除表格
+    dataArr = []
     setTableData([])
   }
 
@@ -122,27 +129,10 @@ function UIComponent() {
 
   return (
     <MarsPannel visible={true} top={10} right={10}>
-      <div className="f-mb">
-        <Space>
-          <MarsCheckbox checked={enabledWadi} onChange={chkClippingPlanes}>
-            是否挖地
-          </MarsCheckbox>
-        </Space>
-      </div>
-
       <div className="f-mb" title="不能针对单个区域，整体抬升">
         <Space>
           <span>抬升高度</span>
           <MarsInputNumber min={-9999} max={9999} value={upHeight} onChange={changeUpHeight}></MarsInputNumber>（米）
-        </Space>
-      </div>
-
-      <div className="f-mb">
-        <Space>
-          抬升区域
-          <MarsButton onClick={drawExtent}>添加矩形</MarsButton>
-          <MarsButton onClick={drawPolygon}>添加多边行</MarsButton>
-          <MarsButton onClick={removeAll}>清除</MarsButton>
         </Space>
       </div>
 
@@ -152,7 +142,24 @@ function UIComponent() {
           <MarsInputNumber min={-9999} max={9999} value={height} onChange={changeClipHeight}></MarsInputNumber>（米）
         </Space>
       </div>
-      {/* @ts-ignore */}
+
+      <div className="f-mb">
+        <Space className="mars-space">
+          <MarsButton onClick={mapWork.btnMovingAnimation}>上升动画</MarsButton>
+          <MarsButton onClick={mapWork.btnMovingAnimation2}>下降动画</MarsButton>
+          <MarsCheckbox checked={enabledWadi} onChange={chkClippingPlanes}>
+            是否挖地
+          </MarsCheckbox>
+        </Space>
+      </div>
+
+      <div className="f-mb">
+        <Space className="mars-space">
+          <MarsButton onClick={drawExtent}>添加矩形</MarsButton>
+          <MarsButton onClick={drawPolygon}>添加多边行</MarsButton>
+          <MarsButton onClick={removeAll}>清除</MarsButton>
+        </Space>
+      </div>
       <MarsTable dataSource={tableData} rowSelection={rowSelection} columns={columns} bordered pagination={{ pageSize: 5 }}></MarsTable>
     </MarsPannel>
   )

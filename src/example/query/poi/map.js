@@ -158,8 +158,8 @@ function loadData(queryOptions, text) {
     count: 25, // count 每页数量
     text,
     success: function (res) {
-      const data = res.list
-      if (data.length <= 1) {
+      const data = res?.list
+      if (!data || data.length === 0) {
         globalMsg("未搜索到相关数据！")
       }
       resultList = resultList.concat(data)

@@ -5,7 +5,7 @@ function UIComponent() {
   return (
     <>
       <MarsPannel visible={true} top={10} right={10}>
-        <GraphicLayerState />
+        <GraphicLayerState drawLabel1="绘制时序点" drawLabel2="绘制漫游路线" />
       </MarsPannel>
     </>
   )

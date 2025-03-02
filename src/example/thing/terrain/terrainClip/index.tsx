@@ -6,6 +6,8 @@ import * as mapWork from "./map.js"
 let enabled = true // 是否挖地
 let clipOutSide = false
 
+let dataArr = []
+
 function UIComponent() {
   const [rowKeys, setSelectRow] = useState([]) // 默认选中的项
   const [tableData, setTableData] = useState([]) // 表格数据
@@ -13,10 +15,14 @@ function UIComponent() {
   // 事件监听
   useMemo(() => {
     mapWork.eventTabel.on("tableObject", function (event: any) {
-      setTableData([])
-      setTableData([...event.table])
-      const seletData = event.table.map((item: any) => item.key)
-      setSelectRow(seletData)
+      if (!event.tableItem) {
+        return
+      }
+      dataArr.push(event.tableItem)
+      setTableData([...dataArr])
+
+      const keysArr = dataArr.map((item) => item.key)
+      setSelectRow([...keysArr])
     })
   }, [])
 
@@ -41,8 +47,9 @@ function UIComponent() {
   // 清除
   const removeAll = () => {
     mapWork.removeAll()
+    dataArr = []
     // 清除表格
-    setTableData([])
+    setTableData(dataArr)
   }
 
   const columns = [
@@ -75,8 +82,9 @@ function UIComponent() {
   const deleted = (record: any) => {
     mapWork.deletedGraphic(record.key)
     const data = tableData.filter((item: any) => item.key !== record.key)
+
+    dataArr = data
     setTableData(data)
-    mapWork.changeTable(data)
   }
 
   return (

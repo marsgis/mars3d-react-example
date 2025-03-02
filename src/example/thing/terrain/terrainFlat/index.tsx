@@ -3,6 +3,7 @@ import { Space } from "antd"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import * as mapWork from "./map.js"
 
+let dataArr = []
 function UIComponent() {
   const [enabledWadi, setEnabledWadi] = useState(true) // 是否挖地
   const [enabledShowLine, setEnabledShowLine] = useState(true) // 是否显示测试边界线
@@ -54,10 +55,14 @@ function UIComponent() {
   // 事件监听
   useMemo(() => {
     mapWork.eventTabel.on("tableObject", function (event: any) {
-      setTableData([])
-      setTableData([...event.table])
-      const seletData = event.table.map((item: any) => item.key)
-      setSelectRow(seletData)
+      if (!event.tableItem) {
+        return
+      }
+      dataArr.push(event.tableItem)
+      setTableData([...dataArr])
+
+      const keysArr = dataArr.map((item) => item.key)
+      setSelectRow([...keysArr])
     })
   }, [])
   useEffect(() => {
@@ -85,6 +90,7 @@ function UIComponent() {
   const removeAll = () => {
     resetEnabled()
     mapWork.removeAll()
+    dataArr = []
     // 清除表格
     setTableData([])
   }
@@ -93,8 +99,9 @@ function UIComponent() {
   const deleted = (record: any) => {
     mapWork.deletedGraphic(record.key, record.lineId)
     const data = tableData.filter((item: any) => item.key !== record.key)
+
+    dataArr = data
     setTableData(data)
-    mapWork.changeTable(data)
   }
 
   // 添加矩形

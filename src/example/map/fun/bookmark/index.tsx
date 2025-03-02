@@ -64,6 +64,7 @@ function UIComponent(props) {
   return (
     <MarsPannel visible={true} right="10" top="10" bottom="40">
       <Input.Search
+        className="mars-input-search"
         size="large"
         value={viewName}
         placeholder="输入 名称"

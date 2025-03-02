@@ -3,6 +3,9 @@ import * as echarts from "echarts"
 import { useEffect } from "react"
 import "./echart-buildings.less"
 
+import areaPng from "./img/area.png"
+import jianzhuPng from "./img/jianzhu.png"
+
 function initEcharts() {
   const domRing = document.getElementById("ring")
 
@@ -470,14 +473,14 @@ function UIComponent(props) {
         </div>
         <div className="_item_row _item_full_box_width justify-between">
           <div className="row1 flex-1">
-            <img src="/img/icon/监测建筑.png" alt="" className="icon" />
+            <img src={jianzhuPng} alt="" className="icon" />
             <div className="row1_right">
               <div className="right_title">87</div>
               <div className="right_sub_title">监测建筑</div>
             </div>
           </div>
           <div className="row1 flex-1 ml">
-            <img src="/img/icon/监测面积.png" alt="" className="icon" />
+            <img src={areaPng} alt="" className="icon" />
             <div className="row1_right">
               <div className="right_title">2021</div>
               <div className="right_sub_title">监测面积(万m²)</div>

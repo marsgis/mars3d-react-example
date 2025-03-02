@@ -59,7 +59,7 @@ function UIComponent() {
   return (
     <>
       <div className="divPanel">
-        <img src="/img/legend/heatmap.png" alt="" />
+        <img src="//data.mars3d.cn/img/busines/legend-heatmap.png" alt="" />
       </div>
       <MarsPannel visible={true} left={10} top={10} width="100">
         <MarsButton onClick={() => mapWork.btnUpdate()}>更新数据</MarsButton>

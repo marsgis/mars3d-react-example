@@ -37,15 +37,6 @@ function UIComponent(props) {
           </MarsButton>
           <MarsButton
             onClick={() => {
-              mapWork.downLoadDiv()
-            }}
-          >
-            下载场景出图(含DIV部分)
-          </MarsButton>
-
-          {imges.length ? <img className="f-mb" alt="截缩略图" src={imges} style={{ width: "100%", height: "100%" }} /> : ""}
-          <MarsButton
-            onClick={() => {
               mapWork.showMapImg().then((image) => {
                 setImageValue(image)
               })
@@ -53,6 +44,8 @@ function UIComponent(props) {
           >
             截缩略图
           </MarsButton>
+
+          {imges.length ? <img className="f-mb" alt="截缩略图" src={imges} style={{ width: "100%", height: "100%" }} /> : ""}
         </Space>
       </MarsPannel>
 

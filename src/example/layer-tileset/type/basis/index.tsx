@@ -1,66 +1,76 @@
 import { MarsCollapse, MarsCollapsePanel, MarsButton, MarsPannel, MarsCheckbox } from "@mars/components/MarsUI"
 import { Space } from "antd"
 import * as mapWork from "./map.js"
+import { useMemo, useState } from "react"
 
 function UIComponent() {
+  const [isShowControl, setIsShowControl] = useState(false)
+  useMemo(() => {
+    mapWork.eventTarget.on("showControl", () => {
+      setIsShowControl(true)
+    })
+  }, [])
+
   return (
-    <MarsPannel visible={true} right="10" top="10" width={340}>
+    <MarsPannel visible={true} left="10" top="10" width={340}>
       <MarsCollapse defaultActiveKey={["1", "2", "3"]}>
-        <MarsCollapsePanel key="1" header="3D Tiles示例">
-          <Space wrap>
-            <MarsButton
-              onClick={() => {
-                mapWork.showQxShequDemo()
-              }}
-            >
-              倾斜摄像(某县城)
-            </MarsButton>
-            <MarsButton
-              onClick={() => {
-                mapWork.showQxSimiaoDemo()
-              }}
-            >
-              倾斜摄像（某景区）
-            </MarsButton>
+        {isShowControl && (
+          <MarsCollapsePanel key="1" header="3D Tiles示例">
+            <Space wrap>
+              <MarsButton
+                onClick={() => {
+                  mapWork.showQxShequDemo()
+                }}
+              >
+                倾斜摄像(某县城)
+              </MarsButton>
+              <MarsButton
+                onClick={() => {
+                  mapWork.showQxSimiaoDemo()
+                }}
+              >
+                倾斜摄像（某景区）
+              </MarsButton>
 
-            <MarsButton
-              onClick={() => {
-                mapWork.showJzwHefeiDemo()
-              }}
-            >
-              城市白膜（合肥）
-            </MarsButton>
+              <MarsButton
+                onClick={() => {
+                  mapWork.showJzwHefeiDemo()
+                }}
+              >
+                城市白膜（合肥）
+              </MarsButton>
 
-            <MarsButton
-              onClick={() => {
-                mapWork.showPntsGantaDemo()
-              }}
-            >
-              高压线塔杆(点云)
-            </MarsButton>
-            <MarsButton
-              onClick={() => {
-                mapWork.showMaxShihuaDemo()
-              }}
-            >
-              人工建模（石化工厂）
-            </MarsButton>
-            <MarsButton
-              onClick={() => {
-                mapWork.showBimQiaoliangDemo()
-              }}
-            >
-              BIM（桥梁）
-            </MarsButton>
-            <MarsButton
-              onClick={() => {
-                mapWork.showBimDitiezhanDemo()
-              }}
-            >
-              BIM（地铁站）
-            </MarsButton>
-          </Space>
-        </MarsCollapsePanel>
+              <MarsButton
+                onClick={() => {
+                  mapWork.showPntsGantaDemo()
+                }}
+              >
+                高压线塔杆(点云)
+              </MarsButton>
+              <MarsButton
+                onClick={() => {
+                  mapWork.showMaxShihuaDemo()
+                }}
+              >
+                人工建模（石化工厂）
+              </MarsButton>
+              <MarsButton
+                onClick={() => {
+                  mapWork.showBimQiaoliangDemo()
+                }}
+              >
+                BIM（桥梁）
+              </MarsButton>
+              <MarsButton
+                onClick={() => {
+                  mapWork.showBimDitiezhanDemo()
+                }}
+              >
+                BIM（地铁站）
+              </MarsButton>
+            </Space>
+          </MarsCollapsePanel>
+        )}
         <MarsCollapsePanel key="2" header="相关控制">
           <Space wrap>
             <MarsCheckbox

@@ -42,7 +42,7 @@ export const MarsInputGroup = forwardRef<any, MarsInputGroupProps>(({ value = []
     <Space>
       {values.map((item, i) => (
         <MarsInput
-          value={item}
+        defaultValue={item}
           key={i}
           suffix={units[i]}
           onChange={(e) => {
