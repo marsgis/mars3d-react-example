@@ -102,7 +102,7 @@ function addDemoGraphic2(graphicLayer) {
 // 对Canvas做自定义处理,需要返回Promise
 function onCustomCanvas(canvas, material) {
   const context = canvas.getContext("2d")
-  return Cesium.Resource.createIfNeeded("./img/country/zg.png")
+  return Cesium.Resource.createIfNeeded("/img/icon/logo.png")
     .fetchImage()
     .then((image) => {
       context.drawImage(image, 5, 5, 20, 20)
@@ -266,7 +266,6 @@ export async function onClickDrawPoint() {
     width: 60,
     height: 10
   })
-
 
   const rectangleEntity = new mars3d.graphic.RectangleEntity({
     positions: [positions[0], positions[2]],

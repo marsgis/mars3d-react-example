@@ -198,6 +198,18 @@ function addDemoGraphic3(graphicLayer) {
   graphicLayer.addGraphic(coneTrack)
 }
 
+// 开始绘制
+export async function startDrawGraphic() {
+  const graphic = await graphicLayer.startDraw({
+    type: "coneTrackP",
+    style: {
+      color: "#ff0000",
+      opacity: 0.3
+    }
+  })
+  console.log("标绘完成", graphic.toJSON())
+}
+
 // 生成演示数据(测试数据量)
 export function addRandomGraphicByCount(count) {
   graphicLayer.clear()

@@ -1,7 +1,8 @@
-import { MarsPannel } from "@mars/components/MarsUI"
+import { MarsPannel, MarsFormItem, MarsButton } from "@mars/components/MarsUI"
 import * as echarts from "echarts"
 import { useMemo } from "react"
 import * as mapWork from "./map.js"
+import { Space } from "antd"
 
 // 获取的dom元素
 function drawHeightToDistanceEcharts(heightArry: any[], heightTDArray: any[], distanceArray: any[]) {
@@ -141,6 +142,13 @@ function UIComponent() {
   return (
     <MarsPannel visible={true} top={10} right={10}>
       <div id="section" style={{ width: " 500px", height: "200px" }}></div>
+      <MarsFormItem label="最近点计算">
+        <Space>
+          <MarsButton onClick={mapWork.drawPoint}>绘制点</MarsButton>
+          <MarsButton onClick={() => mapWork.testGraphicLayer.clear()}>清除</MarsButton>
+          <MarsButton onClick={mapWork.batchComputing}>批量计算(与树求交)</MarsButton>
+        </Space>
+      </MarsFormItem>
     </MarsPannel>
   )
 }

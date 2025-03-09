@@ -442,7 +442,7 @@ const styleConfig = {
         name: "outlineColor",
         label: "边框颜色",
         type: "color",
-        defval: "#000000",
+        defval: "#ffffff",
         show({ allStyle }) {
           return allStyle?.outline
         }
@@ -3293,8 +3293,17 @@ const styleConfig = {
           { label: "水面", value: "Water" },
           { label: "蓝光水面", value: "WaterLight" }
         ],
-        show({ style }) {
-          return style?.fill !== false
+        show({ style, graphicType }) {
+          return style?.fill !== false && graphicType !== "video2D"
+        }
+      },
+      {
+        name: "url",
+        label: "视频链接",
+        type: "label",
+        defval: "",
+        show({ graphicType }) {
+          return graphicType === "video2D"
         }
       },
 

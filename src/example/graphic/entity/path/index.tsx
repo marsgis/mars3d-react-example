@@ -6,7 +6,7 @@ function UIComponent() {
   return (
     <>
       <MarsPannel visible={true} top={10} right={10}>
-        <GraphicLayerState enabledDraw={false} />
+        <GraphicLayerState />
       </MarsPannel>
       <LocationTo />
     </>

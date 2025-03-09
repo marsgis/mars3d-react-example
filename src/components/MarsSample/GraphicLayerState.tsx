@@ -9,25 +9,20 @@ import {
   $alert,
   $showLoading,
   $hideLoading,
-  MarsFormItem
+  MarsFormItem,
+  MarsForm
 } from "@mars/components/MarsUI"
 import { Space, Upload } from "antd"
 import { Component } from "react"
-import classNames from "classnames"
 import { activate, disable, updateWidget, isActive } from "@mars/widgets/common/store/widget"
 
 const mapWork = window.mapWork
 const mars3d = mapWork.mars3d
 
-const graphicDataList = []
-const rowKeys = []
-
 interface GraphicTableItem {
   key: number
   name: string
 }
-
-const lastGraphic = null
 
 // 获取map.js中定义的需要管理的图层
 function getManagerLayer() {
@@ -369,44 +364,50 @@ export class GraphicLayerState extends Component<any, any> {
             return
           }
 
-          graphicDataList.push({ key: item.id, name: getGraphicName(item) })
-          rowKeys.push(item.id)
+          const listArr = that.state.graphicDataList
+          listArr.push({ key: item.id, name: getGraphicName(item) })
 
-          that.setState({ graphicDataList: [...graphicDataList], rowKeys: [...rowKeys] })
+          const listRowKey = that.state.rowKeys
+          listRowKey.push(item.id)
+
+          that.setState({ graphicDataList: [...listArr], rowKeys: [...listRowKey] })
         })
 
         layer.on(mars3d.EventType.removeGraphic, (event) => {
           const graphicId = event.graphic.id
-          const idx = graphicDataList.findIndex((item) => item.key === graphicId)
-          graphicDataList.splice(idx, 1)
 
-          that.setState({ graphicDataList: [...graphicDataList], rowKeys: [...rowKeys] })
+          const listArr = that.state.graphicDataList
+
+          const idx = listArr.findIndex((item) => item.key === graphicId)
+          listArr.splice(idx, 1)
+
+          that.setState({ graphicDataList: [...listArr] })
         })
       }
     }, 500)
   }
 
   initGraphicableData(graphicLayer) {
-    const list = graphicLayer.graphics
+    const listArr = []
+    const listRowKey = []
 
     let graphic
-    list.forEach((item) => {
+    graphicLayer.graphics.forEach((item) => {
       if (item.isPrivate) {
         return
       }
 
-      graphicDataList.push({
+      listArr.push({
         key: item.id,
         name: getGraphicName(item)
       })
-      rowKeys.push(item.id)
+      listRowKey.push(item.id)
 
       graphic = item
     })
-
     this.setState({
-      graphicDataList: [...graphicDataList],
-      rowKeys: [...rowKeys]
+      graphicDataList: [...listArr],
+      rowKeys: [...listRowKey]
     })
 
     if (graphic) {
@@ -421,6 +422,7 @@ export class GraphicLayerState extends Component<any, any> {
   // 展示属性面板
   openGraphicOptionsWidget(event: any) {
     const graphic = event.graphic
+    // || !this.state.hasEdit -- 加上后只有选中 是否编辑 才弹出属性面板
     if (graphic.isDrawing) {
       return
     }
@@ -429,9 +431,6 @@ export class GraphicLayerState extends Component<any, any> {
     if (graphic.isDestroy || graphic.isPrivate) {
       return
     }
-
-    console.log("this.props?.customEditor", this.props)
-    console.log("graphic.type", graphic.type)
 
     if (this.props?.customEditor === graphic.type) {
       this.closeGraphicOptionsWidget() // 关闭属性面板
@@ -607,9 +606,6 @@ export class GraphicLayerState extends Component<any, any> {
     mapWork.graphicLayer.clear()
     mapWork.graphicLayer.enabledEvent = true
 
-    graphicDataList.length = 0
-    rowKeys.length = 0
-
     this.setState({ graphicDataList: [], rowKeys: [], isDrawing: false })
 
     this.closeGraphicOptionsWidget() // 关闭属性面板
@@ -710,10 +706,9 @@ export class GraphicLayerState extends Component<any, any> {
 
   render() {
     return (
-      <>
-        <div className="f-mb">
+      <MarsForm labelCol={{ span: 4 }}>
+        <MarsFormItem label="图层状态">
           <Space>
-            <span className="mars-pannel-item-label">图层状态:</span>
             <MarsCheckbox checked={this.state.enabledShowHide} onChange={(e) => this.onChangeShow(e.target.checked)}>
               显示
             </MarsCheckbox>
@@ -729,53 +724,47 @@ export class GraphicLayerState extends Component<any, any> {
               定位
             </MarsButton>
           </Space>
-        </div>
+        </MarsFormItem>
 
-        <div
-          className={classNames({
-            "f-mb": true,
-            "f-dn": !this.state.interaction
-          })}
-        >
-          <span className="mars-pannel-item-label">数据维护：</span>
-          <Space wrap style={{ width: "350px" }}>
-            <MarsCheckbox checked={this.state.enabledPopup} onChange={(e) => this.onChangePopup(e.target.checked)}>
-              单击Popup
-            </MarsCheckbox>
-            <MarsCheckbox checked={this.state.enabledTooltip} onChange={(e) => this.onChangeTooltip(e.target.checked)}>
-              移入Tooltip
-            </MarsCheckbox>
-            <MarsCheckbox checked={this.state.enabledRightMenu} onChange={(e) => this.onChangeRightMenu(e.target.checked)}>
-              右键菜单
-            </MarsCheckbox>
-            {this.state.enabledCluster && (
-              <MarsCheckbox checked={this.state.isCluster} onChange={(e) => this.onChangClustering(e.target.checked)}>
-                是否聚合
+        {this.state.interaction && (
+          <MarsFormItem label="数据维护">
+            <Space wrap>
+              <MarsCheckbox checked={this.state.enabledPopup} onChange={(e) => this.onChangePopup(e.target.checked)}>
+                单击Popup
               </MarsCheckbox>
-            )}
-          </Space>
-        </div>
+              <MarsCheckbox checked={this.state.enabledTooltip} onChange={(e) => this.onChangeTooltip(e.target.checked)}>
+                移入Tooltip
+              </MarsCheckbox>
+              <MarsCheckbox checked={this.state.enabledRightMenu} onChange={(e) => this.onChangeRightMenu(e.target.checked)}>
+                右键菜单
+              </MarsCheckbox>
+              {this.state.enabledCluster && (
+                <MarsCheckbox checked={this.state.isCluster} onChange={(e) => this.onChangClustering(e.target.checked)}>
+                  是否聚合
+                </MarsCheckbox>
+              )}
+            </Space>
+          </MarsFormItem>
+        )}
 
-        <div
-          className={classNames({
-            "f-mb": true,
-            "f-dn": !this.state.enabledDraw
-          })}
-        >
-          <Space>
-            <span className="mars-pannel-item-label">数据维护:</span>
-            <MarsButton onClick={() => this.onClickStartDraw()} style={{ display: !this.state.isDrawing ? "block" : "none" }}>
-              {this.state.drawLabel1}
-            </MarsButton>
-            <MarsButton
-              onClick={() => this.onClickStartDraw2()}
-              style={{ display: this.state.drawLabel2 && !this.state.isDrawing ? "block" : "none" }}
-            >
-              {this.state.drawLabel2}
-            </MarsButton>
-            <MarsButton onClick={() => this.onClickClearDrawing()} style={{ display: this.state.isDrawing ? "block" : "none" }}>
-              取消绘制
-            </MarsButton>
+        <MarsFormItem label={this.state.enabledDraw ? "数据维护" : null}>
+          <Space wrap>
+            {this.state.enabledDraw && (
+              <>
+                <MarsButton onClick={() => this.onClickStartDraw()} style={{ display: !this.state.isDrawing ? "block" : "none" }}>
+                  {this.state.drawLabel1}
+                </MarsButton>
+                <MarsButton
+                  onClick={() => this.onClickStartDraw2()}
+                  style={{ display: this.state.drawLabel2 && !this.state.isDrawing ? "block" : "none" }}
+                >
+                  {this.state.drawLabel2}
+                </MarsButton>
+                <MarsButton onClick={() => this.onClickClearDrawing()} style={{ display: this.state.isDrawing ? "block" : "none" }}>
+                  取消绘制
+                </MarsButton>
+              </>
+            )}
 
             {this.state.interaction && this.state.enabledEdit ? (
               <MarsCheckbox checked={this.state.hasEdit} onChange={(e) => this.onChangeHasEdit(e.target.checked)}>
@@ -785,16 +774,17 @@ export class GraphicLayerState extends Component<any, any> {
               ""
             )}
 
-            <MarsCheckbox checked={this.state.hasTable} onChange={(e) => this.setState({ hasTable: e.target.checked })}>
-              显示列表
-            </MarsCheckbox>
+            {(this.props.enabledTable ?? true) && (
+              <MarsCheckbox checked={this.state.hasTable} onChange={(e) => this.setState({ hasTable: e.target.checked })}>
+                显示列表
+              </MarsCheckbox>
+            )}
           </Space>
-        </div>
+        </MarsFormItem>
 
         {mapWork.addRandomGraphicByCount && (
-          <div className="f-mb">
+          <MarsFormItem label="数据测试">
             <Space>
-              <span className="mars-pannel-item-label">数据测试:</span>
               <MarsInputNumber
                 defaultValue={this.state.count}
                 {...{ min: 1, max: 1000000, step: 1 }}
@@ -811,13 +801,11 @@ export class GraphicLayerState extends Component<any, any> {
                 清除
               </MarsButton>
             </Space>
-          </div>
+          </MarsFormItem>
         )}
 
-        <div className="f-mb">
+        <MarsFormItem label="数据导出">
           <Space>
-            <span className="mars-pannel-item-label">数据导出:</span>
-
             <MarsButton onClick={() => this.expJSONFile()} title={"导出图层数据为JSON文件"}>
               导出数据
             </MarsButton>
@@ -849,10 +837,10 @@ export class GraphicLayerState extends Component<any, any> {
               导出GeoJSON
             </MarsButton> */}
           </Space>
-        </div>
+        </MarsFormItem>
 
-        <div className="f-mb t-tac" style={{ width: "450px" }}>
-          {this.state.hasTable ? (
+        <MarsFormItem style={{ width: "450px" }}>
+          {this.state.hasTable && (this.props.enabledTable ?? true) ? (
             <MarsTable
               bordered
               pagination={{ pageSize: this.state.currentPage }}
@@ -892,8 +880,8 @@ export class GraphicLayerState extends Component<any, any> {
               }}
             ></MarsTable>
           ) : null}
-        </div>
-      </>
+        </MarsFormItem>
+      </MarsForm>
     )
   }
 }

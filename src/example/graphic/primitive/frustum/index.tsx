@@ -8,12 +8,13 @@ function UIComponent() {
   return (
     <>
       <MarsPannel visible={true} top={10} right={10}>
-        <GraphicLayerState defaultCount={1000} enabledDraw={false} />
+        <GraphicLayerState defaultCount={1000} />
 
         <div className="f-pdg-10-t">
           <Space>
             <span className="mars-pannel-item-label">方法演示:</span>
             <MarsButton onClick={() => mapWork.onClickSelPoint()}>追踪目标点</MarsButton>
+            <MarsButton onClick={() => mapWork.getRayEarthPositions()}>计算边界点</MarsButton>
           </Space>
         </div>
       </MarsPannel>

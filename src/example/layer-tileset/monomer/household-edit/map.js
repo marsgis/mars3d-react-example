@@ -21,6 +21,7 @@ export function onMounted(mapInstance) {
     name: "校园",
     url: "//data.mars3d.cn/3dtiles/qx-xuexiao/tileset.json",
     position: { alt: 279.0 },
+    enableCollision: true,
     maximumScreenSpaceError: 1,
     center: { lat: 43.821193, lng: 125.143124, alt: 990, heading: 342, pitch: -50 }
   })
@@ -140,6 +141,7 @@ export function produceData(drawGraphicId, dthPara, lastGraphicArrId) {
 }
 
 export async function getBuildingHeight() {
+  map.onlyPickModelPosition = true
   const graphic = await map.graphicLayer.startDraw({
     type: "point",
     style: {
@@ -149,6 +151,7 @@ export async function getBuildingHeight() {
   const height = graphic.point?.alt
   map.graphicLayer.removeGraphic(graphic)
 
+  map.onlyPickModelPosition = false
   return height
 }
 

@@ -1,4 +1,4 @@
-import { MarsButton, MarsPannel, MarsCollapse, MarsCollapsePanel, MarsIcon } from "@mars/components/MarsUI"
+import { MarsButton, MarsPannel, MarsCollapse, MarsIcon } from "@mars/components/MarsUI"
 import { Space } from "antd"
 import { useCallback } from "react"
 import * as mapWork from "./map.js"
@@ -19,24 +19,36 @@ function UIComponent() {
 
   return (
     <MarsPannel visible={true} right="10" top="10" width={202}>
-      <MarsCollapse defaultActiveKey={["1", "2"]} expandIcon={expandIcon}>
-        <MarsCollapsePanel key="1" header="超图S3M图层">
-          <Space {...{ direction: "horizontal", wrap: true }}>
-            {list.map((item) => {
-              return (
-                <MarsButton key={item.name} onClick={item.callback}>
-                  {item.name}
-                </MarsButton>
-              )
-            })}
-          </Space>
-        </MarsCollapsePanel>
-        <MarsCollapsePanel key="2" header="开源仓库">
-          <MarsButton href="https://gitee.com/marsgis/mars3d-link-supermap" target="_blank">
-            与超图结合开源仓库
-          </MarsButton>
-        </MarsCollapsePanel>
-      </MarsCollapse>
+      <MarsCollapse
+        defaultActiveKey={["1", "2"]}
+        expandIcon={expandIcon}
+        items={[
+          {
+            key: "1",
+            label: "超图S3M图层",
+            children: (
+              <Space {...{ direction: "horizontal", wrap: true }}>
+                {list.map((item) => {
+                  return (
+                    <MarsButton key={item.name} onClick={item.callback}>
+                      {item.name}
+                    </MarsButton>
+                  )
+                })}
+              </Space>
+            )
+          },
+          {
+            key: "2",
+            label: "开源仓库",
+            children: (
+              <MarsButton href="https://gitee.com/marsgis/mars3d-link-supermap" target="_blank">
+                与超图结合开源仓库
+              </MarsButton>
+            )
+          }
+        ]}
+      ></MarsCollapse>
     </MarsPannel>
   )
 }

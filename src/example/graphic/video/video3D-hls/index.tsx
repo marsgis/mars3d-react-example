@@ -148,7 +148,7 @@ function UIComponent() {
 
   return (
     <>
-      <MarsPannel visible={true} right="10" top="10" width="420">
+      <MarsPannel visible={true} right="10" top="10">
         <GraphicLayerState
           defaultCount={10}
           interaction={false}

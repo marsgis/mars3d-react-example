@@ -121,15 +121,15 @@ function UIComponent() {
       type: "radio",
       field: "type",
       label: "类型:",
-      value: "2",
+      value: 0,
       options: [
         {
           label: "圆锥体",
-          value: "1"
+          value: 1
         },
         {
           label: "四棱锥体",
-          value: "2"
+          value: 0
         }
       ],
       change(sensorType) {
@@ -162,7 +162,7 @@ function UIComponent() {
       extra: "当前值{angle2}",
       extraWidth: 90,
       show(data) {
-        return data.type !== "1"
+        return data.type === 0
       },
       change(angle2) {
         mapWork.angle1(angle2)
@@ -194,6 +194,7 @@ function UIComponent() {
             setGraphicName(data.graphicName)
             setSelected(true)
 
+            guiRef1.current.updateField("type", graphic?.sensorType)
             guiRef1.current.updateField("angle1", graphic?.angle)
             guiRef1.current.updateField("angle2", graphic?.angle2)
           }}

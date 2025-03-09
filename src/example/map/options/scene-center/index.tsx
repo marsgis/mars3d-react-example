@@ -1,5 +1,5 @@
-import { MarsPannel, MarsButton, MarsCollapse, MarsCollapsePanel, MarsFormItem, MarsInput } from "@mars/components/MarsUI"
-import { Row, Col, Space } from "antd"
+import { MarsPannel, MarsButton, MarsCollapse, MarsFormItem, MarsInput } from "@mars/components/MarsUI"
+import { Space } from "antd"
 import * as mapWork from "./map.js"
 import "./index.less"
 import { useState } from "react"
@@ -53,20 +53,18 @@ const cameraData = [
   }
 ]
 function UIComponent() {
-  let obj 
+  let obj
   const [formObj, setFormObj] = useState({
     lng: 0,
-    lat: 0, 
-    alt: 0, 
-    heading: 0, 
-    pitch: 0, 
-    roll: 0 
+    lat: 0,
+    alt: 0,
+    heading: 0,
+    pitch: 0,
+    roll: 0
   })
-  
-  
 
   setTimeout(() => {
-    obj = mapWork.map.getCameraView({ simplify: false }) 
+    obj = mapWork.map.getCameraView({ simplify: false })
     setFormObj(obj)
     mapWork.map.on("cameraChanged", function (event) {
       obj = mapWork.map.getCameraView({ simplify: false })
@@ -76,57 +74,58 @@ function UIComponent() {
 
   return (
     <MarsPannel visible={true} top={10} right={10} width={310}>
-      <MarsCollapse defaultActiveKey={["1", "2"]}>
-        <MarsCollapsePanel key="1" showArrow={false} header="景点视角:">
-          <Space>
-            <MarsButton onClick={() => mapWork.changeView1()}>故宫</MarsButton>
-            <MarsButton onClick={() => mapWork.changeView2()}>珠峰</MarsButton>
-            <MarsButton onClick={() => mapWork.changeView3()}>华山</MarsButton>
-            <MarsButton onClick={() => mapWork.changeView4()}>大别山</MarsButton>
-          </Space>
-        </MarsCollapsePanel>
-        <MarsCollapsePanel key="2" showArrow={false} header="相机和视角控制演示:">
-          <Space wrap>
-            {cameraData.map((item, index) => {
-              return (
-                <MarsButton key={index} onClick={item.callback}>
-                  {item.name}
-                </MarsButton>
-              )
-            })}
-            <MarsFormItem label="经度值">
-              <MarsInput
-              value={formObj.lng}
-              ></MarsInput>
-            </MarsFormItem>
-            <MarsFormItem label="纬度值">
-              <MarsInput
-              value={formObj.lat}
-              ></MarsInput>
-            </MarsFormItem>
-            <MarsFormItem label="高度值">
-              <MarsInput
-              value={formObj.alt}
-              ></MarsInput>
-            </MarsFormItem>
-            <MarsFormItem label="方向角">
-              <MarsInput
-              value={formObj.heading}
-              ></MarsInput>
-            </MarsFormItem>
-            <MarsFormItem label="俯仰角">
-              <MarsInput
-              value={formObj.pitch}
-              ></MarsInput>
-            </MarsFormItem>
-            <MarsFormItem label="翻滚角">
-              <MarsInput
-              value={formObj.roll}
-              ></MarsInput>
-            </MarsFormItem>
-          </Space>
-        </MarsCollapsePanel>
-      </MarsCollapse>
+      <MarsCollapse
+        defaultActiveKey={["1", "2"]}
+        items={[
+          {
+            key: "1",
+            showArrow: false,
+            label: "景点视角:",
+            children: (
+              <Space>
+                <MarsButton onClick={() => mapWork.changeView1()}>故宫</MarsButton>
+                <MarsButton onClick={() => mapWork.changeView2()}>珠峰</MarsButton>
+                <MarsButton onClick={() => mapWork.changeView3()}>华山</MarsButton>
+                <MarsButton onClick={() => mapWork.changeView4()}>大别山</MarsButton>
+              </Space>
+            )
+          },
+          {
+            key: "2",
+            showArrow: false,
+            label: "相机和视角控制演示:",
+            children: (
+              <Space wrap>
+                {cameraData.map((item, index) => {
+                  return (
+                    <MarsButton key={index} onClick={item.callback}>
+                      {item.name}
+                    </MarsButton>
+                  )
+                })}
+                <MarsFormItem label="经度值">
+                  <MarsInput value={formObj.lng}></MarsInput>
+                </MarsFormItem>
+                <MarsFormItem label="纬度值">
+                  <MarsInput value={formObj.lat}></MarsInput>
+                </MarsFormItem>
+                <MarsFormItem label="高度值">
+                  <MarsInput value={formObj.alt}></MarsInput>
+                </MarsFormItem>
+                <MarsFormItem label="方向角">
+                  <MarsInput value={formObj.heading}></MarsInput>
+                </MarsFormItem>
+                <MarsFormItem label="俯仰角">
+                  <MarsInput value={formObj.pitch}></MarsInput>
+                </MarsFormItem>
+                <MarsFormItem label="翻滚角">
+                  <MarsInput value={formObj.roll}></MarsInput>
+                </MarsFormItem>
+              </Space>
+            )
+          }
+        ]}
+      ></MarsCollapse>
     </MarsPannel>
   )
 }

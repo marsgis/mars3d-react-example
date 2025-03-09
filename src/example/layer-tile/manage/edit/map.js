@@ -14,6 +14,7 @@ export const mapOptions = {
   },
   layers: [
     {
+      id: "testTile",
       name: "瓦片测试信息",
       type: "tileinfo",
       color: "rgba(255,255,0,0.6)",
@@ -181,8 +182,9 @@ export function creatHRectangleEntity(item) {
   graphic.flyTo({ scale: 1.5 })
 }
 
-export const saveParams = (updateValue) => {
-  mars3d.Util.downloadFile("瓦片图层参数.json", JSON.stringify({ ...updateValue, center: map.getCameraView() }))
+export const saveParams = () => {
+  const downLayer = tileLayer || map.getLayerById("testTile")
+  mars3d.Util.downloadFile("瓦片图层参数.json", JSON.stringify(downLayer.toJSON({ full: true })))
 }
 
 export function removeTileLayer() {

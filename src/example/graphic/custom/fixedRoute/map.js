@@ -437,11 +437,11 @@ export async function startDrawGraphic() {
       width: 6,
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
-        color: Cesium.Color.AQUA,
+        color: "#00ffff",
         image: "https://data.mars3d.cn/img/textures/arrow-small.png",
         repeat: new Cesium.Cartesian2(80, 1),
         speed: 30,
-        bgColor: "rgba(0,255,255,0.3)"
+        bgColor: "rgba(0, 255, 255, 0.3)"
       },
       showAll: true
     }

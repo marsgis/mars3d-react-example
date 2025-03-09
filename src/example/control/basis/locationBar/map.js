@@ -13,7 +13,14 @@ export const mapOptions = function (option) {
 // 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
+}
 
+// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
+export function onUnmounted() {
+  map = null
+}
+
+function addControl() {
   // 方式2：在创建地球后按需调用addControl添加(直接new对应type类型的控件)
   const locationBar = new mars3d.control.LocationBar({
     template:
@@ -39,11 +46,27 @@ export function onMounted(mapInstance) {
   })
   map.addControl(locationBar)
 
-
-  window.locationBar = locationBar// 只是为了方便F12控制台测试
+  window.locationBar = locationBar // 只是为了方便F12控制台测试
 }
 
-// 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
-export function onUnmounted() {
-  map = null
+// 如果config.json已加载，可以直接修改locationBar
+function updateControl() {
+  map.control.locationBar.template = function (locationData) {
+    let pitch
+    if (locationData.pitch < 0) {
+      pitch = "俯视:" + -locationData.pitch
+    } else {
+      pitch = "仰视:" + locationData.pitch
+    }
+
+    const dfmX = mars3d.PointTrans.degree2dms(locationData.lng, 2).str
+    const dfmY = mars3d.PointTrans.degree2dms(locationData.lat, 2).str
+
+    return ` <div>经度:${dfmY}</div>
+            <div>纬度:${dfmX}</div>
+            <div>海拔：${locationData.alt}米</div>
+            <div>方向：${locationData.heading}度</div>
+            <div>${pitch}度</div>
+            <div>视高：${locationData.cameraHeight}米</div>`
+  }
 }

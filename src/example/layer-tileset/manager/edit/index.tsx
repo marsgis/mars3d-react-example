@@ -1,18 +1,7 @@
-import {
-  MarsCollapse,
-  MarsCollapsePanel,
-  MarsButton,
-  MarsPannel,
-  MarsCheckbox,
-  MarsInput,
-  MarsGui,
-  MarsTree,
-  MarsDialog,
-  MarsSwitch
-} from "@mars/components/MarsUI"
+import { MarsCollapse, MarsButton, MarsPannel, MarsCheckbox, MarsInput, MarsGui, MarsTree, MarsDialog, MarsSwitch } from "@mars/components/MarsUI"
 import { Space } from "antd"
 import * as mapWork from "./map.js"
-import { useState, useRef, useEffect, useMemo, useCallback } from "react"
+import { useState, useRef, useMemo, useCallback } from "react"
 import type { GuiItem } from "@mars/components/MarsUI"
 
 function isHaveChildren(arr: any, index: number) {
@@ -304,102 +293,114 @@ function UIComponent() {
   return (
     <>
       <MarsPannel visible={true} right="10" top="5" width={400}>
-        <MarsCollapse collapsible={"header"} defaultActiveKey={["1", "2", "3", "4"]}>
-          <MarsCollapsePanel
-            key="1"
-            header="模型URL地址"
-            extra={
-              <MarsButton
-                onClick={() => {
-                  setCancelTree(true)
-                  mapWork.showCompTree(inputUrl)
-                }}
-              >
-                查看构件
-              </MarsButton>
+        <MarsCollapse
+          collapsible={"header"}
+          defaultActiveKey={["1", "2", "3", "4"]}
+          items={[
+            {
+              key: "1",
+              label: "模型URL地址",
+              extra: (
+                <MarsButton
+                  onClick={() => {
+                    setCancelTree(true)
+                    mapWork.showCompTree(inputUrl)
+                  }}
+                >
+                  查看构件
+                </MarsButton>
+              ),
+              children: (
+                <Space wrap>
+                  <span className="mars-pannel-item-label">模型URL:</span>
+                  <MarsInput
+                    style={{ width: "280px" }}
+                    defaultValue={inputUrl}
+                    onChange={(e) => {
+                      setInputUrl(e.target.value + "")
+                    }}
+                  ></MarsInput>
+
+                  <MarsButton
+                    onClick={() => {
+                      mapWork.showModel(inputUrl)
+
+                      marsGuiRef3.current.updateField("opacity", 1)
+                      setHighlightEnable(false)
+                      setPopupEnable(true)
+                    }}
+                  >
+                    加载模型
+                  </MarsButton>
+                  <MarsCheckbox
+                    onChange={(e) => {
+                      setAgent(e.target.checked)
+                    }}
+                  >
+                    使用代理
+                  </MarsCheckbox>
+                </Space>
+              )
+            },
+            {
+              key: "2",
+              label: "模型位置",
+              extra: (
+                <MarsButton
+                  onClick={() => {
+                    mapWork.locate()
+                  }}
+                >
+                  定位至模型
+                </MarsButton>
+              ),
+              children: <MarsGui options={options} formProps={{ labelCol: { span: 7 } }} ref={marsGuiRef}></MarsGui>
+            },
+            {
+              key: "3",
+              label: "模型方向",
+              children: <MarsGui options={options2} formProps={{ labelCol: { span: 7 } }} ref={marsGuiRef2}></MarsGui>
+            },
+            {
+              key: "4",
+              label: "其他参数",
+              children: (
+                <>
+                  <MarsGui options={options3} formProps={{ labelCol: { span: 7 } }} ref={marsGuiRef3}></MarsGui>
+                  <Space>
+                    <span>单击高亮构件:</span>
+                    <MarsSwitch
+                      checked={highlightEnable}
+                      onChange={(data) => {
+                        setHighlightEnable(data)
+                        updataValue({ highlightEnable: data, popupEnable })
+                      }}
+                    ></MarsSwitch>
+
+                    <span>单击popup弹窗:</span>
+                    <MarsSwitch
+                      checked={popupEnable}
+                      onChange={(data) => {
+                        setPopupEnable(data)
+                        updataValue({ popupEnable: data, highlightEnable })
+                      }}
+                    ></MarsSwitch>
+                  </Space>
+
+                  <div className="f-tac f-pdg-10-t">
+                    <MarsButton
+                      onClick={() => {
+                        mapWork.saveBookmark()
+                      }}
+                    >
+                      保存参数
+                    </MarsButton>
+                  </div>
+                </>
+              )
             }
-          >
-            <Space wrap>
-              <span className="mars-pannel-item-label">模型URL:</span>
-              <MarsInput
-                style={{ width: "280px" }}
-                defaultValue={inputUrl}
-                onChange={(e) => {
-                  setInputUrl(e.target.value + "")
-                }}
-              ></MarsInput>
-
-              <MarsButton
-                onClick={() => {
-                  mapWork.showModel(inputUrl)
-
-                  marsGuiRef3.current.updateField("opacity", 1)
-                  setHighlightEnable(false)
-                  setPopupEnable(true)
-                }}
-              >
-                加载模型
-              </MarsButton>
-              <MarsCheckbox
-                onChange={(e) => {
-                  setAgent(e.target.checked)
-                }}
-              >
-                使用代理
-              </MarsCheckbox>
-            </Space>
-          </MarsCollapsePanel>
-          <MarsCollapsePanel
-            key="2"
-            header="模型位置"
-            extra={
-              <MarsButton
-                onClick={() => {
-                  mapWork.locate()
-                }}
-              >
-                定位至模型
-              </MarsButton>
-            }
-          >
-            <MarsGui options={options} formProps={{ labelCol: { span: 7 } }} ref={marsGuiRef}></MarsGui>
-          </MarsCollapsePanel>
-          <MarsCollapsePanel key="3" header="模型方向">
-            <MarsGui options={options2} formProps={{ labelCol: { span: 7 } }} ref={marsGuiRef2}></MarsGui>
-          </MarsCollapsePanel>
-          <MarsCollapsePanel key="4" header="其他参数">
-            <MarsGui options={options3} formProps={{ labelCol: { span: 7 } }} ref={marsGuiRef3}></MarsGui>
-            <Space>
-              <span>单击高亮构件:</span>
-              <MarsSwitch
-                checked={highlightEnable}
-                onChange={(data) => {
-                  setHighlightEnable(data)
-                  updataValue({ highlightEnable: data, popupEnable })
-                }}
-              ></MarsSwitch>
-
-              <span>单击popup弹窗:</span>
-              <MarsSwitch
-                checked={popupEnable}
-                onChange={(data) => {
-                  setPopupEnable(data)
-                  updataValue({ popupEnable: data, highlightEnable })
-                }}
-              ></MarsSwitch>
-            </Space>
-
-            <div className="f-tac f-pdg-10-t">
-              <MarsButton
-                onClick={() => {
-                  mapWork.saveBookmark()
-                }}
-              >
-                保存参数
-              </MarsButton>
-            </div>
-          </MarsCollapsePanel>
-        </MarsCollapse>
+          ]}
+        ></MarsCollapse>
       </MarsPannel>
       <MarsDialog
         onClose={() => {

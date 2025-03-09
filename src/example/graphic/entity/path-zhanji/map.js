@@ -102,31 +102,53 @@ function addDemoGraphics() {
   }
 }
 
+let timeNum = null
 // 顶视图
 export function viewSeeTop() {
-  map.trackedEntity = undefined
+  if (timeNum) {
+    map.cancelFlyTo()
+    clearTimeout(timeNum)
+    timeNum = null
+  }
+  timeNum = setTimeout(() => {
+    map.trackedEntity = undefined
 
-  map.flyToPositions(linePositions, { pitch: -90 })
+    map.flyToPositions(linePositions, { pitch: -90 })
+  }, 500)
 }
 
 // 侧视图
 export function viewSeeCe() {
-  map.trackedEntity = graphicPath
+  if (timeNum) {
+    map.cancelFlyTo()
+    clearTimeout(timeNum)
+    timeNum = null
+  }
+  timeNum = setTimeout(() => {
+    map.trackedEntity = graphicPath
 
-  graphicPath.flyToPoint({
-    radius: 5000,
-    heading: 0,
-    duration: 0
-  })
+    graphicPath.flyToPoint({
+      radius: 5000,
+      heading: 0,
+      duration: 0
+    })
+  }, 500)
 }
 
 // 主视图
 export function viewSeeHome() {
-  map.trackedEntity = graphicPath
+  if (timeNum) {
+    map.cancelFlyTo()
+    clearTimeout(timeNum)
+    timeNum = null
+  }
+  timeNum = setTimeout(() => {
+    map.trackedEntity = graphicPath
 
-  graphicPath.flyToPoint({
-    radius: 5000,
-    heading: 90,
-    duration: 0
-  })
+    graphicPath.flyToPoint({
+      radius: 5000,
+      heading: 90,
+      duration: 0
+    })
+  }, 500)
 }

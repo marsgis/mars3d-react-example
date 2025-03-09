@@ -196,7 +196,7 @@ export default function MarsStyle({ style, customType, graphicType, parentType =
 
       const realyMaterialType = materialType.split("-")[0]
       const materialResult = materialTypeOption.data.find((item) => item.value === realyMaterialType)
-      const defval = materialResult.defval ?? {}
+      const defval = materialResult?.defval ?? {}
       const viewMaterialsConfig = [...(materialConfig[realyMaterialType] ?? [])]
 
       viewMaterialsConfig.forEach((p) => {
@@ -300,7 +300,7 @@ export default function MarsStyle({ style, customType, graphicType, parentType =
 
       // 材质类型 materialType 改变时的特殊处理
       if (item.name === "materialType") {
-        data.materialOptions = styleValue.materialOptions
+        data.materialOptions = { ...styleValue.materialOptions }
         // 材质同一类但有多个不同参数设置时，根据-*区分的(如LineFlow-2)，使用workMaterialType记录下，便于业务区分
         data.workMaterialType = val
       }
@@ -321,9 +321,9 @@ export default function MarsStyle({ style, customType, graphicType, parentType =
       let changeVal = null
       // 纯色样式 - 直接改style内参数，否则面板会以style内color值为主，mars3d的效果以materialOptions内color值为主，导致不一致
       if (!styleValue.materialType || styleValue.materialType === "Color") {
-        changeVal = { color: styleValue.materialOptions.color, materialOptions: styleValue.materialOptions }
+        changeVal = { color: styleValue.materialOptions.color, materialOptions: { ...styleValue.materialOptions } }
       } else {
-        changeVal = { materialOptions: styleValue.materialOptions }
+        changeVal = { materialOptions: { ...styleValue.materialOptions } }
       }
       // console.log("修改了材质 changeVal", changeVal)
       changeValue(changeVal)
@@ -339,7 +339,7 @@ export default function MarsStyle({ style, customType, graphicType, parentType =
 
     // 材质类型 materialType 改变时的特殊处理
     if (param === "materialType") {
-      data.materialOptions = styleValue[parent].materialOptions
+      data.materialOptions = { ...styleValue[parent].materialOptions }
       // 材质同一类但有多个不同参数设置时，根据-*区分的(如LineFlow-2)，使用workMaterialType记录下，便于业务区分
       data.workMaterialType = val
     }
@@ -361,7 +361,7 @@ export default function MarsStyle({ style, customType, graphicType, parentType =
         changeVal = {
           [item.name]: {
             ...styleValue[item.name],
-            materialOptions: styleValue[item.name].materialOptions,
+            materialOptions: { ...styleValue[item.name].materialOptions },
             color: styleValue[item.name].materialOptions.color
           }
         }
@@ -369,7 +369,7 @@ export default function MarsStyle({ style, customType, graphicType, parentType =
         changeVal = {
           [item.name]: {
             ...styleValue[item.name],
-            materialOptions: styleValue[item.name].materialOptions
+            materialOptions: { ...styleValue[item.name].materialOptions }
           }
         }
       }

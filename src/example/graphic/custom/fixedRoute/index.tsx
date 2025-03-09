@@ -1,7 +1,7 @@
 import { GraphicLayerState } from "@mars/components/MarsSample/GraphicLayerState"
 import { MarsPannel, MarsButton } from "@mars/components/MarsUI"
 import { Space } from "antd"
-import * as mapWork from "./map"
+import * as mapWork from "./map.js"
 
 function UIComponent() {
   return (

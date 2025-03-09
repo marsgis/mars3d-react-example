@@ -9,7 +9,9 @@ const creditHtml = `© 2023 Baidu - <span>审图号：GS(2023)3206号</span>
 export const mapOptions = {
   scene: {
     center: { lat: 31.667339, lng: 117.301893, alt: 40357, heading: 2, pitch: -68 },
-    highDynamicRange: false
+    resolutionScale: 2.0, // 可以提高文字清晰度
+    highDynamicRange: false, // 解决图片变暗
+    fxaa: true
   },
   // 方式1：在创建地球前的参数中配置
   basemaps: [

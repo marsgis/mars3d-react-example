@@ -1,4 +1,4 @@
-import { MarsCollapse, MarsCollapsePanel, MarsButton, MarsPannel, MarsGui, MarsSlider, MarsInputNumber } from "@mars/components/MarsUI"
+import { MarsCollapse, MarsButton, MarsPannel, MarsGui } from "@mars/components/MarsUI"
 import { Space } from "antd"
 import * as mapWork from "./map.js"
 import type { GuiItem } from "@mars/components/MarsUI"
@@ -51,103 +51,120 @@ function UIComponent() {
 
   return (
     <MarsPannel visible={true} right="10" top="10" width={300}>
-      <MarsCollapse defaultActiveKey={["1", "2", "3"]}>
-        <MarsCollapsePanel key="1" header="单个裁剪面">
-          <Space wrap>
-            <MarsButton
-              onClick={() => {
-                mapWork.drawLine()
-              }}
-            >
-              按绘制线裁剪
-            </MarsButton>
-            <Space wrap>
-              <MarsButton
-                onClick={() => {
-                  mapWork.clippingType("ZR")
-                }}
-              >
-                切顶部
-              </MarsButton>
-              <MarsButton
-                onClick={() => {
-                  mapWork.clippingType("Z")
-                }}
-              >
-                切底部
-              </MarsButton>
-              <MarsButton
-                onClick={() => {
-                  mapWork.clippingType("XR")
-                }}
-              >
-                切东向
-              </MarsButton>
-              <MarsButton
-                onClick={() => {
-                  mapWork.clippingType("X")
-                }}
-              >
-                切西向
-              </MarsButton>
-              <MarsButton
-                onClick={() => {
-                  mapWork.clippingType("Y")
-                }}
-              >
-                切南向
-              </MarsButton>
-              <MarsButton
-                onClick={() => {
-                  mapWork.clippingType("YR")
-                }}
-              >
-                切北向
-              </MarsButton>
-            </Space>
-          </Space>
-        </MarsCollapsePanel>
-        <MarsCollapsePanel key="2" header="多个裁剪面">
-          <Space wrap>
-            <MarsButton
-              onClick={() => {
-                mapWork.drawExtent()
-              }}
-            >
-              绘制矩形
-            </MarsButton>
+      <MarsCollapse
+        defaultActiveKey={["1", "2", "3"]}
+        items={[
+          {
+            key: "1",
+            label: "单个裁剪面",
+            children: (
+              <Space wrap>
+                <MarsButton
+                  onClick={() => {
+                    mapWork.drawLine()
+                  }}
+                >
+                  按绘制线裁剪
+                </MarsButton>
+                <Space wrap>
+                  <MarsButton
+                    onClick={() => {
+                      mapWork.clippingType("ZR")
+                    }}
+                  >
+                    切顶部
+                  </MarsButton>
+                  <MarsButton
+                    onClick={() => {
+                      mapWork.clippingType("Z")
+                    }}
+                  >
+                    切底部
+                  </MarsButton>
+                  <MarsButton
+                    onClick={() => {
+                      mapWork.clippingType("XR")
+                    }}
+                  >
+                    切东向
+                  </MarsButton>
+                  <MarsButton
+                    onClick={() => {
+                      mapWork.clippingType("X")
+                    }}
+                  >
+                    切西向
+                  </MarsButton>
+                  <MarsButton
+                    onClick={() => {
+                      mapWork.clippingType("Y")
+                    }}
+                  >
+                    切南向
+                  </MarsButton>
+                  <MarsButton
+                    onClick={() => {
+                      mapWork.clippingType("YR")
+                    }}
+                  >
+                    切北向
+                  </MarsButton>
+                </Space>
+              </Space>
+            )
+          },
+          {
+            key: "2",
+            label: "多个裁剪面",
+            children: (
+              <Space wrap>
+                <MarsButton
+                  onClick={() => {
+                    mapWork.drawExtent()
+                  }}
+                >
+                  绘制矩形
+                </MarsButton>
 
-            <MarsButton
-              onClick={() => {
-                mapWork.drawPoly()
-              }}
-            >
-              绘制面
-            </MarsButton>
+                <MarsButton
+                  onClick={() => {
+                    mapWork.drawPoly()
+                  }}
+                >
+                  绘制面
+                </MarsButton>
 
-            <MarsButton
-              onClick={() => {
-                mapWork.drawPoly2()
-              }}
-            >
-              绘制外切面
-            </MarsButton>
-          </Space>
-        </MarsCollapsePanel>
-        <MarsCollapsePanel key="3" header="模型裁剪">
-          <MarsGui options={options} formProps={{ labelCol: { span: 8 } }}></MarsGui>
+                <MarsButton
+                  onClick={() => {
+                    mapWork.drawPoly2()
+                  }}
+                >
+                  绘制外切面
+                </MarsButton>
+              </Space>
+            )
+          },
+          {
+            key: "3",
+            label: "模型裁剪",
+            children: (
+              <>
+                <MarsGui options={options} formProps={{ labelCol: { span: 8 } }}></MarsGui>
 
-          <div className="f-tac">
-            <MarsButton
-              onClick={() => {
-                mapWork.clear()
-              }}
-            >
-              清除
-            </MarsButton>
-          </div>
-        </MarsCollapsePanel>
-      </MarsCollapse>
+                <div className="f-tac">
+                  <MarsButton
+                    onClick={() => {
+                      mapWork.clear()
+                    }}
+                  >
+                    清除
+                  </MarsButton>
+                </div>
+              </>
+            )
+          }
+        ]}
+      ></MarsCollapse>
     </MarsPannel>
   )
 }

@@ -6,7 +6,7 @@ export let graphicLayer // 矢量图层对象
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: 31.805326, lng: 117.241767, alt: 2281, heading: 357, pitch: -42 }
+    center: { lat: 31.468597, lng: 117.24951, alt: 43443.9, heading: 2.1, pitch: -51.7 }
   },
   terrain: {
     show: false
@@ -29,7 +29,7 @@ export function onMounted(mapInstance) {
 
   bindLayerPopup() // 在图层上绑定popup,对所有加到这个图层的矢量数据都生效 // 加一些演示数据
 
-  addDemoGraphic1()
+  addRandomGraphicByCount(10000)
 }
 
 // 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
@@ -44,7 +44,7 @@ export function addDemoGraphic1() {
   const url = "//data.mars3d.cn/file/geojson/buildings-hf.json"
   mars3d.Util.fetchJson({ url }).then((data) => {
     console.log("1.geojson数据请求完成", data)
-    const arr = mars3d.Util.geoJsonToGraphics(data)
+    const arr = mars3d.Util.geoJsonToGraphics(data, { hasGroup: false })
 
     console.log("2.开始渲染PolygonCombine对象", arr)
 

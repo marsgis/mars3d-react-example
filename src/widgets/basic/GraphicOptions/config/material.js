@@ -217,10 +217,15 @@ const materialConfig = {
     { name: "lineThickness", label: "网格宽度", type: "number", step: 1, defval: 2 }
   ],
   Checkerboard: [
-    { name: "evenColor", label: "主色", type: "color", defval: "#000000" },
+    { name: "evenColor", label: "主色", type: "color", defval: "#000000" },//entity用，属性材质
     { name: "oddColor", label: "衬色", type: "color", defval: "#ffffff" },
+
+    { name: "lightColor", label: "主色primitive", type: "color", defval: "#000000" },//primitive用，材质 【Cesium本身问题，命名不一样】
+    { name: "darkColor", label: "衬色primitive", type: "color", defval: "#ffffff" },
+
     { name: "repeat_x", label: "横向数量", type: "number", step: 1, defval: 10 },
-    { name: "repeat_y", label: "纵向数量", type: "number", step: 1, defval: 10 }
+    { name: "repeat_y", label: "纵向数量", type: "number", step: 1, defval: 10 },
+
   ],
   Stripe: [
     { name: "evenColor", label: "主色", type: "color", defval: "#000000" },
