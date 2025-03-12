@@ -15,7 +15,7 @@ export const mapOptions = {
   layers: [
     {
       name: "单张图片",
-      icon: "https://data.mars3d.cn/img/thumbnail/basemap/bingmap.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/bing_img.png",
       type: "image",
       url: "https://data.mars3d.cn/img/map/world/world.jpg",
       show: true

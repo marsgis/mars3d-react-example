@@ -33,7 +33,7 @@ export const mapOptions = {
     },
     {
       name: "腾讯深蓝色",
-      icon: "https://data.mars3d.cn/img/thumbnail/basemap/bd-c-midnight.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/my_blue.png",
       type: "tencent",
       layer: "custom",
       style: "4",

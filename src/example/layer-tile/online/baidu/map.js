@@ -35,7 +35,7 @@ export const mapOptions = {
     },
     {
       name: "百度深蓝色",
-      icon: "https://data.mars3d.cn/img/thumbnail/basemap/bd-c-midnight.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/my_blue.png",
       type: "baidu",
       layer: "custom",
       style: "midnight",
@@ -43,7 +43,7 @@ export const mapOptions = {
     },
     {
       name: "百度黑色",
-      icon: "https://data.mars3d.cn/img/thumbnail/basemap/bd-c-dark.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/my_dark.png",
       type: "baidu",
       layer: "custom",
       style: "dark",

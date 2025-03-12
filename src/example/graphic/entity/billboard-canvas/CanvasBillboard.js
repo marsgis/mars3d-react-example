@@ -1,3 +1,5 @@
+// import * as mars3d from "mars3d"
+
 // 通过Canvas绘制复杂或动态对象的图标点Graphic
 class CanvasBillboard extends mars3d.graphic.BillboardPrimitive {
   /**
@@ -30,6 +32,9 @@ class CanvasBillboard extends mars3d.graphic.BillboardPrimitive {
       hasPixelOffset: true,
       pixelOffsetX: 0,
       pixelOffsetY: -36 * (style.scale ?? 1)
+    }
+    if (style.scaleByDistance) {
+      style.label.pixelOffsetScaleByDistance = style.scaleByDistance
     }
 
     super._addedHook(style)

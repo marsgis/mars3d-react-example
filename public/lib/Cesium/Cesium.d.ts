@@ -1494,8 +1494,8 @@ export class BoxOutlineGeometry {
          -68.0, 40.0
     ]));
     const box = Cesium.BoxOutlineGeometry.fromAxisAlignedBoundingBox(aabb);
-    
-     
+
+
      * @param boundingBox - A description of the AxisAlignedBoundingBox.
      */
     static fromAxisAlignedBoundingBox(boundingBox: AxisAlignedBoundingBox): BoxOutlineGeometry;
@@ -1628,7 +1628,7 @@ export class Cartesian2 {
      * // Create a Cartesian2 with (1.0, 2.0)
     const v = [1.0, 2.0];
     const p = Cesium.Cartesian2.fromArray(v);
-    
+
     // Create a Cartesian2 with (1.0, 2.0) using an offset into an array
     const v2 = [0.0, 0.0, 1.0, 2.0];
     const p2 = Cesium.Cartesian2.fromArray(v2, 2);
@@ -1970,7 +1970,7 @@ export class Cartesian3 {
      * // Create a Cartesian3 with (1.0, 2.0, 3.0)
     const v = [1.0, 2.0, 3.0];
     const p = Cesium.Cartesian3.fromArray(v);
-    
+
     // Create a Cartesian3 with (1.0, 2.0, 3.0) using an offset into an array
     const v2 = [0.0, 0.0, 1.0, 2.0, 3.0];
     const p2 = Cesium.Cartesian3.fromArray(v2, 2);
@@ -2396,7 +2396,7 @@ export class Cartesian4 {
      * // Create a Cartesian4 with (1.0, 2.0, 3.0, 4.0)
     const v = [1.0, 2.0, 3.0, 4.0];
     const p = Cesium.Cartesian4.fromArray(v);
-    
+
     // Create a Cartesian4 with (1.0, 2.0, 3.0, 4.0) using an offset into an array
     const v2 = [0.0, 0.0, 1.0, 2.0, 3.0, 4.0];
     const p2 = Cesium.Cartesian4.fromArray(v2, 2);
@@ -3527,14 +3527,14 @@ export class Color {
      * @example
      * //Create a completely random color
     const color = Cesium.Color.fromRandom();
-    
+
     //Create a random shade of yellow.
     const color1 = Cesium.Color.fromRandom({
         red : 1.0,
         green : 1.0,
         alpha : 1.0
     });
-    
+
     //Create a random bright color.
     const color2 = Cesium.Color.fromRandom({
         minimumRed : 0.75,
@@ -4725,7 +4725,7 @@ export class ConstantSpline {
     /**
      * Finds an index <code>i</code> in <code>times</code> such that the parameter
     <code>time</code> is in the interval <code>[times[i], times[i + 1]]</code>.
-    
+
     Since a constant spline has no internal times array, this will throw an error.
      * @param time - The time.
      */
@@ -4895,19 +4895,19 @@ export class CoplanarPolygonOutlineGeometry {
 export enum CornerType {
     /**
      * <img src="Images/CornerTypeRounded.png" style="vertical-align: middle;" width="186" height="189" />
-    
+
     Corner has a smooth edge.
      */
     ROUNDED = 0,
     /**
      * <img src="Images/CornerTypeMitered.png" style="vertical-align: middle;" width="186" height="189" />
-    
+
     Corner point is the intersection of adjacent edges.
      */
     MITERED = 1,
     /**
      * <img src="Images/CornerTypeBeveled.png" style="vertical-align: middle;" width="186" height="189" />
-    
+
     Corner is clipped.
      */
     BEVELED = 2
@@ -6018,7 +6018,7 @@ export class Ellipsoid {
      * The default ellipsoid used when not otherwise specified.
      * @example
      * Cesium.Ellipsoid.default = Cesium.Ellipsoid.MOON;
-    
+
     // Apollo 11 landing site
     const position = Cesium.Cartesian3.fromRadians(
       0.67416,
@@ -6918,7 +6918,7 @@ export namespace Fullscreen {
      * @example
      * // Put the entire page into fullscreen.
     Cesium.Fullscreen.requestFullscreen(document.body)
-    
+
     // Place only the Cesium canvas into fullscreen.
     Cesium.Fullscreen.requestFullscreen(scene.canvas)
      * @param element - The HTML element which will be placed into fullscreen mode.
@@ -8536,7 +8536,7 @@ export class HermiteSpline {
         new Cesium.Cartesian3(-2821260.0, -5248423.0, 4021290.0),
         new Cesium.Cartesian3(-2539788.0, -4724797.0, 3620093.0)
     ];
-    
+
     // Add tangents
     const tangents = new Array(points.length);
     tangents[0] = new Cesium.Cartesian3(1125196, -161816, 270551);
@@ -8545,7 +8545,7 @@ export class HermiteSpline {
         tangents[i] = Cesium.Cartesian3.multiplyByScalar(Cesium.Cartesian3.subtract(points[i + 1], points[i - 1], temp), 0.5, new Cesium.Cartesian3());
     }
     tangents[tangents.length - 1] = new Cesium.Cartesian3(1165345, 112641, 47281);
-    
+
     const spline = Cesium.HermiteSpline.createC1({
         times : times,
         points : points,
@@ -8821,7 +8821,7 @@ export namespace IntersectionTests {
     function rayPlane(ray: Ray, plane: Plane, result?: Cartesian3): Cartesian3;
     /**
      * Computes the intersection of a ray and a triangle as a parametric distance along the input ray. The result is negative when the triangle is behind the ray.
-    
+
     Implements {@link https://cadxfem.org/inf/Fast%20MinimumStorage%20RayTriangle%20Intersection.pdf|
     Fast Minimum Storage Ray/Triangle Intersection} by Tomas Moller and Ben Trumbore.
      * @param ray - The ray.
@@ -8835,7 +8835,7 @@ export namespace IntersectionTests {
     function rayTriangleParametric(ray: Ray, p0: Cartesian3, p1: Cartesian3, p2: Cartesian3, cullBackFaces?: boolean): number;
     /**
      * Computes the intersection of a ray and a triangle as a Cartesian3 coordinate.
-    
+
     Implements {@link https://cadxfem.org/inf/Fast%20MinimumStorage%20RayTriangle%20Intersection.pdf|
     Fast Minimum Storage Ray/Triangle Intersection} by Tomas Moller and Ben Trumbore.
      * @param ray - The ray.
@@ -8898,10 +8898,10 @@ export namespace IntersectionTests {
      * const origin = Cesium.Cartesian3.fromDegrees(-75.59777, 40.03883);
     const normal = ellipsoid.geodeticSurfaceNormal(origin);
     const plane = Cesium.Plane.fromPointNormal(origin, normal);
-    
+
     const p0 = new Cesium.Cartesian3(...);
     const p1 = new Cesium.Cartesian3(...);
-    
+
     // find the intersection of the line segment from p0 to p1 and the tangent plane at origin.
     const intersection = Cesium.IntersectionTests.lineSegmentPlane(p0, p1, plane);
      * @param endPoint0 - An end point of the line segment.
@@ -8917,11 +8917,11 @@ export namespace IntersectionTests {
      * const origin = Cesium.Cartesian3.fromDegrees(-75.59777, 40.03883);
     const normal = ellipsoid.geodeticSurfaceNormal(origin);
     const plane = Cesium.Plane.fromPointNormal(origin, normal);
-    
+
     const p0 = new Cesium.Cartesian3(...);
     const p1 = new Cesium.Cartesian3(...);
     const p2 = new Cesium.Cartesian3(...);
-    
+
     // convert the triangle composed of points (p0, p1, p2) to three triangles that don't cross the plane
     const triangles = Cesium.IntersectionTests.trianglePlaneIntersection(p0, p1, p2, plane);
      * @param p0 - First point of the triangle
@@ -9049,7 +9049,7 @@ export class IonResource extends Resource {
     }).catch(function(error) {
         // an error occurred
     });
-    
+
     // load several images in parallel
     Promise.all([resource1.fetchImage(), resource2.fetchImage()]).then(function(images) {
         // images is an array containing all the loaded images
@@ -9661,14 +9661,14 @@ export namespace Math {
     The hyperbolic sine of <em>value</em> is defined to be
     (<em>e<sup>x</sup>&nbsp;-&nbsp;e<sup>-x</sup></em>)/2.0
     where <i>e</i> is Euler's number, approximately 2.71828183.
-    
+
     <p>Special cases:
       <ul>
         <li>If the argument is NaN, then the result is NaN.</li>
-    
+
         <li>If the argument is infinite, then the result is an infinity
         with the same sign as the argument.</li>
-    
+
         <li>If the argument is zero, then the result is a zero with the
         same sign as the argument.</li>
       </ul>
@@ -9682,13 +9682,13 @@ export namespace Math {
     The hyperbolic cosine of <strong>value</strong> is defined to be
     (<em>e<sup>x</sup>&nbsp;+&nbsp;e<sup>-x</sup></em>)/2.0
     where <i>e</i> is Euler's number, approximately 2.71828183.
-    
+
     <p>Special cases:
       <ul>
         <li>If the argument is NaN, then the result is NaN.</li>
-    
+
         <li>If the argument is infinite, then the result is positive infinity.</li>
-    
+
         <li>If the argument is zero, then the result is 1.0.</li>
       </ul>
     </p>
@@ -9985,7 +9985,7 @@ export namespace Math {
     function log2(number: number): number;
     /**
      * Computes a fast approximation of Atan for input in the range [-1, 1].
-    
+
     Based on Michal Drobot's approximation from ShaderFastLibs,
     which in turn is based on "Efficient approximations for the arctangent function,"
     Rajan, S. Sichun Wang Inkol, R. Joyal, A., May 2006.
@@ -9996,7 +9996,7 @@ export namespace Math {
     function fastApproximateAtan(x: number): number;
     /**
      * Computes a fast approximation of Atan2(x, y) for arbitrary input scalars.
-    
+
     Range reduction math based on nvidia's cg reference implementation: http://developer.download.nvidia.com/cg/atan2.html
      * @param x - An input number that isn't zero if y is zero.
      * @param y - An input number that isn't zero if x is zero.
@@ -10066,10 +10066,10 @@ export class Matrix2 implements ArrayLike<number> {
      * // Create the Matrix2:
     // [1.0, 2.0]
     // [1.0, 2.0]
-    
+
     const v = [1.0, 1.0, 2.0, 2.0];
     const m = Cesium.Matrix2.fromArray(v);
-    
+
     // Create same Matrix2 with using an offset into an array
     const v2 = [0.0, 0.0, 1.0, 1.0, 2.0, 2.0];
     const m2 = Cesium.Matrix2.fromArray(v2, 2);
@@ -10469,10 +10469,10 @@ export class Matrix3 implements ArrayLike<number> {
     // [1.0, 2.0, 3.0]
     // [1.0, 2.0, 3.0]
     // [1.0, 2.0, 3.0]
-    
+
     const v = [1.0, 1.0, 1.0, 2.0, 2.0, 2.0, 3.0, 3.0, 3.0];
     const m = Cesium.Matrix3.fromArray(v);
-    
+
     // Create same Matrix3 with using an offset into an array
     const v2 = [0.0, 0.0, 1.0, 1.0, 1.0, 2.0, 2.0, 2.0, 3.0, 3.0, 3.0];
     const m2 = Cesium.Matrix3.fromArray(v2, 2);
@@ -10780,11 +10780,11 @@ export class Matrix3 implements ArrayLike<number> {
         diagonal : new Cesium.Matrix3()
     };
     Cesium.Matrix3.computeEigenDecomposition(a, result);
-    
+
     const unitaryTranspose = Cesium.Matrix3.transpose(result.unitary, new Cesium.Matrix3());
     const b = Cesium.Matrix3.multiply(result.unitary, result.diagonal, new Cesium.Matrix3());
     Cesium.Matrix3.multiply(b, unitaryTranspose, b); // b is now equal to a
-    
+
     const lambda = Cesium.Matrix3.getColumn(result.diagonal, 0, new Cesium.Cartesian3()).x;  // first eigenvalue
     const v = Cesium.Matrix3.getColumn(result.unitary, 0, new Cesium.Cartesian3());          // first eigenvector
     const c = Cesium.Cartesian3.multiplyByScalar(v, lambda, new Cesium.Cartesian3());        // equal to Cesium.Matrix3.multiplyByVector(a, v)
@@ -10991,10 +10991,10 @@ export class Matrix4 implements ArrayLike<number> {
     // [1.0, 2.0, 3.0, 4.0]
     // [1.0, 2.0, 3.0, 4.0]
     // [1.0, 2.0, 3.0, 4.0]
-    
+
     const v = [1.0, 1.0, 1.0, 1.0, 2.0, 2.0, 2.0, 2.0, 3.0, 3.0, 3.0, 3.0, 4.0, 4.0, 4.0, 4.0];
     const m = Cesium.Matrix4.fromArray(v);
-    
+
     // Create same Matrix4 with using an offset into an array
     const v2 = [0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 2.0, 2.0, 2.0, 2.0, 3.0, 3.0, 3.0, 3.0, 4.0, 4.0, 4.0, 4.0];
     const m2 = Cesium.Matrix4.fromArray(v2, 2);
@@ -11182,7 +11182,7 @@ export class Matrix4 implements ArrayLike<number> {
     //     [12.0, 16.0, 20.0, 24.0]
     //     [13.0, 17.0, 21.0, 25.0]
     const a = Cesium.Matrix4.toArray(m);
-    
+
     // m remains the same
     //creates a = [10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0, 17.0, 18.0, 19.0, 20.0, 21.0, 22.0, 23.0, 24.0, 25.0]
      * @param matrix - The matrix to use..
@@ -11210,14 +11210,14 @@ export class Matrix4 implements ArrayLike<number> {
     //     [14.0, 15.0, 16.0, 17.0]
     //     [18.0, 19.0, 20.0, 21.0]
     //     [22.0, 23.0, 24.0, 25.0]
-    
+
     //Example 1: Creates an instance of Cartesian
     const a = Cesium.Matrix4.getColumn(m, 2, new Cesium.Cartesian4());
      * @example
      * //Example 2: Sets values for Cartesian instance
     const a = new Cesium.Cartesian4();
     Cesium.Matrix4.getColumn(m, 2, a);
-    
+
     // a.x = 12.0; a.y = 16.0; a.z = 20.0; a.w = 24.0;
      * @param matrix - The matrix to use.
      * @param index - The zero-based index of the column to retrieve.
@@ -11233,9 +11233,9 @@ export class Matrix4 implements ArrayLike<number> {
     //     [14.0, 15.0, 16.0, 17.0]
     //     [18.0, 19.0, 20.0, 21.0]
     //     [22.0, 23.0, 24.0, 25.0]
-    
+
     const a = Cesium.Matrix4.setColumn(m, 2, new Cesium.Cartesian4(99.0, 98.0, 97.0, 96.0), new Cesium.Matrix4());
-    
+
     // m remains the same
     // a = [10.0, 11.0, 99.0, 13.0]
     //     [14.0, 15.0, 98.0, 17.0]
@@ -11256,14 +11256,14 @@ export class Matrix4 implements ArrayLike<number> {
     //     [14.0, 15.0, 16.0, 17.0]
     //     [18.0, 19.0, 20.0, 21.0]
     //     [22.0, 23.0, 24.0, 25.0]
-    
+
     //Example 1: Returns an instance of Cartesian
     const a = Cesium.Matrix4.getRow(m, 2, new Cesium.Cartesian4());
      * @example
      * //Example 2: Sets values for a Cartesian instance
     const a = new Cesium.Cartesian4();
     Cesium.Matrix4.getRow(m, 2, a);
-    
+
     // a.x = 18.0; a.y = 19.0; a.z = 20.0; a.w = 21.0;
      * @param matrix - The matrix to use.
      * @param index - The zero-based index of the row to retrieve.
@@ -11279,9 +11279,9 @@ export class Matrix4 implements ArrayLike<number> {
     //     [14.0, 15.0, 16.0, 17.0]
     //     [18.0, 19.0, 20.0, 21.0]
     //     [22.0, 23.0, 24.0, 25.0]
-    
+
     const a = Cesium.Matrix4.setRow(m, 2, new Cesium.Cartesian4(99.0, 98.0, 97.0, 96.0), new Cesium.Matrix4());
-    
+
     // m remains the same
     // a = [10.0, 11.0, 12.0, 13.0]
     //     [14.0, 15.0, 16.0, 17.0]
@@ -11488,9 +11488,9 @@ export class Matrix4 implements ArrayLike<number> {
     //     [14.0, 15.0, 16.0, 17.0]
     //     [18.0, 19.0, 20.0, 21.0]
     //     [22.0, 23.0, 24.0, 25.0]
-    
+
     const a = Cesium.Matrix4.multiplyByScalar(m, -2, new Cesium.Matrix4());
-    
+
     // m remains the same
     // a = [-20.0, -22.0, -24.0, -26.0]
     //     [-28.0, -30.0, -32.0, -34.0]
@@ -11510,9 +11510,9 @@ export class Matrix4 implements ArrayLike<number> {
     //     [14.0, 15.0, 16.0, 17.0]
     //     [18.0, 19.0, 20.0, 21.0]
     //     [22.0, 23.0, 24.0, 25.0]
-    
+
     const a = Cesium.Matrix4.negate(m, new Cesium.Matrix4());
-    
+
     // m remains the same
     // a = [-10.0, -11.0, -12.0, -13.0]
     //     [-14.0, -15.0, -16.0, -17.0]
@@ -11531,9 +11531,9 @@ export class Matrix4 implements ArrayLike<number> {
     //     [14.0, 15.0, 16.0, 17.0]
     //     [18.0, 19.0, 20.0, 21.0]
     //     [22.0, 23.0, 24.0, 25.0]
-    
+
     const a = Cesium.Matrix4.transpose(m, new Cesium.Matrix4());
-    
+
     // m remains the same
     // a = [10.0, 14.0, 18.0, 22.0]
     //     [11.0, 15.0, 19.0, 23.0]
@@ -11556,23 +11556,23 @@ export class Matrix4 implements ArrayLike<number> {
     <code>true</code> if they are equal, <code>false</code> otherwise.
      * @example
      * //compares two Matrix4 instances
-    
+
     // a = [10.0, 14.0, 18.0, 22.0]
     //     [11.0, 15.0, 19.0, 23.0]
     //     [12.0, 16.0, 20.0, 24.0]
     //     [13.0, 17.0, 21.0, 25.0]
-    
+
     // b = [10.0, 14.0, 18.0, 22.0]
     //     [11.0, 15.0, 19.0, 23.0]
     //     [12.0, 16.0, 20.0, 24.0]
     //     [13.0, 17.0, 21.0, 25.0]
-    
+
     if(Cesium.Matrix4.equals(a,b)) {
          console.log("Both matrices are equal");
     } else {
          console.log("They are not equal");
     }
-    
+
     //Prints "Both matrices are equal" on the console
      * @param [left] - The first matrix.
      * @param [right] - The second matrix.
@@ -11585,23 +11585,23 @@ export class Matrix4 implements ArrayLike<number> {
     <code>false</code> otherwise.
      * @example
      * //compares two Matrix4 instances
-    
+
     // a = [10.5, 14.5, 18.5, 22.5]
     //     [11.5, 15.5, 19.5, 23.5]
     //     [12.5, 16.5, 20.5, 24.5]
     //     [13.5, 17.5, 21.5, 25.5]
-    
+
     // b = [10.0, 14.0, 18.0, 22.0]
     //     [11.0, 15.0, 19.0, 23.0]
     //     [12.0, 16.0, 20.0, 24.0]
     //     [13.0, 17.0, 21.0, 25.0]
-    
+
     if(Cesium.Matrix4.equalsEpsilon(a,b,0.1)){
          console.log("Difference between both the matrices is less than 0.1");
     } else {
          console.log("Difference between both the matrices is not less than 0.1");
     }
-    
+
     //Prints "Difference between both the matrices is not less than 0.1" on the console
      * @param [left] - The first matrix.
      * @param [right] - The second matrix.
@@ -11620,15 +11620,15 @@ export class Matrix4 implements ArrayLike<number> {
      * Gets the upper left 3x3 matrix of the provided matrix.
      * @example
      * // returns a Matrix3 instance from a Matrix4 instance
-    
+
     // m = [10.0, 14.0, 18.0, 22.0]
     //     [11.0, 15.0, 19.0, 23.0]
     //     [12.0, 16.0, 20.0, 24.0]
     //     [13.0, 17.0, 21.0, 25.0]
-    
+
     const b = new Cesium.Matrix3();
     Cesium.Matrix4.getMatrix3(m,b);
-    
+
     // b = [10.0, 14.0, 18.0]
     //     [11.0, 15.0, 19.0]
     //     [12.0, 16.0, 20.0]
@@ -14256,7 +14256,7 @@ export class Quaternion {
     const s0 = Cesium.Quaternion.computeInnerQuadrangle(quaternions[i - 1], quaternions[i], quaternions[i + 1], new Cesium.Quaternion());
     const s1 = Cesium.Quaternion.computeInnerQuadrangle(quaternions[i], quaternions[i + 1], quaternions[i + 2], new Cesium.Quaternion());
     const q = Cesium.Quaternion.squad(quaternions[i], quaternions[i + 1], s0, s1, t, new Cesium.Quaternion());
-    
+
     // 2. compute the squad interpolation as above but where the first quaternion is a end point.
     const s1 = Cesium.Quaternion.computeInnerQuadrangle(quaternions[0], quaternions[1], quaternions[2], new Cesium.Quaternion());
     const q = Cesium.Quaternion.squad(quaternions[0], quaternions[1], quaternions[0], s1, t, new Cesium.Quaternion());
@@ -14972,7 +14972,7 @@ export class Request {
      * Priority is a unit-less value where lower values represent higher priority.
     For world-based objects, this is usually the distance from the camera.
     A request that does not have a priority function defaults to a priority of 0.
-    
+
     If priorityFunction is defined, this value is updated every frame with the result of that call.
      */
     priority: number;
@@ -15419,7 +15419,7 @@ export class Resource {
     }).catch(function(error) {
         // an error occurred
     });
-    
+
     // load several images in parallel
     Promise.all([resource1.fetchImage(), resource2.fetchImage()]).then(function(images) {
         // images is an array containing all the loaded images
@@ -17586,7 +17586,7 @@ export class TimeIntervalCollection {
 export enum TimeStandard {
     /**
      * Represents the coordinated Universal Time (UTC) time standard.
-    
+
     UTC is related to TAI according to the relationship
     <code>UTC = TAI - deltaT</code> where <code>deltaT</code> is the number of leap
     seconds which have been introduced as of the time in TAI.
@@ -17943,7 +17943,7 @@ export namespace TridiagonalSystemSolver {
         new Cesium.Cartesian3(-5349898.0, 2457005.0, -2685438.0),
         new Cesium.Cartesian3(845820.0, 1573488.0, -1205591.0)
     ];
-    
+
     const solution = Cesium.TridiagonalSystemSolver.solve(lowerDiagonal, diagonal, upperDiagonal, rightHandSide);
      * @param diagonal - An array with length <code>n</code> that contains the diagonal of the coefficient matrix.
      * @param lower - An array with length <code>n - 1</code> that contains the lower diagonal of the coefficient matrix.
@@ -17982,7 +17982,7 @@ export namespace TrustedServers {
      * @example
      * // Add server
     TrustedServers.add('my.server.com', 81);
-    
+
     // Check if server is trusted
     if (TrustedServers.contains('https://my.server.com:81/path/to/file.png')) {
         // my.server.com:81 is trusted
@@ -18517,7 +18517,7 @@ export class WebMercatorProjection {
     The logic behind this particular cutoff value, which is the one used by
     Google Maps, Bing Maps, and Esri, is that it makes the projection
     square.  That is, the rectangle is equal in the X and Y directions.
-    
+
     The constant value is computed by calling:
        WebMercatorProjection.mercatorAngleToGeodeticLatitude(Math.PI)
      */
@@ -22308,20 +22308,20 @@ export class KmlTour {
     /**
      * Event will be called when all playlist entries are
     played, or tour playback being canceled.
-    
+
     If tour playback was terminated, event callback will
     be called with terminated=true parameter.
      */
     tourEnd: Event;
     /**
      * Event will be called when entry from playlist starts to play.
-    
+
     Event callback will be called with curent entry as first parameter.
      */
     entryStart: Event;
     /**
      * Event will be called when entry from playlist ends to play.
-    
+
     Event callback will be called with following parameters:
     1. entry - entry
     2. terminated - true if playback was terminated by calling {@link KmlTour#stop}
@@ -25716,7 +25716,7 @@ export class ArcGisMapServerImageryProvider {
      * @example
      * // Set the default access token for accessing ArcGIS Image Tile service
     Cesium.ArcGisMapService.defaultAccessToken = "<ArcGIS Access Token>";
-    
+
     // Add a base layer from a default ArcGIS basemap
     const provider = await Cesium.ArcGisMapServerImageryProvider.fromBasemapType(
       Cesium.ArcGisBaseMapType.SATELLITE);
@@ -26279,7 +26279,7 @@ export class Billboard {
      * @example
      * // load an image from a URL
     b.image = 'some/image/url.png';
-    
+
     // assuming b1 and b2 are billboards in the same billboard collection,
     // use the same image for both billboards.
     b2.image = b1.image;
@@ -26318,7 +26318,7 @@ export class Billboard {
     }
     // drawImage will be called to create the texture
     b.setImage('myImage', drawImage);
-    
+
     // subsequent billboards created in the same collection using the same id will use the existing
     // texture, without the need to create the canvas or draw the image
     b2.setImage('myImage', drawImage);
@@ -26805,13 +26805,13 @@ export enum BlendEquation {
     REVERSE_SUBTRACT = WebGLConstants.FUNC_REVERSE_SUBTRACT,
     /**
      * Pixel values are given to the minimum function (min(source, destination)).
-    
+
     This equation operates on each pixel color component.
      */
     MIN = WebGLConstants.MIN,
     /**
      * Pixel values are given to the maximum function (max(source, destination)).
-    
+
     This equation operates on each pixel color component.
      */
     MAX = WebGLConstants.MAX
@@ -27123,7 +27123,7 @@ export class Camera {
     viewer.camera.setView({
         destination : Cesium.Cartesian3.fromDegrees(-117.16, 32.71, 15000.0)
     });
-    
+
     // 2 Set view with heading, pitch and roll
     viewer.camera.setView({
         destination : cartesianPosition,
@@ -27133,7 +27133,7 @@ export class Camera {
             roll : 0.0                             // default value
         }
     });
-    
+
     // 3. Change heading, pitch and roll with the camera position remaining the same.
     viewer.camera.setView({
         orientation: {
@@ -27142,13 +27142,13 @@ export class Camera {
             roll : 0.0                             // default value
         }
     });
-    
-    
+
+
     // 4. View rectangle with a top-down view
     viewer.camera.setView({
         destination : Cesium.Rectangle.fromDegrees(west, south, east, north)
     });
-    
+
     // 5. Set position with an orientation using unit vectors.
     viewer.camera.setView({
         destination : Cesium.Cartesian3.fromDegrees(-122.19, 46.25, 5000.0),
@@ -27352,7 +27352,7 @@ export class Camera {
     is heading/pitch/range, then the heading and the pitch angles are defined in the reference frame defined by the transformation matrix.
     The heading is the angle from y axis and increasing towards the x axis. Pitch is the rotation from the xy-plane. Positive pitch
     angles are below the plane. Negative pitch angles are above the plane. The range is the distance from the center.
-    
+
     In 2D, there must be a top down view. The camera will be placed above the target looking down. The height above the
     target will be the magnitude of the offset. The heading will be determined from the offset. If the heading cannot be
     determined from the offset, the heading will be north.
@@ -27360,7 +27360,7 @@ export class Camera {
      * // 1. Using a cartesian offset
     const center = Cesium.Cartesian3.fromDegrees(-98.0, 40.0);
     viewer.camera.lookAt(center, new Cesium.Cartesian3(0.0, -4790000.0, 3930000.0));
-    
+
     // 2. Using a HeadingPitchRange offset
     const center = Cesium.Cartesian3.fromDegrees(-72.0, 40.0);
     const heading = Cesium.Math.toRadians(50.0);
@@ -27377,7 +27377,7 @@ export class Camera {
     is heading/pitch/range, then the heading and the pitch angles are defined in the reference frame defined by the transformation matrix.
     The heading is the angle from y axis and increasing towards the x axis. Pitch is the rotation from the xy-plane. Positive pitch
     angles are below the plane. Negative pitch angles are above the plane. The range is the distance from the center.
-    
+
     In 2D, there must be a top down view. The camera will be placed above the center of the reference frame. The height above the
     target will be the magnitude of the offset. The heading will be determined from the offset. If the heading cannot be
     determined from the offset, the heading will be north.
@@ -27385,7 +27385,7 @@ export class Camera {
      * // 1. Using a cartesian offset
     const transform = Cesium.Transforms.eastNorthUpToFixedFrame(Cesium.Cartesian3.fromDegrees(-98.0, 40.0));
     viewer.camera.lookAtTransform(transform, new Cesium.Cartesian3(0.0, -4790000.0, 3930000.0));
-    
+
     // 2. Using a HeadingPitchRange offset
     const transform = Cesium.Transforms.eastNorthUpToFixedFrame(Cesium.Cartesian3.fromDegrees(-72.0, 40.0));
     const heading = Cesium.Math.toRadians(50.0);
@@ -27457,12 +27457,12 @@ export class Camera {
     viewer.camera.flyTo({
         destination : Cesium.Cartesian3.fromDegrees(-117.16, 32.71, 15000.0)
     });
-    
+
     // 2. Fly to a Rectangle with a top-down view
     viewer.camera.flyTo({
         destination : Cesium.Rectangle.fromDegrees(west, south, east, north)
     });
-    
+
     // 3. Fly to a position with an orientation using unit vectors.
     viewer.camera.flyTo({
         destination : Cesium.Cartesian3.fromDegrees(-122.19, 46.25, 5000.0),
@@ -27471,7 +27471,7 @@ export class Camera {
             up : new Cesium.Cartesian3(-0.47934589305293746, -0.8553216253114552, 0.1966022179118339)
         }
     });
-    
+
     // 4. Fly to a position with an orientation using heading, pitch and roll.
     viewer.camera.flyTo({
         destination : Cesium.Cartesian3.fromDegrees(-122.19, 46.25, 5000.0),
@@ -27513,13 +27513,13 @@ export class Camera {
     }): void;
     /**
      * Sets the camera so that the current view contains the provided bounding sphere.
-    
+
     <p>The offset is heading/pitch/range in the local east-north-up reference frame centered at the center of the bounding sphere.
     The heading and the pitch angles are defined in the local east-north-up reference frame.
     The heading is the angle from y axis and increasing towards the x axis. Pitch is the rotation from the xy-plane. Positive pitch
     angles are below the plane. Negative pitch angles are above the plane. The range is the distance from the center. If the range is
     zero, a range will be computed such that the whole bounding sphere is visible.</p>
-    
+
     <p>In 2D, there must be a top down view. The camera will be placed above the target looking down. The height above the
     target will be the range. The heading will be determined from the offset. If the heading cannot be
     determined from the offset, the heading will be north.</p>
@@ -27529,13 +27529,13 @@ export class Camera {
     viewBoundingSphere(boundingSphere: BoundingSphere, offset?: HeadingPitchRange): void;
     /**
      * Flies the camera to a location where the current view contains the provided bounding sphere.
-    
+
     <p> The offset is heading/pitch/range in the local east-north-up reference frame centered at the center of the bounding sphere.
     The heading and the pitch angles are defined in the local east-north-up reference frame.
     The heading is the angle from y axis and increasing towards the x axis. Pitch is the rotation from the xy-plane. Positive pitch
     angles are below the plane. Negative pitch angles are above the plane. The range is the distance from the center. If the range is
     zero, a range will be computed such that the whole bounding sphere is visible.</p>
-    
+
     <p>In 2D and Columbus View, there must be a top down view. The camera will be placed above the target looking down. The height above the
     target will be the range. The heading will be aligned to local north.</p>
      * @param boundingSphere - The bounding sphere to view, in world coordinates.
@@ -27572,13 +27572,13 @@ export class Camera {
     computeViewRectangle(ellipsoid?: Ellipsoid, result?: Rectangle): Rectangle | undefined;
     /**
      * Switches the frustum/projection to perspective.
-    
+
     This function is a no-op in 2D which must always be orthographic.
      */
     switchToPerspectiveFrustum(): void;
     /**
      * Switches the frustum/projection to orthographic.
-    
+
     This function is a no-op in 2D which will always be orthographic.
      */
     switchToOrthographicFrustum(): void;
@@ -28003,7 +28003,7 @@ export class Cesium3DTileFeature {
     tileset JSON (3D Tiles 1.1) or in the 3DTILES_metadata 3D Tiles extension.
     Metadata is checked against name from most specific to most general and the
     first match is returned. Metadata is checked in this order:
-    
+
     <ol>
       <li>Batch table (structural metadata) property by semantic</li>
       <li>Batch table (structural metadata) property by property ID</li>
@@ -28619,7 +28619,7 @@ export class Cesium3DTileset {
             console.log('Stopped loading');
             return;
         }
-    
+
         console.log(`Loading: requests: ${numberOfPendingRequests}, processing: ${numberOfTilesProcessing}`);
     });
      */
@@ -29042,9 +29042,9 @@ export class Cesium3DTileset {
      * The tileset's bounding sphere.
      * @example
      * const tileset = await Cesium.Cesium3DTileset.fromUrl("http://localhost:8002/tilesets/Seattle/tileset.json");
-    
+
     viewer.scene.primitives.add(tileset);
-    
+
     // Set the camera to view the newly added tileset
     viewer.camera.viewBoundingSphere(tileset.boundingSphere, new Cesium.HeadingPitchRange(0, -0.5, 0));
      */
@@ -29272,7 +29272,7 @@ export class Cesium3DTileset {
      * @example
      * const tileset = await Cesium.Cesium3DTileset.fromIonAssetId(124624234);
     scene.primitives.add(tileset);
-    
+
     const height = tileset.getHeight(scene.camera.positionCartographic, scene);
      * @param cartographic - The cartographic for which to find the height.
      * @param scene - The scene where visualization is taking place.
@@ -30578,7 +30578,7 @@ export class ClippingPolygonCollection {
     how modify the clipping behavior of multiple polygons.
      * @example
      * const polygons = new Cesium.ClippingPolygonCollection();
-    
+
     const positions = Cesium.Cartesian3.fromRadiansArray([
         -1.3194369277314022,
         0.6988062530900625,
@@ -30591,7 +30591,7 @@ export class ClippingPolygonCollection {
         -1.3194358224045408,
         0.6987471965556998,
     ]);
-    
+
     polygons.add(new Cesium.ClippingPolygon({
         positions: positions
     }));
@@ -30695,7 +30695,7 @@ export class CloudCollection {
     this must be a power of two. For best results, set this to be a power of two
     between <code>8.0</code> and <code>32.0</code> (inclusive).
     </p>
-    
+
     <div align='center'>
     <table border='0' cellpadding='5'><tr>
     <td align='center'>
@@ -30715,7 +30715,7 @@ export class CloudCollection {
     Applies a translation to noise texture coordinates to generate different data.
     This can be modified if the default noise does not generate good-looking clouds.
     </p>
-    
+
     <div align='center'>
     <table border='0' cellpadding='5'><tr>
     <td align='center'>
@@ -31240,7 +31240,7 @@ export class CumulusCloud {
     </td>
     </tr></table>
     </div>
-    
+
     <p>To modify the cloud's appearance, modify its <code>maximumSize</code>
     and <code>slice</code> properties.</p>
      */
@@ -31277,7 +31277,7 @@ export class CumulusCloud {
     </tr>
     </table>
     </div>
-    
+
     <p>To modify the billboard's actual size, modify the cloud's <code>scale</code> property.</p>
      */
     maximumSize: Cartesian3;
@@ -31297,26 +31297,26 @@ export class CumulusCloud {
     <td align='center'><code>cloud.slice = 0.6;</code><br/><img src='Images/CumulusCloud.slice0.6.png' width='250' height='158' /></td>
     </tr></table>
     </div>
-    
+
     <br />
     <p>Due to the nature in which this slice is calculated,
     values below <code>0.2</code> may result in cross-sections that are too small,
     and the edge of the ellipsoid will be visible. Similarly, values above <code>0.7</code>
     will cause the cloud to appear smaller. Values outside the range <code>[0.1, 0.9]</code>
     should be avoided entirely because they do not produce desirable results.</p>
-    
+
     <div align='center'>
     <table border='0' cellpadding='5'><tr>
     <td align='center'><code>cloud.slice = 0.08;</code><br/><img src='Images/CumulusCloud.slice0.08.png' width='250' height='158' /></td>
     <td align='center'><code>cloud.slice = 0.8;</code><br/><img src='Images/CumulusCloud.slice0.8.png' width='250' height='158' /></td>
     </tr></table>
     </div>
-    
+
     <p>If <code>slice</code> is set to a negative number, the cloud will not render a cross-section.
     Instead, it will render the outside of the ellipsoid that is visible. For clouds with
     small values of `maximumSize.z`, this can produce good-looking results, but for larger
     clouds, this can result in a cloud that is undesirably warped to the ellipsoid volume.</p>
-    
+
     <div align='center'>
     <table border='0' cellpadding='5'><tr>
     <td align='center'>
@@ -33874,7 +33874,7 @@ export class ImageBasedLighting {
     There are nine <code>Cartesian3</code> coefficients.
     The order of the coefficients is: L<sub>0,0</sub>, L<sub>1,-1</sub>, L<sub>1,0</sub>, L<sub>1,1</sub>, L<sub>2,-2</sub>, L<sub>2,-1</sub>, L<sub>2,0</sub>, L<sub>2,1</sub>, L<sub>2,2</sub>
     </p>
-    
+
     These values can be obtained by preprocessing the environment map using the <code>cmgen</code> tool of
     {@link https://github.com/google/filament/releases|Google's Filament project}.
     Be sure to use the <code>--no-mirror</code> option in <code>cmgen</code>.
@@ -34076,7 +34076,7 @@ export class ImageryLayer {
      * The {@link TextureMinificationFilter} to apply to this layer.
     Possible values are {@link TextureMinificationFilter.LINEAR} (the default)
     and {@link TextureMinificationFilter.NEAREST}.
-    
+
     To take effect, this property must be set immediately after adding the imagery layer.
     Once a texture is loaded it won't be possible to change the texture filter used.
      */
@@ -34085,7 +34085,7 @@ export class ImageryLayer {
      * The {@link TextureMagnificationFilter} to apply to this layer.
     Possible values are {@link TextureMagnificationFilter.LINEAR} (the default)
     and {@link TextureMagnificationFilter.NEAREST}.
-    
+
     To take effect, this property must be set immediately after adding the imagery layer.
     Once a texture is loaded it won't be possible to change the texture filter used.
      */
@@ -34185,13 +34185,13 @@ export class ImageryLayer {
      * // Handle loading events
     const imageryLayer = Cesium.ImageryLayer.fromProviderAsync(Cesium.IonImageryProvider.fromAssetId(3812));
     viewer.imageryLayers.add(imageryLayer);
-    
+
     imageryLayer.readyEvent.addEventListener(provider => {
       imageryLayer.provider.errorEvent.addEventListener(error => {
         alert(`Encountered an error while loading imagery tiles! ${error}`);
       });
     });
-    
+
     imageryLayer.errorEvent.addEventListener(error => {
       alert(`Encountered an error while creating an imagery layer! ${error}`);
     });
@@ -34211,19 +34211,19 @@ export class ImageryLayer {
      * // Handle loading events
     const imageryLayer = Cesium.ImageryLayer.fromWorldImagery();
     viewer.imageryLayers.add(imageryLayer);
-    
+
     imageryLayer.readyEvent.addEventListener(provider => {
       imageryLayer.provider.errorEvent.addEventListener(error => {
         alert(`Encountered an error while loading imagery tiles! ${error}`);
       });
     });
-    
+
     imageryLayer.errorEvent.addEventListener(error => {
       alert(`Encountered an error while creating an imagery layer! ${error}`);
     });
      * @param options - An object describing initialization options
      * @returns The created imagery layer.
-    
+
     * @example
     // Create a new base layer
     const viewer = new Cesium.Viewer("cesiumContainer", {
@@ -37147,7 +37147,7 @@ export class Model {
      * Gets an event that is raised when the model is loaded and ready for rendering, i.e. when the external resources
     have been downloaded and the WebGL resources are created. Event listeners
     are passed an instance of the {@link Model}.
-    
+
     <p>
     If {@link Model.incrementallyLoadTextures} is true, this event will be raised before all textures are loaded and ready for rendering. Subscribe to {@link Model.texturesReadyEvent} to be notified when the textures are ready.
     </p>
@@ -37389,7 +37389,7 @@ export class Model {
     applyArticulations(): void;
     /**
      * Returns the object that was created for the given extension.
-    
+
     The given name may be the name of a glTF extension, like `"EXT_example_extension"`.
     If the specified extension was present in the root of the underlying glTF asset,
     and a loder for the specified extension has processed the extension data, then
@@ -37789,7 +37789,7 @@ export class ModelAnimationCollection {
      * @example
      * // Example 3. Add an animation and provide all properties and events
     const startTime = Cesium.JulianDate.now();
-    
+
     const animation = model.activeAnimations.add({
       name : 'another animation name',
       startTime : startTime,
@@ -37800,7 +37800,7 @@ export class ModelAnimationCollection {
       reverse : true,                              // Play in reverse
       loop : Cesium.ModelAnimationLoop.REPEAT      // Loop the animation
     });
-    
+
     animation.start.addEventListener(function(model, animation) {
       console.log(`Animation started: ${animation.name}`);
     });
@@ -39827,18 +39827,18 @@ export class PostProcessStageCollection {
     </p>
     <ul>
     <li><code>intensity</code> is a scalar value used to lighten or darken the shadows exponentially. Higher values make the shadows darker. The default value is <code>3.0</code>.</li>
-    
+
     <li><code>bias</code> is a scalar value representing an angle in radians. If the dot product between the normal of the sample and the vector to the camera is less than this value,
     sampling stops in the current direction. This is used to remove shadows from near planar edges. The default value is <code>0.1</code>.</li>
-    
+
     <li><code>lengthCap</code> is a scalar value representing a length in meters. If the distance from the current sample to first sample is greater than this value,
     sampling stops in the current direction. The default value is <code>0.26</code>.</li>
-    
+
     <li><code>stepSize</code> is a scalar value indicating the distance to the next texel sample in the current direction. The default value is <code>1.95</code>.</li>
-    
+
     <li><code>frustumLength</code> is a scalar value in meters. If the current fragment has a distance from the camera greater than this value, ambient occlusion is not computed for the fragment.
     The default value is <code>1000.0</code>.</li>
-    
+
     <li><code>ambientOcclusionOnly</code> is a boolean value. When <code>true</code>, only the shadows generated are written to the output. When <code>false</code>, the input texture is modulated
     with the ambient occlusion. This is a useful debug option for seeing the effects of changing the uniform values. The default value is <code>false</code>.</li>
     </ul>
@@ -39862,10 +39862,10 @@ export class PostProcessStageCollection {
     </p>
     <ul>
     <li><code>contrast</code> is a scalar value in the range [-255.0, 255.0] and affects the contract of the effect. The default value is <code>128.0</code>.</li>
-    
+
     <li><code>brightness</code> is a scalar value. The input texture RGB value is converted to hue, saturation, and brightness (HSB) then this value is
     added to the brightness. The default value is <code>-0.3</code>.</li>
-    
+
     <li><code>glowOnly</code> is a boolean value. When <code>true</code>, only the glow effect will be shown. When <code>false</code>, the glow will be added to the input texture.
     The default value is <code>false</code>. This is a debug option for viewing the effects when changing the other uniform values.</li>
     </ul>
@@ -40132,11 +40132,11 @@ export namespace PostProcessStageLibrary {
     const yellowEdge = Cesium.PostProcessStageLibrary.createEdgeDetectionStage();
     yellowEdge.uniforms.color = Cesium.Color.YELLOW;
     yellowEdge.selected = [feature0];
-    
+
     const greenEdge = Cesium.PostProcessStageLibrary.createEdgeDetectionStage();
     greenEdge.uniforms.color = Cesium.Color.LIME;
     greenEdge.selected = [feature1];
-    
+
     // draw edges around feature0 and feature1
     postProcessStages.add(Cesium.PostProcessStageLibrary.createSilhouetteStage([yellowEdge, greenEdge]);
      * @returns A post-process stage that applies an edge detection effect.
@@ -40379,12 +40379,12 @@ export class Primitive {
     instance is shaded with the same appearance.  Some appearances, like
     {@link PerInstanceColorAppearance} allow giving each instance unique
     properties.
-    
+
     <p>
     When using an appearance that requires a color attribute, like PerInstanceColorAppearance,
     add a depthFailColor per-instance attribute instead.
     </p>
-    
+
     <p>
     Requires the EXT_frag_depth WebGL extension to render properly. If the extension is not supported,
     there may be artifacts.
@@ -40396,7 +40396,7 @@ export class Primitive {
     When this is the identity matrix, the primitive is drawn in world coordinates, i.e., Earth's WGS84 coordinates.
     Local reference frames can be used by providing a different transformation matrix, like that returned
     by {@link Transforms.eastNorthUpToFixedFrame}.
-    
+
     <p>
     This property is only supported in 3D mode.
     </p>
@@ -40461,10 +40461,10 @@ export class Primitive {
       if (!frustumPrimitive.ready) {
         return;
       }
-    
+
       const attributes = primitive.getGeometryInstanceAttributes('an id');
       attributes.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.AQUA);
-    
+
       removeListener();
     });
      */
@@ -40809,7 +40809,7 @@ export class Scene {
     scene.debugCommandFilter = function(command) {
         return false;
     };
-    
+
     // Execute only the billboard's commands.  That is, only draw the billboard.
     const billboards = new Cesium.BillboardCollection();
     scene.debugCommandFilter = function(command) {
@@ -40865,7 +40865,7 @@ export class Scene {
     useDepthPicking: boolean;
     /**
      * When <code>true</code>, enables picking translucent geometry using the depth buffer. Note that {@link Scene#useDepthPicking} must also be true for enabling this to work.
-    
+
     <p>
     There is a decrease in performance when enabled. There are extra draw calls to write depth for
     translucent geometry.
@@ -40890,7 +40890,7 @@ export class Scene {
     /**
      * Blends the atmosphere to geometry far from the camera for horizon views. Allows for additional
     performance improvements by rendering less geometry and dispatching less terrain requests.
-    
+
     Disbaled by default if an ellipsoid other than WGS84 is used.
      */
     fog: Fog;
@@ -41376,7 +41376,7 @@ export class Scene {
      * // Use a custom terrain provider
     const terrain = new Cesium.Terrain(Cesium.CesiumTerrainProvider.fromUrl("https://myTestTerrain.com"));
     scene.setTerrain(terrain);
-    
+
     terrain.errorEvent.addEventListener(error => {
       alert(`Encountered an error while creating terrain! ${error}`);
     });
@@ -41487,7 +41487,7 @@ export class ScreenSpaceCameraController {
     /**
      * If true, inputs are allowed conditionally with the flags enableTranslate, enableZoom,
     enableRotate, enableTilt, and enableLook.  If false, all inputs are disabled.
-    
+
     NOTE: This setting is for temporary use cases, such as camera flights and
     drag-selection of regions (see Picking demo).  It is typically set to false at the
     start of such events, and set true on completion.  To keep inputs disabled
@@ -42212,8 +42212,8 @@ export class Sun {
     assign the return value (<code>undefined</code>) to the object as done in the example.
      * @example
      * sun = sun && sun.destroy();
-    
-     
+
+
      */
     destroy(): void;
 }
@@ -42317,17 +42317,17 @@ export class Terrain {
      * @example
      * // Handle loading events
     const terrain = Cesium.Terrain.fromWorldTerrain();
-    
+
     scene.setTerrain(terrain);
-    
+
     terrain.readyEvent.addEventListener(provider => {
       scene.globe.enableLighting = true;
-    
+
       terrain.provider.errorEvent.addEventListener(error => {
         alert(`Encountered an error while loading terrain tiles! ${error}`);
       });
     });
-    
+
     terrain.errorEvent.addEventListener(error => {
       alert(`Encountered an error while creating terrain! ${error}`);
     });
@@ -42357,17 +42357,17 @@ export class Terrain {
      * @example
      * // Handle loading events
     const bathymetry = Cesium.Terrain.fromWorldBathymetry();
-    
+
     scene.setTerrain(bathymetry);
-    
+
     bathymetry.readyEvent.addEventListener(provider => {
       scene.globe.enableLighting = true;
-    
+
       bathymetry.provider.errorEvent.addEventListener(error => {
         alert(`Encountered an error while loading bathymetric terrain tiles! ${error}`);
       });
     });
-    
+
     bathymetry.errorEvent.addEventListener(error => {
       alert(`Encountered an error while creating bathymetric terrain! ${error}`);
     });
@@ -43167,7 +43167,7 @@ export class ViewportQuad {
      * @example
      * // 1. Change the color of the default material to yellow
     viewportQuad.material.uniforms.color = new Cesium.Color(1.0, 1.0, 0.0, 1.0);
-    
+
     // 2. Change material to horizontal stripes
     viewportQuad.material = Cesium.Material.fromType(Cesium.Material.StripeType);
      */
@@ -44380,7 +44380,7 @@ map of the world.\nhttp://www.openstreetmap.org",
 
  imageryViewModels.push(new Cesium.ProviderViewModel({
      name: "Earth at Night",
-     iconUrl: Cesium.buildModuleUrl("Widgets/Images/ImageryProviders/blackMarble.png"),
+     iconUrl: Cesium.buildModuleUrl("Widgets/Images/ImageryProviders/my_night.png"),
      tooltip: "The lights of cities and villages trace the outlines of civilization \
 in this global view of the Earth at night as seen by NASA/NOAA's Suomi NPP satellite.",
      creationFunction: function() {
@@ -46424,7 +46424,7 @@ export class Viewer {
     trackedEntity: Entity | undefined;
     /**
      * Gets or sets the object instance for which to display a selection indicator.
-    
+
     If a user interactively picks a Cesium3DTilesFeature instance, then this property
     will contain a transient Entity instance with a property named "feature" that is
     the instance that was picked.
@@ -46479,13 +46479,13 @@ export class Viewer {
      * Asynchronously sets the camera to view the provided entity, entities, or data source.
     If the data source is still in the process of loading or the visualization is otherwise still loading,
     this method waits for the data to be ready before performing the zoom.
-    
+
     <p>The offset is heading/pitch/range in the local east-north-up reference frame centered at the center of the bounding sphere.
     The heading and the pitch angles are defined in the local east-north-up reference frame.
     The heading is the angle from y axis and increasing towards the x axis. Pitch is the rotation from the xy-plane. Positive pitch
     angles are above the plane. Negative pitch angles are below the plane. The range is the distance from the center. If the range is
     zero, a range will be computed such that the whole bounding sphere is visible.</p>
-    
+
     <p>In 2D, there must be a top down view. The camera will be placed above the target looking down. The height above the
     target will be the range. The heading will be determined from the offset. If the heading cannot be
     determined from the offset, the heading will be north.</p>
@@ -46498,13 +46498,13 @@ export class Viewer {
      * Flies the camera to the provided entity, entities, or data source.
     If the data source is still in the process of loading or the visualization is otherwise still loading,
     this method waits for the data to be ready before performing the flight.
-    
+
     <p>The offset is heading/pitch/range in the local east-north-up reference frame centered at the center of the bounding sphere.
     The heading and the pitch angles are defined in the local east-north-up reference frame.
     The heading is the angle from y axis and increasing towards the x axis. Pitch is the rotation from the xy-plane. Positive pitch
     angles are above the plane. Negative pitch angles are below the plane. The range is the distance from the center. If the range is
     zero, a range will be computed such that the whole bounding sphere is visible.</p>
-    
+
     <p>In 2D, there must be a top down view. The camera will be placed above the target looking down. The height above the
     target will be the range. The heading will be determined from the offset. If the heading cannot be
     determined from the offset, the heading will be north.</p>

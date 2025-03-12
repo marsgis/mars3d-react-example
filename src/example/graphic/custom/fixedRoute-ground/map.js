@@ -12,14 +12,14 @@ export const mapOptions = {
   control: {
     clockAnimate: true, // 时钟动画控制(左下角)
     timeline: true, // 是否显示时间线控件
-    compass: { top: "10px", left: "5px" }
+    compass: { style: { top: "10px", left: "5px" } }
   }
 }
 
 // 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
-  map.scene.verticalExaggeration = 2 // 地形夸张
+  // map.scene.verticalExaggeration = 2 // 地形夸张
   // map.control.toolbar.container.style.bottom = "55px" // 修改toolbar控件的样式
 
   // 创建矢量数据图层
@@ -61,9 +61,9 @@ function addGraphicLayer() {
     },
     // model: {
     //   show: true,
-    //   url: '//data.mars3d.cn/gltf/mars/qiche.gltf',
+    //   url: "https://data.mars3d.cn/gltf/mars/qiche.gltf",
     //   scale: 0.2,
-    //   minimumPixelSize: 50,
+    //   minimumPixelSize: 50
     // },
     model: {
       url: "https://data.mars3d.cn/gltf/mars/jingche/jingche.gltf",

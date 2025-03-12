@@ -11,7 +11,7 @@ export const mapOptions = {
   basemaps: [
     {
       name: "mapbox影像图",
-      icon: "https://data.mars3d.cn/img/thumbnail/basemap/mapboxSatellite.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/arcgis_img.png",
       type: "mapbox",
       username: "marsgis",
       styleId: "cki0adkar2b0e19mv9tpiewld",
@@ -22,7 +22,7 @@ export const mapOptions = {
     },
     {
       name: "mapbox街道图",
-      icon: "https://data.mars3d.cn/img/thumbnail/basemap/mapboxStreets.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/arcgis_vec.png",
       type: "mapbox",
       username: "marsgis",
       styleId: "cki0a0ire3jvh19r92vwfau1e",
@@ -30,7 +30,7 @@ export const mapOptions = {
     },
     {
       name: "mapbox基础底图",
-      icon: "https://data.mars3d.cn/img/thumbnail/basemap/mapboxTerrain.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/bd_vec.png",
       type: "mapbox",
       username: "marsgis",
       styleId: "cki09kw472a8j19mvog00aoe0",
@@ -38,7 +38,7 @@ export const mapOptions = {
     },
     {
       name: "mapbox黑色底图",
-      icon: "https://data.mars3d.cn/img/thumbnail/basemap/bd-c-dark.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/my_blue.png",
       type: "mapbox",
       username: "marsgis",
       styleId: "cki0a2mtc2vyo1bqu76p8ks8m",
@@ -46,7 +46,7 @@ export const mapOptions = {
     },
     {
       name: "mapbox灰色底图",
-      icon: "https://data.mars3d.cn/img/thumbnail/basemap/bd-c-grayscale.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/my_dark.png",
       type: "mapbox",
       username: "marsgis",
       styleId: "cki0a92b123qo1aluk0e5v7sb",

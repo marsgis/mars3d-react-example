@@ -147,6 +147,7 @@ class HuxingLayer extends mars3d.layer.GraphicLayer {
 
       const cengGraphics = loudongGraphics[ceng]
       cengGraphics.forEach((huGraphic) => {
+        if (huGraphic.isDestroy) { return }
         huGraphic.show = showHu
         if (!showHu) {
           this._lastHideGraphics.push(huGraphic)

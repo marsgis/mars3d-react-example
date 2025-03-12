@@ -5,6 +5,7 @@
  * 通过转geojson方式 加载kml和kmz文件。
  *
  * 提示：静态引入项目中使用时，kgUtil使用需要引入 ../lib/geojson/kml-geojson.js文件
+ * import "../lib/geojson/kml-geojson", 通过window.kgUtil使用
  *
  * 提示：vue项目中使用时，
  * 1.把顶部的import行注释取消；

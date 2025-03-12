@@ -4,11 +4,18 @@ import * as mars3d from "mars3d"
 
 export let map // mars3d.Map三维地图对象
 
+// 表示缩小和放大瓦片数据的过滤方式。默认值为LINEAR线性结构，大部分地图调整为最近方式过滤能够有效提升地图清晰度。
+// Cesium.ImageryLayer.DEFAULT_MINIFICATION_FILTER = Cesium.TextureMinificationFilter.NEAREST
+// Cesium.ImageryLayer.DEFAULT_MAGNIFICATION_FILTER = Cesium.TextureMinificationFilter.NEAREST
 
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: 14.741847, lng: 108.420914, alt: 10003793, heading: 0, pitch: -83 }
+    center: { lat: 39.772088, lng: 116.389826, alt: 55722.1, heading: 358.5, pitch: -76.3 },
+    mapProjection: "EPSG:3857", // 2D模式下避免瓦片拉伸
+    fxaa: true, // 是否开启抗锯齿
+    resolutionScale: 2.0, // 提示注记层清晰度
+    highDynamicRange: false // 避免瓦片太暗
   },
   terrain: {
     url: "https://data.mars3d.cn/terrain",

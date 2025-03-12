@@ -43,7 +43,7 @@ function getImageryProviderArr() {
   imgModel = new Cesium.ProviderViewModel({
     name: "本地图片",
     tooltip: "本地单张图片",
-    iconUrl: "https://data.mars3d.cn/img/thumbnail/basemap/esriNationalGeographic.png",
+    iconUrl: "https://data.mars3d.cn/img/thumbnail/basemap/offline.png",
     category: "标准坐标系",
     creationFunction: function () {
       return mars3d.LayerUtil.createImageryProvider({
@@ -78,7 +78,7 @@ function getImageryProviderArr() {
 
   imgModel = new Cesium.ProviderViewModel({
     name: "Bing影像",
-    iconUrl: "https://data.mars3d.cn/img/thumbnail/basemap/bingAerial.png",
+    iconUrl: "https://data.mars3d.cn/img/thumbnail/basemap/bing_img.png",
     tooltip: "微软提供的高清影像地图",
     category: "标准坐标系",
     creationFunction: function () {
@@ -92,7 +92,7 @@ function getImageryProviderArr() {
 
   imgModel = new Cesium.ProviderViewModel({
     name: "ESRI影像",
-    iconUrl: "https://data.mars3d.cn/img/thumbnail/basemap/esriWorldImagery.png",
+    iconUrl: "https://data.mars3d.cn/img/thumbnail/basemap/arcgis_img.png",
     tooltip: "ESRI提供的高清影像地图",
     category: "标准坐标系",
     creationFunction: function () {

@@ -24,7 +24,7 @@ function initMap() {
       },
       {
         name: "离线地图",
-        icon: "https://data.mars3d.cn/img/thumbnail/basemap/mapboxSatellite.png",
+        icon: "https://data.mars3d.cn/img/thumbnail/basemap/google_img.png",
         type: "xyz",
         url: "https://data.mars3d.cn/tile/img/{z}/{x}/{y}.jpg",
         minimumLevel: 0,

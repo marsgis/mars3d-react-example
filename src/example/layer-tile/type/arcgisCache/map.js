@@ -11,7 +11,7 @@ export const mapOptions = {
   basemaps: [
     {
       name: "ArcGIS影像",
-      icon: "https://data.mars3d.cn/img/thumbnail/basemap/esriWorldImagery.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/arcgis_img.png",
       type: "arcgis_cache",
       url: "https://data.mars3d.cn/arcgis_cache/googleVec/_alllayers/{z}/{y}/{x}.jpg",
       upperCase: true, // 标识图片名称是否大写

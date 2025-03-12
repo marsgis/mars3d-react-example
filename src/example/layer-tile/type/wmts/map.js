@@ -11,7 +11,7 @@ export const mapOptions = {
   basemaps: [
     {
       name: "山西天地图",
-      icon: "https://data.mars3d.cn/img/thumbnail/basemap/blackMarble.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/my_night.png",
       type: "wmts",
       url: "http://shanxi.tianditu.gov.cn/service/SX_DOM/wmts",
       layer: "WD_DOM",

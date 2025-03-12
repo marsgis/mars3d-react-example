@@ -19,13 +19,13 @@ export const mapOptions = {
   basemaps: [
     {
       name: "单张图片",
-      icon: "https://data.mars3d.cn/img/thumbnail/basemap/bingmap.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/bing_img.png",
       type: "image",
       url: "https://data.mars3d.cn/img/map/world/world.jpg"
     },
     {
       name: "夜晚图片",
-      icon: "https://data.mars3d.cn/img/thumbnail/basemap/blackMarble.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/my_night.png",
       type: "image",
       url: "https://data.mars3d.cn/img/map/world/night.jpg",
       dayAlpha: 0.0,
@@ -34,7 +34,7 @@ export const mapOptions = {
     },
     {
       name: "蓝色底图",
-      icon: "https://data.mars3d.cn/img/thumbnail/basemap/bd-c-midnight.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/my_blue.png",
       type: "image",
       url: "https://data.mars3d.cn/img/map/world/blue.jpg",
       show: true

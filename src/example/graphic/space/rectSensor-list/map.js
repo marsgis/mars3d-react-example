@@ -26,7 +26,7 @@ export const mapOptions = {
   layers: [
     {
       name: "夜晚图片",
-      icon: "https://data.mars3d.cn/img/thumbnail/basemap/blackMarble.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/my_night.png",
       type: "image",
       url: "https://data.mars3d.cn/img/map/world/night2.jpg",
       dayAlpha: 0.0,

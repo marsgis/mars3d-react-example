@@ -26,7 +26,7 @@ export const mapOptions = {
     },
     {
       name: "谷歌地形",
-      icon: "https://data.mars3d.cn/img/thumbnail/basemap/stamenWatercolor.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/google_ter.png",
       type: "google",
       layer: "ter",
       chinaCRS: mars3d.ChinaCRS.GCJ02

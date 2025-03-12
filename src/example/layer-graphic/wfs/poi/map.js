@@ -30,7 +30,7 @@ export const mapOptions = {
     },
     {
       name: "蓝色底图",
-      icon: "https://data.mars3d.cn/img/thumbnail/basemap/bd-c-midnight.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/my_blue.png",
       type: "gaode",
       layer: "vec",
       chinaCRS: "GCJ02",
@@ -44,7 +44,7 @@ export const mapOptions = {
     },
     {
       name: "黑色底图",
-      icon: "https://data.mars3d.cn/img/thumbnail/basemap/bd-c-dark.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/my_dark.png",
       type: "gaode",
       layer: "vec",
       chinaCRS: "GCJ02",

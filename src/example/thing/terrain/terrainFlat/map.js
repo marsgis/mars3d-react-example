@@ -17,6 +17,9 @@ export const eventTabel = new mars3d.BaseClass()
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
+  terrainFlat = new mars3d.thing.TerrainFlat()
+  map.addThing(terrainFlat)
+
   // 创建矢量数据图层
   lineLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(lineLayer)
@@ -28,9 +31,6 @@ export function onUnmounted() {
 }
 
 export function addTerrainClip() {
-  terrainFlat = new mars3d.thing.TerrainFlat()
-  map.addThing(terrainFlat)
-
   // terrainFlat.on(mars3d.EventType.addItem, onAddFlatArea)
 
   const areaItem = terrainFlat.addArea(

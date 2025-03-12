@@ -25,13 +25,7 @@ export const mapOptions = {
     toolbar: {
       position: "right-bottom"
     },
-    compass: {
-      style: {
-        bottom: "toolbar",
-        right: "5px",
-        left: "auto"
-      }
-    },
+    compass: { style: { bottom: "toolbar", right: "5px" } },
     baseLayerPicker: true
   },
   terrain: { show: false }

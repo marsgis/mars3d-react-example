@@ -25,7 +25,9 @@ function initMap() {
         diffHeight: 50,
         image: "https://data.mars3d.cn/img/textures/poly-stone.jpg",
         imageBottom: "https://data.mars3d.cn/img/textures/poly-soil.jpg",
-        splitNum: 100,
+        splitNum: 100, // 当显示开挖区域的井时，井墙面每两点之间插值个数(概略值，有经纬网网格来插值)
+        repeatX: 50, // 当显示开挖区域的井时，井四周墙横方向重复次数，同repeat
+        repeatY: 10, // 当显示开挖区域的井时，井四周墙纵方向重复次数，同repeat
         area: [
           {
             exact: true,

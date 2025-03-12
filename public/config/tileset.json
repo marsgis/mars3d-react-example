@@ -9,6 +9,7 @@
       "url": "https://data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
       "maximumScreenSpaceError": 1,
       "maxMemory": 1024,
+      "enableCollision":true,
       "style": {
         "color": {
           "conditions": [["true", "color('rgba(42, 160, 224, 1)')"]]

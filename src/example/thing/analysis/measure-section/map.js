@@ -15,6 +15,7 @@ export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
+
   measureObj = new mars3d.thing.Measure({
     // 设置文本样式
     label: {
@@ -97,6 +98,9 @@ export function measureSection() {
     // maxPointNum:2,
     splitNum: 300, // 插值次数
     exact: false // 是否进行精确计算， 传false时是否快速概略计算方式，该方式计算精度较低，但计算速度快，仅能计算在当前视域内坐标的高度
+    // style: {
+    //   clampToGround: false // 是否贴地
+    // }
   })
 }
 

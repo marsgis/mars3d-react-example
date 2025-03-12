@@ -11,7 +11,7 @@ export const mapOptions = {
   basemaps: [
     // {
     //   name: "光污染图层",
-    //   icon: "https://data.mars3d.cn/img/thumbnail/basemap/blackMarble.png",
+    //   icon: "https://data.mars3d.cn/img/thumbnail/basemap/my_night.png",
     //   type: "wms",
     //   url: "//www.lightpollutionmap.info/geoserver/gwc/service/wms",
     //   layers: "PostGIS:VIIRS_2019",
@@ -27,7 +27,7 @@ export const mapOptions = {
     // {
     //   // wms也可以换一种xyz的直接写法
     //   name: "光污染图层(XYZ方式)",
-    //   icon: "https://data.mars3d.cn/img/thumbnail/basemap/blackMarble.png",
+    //   icon: "https://data.mars3d.cn/img/thumbnail/basemap/my_night.png",
     //   type: "xyz",
     //   url: "//www.lightpollutionmap.info/geoserver/gwc/service/wms?transparent=true&format=image%2Fpng&service=WMS&version=1.1.1&request=GetMap&styles=&layers=PostGIS%3AVIIRS_2019&bbox={westProjected},{southProjected},{eastProjected},{northProjected}&width={width}&height={height}&srs=EPSG%3A3857",
     //   alpha: 0.6, // 透明度
@@ -77,6 +77,7 @@ export function addTileLayer() {
 
   // 方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
   tileLayer = new mars3d.layer.WmsLayer({
+    name: "合肥WMS",
     url: "//server.mars3d.cn/geoserver/mars/wms",
     layers: "mars:hf",
     parameters: {
