@@ -15,7 +15,7 @@ export const mapOptions = {
   layers: [
     {
       name: "矢量瓦片图层",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/osm.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/osm.png",
       type: "pbf", // lib\mars3d\thirdParty\pbf-mapbox\PbfLayer.js 中定义的类型
       url: "https://api.maptiler.com/maps/basic/style.json?key=pSHUA9sSkNny3iqoWG4P",
       popup: "all",

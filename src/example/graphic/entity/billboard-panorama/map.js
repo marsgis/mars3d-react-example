@@ -75,7 +75,7 @@ function addRandomGraphicByCount(graphicLayer, position) {
   const graphic = new mars3d.graphic.BillboardEntity({
     position,
     style: {
-      image: "//data.mars3d.cn/img/marker/lace-blue.png",
+      image: "https://data.mars3d.cn/img/marker/lace-blue.png",
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM
     },

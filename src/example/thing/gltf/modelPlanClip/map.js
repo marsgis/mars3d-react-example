@@ -23,7 +23,7 @@ export function onMounted(mapInstance) {
   const graphic = new mars3d.graphic.ModelPrimitive({
     position: [117.150365, 31.841954, 50.26],
     style: {
-      url: "//data.mars3d.cn/gltf/mars/dikuai/d1.gltf",
+      url: "https://data.mars3d.cn/gltf/mars/dikuai/d1.gltf",
       scale: 1
     }
   })

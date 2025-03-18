@@ -16,7 +16,7 @@ export function onMounted(mapInstance) {
 
   // 添加参考三维模型
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
-    url: "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
+    url: "https://data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
     position: { alt: 38.8 },
     maximumScreenSpaceError: 1,
     cullWithChildrenBounds: false
@@ -24,7 +24,7 @@ export function onMounted(mapInstance) {
   map.addLayer(tiles3dLayer)
 
   // 构造效果
-  blackAndWhite = new mars3d.effect.BlackAndWhiteEffect()
+  blackAndWhite = new mars3d.effect.BlackAndWhite()
   map.addEffect(blackAndWhite)
 }
 // 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）

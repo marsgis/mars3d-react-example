@@ -67,7 +67,7 @@ export function addDemoGraphic1() {
     name: "地面站模型",
     position: [117.218875, 31.817812, 138],
     style: {
-      url: "//data.mars3d.cn/gltf/mars/leida.glb",
+      url: "https://data.mars3d.cn/gltf/mars/leida.glb",
       scale: 50,
       heading: 30,
       pitch: 0,

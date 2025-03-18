@@ -23,7 +23,7 @@ class CanvasBillboard extends mars3d.graphic.BillboardPrimitive {
    * @private
    */
   _addedHook(style) {
-    style.image = "//data.mars3d.cn/img/marker/bg/textPnl.png"
+    style.image = "https://data.mars3d.cn/img/marker/bg/textPnl.png"
     style.label = {
       ...style,
       text: `温度:${this.style.text}℃`,

@@ -168,7 +168,7 @@ function addTestLine(positions) {
   //   style: {
   //     materialType: mars3d.MaterialType.Image,
   //     materialOptions: {
-  //       image: "//data.mars3d.cn/img/textures/poly-soil.jpg",
+  //       image: "https://data.mars3d.cn/img/textures/poly-soil.jpg",
   //       opacity: 0.8 // 透明度
   //     },
   //     clampToGround: true

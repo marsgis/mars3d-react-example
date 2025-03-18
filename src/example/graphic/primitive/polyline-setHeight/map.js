@@ -31,7 +31,7 @@ function addDemoGraphics(graphicLayer) {
   // 颜色
   const colors = ["#f7fcf5", "#e5f5e0", "#c7e9c0", "#a1d99b", "#74c476", "#41ab5d", "#238b45", "#006d2c", "#00441b"].reverse()
 
-  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/geojson/bj-bus.json" })
+  mars3d.Util.fetchJson({ url: "https://data.mars3d.cn/file/geojson/bj-bus.json" })
     .then(function (res) {
       const arr = mars3d.Util.geoJsonToGraphics(res) // 解析geojson
       arr.forEach((item, index) => {

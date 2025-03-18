@@ -30,7 +30,7 @@ function addSlope() {
       // materialType: mars3d.MaterialType.LineFlow,
       // materialOptions: {
       //   color: "#1a9850",
-      //   image: "//data.mars3d.cn/img/textures/line-arrow-right.png",
+      //   image: "https://data.mars3d.cn/img/textures/line-arrow-right.png",
       //   speed: 10
       // },
       // clampToGround: true,

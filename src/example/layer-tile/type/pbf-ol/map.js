@@ -19,7 +19,7 @@ export const mapOptions = {
   basemaps: [
     {
       name: "OSM开源地图",
-      icon: "//data.mars3d.cn/img/thumbnail/basemap/osm.png",
+      icon: "https://data.mars3d.cn/img/thumbnail/basemap/osm.png",
       type: "mvt", // lib\mars3d\thirdParty\pbf-ol\PbfolLayer.js 中定义的类型
       url: "https://a.tiles.mapbox.com/v4/mapbox.mapbox-streets-v6/{z}/{x}/{y}.vector.pbf?access_token={k}",
       key: mars3d.Token.mapbox,

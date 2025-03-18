@@ -28,7 +28,7 @@ export function onMounted(mapInstance) {
 
   // 添加点集
   const resource = new Cesium.Resource({
-    url: "//data.mars3d.cn/file/apidemo/diffusion.json"
+    url: "https://data.mars3d.cn/file/apidemo/diffusion.json"
   })
   resource
     .fetchJson()

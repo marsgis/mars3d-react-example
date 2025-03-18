@@ -192,7 +192,7 @@ function addDemoGraphic3(graphicLayer) {
       cornerType: Cesium.CornerType.MITERED,
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
-        image: "//data.mars3d.cn/img/textures/arrow-h.png",
+        image: "https://data.mars3d.cn/img/textures/arrow-h.png",
         axisY: false,
         repeat: new Cesium.Cartesian2(30.0, 1.0),
         color: "#ffff00",

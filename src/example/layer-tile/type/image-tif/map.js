@@ -31,7 +31,7 @@ let tileLayer
 export async function addTileLayer() {
   removeTileLayer()
 
-  const result = await tif2img2("//data.mars3d.cn/img/map/rjy.tif")
+  const result = await tif2img2("https://data.mars3d.cn/img/map/rjy.tif")
 
   // 方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
   tileLayer = new mars3d.layer.ImageLayer({

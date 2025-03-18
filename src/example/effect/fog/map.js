@@ -22,7 +22,7 @@ export function onMounted(mapInstance) {
         type: "model",
         position: [121.507762, 31.233975, 200],
         style: {
-          url: "//data.mars3d.cn/gltf/mars/shanghai/pudong/scene.gltf",
+          url: "https://data.mars3d.cn/gltf/mars/shanghai/pudong/scene.gltf",
           scale: 520,
           heading: 215
         }
@@ -35,7 +35,7 @@ export function onMounted(mapInstance) {
   map.addLayer(graphicLayer)
 
   // 雾效果
-  fogEffect = new mars3d.effect.FogEffect({
+  fogEffect = new mars3d.effect.Fog({
     maxHeight: 20000, // 大于此高度后不显示
     fogByDistance: new Cesium.Cartesian4(100, 0.0, 9000, 0.9),
     color: Cesium.Color.WHITE

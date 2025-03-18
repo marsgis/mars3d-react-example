@@ -21,7 +21,7 @@ export function onMounted(mapInstance) {
   tiles3dLayer = new mars3d.layer.TilesetLayer({
     name: "教学楼",
     type: "3dtiles",
-    url: "//data.mars3d.cn/3dtiles/bim-daxue/tileset.json",
+    url: "https://data.mars3d.cn/3dtiles/bim-daxue/tileset.json",
     position: { lng: 117.251229, lat: 31.844015, alt: 31.2 },
     maximumScreenSpaceError: 16,
     highlight: {

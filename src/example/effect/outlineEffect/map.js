@@ -115,7 +115,7 @@ export function onMounted(mapInstance) {
   graphicLayer.addGraphic(graphic4)
 
   // 添加特效
-  outlineEffect = new mars3d.effect.OutlineEffect({
+  outlineEffect = new mars3d.effect.Outline({
     color: "#FFFF00",
     width: 4,
     eventType: mars3d.EventType.click,

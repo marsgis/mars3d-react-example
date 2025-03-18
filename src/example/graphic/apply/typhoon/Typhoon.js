@@ -167,7 +167,7 @@ class Typhoon {
     const gifGraphic = new mars3d.graphic.DivGraphic({
       position: [endItem.lon, endItem.lat],
       style: {
-        html: `<img src="//data.mars3d.cn/img/marker/gif/typhoon-small.gif">`,
+        html: `<img src="https://data.mars3d.cn/img/marker/gif/typhoon-small.gif">`,
         horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
         verticalOrigin: Cesium.VerticalOrigin.CENTER
       }

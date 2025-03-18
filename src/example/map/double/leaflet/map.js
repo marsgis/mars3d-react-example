@@ -157,7 +157,7 @@ export function viewTo23D() {
 // function showJsonLayer() {
 //   const graphicLayer = new mars3d.layer.GeoJsonLayer({
 //     name: "标绘示例数据",
-//     url: "//data.mars3d.cn/file/geojson/mars3d-draw.json",
+//     url: "https://data.mars3d.cn/file/geojson/mars3d-draw.json",
 //     popup: "{type} {name}",
 //     flyTo: false
 //   })

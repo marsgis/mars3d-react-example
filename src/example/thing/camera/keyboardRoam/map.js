@@ -22,7 +22,7 @@ export const mapOptions = {
       id: 1987,
       name: "教学楼",
       type: "3dtiles",
-      url: "//data.mars3d.cn/3dtiles/bim-daxue/tileset.json",
+      url: "https://data.mars3d.cn/3dtiles/bim-daxue/tileset.json",
       position: { lng: 117.251229, lat: 31.844015, alt: 31.2 },
       maximumScreenSpaceError: 16,
       maxMemory: 1024,

@@ -140,7 +140,7 @@ function addDemoData() {
   console.log(`3.测试图层`, graphicLayer)
 
   // 特效
-  const rainEffect = new mars3d.effect.RainEffect({
+  const rainEffect = new mars3d.effect.Rain({
     speed: 10,
     size: 20,
     direction: 10,

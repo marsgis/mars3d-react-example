@@ -80,7 +80,7 @@ function addDemoGraphics() {
       pixelOffset: new Cesium.Cartesian2(10, -25) // 偏移量
     },
     model: {
-      url: "//data.mars3d.cn/gltf/mars/zhanji.glb",
+      url: "https://data.mars3d.cn/gltf/mars/zhanji.glb",
       scale: 0.1,
       minimumPixelSize: 90
     }

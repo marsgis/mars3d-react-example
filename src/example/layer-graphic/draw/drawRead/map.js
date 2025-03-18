@@ -15,7 +15,7 @@ export function onMounted(mapInstance) {
 
   const geoJsonLayer = new mars3d.layer.GeoJsonLayer({
     name: "马拉松",
-    url: "//data.mars3d.cn/file/geojson/hefei-marathon.json",
+    url: "https://data.mars3d.cn/file/geojson/hefei-marathon.json",
     toPrimitive: true, // 提高渲染效率
     filter: function (feature) {
       if (feature.properties.type === "modelP") {

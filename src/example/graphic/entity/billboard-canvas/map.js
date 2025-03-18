@@ -19,7 +19,7 @@ export function onMounted(mapInstance) {
     pid: 2020,
     type: "3dtiles",
     name: "油田联合站",
-    url: "//data.mars3d.cn/3dtiles/max-ytlhz/tileset.json",
+    url: "https://data.mars3d.cn/3dtiles/max-ytlhz/tileset.json",
     position: { lng: 117.094224, lat: 31.815859, alt: 26.4 },
     rotation: { z: 116.2 },
     maximumScreenSpaceError: 1,

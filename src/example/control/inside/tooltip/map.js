@@ -278,7 +278,7 @@ export function bindGraphicDynamicAttrDemo() {
         verticalOrigin: Cesium.VerticalOrigin.BOTTOM
       }
     },
-    popup: "all",
+    tooltip: "all",
     attr: {
       type: "ajax",
       url: "http://studio-api.mars3d.cn/api/gap/open/appInfo?id={项目名称}", // {XXX}是指对应的graphic的attr中属性名称

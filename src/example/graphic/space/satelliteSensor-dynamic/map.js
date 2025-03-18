@@ -154,7 +154,7 @@ function addGraphicLayer() {
       width: 10
     },
     model: {
-      url: "//data.mars3d.cn/gltf/mars/weixin.gltf",
+      url: "https://data.mars3d.cn/gltf/mars/weixin.gltf",
       scale: 1,
       minimumPixelSize: 90
     }

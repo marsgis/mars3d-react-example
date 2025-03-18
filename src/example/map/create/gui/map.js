@@ -4,7 +4,7 @@ export let map // mars3d.Map三维地图对象
 
 /**
  * 构造bloom效果对象
- * @type {mars3d.BloomEffect}
+ * @type {mars3d.Bloom}
  */
 let bloomEffect
 
@@ -21,7 +21,7 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
   // 构造bloom效果 用于滑动条测试
-  bloomEffect = new mars3d.effect.BloomEffect()
+  bloomEffect = new mars3d.effect.Bloom()
   map.addEffect(bloomEffect)
 }
 

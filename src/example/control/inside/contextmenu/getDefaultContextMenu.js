@@ -7,7 +7,7 @@ const { addPositionsHeight } = mars3d.PointUtil
 const { proj4Trans } = mars3d.PointTrans
 const { logInfo } = mars3d.Log
 const { RotatePoint, Measure, KeyboardRoam } = mars3d.thing
-const { BloomEffect, BrightnessEffect, BlackAndWhiteEffect, NightVisionEffect, OutlineEffect, RainEffect, SnowEffect, FogEffect } = mars3d.effect
+const { Bloom, Brightness, BlackAndWhite, NightVision, Outline, Rain, Snow, Fog } = mars3d.effect
 
 
 // 获取平台内置的右键菜单
@@ -38,11 +38,7 @@ function getDefaultContextMenu(map) {
         `
         globalAlert(inhtml, map.getLangText("_位置信息"))
 
-        // 打印方便测试
-        const ptX = formatNum(e.cartesian.x, 1) // 笛卡尔
-        const ptY = formatNum(e.cartesian.y, 1)
-        const ptZ = formatNum(e.cartesian.z, 1)
-        logInfo(`经纬度：${mpt.toString()} , 笛卡尔：${ptX},${ptY},${ptZ}`)
+        logInfo("此处经纬度坐标", mpt.toString()) // 打印方便测试
       }
     },
     {
@@ -52,8 +48,9 @@ function getDefaultContextMenu(map) {
       icon: Icon.CameraInfo,
       callback: function (e) {
         const mpt = JSON.stringify(map.getCameraView())
-        logInfo(mpt)
         globalAlert(mpt, map.getLangText("_当前视角信息"))
+
+        logInfo("当前视角信息", mpt)
       }
     },
     // 下面是工具类
@@ -151,7 +148,7 @@ function getDefaultContextMenu(map) {
               },
               success: function (graphic) {
                 // eslint-disable-next-line no-console
-                logInfo(JSON.stringify(graphic.coord))
+                logInfo("标记点坐标", JSON.stringify(graphic.coord))
               }
             })
           }
@@ -171,7 +168,7 @@ function getDefaultContextMenu(map) {
               },
               success: function (graphic) {
                 // eslint-disable-next-line no-console
-                logInfo(JSON.stringify(graphic.coord))
+                logInfo("标记线坐标", JSON.stringify(graphic.coord))
               }
             })
           }
@@ -192,7 +189,7 @@ function getDefaultContextMenu(map) {
               },
               success: function (graphic) {
                 // eslint-disable-next-line no-console
-                logInfo(JSON.stringify(graphic.coord))
+                logInfo("标记面坐标", JSON.stringify(graphic.coord))
               }
             })
           }
@@ -212,7 +209,7 @@ function getDefaultContextMenu(map) {
               addHeight: 1,
               success: function (graphic) {
                 // eslint-disable-next-line no-console
-                logInfo(JSON.stringify(graphic.coord))
+                logInfo("标记圆坐标", JSON.stringify(graphic.coord))
               }
             })
           }
@@ -231,7 +228,7 @@ function getDefaultContextMenu(map) {
               },
               success: function (graphic) {
                 // eslint-disable-next-line no-console
-                logInfo(JSON.stringify(graphic.coord))
+                logInfo("标记矩形坐标", JSON.stringify(graphic.coord))
               }
             })
           }
@@ -269,7 +266,9 @@ function getDefaultContextMenu(map) {
             return map.graphicLayer.length > 0
           },
           callback: function (e) {
-            downloadFile("graphic标绘.json", JSON.stringify(map.graphicLayer.toGeoJSON()))
+            const json = map.graphicLayer.toJSON()
+            logInfo("标绘图层数据", json)
+            downloadFile("标绘图层数据.json", JSON.stringify(json))
           }
         },
         // {
@@ -485,7 +484,7 @@ function getDefaultContextMenu(map) {
           },
           callback: function (e) {
             if (!that_effect.rainEffect) {
-              that_effect.rainEffect = new RainEffect()
+              that_effect.rainEffect = new Rain()
               map.addEffect(that_effect.rainEffect)
             }
           }
@@ -515,7 +514,7 @@ function getDefaultContextMenu(map) {
           },
           callback: function (e) {
             if (!that_effect.snowEffect) {
-              that_effect.snowEffect = new SnowEffect()
+              that_effect.snowEffect = new Snow()
               map.addEffect(that_effect.snowEffect)
             }
           }
@@ -547,7 +546,7 @@ function getDefaultContextMenu(map) {
           callback: function (e) {
             if (!that_effect.fogEffect) {
               const height = map.camera.positionCartographic.height * 2
-              that_effect.fogEffect = new FogEffect({
+              that_effect.fogEffect = new Fog({
                 fogByDistance: new Cesium.Cartesian4(0.1 * height, 0.1, height, 0.8)
               })
               map.addEffect(that_effect.fogEffect)
@@ -580,7 +579,7 @@ function getDefaultContextMenu(map) {
           },
           callback: function (e) {
             if (!that_effect.bloomEffect) {
-              that_effect.bloomEffect = new BloomEffect()
+              that_effect.bloomEffect = new Bloom()
               map.addEffect(that_effect.bloomEffect)
             }
           }
@@ -611,7 +610,7 @@ function getDefaultContextMenu(map) {
           },
           callback: function (e) {
             if (!that_effect.brightnessEffect) {
-              that_effect.brightnessEffect = new BrightnessEffect()
+              that_effect.brightnessEffect = new Brightness()
               map.addEffect(that_effect.brightnessEffect)
             }
           }
@@ -642,7 +641,7 @@ function getDefaultContextMenu(map) {
           },
           callback: function (e) {
             if (!that_effect.nightVisionEffect) {
-              that_effect.nightVisionEffect = new NightVisionEffect()
+              that_effect.nightVisionEffect = new NightVision()
               map.addEffect(that_effect.nightVisionEffect)
             }
           }
@@ -673,7 +672,7 @@ function getDefaultContextMenu(map) {
           },
           callback: function (e) {
             if (!that_effect.blackAndWhiteEffect) {
-              that_effect.blackAndWhiteEffect = new BlackAndWhiteEffect()
+              that_effect.blackAndWhiteEffect = new BlackAndWhite()
               map.addEffect(that_effect.blackAndWhiteEffect)
             }
           }
@@ -704,7 +703,7 @@ function getDefaultContextMenu(map) {
           },
           callback: function (e) {
             if (!that_effect.outlineEffect) {
-              that_effect.outlineEffect = new OutlineEffect()
+              that_effect.outlineEffect = new Outline()
               map.addEffect(that_effect.outlineEffect)
             }
           }
@@ -873,7 +872,9 @@ function getDefaultContextMenu(map) {
             return e.layer.toJSON
           },
           callback: function (e) {
-            downloadFile("layer图层配置.json", JSON.stringify(e.layer.toJSON()))
+            const json = e.layer.toJSON()
+            logInfo("layer图层配置", json)
+            downloadFile("layer图层配置.json", JSON.stringify(json))
           }
         }
       ]
@@ -999,7 +1000,9 @@ function getDefaultContextMenu(map) {
           },
           icon: Icon.DrawDownJson,
           callback: function (e) {
-            downloadFile("Map场景配置.json", JSON.stringify(map.toJSON()))
+            const json = map.toJSON()
+            logInfo("Map场景配置", json)
+            downloadFile("Map场景配置.json", JSON.stringify(json))
           }
         },
         {

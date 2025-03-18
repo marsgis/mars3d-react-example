@@ -41,7 +41,7 @@ function addDemoGraphic1(graphicLayer) {
     name: "地面站模型",
     position: [117.170264, 31.840312, 258],
     style: {
-      url: "//data.mars3d.cn/gltf/mars/leida.glb",
+      url: "https://data.mars3d.cn/gltf/mars/leida.glb",
       scale: 1,
       minimumPixelSize: 40,
       clampToGround: true

@@ -24,20 +24,20 @@ export function onMounted(mapInstance) {
 
   // 添加参考三维模型
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
-    url: "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
+    url: "https://data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
     position: { alt: 38.8 },
     maximumScreenSpaceError: 1,
     cullWithChildrenBounds: false
   })
   map.addLayer(tiles3dLayer)
 
-  snowEffect = new mars3d.effect.SnowEffect({
+  snowEffect = new mars3d.effect.Snow({
     speed: 20,
     maxHeight: 8000 // 大于此高度后不显示
   })
   map.addEffect(snowEffect)
 
-  snowCover = new mars3d.effect.SnowCoverEffect({
+  snowCover = new mars3d.effect.SnowCover({
     layer: tiles3dLayer, // 如果传值3dtiles图层，只对该模型生效
     alpha: 0.6,
     maxHeight: 8000 // 大于此高度后不显示

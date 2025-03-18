@@ -134,7 +134,7 @@ function addDemoGraphic4(graphicLayer) {
   const graphic = new mars3d.graphic.DivPlane({
     position: [116.29569, 30.905512, 583.8],
     style: {
-      html: '<img src="//data.mars3d.cn/img/marker/gif/typhoon.gif" style="width:50px;height:50px;" ></img>',
+      html: '<img src="https://data.mars3d.cn/img/marker/gif/typhoon.gif" style="width:50px;height:50px;" ></img>',
       scale: 10,
       distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 200000), // 按视距距离显示
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,

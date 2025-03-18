@@ -68,7 +68,7 @@ function addGraphicLayer() {
       pixelOffsetY: -20
     },
     model: {
-      url: "//data.mars3d.cn/gltf/mars/zhanji.glb",
+      url: "https://data.mars3d.cn/gltf/mars/zhanji.glb",
       scale: 0.01,
       minimumPixelSize: 100
     },

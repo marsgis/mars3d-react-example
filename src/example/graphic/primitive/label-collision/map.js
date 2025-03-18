@@ -41,7 +41,7 @@ export function onUnmounted() {
 export function addDemoGraphic1() {
   const startTime = new Date().getTime()
 
-  const url = "//data.mars3d.cn/file/geojson/buildings-hf.json"
+  const url = "https://data.mars3d.cn/file/geojson/buildings-hf.json"
   mars3d.Util.fetchJson({ url }).then((data) => {
     console.log("1.geojson数据请求完成", data)
     const arr = mars3d.Util.geoJsonToGraphics(data, { hasGroup: false })

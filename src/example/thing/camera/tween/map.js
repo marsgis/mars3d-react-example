@@ -18,7 +18,7 @@ export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
   // const tiles3dLayer = new mars3d.layer.TilesetLayer({
-  //   url: "//data.mars3d.cn/3dtiles/max-ditiezhan/tileset.json",
+  //   url: "https://data.mars3d.cn/3dtiles/max-ditiezhan/tileset.json",
   //   maximumScreenSpaceError: 1,
   //   popup: "all"
   // })

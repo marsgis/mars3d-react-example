@@ -17,7 +17,7 @@ export function onMounted(mapInstance) {
     layer.brightness = 0.3
   })
 
-  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/geojson/buildings-hf.json" })
+  mars3d.Util.fetchJson({ url: "https://data.mars3d.cn/file/geojson/buildings-hf.json" })
     .then(function (data) {
       createMapvLayer(data.features)
     })

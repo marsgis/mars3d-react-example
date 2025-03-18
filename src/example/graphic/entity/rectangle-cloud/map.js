@@ -25,7 +25,7 @@ export function onMounted(mapInstance) {
       height: 6000,
       materialType: mars3d.MaterialType.RectSlide,
       materialOptions: {
-        image: "//data.mars3d.cn/img/map/world/cloud.png",
+        image: "https://data.mars3d.cn/img/map/world/cloud.png",
         color: Cesium.Color.WHITE.withAlpha(0.6),
         speed: 0.5,
         pure: true

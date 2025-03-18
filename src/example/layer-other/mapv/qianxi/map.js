@@ -14,7 +14,7 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
 
-  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/geojson/mapvchina.json" })
+  mars3d.Util.fetchJson({ url: "https://data.mars3d.cn/file/geojson/mapvchina.json" })
     .then(function (data) {
       createMapvLayer(data)
     })

@@ -16,7 +16,7 @@ export function onMounted(mapInstance) {
 
   // 添加参考三维模型
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
-    url: "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
+    url: "https://data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
     position: { alt: 38.8 },
     maximumScreenSpaceError: 1,
     cullWithChildrenBounds: false
@@ -24,7 +24,7 @@ export function onMounted(mapInstance) {
   map.addLayer(tiles3dLayer)
 
   // 构造效果
-  depthOfField = new mars3d.effect.DepthOfFieldEffect()
+  depthOfField = new mars3d.effect.DepthOfField()
   map.addEffect(depthOfField)
 }
 

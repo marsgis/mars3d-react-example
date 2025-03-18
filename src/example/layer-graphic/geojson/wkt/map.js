@@ -15,7 +15,7 @@ export const treeEvent = new mars3d.BaseClass()
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
 
-  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/wkt-demo.json" })
+  mars3d.Util.fetchJson({ url: "https://data.mars3d.cn/file/apidemo/wkt-demo.json" })
     .then(function (json) {
       addWktData(json)
     })

@@ -72,7 +72,7 @@ export function onMounted(mapInstance) {
   map.basemap = 2017 // 切换至蓝色底图
 
   // 构造效果
-  brightnessEffect = new mars3d.effect.BrightnessEffect()
+  brightnessEffect = new mars3d.effect.Brightness()
   map.addEffect(brightnessEffect)
 }
 

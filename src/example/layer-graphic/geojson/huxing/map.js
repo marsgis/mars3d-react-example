@@ -17,7 +17,7 @@ export function onMounted(mapInstance) {
 
   // HuxingLayer类定义在HuxingLayer.js
   graphicLayer = new HuxingLayer({
-    url: "//data.mars3d.cn/file/geojson/huxing.json"
+    url: "https://data.mars3d.cn/file/geojson/huxing.json"
   })
   map.addLayer(graphicLayer)
 

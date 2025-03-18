@@ -23,7 +23,7 @@ export function onMounted(mapInstance) {
 
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     name: "大雁塔",
-    url: "//data.mars3d.cn/3dtiles/qx-dyt/tileset.json",
+    url: "https://data.mars3d.cn/3dtiles/qx-dyt/tileset.json",
     position: { alt: -27 },
     maximumScreenSpaceError: 1
   })

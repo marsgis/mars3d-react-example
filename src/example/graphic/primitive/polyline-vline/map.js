@@ -15,7 +15,7 @@ export function onMounted(mapInstance) {
 
   map.basemap = 2017
 
-  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/population.json" })
+  mars3d.Util.fetchJson({ url: "https://data.mars3d.cn/file/apidemo/population.json" })
     .then(function (data) {
       showData(data)
     })

@@ -19,7 +19,7 @@ export function onMounted(mapInstance) {
     pid: 2030,
     type: "3dtiles",
     name: "校园",
-    url: "//data.mars3d.cn/3dtiles/qx-xuexiao/tileset.json",
+    url: "https://data.mars3d.cn/3dtiles/qx-xuexiao/tileset.json",
     position: { alt: 279.0 },
     enableCollision: true,
     maximumScreenSpaceError: 1,

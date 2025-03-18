@@ -119,7 +119,7 @@ export function onMounted(mapInstance) {
   graphicLayer.addGraphic(graphic4)
 
   // 添加特效
-  bloomTargetEffect = new mars3d.effect.BloomTargetEffect({
+  bloomTargetEffect = new mars3d.effect.BloomTarget({
     // objectsToExclude: [tiles3dLayer, graphicModel], // 排除不拾取的对象
     eventType: mars3d.EventType.click, // 单击时拾取
     color: Cesium.Color.YELLOW,

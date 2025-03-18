@@ -37,7 +37,7 @@ export function onUnmounted() {
 
 // 访问后端接口，取数据
 function queryTleChinaApiData() {
-  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/tle-china.json" })
+  mars3d.Util.fetchJson({ url: "https://data.mars3d.cn/file/apidemo/tle-china.json" })
     .then(function (data) {
       tleArr = data.data
       console.log("卫星数量：" + tleArr.length)

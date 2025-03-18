@@ -31,7 +31,7 @@ export function onMounted(mapInstance) {
 
   const geoJsonLayer = new mars3d.layer.GeoJsonLayer({
     name: "建筑物面",
-    url: "//data.mars3d.cn/file/geojson/buildings-hf.json",
+    url: "https://data.mars3d.cn/file/geojson/buildings-hf.json",
     symbol: {
       type: "polygonC", // 大数据面类型，效率高
       styleOptions: {

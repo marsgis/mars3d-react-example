@@ -68,7 +68,7 @@ export function showMaxNiaochaoDemo() {
   // 可以绑定Popup弹窗，回调方法中任意处理
   // s3mLayer.bindPopup(function (event) {
   //   var attr = event.graphic.attr;
-  //   // attr["视频"] = `<video src='//data.mars3d.cn/file/video/lukou.mp4' controls autoplay style="width: 300px;" ></video>`;
+  //   // attr["视频"] = `<video src='https://data.mars3d.cn/file/video/lukou.mp4' controls autoplay style="width: 300px;" ></video>`;
   //   return mars3d.Util.getTemplateHtml({ title: "石化工厂", template: "all", attr: attr });
   // });
 
@@ -98,7 +98,8 @@ export function showMaxPipeDemo() {
   s3mLayer = new mars3d.layer.S3MLayer({
     name: "地下管网",
     url: "https://www.supermapol.com/realspace/services/3D-pipe/rest/realspace",
-    center: { lat: 45.768407, lng: 126.621981, alt: 101, heading: 162, pitch: -38 },
+    position: { alt: 140 },
+    center: { lat: 45.76837, lng: 126.624331, alt: 239.4, heading: 259, pitch: -25.2 },
     flyTo: true
   })
   map.addLayer(s3mLayer)
@@ -144,7 +145,8 @@ export function showBIMQiaoDemo() {
   s3mLayer = new mars3d.layer.S3MLayer({
     name: "BIM桥梁",
     url: "https://www.supermapol.com/realspace/services/3D-BIMMoXing/rest/realspace",
-    center: { lat: 40.234379, lng: 116.148777, alt: 223, heading: 331, pitch: -19 },
+    position: { alt: 110 },
+    center: { lat: 40.230996, lng: 116.152794, alt: 341.5, heading: 299.7, pitch: -30.1 },
     flyTo: true
   })
   map.addLayer(s3mLayer)
@@ -175,7 +177,7 @@ export function showQxSuofeiyaDemo() {
     s3mOptions: {
       selectEnabled: false
     },
-    position: { alt: 140 },
+    position: { alt: 25 },
     center: { lat: 45.769034, lng: 126.623702, alt: 291, heading: 250, pitch: -36 },
     flyTo: true
   })
@@ -218,7 +220,7 @@ export function showCqbmDemo() {
   s3mLayer = new mars3d.layer.S3MLayer({
     name: "重庆白模",
     url: "https://www.supermapol.com/realspace/services/3D-CQmodel_wireframe_2000/rest/realspace",
-    // position: { alt: 400 },
+    position: { alt: 210 },
     popup: "all",
     flyTo: true
   })

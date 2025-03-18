@@ -18,7 +18,7 @@ export function onMounted(mapInstance) {
   map.addLayer(graphicLayer)
 
   tilesetLayer = new mars3d.layer.TilesetLayer({
-    url: "//data.mars3d.cn/3dtiles/max-daqiao/tileset.json",
+    url: "https://data.mars3d.cn/3dtiles/max-daqiao/tileset.json",
     position: { lat: 31.7843, lng: 117.196414, alt: -99 },
     rotation: { z: -4 },
     popup: "all"

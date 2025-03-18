@@ -151,7 +151,7 @@ function addDemoGraphic3(graphicLayer) {
       semiMinorAxis: 900, // 短半轴 半径
       materialType: mars3d.MaterialType.Image2,
       materialOptions: {
-        image: "//data.mars3d.cn/img/textures/circle-scan.png",
+        image: "https://data.mars3d.cn/img/textures/circle-scan.png",
         noWhite: false,
         color: "#5fc4ee"
       },

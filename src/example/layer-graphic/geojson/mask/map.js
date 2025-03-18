@@ -29,7 +29,7 @@ export function onUnmounted() {
 function addDemoGeoJsonLayer1() {
   // geojson 合肥边界线
   const geoJsonLayer = new mars3d.layer.GeoJsonLayer({
-    url: "//data.mars3d.cn/file/geojson/areas/340100.json",
+    url: "https://data.mars3d.cn/file/geojson/areas/340100.json",
     mask: true, // 标识为遮罩层【重点参数】
     symbol: {
       styleOptions: {

@@ -91,7 +91,7 @@ function addDemoGraphic3(graphicLayer) {
     name: "警车",
     position: new mars3d.LngLatPoint(116.312961, 30.986354, 1260),
     style: {
-      url: "//data.mars3d.cn/gltf/mars/jingche/jingche.gltf",
+      url: "https://data.mars3d.cn/gltf/mars/jingche/jingche.gltf",
       scale: 20,
       minimumPixelSize: 50,
       heading: 0

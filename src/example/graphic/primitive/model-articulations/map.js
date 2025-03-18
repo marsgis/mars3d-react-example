@@ -61,7 +61,7 @@ function addRockets() {
   graphic = new mars3d.graphic.ModelPrimitive({
     position: [113.693, 31.243, 220000],
     style: {
-      url: "//data.mars3d.cn/gltf/sample/launchvehicle/launchvehicle.glb",
+      url: "https://data.mars3d.cn/gltf/sample/launchvehicle/launchvehicle.glb",
       scale: 20,
       minimumPixelSize: 128,
       heading: 0,

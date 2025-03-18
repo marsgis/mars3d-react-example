@@ -23,7 +23,7 @@ export function onMounted(mapInstance) {
   map.scene.fog.minimumBrightness = 0.8
 
   // 雨效果
-  rainEffect = new mars3d.effect.RainEffect({
+  rainEffect = new mars3d.effect.Rain({
     speed: 10,
     size: 20,
     direction: 10

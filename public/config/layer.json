@@ -1,6 +1,6 @@
 {
   "type": "image",
-  "url": "//data.mars3d.cn/img/map/radar/201906211112.PNG",
+  "url": "https://data.mars3d.cn/img/map/radar/201906211112.PNG",
   "rectangle": { "xmin": 73.16895, "xmax": 134.86816, "ymin": 12.2023, "ymax": 54.11485 },
   "alpha": 0.7
 }

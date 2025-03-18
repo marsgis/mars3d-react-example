@@ -43,7 +43,7 @@ export function addDemoGraphic1(sensorParams) {
     backwardExtrapolationType: Cesium.ExtrapolationType.HOLD, // 在第1个开始时间之前，NONE时不显示，HOLD时显示开始时间对应坐标位置
     forwardExtrapolationType: Cesium.ExtrapolationType.HOLD, // 在最后1个结束时间之后，NONE时不显示，HOLD时显示结束时间对应坐标位置
     style: {
-      url: "//data.mars3d.cn/gltf/mars/weixin.gltf",
+      url: "https://data.mars3d.cn/gltf/mars/weixin.gltf",
       scale: 1,
       minimumPixelSize: 150,
       heading: sensorParams.headingValue,

@@ -118,7 +118,7 @@ function addDemoGraphic2(graphicLayer) {
       dimensions: new Cesium.Cartesian2(1000.0, 1000.0),
       materialType: mars3d.MaterialType.Image2,
       materialOptions: {
-        image: "//data.mars3d.cn/img/textures/poly-rivers.png",
+        image: "https://data.mars3d.cn/img/textures/poly-rivers.png",
         transparent: true
       }
     },

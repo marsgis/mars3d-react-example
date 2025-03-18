@@ -27,7 +27,7 @@ async function initDemoData() {
   const { CPixelLayer } = window.QEC // quickearth.cesium.js
 
   // public静态资源的路径
-  consts.resourcePath = "//data.mars3d.cn/file/qe"
+  consts.resourcePath = "https://data.mars3d.cn/file/qe"
 
   globalMsg("数据加载中...")
   showLoading()

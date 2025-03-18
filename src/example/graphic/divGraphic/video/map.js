@@ -67,7 +67,7 @@ function addRandomGraphicByCount(graphicLayer, position) {
     position,
     style: {
       html: ` <div class="mars3d-divCameraPoint-content">
-                      <img class="mars3d-divCameraPoint-img" src="//data.mars3d.cn/img/marker/svg/camera.svg" >
+                      <img class="mars3d-divCameraPoint-img" src="https://data.mars3d.cn/img/marker/svg/camera.svg" >
                     </div>
                     <div class="mars3d-divCameraPoint-line" ></div>
                     <div class="mars3d-divCameraPoint-point"></div>

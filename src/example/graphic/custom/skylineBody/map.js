@@ -21,7 +21,7 @@ export function onMounted(mapInstance) {
 
   // 添加参考三维模型
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
-    url: "//data.mars3d.cn/3dtiles/qx-shequ/tileset.json",
+    url: "https://data.mars3d.cn/3dtiles/qx-shequ/tileset.json",
     position: { alt: 148.2 },
     maximumScreenSpaceError: 1,
     cullWithChildrenBounds: false,
@@ -60,6 +60,8 @@ function addDemoGraphic1() {
 }
 
 export function addGraphic() {
+  // map.scene.logarithmicDepthBuffer = true
+
   const viewShed = new mars3d.graphic.SkylineBody({
     style: {
       color: "#00ffff",
@@ -67,6 +69,8 @@ export function addGraphic() {
     }
   })
   graphicLayer.addGraphic(viewShed)
+
+  // map.scene.logarithmicDepthBuffer = false
 
   viewShed.flyTo({ pitch: -45 })
 }

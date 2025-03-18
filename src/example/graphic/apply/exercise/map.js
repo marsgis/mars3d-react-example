@@ -58,7 +58,7 @@ function addStaticGraphic() {
     name: "红方雷达模型",
     position: [115.947263, 30.835768, 260.2],
     style: {
-      url: "//data.mars3d.cn/gltf/mars/leida.glb",
+      url: "https://data.mars3d.cn/gltf/mars/leida.glb",
       scale: 1,
       minimumPixelSize: 40
     }
@@ -113,7 +113,7 @@ function addStaticGraphic() {
     name: "蓝方雷达模型",
     position: [118.795298, 32.06146, 8.2],
     style: {
-      url: "//data.mars3d.cn/gltf/mars/leida.glb",
+      url: "https://data.mars3d.cn/gltf/mars/leida.glb",
       scale: 1,
       minimumPixelSize: 40
     }

@@ -48,7 +48,7 @@ export function onUnmounted() {
 // 修改样式，修改点，删除点等操作去激活或更新面板
 function openGraphicOptionsWidget(e) {
   const graphic = e.graphic
-  if (graphic.isDrawing) {
+  if (!graphic || graphic.isDestroy || graphic.isDrawing || graphic.isPrivate || graphic.isCombine) {
     return
   }
   eventTarget.fire("updateGraphicOptionsWidget", { graphicId: graphic.id, layerId: graphicLayer.id })

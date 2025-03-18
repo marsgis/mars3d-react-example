@@ -24,6 +24,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic2(graphicLayer)
   addDemoGraphic3(graphicLayer)
   addDemoGraphic4(graphicLayer)
+  addDemoGraphic5(graphicLayer)
 }
 
 // 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
@@ -183,8 +184,33 @@ function getImage() {
   return particleCanvas
 }
 
-// 动态运行车辆的尾气粒子效果
 function addDemoGraphic4(graphicLayer) {
+  const particleSystem = new mars3d.graphic.ParticleSystem({
+    position: [117.221721, 31.81105, 27], // 位置
+    style: {
+      image: "https://data.mars3d.cn/img/particle/explot.png",
+      particleSize: 25, // 粒子大小（单位：像素）
+      startColor: Cesium.Color.RED.withAlpha(0.7),
+      endColor: Cesium.Color.YELLOW.withAlpha(0.3),
+      emissionRate: 5,
+      gravity: 0.0, // 设置重力参数
+      minimumParticleLife: 1,
+      maximumParticleLife: 6,
+      minimumSpeed: 1.0, // 粒子发射的最小速度
+      maximumSpeed: 4.0, // 粒子发射的最大速度
+      startScale: 0.0,
+      endScale: 10.0,
+      lifetime: 16.0,
+      sizeInMeters: true,
+      emitter: new Cesium.CircleEmitter(5.0)// BoxEmitter 盒形发射器，ConeEmitter 锥形发射器，SphereEmitter 球形发射器，CircleEmitter圆形发射器
+    },
+    attr: { remark: "爆炸粒子效果" }
+  })
+  graphicLayer.addGraphic(particleSystem)
+}
+
+// 动态运行车辆的尾气粒子效果
+function addDemoGraphic5(graphicLayer) {
   const fixedRoute = new mars3d.graphic.FixedRoute({
     position: {
       type: "time", // 时序动态坐标

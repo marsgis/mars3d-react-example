@@ -22,7 +22,7 @@ export function onMounted(mapInstance) {
     name: "警车",
     position: [116.346929, 30.861947, 401.34],
     style: {
-      url: "//data.mars3d.cn/gltf/mars/jingche/jingche.gltf",
+      url: "https://data.mars3d.cn/gltf/mars/jingche/jingche.gltf",
       scale: 20,
       minimumPixelSize: 50,
       heading: 90

@@ -25,7 +25,7 @@ function addLayer() {
 
   const tilesetLayer = new mars3d.layer.TilesetLayer({
     name: "石化工厂",
-    url: "//data.mars3d.cn/3dtiles/max-shihua/tileset.json",
+    url: "https://data.mars3d.cn/3dtiles/max-shihua/tileset.json",
     position: { lng: 117.077158, lat: 31.659116, alt: -2.0 },
     maximumScreenSpaceError: 1,
     center: {

@@ -52,7 +52,7 @@ function initLodGraphicLayer() {
       const graphic = new mars3d.graphic.ModelPrimitive({
         position: [attr.x, attr.y, height],
         style: {
-          url: "//data.mars3d.cn/gltf/mars/leida.glb",
+          url: "https://data.mars3d.cn/gltf/mars/leida.glb",
           scale: 1,
           minimumPixelSize: 40
         }

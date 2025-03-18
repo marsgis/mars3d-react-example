@@ -18,7 +18,7 @@ export function onMounted(mapInstance) {
 
   // BusineDataLayer 业务数据(通过API接口获取)图层
   graphicLayer = new mars3d.layer.BusineDataLayer({
-    url: "//data.mars3d.cn/file/apidemo/gaoxiao.json",
+    url: "https://data.mars3d.cn/file/apidemo/gaoxiao.json",
     symbol: {
       type: "divLightPoint",
       styleOptions: {

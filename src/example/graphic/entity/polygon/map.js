@@ -285,7 +285,7 @@ function addDemoGraphic8(graphicLayer) {
         new Cesium.Cartesian2(0, 0),
         new Cesium.Cartesian2(0, 1)
       ]),
-      materialType: mars3d.MaterialType.Image,
+      materialType: mars3d.MaterialType.Image2,
       materialOptions: {
         image: "https://data.mars3d.cn/img/map/gugong.jpg"
       }

@@ -40,7 +40,7 @@ export function randomPoints() {
     const graphic = new mars3d.graphic.BillboardPrimitive({
       position,
       style: {
-        image: "//data.mars3d.cn/img/marker/mark-blue.png",
+        image: "https://data.mars3d.cn/img/marker/mark-blue.png",
         scale: 1,
         horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
         verticalOrigin: Cesium.VerticalOrigin.BOTTOM,

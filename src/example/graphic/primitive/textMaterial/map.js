@@ -18,7 +18,7 @@ export function onMounted(mapInstance) {
   // 加个模型
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     name: "水利闸门",
-    url: "//data.mars3d.cn/3dtiles/max-fsdzm/tileset.json",
+    url: "https://data.mars3d.cn/3dtiles/max-fsdzm/tileset.json",
     position: { alt: 15.2 },
     maximumScreenSpaceError: 1
   })

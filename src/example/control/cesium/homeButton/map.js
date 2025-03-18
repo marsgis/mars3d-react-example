@@ -23,7 +23,7 @@ export function onMounted(mapInstance) {
   // 方式2：在创建地球后按需调用addControl添加(直接new对应type类型的控件)
   const homeButton = new mars3d.control.HomeButton({
     title: "复位",
-    icon: "//data.mars3d.cn/img/control/homeButton.svg", // 回到默认视域按钮
+    icon: "https://data.mars3d.cn/img/control/homeButton.svg", // 回到默认视域按钮
     click: function (event) {
       console.log("HomeButton 自定义click方法")
       map.flyHome()

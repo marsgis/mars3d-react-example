@@ -22,7 +22,7 @@ export function onMounted(mapInstance) {
 
   tiles3dLayer = new mars3d.layer.TilesetLayer({
     name: "建筑物",
-    url: "//data.mars3d.cn/3dtiles/jzw-shanghai/tileset.json",
+    url: "https://data.mars3d.cn/3dtiles/jzw-shanghai/tileset.json",
     maximumScreenSpaceError: 1
   })
   map.addLayer(tiles3dLayer)

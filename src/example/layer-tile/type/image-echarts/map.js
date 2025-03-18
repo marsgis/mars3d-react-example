@@ -13,7 +13,7 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
 
-  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/radar-scores.json" })
+  mars3d.Util.fetchJson({ url: "https://data.mars3d.cn/file/apidemo/radar-scores.json" })
     .then(function (arrPoints) {
       const dataLD = []
       for (let angle = 0; angle < arrPoints.length; angle++) {

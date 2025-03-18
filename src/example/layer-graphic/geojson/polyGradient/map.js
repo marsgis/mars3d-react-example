@@ -27,7 +27,7 @@ export function onUnmounted() {
 function addDemoGraphics() {
    geoJsonLayer = new mars3d.layer.GeoJsonLayer({
     name: "安徽各市",
-    url: "//data.mars3d.cn/file/geojson/areas/340000_full.json",
+    url: "https://data.mars3d.cn/file/geojson/areas/340000_full.json",
     symbol: {
       type: "polygon",
       styleOptions: {

@@ -34,7 +34,7 @@ export function onMounted(mapInstance) {
   graphicLayer.on(mars3d.EventType.removeGraphic, removeFun)
 
   // 加载模型列表
-  const configUrl = "//data.mars3d.cn/gltf/list.json"
+  const configUrl = "https://data.mars3d.cn/gltf/list.json"
   mars3d.Util.fetchJson({ url: configUrl })
     .then(function (data) {
       eventTarget.fire("loadModelList", { data })
@@ -57,7 +57,7 @@ export function onUnmounted() {
 // 修改样式，修改点，删除点等操作去激活或更新面板
 function openGraphicOptionsWidget(e) {
   const graphic = e.graphic
-  if (graphic.isDrawing) {
+  if (!graphic || graphic.isDestroy || graphic.isDrawing || graphic.isPrivate || graphic.isCombine) {
     return
   }
   eventTarget.fire("updateGraphicOptionsWidget", { graphicId: graphic.id, layerId: graphicLayer.id })

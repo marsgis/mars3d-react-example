@@ -25,7 +25,7 @@ export const mapOptions = {
       symbol: {
         type: "billboardP",
         styleOptions: {
-          image: "//data.mars3d.cn/img/marker/mark-red.png",
+          image: "https://data.mars3d.cn/img/marker/mark-red.png",
           verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
           scaleByDistance: true,
           scaleByDistance_far: 20000,

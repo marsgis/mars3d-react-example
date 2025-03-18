@@ -120,17 +120,12 @@ function addDemoGraphic4(graphicLayer) {
       font_family: "微软雅黑",
       color: "#ffffff",
 
-      // backgroundColor: "rgba(226,190,40,0.5)",
       backgroundPadding: 15,
-      outlineColor: "#ffffff",
-      outlineWidth: 5,
-
       distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0.0, 100000),
 
       // 高亮时的样式（默认为鼠标移入，也可以指定type:'click'单击高亮），构造后也可以openHighlight、closeHighlight方法来手动调用
       highlight: {
-        color: "#ff0000",
-        outlineColor: "#ff0000"
+        color: "#ff0000"
       }
     },
     attr: { remark: "示例4" }
@@ -160,9 +155,7 @@ export function addRandomGraphicByCount(count) {
         font_family: "微软雅黑",
         color: "#ffffff",
         backgroundColor: "rgba(226,190,40,0.5)",
-        backgroundPadding: 15,
-        outlineColor: "#ffffff",
-        outlineWidth: 5
+        backgroundPadding: 15
       },
       attr: { index }
     })

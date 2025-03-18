@@ -32,7 +32,7 @@ let tileLayer
 export function addTileLayer() {
   removeTileLayer()
 
-  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/geojson/temperature.json" })
+  mars3d.Util.fetchJson({ url: "https://data.mars3d.cn/file/geojson/temperature.json" })
     .then(function (geojson) {
       console.log("加载数据完成", geojson)
 

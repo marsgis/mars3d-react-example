@@ -9,7 +9,7 @@ export const mapOptions = {
       position: "right-top"
     },
     homeButton: {
-      icon: "//data.mars3d.cn/img/control/homeButton.svg" // 回到默认视域按钮
+      icon: "https://data.mars3d.cn/img/control/homeButton.svg" // 回到默认视域按钮
     },
     navigationHelpButton: false, // 是否显示帮助信息控件
     fullscreenButton: false, // 右下角全屏按钮

@@ -118,7 +118,7 @@ export function clear() {
 // 改变位置
 function changePosition(time) {
   graphicLayer.eachGraphic((graphic) => {
-    if (graphic.isPrivate) {
+    if (graphic.isPrivate || graphic.isEditing) {
       return
     }
     graphic.addTimePosition(randomPoint(), time) // 按time秒运动至指定位置

@@ -288,7 +288,7 @@ const styleConfig = {
         name: "backgroundColor",
         label: "背景颜色",
         type: "color",
-        defval: "#000000",
+        defval: "#cccccc",
         show({ style }) {
           return style?.background
         }
@@ -307,6 +307,7 @@ const styleConfig = {
       {
         name: "outline",
         label: "是否边框",
+        defval: false,
         type: "radio",
         defval(style, graphicType) {
           return !!style?.outlineWidth || !!style?.outlineColor || !!style?.outlineStyle

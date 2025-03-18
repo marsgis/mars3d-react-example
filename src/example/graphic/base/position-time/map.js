@@ -8,7 +8,7 @@ export const eventTarget = new mars3d.BaseClass()
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: 31.656235, lng: 117.136489, alt: 18627.2, heading: 2.2, pitch: -51.5 }
+    center: { lat: 31.687558, lng: 117.19754, alt: 31239.5, heading: 354.1, pitch: -67.4 }
   },
   control: {
     clockAnimate: true, // 时钟动画控制(左下角)
@@ -34,6 +34,8 @@ export function onMounted(mapInstance) {
   // 加一些演示数据
   addDemoGraphic11(graphicLayer)
   addDemoGraphic12(graphicLayer)
+  addDemoGraphic13(graphicLayer)
+
   addDemoGraphic21(graphicLayer)
   addDemoGraphic22(graphicLayer)
 
@@ -49,31 +51,6 @@ export function onUnmounted() {
 }
 
 function addDemoGraphic11(graphicLayer) {
-  // 点状数据的坐标是传 position 参数
-  // position支持从时序的动态坐标，API: http://mars3d.cn/api/BaseGraphic.html#.TimePosition
-
-  const graphic = new mars3d.graphic.BillboardEntity({
-    position: {
-      type: "time", // 时序动态坐标
-      speed: 800,
-      list: [
-        [117.228059, 31.791955, 33.1],
-        [117.207606, 31.79867, 32],
-        [117.192154, 31.809156, 34.1],
-        [117.207802, 31.84243, 36.6]
-      ]
-    },
-    style: {
-      image: "https://data.mars3d.cn/img/marker/point-red.png",
-      horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
-      verticalOrigin: Cesium.VerticalOrigin.BOTTOM
-    },
-    attr: { remark: "点状数据time类型position" }
-  })
-  graphicLayer.addGraphic(graphic)
-}
-
-function addDemoGraphic12(graphicLayer) {
   // 轨迹数据的坐标是传 position 参数
   // position支持从时序的动态坐标，API: http://mars3d.cn/api/BaseGraphic.html#.TimePosition
 
@@ -84,10 +61,10 @@ function addDemoGraphic12(graphicLayer) {
       speed: 700,
       pauseTime: 0.5,
       list: [
-        [117.166589, 31.819284, 41.4],
-        [117.151892, 31.804337, 33.1],
-        [117.152427, 31.78383, 24.6],
-        [117.191639, 31.784981, 30.3]
+        [117.197291, 31.81111, 31.9],
+        [117.206447, 31.825905, 30.7],
+        [117.210609, 31.860432, 26.5],
+        [117.206516, 31.899888, 23.6]
       ]
     },
     frameRate: 1,
@@ -113,6 +90,53 @@ function addDemoGraphic12(graphicLayer) {
   // }, 3000)
 }
 
+function addDemoGraphic12(graphicLayer) {
+  // 点状数据的坐标是传 position 参数
+  // position支持从时序的动态坐标，API: http://mars3d.cn/api/BaseGraphic.html#.TimePosition
+
+  const graphic = new mars3d.graphic.BillboardEntity({
+    position: {
+      type: "time", // 时序动态坐标
+      list: [
+        { lng: 117.107159, lat: 31.853019, alt: 35.9, time: 3 }, // time字段标识对应时间（数字时代表相对于开始时间的秒数）
+        { lng: 117.177877, lat: 31.853044, alt: 31.3, time: 10 },
+        { lng: 117.217374, lat: 31.859447, alt: 26.9, time: 15 }
+      ]
+    },
+    style: {
+      image: "https://data.mars3d.cn/img/marker/point-red.png",
+      horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+      verticalOrigin: Cesium.VerticalOrigin.BOTTOM
+    },
+    attr: { remark: "点状数据time类型position" }
+  })
+  graphicLayer.addGraphic(graphic)
+}
+
+function addDemoGraphic13(graphicLayer) {
+  // 点状数据的坐标是传 position 参数
+  // position支持从时序的动态坐标，API: http://mars3d.cn/api/BaseGraphic.html#.TimePosition
+
+  const graphic = new mars3d.graphic.BillboardPrimitive({
+    position: {
+      type: "time", // 时序动态坐标
+      speed: 600,
+      list: [
+        [117.110238, 31.831025, 34.8],
+        [117.152636, 31.832871, 39.3],
+        [117.207281, 31.834613, 29.7]
+      ]
+    },
+    style: {
+      image: "https://data.mars3d.cn/img/marker/point-yellow.png",
+      horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+      verticalOrigin: Cesium.VerticalOrigin.BOTTOM
+    },
+    attr: { remark: "点状数据time类型position" }
+  })
+  graphicLayer.addGraphic(graphic)
+}
+
 function addDemoGraphic21(graphicLayer) {
   // 线面状数据的坐标是传 positions 参数
   // positions支持从时序的动态坐标，API: http://mars3d.cn/api/BaseGraphic.html#.TimePolyPositions
@@ -124,44 +148,44 @@ function addDemoGraphic21(graphicLayer) {
         {
           time: 5,
           positions: [
-            [117.010135, 31.813058, 34.8],
-            [117.035708, 31.794232, 35.2],
-            [117.029614, 31.767019, 41.7]
+            [117.028645, 31.814832, 34.9],
+            [117.054214, 31.796002, 35.9],
+            [117.048115, 31.76879, 42.2]
           ]
         },
         {
           time: 10,
           positions: [
-            [117.075295, 31.848101, 33.5],
-            [117.100002, 31.818779, 33],
-            [117.080677, 31.796511, 28.5],
-            [117.090381, 31.761569, 30.1]
+            [117.086449, 31.834356, 32.9],
+            [117.109705, 31.814573, 34.3],
+            [117.090379, 31.792306, 29.7],
+            [117.105005, 31.763448, 22.2]
           ]
         },
         {
           time: 20,
           positions: [
-            [117.149741, 31.864366, 32.5],
-            [117.118684, 31.835242, 35.4],
-            [117.153748, 31.821125, 38.8],
-            [117.125668, 31.797425, 26.8],
-            [117.153006, 31.784057, 24.8],
-            [117.126791, 31.767478, 15.2]
+            [117.147102, 31.827689, 38.2],
+            [117.129322, 31.813692, 28.9],
+            [117.163902, 31.792025, 29.5],
+            [117.1363, 31.775874, 22],
+            [117.157855, 31.760554, 16.7],
+            [117.129878, 31.745181, 14.6]
           ]
         },
         {
           time: 30,
           positions: [
-            [117.19204, 31.810702, 31.7],
-            [117.208252, 31.760556, 25.1],
-            [117.164393, 31.744924, 12.4]
+            [117.199004, 31.804311, 29.9],
+            [117.211699, 31.756447, 24.3],
+            [117.159755, 31.743629, 11.3]
           ]
         },
         {
           time: 40,
           positions: [
-            [117.210314, 31.72052, 13.6],
-            [117.063394, 31.724854, 49.5]
+            [117.257844, 31.737012, 20.3],
+            [117.128521, 31.724062, 20.4]
           ]
         }
       ],

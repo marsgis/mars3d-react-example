@@ -3298,14 +3298,14 @@
             "name": "对象描边",
             "thumbnail": "effect-outlineEffect.jpg",
             "main": "effect/outlineEffect",
-            "api": "OutlineEffect.html",
+            "api": "Outline.html",
             "hasPannel": true
           },
           {
             "name": "对象泛光",
             "thumbnail": "effect-bloomTarget.jpg",
             "main": "effect/bloomTarget",
-            "api": "BloomTargetEffect.html",
+            "api": "BloomTarget.html",
             "hasPannel": true
           }
         ]
@@ -3317,21 +3317,42 @@
             "name": "雾天气",
             "thumbnail": "effect-fog.jpg",
             "main": "effect/fog",
-            "api": "FogEffect.html",
+            "api": "Fog.html",
+            "hasPannel": true
+          },
+          {
+            "name": "高度雾",
+            "thumbnail": "effect-highFog.jpg",
+            "main": "effect/highFog",
+            "api": "HighFog.html",
             "hasPannel": true
           },
           {
             "name": "雨天气",
             "thumbnail": "effect-rain.gif",
             "main": "effect/rain",
-            "api": "RainEffect.html",
+            "api": "Rain.html",
             "hasPannel": true
           },
+          {
+            "name": "局部下雨",
+            "thumbnail": "graphic-primitive-billboard-rain.jpg",
+            "main": "graphic/primitive/billboard-rain",
+            "api": "BillboardPrimitive.html"
+          },
+
           {
             "name": "雪天气",
             "thumbnail": "effect-snow.gif",
             "main": "effect/snow",
-            "api": "SnowEffect.html",
+            "api": "Snow.html",
+            "hasPannel": true
+          },
+          {
+            "name": "闪电",
+            "thumbnail": "effect-lightning.jpg",
+            "main": "effect/lightning",
+            "api": "Lightning.html",
             "hasPannel": true
           },
           {
@@ -3349,49 +3370,49 @@
             "name": "颜色校正",
             "thumbnail": "effect-colorCorrection.jpg",
             "main": "effect/colorCorrection",
-            "api": "ColorCorrectionEffect.html",
+            "api": "ColorCorrection.html",
             "hasPannel": true
           },
           {
             "name": "泛光特效",
             "thumbnail": "effect-bloom.jpg",
             "main": "effect/bloom",
-            "api": "BloomEffect.html",
+            "api": "Bloom.html",
             "hasPannel": true
           },
           {
             "name": "亮度效果",
             "thumbnail": "effect-brightness.jpg",
             "main": "effect/brightness",
-            "api": "BrightnessEffect.html",
+            "api": "Brightness.html",
             "hasPannel": true
           },
           {
             "name": "马赛克效果",
             "thumbnail": "effect-mosaic.jpg",
             "main": "effect/mosaic",
-            "api": "MosaicEffect.html",
+            "api": "Mosaic.html",
             "hasPannel": true
           },
           {
             "name": "景深效果",
             "thumbnail": "effect-depthOfField.jpg",
             "main": "effect/depthOfField",
-            "api": "DepthOfFieldEffect.html",
+            "api": "DepthOfField.html",
             "hasPannel": true
           },
           {
             "name": "夜视效果",
             "thumbnail": "effect-nightVision.jpg",
             "main": "effect/nightVision",
-            "api": "NightVisionEffect.html",
+            "api": "NightVision.html",
             "hasPannel": true
           },
           {
             "name": "黑白效果",
             "thumbnail": "effect-blackAndWhite.jpg",
             "main": "effect/blackAndWhite",
-            "api": "BlackAndWhiteEffect.html",
+            "api": "BlackAndWhite.html",
             "hasPannel": true
           }
         ]

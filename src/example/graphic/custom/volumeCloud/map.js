@@ -21,7 +21,7 @@ export function onMounted(mapInstance) {
   map.addLayer(graphicLayer)
 
   // 加一些演示数据
-  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/volumeCloud.json" })
+  mars3d.Util.fetchJson({ url: "https://data.mars3d.cn/file/apidemo/volumeCloud.json" })
     .then(function (data) {
       console.log("演示数据data", data)
 

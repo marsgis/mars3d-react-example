@@ -15,7 +15,7 @@ export function onMounted(mapInstance) {
 
   map.basemap = 2017 // 蓝色底图
 
-  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/geojson/hefei-road.json" })
+  mars3d.Util.fetchJson({ url: "https://data.mars3d.cn/file/geojson/hefei-road.json" })
     .then(function (data) {
       // 创建Mapv
       createMapvLayer(data.features)

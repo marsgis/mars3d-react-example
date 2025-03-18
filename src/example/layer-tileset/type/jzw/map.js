@@ -76,7 +76,7 @@ export function onMounted(mapInstance) {
     map.scene.light.direction = map.scene.camera.direction
   })
 
-  bloomEffect = new mars3d.effect.BloomEffect({
+  bloomEffect = new mars3d.effect.Bloom({
     enabled: false
   })
   map.addEffect(bloomEffect)
@@ -104,7 +104,7 @@ export function onUnmounted() {
 
 // 开启亮度
 export function addbrightnessEffect(brightness) {
-  brightnessEffect = new mars3d.effect.BrightnessEffect({
+  brightnessEffect = new mars3d.effect.Brightness({
     enabled: false,
     brightness
   })

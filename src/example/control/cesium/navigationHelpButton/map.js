@@ -21,7 +21,7 @@ export function onMounted(mapInstance) {
 
   // 方式2：在创建地球后按需调用addControl添加(直接new对应type类型的控件)
   const navigationHelpButton = new mars3d.control.NavigationHelpButton({
-    icon: "//data.mars3d.cn/img/control/navigationHelpButton.svg",
+    icon: "https://data.mars3d.cn/img/control/navigationHelpButton.svg",
     firstOpen: true,
     localStorageName: localStorageName // 仅为了方便演示,实际项目中不需要
   })

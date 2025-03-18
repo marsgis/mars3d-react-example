@@ -27,7 +27,7 @@ export function addTileLayer() {
 
   // 方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
   tileLayer = new mars3d.layer.XyzLayer({
-    url: "//data.mars3d.cn/tile/dizhiChina/{z}/{x}/{y}.png",
+    url: "https://data.mars3d.cn/tile/dizhiChina/{z}/{x}/{y}.png",
     crs: "EPSG:3857", // 标识为Web墨卡托投影坐标系，也是默认值
     minimumLevel: 0,
     maximumLevel: 10,

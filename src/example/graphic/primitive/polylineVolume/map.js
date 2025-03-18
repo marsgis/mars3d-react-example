@@ -193,7 +193,7 @@ function addDemoGraphic3(graphicLayer) {
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
         color: "#1a9850",
-        image: "//data.mars3d.cn/img/textures/fence-line.png",
+        image: "https://data.mars3d.cn/img/textures/fence-line.png",
         speed: 10,
         repeat_x: 6
       }

@@ -72,7 +72,7 @@ export function onMounted(mapInstance) {
   map.basemap = 2017 // 切换至蓝色底图
 
   // 构造效果
-  bloomEffect = new mars3d.effect.BloomEffect()
+  bloomEffect = new mars3d.effect.Bloom()
   map.addEffect(bloomEffect)
 }
 

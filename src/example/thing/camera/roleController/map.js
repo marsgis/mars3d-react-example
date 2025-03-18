@@ -46,7 +46,7 @@ function initController(position) {
   const point = mars3d.LngLatPoint.fromCartesian(position) // 转为经纬度
   controller.init({
     position: [point.lng, point.lat],
-    url: "//data.mars3d.cn/gltf/mars/man/running.glb",
+    url: "https://data.mars3d.cn/gltf/mars/man/running.glb",
     animation: "run",
     lockViewLevel: 1,
     pitch: -25,

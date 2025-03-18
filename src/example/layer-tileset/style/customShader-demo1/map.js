@@ -18,7 +18,7 @@ export function onMounted(mapInstance) {
   map.basemap = 2017 // 蓝色底图
 
   // 泛光效果
-  const bloomEffect = new mars3d.effect.BloomEffect({})
+  const bloomEffect = new mars3d.effect.Bloom({})
   map.addEffect(bloomEffect)
 
   // 白膜建筑

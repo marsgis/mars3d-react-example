@@ -33,7 +33,7 @@ export function onMounted(mapInstance) {
   map = mapInstance // 记录map
   // map.basemap = 2017 // 暗色底图
 
-  mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/heat-fuzhou.json" }).then(function (result) {
+  mars3d.Util.fetchJson({ url: "https://data.mars3d.cn/file/apidemo/heat-fuzhou.json" }).then(function (result) {
     const arrPoints = []
     for (let i = 0; i < result.Data.length; i++) {
       const item = result.Data[i]

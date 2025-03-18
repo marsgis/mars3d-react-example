@@ -27,7 +27,7 @@ function initMap() {
   })
 
   // 方式2：在创建地球后按需调用addEffect添加
-  //  const rainEffect = new mars3d.effect.RainEffect({
+  //  const rainEffect = new mars3d.effect.Rain({
   //     speed: 10,
   //     size: 20,
   //     direction: 10

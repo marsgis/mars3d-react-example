@@ -30,7 +30,7 @@ async function initDemoData() {
   showLoading()
 
   // public静态资源的路径
-  consts.resourcePath = "//data.mars3d.cn/file/qe"
+  consts.resourcePath = "https://data.mars3d.cn/file/qe"
   // config资源配置
   await resourceService.loadResourceFromConfigPath("styles/demo.config.json")
 
