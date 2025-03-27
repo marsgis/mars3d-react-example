@@ -172,6 +172,14 @@ export function addTileLayer() {
     key: mars3d.Token.tiandituArr
   })
   map.addLayer(tileLayer)
+
+
+  // tileLayer = new mars3d.layer.TdtLayer({
+  //   name: "地表覆盖",
+  //   layer: "glc2020",
+  //   key: ["75f0434f240669f4a2df6359275146d2"] //需要有效token才能访问地表覆盖
+  // })
+  // map.addLayer(tileLayer)
 }
 
 export function removeTileLayer() {

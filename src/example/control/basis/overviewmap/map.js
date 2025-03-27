@@ -64,10 +64,11 @@ function addGraphicToOverviewMap(overviewMap) {
       image: "https://data.mars3d.cn/img/marker/street2.png",
       scale: 0.5,
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
-      verticalOrigin: Cesium.VerticalOrigin.CENTER,
-      rotation: new Cesium.CallbackProperty(() => {
-        return Cesium.Math.toRadians(360 - Cesium.Math.toDegrees(map.camera.heading))
-      }, false)
+      verticalOrigin: Cesium.VerticalOrigin.CENTER
+      // 2D时可以取消下面注释；3D时本身地图有方向，无需rotation
+      // rotation: new Cesium.CallbackProperty(() => {
+      //   return Cesium.Math.toRadians(360 - Cesium.Math.toDegrees(map.camera.heading))
+      // }, false)
     }
   })
   mapEx.graphicLayer.addGraphic(graphic)
