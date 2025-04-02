@@ -1,7 +1,3 @@
-/**
- * 该示例由 刘博方 开发，
- * 开源地址： https://github.com/ShareQiu1994/CesiumRoleController/
- */
 import * as mars3d from "mars3d"
 import { CesiumRoleController } from "./CesiumRoleController.js"
 
@@ -21,7 +17,15 @@ let controller // 控制器
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
 
-  controller = new CesiumRoleController(mars3d.Cesium, map.viewer)
+  controller = new CesiumRoleController({
+    url: "https://data.mars3d.cn/gltf/mars/man/running.glb",
+    animation: "run",
+    lockViewLevel: 1,
+    pitch: -25,
+    speed: 2,
+    range: 300.0
+  })
+  map.addThing(controller)
 }
 
 // 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
@@ -34,23 +38,10 @@ export function startController() {
 
   map.once("click", (event) => {
     map.setCursor("default")
-    initController(event.cartesian)
+    controller.position = event.cartesian
   })
 }
 
 export function stopController() {
   controller.destroy()
-}
-
-function initController(position) {
-  const point = mars3d.LngLatPoint.fromCartesian(position) // 转为经纬度
-  controller.init({
-    position: [point.lng, point.lat],
-    url: "https://data.mars3d.cn/gltf/mars/man/running.glb",
-    animation: "run",
-    lockViewLevel: 1,
-    pitch: -25,
-    speed: 2,
-    range: 300.0
-  })
 }

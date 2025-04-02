@@ -60,6 +60,10 @@ export async function drawComputePolygon() {
     computePolygon.remove()
     computePolygon = null
   }
+  const lineGraphic = graphicLayer.getGraphicById("lineByTerrain")
+  if (lineGraphic) {
+    lineGraphic.remove()
+  }
 
   computePolygon = await graphicLayer.startDraw({
     type: "polygon",
@@ -71,19 +75,16 @@ export async function drawComputePolygon() {
       outlineWidth: 1
     }
   })
-
-  gridSize = 0.03
-  if (computePolygon.area > 20104752) {
-    gridSize = gridSize + Math.ceil(computePolygon.area / 20104752) * 0.03
-  }
-
-  eventTarget.fire("changeGridSize", { gridSize })
 }
 // 绘制起点
 export async function startPoint() {
   if (pointQD) {
     pointQD.remove()
     pointQD = null
+  }
+  const lineGraphic = graphicLayer.getGraphicById("lineByTerrain")
+  if (lineGraphic) {
+    lineGraphic.remove()
   }
   pointQD = await graphicLayer.startDraw({
     type: "point",
@@ -108,6 +109,10 @@ export async function endPoint() {
   if (pointZD) {
     pointZD.remove()
     pointZD = null
+  }
+  const lineGraphic = graphicLayer.getGraphicById("lineByTerrain")
+  if (lineGraphic) {
+    lineGraphic.remove()
   }
   pointZD = await graphicLayer.startDraw({
     type: "point",
@@ -165,11 +170,7 @@ export function shortestPath() {
   shortestPathLayer.addGraphic(polyonLine)
 }
 
-let gridSize = 0.03
-let maxSlope = 20
-let splitCount = 12
-
-export async function shortPathByTerrain(gridSizeValue, maxSlopeValue, splitCountValue) {
+export async function shortPathByTerrain(options) {
   if (!pointQD || !pointZD) {
     globalMsg("请绘制点")
     return
@@ -183,16 +184,20 @@ export async function shortPathByTerrain(gridSizeValue, maxSlopeValue, splitCoun
     return
   }
 
+  map.graphicLayer.clear()
+
+  const lineGraphic = graphicLayer.getGraphicById("lineByTerrain")
+  if (lineGraphic) {
+    lineGraphic.remove()
+  }
   globalMsg("正在计算路径")
 
-  gridSize = gridSizeValue
-  maxSlope = maxSlopeValue
-  splitCount = splitCountValue
+  const lineData = await analysisByTerrain(pointQD?.coord, pointZD?.coord, options)
 
-  const lineData = await analysisByTerrain([pointQD?.point.lng, pointQD?.point.lat], [pointZD?.point.lng, pointZD?.point.lat])
   if (lineData) {
     const lineByTerrain = new mars3d.graphic.PolylineEntity({
-      positions: Cesium.Cartesian3.fromDegreesArray(lineData.flat()),
+      id: "lineByTerrain",
+      positions: lineData,
       style: {
         color: " #55ff33",
         clampToGround: true
@@ -213,209 +218,227 @@ export function clearLayer() {
 }
 
 // 根据地形分析最短路径算法，
-function analysisByTerrain(start, end) {
-  const points = computePolygon.points
-  const scaledPoly = {
-    type: "Feature",
-    geometry: {
-      type: "Polygon",
-      coordinates: [
-        [
-          [points[0].lng, points[0].lat],
-          [points[1].lng, points[1].lat],
-          [points[2].lng, points[2].lat],
-          [points[3].lng, points[3].lat],
-          [points[0].lng, points[0].lat]
-        ]
-      ]
-    },
-    properties: {}
-  }
+async function analysisByTerrain(start, end, options) {
+  let rectangleBbox = mars3d.PolyUtil.getPositionsRectVertex(mars3d.LngLatArray.toCartesians(computePolygon.coord))
+  rectangleBbox = mars3d.LngLatArray.toArray(rectangleBbox)
 
-  //  计算扩大后的边界
-  const enveloped = turf.envelope(scaledPoly).bbox
+  const distance = mars3d.MeasureUtil.getDistance([rectangleBbox[0], rectangleBbox[1]])
+
+  // 指定网格大小
+  const gridSize = distance / 1000 / options.splitNum ?? 0.03
+  // 可以通过的最大坡度，通过调整maxSlope，可以控制哪些地形可以走
+  const maxSlope = options.maxSlope ?? 20
 
   //  划分为网格
-  const squareGrid = turf.squareGrid(enveloped, gridSize)
+  const bbox = [rectangleBbox[0][0], rectangleBbox[0][1], rectangleBbox[2][0], rectangleBbox[2][1]]
+  const geojson = turf.squareGrid(bbox, gridSize, { units: "kilometers" })
+
+  const polygons = mars3d.Util.geoJsonToGraphics(geojson) // 解析geojson
+
+  //  计算每列有多少个网格（为了计算每个网格在整体网格中的序号（供A*算法使用））
+  const columnCount = Math.floor(mars3d.MeasureUtil.getDistance([rectangleBbox[1], rectangleBbox[2]]) / (gridSize * 1000))
+
+  const graphicArr = []
+  let startXy = null //  起点所在的网格序号
+  let endXy = null //  终点所在的网格序号
+  let count = 0
+
   const interpolatingPoints = []
-  const line = turf.lineString(squareGrid.features[0].geometry.coordinates[0])
-  const lineLength = turf.length(line)
-  squareGrid.features.forEach((item, index) => {
-    const positions = item.geometry.coordinates[0]
-    const line = turf.lineString(positions)
-    //  在每个网格轮廓上进行插值
-    for (let j = 1; j <= splitCount; j++) {
-      const along = turf.along(line, lineLength * (j / splitCount)).geometry.coordinates
-      interpolatingPoints.push(Cesium.Cartographic.fromDegrees(...along))
+  for (let i = 0; i < polygons.length; i++) {
+    const item = polygons[i]
+    const positions = item.positions
+
+    const rectangleBbox = mars3d.PolyUtil.getPositionsRectVertex(mars3d.LngLatArray.toCartesians(positions))
+    interpolatingPoints.push(...rectangleBbox)
+  }
+
+  const newPositions = await mars3d.PolyUtil.computeSurfacePoints({ scene: map.scene, positions: interpolatingPoints, has3dtiles: false })
+
+  for (let i = 0; i < newPositions?.positions.length; i += 4) {
+    const group = newPositions.positions.slice(i, i + 4)
+
+    // 计算每个网格的横纵向序号（供A*算法使用）
+    const x = Math.floor(count / columnCount)
+    const y = (x + 1) * columnCount - count - 1
+
+    // 获取中心点
+    let center = mars3d.PolyUtil.centerOfMass(group)
+
+    rectangleBbox = mars3d.LngLatArray.toArray(group)
+    const sort = rectangleBbox.sort((a, b) => a[2] - b[2])
+
+    if (!startXy && mars3d.PolyUtil.isInPoly(start, group)) {
+      startXy = { x, y }
+      center = mars3d.LngLatPoint.toCartesian(start)
+      // 起点所在位置以起点到最低点的角度为主
+      sort.splice(sort.length - 1, 1, start)
     }
+    if (!endXy && mars3d.PolyUtil.isInPoly(end, group)) {
+      endXy = { x, y }
+      center = mars3d.LngLatPoint.toCartesian(end)
+      // 终点所在位置以起点到最低点的角度为主
+      sort.splice(sort.length - 1, 1, end)
+    }
+
+    const [maxHeigthPos, minHeightPos] = [sort.at(0), sort.at(-1)]
+
+    // 计算斜坡角度
+    const edge1 = mars3d.MeasureUtil.getDistance([maxHeigthPos, minHeightPos]) / 1000
+    const edge2 = Math.abs(maxHeigthPos[2] - minHeightPos[2]) / 1000
+
+    // 根据两条直角边的反正切值计算坡度
+    const slope = Cesium.Math.toDegrees(Math.atan(edge2 / edge1))
+    const obj = {
+      slope: slope, // 坡角
+      center: center, // 中心点
+      id: `${x}-${y}`,
+      polygonCoor: group,
+      x: x, // 横向序号
+      y: y // 纵向序号
+    }
+
+    graphicArr.push(obj)
+    count += 1 // count+1开始计算下一个网格的相关属性
+  }
+
+  const allList = [] // 所有网格
+  const openList = [] // 待计算的网格
+  graphicArr.forEach((item) => {
+    const obj = {
+      x: item.x,
+      y: item.y,
+      id: item.id,
+      center: item.center,
+      slope: item.slope,
+      h: Math.sqrt(Math.pow(item.x - endXy.x, 2) + Math.pow(item.y - endXy.y, 2)), // 当前网格和终点距为未来预期代价
+      g: null, // 当前网格和起点距离为历史代价
+      f: null,
+      parentId: null
+    }
+
+    // 解开注释，看具体插值网格信息
+    // const graphic = new mars3d.graphic.PolygonPrimitive({
+    //   positions: item.polygonCoor,
+    //   style: {
+    //     randomColor: true
+    //   },
+    //   popup: `${item.id}<br>${item.slope}°`
+    // })
+    // map.graphicLayer.addGraphic(graphic)
+
+    if (item.slope > maxSlope) {
+      obj.isInCloseList = 1 // 障碍物就关闭，后面不再对该网格进行计算
+    } else {
+      obj.isInOpenList = 0 // 该网格为待计算网格
+    }
+    allList.push(obj)
   })
 
-  // console.log("----interpolatingPoints-", interpolatingPoints)
+  const startNode = allList.find((item) => item.x === startXy.x && item.y === startXy.y)
 
-  let startXy = [] //  起点所在的网格序号
-  let endXy = [] //  终点所在的网格序号
-  return Cesium.sampleTerrainMostDetailed(map.viewer.scene.terrainProvider, interpolatingPoints).then((updatePositions) => {
-    //  计算每列有多少个网格（为了计算每个网格在整体网格中的序号（供A*算法使用））
-    const columnCount = Math.floor(turf.distance(turf.point([enveloped[0], enveloped[1]]), turf.point([enveloped[0], enveloped[3]])) / gridSize)
+  if (!startNode || !startXy || !endXy) {
+    console.log("没有开始和结束坐标", startNode, startXy, endXy)
+    return
+  }
+  startNode.g = 0
+  startNode.isInOpenList = 1
+  // // 计算好起点的代价后将它插入到openList中
+  openList.push(startNode)
+  let endNode = {}
 
-    let count = 0
-    // 为每个网格添加序号、坡角、中心点属性，并找出起点和终点的网格序号
-    for (let i = 0; i < updatePositions.length; i += splitCount) {
-      const group = updatePositions.slice(i, i + splitCount)
-      const sort = group.sort((a, b) => a.height - b.height)
-      const [minHeightPos, maxHeigthPos] = [sort.at(0), sort.at(-1)]
-      // 获取中心点
-      const polygon = squareGrid.features[count]
-      const center = turf.centroid(polygon)
-      // 计算斜坡角度
-      const line = turf.lineString([
-        [Cesium.Math.toDegrees(maxHeigthPos.longitude), Cesium.Math.toDegrees(maxHeigthPos.latitude)],
-        [Cesium.Math.toDegrees(minHeightPos.longitude), Cesium.Math.toDegrees(minHeightPos.latitude)]
-      ])
-      const edge1 = turf.length(line)
-      const edge2 = (maxHeigthPos.height - minHeightPos.height) / 1000
-      // 根据两条直角边的反正切值计算坡度
-      const slope = Cesium.Math.toDegrees(Math.atan(edge2 / edge1))
-      // 计算每个网格的横纵向序号（供A*算法使用）
-      const x = Math.floor(count / columnCount)
-      const y = (x + 1) * columnCount - count - 1
-      const currentGrid = squareGrid.features[count]
-      currentGrid.properties = {
-        slope: slope, // 坡角
-        center: center.geometry.coordinates, // 中心点
-        id: `${x}-${y}`,
-        x: x, // 横向序号
-        y: y // 纵向序号
-      }
-      // 计算起点和终点的二维xy坐标(turf.booleanPointInPolygon计算点是否在多边形内)
-      if (!startXy.length && turf.booleanPointInPolygon(turf.point(start), polygon)) {
-        startXy = { x, y }
-      }
-      if (!endXy.length && turf.booleanPointInPolygon(turf.point(end), polygon)) {
-        endXy = { x, y }
-      }
-      count += 1 // count+1开始计算下一个网格的相关属性
+  while (openList.length) {
+    // 根据代价逆序排序，从openList中获取到代价最小的网格（如果有多个代价相同的点，优先选择 g 值（历史代价）较小的网格，因为这更有可能导向最短路径。）
+    const sortedByF = openList.sort((a, b) => a.f - b.f)
+    const minFNodes = sortedByF.filter((item) => item.f === sortedByF[0].f)
+    const nodeCurrent = minFNodes.sort((a, b) => a.g - b.g)[0]
+
+    // 获取代价最小的网格周围的网格
+    const childUp = allList.find((item) => item.x === nodeCurrent.x && item.y === nodeCurrent.y - 1)
+    const childRight = allList.find((item) => item.x === nodeCurrent.x + 1 && item.y === nodeCurrent.y)
+    const childDown = allList.find((item) => item.x === nodeCurrent.x && item.y === nodeCurrent.y + 1)
+    const childLeft = allList.find((item) => item.x === nodeCurrent.x - 1 && item.y === nodeCurrent.y)
+
+    const childList = [childUp, childRight, childDown, childLeft]
+
+    // 只有当左边和上边不全是障碍物，才能走左上的网格
+    if (!childUp?.isInCloseList || !childLeft?.isInCloseList) {
+      const childLeftUp = allList.find((item) => item.x === nodeCurrent.x - 1 && item.y === nodeCurrent.y - 1)
+      childList.push(childLeftUp)
+    }
+    // 只有当右边和上边不全是障碍物，才能走右上的网格
+    if (!childUp?.isInCloseList || !childRight?.isInCloseList) {
+      const childRightUp = allList.find((item) => item.x === nodeCurrent.x + 1 && item.y === nodeCurrent.y - 1)
+      childList.push(childRightUp)
+    }
+    // 只有当右边和下边不全是障碍物，才能走右下的网格
+    if (!childDown?.isInCloseList || !childRight?.isInCloseList) {
+      const childRightDown = allList.find((item) => item.x === nodeCurrent.x + 1 && item.y === nodeCurrent.y + 1)
+      childList.push(childRightDown)
+    }
+    // 只有当左边和下边不全是障碍物，才能走左下的网格
+    if (!childDown?.isInCloseList || !childLeft?.isInCloseList) {
+      const childLeftDown = allList.find((item) => item.x === nodeCurrent.x - 1 && item.y === nodeCurrent.y + 1)
+      childList.push(childLeftDown)
     }
 
-    const allList = [] // 所有网格
-    const openList = [] // 待计算的网格
-    squareGrid.features.forEach(({ geometry: { coordinates }, properties }) => {
-      const obj = {
-        x: properties.x,
-        y: properties.y,
-        id: properties.id,
-        center: properties.center,
-        slope: properties.slope,
-        h: Math.sqrt(Math.pow(properties.x - endXy.x, 2) + Math.pow(properties.y - endXy.y, 2)), // 当前网格和终点距为未来预期代价
-        g: null, // 当前网格和起点距离为历史代价
-        f: null,
-        parentId: null,
-        coordinates: coordinates[0].map((item) => [item[0], item[1]])
-      }
+    // 遍历周围网格
+    for (let i = 0; i < childList.length; i++) {
+      const child = childList[i]
 
-      if (properties.slope > maxSlope) {
-        obj.isInCloseList = 1 // 障碍物就关闭，后面不再对该网格进行计算
-      } else {
-        obj.isInOpenList = 0 // 该网格为待计算网格
+      if (!child || child.isInCloseList === 1) {
+        // 已经关闭，后面不再计算
+        continue
       }
-      allList.push(obj)
-    })
-    const startNode = allList.find((item) => item.x === startXy.x && item.y === startXy.y)
-    startNode.g = 0
-    startNode.isInOpenList = 1
-    // 计算好起点的代价后将它插入到openList中
-    openList.push(startNode)
-    let endNode = {}
-
-    while (openList.length) {
-      // 根据代价逆序排序，从openList中获取到代价最小的网格（如果有多个代价相同的点，优先选择 g 值（历史代价）较小的网格，因为这更有可能导向最短路径。）
-      const sortedByF = openList.sort((a, b) => a.f - b.f)
-      const minFNodes = sortedByF.filter((item) => item.f === sortedByF[0].f)
-      const nodeCurrent = minFNodes.sort((a, b) => a.g - b.g)[0]
-      // 获取代价最小的网格周围的网格
-      const childUp = allList.find((item) => item.x === nodeCurrent.x && item.y === nodeCurrent.y - 1)
-      const childRight = allList.find((item) => item.x === nodeCurrent.x + 1 && item.y === nodeCurrent.y)
-      const childDown = allList.find((item) => item.x === nodeCurrent.x && item.y === nodeCurrent.y + 1)
-      const childLeft = allList.find((item) => item.x === nodeCurrent.x - 1 && item.y === nodeCurrent.y)
-      const childList = [childUp, childRight, childDown, childLeft]
-      // 只有当左边和上边不全是障碍物，才能走左上的网格
-      if (!childUp?.isInCloseList || !childLeft?.isInCloseList) {
-        const childLeftUp = allList.find((item) => item.x === nodeCurrent.x - 1 && item.y === nodeCurrent.y - 1)
-        childList.push(childLeftUp)
-      }
-      // 只有当右边和上边不全是障碍物，才能走右上的网格
-      if (!childUp?.isInCloseList || !childRight?.isInCloseList) {
-        const childRightUp = allList.find((item) => item.x === nodeCurrent.x + 1 && item.y === nodeCurrent.y - 1)
-        childList.push(childRightUp)
-      }
-      // 只有当右边和下边不全是障碍物，才能走右下的网格
-      if (!childDown?.isInCloseList || !childRight?.isInCloseList) {
-        const childRightDown = allList.find((item) => item.x === nodeCurrent.x + 1 && item.y === nodeCurrent.y + 1)
-        childList.push(childRightDown)
-      }
-      // 只有当左边和下边不全是障碍物，才能走左下的网格
-      if (!childDown?.isInCloseList || !childLeft?.isInCloseList) {
-        const childLeftDown = allList.find((item) => item.x === nodeCurrent.x - 1 && item.y === nodeCurrent.y + 1)
-        childList.push(childLeftDown)
-      }
-      // 遍历周围网格
-      for (let i = 0; i < childList.length; i++) {
-        const child = childList[i]
-        if (!child || child.isInCloseList === 1) {
-          // 已经关闭，后面不再计算
-          continue
-        }
-        // 计算当前网格到它子网格的距离
-        const currentToChild = Math.sqrt(Math.pow(nodeCurrent.x - child.x, 2) + Math.pow(nodeCurrent.y - child.y, 2))
-        if (child.isInOpenList === 0) {
-          // 从来没有被计算过，现在计算它的代价
-          child.parentId = nodeCurrent.id
-          // 子网格的历史代价是当前网格历史代价加上当前网格到子网格的距离
-          child.g = nodeCurrent.g + currentToChild
-          // 子网格的未来期望代价是子网格到终点的距离
-          child.h = Math.sqrt(Math.pow(child.x - endXy.x, 2) + Math.pow(child.y - endXy.y, 2))
-          // 得出最终代价
+      // 计算当前网格到它子网格的距离
+      const currentToChild = Math.sqrt(Math.pow(nodeCurrent.x - child.x, 2) + Math.pow(nodeCurrent.y - child.y, 2))
+      if (child.isInOpenList === 0) {
+        // 从来没有被计算过，现在计算它的代价
+        child.parentId = nodeCurrent.id
+        // 子网格的历史代价是当前网格历史代价加上当前网格到子网格的距离
+        child.g = nodeCurrent.g + currentToChild
+        // 子网格的未来期望代价是子网格到终点的距离
+        child.h = Math.sqrt(Math.pow(child.x - endXy.x, 2) + Math.pow(child.y - endXy.y, 2))
+        // 得出最终代价
+        child.f = child.g + child.h
+        // 设置标记，表明这个子网格已经被计算过至少一次了
+        child.isInOpenList = 1
+        openList.push(child) // 将这个子网格加入到待计算列表中
+      } else if (child.isInOpenList === 1) {
+        // 这个子网格被计算过
+        //  将子网格的父级替换为当前网格重新计算代价
+        const g = nodeCurrent.g + currentToChild
+        // 如果更换为新父级后代价比以前小，就更新一下
+        if (g < child.g) {
+          child.g = g
           child.f = child.g + child.h
-          // 设置标记，表明这个子网格已经被计算过至少一次了
-          child.isInOpenList = 1
-          openList.push(child) // 将这个子网格加入到待计算列表中
-        } else if (child.isInOpenList === 1) {
-          // 这个子网格被计算过
-          //  将子网格的父级替换为当前网格重新计算代价
-          const g = nodeCurrent.g + currentToChild
-          // 如果更换为新父级后代价比以前小，就更新一下
-          if (g < child.g) {
-            child.g = g
-            child.f = child.g + child.h
-            child.parentId = nodeCurrent.id
-          }
-        }
-        // 找到终点了，赋值后直接跳出
-        if (child.x === endXy.x && child.y === endXy.y) {
-          endNode = child
-
-          const roadPath = []
-          // 溯源出路线
-          let currentNode = endNode
-          while (currentNode) {
-            roadPath.push(currentNode.center)
-            currentNode = allList.find(({ id }) => id === currentNode.parentId)
-          }
-          const line = turf.lineString(roadPath)
-          return roadPath
+          child.parentId = nodeCurrent.id
         }
       }
-      if (endNode.id) {
-        break
-      }
+      // 找到终点了，赋值后直接跳出
+      if (child.x === endXy.x && child.y === endXy.y) {
+        endNode = child
 
-      // 将当前网格从待计算列表中移除并将它关闭
-      const index = openList.findIndex(({ x, y }) => x === nodeCurrent.x && y === nodeCurrent.y)
-      openList[index].isInCloseList = 1
-      openList.splice(index, 1)
+        const roadPath = []
+        // 溯源出路线
+        let currentNode = endNode
+        while (currentNode) {
+          roadPath.push(currentNode.center)
+          currentNode = allList.find(({ id }) => id === currentNode.parentId)
+        }
+        const line = turf.lineString(roadPath)
+        return roadPath
+      }
     }
-    if (!openList.length && !endNode.id) {
-      globalMsg("无路可走")
+    if (endNode.id) {
+      break
     }
-  })
+
+    // 将当前网格从待计算列表中移除并将它关闭
+    const index = openList.findIndex(({ x, y }) => x === nodeCurrent.x && y === nodeCurrent.y)
+    openList[index].isInCloseList = 1
+    openList.splice(index, 1)
+  }
+  if (!openList.length && !endNode.id) {
+    globalMsg("无路可走，可略微调大插值数或调高最大坡度")
+  }
 }
