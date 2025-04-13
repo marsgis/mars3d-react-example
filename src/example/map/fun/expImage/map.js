@@ -198,3 +198,29 @@ function addGraphic_09(graphicLayer) {
     }
   })
 }
+
+export function shotPartImg() {
+  // API及更多资料参考： https://github.com/likaia/js-screen-shot
+  // 当前引入的是 public\lib\dom2img\screenShotPlugin.umd.js
+
+  // eslint-disable-next-line no-undef
+  const plugin = new screenShotPlugin({
+    clickCutFullScreen: true,
+    wrcWindowMode: true,
+    loadCrossImg: true,
+    enableWebRtc: false,
+    h2cImgLoadErrCallback: (err) => {
+      console.log("h2cCrossImgLoadErrFn", err)
+    },
+    h2cIgnoreElementsCallback: (element) => {
+      if (element.id === "hideDom") {
+        return true
+      }
+      return false
+    },
+
+    completeCallback: ({ base64, cutInfo }) => {
+      eventTarget.fire("showPartImg", { base64 })
+    }
+  })
+}

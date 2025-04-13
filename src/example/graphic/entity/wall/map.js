@@ -306,7 +306,10 @@ function addDemoGraphic7(graphicLayer) {
       [117.261023, 31.776821, 19.8]
     ],
     style: {
-      diffHeight: 500,
+      // diffHeight: 500,
+      maximumHeights: [100, 500, 1000], // 不用diffHeight，自定义每个坐标的高度
+      minimumHeights: [32.2, 26.7, 19.8],
+
       color: "#00ffff",
       opacity: 0.4,
 

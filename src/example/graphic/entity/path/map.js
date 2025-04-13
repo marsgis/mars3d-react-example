@@ -90,6 +90,7 @@ function addDemoGraphic1(graphicLayer) {
     },
     attr: { remark: "示例1" }
   })
+  console.log("geojson数据", graphic.toGeoJSON())
   graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
 }
 

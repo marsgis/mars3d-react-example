@@ -115,10 +115,15 @@ function addDemoGraphic2(graphicLayer) {
   const graphic = new mars3d.graphic.DoubleSidedPlane({
     position: new mars3d.LngLatPoint(116.329199, 30.881595, 390.3),
     style: {
-      image: "https://data.mars3d.cn/img/textures/wzplane.png",
       dimensions_x: 2000,
       dimensions_y: 1000,
-      heading: 20
+      heading: 20,
+      materialType: mars3d.MaterialType.Text,
+      materialOptions: {
+        text: "水利闸门",
+        font_family: "楷体",
+        color: "#00ffff"
+      }
     },
     attr: { remark: "示例2" }
   })

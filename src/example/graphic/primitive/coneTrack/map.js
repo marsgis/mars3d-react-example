@@ -33,6 +33,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic1(graphicLayer)
   addDemoGraphic2(graphicLayer)
   addDemoGraphic3(graphicLayer)
+  addDemoGraphic4(graphicLayer)
 }
 
 // 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
@@ -66,9 +67,27 @@ function addDemoGraphic1(graphicLayer) {
   graphicLayer.addGraphic(coneTrack)
 }
 
+function addDemoGraphic2(graphicLayer) {
+  const coneTrack = new mars3d.graphic.ConeTrackPrimitive({
+    position: [116.430348, 31.050238, 5000],
+    style: {
+      angle: 8, // 半场角度
+      length: 4000,
+      materialType: mars3d.MaterialType.CylinderWave,
+      materialOptions: {
+        color: "#ffff00",
+        repeat: 30.0
+      }
+    },
+    attr: { remark: "示例2" }
+  })
+  graphicLayer.addGraphic(coneTrack)
+}
+
+
 // 静态的位置
 let coneTrack
-function addDemoGraphic2(graphicLayer) {
+function addDemoGraphic3(graphicLayer) {
   const position = [116.28782, 30.971557, 5000]
   // 加个飞机
   const graphic = new mars3d.graphic.ModelPrimitive({
@@ -78,7 +97,7 @@ function addDemoGraphic2(graphicLayer) {
       scale: 1,
       minimumPixelSize: 50
     },
-    attr: { remark: "示例2" }
+    attr: { remark: "示例3" }
   })
   graphicLayer.addGraphic(graphic)
 
@@ -114,7 +133,7 @@ export async function onClickSelPoint() {
 }
 
 // 动态的位置
-function addDemoGraphic3(graphicLayer) {
+function addDemoGraphic4(graphicLayer) {
   // 飞机
   const graphicModel = new mars3d.graphic.ModelEntity({
     position: {
@@ -134,7 +153,7 @@ function addDemoGraphic3(graphicLayer) {
       scale: 0.3,
       minimumPixelSize: 30
     },
-    attr: { remark: "示例3" }
+    attr: { remark: "示例4" }
   })
   graphicLayer.addGraphic(graphicModel)
 
@@ -166,19 +185,16 @@ function addDemoGraphic3(graphicLayer) {
   })
   graphicLayer.addGraphic(graphicQC)
 
+
   // 圆锥追踪体（动态position=>动态targetPosition）
   const coneTrack = new mars3d.graphic.ConeTrackPrimitive({
     position: graphicModel.property,
     targetPosition: graphicQC.property,
+    frameRate: 20,
     style: {
-      // length: 4000, //targetPosition存在时无需传
-      angle: 5, // 半场角度
-      // 自定义扩散波纹纹理
-      materialType: mars3d.MaterialType.CylinderWave,
-      materialOptions: {
-        color: "#ffff00",
-        repeat: 30.0
-      },
+      angle: 2, // 半场角度
+      color: "#00ffff",
+      opacity: 0.5,
       faceForward: false, // 当绘制的三角面片法向不能朝向视点时，自动翻转法向，从而避免法向计算后发黑等问题
       closed: true, // 是否为封闭体，实际上执行的是 是否进行背面裁剪
       renderState: Cesium.RenderState.fromCache({

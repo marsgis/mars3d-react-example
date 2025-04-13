@@ -7,7 +7,7 @@ let windLayer
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: -7.267841, lng: 102.947683, alt: 1960633.4, heading: 0.4, pitch: -70.1 },
+    center: { lat: -5.020384, lng: 103.408071, alt: 1600014, heading: 0, pitch: -70.7 },
     scene3DOnly: true
   },
   control: {
@@ -19,6 +19,8 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
   map.basemap = 2017 // 蓝色底图
+
+  globalNotify("已知问题提示", `低视角下风场看不美观，目前仅支持大场景俯视看。 `)
 
   map.mouseEvent.enabledMoveTarget = false // 是否开启鼠标移动事件的拾取矢量数据
 
@@ -33,7 +35,7 @@ export function onMounted(mapInstance) {
   // map.scene.skyAtmosphere.brightnessShift = 0.08 // 地面0.08 海底
 
   windLayer = new mars3d.layer.WindLayer({
-    fixedHeight: 1000,
+    fixedHeight: 1,
     particlesTextureSize: 200, // 粒子系统的纹理大小
     dropRate: 0.003, // 粒子消失率
     dropRateBump: 0.001, // 慢速粒子的额外消失率
@@ -85,7 +87,7 @@ export function onMounted(mapInstance) {
   })
   map.addLayer(windLayer)
 
-  loadHongkongData()
+  loadDongnanData1()
 }
 
 // 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
@@ -120,7 +122,7 @@ export async function loadHongkongData() {
 
 // 加载局部数据2
 export async function loadDongnanData1() {
-  map.setCameraView({ lat: -8.188301, lng: 103.011488, alt: 1423712.3, heading: 4.8, pitch: -59.5 }, { duration: 0 })
+  map.setCameraView({ lat: -5.020384, lng: 103.408071, alt: 1600014, heading: 0, pitch: -70.7 }, { duration: 0 })
 
   windLayer.setOptions({
     particlesTextureSize: 200, // 粒子系统的纹理大小

@@ -31,8 +31,7 @@ export function onMounted(mapInstance) {
   map = mapInstance // 记录map
   // map.control.toolbar.container.style.bottom = "55px" // 修改toolbar控件的样式
 
-  const control = map.getControl("navigationHelpButton", "type")
-  control.on(mars3d.EventType.click, function (event) {
+  map.control.navigationHelpButton.on(mars3d.EventType.click, function (event) {
     console.log("您单击了帮助按钮", event)
   })
 }

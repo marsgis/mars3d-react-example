@@ -16,9 +16,8 @@ class CameraList extends mars3d.TaskItem {
     }
   }
 
-  // 暂停(非必须)
-  _pauseWork() {
-    // this._disableWork()
+  _disableWork() {
+    this._map.pauseCameraViewList()
   }
 }
 mars3d.thing.Task.register("cameraList", CameraList)

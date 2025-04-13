@@ -20,6 +20,14 @@ export function onMounted(mapInstance) {
   // 方式2：在创建地球后按需调用addControl添加(直接new对应type类型的控件)
   const sceneModePicker = new mars3d.control.SceneModePicker({})
   map.addControl(sceneModePicker)
+
+  // map.control.sceneModePicker.on(mars3d.EventType.click, function (event) {
+  //   console.log("您单击了视图切换按钮", event)
+  // })
+
+  map.on(mars3d.EventType.morphComplete, function (event) {
+    console.log("您切换了视图", event)
+  })
 }
 
 // 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）

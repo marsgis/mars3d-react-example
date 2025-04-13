@@ -51,13 +51,12 @@ export function onUnmounted() {
 
 //  wall文字  primitive方式添加
 function addDemoGraphic1(graphicLayer) {
-  const graphic = new mars3d.graphic.WallPrimitive({
-    positions: [
-      [121.479914, 29.791249, 32],
-      [121.479694, 29.791303, 32]
-    ],
+  const graphic = new mars3d.graphic.DoubleSidedPlane({
+    position: [121.479814, 29.791285, 32],
     style: {
-      diffHeight: 5,
+      dimensions_x: 20,
+      dimensions_y: 5,
+      heading: 106,
       materialType: mars3d.MaterialType.Text,
       materialOptions: {
         text: "水利闸门",
@@ -166,19 +165,16 @@ export function addRandomGraphicByCount(count) {
   const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
   console.log("生成的测试网格坐标", result)
 
-  const diffHeight = result.radius * 0.5
-
   for (let j = 0; j < result.points.length; ++j) {
     const position = result.points[j]
     const index = j + 1
 
-    const pt1 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 225, result.radius)
-    const pt2 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 45, result.radius)
-
-    const graphic = new mars3d.graphic.WallPrimitive({
-      positions: [pt1, pt2],
+    const graphic = new mars3d.graphic.DoubleSidedPlane({
+      position: position,
       style: {
-        diffHeight,
+        dimensions_x: result.radius,
+        dimensions_y: result.radius * 0.3,
+        heading: Math.random() * 360,
         materialType: mars3d.MaterialType.Text,
         materialOptions: {
           text: "第" + index + "个",

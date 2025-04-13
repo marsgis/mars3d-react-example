@@ -213,7 +213,8 @@
             "resources": [
               "/img/div-graphic/divGraphic.css",
               "/lib/dom2img/dom-to-image.js",
-              "/lib/dom2img/html2canvas.js"
+              "/lib/dom2img/html2canvas.js",
+              "/lib/dom2img/screenShotPlugin.umd.js"
             ]
           },
           {

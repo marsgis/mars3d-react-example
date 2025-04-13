@@ -27,13 +27,10 @@ export function onMounted(mapInstance) {
   })
   map.addControl(navigationHelpButton)
 
-  // 按钮触发自定义方法
-  // map.control.navigationHelpButton._container.addEventListener("click", (event) => {
-  //   console.log("自定义方法")
-  // })
-  // navigationHelpButton._container.onclick = function (event) {
-  //   console.log("自定义方法")
-  // }
+  // 单击事件
+  map.control.navigationHelpButton.on(mars3d.EventType.click, function (event) {
+    console.log("您单击了帮助按钮", event)
+  })
 }
 
 // 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）

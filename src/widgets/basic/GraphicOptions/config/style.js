@@ -288,7 +288,7 @@ const styleConfig = {
         name: "backgroundColor",
         label: "背景颜色",
         type: "color",
-        defval: "#cccccc",
+        defval: "#000000",
         show({ style }) {
           return style?.background
         }
@@ -307,7 +307,6 @@ const styleConfig = {
       {
         name: "outline",
         label: "是否边框",
-        defval: false,
         type: "radio",
         defval(style, graphicType) {
           return !!style?.outlineWidth || !!style?.outlineColor || !!style?.outlineStyle
@@ -2458,6 +2457,7 @@ const styleConfig = {
           { label: "实线", value: "Color" },
           { label: "虚线", value: "PolylineDash" },
           { label: "虚线箭头", value: "LineDashArrow" },
+          { label: "虚线箭头2", value: "LineFlow-dashArrow", defval: { image: "https://data.mars3d.cn/img/textures/line-dashArrow.png",speed:0, repeat_x: 10 } },
           { label: "衬色线", value: "PolylineOutline" },
           { label: "箭头", value: "PolylineArrow" },
           { label: "光晕", value: "PolylineGlow" },
