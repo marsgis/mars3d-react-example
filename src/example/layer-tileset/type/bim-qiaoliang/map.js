@@ -13,8 +13,8 @@ export const mapOptions = {
     baseColor: "rgba(0,0,0.0,0.5)",
     globe: {
       depthTestAgainstTerrain: true
-    },
-    highDynamicRange: true
+    }
+    // highDynamicRange: true //不可以加，加了看不到开挖的墙图片
   }
 }
 

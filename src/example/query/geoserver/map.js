@@ -46,7 +46,6 @@ export function query(text) {
     }
   })
 
-
   // queryMapserver.queryBySql({
   //   cql_filter: `name like '%${text}%'`,
   //   graphic: drawGraphic,
@@ -170,7 +169,11 @@ export function clearAll(noClearDraw) {
   geoJsonLayer.clear()
 }
 
-export function flyToGraphic(graphic) {
+export function flyToGraphic(graphicId) {
+  const graphic = geoJsonLayer.getGraphicById(graphicId)
+  if (!graphic) {
+    return
+  }
   graphic.openHighlight()
   graphic.flyTo({
     radius: 1000, // 点数据：radius控制视距距离

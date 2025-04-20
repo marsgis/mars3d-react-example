@@ -9,7 +9,13 @@ const creditHtml = `自然资源部 - <span>审图号：GS(2023)336号</span>
 export const mapOptions = {
   scene: {
     center: { lat: 31.675177, lng: 117.323257, alt: 81193, heading: 359, pitch: -79 },
-    highDynamicRange: false
+    highDynamicRange: false,
+    showSkyAtmosphere: false,
+    fog: false,
+    fxaa: false,
+    globe: {
+      showGroundAtmosphere: false
+    }
   },
   // 方式1：在创建地球前的参数中配置
   basemaps: [

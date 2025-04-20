@@ -97,8 +97,8 @@ async function updateHeightRange(graphic, positions, callback) {
   const result = await mars3d.PolyUtil.interPolygonByDepth({ scene: map.scene, positions })
 
   graphic.show = true // 恢复显示
-  const minHeight = Math.ceil(result.minHeight)
-  const maxHeight = Math.floor(result.maxHeight)
+  const minHeight = Math.floor(result.minHeight)
+  const maxHeight = Math.ceil(result.maxHeight)
 
   callback(minHeight, maxHeight)
 

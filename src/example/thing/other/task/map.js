@@ -139,7 +139,8 @@ export function onMounted(mapInstance) {
           },
           polyline: {
             color: "#ffff00",
-            width: 3
+            width: 3,
+            clampToGround: true
           },
           model: {
             url: "https://data.mars3d.cn/gltf/mars/man/walk.gltf",

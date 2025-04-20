@@ -176,7 +176,7 @@ export function mapFlyToPoint() {
   map.graphicLayer.clear()
 
   const position = [113.939351, 36.068144, 350.9]
-  map.flyToPoint(position, { radius: 50000 })
+  map.flyToPoint(position, { maxHeight: 5000 })
 
   // 显示参照物
   const graphic = new mars3d.graphic.PointPrimitive({

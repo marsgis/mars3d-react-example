@@ -55,6 +55,7 @@ function addDemoGraphic1(graphicLayer) {
     style: {
       url: "https://data.mars3d.cn/file/video/lukou.mp4",
       opacity: 0.9,
+      maskImage: "https://data.mars3d.cn/img/textures/video-mask.png", // 羽化视频四周，融合更美观
       distanceDisplayCondition_far: 5000
     }
   })

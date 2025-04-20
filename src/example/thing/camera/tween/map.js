@@ -17,12 +17,14 @@ let roaming
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
-  // const tiles3dLayer = new mars3d.layer.TilesetLayer({
-  //   url: "https://data.mars3d.cn/3dtiles/max-ditiezhan/tileset.json",
-  //   maximumScreenSpaceError: 1,
-  //   popup: "all"
-  // })
-  // map.addLayer(tiles3dLayer)
+  const tiles3dLayer = new mars3d.layer.TilesetLayer({
+    url: "https://data.mars3d.cn/3dtiles/max-ditiezhan/tileset.json",
+    position: { lat: 22.736443, lng: 108.380053, alt: -1 }, // 原始的
+    // position: { lng: 117.139776, lat: 31.80001, alt: -69 }, // 改为到合肥的
+    maximumScreenSpaceError: 1,
+    popup: "all"
+  })
+  map.addLayer(tiles3dLayer)
 
   const viewPoints = [
     { id: 0, name: "地铁口", lat: 22.7407925, lng: 108.3793365, alt: 89.7, heading: 37.4, pitch: -7.1, duration: 2 },

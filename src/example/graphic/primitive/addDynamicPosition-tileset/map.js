@@ -119,6 +119,7 @@ function random(min, max) {
 export async function startDrawGraphic() {
   const graphic = await graphicLayer.startDraw({
     type: "billboardP",
+    frameRate: 1,
     position: {
       type: "time", // 时序动态坐标
       speed: 260

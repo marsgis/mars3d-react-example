@@ -37,6 +37,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic7(graphicLayer)
   addDemoGraphic8(graphicLayer)
   addDemoGraphic9(graphicLayer)
+  addDemoGraphic10(graphicLayer)
 }
 
 // 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
@@ -110,7 +111,9 @@ function addDemoGraphic2(graphicLayer) {
   // 测试整体平移
   setTimeout(function () {
     const centerNew = [117.169529, 31.841169, 235.3]
-    const positionsNew = mars3d.PolyUtil.movePoints(graphic.positions, centerNew)
+    const positionsNew = mars3d.PolyUtil.movePoints(graphic.positions, {
+      center: centerNew
+    })
     graphic.positions = positionsNew
   }, 6000)
 }
@@ -352,6 +355,28 @@ function addDemoGraphic9(graphicLayer) {
       }
     },
     attr: { remark: "示例9" }
+  })
+  graphicLayer.addGraphic(graphic)
+}
+// 渐变面
+function addDemoGraphic10(graphicLayer) {
+  const graphic = new mars3d.graphic.PolygonEntity({
+    positions: [
+      [117.308161, 31.907334, 16.9],
+      [117.302609, 31.877667, 12.2],
+      [117.337423, 31.873329, 13.6],
+      [117.340994, 31.902117, 19.7]
+    ],
+    style: {
+      materialType: mars3d.MaterialType.PolyGradient,
+      materialOptions: {
+        color: "#004DFF",
+        isInner: true,
+        alphaPower: 2.6,
+        diffusePower: 1.3
+      }
+    },
+    attr: { remark: "示例10" }
   })
   graphicLayer.addGraphic(graphic)
 }

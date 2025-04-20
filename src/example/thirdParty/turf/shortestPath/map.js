@@ -45,6 +45,7 @@ export async function drawPolygon() {
     style: {
       color: "#00ffff",
       opacity: 0.4,
+      clampToGround: true,
       outline: true,
       outlineWidth: 1,
       outlineColor: "#ffffff"
@@ -161,9 +162,10 @@ export function shortestPath() {
   const path = turf.shortestPath(startPoint, endPoint, options)
 
   const positions = path.geometry.coordinates
-  const polyonLine = new mars3d.graphic.PolylineEntity({
+  const polyonLine = new mars3d.graphic.PolylinePrimitive({
     positions,
     style: {
+      clampToGround: true,
       color: " #55ff33"
     }
   })
