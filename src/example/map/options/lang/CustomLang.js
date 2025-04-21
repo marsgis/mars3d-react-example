@@ -229,6 +229,7 @@ const CustomLang = {
   _修改缩放比例: "Modify the Scale",
   _无法删除不能少于最小点数: "Cannot delete, the number of dots cannot be less than",
   _删除: "Delete",
+  _粘贴: "Paste",
   _半径: "Radius",
 
   // src\graphic\entity\ModelEntity.js

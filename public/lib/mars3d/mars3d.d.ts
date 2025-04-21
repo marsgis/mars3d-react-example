@@ -3,7 +3,7 @@
  * Mars3D三维可视化平台  mars3d
  *
  * 版本信息：v3.9.7
- * 编译日期：2025-04-18 17:28
+ * 编译日期：2025-04-21 19:53
  * 版权所有：Copyright by 火星科技  http://mars3d.cn
  * 使用单位：火星科技免费公开版 ，2025-02-01
  */
@@ -732,6 +732,10 @@ declare enum GraphicType {
  */
 declare enum Icon {
     /**
+     * 粘贴
+     */
+    Paste = "fa fa-paste",
+    /**
      * 删除
      */
     Delete = "fa fa-trash-o",
@@ -1364,6 +1368,7 @@ declare enum Lang {
     "_修改缩放比例" = "\u4FEE\u6539\u7F29\u653E\u6BD4\u4F8B",
     "_无法删除不能少于最小点数" = "\u65E0\u6CD5\u5220\u9664\uFF0C\u70B9\u6570\u91CF\u4E0D\u80FD\u5C11\u4E8E",
     "_删除" = "\u5220\u9664",
+    "_粘贴" = "\u7C98\u8D34",
     "_半径" = "\u534A\u5F84",
     /**
      * ModelEntity 标绘时的tooltip加载中提示
@@ -21162,6 +21167,7 @@ declare namespace VideoPrimitive {
      * @property [url] - 视频对应url地址
      * @property [container] - 视频对应的video标签,与url二选一
      * @property [opacity = 1.0] - 透明度
+     * @property [maskImage] - 遮盖融合的图片url地址，可用于视频等场景下的四周羽化效果。
      * @property [distanceDisplayCondition_far = number.MAX_VALUE] - 最大距离
      * @property [distanceDisplayCondition_near = 0] - 最小距离
      *
@@ -21178,6 +21184,7 @@ declare namespace VideoPrimitive {
         url?: string;
         container?: HTMLVideoElement;
         opacity?: number;
+        maskImage?: string;
         distanceDisplayCondition_far?: number;
         distanceDisplayCondition_near?: number;
         flat?: boolean;
@@ -22183,7 +22190,7 @@ declare namespace CzmGeoJsonLayer {
  * @param [options.symbol] - 矢量数据的style样式
  * @param options.symbol.styleOptions - 数据的Style样式
  * @param [options.symbol.styleField] - 按 styleField 属性设置不同样式。
- * @param [options.symbol.styleFieldOptions] - 按styleField值与对应style样式的键值对象。默认与styleOptions合并，可以设置merge:false不合并
+ * @param [options.symbol.styleFieldOptions] - 按styleField值与对应style样式的键值对象。键支持对attr的JS语法字符串，如 "attr.floors>10 && attr.floors<20": { color: "#ff0000" } ，默认与styleOptions合并，可以设置merge:false不合并。
  * @param [options.symbol.callback] - 自定义判断处理返回style ，示例：callback: function (attr, entity, styleOpt){  return { color: "#ff0000" };  }
  * @param [options.popup] - 绑定的popup弹窗值，也可以bindPopup方法绑定，支持：'all'、数组、字符串模板
  * @param [options.popupOptions] - popup弹窗时的配置参数，也支持如pointerEvents等{@link Popup}构造参数,还包括：
@@ -22318,7 +22325,7 @@ declare class CzmGeoJsonLayer extends BaseGraphicLayer {
      * @param symbol - 设置新的symbol 矢量数据样式.  {@link GraphicType}
      * @param symbol.styleOptions - Style样式，每种不同类型数据都有不同的样式，具体见各矢量数据的style参数。{@link GraphicType}
      * @param [symbol.styleField] - 按 styleField 属性设置不同样式。
-     * @param [symbol.styleFieldOptions] - 按styleField值与对应style样式的键值对象。
+     * @param [symbol.styleFieldOptions] - 按styleField值与对应style样式的键值对象。键支持对attr的JS语法字符串，如 "attr.floors>10 && attr.floors<20": { color: "#ff0000" } ，默认与styleOptions合并，可以设置merge:false不合并。
      * @returns 当前对象本身，可以链式调用
      */
     updateStyle(symbol: {
@@ -22651,7 +22658,7 @@ declare class KmlLayer extends CzmGeoJsonLayer {
  * @param [options.symbol.type] - 标识数据类型，默认是根据数据生成 point、polyline、polygon
  * @param options.symbol.styleOptions - Style样式，每种不同类型数据都有不同的样式，具体见各矢量数据的style参数。{@link GraphicType}
  * @param [options.symbol.styleField] - 按 styleField 属性设置不同样式。
- * @param [options.symbol.styleFieldOptions] - 按styleField值与对应style样式的键值对象。默认与styleOptions合并，可以设置merge:false不合并
+ * @param [options.symbol.styleFieldOptions] - 按styleField值与对应style样式的键值对象。键支持对attr的JS语法字符串，如 "attr.floors>10 && attr.floors<20": { color: "#ff0000" } ，默认与styleOptions合并，可以设置merge:false不合并。
  * @param [options.symbol.merge] - 是否合并并覆盖json中已有的style，默认不合并。
  * @param [options.symbol.callback] - 自定义判断处理返回style ，示例：callback: function (attr, styleOpt){  return { color: "#ff0000" };  }
  * @param [options.graphicOptions] - 默认的graphic的构造参数，每种不同类型数据都有不同的属性，具体见各{@link GraphicType}矢量数据的构造参数。
@@ -22810,7 +22817,7 @@ declare class ArcGisWfsLayer extends LodGraphicLayer {
  * @param [options.symbol.type] - 标识数据类型，默认是根据数据生成 point、polyline、polygon
  * @param options.symbol.styleOptions - Style样式，每种不同类型数据都有不同的样式，具体见各{@link GraphicType}矢量数据的style参数。
  * @param [options.symbol.styleField] - 按 styleField 属性设置不同样式。
- * @param [options.symbol.styleFieldOptions] - 按styleField值与对应style样式的键值对象。默认与styleOptions合并，可以设置merge:false不合并
+ * @param [options.symbol.styleFieldOptions] - 按styleField值与对应style样式的键值对象。键支持对attr的JS语法字符串，如 "attr.floors>10 && attr.floors<20": { color: "#ff0000" } ，默认与styleOptions合并，可以设置merge:false不合并。
  * @param [options.symbol.merge] - 是否合并并覆盖json中已有的style，默认不合并。
  * @param [options.symbol.callback] - 自定义判断处理返回style ，示例：callback: function (attr, styleOpt){  return { color: "#ff0000" };  }
  * @param [options.graphicOptions] - 默认的graphic的构造参数，每种不同类型数据都有不同的属性，具体见各{@link GraphicType}矢量数据的构造参数。
@@ -22955,7 +22962,7 @@ declare class ArcGisWfsSingleLayer extends GeoJsonLayer {
  * @param [options] - 参数对象，包括以下：
  * @param [options.url] - geojson文件或服务url地址
  * @param [options.data] - geojson格式规范数据对象，与url二选一即可。
- * @param [options.filter] - 数据筛选方法，方法时，方法体内返回false时排除数据 filter:function(feature){return true}；支持字符串基于attr属性进行筛选的JS语句字符串，比如： attr.name=='安徽省' || attr.code=='340000'
+ * @param [options.filter] - 数据筛选方法，方法时，方法体内返回false时排除数据 filter:function(attr){return true}；支持字符串基于attr属性进行筛选的JS语句字符串，比如： attr.name=='安徽省' || attr.code=='340000'
  * @param [options.dataColumn] - 接口返回数据中，对应的业务数据数组所在的读取字段名称，支持多级(用.分割)；如果数据直接返回数组时可以不配置。
  * @param [options.formatData] - 可以对加载的数据进行格式化或转换操作
  * @param [options.formatPosition] - 可以对加载的坐标进行格式化或转换操作 (优先级：formatPosition方法>position字段>latColumn和lngColumn字段)
@@ -22970,7 +22977,7 @@ declare class ArcGisWfsSingleLayer extends GeoJsonLayer {
  * @param [options.symbol.type] - 标识数据类型，默认是根据数据生成 point、polyline、polygon
  * @param options.symbol.styleOptions - Style样式，每种不同类型数据都有不同的样式，具体见各{@link GraphicType}矢量数据的style参数。
  * @param [options.symbol.styleField] - 按 styleField 属性设置不同样式。
- * @param [options.symbol.styleFieldOptions] - 按styleField值与对应style样式的键值对象。默认与styleOptions合并，可以设置merge:false不合并
+ * @param [options.symbol.styleFieldOptions] - 按styleField值与对应style样式的键值对象。键支持对attr的JS语法字符串，如 "attr.floors>10 && attr.floors<20": { color: "#ff0000" } ，默认与styleOptions合并，可以设置merge:false不合并。
  * @param [options.symbol.merge] - 是否合并并覆盖json中已有的style，默认不合并。
  * @param [options.symbol.callback] - 自定义判断处理返回style ，示例：callback: function (attr, styleOpt){  return { color: "#ff0000" };  }
  * @param [options.graphicOptions] - 默认的graphic的构造参数，每种不同类型数据都有不同的属性，具体见各{@link GraphicType}矢量数据的构造参数。
@@ -23194,7 +23201,7 @@ declare namespace GeoJsonLayer {
  * @param [options.symbol.type] - 标识数据类型，默认是根据数据生成 point、polyline、polygon
  * @param options.symbol.styleOptions - Style样式，每种不同类型数据都有不同的样式，具体见各{@link GraphicType}矢量数据的style参数。
  * @param [options.symbol.styleField] - 按 styleField 属性设置不同样式。
- * @param [options.symbol.styleFieldOptions] - 按styleField值与对应style样式的键值对象。默认与styleOptions合并，可以设置merge:false不合并
+ * @param [options.symbol.styleFieldOptions] - 按styleField值与对应style样式的键值对象。键支持对attr的JS语法字符串，如 "attr.floors>10 && attr.floors<20": { color: "#ff0000" } ，默认与styleOptions合并，可以设置merge:false不合并。
  * @param [options.symbol.merge] - 是否合并并覆盖json中已有的style，默认不合并。
  * @param [options.symbol.callback] - 自定义判断处理返回style ，示例：callback: function (attr, styleOpt){  return { color: "#ff0000" };  }
  * @param [options.graphicOptions] - 默认的graphic的构造参数，每种不同类型数据都有不同的属性，具体见各{@link GraphicType}矢量数据的构造参数。
@@ -23447,7 +23454,7 @@ declare namespace GraphicLayer {
  * @param [options.symbol.type] - 标识数据类型，默认是根据数据生成 point、polyline、polygon
  * @param options.symbol.styleOptions - Style样式，每种不同类型数据都有不同的样式，具体见各{@link GraphicType}矢量数据的style参数。
  * @param [options.symbol.styleField] - 按 styleField 属性设置不同样式。
- * @param [options.symbol.styleFieldOptions] - 按styleField值与对应style样式的键值对象。默认与styleOptions合并，可以设置merge:false不合并默认与styleOptions合并，可以设置merge:false不合并
+ * @param [options.symbol.styleFieldOptions] - 按styleField值与对应style样式的键值对象。键支持对attr的JS语法字符串，如 "attr.floors>10 && attr.floors<20": { color: "#ff0000" } ，默认与styleOptions合并，可以设置merge:false不合并。
  * @param [options.symbol.callback] - 自定义判断处理返回style ，示例：callback: function (attr, styleOpt){  return { color: "#ff0000" };  }
  * @param [options.allowDrillPick] - 是否允许鼠标穿透拾取
  * @param [options.cluster] - 聚合参数(Tip:不参与聚合的类型：合并渲染对象、处于标绘或编辑状态的对象)：
@@ -23696,6 +23703,7 @@ declare class GraphicLayer extends BaseGraphicLayer {
      * @param [options.flyTo = false] - 是否加载完成后进行飞行到数据区域
      * @param [options.toPrimitive] - 是否将entity类型转为primivate类型渲染（比如数据的point改为pointP展示，同类型大于10条时自动改为合并渲染类型展示）
      * @param [options.onEachFeature] - 创建每个Graphic前的回调
+     * @param [options.filter] - 数据筛选方法，方法时，方法体内返回false时排除数据 filter:function(item,attr){return true}；支持字符串基于attr属性进行筛选的JS语句字符串，比如： attr.name=='安徽省' || attr.code=='340000' 。
      * @returns 绘制创建完成的Promise 添加后的Graphic对象
      */
     loadJSON(json: any | any | string, options?: {
@@ -23703,6 +23711,7 @@ declare class GraphicLayer extends BaseGraphicLayer {
         flyTo?: boolean;
         toPrimitive?: boolean;
         onEachFeature?: (...params: any[]) => any;
+        filter?: ((...params: any[]) => any) | string;
     }): Promise<BaseGraphic[] | any>;
     /**
      * 加载转换GeoJSON格式规范数据为Graphic后加载到图层中。
@@ -24391,7 +24400,7 @@ declare namespace LodGraphicLayer {
  * @param [options.symbol] - 矢量数据的style样式,为Function时是完全自定义的回调处理 symbol(attr, style, feature)
  * @param options.symbol.styleOptions - 数据的Style样式
  * @param [options.symbol.styleField] - 按 styleField 属性设置不同样式。
- * @param [options.symbol.styleFieldOptions] - 按styleField值与对应style样式的键值对象。默认与styleOptions合并，可以设置merge:false不合并
+ * @param [options.symbol.styleFieldOptions] - 按styleField值与对应style样式的键值对象。键支持对attr的JS语法字符串，如 "attr.floors>10 && attr.floors<20": { color: "#ff0000" } ，默认与styleOptions合并，可以设置merge:false不合并。
  * @param [options.symbol.merge] - 是否合并并覆盖json中已有的style，默认不合并。
  * @param [options.symbol.callback] - 自定义判断处理返回style ，示例：callback: function (attr, styleOpt){  return { color: "#ff0000" };  }
  * @param [options.cluster] - 聚合参数(Tip:不参与聚合的类型：合并渲染对象、处于标绘或编辑状态的对象)：
@@ -24574,7 +24583,7 @@ declare class LodGraphicLayer extends GraphicLayer {
  * @param [options.symbol.type] - 标识数据类型，默认是根据数据生成 point、polyline、polygon
  * @param options.symbol.styleOptions - Style样式，每种不同类型数据都有不同的样式，具体见各{@link GraphicType}矢量数据的style参数。
  * @param [options.symbol.styleField] - 按 styleField 属性设置不同样式。
- * @param [options.symbol.styleFieldOptions] - 按styleField值与对应style样式的键值对象。默认与styleOptions合并，可以设置merge:false不合并
+ * @param [options.symbol.styleFieldOptions] - 按styleField值与对应style样式的键值对象。键支持对attr的JS语法字符串，如 "attr.floors>10 && attr.floors<20": { color: "#ff0000" } ，默认与styleOptions合并，可以设置merge:false不合并。
  * @param [options.symbol.callback] - 自定义判断处理返回style ，示例：callback: function (attr, styleOpt){  return { color: "#ff0000" };  }
  * @param [options.allowDrillPick] - 是否允许鼠标穿透拾取
  * @param [options.cluster] - 聚合参数(Tip:不参与聚合的类型：合并渲染对象、处于标绘或编辑状态的对象)：
@@ -24833,7 +24842,7 @@ declare class OsmBuildingsLayer extends TilesetLayer {
  * @param [options.symbol.type] - 标识数据类型，默认是根据数据生成 point、polyline、polygon
  * @param options.symbol.styleOptions - Style样式，每种不同类型数据都有不同的样式，具体见各{@link GraphicType}矢量数据的style参数。
  * @param [options.symbol.styleField] - 按 styleField 属性设置不同样式。
- * @param [options.symbol.styleFieldOptions] - 按styleField值与对应style样式的键值对象。默认与styleOptions合并，可以设置merge:false不合并
+ * @param [options.symbol.styleFieldOptions] - 按styleField值与对应style样式的键值对象。键支持对attr的JS语法字符串，如 "attr.floors>10 && attr.floors<20": { color: "#ff0000" } ，默认与styleOptions合并，可以设置merge:false不合并。
  * @param [options.symbol.merge] - 是否合并并覆盖json中已有的style，默认不合并。
  * @param [options.symbol.callback] - 自定义判断处理返回style ，示例：callback: function (attr, styleOpt){  return { color: "#ff0000" };  }
  * @param [options.graphicOptions] - 默认的graphic的构造参数，每种不同类型数据都有不同的属性，具体见各{@link GraphicType}矢量数据的构造参数。
@@ -25545,7 +25554,7 @@ declare class TilesetLayer extends BaseGraphicLayer {
  * @param [options.symbol.type] - 标识数据类型，默认是根据数据生成 point、polyline、polygon
  * @param [options.symbol.styleOptions] - Style样式，每种不同类型数据都有不同的样式，具体见各矢量数据的style参数。{@link GraphicType}
  * @param [options.symbol.styleField] - 按 styleField 属性设置不同样式。
- * @param [options.symbol.styleFieldOptions] - 按styleField值与对应style样式的键值对象。默认与styleOptions合并，可以设置merge:false不合并
+ * @param [options.symbol.styleFieldOptions] - 按styleField值与对应style样式的键值对象。键支持对attr的JS语法字符串，如 "attr.floors>10 && attr.floors<20": { color: "#ff0000" } ，默认与styleOptions合并，可以设置merge:false不合并。
  * @param [options.symbol.merge] - 是否合并并覆盖json中已有的style，默认不合并。
  * @param [options.symbol.callback] - 自定义判断处理返回style ，示例：callback: function (attr, styleOpt){  return { color: "#ff0000" };  }
  * @param [options.graphicOptions] - 默认的graphic的构造参数，每种不同类型数据都有不同的属性，具体见各{@link GraphicType}矢量数据的构造参数。
@@ -40833,7 +40842,7 @@ declare namespace Util {
      * @param symbol - symbol配置
      * @param symbol.styleOptions - Style样式，每种不同类型数据都有不同的样式，具体见各矢量数据的style参数。{@link GraphicType}
      * @param [symbol.styleField] - 按 styleField 属性设置不同样式。
-     * @param [symbol.styleFieldOptions] - 按styleField值与对应style样式的键值对象。
+     * @param [symbol.styleFieldOptions] - 按styleField值与对应style样式的键值对象。键支持对attr的JS语法字符串，如 "attr.floors>10 && attr.floors<20": { color: "#ff0000" } ，默认与styleOptions合并，可以设置merge:false不合并。
      * @param [symbol.callback] - 自定义判断处理返回style ，示例：callback: function (attr, styleOpt){  return { color: "#ff0000" };  }
      * @param [attr] - 数据属性对象
      * @param [callbackResult] - callback时的第3个回调参数

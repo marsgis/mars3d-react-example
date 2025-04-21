@@ -37,7 +37,7 @@ export function onMounted(mapInstance) {
     const arrPoints = []
     for (let i = 0; i < result.Data.length; i++) {
       const item = result.Data[i]
-      arrPoints.push({ lng: item.x, lat: item.y, value: item.t0 })
+      arrPoints.push({ lng: item.x, lat: item.y, value: item.t0 / 100 })
     }
     showHeatMap(arrPoints)
   })
@@ -49,13 +49,14 @@ export function onMounted(mapInstance) {
 export function onUnmounted() {
   map = null
 }
-
+let heatLayer
 function showHeatMap(arrPoints) {
   // 热力图 图层
-  const heatLayer = new mars3d.layer.HeatLayer({
+  heatLayer = new mars3d.layer.HeatLayer({
     positions: arrPoints,
     // 以下为热力图本身的样式参数，可参阅api：https://www.patrick-wied.at/static/heatmapjs/docs.html
-    max: 20000,
+    // min: 0,
+    // max: 200,
     heatStyle: {
       radius: 20,
       minOpacity: 0,
@@ -98,6 +99,9 @@ function showHeatMap(arrPoints) {
       `
     map.openSmallTooltip(e.windowPosition, inhtml)
   })
+}
+export function setHeatOptions(options) {
+  heatLayer.setOptions(options)
 }
 
 // 添加地形外裁剪

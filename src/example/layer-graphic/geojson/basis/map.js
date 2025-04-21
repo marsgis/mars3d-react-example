@@ -393,12 +393,18 @@ export function showBuilding() {
   graphicLayer = new mars3d.layer.GeoJsonLayer({
     name: "建筑物面",
     url: "https://data.mars3d.cn/file/geojson/buildings-demo.json",
+    // filter: "attr.floors>30", // 筛选数据
     symbol: {
       styleOptions: {
         color: "#0d3685",
         outlineColor: "#0d3685",
         opacity: 0.8
       },
+      // styleFieldOptions: {
+      //   "attr.floors<20": { color: "#ff0000" },
+      //   "attr.floors>20 && attr.floors<30": { color: "#fff000" },
+      //   "attr.floors>30": { color: "#00ffff" }
+      // },
       callback: function (attr, styleOpt) {
         const diffHeight = Number(attr.floors || 1) * Number(attr.flo_height)
         return { height: 0, diffHeight }
