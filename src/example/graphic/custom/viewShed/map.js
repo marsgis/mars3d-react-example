@@ -8,7 +8,7 @@ export const eventTarget = new mars3d.BaseClass()
 
 export const mapOptions = {
   scene: {
-    center: { lat: 28.440007, lng: 119.48322, alt: 424, heading: 282, pitch: -56 },
+    center: { lat: 28.445199, lng: 119.481909, alt: 661.2, heading: 199.8, pitch: -41.6 },
     fxaa: true, // 不开启抗锯齿，可视域会闪烁
     globe: {
       depthTestAgainstTerrain: true // 不加无法投射到地形上
@@ -38,6 +38,7 @@ export function onMounted(mapInstance) {
 
   // 加一些演示数据
   addDemoGraphic1()
+  addDemoGraphic2()
 }
 
 // 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
@@ -55,6 +56,29 @@ function addDemoGraphic1() {
       heading: 44,
       pitch: -12,
       addHeight: 0.5
+    },
+    depthBiasStep: 0.01
+  })
+  graphicLayer.addGraphic(viewShed)
+}
+
+function addDemoGraphic2() {
+  const viewShed = new mars3d.graphic.ViewShed({
+    position: {
+      type: "time",
+      speed: 100,
+      list: [
+        [119.479894, 28.441438, 132.8],
+        [119.475388, 28.438343, 138.1]
+      ],
+      forwardExtrapolationType: Cesium.ExtrapolationType.NONE // 到达后消失
+    },
+    style: {
+      angle: 60,
+      angle2: 45,
+      distance: 80,
+      heading: 138,
+      showFrustum: true
     },
     depthBiasStep: 0.01
   })

@@ -38,20 +38,23 @@ export function onUnmounted() {
 }
 
 function addGraphicLayer() {
+  const pointList = [
+    [116.043233, 30.845286, 392.48],
+    [116.046833, 30.846863, 411.33],
+    [116.052137, 30.848801, 439.45],
+    [116.060838, 30.850918, 442.91],
+    [116.069013, 30.852035, 435.14],
+    [116.18739, 30.854441, 244.53],
+    [116.205214, 30.859332, 300.96]
+  ]
+  // pointList = mars3d.PolyUtil.interLine(pointList, { minDistance: 10 }) // path穿地时，且没有autoSurfaceHeight时可以进行插值
+
   const fixedRoute = new mars3d.graphic.FixedRoute({
     name: "贴地表表面漫游",
     position: {
       type: "time", // 时序动态坐标
       speed: 160,
-      list: [
-        [116.043233, 30.845286, 392.48],
-        [116.046833, 30.846863, 411.33],
-        [116.052137, 30.848801, 439.45],
-        [116.060838, 30.850918, 442.91],
-        [116.069013, 30.852035, 435.14],
-        [116.18739, 30.854441, 244.53],
-        [116.205214, 30.859332, 300.96]
-      ]
+      list: pointList
     },
     clockLoop: false, // 是否循环播放
     camera: {
@@ -71,15 +74,24 @@ function addGraphicLayer() {
       mergeOrientation: true, // 用于设置模型不是标准的方向时的纠偏处理,在orientation基础的方式值上加上设置是heading值
       minimumPixelSize: 50
     },
+    // polyline: {
+    //   color: "rgba(255,0,0,0.5)",
+    //   width: 2,
+    //   showAll: true
+    // },
+    // path: {
+    //   color: "rgba(255,255,0,1.0)",
+    //   width: 4,
+    //   leadTime: 0
+    // }
     polyline: {
-      color: "rgba(255,0,0,0.5)",
-      width: 2,
-      showAll: true
+      color: "rgba(0,255,0,1.0)",
+      width: 2 // 显示已走过的路线
     },
     path: {
-      color: "rgba(255,255,0,1.0)",
-      width: 4,
-      leadTime: 0
+      color: "rgba(255,255,0,0.5)",
+      width: 2,
+      trailTime: 0 // 显示未来的路线
     }
   })
   graphicLayer.addGraphic(fixedRoute)

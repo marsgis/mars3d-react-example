@@ -8,7 +8,7 @@ export const eventTarget = new mars3d.BaseClass()
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: 31.208902, lng: 117.315575, alt: 113661.9, heading: 359.1, pitch: -61 }
+    center: { lat: 31.804075, lng: 104.419481, alt: 10628, heading: 358.4, pitch: -60.9 }
   }
 }
 
@@ -28,37 +28,24 @@ export function onMounted(mapInstance) {
   })
 
   colorRamp = new mars3d.ColorRamp({
-    steps: [5, 30, 50, 100, 200, 256],
-    colors: ["rgb(0, 228, 0)", "rgb(256, 256, 0)", "rgb(256, 126, 0)", "rgb(256, 0, 0)", "rgb(153, 0, 76)", "rgb(126, 0, 35)"]
+    steps: [0, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+    colors: ["#0A0A80", "#0000CD", "#1F497D", "#4682B4", "#00FFFF", "#00FF7F", "#8FBC8F", "#FFFF00", "#FFA500", "#FF4500", "#FF0000", "#8B0000"]
   })
 
-  addRandomGraphicByCount(230)
-}
+  mars3d.Util.fetchJson({ url: "https://data.mars3d.cn/file/apidemo/flood-point.json" }).then(function (result) {
+    for (let i = 0; i < result.length; i++) {
+      const item = result[i]
+      const graphic = new mars3d.graphic.PointPrimitive({
+        position: [item.lon, item.lat, 650],
+        style: {
+          color: colorRamp.getColor(item.val),
+          pixelSize: 7
+        },
+        attr: { 水深: item.val }
+      })
+      graphicLayer.addGraphic(graphic)
+    }
 
-// 生成演示数据(测试数据量)
-export function addRandomGraphicByCount(count) {
-  graphicLayer.clear()
-  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
-
-  const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
-  const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
-  console.log("生成的测试网格坐标", result)
-
-  for (let j = 0; j < result.points.length; ++j) {
-    const position = result.points[j]
-    const val = j % 256
-    const clr = colorRamp.getColor(val)
-    const graphic = new mars3d.graphic.PointPrimitive({
-      position,
-      style: {
-        color: clr,
-        pixelSize: 20
-      },
-      attr: { 值: val, 颜色: clr }
-    })
-    graphicLayer.addGraphic(graphic)
-  }
-
-  graphicLayer.enabledEvent = true // 恢复事件
-  return result.points.length
+    // graphicLayer.flyTo()
+  })
 }

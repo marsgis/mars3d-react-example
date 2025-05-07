@@ -201,7 +201,8 @@ function addGraphic_09(graphicLayer) {
 
 export function shotPartImg() {
   // API及更多资料参考： https://github.com/likaia/js-screen-shot
-  // 当前引入的是 public\lib\dom2img\screenShotPlugin.umd.js
+  // 当前引入的是 public\lib\dom2img\screenShotPlugin.umd.js,官方版本的一种截图方式是基于html2canvas,这会导致截图中出现box-shadow样式错误，
+  // 所以这里将html2canvas换成modern-screenshot，详细资料可以看https://github.com/qq15725/modern-screenshot这个仓库
 
   // eslint-disable-next-line no-undef
   const plugin = new screenShotPlugin({

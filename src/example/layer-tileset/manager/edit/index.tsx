@@ -181,16 +181,12 @@ function UIComponent() {
   const [checkedKeys, setCheckedKeys] = useState<any[]>([]) // 默认勾选的节点
   const [cancelTree, setCancelTree] = useState(false)
 
-  const updataValue = useCallback(
-    (otherData = { popupEnable, highlightEnable }) => {
+  const updataValue = useCallback(() => {
       const data = marsGuiRef.current.getValues()
       const data2 = marsGuiRef2.current.getValues()
       const data3 = marsGuiRef3.current.getValues()
 
-      const data4 = {
-        name: "模型名称",
-        type: "3dtiles",
-        url: inputUrl,
+      const data4 = { 
         maximumScreenSpaceError: data3.maximumScreenSpaceError, // 【重要】数据加大，能让最终成像变模糊
         position: {
           lng: data.txtX,
@@ -207,10 +203,18 @@ function UIComponent() {
         axis: data2.axis ? data2.axis : undefined, // 变换垂直轴
         proxy: agent ? "//server.mars3d.cn/proxy/" : undefined, // 代理
         opacity: data3.opacity,
+        highlight: highlightEnable
+          ? {
+            type: "click",
+            outlineEffect: true,
+            color: "#00FF00"
+          }
+          : false,
+        popup: popupEnable ? "all" : false,
         show: true
       }
 
-      mapWork.updateModel(data4, otherData)
+      mapWork.setLayerOptions(data4)
       return data4
     },
     [agent, inputUrl, popupEnable, highlightEnable]
@@ -373,7 +377,7 @@ function UIComponent() {
                       checked={highlightEnable}
                       onChange={(data) => {
                         setHighlightEnable(data)
-                        updataValue({ highlightEnable: data, popupEnable })
+                        updataValue()
                       }}
                     ></MarsSwitch>
 
@@ -382,7 +386,7 @@ function UIComponent() {
                       checked={popupEnable}
                       onChange={(data) => {
                         setPopupEnable(data)
-                        updataValue({ popupEnable: data, highlightEnable })
+                        updataValue()
                       }}
                     ></MarsSwitch>
                   </Space>

@@ -335,7 +335,7 @@
             "main": "thing/camera/roleController",
             "hasPannel": true,
             "resources": [
-              "CesiumRoleController.js"
+              "RunModelPrimitive.js"
             ]
           },
           {
@@ -838,20 +838,6 @@
               "mars3d",
               "geotiff"
             ]
-          },
-          {
-            "name": "全国温度图(image应用案例)",
-            "thumbnail": "layert-type-image-kriging.jpg",
-            "main": "layer-tile/type/image-kriging",
-            "api": "ImageLayer.html",
-            "libs": [
-              "mars3d",
-              "kriging"
-            ],
-            "resources": [
-              "krigingConfig.js"
-            ],
-            "hasPannel": true
           },
           {
             "name": "极坐标图(image应用案例)",
@@ -3371,12 +3357,6 @@
             "main": "layer-graphic/fun/clampToGround",
             "api": "GraphicLayer.html#autoSurfaceHeight",
             "hasPannel": true
-          },
-          {
-            "name": "渐变色带工具类",
-            "thumbnail": "layerg-fun-colorRamp.jpg",
-            "main": "layer-graphic/fun/colorRamp",
-            "api": "ColorRamp.html"
           }
         ]
       }
@@ -3974,7 +3954,7 @@
     "icon": "fa-street-view",
     "children": [
       {
-        "name": "热力图",
+        "name": "热力图 色斑图",
         "details": "与heatmap.js库结合的图层,需要引入mars3d-heatmap插件",
         "children": [
           {
@@ -4030,6 +4010,23 @@
               "mars3d",
               "mars3d-heatmap"
             ]
+          },
+          {
+            "name": "色斑图(kriging插值)",
+            "thumbnail": "layert-type-image-kriging.jpg",
+            "main": "layer-tile/type/image-kriging",
+            "api": "ImageLayer.html",
+            "libs": [
+              "mars3d",
+              "kriging"
+            ],
+            "hasPannel": true
+          },
+          {
+            "name": "点数据渐变色带渲染",
+            "thumbnail": "layerg-fun-colorRamp.jpg",
+            "main": "layer-graphic/fun/colorRamp",
+            "api": "ColorRamp.html"
           }
         ]
       },

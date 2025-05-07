@@ -266,9 +266,13 @@ function addDemoGraphic5(graphicLayer) {
         gapColor: Cesium.Color.YELLOW,
         dashPattern: parseInt("1111000000", 2)
       },
-      snakeAnimationDelay: 5, // 延迟多少秒执行执行流动生长(贪吃蛇)动画
-      snakeAnimationDuration: 10 // 执行流动生长(贪吃蛇)动画的时长（内部执行startSnakeAnimation方法）,单位：秒
+      // snakeAnimationDelay: 5, // 延迟多少秒执行执行流动生长(贪吃蛇)动画
+      snakeAnimationDuration: 7 // 执行流动生长(贪吃蛇)动画的时长（内部执行startSnakeAnimation方法）,单位：秒
     },
+    availability: [
+      { start: 5, stop: 15 },
+      { start: 20, stop: 30 }
+    ],
     attr: { remark: "示例5" }
   })
   graphicLayer.addGraphic(graphic)

@@ -96,6 +96,10 @@ export function addRandomGraphicByCount(count) {
   //   graphic.offsetHeight = height
   // }, 10)
 
+
+  // graphic.setColorStyle({ color: Cesium.Color.fromCssColorString("#ff0000").withAlpha(0.1) }, 1)
+
+
   graphicLayer.enabledEvent = true // 恢复事件
   return result.points.length
 }

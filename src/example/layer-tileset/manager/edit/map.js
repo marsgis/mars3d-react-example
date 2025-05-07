@@ -160,26 +160,10 @@ export function updateHeightForSurfaceTerrain(position) {
 }
 
 // 修改更改后的参数
-export function updateModel(params, pannelData) {
+export function setLayerOptions(params) {
   console.log("更新模型参数", params)
 
   tiles3dLayer.setOptions(params)
-
-  // 非参数，调用方法绑定或解绑
-  if (pannelData.highlightEnable) {
-    tiles3dLayer.highlight = {
-      type: mars3d.EventType.click, // 默认为鼠标移入高亮，也可以指定click单击高亮
-      outlineEffect: true, // 采用OutlineEffect方式来高亮
-      color: "#00FF00"
-    }
-  } else {
-    tiles3dLayer.highlight = undefined
-  }
-  if (pannelData.popupEnable) {
-    tiles3dLayer.bindPopup("all")
-  } else {
-    tiles3dLayer.unbindPopup()
-  }
 }
 
 // 深度检测

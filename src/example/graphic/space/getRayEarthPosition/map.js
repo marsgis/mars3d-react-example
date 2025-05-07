@@ -72,13 +72,14 @@ function addSatellite() {
       show: false
     },
     path: {
-      color: "#00ff00",
-      opacity: 0.5,
-      width: 1,
-      show: true
+      color: "#5399DD",
+      width: 2
     }
   })
   graphicLayer.addGraphic(weixin)
+
+  // 星下圆
+  // addCricle(weixin)
 
   // 卫星朝向的中线地面点
   const graphic = new mars3d.graphic.PolylineEntity({
@@ -182,4 +183,97 @@ export function chkShowModelMatrix(val) {
 
 export function locate() {
   weixin.flyTo()
+}
+
+// 星下圆
+function addCricle(weixing) {
+  let weixingPoint = mars3d.LngLatPoint.fromCartesian(weixing.position)
+
+  // 创建临时圆锥传感器
+  const coneTmp = new mars3d.graphic.SatelliteSensor({
+    position: weixingPoint,
+    style: {
+      sensorType: mars3d.graphic.SatelliteSensor.Type.Conic,
+      angle: 10,
+      color: "rgba(255,255,0,0)"
+    }
+  })
+  // 创建临时圆图层
+  graphicLayer.addGraphic(coneTmp)
+
+  let weixingPosition
+
+  // 延迟绘制圆圈
+  setTimeout(() => {
+    if (graphicLayer.isAdded) {
+      const areaCoords = coneTmp.getAreaCoords({ convex: false })
+      const areaCoordsTemp = []
+      for (const coordinate of areaCoords) {
+        const point = mars3d.LngLatPoint.fromCartesian(coordinate)
+        areaCoordsTemp.push(point)
+      }
+      if (!areaCoords || !isValidMultiPoint(areaCoords)) {
+        // $message(`经纬度数据异常`, "error")
+        return
+      }
+      const coneBottomCircle = new mars3d.graphic.CircleEntity({
+        position: new Cesium.CallbackProperty(() => {
+          const point = mars3d.LngLatPoint.fromCartesian(weixingPosition)
+          return Cesium.Cartesian3.fromDegrees(point.lng, point.lat, 0)
+        }, false),
+        style: {
+          radius: 120000,
+          materialType: mars3d.MaterialType.PolyGradient,
+          materialOptions: { alphaPower: 0.4, diffusePower: 1.6, color: "#dddd00" },
+          outline: true,
+          outlineStyle: {
+            width: 1.5,
+            color: "rgba(255,255,0,1)",
+            granularity: 36000000.0 // 指定椭圆上各点之间的角距离,可以控制圆的平滑度(值越小越平滑)
+          },
+          clampToGround: true
+        }
+      })
+      graphicLayer.addGraphic(coneBottomCircle)
+      graphicLayer.removeGraphic(coneTmp)
+    }
+  }, 200)
+  // 卫星轨迹开始位置
+  weixingPosition = weixing.position
+  weixing.on(mars3d.EventType.change, (event) => {
+    const graphic = event.graphic
+    weixingPosition = graphic.position
+    weixingPoint = mars3d.LngLatPoint.fromCartesian(weixingPosition)
+  })
+}
+function isValidMultiPoint(coordinates) {
+  if (!Array.isArray(coordinates) || coordinates.length === 0) {
+    return false
+  }
+  for (const coordinate of coordinates) {
+    const point = mars3d.LngLatPoint.fromCartesian(coordinate)
+    if (!isValidCoordinate(point.lng, point.lat)) {
+      return false
+    }
+  }
+  return true
+}
+function isValidCoordinate(longitude, latitude) {
+  if (!isValidLongitude(longitude) || !isValidLatitude(latitude)) {
+    return false
+  }
+  try {
+    // 尝试创建一个点
+    turf.point([longitude, latitude])
+    return true // 如果没有错误，说明经纬度有效
+  } catch (error) {
+    // 如果有错误，说明经纬度无效
+    return false
+  }
+}
+function isValidLongitude(longitude) {
+  return typeof longitude === "number" && longitude >= -180 && longitude <= 180
+}
+function isValidLatitude(latitude) {
+  return typeof latitude === "number" && latitude >= -90 && latitude <= 90
 }

@@ -13,7 +13,8 @@ export const mapOptions = {
       name: "谷歌影像",
       icon: "https://data.mars3d.cn/img/thumbnail/basemap/google_img.png",
       type: "google",
-      layer: "img_d",
+      // layer: "img_d", //内置的URL失效时，可以按下面类似自定义其他URL的谷歌服务
+      url: "https://cbk.8ditu.com/maps/vt?lyrs=s&v=982&gl=cn&x={x}&y={y}&z={z}",
       chinaCRS: mars3d.ChinaCRS.GCJ02,
       show: true
     },

@@ -18,7 +18,7 @@ export function onMounted(mapInstance) {
     url: "https://data.mars3d.cn/file/geojson/hefei-marathon.json",
     toPrimitive: true, // 提高渲染效率
     filter: function (feature) {
-      if (feature.properties.type === "modelP") {
+      if (feature.properties?.type === "modelP") {
         return false // cesium 1.123+版本大量模型渲染崩溃，暂时过滤掉
       }
       return true
