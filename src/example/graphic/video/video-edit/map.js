@@ -52,6 +52,7 @@ function addDemoGraphic1(graphicLayer) {
       [117.204087, 31.842668, 43.6],
       [117.204827, 31.842712, 43.6]
     ],
+    grids: 4,
     style: {
       url: "https://data.mars3d.cn/file/video/lukou.mp4",
       opacity: 0.9,

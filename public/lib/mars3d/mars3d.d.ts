@@ -2,8 +2,8 @@
 /**
  * Mars3D三维可视化平台  mars3d
  *
- * 版本信息：v3.9.9
- * 编译日期：2025-05-07 14:01
+ * 版本信息：v3.9.10
+ * 编译日期：2025-05-11 11:07
  * 版权所有：Copyright by 火星科技  http://mars3d.cn
  * 使用单位：火星科技免费公开版 ，2025-02-01
  */
@@ -21212,6 +21212,7 @@ declare namespace VideoPrimitive {
  * @param options.positions - 坐标位置
  * @param options.style - 样式信息
  * @param [options.attr] - 附件的属性信息，可以任意附加属性，导出geojson或json时会自动处理导出。
+ * @param [options.grids = 4] - 网格行列数
  * @param [options.positions_grid] - 历史编辑的网格坐标点，用于json导出导入
  * @param [options.play = true] - 初始化后默认是播放还是停止状态
  * @param [options.synchronizer] - 是否内部加VideoSynchronizer同步时钟
@@ -21246,6 +21247,7 @@ declare class VideoPrimitive extends BasePolyPrimitive {
         positions: LngLatPoint[] | Cesium.Cartesian3[] | any[];
         style: VideoPrimitive.StyleOptions | any;
         attr?: any | BaseGraphic.AjaxAttr;
+        grids?: number;
         positions_grid?: Cesium.Cartesian3[];
         play?: boolean;
         synchronizer?: boolean;
@@ -29921,7 +29923,7 @@ declare class Map extends BaseClass {
      */
     onlyPickTerrainPosition: boolean;
     /**
-     * 是否开启顶点吸附功能，只拾取顶点上的点
+     * 是否开启顶点吸附功能，只拾取顶点上的点（仅3D模式下、切相机视角高度低于1000000时有效）
      */
     onlyVertexPosition: boolean;
     /**

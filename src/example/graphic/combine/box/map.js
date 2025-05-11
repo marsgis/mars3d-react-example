@@ -96,9 +96,10 @@ export function addRandomGraphicByCount(count) {
   //   graphic.offsetHeight = height
   // }, 10)
 
-
-  // graphic.setColorStyle({ color: Cesium.Color.fromCssColorString("#ff0000").withAlpha(0.1) }, 1)
-
+  // 演示：设置颜色
+  // graphic.readyPromise.then(() => {
+  //   graphic.setColorStyle({ color: "#ff0000" }, 0)
+  // })
 
   graphicLayer.enabledEvent = true // 恢复事件
   return result.points.length

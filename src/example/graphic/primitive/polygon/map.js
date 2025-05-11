@@ -255,6 +255,7 @@ function addDemoGraphic7(graphicLayer) {
 // 面状：碎石面效果
 function addDemoGraphic8(graphicLayer) {
   const graphic = new mars3d.graphic.PolygonPrimitive({
+    unit: "mu",
     positions: [
       [117.275127, 31.839641, 25.1],
       [117.291876, 31.83181, 23.6],
