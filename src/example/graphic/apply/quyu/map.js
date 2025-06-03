@@ -56,57 +56,57 @@ export function onMounted(mapInstance) {
   // map.scene.debugShowFramesPerSecond = true
 
   terrainClip = new mars3d.thing.TerrainClip({
-    czm: false, // 效率高些
-    image: false,
-    splitNum: 80 // 井边界插值数
+    czm: false // 效率高些
   })
   map.addThing(terrainClip)
 
   mars3d.Util.fetchJson({ url: `http://data.mars3d.cn/file/geojson/areas/${xzqhCode}.json` })
     .then(function (geojson) {
       const arr = mars3d.Util.geoJsonToGraphics(geojson) // 解析geojson
-      const options = arr[0]
 
-      if (options.isRing) {
-        // 多面时
-        terrainClip.addArea(options.positions[0], { simplify: { tolerance: 0.002 } })
-        terrainClip.clipOutSide = true
-      } else {
-        // 普通面
-        terrainClip.addArea(options.positions, { simplify: { tolerance: 0.002 } })
-        terrainClip.clipOutSide = true
-      }
+      // 有些地方的区域是多个，比如河北省
+      arr.forEach((options) => {
+        if (options.isRing) {
+          // 多面时
+          terrainClip.addArea(options.positions[0], { simplify: { tolerance: 0.002 } })
+          terrainClip.clipOutSide = true
+        } else {
+          // 普通面
+          terrainClip.addArea(options.positions, { simplify: { tolerance: 0.002 } })
+          terrainClip.clipOutSide = true
+        }
 
-      const polylineGraphic = new mars3d.graphic.PolylineEntity({
-        positions: options.positions,
-        style: {
-          width: 10,
-          color: "#b3e0ff",
-          depthFail: false,
-          materialType: mars3d.MaterialType.PolylineGlow,
-          materialOptions: {
+        const polylineGraphic = new mars3d.graphic.PolylineEntity({
+          positions: options.positions,
+          style: {
+            width: 10,
             color: "#b3e0ff",
-            glowPower: 0.3,
-            taperPower: 1.0
+            depthFail: false,
+            materialType: mars3d.MaterialType.PolylineGlow,
+            materialOptions: {
+              color: "#b3e0ff",
+              glowPower: 0.3,
+              taperPower: 1.0
+            }
           }
-        }
-      })
-      graphicLayer.addGraphic(polylineGraphic)
+        })
+        graphicLayer.addGraphic(polylineGraphic)
 
-      const wall = new mars3d.graphic.WallPrimitive({
-        positions: options.positions,
-        style: {
-          setHeight: -wallHeight,
-          diffHeight: wallHeight, // 墙高
-          width: 10,
-          materialType: mars3d.MaterialType.Image2,
-          materialOptions: {
-            image: "https://data.mars3d.cn/img/textures/fence-top.png",
-            color: "#0b88e3"
+        const wall = new mars3d.graphic.WallPrimitive({
+          positions: options.positions,
+          style: {
+            setHeight: -wallHeight,
+            diffHeight: wallHeight, // 墙高
+            width: 10,
+            materialType: mars3d.MaterialType.Image2,
+            materialOptions: {
+              image: "https://data.mars3d.cn/img/textures/fence-top.png",
+              color: "#0b88e3"
+            }
           }
-        }
+        })
+        graphicLayer.addGraphic(wall)
       })
-      graphicLayer.addGraphic(wall)
     })
     .catch(function (error) {
       console.log("加载JSON出错", error)

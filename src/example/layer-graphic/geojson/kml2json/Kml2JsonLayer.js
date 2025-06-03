@@ -25,7 +25,7 @@ class Kml2JsonLayer extends mars3d.layer.GeoJsonLayer {
    */
   load(newOptions) {
     if (newOptions) {
-      if (Cesium.defaultValue(newOptions.clear, true)) {
+      if (newOptions.clear ?? true) {
         delete this.options.url
         delete this.options.data
       }

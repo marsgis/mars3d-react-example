@@ -3,7 +3,7 @@ import * as mars3d from "mars3d"
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: 31.804309, lng: 117.13896, alt: 25.6, heading: 45.4, pitch: -24.1 }
+    center: { lat: 31.804278, lng: 117.138924, alt: 22.3, heading: 36.5, pitch: -10.5 }
   }
 }
 

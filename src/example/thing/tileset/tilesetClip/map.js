@@ -18,14 +18,14 @@ export function onMounted(mapInstance) {
   map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
 
   terrainClip = new mars3d.thing.TerrainClip({
-    diffHeight: 50, // 井的深度
-    image: "https://data.mars3d.cn/img/textures/poly-stone.jpg",
-    imageBottom: "https://data.mars3d.cn/img/textures/poly-soil.jpg",
-    splitNum: 80 // 井边界插值数
+    stylePit: {
+      diffHeight: 50, // 井的深度
+      image: "https://data.mars3d.cn/img/textures/poly-stone.jpg",
+      imageBottom: "https://data.mars3d.cn/img/textures/poly-soil.jpg",
+      splitNum: 80 // 井边界插值数
+    }
   })
   map.addThing(terrainClip)
-
-
 
   globalNotify("已知问题提示", `(1) 目前不支持所有类型3dtile数据，请替换url进行自测`)
 

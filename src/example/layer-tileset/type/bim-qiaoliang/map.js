@@ -112,10 +112,12 @@ export function terrainClips(heightVal) {
       [117.096176, 31.853494, 42.56]
     ],
     exact: true,
-    diffHeight: heightVal, // 高度
-    image: "https://data.mars3d.cn/img/textures/poly-stone.jpg",
-    imageBottom: "https://data.mars3d.cn/img/textures/poly-soil.jpg",
-    splitNum: 80 // 井边界插值数
+    stylePit: {
+      diffHeight: heightVal, // 高度
+      image: "https://data.mars3d.cn/img/textures/poly-stone.jpg",
+      imageBottom: "https://data.mars3d.cn/img/textures/poly-soil.jpg",
+      splitNum: 80 // 井边界插值数
+    }
   })
   map.addThing(terrainClip)
 }

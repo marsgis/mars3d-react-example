@@ -16,6 +16,10 @@ export const mapOptions = {
 export function onMounted(mapInstance) {
   map = mapInstance // 记录map
 
+  mars3d.DrawUtil.setAllEditPointStyle({
+    type: mars3d.GraphicType.point // 支持设置type指定编辑点类型,默认是pointP
+  })
+
   // 创建矢量数据图层
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)

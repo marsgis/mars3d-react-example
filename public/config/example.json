@@ -2161,7 +2161,7 @@
             "hasPannel": true
           },
           {
-            "name": "无人机飞行轨迹",
+            "name": "Path无人机飞行轨迹",
             "thumbnail": "graphic-entity-path-wrj.gif",
             "main": "graphic/entity/path-wrj",
             "api": "PathEntity.html",
@@ -2170,7 +2170,7 @@
             "download": false
           },
           {
-            "name": "战机绕圈巡航轨迹",
+            "name": "Path战机绕圈巡航轨迹",
             "thumbnail": "graphic-entity-path-zhanji.gif",
             "main": "graphic/entity/path-zhanji",
             "api": "PathEntity.html",
@@ -2179,11 +2179,48 @@
             "download": false
           },
           {
+            "name": "Route 低空无人机实时轨迹",
+            "thumbnail": "graphic-custom-route-uva.jpg",
+            "main": "graphic/custom/route-uva",
+            "api": "FixedRoute.html",
+            "libs":["mars3d","mars3d-space"],
+            "new":true
+          },
+          {
+            "name": "Route实时轨迹路线",
+            "thumbnail": "graphic-custom-route.jpg",
+            "main": "graphic/custom/route",
+            "api": "Route.html",
+            "hasPannel": true
+          },
+          {
+            "name": "模型上实时轨迹路线",
+            "thumbnail": "graphic-custom-route-tileset.jpg",
+            "main": "graphic/custom/route-tileset",
+            "api": "Route.html",
+            "developerShow": false
+          },
+          {
+            "name": "AIS实时动态目标",
+            "thumbnail": "graphic-custom-route-ais.jpg",
+            "main": "graphic/custom/route-ais",
+            "api": "Route.html",
+            "developerShow": false
+          },
+          {
             "name": "FixedRoute 固定轨迹路线",
             "thumbnail": "graphic-custom-fixedRoute.gif",
             "main": "graphic/custom/fixedRoute",
             "api": "FixedRoute.html",
             "hasPannel": true
+          },
+          {
+            "name": "低空无人机历史轨迹",
+            "thumbnail": "graphic-custom-fixedRoute-uva.jpg",
+            "main": "graphic/custom/fixedRoute-uva",
+            "api": "FixedRoute.html",
+            "libs":["mars3d","mars3d-space"],
+            "new":true
           },
           {
             "name": "行人漫游",
@@ -2232,13 +2269,6 @@
             ]
           },
           {
-            "name": "无人机航拍",
-            "thumbnail": "graphic-custom-fixedRoute-shoot.jpg",
-            "main": "graphic/custom/fixedRoute-shoot",
-            "api": "FixedRoute.html",
-            "developerShow": false
-          },
-          {
             "name": "飞机路线",
             "thumbnail": "graphic-custom-fixedRoute-flight.gif",
             "main": "graphic/custom/fixedRoute-flight",
@@ -2253,27 +2283,6 @@
             "api": "FixedRoute.html",
             "developerShow": false,
             "hasPannel": true
-          },
-          {
-            "name": "Route实时轨迹路线",
-            "thumbnail": "graphic-custom-route.jpg",
-            "main": "graphic/custom/route",
-            "api": "Route.html",
-            "hasPannel": true
-          },
-          {
-            "name": "模型上实时轨迹路线",
-            "thumbnail": "graphic-custom-route-tileset.jpg",
-            "main": "graphic/custom/route-tileset",
-            "api": "Route.html",
-            "developerShow": false
-          },
-          {
-            "name": "AIS实时动态目标",
-            "thumbnail": "graphic-custom-route-ais.jpg",
-            "main": "graphic/custom/route-ais",
-            "api": "Route.html",
-            "developerShow": false
           }
         ]
       },

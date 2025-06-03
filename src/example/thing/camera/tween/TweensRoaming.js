@@ -132,10 +132,10 @@ class TweensRoaming extends mars3d.BaseThing {
         pitch: [views[i1].pitch, views[i2].pitch, views[i3].pitch]
       }
 
-      const duration = Cesium.defaultValue(views[i1].duration, 3) * 1000
-      const delay = Cesium.defaultValue(views[i1].stop, 0) * 1000
+      const duration = (views[i1].duration ?? 3) * 1000
+      const delay = (views[i1].stop ?? 0) * 1000
       // eslint-disable-next-line no-undef
-      const easingFunction = Cesium.defaultValue(views[i1].easingFunction, Tween.Easing.Linear.None)
+      const easingFunction = views[i1].easingFunction ?? Tween.Easing.Linear.None
 
       // eslint-disable-next-line no-undef
       const tween = new Tween.Tween(startObject)

@@ -87,7 +87,6 @@ export function onMounted(mapInstance) {
   //   })
   // })
 
-
   addPlaneClipThing(layerWorkBIM)
 }
 
@@ -116,10 +115,12 @@ function addPlaneClipThing(layerWorkBIM) {
       [117.251877, 31.844216, 28.24],
       [117.251176, 31.844216, 28.24]
     ],
-    diffHeight: 10, // 高度
-    image: "https://data.mars3d.cn/img/textures/poly-stone.jpg", // 边界墙材质
-    imageBottom: "https://data.mars3d.cn/img/textures/poly-soil.jpg", // 底部区域材质
-    splitNum: 50 // wall边界插值数
+    stylePit: {
+      diffHeight: 10, // 高度
+      image: "https://data.mars3d.cn/img/textures/poly-stone.jpg", // 边界墙材质
+      imageBottom: "https://data.mars3d.cn/img/textures/poly-soil.jpg", // 底部区域材质
+      splitNum: 50 // wall边界插值数
+    }
   })
   map.addThing(terrainPlanClip)
 }

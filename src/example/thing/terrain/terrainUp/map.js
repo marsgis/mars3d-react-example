@@ -17,11 +17,13 @@ export function onMounted(mapInstance) {
 
   terrainUplift = new mars3d.thing.TerrainUplift({
     upHeight: 2000, // 抬升的高度
-    image: "https://data.mars3d.cn/img/textures/poly-land.png",
-    // image: "https://data.mars3d.cn/img/textures/mining.jpg",
-    imageBottom: "https://data.mars3d.cn/img/textures/poly-land.png",
-    diffHeight: 100,
-    splitNum: 80 // 井边界插值数
+    stylePit: {
+      image: "https://data.mars3d.cn/img/textures/poly-land.png",
+      // image: "https://data.mars3d.cn/img/textures/mining.jpg",
+      imageBottom: "https://data.mars3d.cn/img/textures/poly-land.png",
+      diffHeight: 100,
+      splitNum: 80 // 井边界插值数
+    }
   })
   map.addThing(terrainUplift)
 }

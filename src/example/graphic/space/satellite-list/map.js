@@ -126,7 +126,7 @@ function createSatelliteList(arr) {
 
     // path显示后FPS下降的厉害
     item.path = item.path || {}
-    item.path.color = Cesium.defaultValue(item.path.color, "#e2e2e2")
+    item.path.color = item.path.color ?? "#e2e2e2"
     item.path.closure = false
 
     item.cone = {

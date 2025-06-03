@@ -17,7 +17,7 @@ class Shp2JsonLayer extends mars3d.layer.GeoJsonLayer {
    */
   load(newOptions) {
     if (newOptions) {
-      if (Cesium.defaultValue(newOptions.clear, true)) {
+      if (newOptions.clear ?? true) {
         delete this.options.url
         delete this.options.data
       }
@@ -53,6 +53,5 @@ class Shp2JsonLayer extends mars3d.layer.GeoJsonLayer {
 
 // 注册下
 mars3d.LayerUtil.register("geojson_shp", Shp2JsonLayer)
-
 
 // export { Shp2JsonLayer }

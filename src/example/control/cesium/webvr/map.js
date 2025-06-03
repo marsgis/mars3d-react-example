@@ -9,7 +9,7 @@ export const mapOptions = function (option) {
     toolbar: {
       position: "right-top"
     },
-    vrButton: true// 方式1：options中添加控件
+    vrButton: true // 方式1：options中添加控件
   }
   return option
 }
@@ -22,7 +22,6 @@ export function onMounted(mapInstance) {
     const isVR = map.scene.useWebVR
     console.log("点击了VR按钮", isVR)
   })
-
 
   globalNotify("已知问题提示", `(1) 请确保您的显示器调整到 3D模式。(2) 需要佩戴3D眼镜才能体验效果。`)
 
@@ -39,17 +38,49 @@ export function onMounted(mapInstance) {
   })
   map.addLayer(tiles3dLayer)
 
-  // 这句话打开VR
-  map.scene.useWebVR = true
-
-  // WebVR相关参数: 眼镜的视角距离（单位：米）
-  map.scene.eyeSeparation = 100.0
-
-  // WebVR相关参数: 焦距
-  map.scene.eyeSeparation.focalLength = 5.0
+  openWebVR()
 }
 
 // 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
 export function onUnmounted() {
   map = null
+}
+
+function openWebVR() {
+  // WebVR相关参数: 眼镜的视角距离（单位：米）
+  map.scene.eyeSeparation = 100.0
+  // map.scene.eyeSeparation = -100
+
+  // WebVR相关参数: 焦距
+  map.scene.eyeSeparation.focalLength = 5.0
+
+  // 这句话打开VR
+  map.scene.useWebVR = true
+
+  // 自定义的水平交错片段着色器代码
+  const postProcessStage = new Cesium.PostProcessStage({
+    fragmentShader: `
+        uniform sampler2D colorTexture;
+        in vec2 v_textureCoordinates;
+
+        uniform float width;
+        // uniform float height;
+
+        void main() {
+          vec4 color;
+          float x = v_textureCoordinates.x;
+          if (mod(v_textureCoordinates.x * width, 2.0) < 0.5) {
+            color = texture(colorTexture, vec2(v_textureCoordinates.x / 2.0, v_textureCoordinates.y / 2.0));
+          } else {
+            color = texture(colorTexture, vec2(v_textureCoordinates.x / 2.0 + 0.5, v_textureCoordinates.y / 2.0));
+          }
+          out_FragColor = color;
+        }
+      `,
+    uniforms: {
+      width: map.scene.canvas.clientWidth
+      // height: map.scene.canvas.clientHeight
+    }
+  })
+  // map.scene.postProcessStages.add(postProcessStage)
 }

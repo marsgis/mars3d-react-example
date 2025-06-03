@@ -16,10 +16,12 @@ export function onMounted(mapInstance) {
 
   // // 地形开挖 [如果同步切地形，可以取消注释及后面相关注释]
   // terrainPlanClip = new mars3d.thing.TerrainPlanClip({
-  //   diffHeight: 1000, // 井的深度
-  //   image: "https://data.mars3d.cn/img/textures/poly-stone.jpg", // 边界墙材质
-  //   imageBottom: "https://data.mars3d.cn/img/textures/poly-soil.jpg", // 底部区域材质
-  //   splitNum: 50 // 井边界插值数
+  //   stylePit: {
+  //     diffHeight: 1000, // 井的深度
+  //     image: "https://data.mars3d.cn/img/textures/poly-stone.jpg", // 边界墙材质
+  //     imageBottom: "https://data.mars3d.cn/img/textures/poly-soil.jpg", // 底部区域材质
+  //     splitNum: 50 // 井边界插值数
+  //   }
   // })
   // map.addThing(terrainPlanClip)
 

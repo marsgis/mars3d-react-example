@@ -169,6 +169,46 @@ export function showPoint() {
   })
 }
 
+export function showPointForHeat() {
+  removeLayer()
+
+  graphicLayer = new mars3d.layer.GeoJsonLayer({
+    name: "体育设施点-按热力图渲染",
+    url: "https://data.mars3d.cn/file/geojson/hfty-point.json",
+    symbol: {
+      type: "heat", // 按热力图来渲染数据
+      // 下面参数支持mars3d.layer.HeatLayer的所有构造参数
+      heatStyle: {
+        radius: 20,
+        minOpacity: 0,
+        maxOpacity: 0.4,
+        blur: 0.3,
+        gradient: {
+          0: "#e9ec36",
+          0.25: "#ffdd2f",
+          0.5: "#fa6c20",
+          0.75: "#fe4a33",
+          1: "#ff0000"
+        }
+      },
+      // 以下为矩形矢量对象的样式参数
+      style: {
+        opacity: 1.0,
+        outline: true, // 显示范围线，方便对照
+        outlineColor: "#ffffff",
+        outlineWidth: 1
+      }
+    },
+    flyTo: true
+  })
+  map.addLayer(graphicLayer)
+
+  // 绑定事件
+  graphicLayer.on(mars3d.EventType.load, function (event) {
+    console.log("数据加载完成", event)
+  })
+}
+
 /**
  * 全国省界
  */

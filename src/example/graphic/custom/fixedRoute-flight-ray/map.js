@@ -88,10 +88,13 @@ function addGraphicLayer() {
   bindPopup(fixedRoute)
 
   // ui面板信息展示
-  fixedRoute.on(mars3d.EventType.change, mars3d.Util.funThrottle((event) => {
-    // 取实时信息，可以通过  fixedRoute.info
-    eventTarget.fire("roamLineChange", event)
-  }, 500))
+  fixedRoute.on(
+    mars3d.EventType.change,
+    mars3d.Util.funThrottle((event) => {
+      // 取实时信息，可以通过  fixedRoute.info
+      eventTarget.fire("roamLineChange", event)
+    }, 500)
+  )
 
   // 启动漫游
   fixedRoute.start()
@@ -108,11 +111,10 @@ export function setMoelStyle(style) {
   fixedRoute.model.style.roll = style.roll
 }
 
-export function clearMoelPitchRoll () {
+export function clearMoelPitchRoll() {
   fixedRoute.model.style.pitch = undefined
   fixedRoute.model.style.roll = undefined
 }
-
 
 export function clearGroundLayer() {
   groundLayer.clear()
@@ -186,9 +188,9 @@ function getFourShadingPosition(opts) {
   // 张角
   const angle1 = Cesium.Math.toRadians(opts.angle) / 2
 
-  const heading = Cesium.Math.toRadians(Cesium.defaultValue(opts.heading, fixedRoute.model.heading))
-  const pitch = Cesium.Math.toRadians(Cesium.defaultValue(opts.pitch, fixedRoute.model.pitch))
-  const roll = Cesium.Math.toRadians(Cesium.defaultValue(opts.heading, fixedRoute.model.roll))
+  const heading = Cesium.Math.toRadians(opts.heading ?? fixedRoute.model.heading)
+  const pitch = Cesium.Math.toRadians(opts.pitch ?? fixedRoute.model.pitch)
+  const roll = Cesium.Math.toRadians(opts.heading ?? fixedRoute.model.roll)
 
   // 张角
   const angle2 = Cesium.Math.toRadians(opts.angle2) / 2

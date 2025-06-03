@@ -14,7 +14,15 @@ export const mapOptions = {
       roll: 359.8
     },
     fxaa: true,
-    requestRenderMode: true // 显式渲染
+    requestRenderMode: true, // 显式渲染
+    showSkyAtmosphere: false, // 关闭影响FPS效率的参数
+    fog: false,
+    globe: {
+      showGroundAtmosphere: false
+    },
+    clock: {
+      currentTime: "2025-08-01 12:00:00"
+    }
   },
   thing: {
     keyboardRoam: {
@@ -24,11 +32,7 @@ export const mapOptions = {
       minPitch: 0.1, // 最小仰角  0-1
       maxPitch: 0.95 // 最大仰角  0-1
     }
-  },
-  control: {
-    infoBox: false
-  },
-  layers: []
+  }
 }
 
 export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
@@ -36,12 +40,6 @@ export const eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出
 // 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
-
-  map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
-
-  // 固定光照时间
-  map.clock.currentTime = Cesium.JulianDate.fromDate(new Date("2022-11-01 12:00:00"))
-  // map.clock.shouldAnimate = false
 
   // 固定光照方向
   map.scene.light = new Cesium.DirectionalLight({
@@ -54,7 +52,6 @@ export function onMounted(mapInstance) {
 
   // 调试面板
   map.viewer.extend(Cesium.viewerCesiumInspectorMixin)
-  map.scene.globe.depthTestAgainstTerrain = false
 
   // 针对不同终端的优化配置
   if (isPCBroswer()) {

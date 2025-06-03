@@ -43,6 +43,7 @@ export function onMounted(mapInstance) {
   addDemoGraphic11(graphicLayer)
   addDemoGraphic12(graphicLayer)
   addDemoGraphic13(graphicLayer)
+  addDemoGraphic14(graphicLayer)
 }
 
 // 释放当前地图业务的生命周期函数,具体项目中时必须写onMounted的反向操作（如解绑事件、对象销毁、变量置空）
@@ -427,6 +428,29 @@ function addDemoGraphic13(graphicLayer) {
     attr: { remark: "示例13" }
   })
   graphicLayer.addGraphic(graphic)
+}
+
+function addDemoGraphic14(graphicLayer) {
+  const graphic = new mars3d.graphic.PolygonPrimitive({
+    positions: [
+      [117.243724, 31.912542, 26.8],
+      [117.24524, 31.89712, 22.3],
+      [117.271467, 31.889732, 19],
+      [117.284579, 31.904554, 17.6],
+      [117.260362, 31.916844, 20.5]
+    ],
+    style: {
+      materialType: mars3d.MaterialType.PolyGradient2,
+      materialOptions: {
+        color: Cesium.Color.RED,
+        color2: Cesium.Color.WHITE,
+        alphaPower: 1.0,
+        diffusePower: 0.1 // 漫射系数 -0.5至0.5
+      }
+    },
+    attr: { remark: "示例14" }
+  })
+  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
 }
 
 // 生成演示数据(测试数据量)

@@ -333,7 +333,7 @@ function addDemoGraphic8(graphicLayer) {
           grd.addColorStop(0, scanColor0)
           grd.addColorStop(1, scanColor1)
           context.fillStyle = grd
-          context.globalAlpha = Cesium.defaultValue(graphic.style.globalAlpha, 1.0)
+          context.globalAlpha = graphic.style.globalAlpha ?? 1.0
 
           context.beginPath()
           context.moveTo(400, 400)

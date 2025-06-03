@@ -33,15 +33,7 @@ export function onMounted(mapInstance) {
   map = mapInstance // 记录map
   // map.basemap = 2017 // 暗色底图
 
-  mars3d.Util.fetchJson({ url: "https://data.mars3d.cn/file/apidemo/heat-fuzhou.json" }).then(function (result) {
-    const arrPoints = []
-    for (let i = 0; i < result.Data.length; i++) {
-      const item = result.Data[i]
-      arrPoints.push({ lng: item.x, lat: item.y, value: item.t0 / 100 })
-    }
-    showHeatMap(arrPoints)
-  })
-
+  showHeatMap2()
   // addTerrainClip()
 }
 
@@ -49,8 +41,18 @@ export function onMounted(mapInstance) {
 export function onUnmounted() {
   map = null
 }
+
 let heatLayer
-function showHeatMap(arrPoints) {
+async function showHeatMap() {
+  const result = await mars3d.Util.fetchJson({ url: "https://data.mars3d.cn/file/apidemo/heat-fuzhou.json" })
+
+  const arrPoints = []
+  for (let i = 0; i < result.Data.length; i++) {
+    const item = result.Data[i]
+    arrPoints.push({ lng: item.x, lat: item.y, value: item.t0 / 100 })
+  }
+  showHeatMap(arrPoints)
+
   // 热力图 图层
   heatLayer = new mars3d.layer.HeatLayer({
     positions: arrPoints,
@@ -100,6 +102,50 @@ function showHeatMap(arrPoints) {
     map.openSmallTooltip(e.windowPosition, inhtml)
   })
 }
+
+// 也可以使用业务图层+配置symbol方式
+async function showHeatMap2() {
+  const graphicLayer = new mars3d.layer.BusineDataLayer({
+    url: "https://data.mars3d.cn/file/apidemo/heat-fuzhou.json",
+    dataColumn: "Data",
+    lngColumn: "x",
+    latColumn: "y",
+    symbol: {
+      type: "heat", // 按热力图来渲染数据
+      // 下面参数支持mars3d.layer.HeatLayer的所有构造参数
+      valueColumn: "t0",
+      heatStyle: {
+        radius: 20,
+        minOpacity: 0,
+        maxOpacity: 0.4,
+        blur: 0.3,
+        gradient: {
+          0: "#e9ec36",
+          0.25: "#ffdd2f",
+          0.5: "#fa6c20",
+          0.75: "#fe4a33",
+          1: "#ff0000"
+        }
+      },
+      // 以下为矩形矢量对象的样式参数
+      style: {
+        opacity: 1.0,
+        outline: true, // 显示范围线，方便对照
+        outlineColor: "#ffffff",
+        outlineWidth: 1
+      }
+    },
+    flyTo: true
+  })
+  map.addLayer(graphicLayer)
+
+  // 绑定事件
+  graphicLayer.on(mars3d.EventType.load, function (event) {
+    console.log("数据加载完成", event)
+    window.heatLayer = event.otherLayer
+  })
+}
+
 export function setHeatOptions(options) {
   heatLayer.setOptions(options)
 }
@@ -111,8 +157,6 @@ async function addTerrainClip() {
   const options = arr[0]
 
   const terrainClip = new mars3d.thing.TerrainClip({
-    image: false,
-    splitNum: 10, // 井边界插值数
     clipOutSide: true
   })
   map.addThing(terrainClip)

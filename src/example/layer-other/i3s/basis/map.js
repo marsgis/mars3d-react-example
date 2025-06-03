@@ -5,16 +5,26 @@ export let map
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: 50.096737, lng: 8.670794, alt: 1148.6, heading: 28.9, pitch: -44.9 }
+    center: { lat: 50.096737, lng: 8.670794, alt: 1148.6, heading: 28.9, pitch: -44.9 },
+    showSkyAtmosphere: false, // 关闭影响FPS效率的参数
+    fog: false,
+    fxaa: false,
+    globe: {
+      showGroundAtmosphere: false
+    },
+    clock: {
+      currentTime: "2025-08-01 12:00:00"
+    }
   },
-  terrain: false
+  method: {
+    fixedLight: true // 固定光照，避免gltf模型随时间存在亮度不一致。
+  }
 }
 
 // 初始化地图业务，生命周期钩子函数（必须）,框架在地图初始化完成后自动调用该函数
 export function onMounted(mapInstance) {
   map = mapInstance // 记录首次创建的map
-  map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
-  // map.basemap = "ArcGIS影像"
+  map.basemap = "ArcGIS影像"
 
   globalNotify(
     "已知问题提示",
@@ -92,6 +102,20 @@ export function showFrankfurtDemo() {
     url: "https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/Frankfurt2017_vi3s_18/SceneServer/layers/0",
     skipLevelOfDetail: false,
     debugShowBoundingVolume: false,
+    flyTo: true
+  })
+  map.addLayer(i3sLayer)
+}
+
+export function showHostedDemo() {
+  removeLayer()
+
+  i3sLayer = new mars3d.layer.I3SLayer({
+    name: "Hosted",
+    url: "https://www.geosceneonline.cn/server/rest/services/Hosted/part5_b_Project/SceneServer/layers/0",
+    skipLevelOfDetail: false,
+    debugShowBoundingVolume: false,
+    center: { lat: 44.28336, lng: 86.147017, alt: 495.1, heading: 11.4, pitch: -21.5 },
     flyTo: true
   })
   map.addLayer(i3sLayer)

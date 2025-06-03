@@ -6,7 +6,7 @@ export let graphicLayer // 矢量图层对象
 // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
 export const mapOptions = {
   scene: {
-    center: { lat: 31.548343, lng: 104.372096, alt: 8226.5, heading: 342.8, pitch: -43.1 }
+    center: { lat: 31.595596, lng: 117.254684, alt: 11357.7, heading: 351.3, pitch: -50.4 }
   }
 }
 
@@ -31,7 +31,7 @@ export function onMounted(mapInstance) {
   let progressValue = 0 // 当前进度
   const intervalId = setInterval(() => {
     progressValue++
-    if (progressValue < 216) {
+    if (progressValue <= 180) {
       loadAndRenderGeoJSON(progressValue)
     } else {
       clearInterval(intervalId)
@@ -47,17 +47,16 @@ const floods = []
 
 // 加载洪水数据
 async function loadAndRenderGeoJSON(fileIndex) {
-  const url = `//data.mars3d.cn/file/apidemo/floods/${fileIndex}.json`
-  const features = await mars3d.Util.sendAjax({ url })
+ const url = `//data.mars3d.cn/file/apidemo/floods/${fileIndex}.json`
+   const features = await mars3d.Util.sendAjax({ url })
   const instances = []
-  features.forEach((feature) => {
-    const coordinates = feature.c
+  features.forEach((item) => {
     instances.push({
-      positions: coordinates[0],
+      positions: item.coords,
       style: {
-        color: colorRamp.getColor(feature.d)
+        color: colorRamp.getColor(item.depth)
       },
-      attr: { depth: feature.d }
+      attr: { depth: item.depth }
     })
   })
 
@@ -75,4 +74,6 @@ async function loadAndRenderGeoJSON(fileIndex) {
     a.remove()
   }
   floods.push(graphic)
+
+  console.log(`加载第${fileIndex}个时刻完成`)
 }

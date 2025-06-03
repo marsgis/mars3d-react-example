@@ -45,11 +45,14 @@ export function addLayer(height) {
       [117.21764, 31.843807, 42.83],
       [117.214491, 31.843807, 42.83]
     ],
-    diffHeight: height, // 井的深度
-    image: "https://data.mars3d.cn/img/textures/poly-stone.jpg", // 边界墙材质
-    imageBottom: "https://data.mars3d.cn/img/textures/poly-soil.jpg", // 底部区域材质
-    splitNum: 50, // 井边界插值数
-    exact: true
+    exact: true,
+    stylePit: {
+      diffHeight: height, // 井的深度
+      image: "https://data.mars3d.cn/img/textures/poly-stone.jpg", // 边界墙材质
+      imageBottom: "https://data.mars3d.cn/img/textures/poly-soil.jpg", // 底部区域材质
+      stRotationDegree: 45,
+      splitNum: 50 // 井边界插值数
+    }
   })
   map.addThing(terrainPlanClip)
 }

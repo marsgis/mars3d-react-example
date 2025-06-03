@@ -248,7 +248,7 @@ export function bindGraphicDemo2() {
   })
 
   // 刷新局部DOM,不影响tooltip面板的其他控件操作
-  graphic.on(mars3d.EventType.popupRender, function (event) {
+  graphic.on(mars3d.EventType.tooltipRender, function (event) {
     const container = event.container // tooltip对应的DOM
 
     const tdTime = container.querySelector("#tdTime")

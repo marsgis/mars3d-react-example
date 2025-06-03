@@ -220,8 +220,8 @@ function loadNetCDF(filePath) {
 
       // 构造WindLayer类需要的格式数据
       const result = {
-        xmin: Math.min(...arrLon),
-        xmax: Math.max(...arrLon),
+        xmin: -180, // Math.min(...arrLon),
+        xmax: 180, // Math.max(...arrLon),
         ymin: Math.min(...arrLat),
         ymax: Math.max(...arrLat),
         rows: arrLat.length,

@@ -69,6 +69,10 @@ function addLayer() {
   })
   map.addLayer(heatLayer)
 
+  // setTimeout(() => {
+  //   mars3d.Util.downloadFile("layer.json", JSON.stringify(heatLayer.toJSON()))
+  // }, 8000)
+
   // 显示地面对应的点，测试渲染结果的正确性
   for (let i = 0; i < arrPoints.length; i++) {
     const item = arrPoints[i]

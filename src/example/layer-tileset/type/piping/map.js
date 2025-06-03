@@ -97,11 +97,13 @@ export function chkClippingPlanes(val) {
 export function terrainClips(heightVal) {
   // 挖地区域
   terrainPlanClip = new mars3d.thing.TerrainClip({
-    diffHeight: heightVal, // 高度
     exact: true,
-    image: "https://data.mars3d.cn/img/textures/poly-stone.jpg",
-    imageBottom: "https://data.mars3d.cn/img/textures/poly-soil.jpg",
-    splitNum: 50 // 井边界插值数
+    stylePit: {
+      image: "https://data.mars3d.cn/img/textures/poly-stone.jpg",
+      imageBottom: "https://data.mars3d.cn/img/textures/poly-soil.jpg",
+      diffHeight: heightVal, // 高度
+      splitNum: 50 // 井边界插值数
+    }
   })
   map.addThing(terrainPlanClip)
 

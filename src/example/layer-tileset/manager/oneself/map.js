@@ -19,6 +19,7 @@ export const mapOptions = function (option) {
       contextOptions: { webgl: { antialias: mars3d.Util.isPCBroswer() } },
       globe: {
         baseColor: "#363635", // 地球地面背景色
+        undergroundColor: "#363635", // 当相机在地下时，渲染球体背面的颜色
         showGroundAtmosphere: false,
         enableLighting: false
       },
@@ -98,6 +99,7 @@ export function changeColor(color) {
   const clr = Cesium.Color.fromCssColorString(color)
   map.scene.backgroundColor = clr // 空间背景色
   map.scene.globe.baseColor = clr // 地表背景色
+  map.scene.globe.undergroundColor = clr // 当相机在地下时，渲染球体背面的颜色
 
   document.body.style.backgroundColor = color
 }
