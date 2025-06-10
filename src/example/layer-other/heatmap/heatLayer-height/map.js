@@ -50,7 +50,7 @@ function showHeatMap(arrPoints, height) {
 // 更新数据
 export function btnUpdate() {
   const arr = getRandomPoints(1000)
-  heatLayer.setPositions(arr, true)
+  heatLayer.positions = arr
 }
 
 const rectangle = {

@@ -310,3 +310,64 @@ function bindPopup(fixedRoute) {
     }
   })
 }
+
+
+// 当需要无人机竖直飞行时，方向不乱变化，执行下下面方法
+function bindVelocityVectorPropertyGetValueFun() {
+  const timeNowScratch = new Cesium.JulianDate()
+  const position1Scratch = new Cesium.Cartesian3()
+  const position2Scratch = new Cesium.Cartesian3()
+  Cesium.VelocityVectorProperty.prototype._getValue = function (time, velocityResult, positionResult) {
+    if (!Cesium.defined(time)) {
+      time = Cesium.JulianDate.now(timeNowScratch)
+    }
+
+    if (!Cesium.defined(velocityResult)) {
+      velocityResult = new Cesium.Cartesian3()
+    }
+
+    const property = this._position
+    if (Cesium.Property.isConstant(property)) {
+      return undefined
+    }
+
+    const thisVal = property.getIndex(time, position1Scratch) // property.getValue(time, position1Scratch)
+    let position1 = thisVal?.value
+    if (!Cesium.defined(position1)) {
+      return undefined
+    }
+
+    let position2 = property.getValueByIndex(thisVal.index + 1, position2Scratch)
+    if (!Cesium.defined(position2)) {
+      position2 = position1
+      position1 = property.getValueByIndex(thisVal.index - 1, position2Scratch)
+      if (!Cesium.defined(position1)) {
+        return undefined
+      }
+    }
+
+    if (Cesium.Cartesian3.equals(position1, position2)) {
+      return undefined
+    }
+
+    position2 = mars3d.PointUtil.setPositionsHeight(position2, mars3d.Cesium.Cartographic.fromCartesian(position1).height)
+
+
+    if (mars3d.Cesium.Cartesian3.distance(position1, position2) < 0.01) {
+      return undefined
+    }
+
+
+    if (Cesium.defined(positionResult)) {
+      position1.clone(positionResult)
+    }
+
+    const velocity = Cesium.Cartesian3.subtract(position2, position1, velocityResult)
+    if (this._normalize) {
+      return Cesium.Cartesian3.normalize(velocity, velocityResult)
+    }
+
+    return Cesium.Cartesian3.divideByScalar(velocity, 1, velocityResult)
+  }
+
+}

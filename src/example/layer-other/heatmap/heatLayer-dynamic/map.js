@@ -61,7 +61,7 @@ function showHeatMap() {
     lerpHeatMapData(heatMapData0, heatMapData1, ratio, resultHeatMapData)
 
     // 更新数据
-    heatLayer.setPositions(resultHeatMapData, true)
+    heatLayer.positions = resultHeatMapData
   }, 100)
 }
 

@@ -127,6 +127,10 @@ export async function analysisMeasure() {
     depth: true // 使用离屏渲染深度图的方式
     // minHeight: 50 , //可以设置一个固定的最低高度
   })
+
+  // measureVolume = await measure.graphicLayer.startDraw({
+  //   type: "volumeDepthMeasure"
+  // })
 }
 
 // 清除
