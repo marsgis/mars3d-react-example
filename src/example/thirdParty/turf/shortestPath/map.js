@@ -192,7 +192,6 @@ export async function shortPathByTerrain(options) {
   if (lineGraphic) {
     lineGraphic.remove()
   }
-  globalMsg("正在计算路径")
 
   const lineData = await analysisByTerrain(pointQD?.coord, pointZD?.coord, options)
 
@@ -206,7 +205,6 @@ export async function shortPathByTerrain(options) {
       }
     })
     await graphicLayer.addGraphic(lineByTerrain)
-    globalMsg("路径计算完成")
   }
 }
 

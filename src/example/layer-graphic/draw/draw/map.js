@@ -68,6 +68,8 @@ export function onMounted(mapInstance) {
   //   _双击完成绘制: "右击完成绘制",
   //   _右击删除点: "中键单击完成绘制"
   // })
+  // 关闭提示的方式
+  // map.smallTooltip.enabled = false
 
   // map.on(mars3d.EventType.mouseOver, function (event) {
   //   console.log("mouseover")

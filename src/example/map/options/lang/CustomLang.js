@@ -128,7 +128,7 @@ const CustomLang = {
   _允许编辑: "Allowed to edit",
   _禁止编辑: "Prohibit to edit",
   _导出JSON: "Export JSON",
-  _导入文件: "Import JSON",
+  _导入JSON: "Import JSON",
   _清除标记: "Clear",
 
   _特效效果: "Effects",

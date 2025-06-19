@@ -2,13 +2,12 @@
 // const Cesium = mars3d.Cesium
 
 const { LngLatPoint, Icon, CRS } = mars3d
-const { alert = globalAlert, downloadFile, formatNum } = mars3d.Util
+const { alert = globalAlert, downloadFile, formatNum, openFile } = mars3d.Util
 const { addPositionsHeight } = mars3d.PointUtil
 const { proj4Trans } = mars3d.PointTrans
 const { logInfo } = mars3d.Log
 const { RotatePoint, Measure, KeyboardRoam } = mars3d.thing
 const { Bloom, Brightness, BlackAndWhite, NightVision, Outline, Rain, Snow, Fog } = mars3d.effect
-
 
 // 获取平台内置的右键菜单
 function getDefaultContextMenu(map) {
@@ -271,19 +270,18 @@ function getDefaultContextMenu(map) {
             downloadFile("标绘图层数据.json", JSON.stringify(json))
           }
         },
-        // {
-        //   text: function () {
-        //     return map.getLangText("_导入文件") + `<input id="defaultContextMenu_Impfile" type="file" accept=".json,.geojson" style="display: none" />`
-        //   },
-        //   icon: Icon.DrawDownJson,
-        //   // show: function (e) {
-        //   //   return map.graphicLayer.length > 0
-        //   // },
-        //   callback: function (e) {
-        //     debugger
-        //     // downloadFile("图上标记.json", JSON.stringify(map.graphicLayer.toGeoJSON()))
-        //   }
-        // },
+        {
+          text: function () {
+            return map.getLangText("_导入JSON")
+          },
+          icon: Icon.DrawDownJson,
+          callback: function (e) {
+            openFile({ accept: ".json,.geojson" }).then((result) => {
+              logInfo("导入文件数据", result.text)
+              map.graphicLayer.loadJSON(result.text, { flyTo: true, clear: true })
+            })
+          }
+        },
         {
           text: function () {
             return map.getLangText("_清除标记")
@@ -994,6 +992,18 @@ function getDefaultContextMenu(map) {
           }
         },
 
+        {
+          text: function () {
+            return map.getLangText("_导入JSON")
+          },
+          icon: Icon.DrawDownJson,
+          callback: function (e) {
+            openFile({ accept: ".json,.geojson" }).then((result) => {
+              logInfo("导入场景JSON文件", result.text)
+              map.setOptions(result.text, { merge: false })
+            })
+          }
+        },
         {
           text: function () {
             return map.getLangText("_导出JSON")

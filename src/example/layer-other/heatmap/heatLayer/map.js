@@ -142,7 +142,7 @@ async function showHeatMap2() {
   // 绑定事件
   graphicLayer.on(mars3d.EventType.load, function (event) {
     console.log("数据加载完成", event)
-    window.heatLayer = event.otherLayer
+    heatLayer = event.graphics
   })
 }
 

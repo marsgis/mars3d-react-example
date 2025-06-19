@@ -1766,13 +1766,13 @@ const styleConfig = {
     name: "球体",
     primitive: true,
     style: [
-      { name: "radii_x", label: "X半径", type: "number", step: 1, defval: 100.0 },
-      { name: "radii_y", label: "Y半径", type: "number", step: 1, defval: 100.0 },
-      { name: "radii_z", label: "Z半径", type: "number", step: 1, defval: 100.0 },
+      { name: "radii_x", label: "X半径", type: "number", step: 1, min: 1, defval: 100.0 },
+      { name: "radii_y", label: "Y半径", type: "number", step: 1, min: 1, defval: 100.0 },
+      { name: "radii_z", label: "Z半径", type: "number", step: 1, min: 1, defval: 100 },
 
-      { name: "innerRadii_x", label: "内部X半径", type: "number", step: 1, defval: 0.0 },
-      { name: "innerRadii_y", label: "内部Y半径", type: "number", step: 1, defval: 0.0 },
-      { name: "innerRadii_z", label: "内部Z半径", type: "number", step: 1, defval: 0.0 },
+      { name: "innerRadii_x", label: "内部X半径", type: "number", step: 1, min: 1, defval: 0.0 },
+      { name: "innerRadii_y", label: "内部Y半径", type: "number", step: 1, min: 1, defval: 0.0 },
+      { name: "innerRadii_z", label: "内部Z半径", type: "number", step: 1, min: 1, defval: 0.0 },
 
       { name: "minimumClockDegree", label: "最小时钟角度", type: "number", defval: 0.0 },
       { name: "maximumClockDegree", label: "最大时钟角度", type: "number", defval: 360.0 },
@@ -3940,7 +3940,15 @@ const styleConfig = {
   pointPlot: {
     name: "点状军标",
     style: [
-      { name: "color", label: "颜色", type: "color", defval: "#ff0000" },
+      {
+        name: "color",
+        label: "颜色",
+        type: "color",
+        defval: "#ff0000",
+        show({ style }) {
+          return style?.hasColor ?? true
+        }
+      },
 
       { name: "width", label: "宽度", type: "number", min: 1, max: 200, step: 1, defval: 30 },
       { name: "lockRatio", label: "等比高度", type: "radio", defval: true },
@@ -3986,7 +3994,7 @@ const styleConfig = {
         name: "intext_color",
         label: "内联文本颜色",
         type: "color",
-        defval: "#ff0000",
+        defval: "#000000",
         show({ style }) {
           return style?.intext
         }
@@ -4038,14 +4046,44 @@ const styleConfig = {
 
       { name: "flat", label: "是否平放", type: "radio", defval: false },
       { name: "rotate", label: "竖直旋转角度", type: "slider", min: 0.0, max: 360.0, step: 0.01, defval: 0.0 },
-      { name: "diffHeight", label: "拉伸厚度", type: "number", min: 0.0, max: 1000.0, step: 1, defval: 0.0 }
+      { name: "diffHeight", label: "拉伸厚度", type: "number", min: 0.0, max: 1000.0, step: 1, defval: 0.0 },
+
+      { name: "text", label: "注记文本", type: "textarea", defval: "" },
+      { name: "text_color", label: "注记颜色", type: "color", defval: "#000000" },
+      { name: "text_font_size", label: "注记大小", type: "number", min: 1, max: 200, step: 1, defval: 30 },
+      {
+        name: "text_direction",
+        label: "注记位置",
+        type: "combobox",
+        valType: "number",
+        defval: 0,
+        data: [
+          { label: "正下方", value: 0 },
+          { label: "正右方", value: 1 },
+          { label: "正上方", value: 2 },
+          { label: "正左方", value: 3 },
+          { label: "右上", value: 4 },
+          { label: "右下", value: 5 },
+          { label: "左上", value: 6 },
+          { label: "左下", value: 7 },
+          { label: "居中", value: 8 }
+        ]
+      }
     ]
   },
 
   polyPlot: {
     name: "线面军标",
     style: [
-      { name: "color", label: "颜色", type: "color", defval: "#ff0000" },
+      {
+        name: "color",
+        label: "颜色",
+        type: "color",
+        defval: "#ff0000",
+        show({ style }) {
+          return style?.hasColor ?? true
+        }
+      },
       { name: "lineWidth", label: "边线线宽", type: "number", min: 0.1, max: 50.0, step: 0.1, defval: 0.5 },
       {
         name: "lineType",
@@ -4138,16 +4176,6 @@ const styleConfig = {
         ],
         show({ style, graphicType }) {
           return style?.fill
-        }
-      },
-
-      {
-        name: "fillColor",
-        label: "填充颜色",
-        type: "color",
-        defval: "#ff0000",
-        show({ style }) {
-          return style?.fill && (!style?.materialType || style?.materialType === "Color")
         }
       },
 

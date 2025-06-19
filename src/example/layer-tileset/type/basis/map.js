@@ -52,6 +52,7 @@ export function onMounted(mapInstance) {
 
   // 调试面板
   map.viewer.extend(Cesium.viewerCesiumInspectorMixin)
+  bindTestTerrain(false)
 
   // 针对不同终端的优化配置
   if (isPCBroswer()) {
