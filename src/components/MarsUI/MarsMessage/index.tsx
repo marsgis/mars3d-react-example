@@ -4,7 +4,7 @@ import "./index.less"
 /**
  * message 信息弹窗
  * @export
- * @copyright 火星科技 mars3d.cn
+ * @copyright mars3d.cn
  * @author 火星渣渣灰 2022-01-01
  * @returns {void}
  */

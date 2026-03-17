@@ -4,7 +4,7 @@ import "nprogress/nprogress.css"
 /**
  * loading组件
  * @export
- * @copyright 火星科技 mars3d.cn
+ * @copyright mars3d.cn
  * @author 火星渣渣灰 2022-02-19
  * @returns { void }
  */
